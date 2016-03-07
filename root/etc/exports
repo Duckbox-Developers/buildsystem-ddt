@@ -1,0 +1,4 @@
+# This file defines the filesystem that will be exported to
+# selected clients. If present, the NFS-server will be started.
+
+/hdd *(rw,wdelay,nohide,insecure,no_root_squash,no_all_squash,no_subtree_check,sync)

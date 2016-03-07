@@ -1,0 +1,66 @@
+#! /bin/sh
+#
+# busybox httpd
+#
+# chkconfig: 3 91 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/httpd
+NAME=httpd
+DESC="Web server"
+
+test -x $DAEMON || exit 0
+
+# Defaults
+CONFIGFILE="/etc/httpd.conf"
+CONFIGDEFAULTFILE="/etc/default/httpd"
+USERID=root
+GROUPID=root
+ENABLE="false"
+
+# Reads config file (will override defaults above)
+[ -r "$CONFIGDEFAULTFILE" ] && . $CONFIGDEFAULTFILE
+
+ENABLE="true"
+if [ "$ENABLE" != "true" ]; then
+	echo "$NAME daemon disabled - read $CONFIGDEFAULTFILE."
+	exit 0
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
+		--exec $DAEMON -b -- -h /var/www
+		#--exec $DAEMON -- -b -c $CONFIGFILE
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "$NAME."
+	;;
+#  reload|force-reload)
+#	echo "Reloading $DESC configuration files."
+#	start-stop-daemon --stop --signal 1 --quiet --exec $DAEMON
+#	;;
+  restart)
+	echo -n "Restarting $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "$NAME."
+	sleep 1
+	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
+		--exec $DAEMON -b --
+	echo "$NAME."
+	;;
+  *)
+#	echo "Usage: $0 {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $0 {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

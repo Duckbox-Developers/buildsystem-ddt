@@ -1,0 +1,23 @@
+# Timeout value in seconds (default: 300)
+TIMEOUT=300
+
+# Direct maps are only partially implemented 
+# and could silently break things. See /usr/share/doc/autofs/README.direct for information
+# about current limitations and check your configurations before enabling them.
+DISABLE_DIRECT=1
+
+# The LDAP URI for auto.master
+# (e. g. LDAPURI="ldap://ldapserver.example.com/")
+#LDAPURI=
+
+# The LDAP base for auto.master
+# (e. g. LDAPBASE="ou=auto.master,ou=Automount,dc=example,dc=com")
+#LDAPBASE=
+
+# Restart autofs automatically on upgrades -- normally, you want this, but
+# if you have critical files on autofs-mounted directories (the new autofs
+# .deb file, for instance), you may want to set this to 1
+#AUTOFS_DONT_RESTART_ON_UPGRADES=
+
+# Use ghosting, does not break anything if kernel support not present.
+GHOSTING=-g

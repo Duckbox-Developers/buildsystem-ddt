@@ -1,0 +1,20 @@
+# Defaults for vsftpd initscript
+# sourced by /etc/init.d/vsftpd
+# installed manually at /etc/default/vsftpd
+
+#
+# This is a POSIX shell fragment
+#
+
+# Full path to the server configuration file
+CONFIGFILE="/etc/vsftpd.conf"
+
+# Name or ID of the user and group the daemon should run under
+USERID=root
+GROUPID=root
+
+# Edit $CONFIGFILE
+# Change this to true when done to enable the init.d script
+#ENABLE=false
+ENABLE=true
+

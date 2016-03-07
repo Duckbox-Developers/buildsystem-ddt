@@ -1,0 +1,3 @@
+#!/bin/sh
+# this is a workaround for a busybox bug
+true

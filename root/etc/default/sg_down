@@ -1,0 +1,9 @@
+# Enable/Disable
+ENABLE=true
+
+# time in seconds of device inactivity until it will be 
+# put to standby mode (5 minutes)
+IDLE_UNTIL_STANDBY=30
+
+# device to use
+DEVICE=sda

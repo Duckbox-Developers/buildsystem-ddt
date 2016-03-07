@@ -1,0 +1,65 @@
+#! /bin/sh
+#
+# vsftpd
+#
+# chkconfig: 3 20 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/vsftpd
+DESC="FTP server"
+NAME=vsftpd
+
+test -x $DAEMON || exit 0
+
+# Defaults
+CONFIGFILE="/etc/vsftpd.conf"
+CONFIGDEFAULTFILE="/etc/default/vsftpd"
+USERID=root
+GROUPID=root
+ENABLE="true"
+
+# Reads config file (will override defaults above)
+[ -r "$CONFIGDEFAULTFILE" ] && . $CONFIGDEFAULTFILE
+
+if [ "$ENABLE" != "true" ]; then
+	echo "$NAME daemon disabled - read $CONFIGDEFAULTFILE."
+	exit 0
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
+		--exec $DAEMON -b --
+		#--exec $DAEMON -- -b -c $CONFIGFILE
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "$NAME."
+	;;
+#  reload|force-reload)
+#	echo "Reloading $DESC configuration files."
+#	start-stop-daemon --stop --signal 1 --quiet --exec $DAEMON
+#	;;
+  restart)
+	echo -n "Restarting $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "done."
+	sleep 1
+	start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
+		--exec $DAEMON -b --
+	echo "$NAME."
+	;;
+  *)
+#	echo "Usage: $0 {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $0 {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

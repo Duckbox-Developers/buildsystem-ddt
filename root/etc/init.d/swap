@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# swap
+#
+# chkconfig: 3 25 0
+# description:
+#
+# pidfile:
+
+#see http://www.nslu2-linux.org/wiki/HowTo/MountNFSSwapPartition
+
+set -e
+
+NFSREMDIR=192.168.1.201:/home/nfsswap
+LOCDIR=/mnt/swap
+
+SWAP=no
+[ -f /etc/default/swap ] || exit 0
+. /etc/default/swap
+[ "$SWAP" != "yes" ] && exit 0
+
+get_mountstatus() {
+	( grep -q "$LOCDIR" /proc/mounts ) || \
+		( [ ! -d $LOCDIR ] && mkdir -p $LOCDIR; mount -t nfs $NFSREMDIR $LOCDIR -o nolock || exit 1 ) 
+	return 0
+}
+
+get_swapfilestatus() {
+	[ ! -f $LOCDIR/swapfile ] && ( dd if=/dev/zero of=$LOCDIR/swapfile bs=1M count=64 )
+	return 0
+}
+
+case "$1" in
+	start)
+		get_mountstatus
+		get_swapfilestatus
+		echo -n "Starting swap..."
+		modprobe loop
+		losetup /dev/loop0 $LOCDIR/swapfile
+		mkswap /dev/loop0
+		swapon /dev/loop0 || ( echo "Swapon failed."; exit 1 )
+		mount -n -t tmpfs tmpfs /tmp -o size=64M,remount
+		mount -n -t tmpfs tmpfs /var/run -o size=64M,remount
+		#echo "done"
+		;;
+	stop)
+		echo -n "Stopping swap..."
+		swapoff /dev/loop0
+		losetup -d /dev/loop0
+		modprobe -r loop
+		umount /mnt/swap
+		#echo "done"
+		;;
+	restart)
+		swapoff /dev/loop0
+		swapon /dev/loop0
+		;;
+	*)
+		echo "Usage: swap { start | stop | restart }" >&2
+		exit 1
+		;;
+esac
+
+exit 0

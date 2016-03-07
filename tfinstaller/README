@@ -1,0 +1,10 @@
+In order to build the TF installer just call make in the current directory.
+It is assumed that the release directory has already been generated.
+Make creates a uImage containing an initramfs with installation scripts
+in the current directory.
+
+TODO:
+Find out why the busybox 1.11.2 does not boot. Currently a binary of
+busybox 1.13.1 is supplied.
+Audioniek: Done. Procedure now uses the busybox built already as
+originally intended.

@@ -1,0 +1,158 @@
+#!/bin/sh
+
+MODDIR=/lib/modules
+
+insmod $MODDIR/vfd.ko
+echo "    Welcome     " > /dev/vfd
+
+loadMME() {
+   # mme bug workaround
+   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
+   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
+   # end mme bug wa
+   echo "load a firmware"
+   /bin/stslave -t st231.1 -R /boot/audio.elf
+   echo "load v firmware"
+   /bin/stslave -t st231.0 -R /boot/video.elf
+}
+
+if [ -e /var/etc/.firstboot ]; then
+   echo "WAIT 1 min" > /dev/vfd
+   echo "WAIT 1 min"
+   rm /var/etc/.firstboot
+   touch /dev/.devfsd
+fi
+
+/etc/init.d/mountvirtfs start
+
+if [ ! -e /var/etc/.firstboot ]; then
+
+   insmod $MODDIR/e2_proc.ko
+
+   loadMME
+
+   echo "Starting DEBUG Interface"
+   /etc/init.d/mountall start
+   /etc/init.d/hostname start
+
+   echo "starting telnetd"
+   /usr/sbin/telnetd -l /bin/login
+
+   #used by fp_control! otherwise crash
+   insmod $MODDIR/boxtype.ko
+
+   echo "LOADING MODULES"   
+   fp_control -c
+   
+   echo "init embxshell"
+   insmod $MODDIR/embxshell.ko
+   echo "init embxmailbox"
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:137:set2 ;
+   echo "init embxshm"
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000 ;
+
+   echo "init mme_host"
+   touch /etc/mme.tmp
+   echo "interupts pre"
+   echo $(cat /proc/interrupts | grep mailbox)
+   /etc/init.d/mme_check &
+   insmod $MODDIR/mme_host.ko transport0=shm &
+   echo "interupts aft"
+   echo $(cat /proc/interrupts | grep mailbox)
+   rm /etc/mme.tmp
+
+   echo "MME LOADED"
+
+   echo "init AVS"
+   insmod $MODDIR/avs.ko
+
+   echo "init stmfb"
+   insmod $MODDIR/stmcore-display-stx7100.ko
+   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv;# display1=720x576-16@50:1m:pal:cvbs;
+
+   echo "init player"
+   insmod $MODDIR/mmelog.ko
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+   insmod $MODDIR/ksound.ko
+   insmod $MODDIR/stm_v4l2.ko
+   insmod $MODDIR/pseudocard.ko
+   insmod $MODDIR/cx24116.ko
+   insmod $MODDIR/cimax.ko
+   insmod $MODDIR/pti.ko camRouting=1
+   insmod $MODDIR/stmdvb.ko
+   insmod $MODDIR/stm_monitor.ko
+   insmod $MODDIR/player2.ko
+   insmod $MODDIR/sth264pp.ko
+   insmod $MODDIR/stmalloc.ko
+   insmod $MODDIR/platform.ko
+   insmod $MODDIR/silencegen.ko
+   insmod $MODDIR/bpamem.ko
+
+   showiframe -p /var/boot/bootlogo.mvi &
+   stfbcontrol a 0
+
+   echo "init lircd"
+   mkdir -p /var/run/lirc
+   /usr/bin/lircd
+
+   echo "init frontpanel"
+   insmod $MODDIR/simu_button.ko
+   /bin/evremote2 &
+   var=`cat /proc/boxtype`
+   case "$var" in
+   	0) echo "1W boxtype"
+	   echo "B" > /dev/ttyAS1
+           echo "B" > /dev/ttyAS1;;
+  	1|3) echo "14W boxtype"
+      	   insmod $MODDIR/button.ko
+      	   insmod $MODDIR/led.ko;;
+   	*) echo "unknown boxtype";;
+   esac
+
+   #DVD-PLAYER EXIT-TASTE LOAD OR EJECT DVD
+   #mount /dev/sr0 /media/dvd
+   mount -t ext3 /dev/sda1 /hdd/movie
+
+   /etc/init.d/portmap start
+   /etc/init.d/vsftpd start
+   /usr/sbin/inetd
+
+   #timefix e2
+   date -s "200901011200"
+
+   stfbcontrol a 255
+
+   echo "LOADING e2" > /dev/vfd
+   echo "LOADING e2"
+
+   until false
+   do
+      echo "starting e2->"
+      /usr/local/bin/enigma2
+      rtv=$?
+      echo "e2 ended <- RTV: " $rtv
+     case "$rtv" in
+		0) echo "0"
+		   echo "E2 ERROR"
+      	   init 6;;
+		1) echo "1"
+		   echo "SHUTDOWN"
+		   init 0;;
+		2) echo "2"
+		   echo "REBOOT"
+		   init 6;;
+		3) echo "3"
+		   echo "E2 RESTART"
+		   echo "0" > /proc/progress
+		   showiframe -p /var/boot/bootlogo.mvi &;;
+		*) echo "*"
+		   echo "ERROR"
+           init 6;;
+      esac
+   done 
+fi
+
+#never reached
+echo "REBOOT UFS910" > /dev/vfd
+echo "REBOOT UFS910"
+reboot

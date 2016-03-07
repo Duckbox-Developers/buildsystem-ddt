@@ -1,0 +1,67 @@
+#! /bin/sh
+#
+# sg_down
+#
+# chkconfig: 2345 20 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/sg_down.sh
+NAME=sg_down
+DESC=sg_down
+
+test -x $DAEMON || exit 0
+
+# Defaults
+CONFIGFILE="/etc/sg_down.conf"
+CONFIGDEFAULTFILE="/etc/default/sg_down"
+USERID=root
+GROUPID=root
+ENABLE="false"
+
+# Reads config file (will override defaults above)
+[ -r "$CONFIGDEFAULTFILE" ] && . $CONFIGDEFAULTFILE
+
+if [ "$ENABLE" != "true" ]; then
+	echo "$NAME daemon disabled - read $CONFIGDEFAULTFILE."
+	exit 0
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	start-stop-daemon --start -v --background --pidfile /var/run/sg_downd.pid --make-pidfile --chuid $USERID:$GROUPID \
+		--exec $DAEMON --
+	#start-stop-daemon --start --quiet --chuid $USERID:$GROUPID \
+		#--exec $DAEMON -b --
+		#--exec $DAEMON -- -b -c $CONFIGFILE
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "$NAME."
+	;;
+#  reload|force-reload)
+#	echo "Reloading $DESC configuration files."
+#	start-stop-daemon --stop --signal 1 --quiet --exec $DAEMON
+#	;;
+  restart)
+	echo -n "Restarting $DESC: "
+	start-stop-daemon --stop --oknodo --quiet --exec $DAEMON
+	echo "$NAME."
+	sleep 1
+	start-stop-daemon --start -v --background --pidfile /var/run/sg_downd.pid --make-pidfile --chuid $USERID:$GROUPID \
+		--exec $DAEMON --
+	echo "$NAME."
+	;;
+  *)
+#	echo "Usage: $0 {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $0 {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

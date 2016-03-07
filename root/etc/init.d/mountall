@@ -1,0 +1,76 @@
+#! /bin/sh
+#
+# mountall	Mount all filesystems.
+#
+# Version:	@(#)mountall.sh  2.85-23  29-Jul-2004  miquels@cistron.nl
+#
+# chkconfig: S 35 0
+#
+
+VERBOSE=yes
+TMPTIME=0
+[ -f /etc/default/rcS ] && . /etc/default/rcS
+. /etc/init.d/bootclean.sh
+
+#
+# Mount local file systems in /etc/fstab.
+#
+[ "$VERBOSE" != no ] && echo "[mountall] Mounting local filesystems..."
+mount -av -t nonfs,nonfs4,nosmbfs,nocifs,noncp,noncpfs,nocoda 2>&1 |
+	egrep -v '(already|nothing was) mounted'
+
+# added by ks
+#BEGIN
+[ ! -d /var/lock ] && mkdir /var/lock
+[ ! -d /var/lock/subsys ] && mkdir /var/lock/subsys
+[ ! -d /var/log ] && mkdir /var/log
+[ ! -d /var/lib ] && mkdir /var/lib
+[ ! -d /var/lib/urandom ] && mkdir /var/lib/urandom
+[ ! -d /var/run ] && mkdir /var/run
+ln -sf /tmp /var/tmp
+#END
+
+case `uname -s` in
+	*FreeBSD)
+		INITCTL=/etc/.initctl
+		;;
+	*)
+		INITCTL=/dev/initctl
+		;;
+esac
+
+#
+# We might have mounted something over /dev, see if /dev/initctl is there.
+#
+if [ ! -p $INITCTL ]
+then
+	rm -f $INITCTL
+	mknod -m 600 $INITCTL p
+fi
+kill -USR1 1
+
+#
+# Execute swapon command again, in case we want to swap to
+# a file on a now mounted filesystem.
+#
+doswap=yes
+case "`uname -sr`" in
+	Linux\ 2.[0123].*)
+		if grep -qs resync /proc/mdstat
+		then
+			doswap=no
+		fi
+		;;
+esac
+if [ $doswap = yes ]
+then
+	swapon -a 2> /dev/null
+fi
+
+#
+#	Clean /tmp, /var/lock, /var/run
+#
+bootclean mountall
+
+: exit 0
+

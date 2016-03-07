@@ -1,0 +1,89 @@
+#!/bin/sh
+# DHCP script for relook400
+
+RESOLV_CONF="/etc/resolv.conf"
+
+update_interface()
+{
+	[ -n "$broadcast" ] && BROADCAST="broadcast $broadcast"
+	[ -n "$subnet" ] && NETMASK="netmask $subnet"
+	[ -z "$ip" ] && ip="0.0.0.0"
+	
+	/sbin/ifconfig $interface $ip $BROADCAST $NETMASK
+}
+
+update_routes()
+{
+	if [ -n "$router" ]
+	then
+		while /sbin/route del default gw 0.0.0.0 dev $interface
+		do 
+			echo "del route..."
+		done
+
+		for i in $router
+		do
+			/sbin/route add default gw $i dev $interface
+		done
+	fi
+}
+
+update_dns()
+{
+	echo -n > $RESOLV_CONF
+	[ -n "$domain" ] && echo domain $domain >> $RESOLV_CONF
+	
+	for i in $dns
+	do
+		echo adding dns $i
+		echo nameserver $i >> $RESOLV_CONF
+	done		
+}
+
+update_hostname()
+{
+	if [ -n "$hostname" ]
+	then
+		hostname $hostname;
+	fi
+}
+
+deconfig()
+{	
+	/sbin/ifconfig $interface 0.0.0.0
+}
+
+
+case "$1" in
+	bound)
+		update_interface;
+		update_routes;
+		update_dns;
+		update_hostname;
+
+		[ -n "$siaddr" ] && { echo $siaddr > /tmp/dhcpc.next-server; }
+		[ -n "$boot_file" ] && { echo $boot_file > /tmp/dhcpc.filename; }
+	;;
+	
+	renew)
+		update_interface;
+		update_routes;
+		update_dns;
+		update_hostname;
+	;;
+
+	deconfig)
+		deconfig;
+	;;
+
+	leasefail)
+		echo "failed...";
+	;;
+
+	*)
+		echo "Usage : $0 {bound|renew|deconfig|leasefail}"
+		exit 1
+	;;
+esac
+
+exit 0

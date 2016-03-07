@@ -1,0 +1,14 @@
+--- a/arch/sh/Kconfig
++++ b/arch/sh/Kconfig
+@@ -923,6 +923,11 @@
+ 	  power saving state, which causes issues with things like ptrace().
+ 
+ 	  If unsure, say N.
++
++config BPA2_DIRECTFBOPTIMIZED
++	bool "Kernel bpa2 map"
++	depends on BPA2 && (CPU_SUBTYPE_STX7105 || CPU_SUBTYPE_STX7111)
++	def_bool n
+ 
+ choice
+ 	prompt "Kernel command line"

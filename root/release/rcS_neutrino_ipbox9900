@@ -1,0 +1,129 @@
+#!/bin/sh
+
+MODDIR=/lib/modules
+
+insmod $MODDIR/micom.ko
+
+if [ -e /var/etc/.firstboot ]; then
+   rm /var/etc/.firstboot
+   sleep 1
+   echo "WAIT 3 min"
+   touch /dev/.devfsd
+    mkdir /dev/dbox
+    mkdir /dev/input
+    mknod /dev/dbox/vfd c 147 0
+    mknod /dev/dbox/avs0 c 10 221
+    mknod /dev/input/uinput c 10 223
+    echo "WAIT 3 min" > /dev/dbox/vfd
+fi
+
+/etc/init.d/mountvirtfs start
+
+/etc/init.d/portmap start
+
+insmod $MODDIR/e2_proc.ko
+
+if [ ! -e /var/etc/.firstboot ]; then
+   echo "LOADING MODULES" > /dev/dbox/vfd
+   echo "LOADING MODULES"
+
+   echo "init AVS"
+   insmod $MODDIR/avs.ko type=stv6418
+
+   echo "init stmfb"
+   insmod $MODDIR/stmcore-display-stx7109c3.ko
+   tvmode
+   insmod $MODDIR/stmfb.ko display0=720x576-32@50:12m:0:pal:cvbs
+
+   echo "load video firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
+#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
+   /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+   echo "load audio firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
+#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
+   /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+   echo "init embx"
+   insmod $MODDIR/embxshell.ko
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000 ;
+   insmod $MODDIR/mme_host.ko transport0=shm
+
+   echo "init player"
+   insmod $MODDIR/mmelog.ko
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1;
+   insmod $MODDIR/ksound.ko
+   insmod $MODDIR/p2div64.ko
+   insmod $MODDIR/stm_v4l2.ko
+   insmod $MODDIR/pseudocard.ko
+   insmod $MODDIR/fe-core.ko
+   insmod $MODDIR/starci.ko
+   insmod $MODDIR/pti.ko
+   insmod $MODDIR/stmsysfs.ko
+   insmod $MODDIR/stm_monitor.ko
+   insmod $MODDIR/stmdvb.ko
+   
+   insmod $MODDIR/player2.ko
+   insmod $MODDIR/sth264pp.ko
+   insmod $MODDIR/stmalloc.ko
+   insmod $MODDIR/platform.ko
+   insmod $MODDIR/silencegen.ko
+   insmod $MODDIR/bpamem.ko
+   mknod /dev/bpamem c 153 0
+fi
+
+#showiframe -p /var/boot/bootlogo.mvi &
+stfbcontrol a 0
+
+if [ ! -e /var/etc/.firstboot ]; then
+   echo "neutrino" > /dev/dbox/vfd
+   echo "LOADING neutrino"
+
+   /etc/init.d/mountall start
+   /etc/init.d/hostname start
+
+#   echo "starting telnetd"
+#   /usr/sbin/telnetd -l /bin/autologin
+#   /etc/init.d/vsftpd start
+   /usr/sbin/inetd
+   mkdir -p /var/run/lirc
+   /usr/bin/lircd -u
+
+   if [ -e /etc/network/interfaces ]; then
+     ip addr flush eth0
+     /etc/init.d/networking stop
+     TEST=$(grep -c 'dhcp' /etc/network/interfaces)
+     if [ "$(TEST)" -eq "1" ]; then
+       /etc/init.d/udhcpc start
+     fi
+     /etc/init.d/networking start
+   fi
+
+   #timefix
+   date -s "200901011200"
+
+   stfbcontrol a 255
+   until false
+   do
+      echo "starting neutrino->"
+      /usr/local/bin/neutrino
+      rtv=$?
+      echo "neutrino ended <- RTV: " $rtv
+      case "$rtv" in
+		0) echo "0"
+		   echo "SHUTDOWN"
+		   init 0;;
+		1) echo "1"
+		   echo "REBOOT"
+		   init 6;;
+		*) echo "*"
+		   echo "ERROR"
+		   init 6;;
+      esac
+   done
+fi
+echo "REBOOT IPBOX" > /dev/dbox/vfd
+echo "REBOOT IPBOX"
+init 6

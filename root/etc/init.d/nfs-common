@@ -1,0 +1,95 @@
+#!/bin/sh
+#
+# nfs-common    This shell script takes care of starting and stopping
+#               common daemons required for NFS clients and servers.
+#
+# chkconfig: 2345 19 81
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+# description: NFS is a popular protocol for file sharing across \
+#	       TCP/IP networks. This service provides NFS file \
+#	       locking functionality.
+#
+
+set -e
+
+# What is this?
+DESC="NFS common utilities"
+
+# Read config
+DEFAULTFILE=/etc/default/nfs-common
+PREFIX=/usr
+NEED_LOCKD=
+if [ -f $DEFAULTFILE ]; then
+    . $DEFAULTFILE
+fi
+
+# Determine whether lockd daemon is required.
+case "$NEED_LOCKD" in
+yes|no)	;;
+*)  case `uname -r` in
+    '' | [01].* | 2.[0123].* )
+	# Older kernels may or may not need a lockd daemon.
+	# We must assume they do, unless we can prove otherwise.
+	# (A false positive here results only in a harmless message.)
+	NEED_LOCKD=yes
+	if test -f /proc/ksyms
+	then
+	    grep -q lockdctl /proc/ksyms || NEED_LOCKD=no
+	fi
+	;;
+
+    *)  # Modern kernels (>= 2.4) start a lockd thread automatically.
+	NEED_LOCKD=no
+	;;
+    esac
+    ;;
+esac
+
+# Exit if required binaries are missing.
+[ -x $PREFIX/sbin/rpc.statd ] || exit 0
+[ -x $PREFIX/sbin/rpc.lockd ] || [ "$NEED_LOCKD" = no ] || exit 0
+
+# See how we were called.
+case "$1" in
+  start)
+	cd /	# daemons should have root dir as cwd
+	printf "[nfs-common] Starting $DESC:"
+	printf " statd"
+	start-stop-daemon --start --quiet \
+	    --exec $PREFIX/sbin/rpc.statd -- $STATDOPTS
+	if [ "$NEED_LOCKD" = yes ]
+	then
+	    printf " lockd"
+	    start-stop-daemon --start --quiet \
+		--exec $PREFIX/sbin/rpc.lockd  || true
+	fi
+	echo "."
+	;;
+
+  stop)
+	printf "[nfs-common] Stopping $DESC:"
+	if [ "$NEED_LOCKD" = yes ]
+	then
+	    printf " lockd"
+	    start-stop-daemon --stop --oknodo --quiet \
+		--name rpc.lockd --user 0  || true
+	fi
+	printf " statd"
+	start-stop-daemon --stop --oknodo --quiet \
+	    --name rpc.statd --user 0
+	echo "."
+	;;
+
+  restart | force-reload)
+	$0 stop
+	sleep 1
+	$0 start
+	;;
+
+  *)
+	echo "Usage: nfs-common {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit 0

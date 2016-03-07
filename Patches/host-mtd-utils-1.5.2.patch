@@ -1,0 +1,13 @@
+--- a/Makefile
++++ b/Makefile
+@@ -62,8 +62,8 @@
+ 	$(MAKE) -C $(TESTS) clean
+ 
+ install:: $(addprefix $(BUILDDIR)/,${BINS}) ${SCRIPTS}
+-	mkdir -p ${DESTDIR}/${SBINDIR}
+-	install -m 0755 $^ ${DESTDIR}/${SBINDIR}/
++	mkdir -p ${DESTDIR}/${BINDIR}
++	install -m 0755 $^ ${DESTDIR}/${BINDIR}/
+ 	mkdir -p ${DESTDIR}/${MANDIR}/man1
+ 	install -m 0644 mkfs.jffs2.1 ${DESTDIR}/${MANDIR}/man1/
+ 	-gzip -9f ${DESTDIR}/${MANDIR}/man1/*.1

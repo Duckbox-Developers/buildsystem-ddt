@@ -1,0 +1,29 @@
+--- a/Makefile.am.org	2011-06-02 19:56:45.000000000 +0200
++++ b/Makefile.am	2012-08-05 02:52:39.934756834 +0200
+@@ -40,7 +40,6 @@
+ 	modules.dep.5 modules.dep.bin.5
+ MAN8 = depmod.8 insmod.8 lsmod.8 rmmod.8 modprobe.8 modinfo.8
+ SGML = $(addprefix doc/,  $(MAN5:%.5=%.sgml) $(MAN8:%.8=%.sgml))
+-dist_man_MANS = $(MAN5) $(MAN8)
+ # If they haven't overridden mandir, fix it (never /man!)
+ mandir =$(shell if [ @mandir@ = $(prefix)/man ]; then if [ $(prefix) = / ]; then echo /usr/share/man; else echo $(prefix)/share/man; fi; else echo @mandir@; fi)
+ 
+--- a/configure.ac.org	2011-06-02 19:55:01.000000000 +0200
++++ b/configure.ac	2012-08-05 03:11:00.010802446 +0200
+@@ -29,13 +29,12 @@
+ AC_PROG_CC
+ AC_PROG_RANLIB
+ 
+-AC_CHECK_PROGS(DOCBOOKTOMAN, docbook-to-man docbook2man, [no],)
+-if test x"$DOCBOOKTOMAN" = xno
++AC_CHECK_PROGS(DOCBOOKTOMAN, docbook-to-man docbook2man)
++if test x"$DOCBOOKTOMAN" = x
+ then
+ 	AC_MSG_WARN([docbook2man not found])
+-	# fail with a meaningfull error if $DOCBOOKTOMAN called by the makefile
+-	DOCBOOKTOMAN=docbook2man
+ fi
++AM_CONDITIONAL([HAVE_DOCBOOKTOMAN], [test "x$DOCBOOKTOMAN" != "x"])
+  
+ # Delay adding the zlib_flags until after AC_PROG_CC, so we can distinguish
+ # between a broken cc and a working cc but missing libz.a.

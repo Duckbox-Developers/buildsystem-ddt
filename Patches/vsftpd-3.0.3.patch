@@ -1,0 +1,298 @@
+--- vsftpd-3.0.2-org/builddefs.h
++++ vsftpd-3.0.2/builddefs.h
+@@ -2,7 +2,7 @@
+ #define VSF_BUILDDEFS_H
+ 
+ #undef VSF_BUILD_TCPWRAPPERS
+-#define VSF_BUILD_PAM
++#undef VSF_BUILD_PAM
+ #undef VSF_BUILD_SSL
+ 
+ #endif /* VSF_BUILDDEFS_H */
+--- vsftpd-3.0.2-org/Makefile
++++ vsftpd-3.0.2/Makefile
+@@ -3,14 +3,12 @@
+ INSTALL	=	install
+ IFLAGS  = -idirafter dummyinc
+ #CFLAGS = -g
+-CFLAGS	=	-O2 -fPIE -fstack-protector --param=ssp-buffer-size=4 \
+-	-Wall -W -Wshadow -Werror -Wformat-security \
+-	-D_FORTIFY_SOURCE=2 \
++CFLAGS	=	-O2 -Wall -W -Wshadow
+ 	#-pedantic -Wconversion
+ 
+-LIBS	=	`./vsf_findlibs.sh`
++LIBS	=	-lcrypt -ldl -lnsl -lresolv -lutil
+ LINK	=	-Wl,-s
+-LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
++#LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
+ 
+ OBJS	=	main.o utility.o prelogin.o ftpcmdio.o postlogin.o privsock.o \
+ 		tunables.o ftpdataio.o secbuf.o ls.o \
+@@ -29,21 +27,7 @@
+ 	$(CC) -o vsftpd $(OBJS) $(LINK) $(LDFLAGS) $(LIBS)
+ 
+ install:
+-	if [ -x /usr/local/sbin ]; then \
+-		$(INSTALL) -m 755 vsftpd /usr/local/sbin/vsftpd; \
+-	else \
+-		$(INSTALL) -m 755 vsftpd /usr/sbin/vsftpd; fi
+-	if [ -x /usr/local/man ]; then \
+-		$(INSTALL) -m 644 vsftpd.8 /usr/local/man/man8/vsftpd.8; \
+-		$(INSTALL) -m 644 vsftpd.conf.5 /usr/local/man/man5/vsftpd.conf.5; \
+-	elif [ -x /usr/share/man ]; then \
+-		$(INSTALL) -m 644 vsftpd.8 /usr/share/man/man8/vsftpd.8; \
+-		$(INSTALL) -m 644 vsftpd.conf.5 /usr/share/man/man5/vsftpd.conf.5; \
+-	else \
+-		$(INSTALL) -m 644 vsftpd.8 /usr/man/man8/vsftpd.8; \
+-		$(INSTALL) -m 644 vsftpd.conf.5 /usr/man/man5/vsftpd.conf.5; fi
+-	if [ -x /etc/xinetd.d ]; then \
+-		$(INSTALL) -m 644 xinetd.d/vsftpd /etc/xinetd.d/vsftpd; fi
++	$(INSTALL) -m 755 vsftpd $(PREFIX)/usr/bin/vsftpd; $(INSTALL) -m 644 vsftpd.conf $(PREFIX)/etc/
+ 
+ clean:
+ 	rm -f *.o *.swp vsftpd
+--- vsftpd-3.0.0-org/parseconf.c
++++ vsftpd-3.0.0/parseconf.c
+@@ -227,7 +227,6 @@
+      * race conditions.
+      */
+     if (vsf_sysutil_retval_is_error(retval) ||
+-        vsf_sysutil_statbuf_get_uid(p_statbuf) != vsf_sysutil_getuid() ||
+         !vsf_sysutil_statbuf_is_regfile(p_statbuf))
+     {
+       die("config file not owned by correct user, or not a file");
+--- vsftpd-3.0.2-org/secutil.c
++++ vsftpd-3.0.2/secutil.c
+@@ -132,13 +132,13 @@
+   /* Misconfiguration check: don't ever chroot() to a directory writable by
+    * the current user.
+    */
+-  if ((options & VSF_SECUTIL_OPTION_CHROOT) &&
++/*  if ((options & VSF_SECUTIL_OPTION_CHROOT) &&
+       !(options & VSF_SECUTIL_OPTION_ALLOW_WRITEABLE_ROOT))
+   {
+     if (vsf_sysutil_write_access("/"))
+     {
+       die("vsftpd: refusing to run with writable root inside chroot()");
+     }
+-  }
++  }   */
+ }
+ 
+--- vsftpd.orig/str.c
++++ vsftpd/str.c
+@@ -104,6 +104,18 @@
+   return vsf_sysutil_strdup(str_getbuf(p_str));
+ }
+ 
++const char*
++str_strdup_trimmed(const struct mystr* p_str)
++{
++  const char* p_trimmed = str_getbuf(p_str);
++  int h, t, newlen;
++
++  for (h = 0; h < (int)str_getlen(p_str) && vsf_sysutil_isspace(p_trimmed[h]); h++) ;
++  for (t = str_getlen(p_str) - 1; t >= 0 && vsf_sysutil_isspace(p_trimmed[t]); t--) ;
++  newlen = t - h + 1;
++  return newlen ? vsf_sysutil_strndup(p_trimmed+h, (unsigned int)newlen) : 0L;
++}
++
+ void
+ str_alloc_alt_term(struct mystr* p_str, const char* p_src, char term)
+ {
+--- vsftpd.orig/str.h
++++ vsftpd/str.h
+@@ -31,6 +31,7 @@
+ void str_alloc_filesize_t(struct mystr* p_str, filesize_t the_filesize);
+ void str_copy(struct mystr* p_dest, const struct mystr* p_src);
+ const char* str_strdup(const struct mystr* p_str);
++const char* str_strdup_trimmed(const struct mystr* p_str);
+ void str_empty(struct mystr* p_str);
+ void str_free(struct mystr* p_str);
+ void str_trunc(struct mystr* p_str, unsigned int trunc_len);
+--- vsftpd.orig/sysutil.c	2009-10-02 14:15:18.000000000 +0200
++++ vsftpd/sysutil.c	2009-10-18 11:28:31.000000000 +0200
+@@ -1035,6 +1035,18 @@
+   return strdup(p_str);
+ }
+ 
++char*
++vsf_sysutil_strndup(const char* p_str, unsigned int p_len)
++{
++  char *new = (char *)malloc(p_len+1);
++
++  if (new == NULL)
++    return NULL;
++
++  new[p_len]='\0';
++  return (char *)memcpy(new, p_str, p_len);
++}
++
+ void
+ vsf_sysutil_memclr(void* p_dest, unsigned int size)
+ {
+--- vsftpd.orig/sysutil.h
++++ vsftpd/sysutil.h
+@@ -186,6 +186,7 @@
+ /* Various string functions */
+ unsigned int vsf_sysutil_strlen(const char* p_text);
+ char* vsf_sysutil_strdup(const char* p_str);
++char* vsf_sysutil_strndup(const char* p_str, unsigned int p_len);
+ void vsf_sysutil_memclr(void* p_dest, unsigned int size);
+ void vsf_sysutil_memcpy(void* p_dest, const void* p_src,
+                         const unsigned int size);
+--- vsftpd.orig/ls.c	2009-10-02 14:15:18.000000000 +0200
++++ vsftpd/ls.c	2009-10-18 11:48:29.000000000 +0200
+@@ -289,6 +289,25 @@
+       {
+         goto out;
+       }
++      if (!must_match_at_current_pos)
++      {
++        struct mystr scan_fwd = INIT_MYSTR;
++
++        str_mid_to_end(&name_remain_str, &scan_fwd,
++                        indexx + str_getlen(&s_match_needed_str));
++        /* We're allowed to be greedy, test if it match further along
++         * keep advancing indexx while we can still match.
++         */
++        while( (locate_result = str_locate_str(&scan_fwd, &s_match_needed_str)),
++            locate_result.found )
++        {
++          indexx += locate_result.index + str_getlen(&s_match_needed_str);
++          str_mid_to_end(&scan_fwd, &temp_str,
++                         locate_result.index + str_getlen(&s_match_needed_str));
++          str_copy(&scan_fwd, &temp_str);
++        }
++       str_free(&scan_fwd);
++      }
+       /* Chop matched string out of remainder */
+       str_mid_to_end(&name_remain_str, &temp_str,
+                      indexx + str_getlen(&s_match_needed_str));
+--- vsftpd.orig/features.c
++++ vsftpd/features.c
+@@ -27,6 +27,10 @@
+       vsf_cmdio_write_raw(p_sess, " AUTH TLS\r\n");
+     }
+   }
++  if (tunable_utf8_filesystem)
++  {
++     vsf_cmdio_write_raw(p_sess, " UTF8\r\n");
++  }
+   if (tunable_port_enable)
+   {
+     vsf_cmdio_write_raw(p_sess, " EPRT\r\n");
+--- vsftpd.orig/parseconf.c	2009-08-07 18:46:40.000000000 +0000
++++ vsftpd/parseconf.c	2010-02-25 13:28:06.000000000 +0000
+@@ -28,6 +28,7 @@
+ parseconf_bool_array[] =
+ {
+   { "anonymous_enable", &tunable_anonymous_enable },
++  { "utf8_filesystem", &tunable_utf8_filesystem },
+   { "local_enable", &tunable_local_enable },
+   { "pasv_enable", &tunable_pasv_enable },
+   { "port_enable", &tunable_port_enable },
+--- vsftpd.orig/tunables.c
++++ vsftpd/tunables.c
+@@ -10,6 +10,7 @@
+ 
+ int tunable_anonymous_enable;
+ int tunable_local_enable;
++int tunable_utf8_filesystem;
+ int tunable_pasv_enable;
+ int tunable_port_enable;
+ int tunable_chroot_local_user;
+@@ -150,6 +151,7 @@
+ {
+   tunable_anonymous_enable = 1;
+   tunable_local_enable = 0;
++  tunable_utf8_filesystem = 0;
+   tunable_pasv_enable = 1;
+   tunable_port_enable = 1;
+   tunable_chroot_local_user = 0;
+--- vsftpd.orig/tunables.h
++++ vsftpd/tunables.h
+@@ -11,6 +11,7 @@
+ /* Booleans */
+ extern int tunable_anonymous_enable;          /* Allow anon logins */
+ extern int tunable_local_enable;              /* Allow local logins */
++extern int tunable_utf8_filesystem;           /* Server uses UTF8 Filesystem */
+ extern int tunable_pasv_enable;               /* Allow PASV */
+ extern int tunable_port_enable;               /* Allow PORT */
+ extern int tunable_chroot_local_user;         /* Restrict local to home dir */
+--- vsftpd.orig/sysdeputil.c
++++ vsftpd/sysdeputil.c
+@@ -25,6 +25,11 @@
+   #define _LARGEFILE64_SOURCE 1
+ #endif
+ 
++#ifdef __linux__
++  #include <stdio.h>
++  #include <sys/utsname.h>
++#endif
++
+ /* For INT_MAX */
+ #include <limits.h>
+ 
+@@ -165,6 +165,9 @@
+ #endif
+ /* END config */
+ 
++#undef VSF_SYSDEP_HAVE_CAPABILITIES
++#undef VSF_SYSDEP_HAVE_LIBCAP
++
+ /* PAM support - we include our own dummy version if the system lacks this */
+ #include <security/pam_appl.h>
+ 
+@@ -1262,11 +1267,36 @@
+ #endif
+ }
+ 
++#ifdef VSF_SYSDEP_HAVE_LINUX_CLONE
++/* On Linux versions <2.6.35, netns cleanup may be so slow that
++ * creating a netns per connection allows a remote denial-of-service.
++ * We therefore do not use CLONE_NEWNET on these versions.
++ */
++static int
++vsf_sysutil_netns_cleanup_is_fast(void)
++{
++#ifdef __linux__
++  struct utsname utsname;
++  int r1, r2, r3 = 0;
++  return (uname(&utsname) == 0 &&
++	  sscanf(utsname.release, "%d.%d.%d", &r1, &r2, &r3) >= 2 &&
++	  ((r1 << 16) | (r2 << 8) | r3) >= ((2 << 16) | (6 << 8) | 35));
++#else
++  /* Assume any other kernel that has the feature don't have this problem */
++  return 1;
++#endif
++}
++#endif
++
+ int
+ vsf_sysutil_fork_isolate_all_failok()
+ {
+ #ifdef VSF_SYSDEP_HAVE_LINUX_CLONE
+-  static int cloneflags_work = 1;
++  static int cloneflags_work = -1;
++  if (cloneflags_work < 0)
++  {
++    cloneflags_work = vsf_sysutil_netns_cleanup_is_fast();
++  }
+   if (cloneflags_work)
+   {
+     int ret = syscall(__NR_clone,
+@@ -1312,7 +1342,11 @@ int
+ vsf_sysutil_fork_newnet()
+ {
+ #ifdef VSF_SYSDEP_HAVE_LINUX_CLONE
+-  static int cloneflags_work = 1;
++  static int cloneflags_work = -1;
++  if (cloneflags_work < 0)
++  {
++    cloneflags_work = vsf_sysutil_netns_cleanup_is_fast();
++  }
+   if (cloneflags_work)
+   {
+     int ret = syscall(__NR_clone, CLONE_NEWNET | SIGCHLD, NULL);

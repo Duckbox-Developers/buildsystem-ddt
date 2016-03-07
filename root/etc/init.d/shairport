@@ -1,0 +1,20 @@
+#!/bin/sh
+PID=/tmp/shairport.pid
+
+case $1 in
+	start)
+		[ x$(pidof mDNSResponder) == x ] && mDNSResponder
+		sleep 1
+		shairport -P $PID -d -o alsa -- -d hw:1,0
+		;;
+	stop)
+		# Kill -9 shairport to keep it from muting the volume. FIXME.
+		[ -f $PID ] && kill -9 `cat $PID` $(pidof mDNSPublish)
+		rm -f $PID 2>/dev/null
+		kill $(pidof mDNSResponder)
+		;;
+	*)
+		echo   "usage:	$0 <start|stop>"
+		exit 1
+		;;
+esac

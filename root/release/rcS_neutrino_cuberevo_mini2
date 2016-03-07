@@ -1,0 +1,169 @@
+#!/bin/sh
+
+MODDIR=/lib/modules
+
+insmod $MODDIR/micom.ko
+insmod $MODDIR/e2_proc.ko
+
+if [ -e /var/etc/.firstboot ]; then
+   rm /var/etc/.firstboot
+   sleep 1
+   echo "WAIT 3 min"
+   /bin/fp_control -t "WAIT 3 min"
+   touch /dev/.devfsd
+fi
+
+/etc/init.d/mountvirtfs start
+
+if [ -e /dev/ttyAS1 ]; then
+   rm -f /dev/ttyAS1
+fi
+
+   /etc/init.d/portmap start
+
+if [ ! -e /var/etc/.firstboot ]; then
+   /bin/fp_control -t "LOADING MODULES"
+   echo "LOADING MODULES"
+
+   insmod $MODDIR/stmcore-display-stx7109c3.ko
+
+   echo "init stmfb"
+### does not work currently, fix to 720p ###
+#   /bin/eeprom tvmode
+#   TVMODE=$?
+#   case "$TVMODE" in
+#	0) echo "SD-PAL"
+#	   insmod $MODDIR/stmfb.ko display0=720x576-32@50:12m:pal:yuv:yuv;;
+#	1) echo "SD-NTSC"
+#	   insmod $MODDIR/stmfb.ko display0=720x480-32@60:12m:ntsc-m:yuv:yuv;;
+#	2) echo "720P-50"
+	   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
+#	   ;;
+#	3) echo "720P-60"
+#	   insmod $MODDIR/stmfb.ko display0=1280x720-32@60:12m:ntsc-m:yuv:yuv;;
+#	4) echo "1080I-50"
+#	   insmod $MODDIR/stmfb.ko display0=1920x1080-32@50i:12m:pal:yuv:yuv;;
+#	5) echo "1080I-60"
+#	   insmod $MODDIR/stmfb.ko display0=1920x1080-32@60i:12m:ntsc-m:yuv:yuv;;
+#	*) echo "Use default SD-PAL"
+#	   insmod $MODDIR/stmfb.ko display0=720x576-32@50:12m:pal:yuv:yuv;;
+#   esac
+
+   echo "load video firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
+#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
+   /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+   echo "load audio firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
+#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
+   /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+   echo "init embx"
+   insmod $MODDIR/embxshell.ko
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000
+   insmod $MODDIR/mme_host.ko transport0=shm
+
+   echo "init AVS"
+   insmod $MODDIR/avs.ko type=stv6412
+   if [ `lsmod | grep -c "avs"` -eq 0 ]; then
+      insmod $MODDIR/avs.ko type=avs_pio
+   fi
+
+   echo "init player"
+   insmod $MODDIR/mmelog.ko
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1
+   insmod $MODDIR/ksound.ko
+   insmod $MODDIR/p2div64.ko
+   insmod $MODDIR/stm_v4l2.ko
+   insmod $MODDIR/stmvout.ko
+   insmod $MODDIR/stmvbi.ko
+   insmod $MODDIR/pseudocard.ko
+
+   insmod $MODDIR/frontend_platform.ko
+   insmod $MODDIR/socket.ko
+   insmod $MODDIR/lnbh221.ko
+   insmod $MODDIR/lnb_pio.ko
+   insmod $MODDIR/dvb-pll.ko
+   insmod $MODDIR/cx24116.ko
+#   insmod $MODDIR/tda10023.ko
+#   insmod $MODDIR/zl10353.ko
+   insmod $MODDIR/stv090x.ko
+#   insmod $MODDIR/stv0288.ko
+   insmod $MODDIR/starci.ko
+   insmod $MODDIR/smartcard.ko
+   insmod $MODDIR/pti.ko
+   insmod $MODDIR/stm_monitor.ko
+   insmod $MODDIR/stmsysfs.ko
+   insmod $MODDIR/stmdvb.ko
+   insmod $MODDIR/player2.ko discardlateframe=0
+   insmod $MODDIR/sth264pp.ko
+   insmod $MODDIR/stmalloc.ko
+   insmod $MODDIR/platform.ko
+   insmod $MODDIR/silencegen.ko
+   insmod $MODDIR/bpamem.ko
+
+   echo "init frontpanel"
+   insmod $MODDIR/simu_button.ko
+
+fi
+
+# Module aus modules.extra laden
+   [ -f /var/etc/modules.extra ] && eval `sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^\(.*\)/insmod \0;/' < /var/etc/modules.extra`
+
+if [ ! -e /var/etc/.firstboot ]; then
+   /bin/fp_control -t "LOADING neutrino"
+   echo "LOADING neutrino"
+
+   /etc/init.d/mountall start
+   /etc/init.d/hostname start
+
+#   echo "starting telnetd"
+#   /usr/sbin/telnetd -l /bin/autologin
+#   /etc/init.d/vsftpd start
+   /usr/sbin/inetd
+
+   if [ -e /etc/network/interfaces ]; then
+     ip addr flush eth0
+     /etc/init.d/networking stop
+     TEST=$(grep -c 'dhcp' /etc/network/interfaces)
+     if [ "$(TEST)" -eq "1" ]; then
+       /etc/init.d/udhcpc start
+     fi
+     /etc/init.d/networking start
+   fi
+
+   #timefix
+   date -s "200901011200"
+
+   stfbcontrol a 255
+
+    /bin/evremote2 10 140 &
+
+    /bin/fp_control -l 0 1
+
+   until false
+do
+ killall -9 showiframe
+ echo "starting neutrino ->"
+ /usr/local/bin/neutrino
+     rtv=$?
+      echo "neutrino ended <- RTV: " $rtv
+      case "$rtv" in
+		0) echo "0"
+		   echo "SHUTDOWN"
+		   init 0;;
+		1) echo "1"
+		   echo "REBOOT"
+		   init 6;;
+		*) echo "*"
+		   echo "ERROR"
+		   init 6;;
+      esac
+   done
+fi
+
+/bin/fp_control -t "REBOOT CUBEREVO"
+echo "REBOOT CUBEREVO"
+init 6

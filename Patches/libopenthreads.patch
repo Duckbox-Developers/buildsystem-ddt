@@ -1,0 +1,69 @@
+--- a/Make/makedefs.orig	2013-01-08 15:42:24.896068261 +0100
++++ b/Make/makedefs	2013-01-08 15:42:24.880068259 +0100
+@@ -85,7 +85,7 @@
+ LIBINST    = lib/$(OS)$(ARCH)
+ IMP_LIBINST = lib/$(OS)$(ARCH)
+ 
+-INST_LOCATION      ?= /usr/local
++INST_LOCATION      = $(PREFIX)/usr
+ INST_LIBS          = $(INST_LOCATION)/lib$(ARCH_EXT)
+ INST_INCLUDE       = $(INST_LOCATION)/include
+ INST_SHARE         = $(INST_LOCATION)/share
+@@ -212,50 +212,19 @@
+ 
+ ifeq ($(OS),Linux)
+ SYSARCH           := $(shell arch)
+-  ifeq ($(COMPILER),intel)
+-    CXX               = icpc
+-    CXXFLAGS          += -x c++ -cxxlib-gcc -gcc-version=323
+-    DEF               += -fPIC
+-    OPTF              = -O2
+-    DBGF              = -g
+-    ifeq ($(SYSARCH),ia64)
+-      ARCH              = IA64
+-    else
+-      ARCH              = 32
+-    endif
+-  else
+-    ifeq (x$(CXX),x)
+-      CXX               = g++
+-    endif
+-
+-ifeq ("$(COMPILE_OSG_OP_OT_WITH_SONAMES)","YES")
+-    LDFLAGS         += -Wl,-soname -Wl,$@.$(LIB_EXT).0
+-endif
+-
+-    ###DEF               += -fPIC
+-    OPTF              = -O2
+-    DBGF              = -ggdb -gstabs
+-    ifeq ($(SYSARCH),x86_64)
+-      ARCH              = 64
+-    ifeq (x$(CXX),x)
+-      CXX               = g++
+-    endif
+-      DEF               += -fPIC
+-    else 
+-      ARCH              = 32
+-    endif
+-  endif
++  CXX               = sh4-linux-g++
++  LD                = linux-sh4-ld
++  OPTF              = -O2
++  DBGF              = -ggdb -gstabs
++  DEF               += -fPIC
++  ARCH              = 32
+ 
+   DEPARG            = -M
+   INC               +=  
+   DEF               +=
+   SHARED            = -shared
+   ARCHARGS          = 
+-ifeq ($(SYSARCH),x86_64)
+-  LINKARGS          = -L/usr/X11R6/lib64
+-else
+-  LINKARGS          = -L/usr/X11R6/lib
+-endif
++
+   MAKEDIST          = $(TOPDIR)/Make/makerpms
+ endif
+ 

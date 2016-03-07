@@ -1,0 +1,17 @@
+#!/bin/sh
+
+NFS=`grep -c nfs /proc/cmdline`
+if [ "$NFS" -eq "1" ]; then 
+   echo "Booting from nfs, don't set network" 
+else 
+   if [ -e /etc/network/interfaces ]; then 
+      ip addr flush eth0 
+      /etc/init.d/networking stop 
+      DHCP=`grep -c dhcp /etc/network/interfaces`
+      if [ "$DHCP" -eq "1" ]; then 
+         echo "Starting dhcp"
+         /etc/init.d/udhcpc start 
+      fi 
+      /etc/init.d/networking start 
+   fi 
+fi

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -x
+
+flashprefix=$1
+prefix=$flashprefix
+buildprefix=$2
+
+NEWROOT=$prefix/root
+MYFILES=$prefix/../../myfiles
+
+
+# Create symlinks for convenient access of automounted directories
+( cd $NEWROOT && \
+  ln -sf /var/tmp/autofs/video media/video && \
+	ln -sf /var/tmp/autofs/bilder media/bilder \
+)

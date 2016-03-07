@@ -1,0 +1,152 @@
+--- a/Makefile
++++ b/Makefile
+@@ -42,6 +42,7 @@
+ TO_BIN= lua luac
+ TO_INC= lua.h luaconf.h lualib.h lauxlib.h lua.hpp
+ TO_LIB= liblua.a
++TO_SOLIB = liblua.so.$(R)
+ TO_MAN= lua.1 luac.1
+ 
+ # Lua version and release.
+@@ -60,6 +61,8 @@
+ install: dummy
+ 	cd src && $(MKDIR) $(INSTALL_BIN) $(INSTALL_INC) $(INSTALL_LIB) $(INSTALL_MAN) $(INSTALL_LMOD) $(INSTALL_CMOD)
+ 	cd src && $(INSTALL_EXEC) $(TO_BIN) $(INSTALL_BIN)
++	test -f src/$(TO_SOLIB) && cd src && $(INSTALL_EXEC) $(TO_SOLIB) $(INSTALL_LIB) || :
++	test -f src/$(TO_SOLIB) && ln -sf $(TO_SOLIB) $(INSTALL_LIB)/liblua.so || :
+ 	cd src && $(INSTALL_DATA) $(TO_INC) $(INSTALL_INC)
+ 	cd src && $(INSTALL_DATA) $(TO_LIB) $(INSTALL_LIB)
+ 	cd doc && $(INSTALL_DATA) $(TO_MAN) $(INSTALL_MAN)
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -29,8 +29,10 @@
+ PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
+ 
+ LUA_A=	liblua.a
++LUA_SO=	liblua.so
+ CORE_O=	lapi.o lcode.o lctype.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o \
+ 	lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o \
++	posix.o \
+ 	ltm.o lundump.o lvm.o lzio.o
+ LIB_O=	lauxlib.o lbaselib.o lbitlib.o lcorolib.o ldblib.o liolib.o \
+ 	lmathlib.o loslib.o lstrlib.o ltablib.o loadlib.o linit.o
+@@ -43,8 +45,13 @@
+ LUAC_O=	luac.o
+ 
+ ALL_O= $(BASE_O) $(LUA_O) $(LUAC_O)
++ifneq (dynamic,$(BUILDMODE))
+ ALL_T= $(LUA_A) $(LUA_T) $(LUAC_T)
++else
++ALL_T= $(LUA_A) $(LUA_SO) $(LUA_T) $(LUAC_T)
++endif
+ ALL_A= $(LUA_A)
++ALL_SO= $(LUA_SO)
+ 
+ # Targets start here.
+ default: $(PLAT)
+@@ -54,13 +61,24 @@
+ o:	$(ALL_O)
+ 
+ a:	$(ALL_A)
++
++so:	$(ALL_SO)
+ 
+ $(LUA_A): $(BASE_O)
+ 	$(AR) $@ $(BASE_O)
+ 	$(RANLIB) $@
+ 
++$(LUA_SO): $(CORE_O) $(LIB_O)
++	$(CC) -o $@.$(PKG_VERSION) -shared -Wl,-soname="$@.$(PKG_VERSION)" $?
++	ln -fs $@.$(PKG_VERSION) $@
++
++ifneq (dynamic,$(BUILDMODE))
+ $(LUA_T): $(LUA_O) $(LUA_A)
+ 	$(CC) -o $@ $(LDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
++else
++$(LUA_T): $(LUA_O) $(LUA_SO)
++	$(CC) -o $@ -L. $(LDFLAGS) $(LUA_O) -llua $(LIBS)
++endif
+ 
+ $(LUAC_T): $(LUAC_O) $(LUA_A)
+ 	$(CC) -o $@ $(LDFLAGS) $(LUAC_O) $(LUA_A) $(LIBS)
+@@ -103,7 +121,7 @@
+ generic: $(ALL)
+ 
+ linux:
+-	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_LINUX" SYSLIBS="-Wl,-E -ldl -lreadline"
++	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_LINUX" SYSLIBS="-Wl,-E -ldl -lrt"
+ 
+ macosx:
+ 	$(MAKE) $(ALL) SYSCFLAGS="-DLUA_USE_MACOSX" SYSLIBS="-lreadline" CC=cc
+@@ -164,6 +182,7 @@
+ lparser.o: lparser.c lua.h luaconf.h lcode.h llex.h lobject.h llimits.h \
+  lzio.h lmem.h lopcodes.h lparser.h ldebug.h lstate.h ltm.h ldo.h lfunc.h \
+  lstring.h lgc.h ltable.h
++posix.o: posix.c lua.h luaconf.h lauxlib.h
+ lstate.o: lstate.c lua.h luaconf.h lapi.h llimits.h lstate.h lobject.h \
+  ltm.h lzio.h lmem.h ldebug.h ldo.h lfunc.h lgc.h llex.h lstring.h \
+  ltable.h
+--- /dev/null
++++ b/src/config.h
+@@ -0,0 +1,22 @@
++#define HAVE_DLFCN_H 1
++#define HAVE_INTTYPES_H 1
++#define HAVE_LAUXLIB_H 1
++#define HAVE_LUACONF_H 1
++#define HAVE_LUALIB_H 1
++#define HAVE_LUA_H 1
++#define HAVE_MEMORY_H 1
++#define HAVE_STATVFS 1
++#define HAVE_STDINT_H 1
++#define HAVE_STDLIB_H 1
++#define HAVE_STRINGS_H 1
++#define HAVE_STRING_H 1
++#define HAVE_SYS_STATVFS_H 1
++#define HAVE_SYS_STAT_H 1
++#define HAVE_SYS_TYPES_H 1
++#define HAVE_UNISTD_H 1
++#define _XOPEN_SOURCE 700
++#define _GNU_SOURCE 1
++#define VERSION "31"
++#include <strings.h>
++#define LUA_LIB
++
+diff --git a/src/linit.c b/src/linit.c
+index c1a3830..9c8a47a 100644
+--- a/src/linit.c
++++ b/src/linit.c
+@@ -19,6 +19,7 @@
+ #include "lua.h"
+ 
+ #include "lualib.h"
++LUALIB_API int (luaopen_posix_c) (lua_State *L);
+ #include "lauxlib.h"
+ 
+ 
+@@ -37,6 +38,7 @@ static const luaL_Reg loadedlibs[] = {
+   {LUA_BITLIBNAME, luaopen_bit32},
+   {LUA_MATHLIBNAME, luaopen_math},
+   {LUA_DBLIBNAME, luaopen_debug},
++  {"posix_c", luaopen_posix_c},
+   {NULL, NULL}
+ };
+ 
+--- a/src/luaconf.h
++++ b/src/luaconf.h
+@@ -43,7 +43,6 @@
+ #if defined(LUA_USE_LINUX)
+ #define LUA_USE_POSIX
+ #define LUA_USE_DLOPEN		/* needs an extra library: -ldl */
+-#define LUA_USE_READLINE	/* needs some extra libraries */
+ #define LUA_USE_STRTODHEX	/* assume 'strtod' handles hex formats */
+ #define LUA_USE_AFORMAT		/* assume 'printf' handles 'aA' specifiers */
+ #define LUA_USE_LONGLONG	/* assume support for long long */
+@@ -100,7 +99,7 @@
+ #else			/* }{ */
+ 
+ #define LUA_VDIR	LUA_VERSION_MAJOR "." LUA_VERSION_MINOR "/"
+-#define LUA_ROOT	"/usr/local/"
++#define LUA_ROOT	"/usr/"
+ #define LUA_LDIR	LUA_ROOT "share/lua/" LUA_VDIR
+ #define LUA_CDIR	LUA_ROOT "lib/lua/" LUA_VDIR
+ #define LUA_PATH_DEFAULT  \

@@ -1,0 +1,65 @@
+diff -NEbur '--exclude-from=/home/dbo/DDT/cdk/scripts/diff-exclude' udpxy-1.0.23-0.org/netop.c udpxy-1.0.23-0/netop.c
+--- udpxy-1.0.23-0.org/netop.c	2012-07-16 19:20:03.000000000 +0200
++++ udpxy-1.0.23-0/netop.c	2014-12-20 23:19:43.189507235 +0100
+@@ -53,16 +53,24 @@
+ 
+     extern const char IPv4_ALL[];
+ 
+-    assert( (port > 0) && sockfd && ipaddr );
++    int socktype = 0;
++    socklen_t socktypelen = sizeof(socktype);
++    int inetd = !getsockopt(0, SOL_SOCKET, SO_TYPE, &socktype, &socktypelen) && socktype == SOCK_STREAM;
++
++    assert( (!inetd || port > 0) && sockfd && ipaddr );
+     (void)IPv4_ALL;
+     TRACE( (void)tmfprintf( g_flog, "Setting up listener for [%s:%d]\n",
+                 ipaddr[0] ? ipaddr : IPv4_ALL, port) );
+ 
+     rc = ERR_INTERNAL;
+     do {
++	if (inetd)
++		lsock = 0;
++	else
+         lsock = socket( AF_INET, SOCK_STREAM, 0 );
+         if( -1 == lsock ) break;
+ 
++	if (!inetd) {
+         (void) memset( &servaddr, 0, sizeof(servaddr) );
+         servaddr.sin_family = AF_INET;
+         servaddr.sin_port = htons( (short)port );
+@@ -87,6 +95,7 @@
+                     __func__);
+             break;
+         }
++	}
+ 
+         #define NONBLOCK 1
+         rc = set_nblock (lsock, NONBLOCK);
+@@ -102,8 +111,10 @@
+             break;
+         }
+ 
++	if (!inetd) {
+         rc = bind( lsock, (struct sockaddr*)&servaddr, sizeof(servaddr) );
+         if( 0 != rc ) break;
++	}
+ 
+         rc = listen (lsock, (bklog > 0 ? bklog : 1));
+         if( 0 != rc ) break;
+diff -NEbur '--exclude-from=/home/dbo/DDT/cdk/scripts/diff-exclude' udpxy-1.0.23-0.org/udpxy.c udpxy-1.0.23-0/udpxy.c
+--- udpxy-1.0.23-0.org/udpxy.c	2012-07-16 19:20:03.000000000 +0200
++++ udpxy-1.0.23-0/udpxy.c	2014-12-20 23:19:43.193507235 +0100
+@@ -1389,7 +1389,12 @@
+     openlog( g_udpxy_app, LOG_CONS | LOG_PID, LOG_LOCAL0 );
+ 
+     do {
+-        if( (argc < 2) || (port <= 0) || (rc != 0) ) {
++	int socktype = 0;
++	socklen_t socktypelen = sizeof(socktype);
++	int inetd = !getsockopt(0, SOL_SOCKET, SO_TYPE, &socktype, &socktypelen) && socktype == SOCK_STREAM;
++	if (inetd)
++		no_daemon = 1;
++        if( !inetd && ((argc < 2) || (port <= 0) || (rc != 0)) ) {
+             usage( argv[0], stderr );
+             rc = ERR_PARAM; break;
+         }

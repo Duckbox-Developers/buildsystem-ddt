@@ -1,0 +1,6 @@
+# Swap on NFS swapfile
+SWAP=no
+# NFS server mit remote directory
+NFSREMDIR=192.168.1.201:/home/nfsswap
+# Local mountpoint
+LOCDIR=/mnt/swap

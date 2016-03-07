@@ -1,0 +1,42 @@
+#! /bin/sh
+#
+# halt		Execute the halt command.
+#
+# Version:      @(#)halt  2.85-22  19-Jun-2004  miquels@cistron.nl
+#
+# chkconfig: 0 90 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+# Get the default from /etc/default/halt.
+[ -f /etc/default/halt ] && . /etc/default/halt
+
+if [ "$INIT_HALT" = "" ]
+then
+	case "$HALT" in
+		[Pp]*)
+			INIT_HALT=POWEROFF
+			;;
+		[Hh]*)
+			INIT_HALT=HALT
+			;;
+		*)
+			INIT_HALT=POWEROFF
+			;;
+	esac
+fi
+
+ 
+# Led brightness
+/bin/tffpctl --brightness 5
+/bin/tffpctl --cleardisplay
+
+# Write everything to disk
+# It would be great if we could remount / as read-only before shutting down
+/bin/sync
+sleep 5
+# Power off
+/bin/tffpctl --poweroff
+
+: exit 0

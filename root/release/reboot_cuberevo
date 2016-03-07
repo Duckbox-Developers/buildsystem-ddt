@@ -1,0 +1,18 @@
+#! /bin/sh
+#
+# reboot	Execute the reboot command.
+#
+# Version:      @(#)reboot  2.75  22-Jun-1998  miquels@cistron.nl
+#
+# chkconfig: 6 90 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+echo -n "Rebooting... "
+#reboot -n
+if [ -e /bin/cubefpctl ]; then
+	/bin/cubefpctl --reboot
+else
+	/bin/fp_control -r 00:00:00 01.01.1980
+fi

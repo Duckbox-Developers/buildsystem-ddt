@@ -1,0 +1,24 @@
+#! /bin/sh
+#
+# sendsigs	Kill all remaining processes.
+#
+# Version:      @(#)sendsigs  2.85-8  05-Nov-2003  miquels@cistron.nl
+#
+# chkconfig: 06 20 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+# If we are running this as part of busybox, we don't have killall5!
+if [ -e /sbin/killall5 ] ; then
+  # Kill all processes.
+  echo -n "Sending all processes the TERM signal..."
+  killall5 -15
+  echo "done."
+  sleep 5
+  echo -n "Sending all processes the KILL signal..."
+  killall5 -9
+  echo "done."
+fi
+
+: exit 0

@@ -1,0 +1,65 @@
+diff -ur a/src/client.lua b/src/client.lua
+--- a/src/client.lua	2012-04-14 02:35:31.000000000 +0200
++++ b/src/client.lua	2013-05-12 11:21:43.212284984 +0200
+@@ -10,7 +10,7 @@
+ local concat = require("table").concat
+ 
+ local ltn12 = require("ltn12")
+-local soap = require("soap")
++local soap = require("soap.soap")
+ 
+ 
+ local _M = {
+diff -ur a/src/server.lua b/src/server.lua
+--- a/src/server.lua	2012-04-14 02:35:31.000000000 +0200
++++ a/src/server.lua	2013-05-12 16:12:14.185238631 +0200
+@@ -8,7 +8,7 @@
+ local table = require"table"
+ local string = require"string"
+ local cgilua = cgilua
+-local soap = require"soap"
++local soap = require"soap.soap"
+ 
+ 
+ local encoding = "iso-8859-1"
+diff -ur a/src/soap.lua b/src/soap.lua
+--- a/src/soap.lua	2012-04-14 02:35:31.000000000 +0200
++++ b/src/soap.lua	2013-05-17 07:26:38.551190138 +0200
+@@ -212,7 +212,7 @@
+ 				return v
+ 			end
+ 			i = i+1
+-			v = self[i]
++			v = obj[i]
+ 		end
+ 		return nil
+ 	end
+@@ -233,19 +233,24 @@
+ 	local lc = list_children (obj)
+ 	local o = lc ()
+ 	-- Skip SOAP:Header
+-	while o and o.tag ~= ns..":Header" and o.tag ~= "SOAP-ENV:Header" do
++	while (o and o.tag ~= ns..":Body" and o.tag ~= "SOAP-ENV:Body") do
+ 		o = lc ()
+ 	end
+-	if o.tag == ns..":Body" or o.tag == "SOAP-ENV:Body" then
+-		obj = list_children (o)
++	if o then
++		lc = list_children (o)
++		obj = lc ()
+ 	else
+ 		error ("Couldn't find SOAP Body!")
+ 	end
+ 	local method = obj.tag:match ("%:([^:]*)$") or obj.tag
+ 
+ 	local entries = {}
++	local j = 1
+ 	for i = 1, #obj do
+-		entries[i] = obj[i]
++		if ((type(obj[i]) ~= 'string') or ((obj[i] ~= "\n") and (obj[i] ~= "\r"))) then 
++			entries[j] = obj[i]
++			j = j + 1
++		end
+ 	end
+ 	return namespace, method, entries
+ end

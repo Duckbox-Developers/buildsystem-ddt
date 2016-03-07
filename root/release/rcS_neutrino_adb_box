@@ -1,0 +1,160 @@
+#!/bin/sh
+
+MODDIR=/lib/modules
+boxtype=`cat /etc/boxtype`
+
+if [ $boxtype == 'bska' ]; then
+  echo "Init VFD bialy"
+  insmod $MODDIR/vfd.ko rec=0
+else
+  echo "Init VFD czarny"
+  insmod $MODDIR/vfd.ko rec=1
+fi
+
+if [ -e /var/etc/.firstboot ]; then
+   echo "WAIT 3 min" > /dev/vfd
+   echo "WAIT 3 min"
+   rm /var/etc/.firstboot
+   touch /dev/.devfsd
+fi
+
+   /etc/init.d/mountvirtfs start
+   /etc/init.d/portmap start
+
+if [ ! -e /var/etc/.firstboot ]; then
+
+   insmod $MODDIR/e2_proc.ko
+
+   echo "load video firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
+#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
+   /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+   echo "load audio firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
+#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
+   /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+# start automounter with umount timeout of 5 seconds
+   insmod $MODDIR/autofs4.ko
+   /usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
+
+   echo "Starting DEBUG Interface"
+   /etc/init.d/mountall start
+   /etc/init.d/hostname start
+
+#   echo "starting telnetd"
+#   /usr/sbin/telnetd -l /bin/autologin
+
+   echo "init stmfb"
+   insmod $MODDIR/stmcore-display-stx7100.ko
+   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv;# display1=720x576-16@50:1m:pal:cvbs;
+
+   echo "LOADING MODULES"
+   echo "LOADING MODULES" >/dev/vfd
+
+   echo "init embx"
+   insmod $MODDIR/embxshell.ko
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:137:set2 ;
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
+   insmod $MODDIR/mme_host.ko transport0=shm
+
+   if [ $boxtype == 'bsla' ]; then
+   echo "init Cooler"
+    insmod $MODDIR/cooler.ko
+   fi
+
+   echo "init AVS"
+   insmod $MODDIR/avs.ko type=stv6412
+
+   echo "init player"
+   player=`cat /proc/stb/player/version`
+   player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
+   echo "init player $player"
+   insmod $MODDIR/mmelog.ko
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+   insmod $MODDIR/ksound.ko
+   insmod $MODDIR/p2div64.ko
+   insmod $MODDIR/stm_v4l2.ko
+    if [ $player -gt 131 ]; then
+	insmod $MODDIR/stmvout.ko
+	insmod $MODDIR/stmvbi.ko
+   fi
+  insmod $MODDIR/pseudocard.ko
+
+    if [ $boxtype == 'bska' ]; then
+         echo "init frontends bialy"
+         insmod $MODDIR/fe-core.ko tuner=bialy ;
+    else
+         echo "init frontends czarny"
+	 insmod $MODDIR/fe-core.ko tuner=czarny ;
+    fi
+
+   echo "init drivers"
+   if [ $player -gt 131 ]; then
+	insmod $MODDIR/pti.ko
+	insmod $MODDIR/stm_monitor.ko
+	insmod $MODDIR/stmsysfs.ko
+    	insmod $MODDIR/stmdvb.ko TSIS_mode=parallel
+   else
+	insmod $MODDIR/pti.ko
+	insmod $MODDIR/stmdvb.ko
+	insmod $MODDIR/stm_monitor.ko
+   fi	
+   insmod $MODDIR/player2.ko
+   insmod $MODDIR/sth264pp.ko
+   insmod $MODDIR/stmalloc.ko
+   insmod $MODDIR/platform.ko
+   insmod $MODDIR/bpamem.ko
+   insmod $MODDIR/smartcard.ko
+
+   /usr/local/bin/dvbtest -4 -f l /var/boot/bootlogo.mvi
+
+   echo "init frontpanel"
+   insmod $MODDIR/boxtype.ko
+   insmod $MODDIR/simu_button.ko
+
+   echo "init lircd"
+   mkdir -p /var/run/lirc
+   /usr/bin/lircd
+
+   /bin/evremote2 &
+
+# Module aus modules.extra laden
+   [ -f /var/etc/modules.extra ] && eval `sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^\(.*\)/insmod \0;/' < /var/etc/modules.extra`
+
+#   /etc/init.d/vsftpd start
+   /usr/sbin/inetd
+
+   #timefix
+   date -s "200901011200"
+
+   echo "LOADING neutrino" > /dev/vfd
+   echo "LOADING neutrino"
+
+   until false
+   do
+      echo "starting neutrino->"
+      /etc/init.d/networking restart
+      /usr/bin/start-emu.sh
+      /usr/local/bin/neutrino
+      rtv=$?
+      echo "neutrino ended <- RTV: " $rtv
+      case "$rtv" in
+		0) echo "0"
+		   echo "SHUTDOWN"
+		   init 0;;
+		1) echo "1"
+		   echo "REBOOT"
+		   init 6;;
+		*) echo "*"
+		   echo "ERROR"
+		   init 6;;
+      esac
+   done
+fi
+
+#never reached
+echo "REBOOT" > /dev/vfd
+echo "REBOOT"
+init 6

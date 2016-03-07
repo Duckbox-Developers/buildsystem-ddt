@@ -1,0 +1,180 @@
+#!/bin/sh
+#
+# $Id: rc.autofs.in,v 1.4 2000/01/22 22:17:34 hpa Exp $
+#
+# rc file for automount using a Sun-style "master map".
+# We look for a local /etc/auto.master
+#
+# On most distributions, this file should be called:
+# /etc/rc.d/init.d/autofs or /etc/init.d/autofs
+#
+#
+# Location of the automount daemon and the link directory
+#
+LINKDIR=/tmp/automount
+DAEMON=/usr/sbin/automount
+if [ `lsmod | grep "autofs4" | wc -l` -lt 1 ]; then
+	insmod /lib/modules/autofs4.ko
+fi
+#
+# Determine which kind of configuration we're using
+#
+test -e $DAEMON || exit 0
+thisscript="$0"
+if [ ! -f "$thisscript" ]; then
+	echo "$0: Cannot find myself" 1>&2
+	exit 1
+fi
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+export PATH
+
+#
+# We can add local options here
+# e.g. localoptions='rsize=8192,wsize=8192'
+#
+localoptions=''
+
+#
+# This function will build a list of automount commands to execute in
+# order to activate all the mount points. It is used to figure out
+# the difference of automount points in case of a reload
+#
+
+getmounts() {
+#
+# Check for local maps to be loaded
+#
+	if [ -f /etc/auto.master ]
+	then
+		cat /etc/auto.master | sed -e '/^#/d' -e '/^$/d'| (
+			while read dir map options
+			do
+				if [ ! -z "$dir" -a ! -z "$map" \
+				-a x`echo "$map" | cut -c1` != 'x-' ]
+				then
+					map=`echo "/etc/$map" | sed -e 's:^/etc//:/:'`
+					options=`echo "$options" | sed -e 's/\(^\|[ \t]\)-/\1/g'`
+					if [ -x $map ]; then
+						echo "$DAEMON $dir program $map $options $localoptions"
+					elif [ -f $map ]; then
+						echo "$DAEMON $dir file $map $options $localoptions"
+					else
+						echo "$DAEMON $dir `basename $map` $options $localoptions"
+					fi
+				fi
+			done
+		)
+	fi
+}
+
+#
+# create directorys
+#
+createdirs() {
+	mkdir -p $LINKDIR
+	rm -f $LINKDIR/*
+	getmounts | while read patzhalter zieldir type datei rest1
+	do
+		if [ $type = 'file' ]; then
+			cat $datei | sed -e '/^#/d' -e '/^$/d'| (
+			while read dir1 rest2
+			do
+				echo "Symlink: $zieldir/$dir1 $LINKDIR/$dir1"
+				ln -s $zieldir/$dir1 $LINKDIR/$dir1
+				done
+			)
+		fi
+	done
+}
+
+#
+# delete directorys
+#
+deletedirs() {
+	rm -f $LINKDIR/*
+	if [ -e $LINKDIR ]; then
+		rmdir $LINKDIR
+	fi
+}
+
+#
+# Status lister.
+#
+status() {
+	echo "Configured Mount Points:"
+	echo "------------------------"
+	getmounts
+	echo ""
+	echo "Active Mount Points:"
+	echo "--------------------"
+	ps | grep "automount " | grep -v "grep" | (
+		while read pid user vsz stat command; do echo $command; done
+	)
+}
+
+#
+# start/stop functions
+#
+mainprogram() {
+#
+# See how we were called.
+#
+	case "$1" in
+	start)
+		echo -n 'Starting automounter:'
+		createdirs
+		getmounts | while read cmd mnt rest
+		do
+			echo -n " $mnt"
+			mkdir -p /var/run/autofs`echo $mnt | sed 's/\//./'`
+			pidfile=/var/run/autofs`echo $mnt | sed 's/\//./'`.pid
+			start-stop-daemon --start --pidfile $pidfile --quiet --exec $DAEMON -- $mnt $rest --timeout=5 --ghost
+			#
+			#	Automount needs a '--pidfile' or '-p' option.
+			#	For now we look for the pid ourself.
+			#
+			ps | grep "$DAEMON $mnt" | grep -v "grep" | (
+				read pid rest
+				echo $pid > $pidfile
+				echo "$mnt $rest" >> $pidfile
+			)
+		done
+		echo "."
+		;;
+	stop)
+		echo 'Stopping automounter.'
+		start-stop-daemon --stop --quiet --signal USR2 --exec $DAEMON
+		deletedirs
+		;;
+	reload|restart)
+		createdirs
+		echo "Reloading automounter: checking for changes ... "
+		TMP=/var/run/autofs.tmp
+		getmounts >$TMP
+		for i in /var/run/autofs.*.pid
+		do
+			pid=`head -n 1 $i 2>/dev/null`
+			[ "$pid" = "" ] && continue
+			command=`tail +2 $i`
+			if ! grep -q "^$command" $TMP
+			then
+				echo "Stopping automounter: $command"
+				kill -USR2 $pid
+			fi
+		done
+		rm -f $TMP
+		$thisscript start
+		;;
+	status)
+		status
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|reload|status}" >&2
+		exit 1
+		;;
+	esac
+}
+
+mainprogram "$@"
+exit 0

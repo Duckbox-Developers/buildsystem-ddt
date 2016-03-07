@@ -1,0 +1,22 @@
+--- a/fsck/Makefile.am
++++ b/fsck/Makefile.am
+@@ -14,7 +14,7 @@
+           fsckpfs.h xchkdsk.h xfsck.h xfsckint.h
+ 
+ install-exec-hook:
+-	$(LN) -f $(DESTDIR)$(sbindir)/jfs_fsck $(DESTDIR)$(sbindir)/fsck.jfs
++	cd $(DESTDIR)$(sbindir); ln -s jfs_fsck fsck.jfs
+ 
+ install-data-hook:
+ 	$(LN) -f $(DESTDIR)$(man8dir)/jfs_fsck.8 $(DESTDIR)$(man8dir)/fsck.jfs.8
+--- a/mkfs/Makefile.am
++++ b/mkfs/Makefile.am
+@@ -13,7 +13,7 @@
+                  inodemap.h inodes.h
+ 
+ install-exec-hook:
+-	$(LN) -f $(DESTDIR)$(sbindir)/jfs_mkfs $(DESTDIR)$(sbindir)/mkfs.jfs
++	cd $(DESTDIR)$(sbindir); ln -s jfs_mkfs mkfs.jfs
+ 
+ install-data-hook:
+ 	$(LN) -f $(DESTDIR)$(man8dir)/jfs_mkfs.8 $(DESTDIR)$(man8dir)/mkfs.jfs.8

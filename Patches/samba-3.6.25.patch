@@ -1,0 +1,154 @@
+--- samba-3.6.12/source3/configure.in.org
++++ samba-3.6.12/source3/configure.in
+@@ -325,38 +325,6 @@
+ fi
+ fi
+ 
+-############################################
+-# check if the compiler can handle negative enum values
+-# and don't truncate the values to INT_MAX
+-# a runtime test is needed here
+-AC_SUBST(PIDL_ARGS)
+-AC_CACHE_CHECK([that the C compiler understands negative enum values],samba_cv_CC_NEGATIVE_ENUM_VALUES, [
+-    AC_TRY_RUN(
+-[
+-	#include <stdio.h>
+-	enum negative_values { NEGATIVE_VALUE = 0xFFFFFFFF };
+-	int main(void) {
+-		enum negative_values v1 = NEGATIVE_VALUE;
+-		unsigned v2 = NEGATIVE_VALUE;
+-
+-		if (v1 != 0xFFFFFFFF) {
+-			printf("%u != 0xFFFFFFFF\n", v1);
+-			return 1;
+-		}
+-		if (v2 != 0xFFFFFFFF) {
+-			printf("%u != 0xFFFFFFFF\n", v2);
+-			return 1;
+-		}
+-
+-		return 0;
+-	}
+-],
+-	samba_cv_CC_NEGATIVE_ENUM_VALUES=yes,samba_cv_CC_NEGATIVE_ENUM_VALUES=no)])
+-if test x"$samba_cv_CC_NEGATIVE_ENUM_VALUES" != x"yes"; then
+-	AC_MSG_WARN([using --uint-enums for pidl])
+-	PIDL_ARGS="$PIDL_ARGS --uint-enums"
+-fi
+-
+ dnl Figure out the flags to support named structure initializers
+ 
+ LIBREPLACE_C99_STRUCT_INIT([],[AC_MSG_ERROR([c99 structure initializer are not supported])])
+@@ -624,7 +592,7 @@
+ # Tests for linux LFS support. Need kernel 2.4 and glibc2.2 or greater support.
+ #
+     *linux*)
+-        AC_MSG_CHECKING([for LFS support])
++        AC_CACHE_CHECK([for LFS support], samba_cv_LINUX_LFS_SUPPORT,[
+         old_CPPFLAGS="$CPPFLAGS"
+         CPPFLAGS="-D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
+        AC_TRY_RUN([
+@@ -663,13 +631,14 @@
+        exit(1);
+ #endif
+ }
+-], [LINUX_LFS_SUPPORT=yes], [LINUX_LFS_SUPPORT=no], [LINUX_LFS_SUPPORT=cross])
+-	CPPFLAGS="$old_CPPFLAGS"
+-	if test x$LINUX_LFS_SUPPORT = xyes ; then
+-		CPPFLAGS="-D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
+-		AC_DEFINE(_LARGEFILE64_SOURCE, 1, [Whether to enable large file support])
+-		AC_DEFINE(_FILE_OFFSET_BITS, 64, [File offset bits])
+-		AC_DEFINE(_GNU_SOURCE, 1, [Whether to use GNU libc extensions])
++ ], [samba_cv_LINUX_LFS_SUPPORT=yes], [samba_cv_LINUX_LFS_SUPPORT=no], [samba_cv_LINUX_LFS_SUPPORT=cross])
++ 	CPPFLAGS="$old_CPPFLAGS"])
++ 	if test x"$samba_cv_LINUX_LFS_SUPPORT" = x"yes" -o x"$samba_cv_LINUX_LFS_SUPPORT" = x"cross"; then
++ 		CPPFLAGS="-D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
++ 		AC_DEFINE(_LARGEFILE_SOURCE, 1, [Whether to enable large file support 32])
++  		AC_DEFINE(_LARGEFILE64_SOURCE, 1, [Whether to enable large file support])
++  		AC_DEFINE(_FILE_OFFSET_BITS, 64, [File offset bits])
++  		AC_DEFINE(_GNU_SOURCE, 1, [Whether to use GNU libc extensions])
+ 	fi
+ 	AC_MSG_RESULT([$LINUX_LFS_SUPPORT])
+ 	;;
+@@ -1147,10 +1116,8 @@
+ # Check to see if core dump directory is defined in linux
+ # with /proc/sys/kernel/core_pattern
+ 
+-AC_CHECK_FILE([/proc/sys/kernel/core_pattern],
+ 	AC_DEFINE(HAVE_SYS_KERNEL_PROC_CORE_PATTERN, 1,
+-	[Whether Linux kernel uses core_pattern for core files]),
+-	 [])
++	[Whether Linux kernel uses core_pattern for core files])
+ 
+ #############################
+ # check if building with gpfs
+@@ -2593,40 +2564,6 @@
+ fi
+ # end utmp details
+ 
+-AC_CACHE_CHECK([for linux fallocate],samba_cv_HAVE_LINUX_FALLOCATE,[
+-AC_TRY_COMPILE([
+-#if defined(HAVE_UNISTD_H)
+-#include <unistd.h>
+-#endif
+-#include <sys/types.h>
+-#define _GNU_SOURCE
+-#include <fcntl.h>
+-#if defined(HAVE_LINUX_FALLOC_H)
+-#include <linux/falloc.h>
+-#endif],
+-[int ret = fallocate(0, FALLOC_FL_KEEP_SIZE, 0, 10);],
+-samba_cv_HAVE_LINUX_FALLOCATE=yes,samba_cv_HAVE_LINUX_FALLOCATE=no)])
+-if test x"$samba_cv_HAVE_LINUX_FALLOCATE" = x"yes" && test x"$ac_cv_func_fallocate" = x"yes"; then
+-    AC_DEFINE(HAVE_LINUX_FALLOCATE,1,[Whether the Linux 'fallocate' function is available])
+-fi
+-
+-AC_CACHE_CHECK([for linux fallocate64],samba_cv_HAVE_LINUX_FALLOCATE64,[
+-AC_TRY_COMPILE([
+-#if defined(HAVE_UNISTD_H)
+-#include <unistd.h>
+-#endif
+-#include <sys/types.h>
+-#define _GNU_SOURCE
+-#include <fcntl.h>
+-#if defined(HAVE_LINUX_FALLOC_H)
+-#include <linux/falloc.h>
+-#endif],
+-[int ret = fallocate64(0, FALLOC_FL_KEEP_SIZE, 0, 10);],
+-samba_cv_HAVE_LINUX_FALLOCATE64=yes,samba_cv_HAVE_LINUX_FALLOCATE64=no)])
+-if test x"$samba_cv_HAVE_LINUX_FALLOCATE64" = x"yes" && test x"$ac_cv_func_fallocate64" = x"yes"; then
+-    AC_DEFINE(HAVE_LINUX_FALLOCATE64,1,[Whether the Linux 'fallocate64' function is available])
+-fi
+-
+ ICONV_LOOK_DIRS="/usr /usr/local /sw /opt"
+ AC_ARG_WITH(libiconv,
+ [AS_HELP_STRING([--with-libiconv=BASEDIR], [Use libiconv in BASEDIR/lib and BASEDIR/include (default=auto)])],
+@@ -2833,6 +2770,10 @@
+     AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
+ fi
+ 
++if test x"$samba_cv_HAVE_KERNEL_OPLOCKS_LINUX" = x"cross"; then
++    AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
++fi
++
+ AC_CACHE_CHECK([for kernel change notify support],samba_cv_HAVE_KERNEL_CHANGE_NOTIFY,[
+ AC_TRY_RUN([
+ #include <sys/types.h>
+@@ -3845,7 +3785,6 @@
+   # Heimdal checks.
+   AC_CHECK_LIB_EXT(crypto, KRB5_LIBS, des_set_key)
+   AC_CHECK_LIB_EXT(asn1, KRB5_LIBS, copy_Authenticator)
+-  AC_CHECK_LIB_EXT(roken, KRB5_LIBS, roken_getaddrinfo_hostspec)
+ 
+   # Heimdal checks. On static Heimdal gssapi must be linked before krb5.
+   AC_CHECK_LIB_EXT(gssapi, KRB5_LIBS, gss_display_status,[],[],have_gssapi=yes)
+--- samba-3.6.12/source3/lib/util_sock.c.org
++++ samba-3.6.12/source3/lib/util_sock.c
+@@ -1341,7 +1341,6 @@
+ 				((st.st_mode & 0777) != dir_perms)) {
+ 			DEBUG(0, ("invalid permissions on socket directory "
+ 				"%s\n", socket_dir));
+-			goto out_umask;
+ 		}
+ 	}
+ 

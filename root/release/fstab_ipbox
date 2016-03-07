@@ -1,0 +1,7 @@
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>               <dump>  <pass>
+/dev/sda1     /hdd                auto    defaults,noatime,nodiratime      0 0
+/dev/sdb1     /media/usb          auto    defaults,noatime,nodiratime      0 0
+
+

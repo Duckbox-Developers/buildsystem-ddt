@@ -1,0 +1,124 @@
+#!/bin/sh
+#
+# enigma2        This starts enigma2 gui.
+#
+# chkconfig: 3 81 0
+# description:
+#
+# pidfile:
+
+PATH=/sbin:/bin:/usr/bin:/usr/sbin
+RETVAL=0
+NAME="enigma2"
+prog="enigma2"
+
+. /lib/lsb/splash-functions
+
+# Set environment values (see /etc/default/enigma2)
+#AUTOSTART_ENIGMA2=no
+AUTOSTART_ENIGMA2=yes
+[ -f /etc/default/enigma2 ] && . /etc/default/enigma2
+
+[ "${AUTOSTART_ENIGMA2}" != "yes" ] && exit 0
+
+start(){
+	mount /dev/sr0 /media/dvd
+	#mount -t ext3 /dev/sdb1 /hdd/movie
+
+	mkdir -p /var/run/lirc
+        pidof lircd || /usr/bin/lircd
+
+	splash_exit
+
+        echo "Starting enigma2: ..."
+	echo "LOADING ENIGMA2" > /dev/vfd
+
+	echo "   " > /root/progress
+	rset
+	showiframe /boot/bootlogo.mvi &
+	stfbcontrol a 0
+	stfbcontrol a 255
+
+	var=`cat /proc/boxtype`
+
+	#(enigma2; reboot -f)&
+	( until false
+	  do
+		echo "starting e2->"
+		/usr/local/bin/enigma2
+		rtv=$?
+		echo "e2 ended <- RTV: " $rtv
+		case "$rtv" in
+			0) echo "0"
+			   echo "E2 ERROR"
+			   rset
+			   showiframe /boot/bootlogo.mvi &
+			   echo "   " > /root/progress;;
+			1) echo "1"
+			   echo "SHUTDOWN"
+			   case "$var" in
+				0) gotosleep;;
+				*) echo " " > /root/progress
+				stfbcontrol a 0
+				showiframe /boot/poweroff.mvi &;;
+			   esac;;
+			2) echo "2"
+			   echo "REBOOT"
+			   reboot;;
+			3) echo "3"
+			   echo "E2 RESTART"
+			   rset
+			   showiframe /boot/bootlogo.mvi &
+			   echo "   " > /root/progress;;
+			*) echo "*"
+			   echo "ERROR";;
+		esac
+	done )&
+
+	echo "REBOOT UFS910"
+	echo "REBOOT UFS910" > /dev/vfd
+	reboot -f
+
+        #RETVAL=$?
+}
+
+stop(){
+    echo -n $"Stopping $prog: "
+
+    RETVAL=$?
+    echo "ok"
+
+}
+
+reload(){
+    echo -n $"Reloading configuration: "
+
+    RETVAL=$?
+    echo
+}
+
+restart(){
+    stop
+    start
+}
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    reload)
+        reload
+        ;;
+    *)
+        echo $"Usage: $0 {start}"
+#        echo $"Usage: $0 {start|stop|restart|reload}"
+        RETVAL=1
+esac
+exit $RETVAL

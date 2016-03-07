@@ -1,0 +1,20 @@
+# These drivers are available to the user for selection in
+# the Neutrino Kernel Options menue.
+#
+#
+cec(activemode=1 deviceName=DuckBox deviceType=3) # HDMI CEC
+rt2500usb          # Ralink RT2500 USB WLAN
+rt2870sta          # Ralink RT2870 USB WLAN
+rt3070sta          # Ralink RT3070 USB WLAN
+rt5370sta          # Ralink RT5370 USB WLAN
+8188eu             # Realtek RTL8188EU USB WLAN
+8192cu             # Realtek RTL8192CU USB WLAN
+8712u              # Realtek RTL8712U USB WLAN
+#zd1201             # ZYDAS 1201 USB WLAN
+usbserial pl2303   # Prolific PL-2303 USB-to-serial
+usbserial ftdi_sio # FTDI_SIO USB-to-serial
+tun                # TUN network device
+cifs               # CIFS network driver
+jfs                # JFS file system driver
+ntfs               # NTFS file system driver (ro)
+

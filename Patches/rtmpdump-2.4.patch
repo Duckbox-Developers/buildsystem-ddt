@@ -1,0 +1,48 @@
+--- rtmpdump-2.4.orig/Makefile
++++ rtmpdump-2.4/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=$(PREFIX)
+ 
+ CC=$(CROSS_COMPILE)gcc
+ LD=$(CROSS_COMPILE)ld
+@@ -22,7 +22,7 @@
+ DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
+ OPT=-O2
+ CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT)
+-LDFLAGS=-Wall $(XLDFLAGS)
++LDFLAGS+=-Wall
+ 
+ bindir=$(prefix)/bin
+ sbindir=$(prefix)/sbin
+--- rtmpdump-2.4.orig/librtmp/Makefile
++++ rtmpdump-2.4/librtmp/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+ 
+-prefix=/usr/local
++prefix=$(PREFIX)
+ 
+ incdir=$(prefix)/include/librtmp
+ bindir=$(prefix)/bin
+@@ -75,7 +75,7 @@
+ DEF=-DRTMPDUMP_VERSION=\"$(VERSION)\" $(CRYPTO_DEF) $(XDEF)
+ OPT=-O2
+ CFLAGS=-Wall $(XCFLAGS) $(INC) $(DEF) $(OPT) $(SO_DEF)
+-LDFLAGS=$(XLDFLAGS)
++#LDFLAGS=$(XLDFLAGS)
+ 
+ 
+ OBJS=rtmp.o log.o amf.o hashswf.o parseurl.o
+--- rtmpdump-2.4.orig/librtmp/librtmp.pc.in
++++ rtmpdump-2.4/librtmp/librtmp.pc.in
+@@ -1,6 +1,6 @@
+ prefix=@prefix@
+ exec_prefix=${prefix}
+-libdir=@libdir@
++libdir=${prefix}/lib
+ incdir=${prefix}/include
+ 
+ Name: librtmp

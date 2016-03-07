@@ -1,0 +1,139 @@
+#!/bin/bash
+#
+# Init file for OpenSSH server daemon
+#
+# chkconfig: 2345 55 25
+# description: OpenSSH server daemon
+
+RETVAL=0
+prog="sshd"
+
+# Some functions to make the below more readable
+KEYGEN=/usr/bin/ssh-keygen
+SSHD=/usr/sbin/sshd
+RSA1_KEY=/etc/openssh/ssh_host_key
+RSA_KEY=/etc/openssh/ssh_host_rsa_key
+DSA_KEY=/etc/openssh/ssh_host_dsa_key
+ECDSA_KEY=/etc/openssh/ssh_host_ecdsa_key
+PID_FILE=/var/run/sshd.pid
+
+do_rsa1_keygen() {
+	if [ ! -s $RSA1_KEY ]; then
+		echo -n $"Generating SSH1 RSA host key: "
+		if $KEYGEN -q -t rsa1 -f $RSA1_KEY -C '' -N '' >&/dev/null; then
+			chmod 600 $RSA1_KEY
+			chmod 644 $RSA1_KEY.pub
+			echo "ok"
+		else
+			echo "failed"
+			exit 1
+		fi
+	fi
+}
+
+do_rsa_keygen() {
+	if [ ! -s $RSA_KEY ]; then
+		echo -n $"Generating SSH2 RSA host key: "
+		if $KEYGEN -q -t rsa -f $RSA_KEY -C '' -N '' >&/dev/null; then
+			chmod 600 $RSA_KEY
+			chmod 644 $RSA_KEY.pub
+			echo "ok"
+		else
+			echo "failed"
+			exit 1
+		fi
+	fi
+}
+
+do_dsa_keygen() {
+	if [ ! -s $DSA_KEY ]; then
+		echo -n $"Generating SSH2 DSA host key: "
+		if $KEYGEN -q -t dsa -f $DSA_KEY -C '' -N '' >&/dev/null; then
+			chmod 600 $DSA_KEY
+			chmod 644 $DSA_KEY.pub
+			echo "ok"
+		else
+			echo "failed"
+			exit 1
+		fi
+	fi
+}
+
+do_ecdsa_keygen() {
+	if [ ! -s $ECDSA_KEY ]; then
+		echo -n $"Generating SSH2 ECDSA host key: "
+		if $KEYGEN -q -t ecdsa -f $ECDSA_KEY -C '' -N '' >&/dev/null; then
+			chmod 600 $ECDSA_KEY
+			chmod 644 $ECDSA_KEY.pub
+			echo "ok"
+		else
+			echo "failed"
+			exit 1
+		fi
+	fi
+}
+
+check_config()
+{
+	$SSHD -t
+	RETVAL=$?
+	if [ ! "$RETVAL" = 0 ]; then
+		echo "Configuration file or keys are invalid"
+	fi
+}
+
+start()
+{
+	# Create keys if necessary
+	do_rsa1_keygen
+	do_rsa_keygen
+	do_dsa_keygen
+	do_ecdsa_keygen
+
+	echo -n $"Starting $prog:"
+	if [ -d /proc/1/. ] ; then
+		start-stop-daemon --start --quiet --pidfile $PID_FILE --exec $SSHD
+		RETVAL=$?
+	else
+		$SSHD
+		RETVAL=$?
+	fi
+	echo "ok"
+}
+
+stop()
+{
+	echo -n $"Stopping $prog:"
+	start-stop-daemon --stop --quiet --oknodo --pidfile $PID_FILE
+	RETVAL=$?
+	echo "ok"
+}
+
+reload()
+{
+	echo -n $"Reloading $prog:"
+	check_config
+	start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile $PID_FILE --exec $SSHD
+	RETVAL=$?
+	echo
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	reload)
+		reload
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|reload}"
+		RETVAL=1
+esac
+exit $RETVAL

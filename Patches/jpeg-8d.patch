@@ -1,0 +1,12 @@
+--- jpeg-6b/config.sub	1998-03-25 16:25:39.000000000 +0100
++++ jpeg-6b/config.sub-new	2007-11-26 14:49:14.000000000 +0100
+@@ -520,6 +520,9 @@
+ 		basic_machine=sh-hitachi
+ 		os=-hms
+ 		;;
++	sh4)
++		basic_machine=sh4-linux
++		;;
+ 	sps7)
+ 		basic_machine=m68k-bull
+ 		os=-sysv2
