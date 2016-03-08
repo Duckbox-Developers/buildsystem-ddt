@@ -211,10 +211,10 @@ $(D)/lsb: $(D)/bootstrap $(ARCHIVE)/lsb_$(LSB_VER).tar.gz
 PORTMAP_VER = 6.0.0
 
 $(ARCHIVE)/portmap_$(PORTMAP_VER).orig.tar.gz:
-	$(WGET) http://ftp.de.debian.org/debian/pool/main/p/portmap/portmap_$(PORTMAP_VER).orig.tar.gz
+	$(WGET) https://merges.ubuntu.com/p/portmap/portmap_$(PORTMAP_VER).orig.tar.gz
 
 $(ARCHIVE)/portmap_$(PORTMAP_VER)-2.diff.gz:
-	$(WGET) http://ftp.de.debian.org/debian/pool/main/p/portmap/portmap_$(PORTMAP_VER)-2.diff.gz
+	$(WGET) https://merges.ubuntu.com/p/portmap/portmap_$(PORTMAP_VER)-2.diff.gz
 
 $(D)/portmap: $(D)/bootstrap $(ARCHIVE)/portmap_$(PORTMAP_VER).orig.tar.gz $(ARCHIVE)/portmap_$(PORTMAP_VER)-2.diff.gz
 	$(REMOVE)/portmap-$(PORTMAP_VER)
