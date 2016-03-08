@@ -1165,6 +1165,26 @@ $(D)/xupnpd: $(D)/bootstrap
 	touch $@
 
 #
+# dvbsnoop
+#
+$(D)/dvbsnoop: $(D)/bootstrap
+	$(REMOVE)/dvbsnoop
+	[ -d "$(ARCHIVE)/dvbsnoop.git" ] && \
+	(cd $(ARCHIVE)/dvbsnoop.git; git pull; ); \
+	[ -d "$(ARCHIVE)/dvbsnoop.git" ] || \
+	git clone https://github.com/cotdp/dvbsnoop.git $(ARCHIVE)/dvbsnoop.git; \
+	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop;
+	cd $(BUILD_TMP)/dvbsnoop; \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REMOVE)/dvbsnoop
+	touch $@
+
+#
 # udpxy
 #
 UDPXY_VER = 1.0.23-9
