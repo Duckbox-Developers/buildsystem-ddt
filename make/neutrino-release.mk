@@ -220,8 +220,6 @@ release_neutrino_spark:
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -dp $(SKEL_ROOT)/release/lircd_spark.conf $(RELEASE_DIR)/etc/lircd.conf
 	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
-	cp -f $(SKEL_ROOT)/sbin/flash_* $(RELEASE_DIR)/sbin
-	cp -f $(SKEL_ROOT)/sbin/nand* $(RELEASE_DIR)/sbin
 
 #
 # release_spark7162
@@ -241,9 +239,6 @@ release_neutrino_spark7162:
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -dp $(SKEL_ROOT)/release/lircd_spark7162.conf $(RELEASE_DIR)/etc/lircd.conf
 	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
-	cp -f $(SKEL_ROOT)/sbin/flashcp $(RELEASE_DIR)/sbin
-	cp -f $(SKEL_ROOT)/sbin/flash_* $(RELEASE_DIR)/sbin
-	cp -f $(SKEL_ROOT)/sbin/nand* $(RELEASE_DIR)/sbin
 
 #
 # release_fortis_hdbox
