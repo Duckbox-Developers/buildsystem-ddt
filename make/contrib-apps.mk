@@ -6,7 +6,13 @@ BUSYBOX_VER = 1.24.1
 $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2:
 	$(WGET) http://busybox.net/downloads/busybox-$(BUSYBOX_VER).tar.bz2
 
-$(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES)/busybox.config$(if $(UFS912)$(UFS913)$(SPARK)$(SPARK7162),_nandwrite)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
+BUSYBOX_CONFIG = busybox.config_nandwrite
+else
+BUSYBOX_CONFIG = busybox.config
+endif
+
+$(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES)/$(BUSYBOX_CONFIG)
 	rm -fr $(BUILD_TMP)/busybox-$(BUSYBOX_VER)
 	$(UNTAR)/busybox-$(BUSYBOX_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/busybox-$(BUSYBOX_VER); \
