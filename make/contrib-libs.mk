@@ -421,6 +421,16 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/lu
 	touch $@
 
 #
+# luajson
+#
+$(ARCHIVE)/luajson:
+	$(WGET) http://regex.info/code/JSON.lua
+
+$(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/luajson
+	cp $(ARCHIVE)/JSON.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)/json.lua
+	touch $@
+
+#
 # libboost
 #
 BOOST_MAJOR = 1

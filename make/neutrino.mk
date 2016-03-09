@@ -12,7 +12,7 @@ $(TARGETPREFIX)/var/etc/.version:
 
 NEUTRINO_DEPS  = $(D)/bootstrap $(D)/lirc $(D)/libcurl $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype $(D)/openvpn
 NEUTRINO_DEPS += $(D)/ffmpeg $(D)/libdvbsi++ $(D)/libsigc++ $(D)/libopenthreads $(D)/libusb $(D)/libalsa
-NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/lua-feedparser $(D)/luasoap
+NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/lua-feedparser $(D)/luasoap $(D)/luajson
 
 ifeq ($(WLANDRIVER), wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
