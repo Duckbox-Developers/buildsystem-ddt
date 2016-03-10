@@ -423,10 +423,10 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/lu
 #
 # luajson
 #
-$(ARCHIVE)/luajson:
+$(ARCHIVE)/JSON.lua:
 	$(WGET) http://regex.info/code/JSON.lua
 
-$(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/luajson
+$(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/JSON.lua
 	cp $(ARCHIVE)/JSON.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)/json.lua
 	touch $@
 
