@@ -172,7 +172,7 @@ $(SOURCE_DIR)/neutrino-mp-cst-next-max/src/gui/version.h:
 		pushd $(SOURCE_DIR)/neutrino-mp-cst-next-max ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(BUILD_TMP) ; \
+		pushd $(CDK_DIR) ; \
 		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
@@ -327,7 +327,7 @@ $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h:
 		pushd $(SOURCE_DIR)/neutrino-mp-cst-next ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(BUILD_TMP) ; \
+		pushd $(CDK_DIR) ; \
 		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
@@ -484,7 +484,7 @@ $(SOURCE_DIR)/neutrino-mp-next/src/gui/version.h:
 		pushd $(SOURCE_DIR)/neutrino-mp-next ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(BUILD_TMP) ; \
+		pushd $(CDK_DIR) ; \
 		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'-next_NMP-rev'$$NMP_REV'-next"' >> $@ ; \
@@ -682,7 +682,7 @@ $(SOURCE_DIR)/neutrino-mp-tangos/src/gui/version.h:
 		pushd $(SOURCE_DIR)/neutrino-mp-tangos ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(BUILD_TMP) ; \
+		pushd $(CDK_DIR) ; \
 		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'-next_NMP-rev'$$NMP_REV'-tangos"' >> $@ ; \
