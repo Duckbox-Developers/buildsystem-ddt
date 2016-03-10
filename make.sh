@@ -317,9 +317,10 @@ esac
 echo "IMAGE=$IMAGE" >> config
 
 ##############################################
-
 echo " "
-echo "----------------------------------------"
+make printenv
+echo " "
+##############################################
 echo "Your build environment is ready :-)"
 echo "Your next step could be:"
 case "$IMAGE" in
@@ -331,4 +332,4 @@ case "$IMAGE" in
 		echo "  make yaud-enigma2-pli-nightly";;
 		*)
 esac
-echo "----------------------------------------"
+echo " "
