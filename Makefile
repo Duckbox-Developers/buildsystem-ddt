@@ -22,6 +22,7 @@ printenv:
 	@echo "ARCHIVE_DIR    : $(ARCHIVE)"
 	@echo "BASE_DIR       : $(BASE_DIR)"
 	@echo "CDK_DIR        : $(CDK_DIR)"
+	@echo "CUSTOM_DIR     : $(CUSTOM_DIR)"
 	@echo "APPS_DIR       : $(APPS_DIR)"
 	@echo "DRIVER_DIR     : $(DRIVER_DIR)"
 	@echo "FLASH_DIR      : $(FLASH_DIR)"
