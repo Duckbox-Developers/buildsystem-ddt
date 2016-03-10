@@ -873,6 +873,7 @@ endif
 #
 $(D)/release_neutrino: \
 $(D)/%release_neutrino: release_neutrino_base release_neutrino_$(BOXTYPE)
+	$(TUXBOX_CUSTOMIZE)
 	touch $@
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/neutrino-hd

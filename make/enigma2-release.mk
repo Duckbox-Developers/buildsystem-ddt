@@ -936,6 +936,7 @@ endif
 #
 $(D)/release_enigma2: \
 $(D)/%release_enigma2: release_enigma2_base release_enigma2_$(BOXTYPE)
+	$(TUXBOX_CUSTOMIZE)
 	touch $@
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2
