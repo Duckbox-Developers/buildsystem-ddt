@@ -330,7 +330,7 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 		sed -i '/^#define/d' src/lua52compat.h; \
 		sed -i 's|man/man1|/.remove|' Makefile; \
 		$(MAKE) linux CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" BUILDMODE=dynamic PKG_VERSION=$(LUA_VER); \
-		$(MAKE) install INSTALL_TOP=$(TARGETPREFIX)/usr INSTALL_MAN=$(BUILD_TMP)/.remove
+		$(MAKE) install INSTALL_TOP=$(TARGETPREFIX)/usr INSTALL_MAN=$(TARGETPREFIX)/.remove
 	$(REMOVE)/lua-$(LUA_VER)
 	touch $@
 
@@ -464,7 +464,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
 	$(UNTAR)/zlib-$(ZLIB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
 		$(PATCH)/zlib-1.2.8.patch; \
-		CC=$(TARGET)-gcc mandir=$(BUILD_TMP)/.remove CFLAGS="$(TARGET_CFLAGS)" \
+		CC=$(TARGET)-gcc mandir=$(TARGETPREFIX)/.remove CFLAGS="$(TARGET_CFLAGS)" \
 		./configure \
 			--prefix=/usr \
 			--shared \
@@ -653,10 +653,11 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).ta
 			--prefix=/usr \
 			--enable-shared \
 			--mandir=/.remove \
+			--docdir=/.remove \
 			--bindir=/.remove \
+			--includedir=/.remove \
 			--with-jpeg8 \
 			--disable-static \
-			--includedir=/.remove \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX); \
@@ -665,6 +666,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).ta
 			--prefix=/usr \
 			--enable-shared \
 			--mandir=/.remove \
+			--docdir=/.remove \
 			--bindir=/.remove \
 		; \
 		$(MAKE); \
@@ -689,7 +691,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libpng-$(PNG_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libpng-$(PNG_VER); \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
-			--mandir=$(BUILD_TMP)/.remove \
+			--mandir=$(TARGETPREFIX)/.remove \
 			--bindir=$(HOSTPREFIX)/bin \
 		; \
 		ECHO=echo $(MAKE) all; \
