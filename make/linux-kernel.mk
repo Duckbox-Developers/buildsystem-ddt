@@ -270,20 +270,15 @@ $(D)/linux-kernel: $(D)/bootstrap $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFI
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
-	$(MAKE) -C $(KERNEL_DIR) uImage modules \
-		ARCH=sh \
-		CROSS_COMPILE=$(TARGET)-
-	$(MAKE) -C $(KERNEL_DIR) modules_install \
-		ARCH=sh \
-		CROSS_COMPILE=$(TARGET)- \
-		DEPMOD=$(DEPMOD) \
-		INSTALL_MOD_PATH=$(TARGETPREFIX)
-	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub; \
-	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGETPREFIX)/boot/vmlinux-sh4-$(KERNEL_VERSION); \
-	install -m 644 $(KERNEL_DIR)/System.map $(TARGETPREFIX)/boot/System.map-sh4-$(KERNEL_VERSION); \
-	install -m 644 $(KERNEL_DIR)/COPYING $(TARGETPREFIX)/boot/LICENSE; \
-	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGETPREFIX)/boot/; \
-	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/build || true; \
+	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
+	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- \
+		 DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
+	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGETPREFIX)/boot/vmlinux-sh4-$(KERNEL_VERSION)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGETPREFIX)/boot/System.map-sh4-$(KERNEL_VERSION)
+	install -m 644 $(KERNEL_DIR)/COPYING $(TARGETPREFIX)/boot/LICENSE
+	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGETPREFIX)/boot/
+	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/build || true
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/source || true
 	touch $@
 
@@ -302,7 +297,7 @@ linux-kernel.menuconfig linux-kernel.xconfig: \
 linux-kernel.%:
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- $*
 	@echo
-	@echo "You have to edit m a n u a l l y Patches/linux-$(KERNEL_VERSION).config to make changes permanent !!!"
+	@echo "You have to edit m a n u a l l y $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) to make changes permanent !!!"
 	@echo ""
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config
 	@echo ""
