@@ -1270,3 +1270,20 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/openssh-$(OPENSSH
 	$(REMOVE)/openssh-$(OPENSSH_VER)
 	touch $@
 
+#
+# usb-modeswitch-data
+#
+USB_MODESWITCH_DATA_VER = 20160112
+
+$(ARCHIVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER).tar.bz2:
+	$(WGET) http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER).tar.bz2
+
+$(D)/usb-modeswitch-data: $(D)/bootstrap $(ARCHIVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER).tar.bz2
+	$(REMOVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER)
+	$(UNTAR)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER); \
+		$(PATCH)/usb-modeswitch-data.patch; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REMOVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER)
+	touch $@

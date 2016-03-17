@@ -1,0 +1,29 @@
+--- a/Makefile
++++ b/Makefile
+@@ -13,14 +13,14 @@
+ clean:
+ 	$(RM) 40-usb_modeswitch.rules
+ 
+-install: all files-install db-install rules-reload
++install: all files-install db-install
+ 
+-install-packed: files-install db-install-packed rules-reload
++install-packed: files-install db-install-packed
+ 
+ files-install: 
+ 	install -d $(PREFIX)/share/usb_modeswitch
+ 	install -d $(ETCDIR)/usb_modeswitch.d
+-	install -D --mode=644 40-usb_modeswitch.rules $(RULESDIR)/40-usb_modeswitch.rules
++# 	install -D --mode=644 40-usb_modeswitch.rules $(RULESDIR)/40-usb_modeswitch.rules
+ 
+ 40-usb_modeswitch.rules:
+ 	./gen-rules.tcl
+@@ -54,7 +54,7 @@
+ 		fi \
+ 	fi
+ 
+-uninstall: files-uninstall rules-reload
++uninstall: files-uninstall
+ 
+ files-uninstall:
+ 	$(RM) $(RULESDIR)/40-usb_modeswitch.rules
