@@ -1287,3 +1287,23 @@ $(D)/usb-modeswitch-data: $(D)/bootstrap $(ARCHIVE)/usb-modeswitch-data-$(USB_MO
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VER)
 	touch $@
+
+#
+# usb-modeswitch
+#
+USB_MODESWITCH_VER = 2.3.0
+
+$(ARCHIVE)/usb-modeswitch-$(USB_MODESWITCH_VER).tar.bz2:
+	$(WGET) http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-$(USB_MODESWITCH_VER).tar.bz2
+
+$(D)/usb-modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb-modeswitch-data $(ARCHIVE)/usb-modeswitch-$(USB_MODESWITCH_VER).tar.bz2
+	$(REMOVE)/usb-modeswitch-$(USB_MODESWITCH_VER)
+	$(UNTAR)/usb-modeswitch-$(USB_MODESWITCH_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/usb-modeswitch-$(USB_MODESWITCH_VER); \
+		$(PATCH)/usb-modeswitch.patch; \
+		sed -i -e "s/= gcc/= $(TARGET)-gcc/" -e "s/-l usb/-lusb -lusb-1.0 -lpthread -lrt/" -e "s/install -D -s/install -D --strip-program=$(TARGET)-strip -s/" Makefile; \
+		sed -i -e "s/@CC@/$(TARGET)-gcc/g" jim/Makefile.in; \
+		$(BUILDENV) $(MAKE) DESTDIR=$(TARGETPREFIX)  install-static; \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REMOVE)/usb-modeswitch-$(USB_MODESWITCH_VER)
+	touch $@
