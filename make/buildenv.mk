@@ -72,6 +72,8 @@ REWRITE_PKGCONF       = sed -i "s,^prefix=.*,prefix='$(TARGETPREFIX)/usr',"
 REWRITE_LIBTOOL_OPT   = sed -i "s,^libdir=.*,libdir='$(TARGETPREFIX)/opt/pkg/lib'," $(TARGETPREFIX)/opt/pkg/lib
 REWRITE_PKGCONF_OPT   = sed -i "s,^prefix=.*,prefix='$(TARGETPREFIX)/opt/pkg',"
 
+export RM=$(shell which rm) -f
+
 # helper perl
 #REWRITE_LIBTOOL       = perl -pi -e "s,^libdir=.*$$,libdir='$(TARGETPREFIX)/usr/lib'," $(TARGETPREFIX)/usr/lib
 #REWRITE_LIBTOOLDEP    = perl -pi -e "s, /usr/lib, $(TARGETPREFIX)/usr/lib,g if /^dependency_libs/" $(TARGETPREFIX)/usr/lib
