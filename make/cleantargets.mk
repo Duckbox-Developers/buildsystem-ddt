@@ -8,11 +8,7 @@ clean: depsclean
 		INSTALL_MOD_PATH=$(TARGETPREFIX) clean
 	-$(MAKE) -C $(APPS_DIR)/tools distclean
 	-$(MAKE) driver-clean
-	-rm -rf $(HOSTPREFIX)
-	-rm -rf $(CROSS_DIR)
-	-rm -rf $(TARGETPREFIX)
-	-rm -rf $(BOOT_DIR)
-	-rm -rf $(RELEASE_DIR)
+	-rm -rf $(BASE_DIR)/tufsbox
 	-rm -rf $(D)/linux-kernel*
 
 distclean:
