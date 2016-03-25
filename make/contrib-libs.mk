@@ -501,7 +501,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz
 # timezone
 #
 TZ_VER = 2016a
-TZDATA_ZONELIST = europe
+TZDATA_ZONELIST = africa antarctica asia australasia europe northamerica southamerica pacificnew etcetera backward
 DEFAULT_TIMEZONE ?= "CET"
 #ln -s /usr/share/zoneinfo/<country>/<city> /etc/localtime
 
@@ -526,7 +526,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 		if [ -e $(TARGETPREFIX)/usr/share/zoneinfo/$(DEFAULT_TIMEZONE) ]; then \
 			echo ${DEFAULT_TIMEZONE} > $(TARGETPREFIX)/etc/timezone; \
 		fi; \
-	install -m 0644 $(PATCHES)/timezone.xml $(TARGETPREFIX)/etc/
+	install -m 0644 $(SKEL_ROOT)/etc/timezone.xml $(TARGETPREFIX)/etc/
 	$(REMOVE)/timezone
 	touch $@
 
