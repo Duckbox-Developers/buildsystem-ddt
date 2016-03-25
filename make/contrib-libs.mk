@@ -764,7 +764,7 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
 #
 # libcurl
 #
-CURL_VER = 7.47.1
+CURL_VER = 7.48.0
 
 $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 	$(WGET) http://curl.haxx.se/download/$(lastword $(subst /, ,$@))
@@ -772,7 +772,7 @@ $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).tar.bz2
 	$(UNTAR)/curl-$(CURL_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/curl-$(CURL_VER); \
-		$(PATCH)/libcurl-7.46.0.patch; \
+		$(PATCH)/libcurl-7.48.0.patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
