@@ -612,7 +612,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 #
 # libjpeg
 #
-JPEG_VER = 8d
+JPEG_VER = 9b
 
 $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz:
 	$(WGET) http://www.ijg.org/files/jpegsrc.v$(JPEG_VER).tar.gz
