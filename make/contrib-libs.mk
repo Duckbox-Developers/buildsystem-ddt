@@ -1026,14 +1026,14 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/libiconv-$(ICONV_VER).tar.gz
 #
 # libexpat
 #
-EXPAT_VER = 2.1.0
+EXPAT_VER = 2.1.1
 
-$(ARCHIVE)/expat-$(EXPAT_VER).tar.gz:
-	$(WGET) http://prdownloads.sourceforge.net/sourceforge/expat/$(EXPAT_VER)/expat-$(EXPAT_VER).tar.gz
+$(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2:
+	$(WGET) http://downloads.sourceforge.net/project/expat/expat/$(EXPAT_VER)/expat-$(EXPAT_VER).tar.bz2
 
-$(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VER).tar.gz
+$(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2
 	$(REMOVE)/expat-$(EXPAT_VER)
-	$(UNTAR)/expat-$(EXPAT_VER).tar.gz
+	$(UNTAR)/expat-$(EXPAT_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/expat-$(EXPAT_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
