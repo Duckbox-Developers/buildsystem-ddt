@@ -190,12 +190,10 @@ $(D)/python_lxml: $(D)/bootstrap $(D)/python $(D)/libxslt $(D)/python_setuptools
 #
 # python_twisted
 #
-PYTHON_TWISTED_MAJOR = 13.2
-PYTHON_TWISTED_MINOR = 0
-PYTHON_TWISTED_VER = $(PYTHON_TWISTED_MAJOR).$(PYTHON_TWISTED_MINOR)
+PYTHON_TWISTED_VER = 16.0.0
 
 $(ARCHIVE)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2:
-	$(WGET) http://twistedmatrix.com/Releases/Twisted/$(PYTHON_TWISTED_MAJOR)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
+	$(WGET) http://pypi.python.org/packages/source/T/Twisted/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
 
 $(D)/python_twisted: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
 	$(REMOVE)/Twisted-$(PYTHON_TWISTED_VER)
