@@ -227,7 +227,7 @@ $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/libfreetype $(D)/python $(
 #
 # python_pycrypto
 #
-PYTHON_PYCRYPTO_VER = 2.5
+PYTHON_PYCRYPTO_VER = 2.6.1
 
 $(ARCHIVE)/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz:
 	$(WGET) http://pypi.python.org/packages/source/p/pycrypto/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
@@ -236,7 +236,7 @@ $(D)/python_pycrypto: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIV
 	$(REMOVE)/pycrypto-$(PYTHON_PYCRYPTO_VER)
 	$(UNTAR)/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pycrypto-$(PYTHON_PYCRYPTO_VER); \
-		$(PATCH)/python-pycrypto-2.5.patch; \
+		$(PATCH)/python-pycrypto-2.6.patch; \
 		export ac_cv_func_malloc_0_nonnull=yes; \
 		$(CONFIGURE) \
 			--prefix=/usr \
