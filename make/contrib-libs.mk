@@ -621,7 +621,7 @@ $(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
 	$(REMOVE)/jpeg-$(JPEG_VER)
 	$(UNTAR)/jpegsrc.v$(JPEG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VER); \
-		$(PATCH)/jpeg-8d.patch; \
+		$(PATCH)/jpeg-9b.patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
