@@ -64,7 +64,6 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 		$(PATCH)/gst-1.0-plugins-base-taglist-not-send-to-down-stream-if-all-the-frame-cor.patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
-			--disable-freetypetest \
 			--disable-libvisual \
 			--disable-valgrind \
 			--disable-debug \
@@ -188,7 +187,6 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmod
 			--disable-direct3d \
 			--disable-directsound \
 			--disable-gme \
-			--disable-gsettings \
 			--disable-gsm \
 			--disable-kate \
 			--disable-ladspa \
@@ -231,18 +229,25 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmod
 	for i in `cd $(TARGETPREFIX)/usr/lib/gstreamer-1.0; echo *.la`; do \
 		$(REWRITE_LIBTOOL)/gstreamer-1.0/$$i; done
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-codecparsers-1.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-bad-audio-1.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-bad-base-1.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-bad-video-1.0.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-insertbin-1.0.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-mpegts-1.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-player-1.0.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gstreamer-plugins-bad-1.0.pc
 	$(REWRITE_LIBTOOL)/libgstbasecamerabinsrc-1.0.la
 	$(REWRITE_LIBTOOL)/libgstcodecparsers-1.0.la
 	$(REWRITE_LIBTOOL)/libgstphotography-1.0.la
 	$(REWRITE_LIBTOOL)/libgstadaptivedemux-1.0.la
 	$(REWRITE_LIBTOOL)/libgstbadbase-1.0.la
+	$(REWRITE_LIBTOOL)/libgstbadaudio-1.0.la
 	$(REWRITE_LIBTOOL)/libgstbadvideo-1.0.la
 	$(REWRITE_LIBTOOL)/libgstinsertbin-1.0.la
 	$(REWRITE_LIBTOOL)/libgstmpegts-1.0.la
+	$(REWRITE_LIBTOOL)/libgstplayer-1.0.la
 	$(REWRITE_LIBTOOL)/libgsturidownloader-1.0.la
+	$(REWRITE_LIBTOOLDEP)/libgstbadaudio-1.0.la
 	$(REWRITE_LIBTOOLDEP)/libgstadaptivedemux-1.0.la
 	$(REWRITE_LIBTOOLDEP)/libgstbadvideo-1.0.la
 	$(REMOVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER)
@@ -450,6 +455,8 @@ $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	for i in `cd $(TARGETPREFIX)/usr/lib/gstreamer-1.0; echo *.la`; do \
+		$(REWRITE_LIBTOOL)/gstreamer-1.0/$$i; done
 	$(REMOVE)/gstreamer1.0-plugin-subsink
 	touch $@
 
@@ -481,6 +488,7 @@ $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_ba
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	for i in `cd $(TARGETPREFIX)/usr/lib/gstreamer-1.0; echo *.la`; do \
+		$(REWRITE_LIBTOOL)/gstreamer-1.0/$$i; done
 	$(REMOVE)/gstreamer1.0-plugin-multibox-dvbmediasink
 	touch $@
-
