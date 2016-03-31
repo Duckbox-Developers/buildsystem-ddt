@@ -1,0 +1,52 @@
+--- a/libavcodec/libwebpenc_animencoder.c
++++ b/libavcodec/libwebpenc_animencoder.c
+@@ -41,8 +41,9 @@
+     int ret = ff_libwebp_encode_init_common(avctx);
+     if (!ret) {
+         LibWebPAnimContext *s = avctx->priv_data;
+-        WebPAnimEncoderOptions enc_options;
++        WebPAnimEncoderOptions enc_options = { 0 };
+         WebPAnimEncoderOptionsInit(&enc_options);
++        enc_options.verbose = av_log_get_level() >= AV_LOG_VERBOSE;
+         // TODO(urvang): Expose some options on command-line perhaps.
+         s->enc = WebPAnimEncoderNew(avctx->width, avctx->height, &enc_options);
+         if (!s->enc)
+--- a/libavcodec/avpacket.c
++++ b/libavcodec/avpacket.c
+@@ -58,6 +58,7 @@ void av_init_packet(AVPacket *pkt)
+ #if FF_API_DESTRUCT_PACKET
+ FF_DISABLE_DEPRECATION_WARNINGS
+     pkt->destruct             = NULL;
++    pkt->priv                 = NULL;
+ FF_ENABLE_DEPRECATION_WARNINGS
+ #endif
+     pkt->buf                  = NULL;
+--- a/libavformat/utils.c
++++ b/libavformat/utils.c
+@@ -113,6 +113,26 @@ MAKE_ACCESSORS(AVFormatContext, format, int, metadata_header_padding)
+ MAKE_ACCESSORS(AVFormatContext, format, void *, opaque)
+ MAKE_ACCESSORS(AVFormatContext, format, av_format_control_message, control_message_cb)
+ 
++void *av_fast_realloc(void *ptr, unsigned int *size, size_t min_size)
++{
++    if (min_size < *size)
++        return ptr;
++
++    min_size = FFMAX(17 * min_size / 16 + 32, min_size);
++
++    ptr = av_realloc(ptr, min_size);
++    /* we could set this to the unmodified min_size but this is safer
++     * if the user lost the ptr and uses NULL now
++     */
++    if (!ptr)
++        min_size = 0;
++
++    *size = min_size;
++
++    return ptr;
++}
++
++
+ int64_t av_stream_get_end_pts(const AVStream *st)
+ {
+     return st->pts.val;

@@ -1182,31 +1182,30 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 #
 # ffmpeg
 #
-FFMPEG_VER = 2.6.4
-#FFMPEG_VER = 3.0
+#FFMPEG_VER = 2.6.4
+FFMPEG_VER = 2.8.6
 
 $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz:
 	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VER).tar.xz
 
 ifeq ($(IMAGE), enigma2)
 FFMPEG_EXTRA  = --enable-librtmp
-FFMPEG_EXTRA += --enable-protocol=librtmp --enable-protocol=librtmpe --enable-protocol=librtmps --enable-protocol=librtmpt --enable-protocol=librtmpte
 LIBRTMPDUMP = $(D)/librtmpdump
 endif
 
 ifeq ($(IMAGE), neutrino)
 FFMPEG_EXTRA = --disable-iconv
-LIBXML2 = $(D)/libxml2
+LIBXML2 = $(D)/libroxml
 endif
 
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/ffmpeg-$(FFMPEG_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
-		$(PATCH)/ffmpeg-buffer-size-2.6.4.patch; \
-		$(PATCH)/ffmpeg-hds-2.6.4.patch; \
-		$(PATCH)/ffmpeg-aac-2.6.4.patch; \
-		$(PATCH)/ffmpeg-2.8-kodi.patch; \
+		$(PATCH)/ffmpeg-buffer-size-$(FFMPEG_VER).patch; \
+		$(PATCH)/ffmpeg-hds-libroxml-$(FFMPEG_VER).patch; \
+		$(PATCH)/ffmpeg-aac-$(FFMPEG_VER).patch; \
+		$(PATCH)/ffmpeg-kodi-$(FFMPEG_VER).patch; \
 		./configure \
 			--disable-ffserver \
 			--disable-ffplay \
@@ -1298,6 +1297,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $
 			--enable-decoder=h264 \
 			--enable-decoder=mjpeg \
 			--enable-decoder=mp3 \
+			--enable-decoder=movtext \
 			--enable-decoder=mpeg1video \
 			--enable-decoder=mpeg2video \
 			--enable-decoder=msmpeg4v1 \
@@ -1328,7 +1328,10 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $
 			--enable-demuxer=flv \
 			--enable-demuxer=hds \
 			--enable-demuxer=hls \
-			--enable-demuxer=image* \
+			--enable-demuxer=image2 \
+			--enable-demuxer=image2pipe \
+			--enable-demuxer=image_jpeg_pipe \
+			--enable-demuxer=image_png_pipe \
 			--enable-demuxer=matroska \
 			--enable-demuxer=mjpeg \
 			--enable-demuxer=mov \
@@ -1347,21 +1350,20 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $
 			--enable-demuxer=vc1 \
 			--enable-demuxer=wav \
 			\
-			--disable-protocols \
-			--enable-protocol=file \
-			--enable-protocol=http \
-			--enable-protocol=https \
-			--enable-protocol=mmsh \
-			--enable-protocol=mmst \
-			--enable-protocol=rtmp \
-			--enable-protocol=rtmpe \
-			--enable-protocol=rtmps \
-			--enable-protocol=rtmpt \
-			--enable-protocol=rtmpte \
-			--enable-protocol=rtmpts \
-			--enable-protocol=rtp \
-			--enable-protocol=tcp \
-			--enable-protocol=udp \
+			--disable-protocol=cache \
+			--disable-protocol=concat \
+			--disable-protocol=crypto \
+			--disable-protocol=data \
+			--disable-protocol=ftp \
+			--disable-protocol=gopher \
+			--disable-protocol=hls \
+			--disable-protocol=httpproxy \
+			--disable-protocol=md5 \
+			--disable-protocol=pipe \
+			--disable-protocol=sctp \
+			--disable-protocol=srtp \
+			--disable-protocol=subfile \
+			--disable-protocol=unix \
 			\
 			--disable-filters \
 			--enable-filter=scale \
@@ -1377,6 +1379,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $
 			$(FFMPEG_EXTRA) \
 			--disable-static \
 			--enable-openssl \
+			--enable-network \
 			--enable-shared \
 			--enable-small \
 			--enable-stripping \
