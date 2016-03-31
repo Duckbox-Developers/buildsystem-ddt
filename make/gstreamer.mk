@@ -1,7 +1,7 @@
 #
 # gstreamer
 #
-GSTREAMER_VER = 1.6.1
+GSTREAMER_VER = 1.8.0
 
 $(ARCHIVE)/gstreamer-$(GSTREAMER_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$(GSTREAMER_VER).tar.xz
@@ -11,7 +11,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glibnetworking $(
 	$(UNTAR)/gstreamer-$(GSTREAMER_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
 		$(PATCH)/gstreamer-1.0-fix-crash-with-gst-inspect.patch; \
-		$(PATCH)/gstreamer-1.0-revert-baseparse-fix-GST_BASE_PARSE_FLAG_LOST_SYNC.patch; \
+		$(PATCH)/gstreamer-1.0-revert-use-new-gst-adapter-get-buffer.patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--libexecdir=/usr/lib \
@@ -48,7 +48,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glibnetworking $(
 #
 # gst_plugins_base
 #
-GSTREAMER_BASE_VER = 1.6.1
+GSTREAMER_BASE_VER = $(GSTREAMER_VER)
 
 $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
@@ -59,6 +59,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GSTREAMER_BASE_VER); \
 		$(PATCH)/gst-1.0-plugins-base-get-caps-from-src-pad-when-query-caps.patch; \
 		$(PATCH)/gst-1.0-plugins-base-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch; \
+		$(PATCH)/gst-1.0-plugins-base-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-ca.patch; \
 		$(PATCH)/gst-1.0-plugins-base-subparse-avoid-false-negatives-dealing-with-UTF-8.patch; \
 		$(PATCH)/gst-1.0-plugins-base-taglist-not-send-to-down-stream-if-all-the-frame-cor.patch; \
 		$(CONFIGURE) \
@@ -117,7 +118,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 #
 # gst_plugins_good
 #
-GSTREAMER_GOOD_VER = 1.6.1
+GSTREAMER_GOOD_VER = $(GSTREAMER_VER)
 
 $(ARCHIVE)/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz
@@ -148,7 +149,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 #
 # gst_plugins_bad
 #
-GSTREAMER_BAD_VER = 1.6.1
+GSTREAMER_BAD_VER = $(GSTREAMER_VER)
 
 $(ARCHIVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
@@ -157,8 +158,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmod
 	$(REMOVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER)
 	$(UNTAR)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VER); \
-		$(PATCH)/gst-1.0-plugins-bad-configure-allow-to-disable-libssh2.patch; \
-		$(PATCH)/gst-1.0-plugins-bad-dvbapi5-fix-old-kernel.patch; \
+		$(PATCH)/gst-1.0-plugins-bad-fix-compile-error.patch; \
 		$(PATCH)/gst-1.0-plugins-bad-rtmp-fix-seeking-and-potential-segfault.patch; \
 		$(BUILDENV) \
 		autoreconf --force --install; \
@@ -220,6 +220,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmod
 			--disable-wildmidi \
 			--disable-wininet \
 			--disable-winscreencap \
+			--disable-x265 \
 			--disable-zbar \
 			--disable-examples \
 			--disable-debug \
@@ -250,7 +251,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmod
 #
 # gst_plugins_ugly
 #
-GSTREAMER_UGLY_VER = 1.6.1
+GSTREAMER_UGLY_VER = $(GSTREAMER_VER)
 
 $(ARCHIVE)/gst-plugins-ugly-$(GSTREAMER_UGLY_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-$(GSTREAMER_UGLY_VER).tar.xz
@@ -282,7 +283,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 #
 # gst_libav
 #
-GSTREAMER_LIBAV_VER = 1.6.1
+GSTREAMER_LIBAV_VER = $(GSTREAMER_VER)
 
 $(ARCHIVE)/gst-libav-$(GSTREAMER_LIBAV_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-libav/gst-libav-$(GSTREAMER_LIBAV_VER).tar.xz
@@ -460,10 +461,9 @@ $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_ba
 	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git" ] && \
 	(cd $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; git pull;); \
 	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git" ] || \
-	git clone git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; \
+	git clone -b experimental git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; \
 	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
 	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
-		$(PATCH)/gst-1.0-plugins-dvbmediasink-sh4.patch; \
 		aclocal --force -I m4; \
 		libtoolize --copy --force; \
 		autoconf --force; \
