@@ -1,6 +1,5 @@
-diff -Naur graphlcd-base-touchcol.git/glcddrivers/ax206dpf.c graphlcd-base-touchcol/glcddrivers/ax206dpf.c
---- graphlcd-base-touchcol.git/glcddrivers/ax206dpf.c	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/glcddrivers/ax206dpf.c	2014-02-03 15:47:08.199106347 +0100
+--- a/glcddrivers/ax206dpf.c
++++ b/glcddrivers/ax206dpf.c
 @@ -43,7 +43,7 @@
  #include <algorithm>
  #include <pthread.h>
@@ -449,9 +448,8 @@ diff -Naur graphlcd-base-touchcol.git/glcddrivers/ax206dpf.c graphlcd-base-touch
  	return usb_dev;
  }
  
-diff -Naur graphlcd-base-touchcol.git/glcddrivers/ax206dpf.h graphlcd-base-touchcol/glcddrivers/ax206dpf.h
---- graphlcd-base-touchcol.git/glcddrivers/ax206dpf.h	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/glcddrivers/ax206dpf.h	2014-02-03 15:43:49.951114684 +0100
+--- a/glcddrivers/ax206dpf.h
++++ b/glcddrivers/ax206dpf.h
 @@ -53,10 +53,12 @@
      bool isPortrait;
      bool rotate90;
@@ -499,9 +497,8 @@ diff -Naur graphlcd-base-touchcol.git/glcddrivers/ax206dpf.h graphlcd-base-touch
  int sgdev_open(const char *portname, int *fd);
  
  #ifdef __cplusplus
-diff -Naur graphlcd-base-touchcol.git/glcddrivers/Makefile graphlcd-base-touchcol/glcddrivers/Makefile
---- graphlcd-base-touchcol.git/glcddrivers/Makefile	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/glcddrivers/Makefile	2014-02-03 15:43:49.951114684 +0100
+--- a/glcddrivers/Makefile
++++ b/glcddrivers/Makefile
 @@ -26,18 +26,18 @@
  endif
  
@@ -525,10 +522,9 @@ diff -Naur graphlcd-base-touchcol.git/glcddrivers/Makefile graphlcd-base-touchco
 +        LIBS += $(shell pkg-config --libs libusb-1.0)
          DEFINES += -DHAVE_DRIVER_picoLCD_256x64
      endif
- endif  
-diff -Naur graphlcd-base-touchcol.git/glcddrivers/port.c graphlcd-base-touchcol/glcddrivers/port.c
---- graphlcd-base-touchcol.git/glcddrivers/port.c	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/glcddrivers/port.c	2014-02-03 15:43:49.947114684 +0100
+ endif
+--- a/glcddrivers/port.c
++++ b/glcddrivers/port.c
 @@ -18,12 +18,34 @@
  #include <unistd.h>
  #include <termios.h>
@@ -564,10 +560,9 @@ diff -Naur graphlcd-base-touchcol.git/glcddrivers/port.c graphlcd-base-touchcol/
  
  #include "port.h"
  
-diff -Naur graphlcd-base-touchcol.git/glcdgraphics/Makefile graphlcd-base-touchcol/glcdgraphics/Makefile
---- graphlcd-base-touchcol.git/glcdgraphics/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/glcdgraphics/Makefile	2014-02-03 15:43:49.947114684 +0100
-@@ -44,13 +44,15 @@
+--- a/glcdgraphics/Makefile
++++ b/glcdgraphics/Makefile
+@@ -41,13 +41,15 @@
  -include $(DEPFILE)
  
  ifdef HAVE_FREETYPE2
@@ -588,7 +583,7 @@ diff -Naur graphlcd-base-touchcol.git/glcdgraphics/Makefile graphlcd-base-touchc
 +	INCLUDES += -I$(DESTDIR)/usr/include/freetype
 +	LIBS += -L$(DESTDIR)/usr/lib -lfreetype
  	DEFINES += -DHAVE_FREETYPE2
- endif### Targets:
+ endif
  
 diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graphlcd.conf
 --- graphlcd-base-touchcol.git/graphlcd.conf	2014-02-03 15:33:45.183140000 +0100
@@ -1081,9 +1076,8 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
  #
  # UpsideDown
  #  Rotates the display output by 180 degrees. This might be useful, if
-diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.config
---- graphlcd-base-touchcol.git/Make.config	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/Make.config	2014-02-03 15:43:49.947114684 +0100
+--- a/Make.config
++++ b/Make.config
 @@ -3,12 +3,12 @@
  
  ### The C compiler and options:
@@ -1091,7 +1085,7 @@ diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.co
 -CC       = gcc
 -CFLAGS   = -O2
 +CC       = $(TARGET)gcc
-+CFLAGS   = -Os
++CFLAGS   = -pipe -Os
  
 -#CXX      = g++
 +CXX      = $(TARGET)g++
@@ -1099,9 +1093,9 @@ diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.co
 -CXXFLAGS = -g -O2 -Wall -Woverloaded-virtual
 +CXXFLAGS = -g -pipe -Os -Wall -Woverloaded-virtual
  #CXXFLAGS = -g -ggdb -O0 -Wall -Woverloaded-virtual
+ CXXFLAGS += -MMD -MP
  
- # no CXX given at all: force g++
-@@ -40,14 +40,15 @@
+@@ -39,14 +39,15 @@
  DESTDIR = /usr/local
  endif
  
@@ -1122,7 +1116,7 @@ diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.co
  
  DEFINES += -D_GNU_SOURCE
  # define HAVE_DEBUG when invoking "make" if you want to use debugging
-@@ -64,7 +65,7 @@
+@@ -63,7 +64,7 @@
  HAVE_FREETYPE2=1
  
  # comment this variable out if you don't want to use fontconfig font names
@@ -1131,7 +1125,7 @@ diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.co
  
  # comment this variable out if you want binaries to be stripped when installing (for production-level binaries or packages)
  #HAVE_STRIP = -s
-@@ -74,13 +75,13 @@
+@@ -73,13 +74,13 @@
  #HAVE_GRAPHICSMAGICK=1
  
  # comment this variable or set to 0 if you do not want to build the vncserver driver, even if requirements (libvncserver) are fullfilled on the system
@@ -1147,9 +1141,8 @@ diff -Naur graphlcd-base-touchcol.git/Make.config graphlcd-base-touchcol/Make.co
  
  # uncomment this variable if you want to enable the experimental support for picoLCD 256x64 
  #HAVE_DRIVER_picoLCD_256x64=1
-diff -Naur graphlcd-base-touchcol.git/Makefile graphlcd-base-touchcol/Makefile
---- graphlcd-base-touchcol.git/Makefile	2014-02-03 15:33:45.179140000 +0100
-+++ graphlcd-base-touchcol/Makefile	2014-02-03 15:43:49.947114684 +0100
+--- a/Makefile
++++ b/Makefile
 @@ -7,6 +7,7 @@
  ARCHIVE = $(PROJECT)-$(VERSION)
  PACKAGE = $(ARCHIVE)
@@ -1167,10 +1160,9 @@ diff -Naur graphlcd-base-touchcol.git/Makefile graphlcd-base-touchcol/Makefile
  
  uninstall:
  	@$(MAKE) -C glcdgraphics uninstall
-diff -Naur graphlcd-base-touchcol.git/tools/convpic/Makefile graphlcd-base-touchcol/tools/convpic/Makefile
---- graphlcd-base-touchcol.git/tools/convpic/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/convpic/Makefile	2014-02-03 15:43:49.947114684 +0100
-@@ -36,7 +36,7 @@
+--- a/tools/convpic/Makefile
++++ b/tools/convpic/Makefile
+@@ -33,7 +33,7 @@
  
  install: $(PRGNAME)
  	install -d $(BINDIR)
@@ -1179,22 +1171,20 @@ diff -Naur graphlcd-base-touchcol.git/tools/convpic/Makefile graphlcd-base-touch
  
  uninstall:
  	rm -f $(BINDIR)/$(PRGNAME)
-diff -Naur graphlcd-base-touchcol.git/tools/crtfont/Makefile graphlcd-base-touchcol/tools/crtfont/Makefile
---- graphlcd-base-touchcol.git/tools/crtfont/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/crtfont/Makefile	2014-02-03 15:43:49.951114684 +0100
+--- a/tools/crtfont/Makefile
++++ b/tools/crtfont/Makefile
+@@ -32,7 +32,7 @@
+ 
+ install: $(PRGNAME)
+ 	install -d $(BINDIR)
+-	install -m 755 -o root -g root $(HAVE_STRIP) $(PRGNAME) $(BINDIR)
++	install -m 755 $(PRGNAME) $(BINDIR)
+ 
+ uninstall:
+ 	rm -f $(BINDIR)/$(PRGNAME)
+--- a/tools/genfont/Makefile
++++ b/tools/genfont/Makefile
 @@ -35,7 +35,7 @@
- 
- install: $(PRGNAME)
- 	install -d $(BINDIR)
--	install -m 755 -o root -g root $(HAVE_STRIP) $(PRGNAME) $(BINDIR)
-+	install -m 755 $(PRGNAME) $(BINDIR)
- 
- uninstall:
- 	rm -f $(BINDIR)/$(PRGNAME)
-diff -Naur graphlcd-base-touchcol.git/tools/genfont/Makefile graphlcd-base-touchcol/tools/genfont/Makefile
---- graphlcd-base-touchcol.git/tools/genfont/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/genfont/Makefile	2014-02-03 15:43:49.951114684 +0100
-@@ -38,7 +38,7 @@
  
  install: $(PRGNAME)
  	install -d $(BINDIR)
@@ -1203,10 +1193,9 @@ diff -Naur graphlcd-base-touchcol.git/tools/genfont/Makefile graphlcd-base-touch
  	
  uninstall:
  	rm -f $(BINDIR)/$(PRGNAME)
-diff -Naur graphlcd-base-touchcol.git/tools/lcdtestpattern/Makefile graphlcd-base-touchcol/tools/lcdtestpattern/Makefile
---- graphlcd-base-touchcol.git/tools/lcdtestpattern/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/lcdtestpattern/Makefile	2014-02-03 15:43:49.951114684 +0100
-@@ -36,7 +36,7 @@
+--- a/tools/lcdtestpattern/Makefile
++++ b/tools/lcdtestpattern/Makefile
+@@ -33,7 +33,7 @@
  
  install: $(PRGNAME)
  	install -d $(BINDIR)
@@ -1215,10 +1204,9 @@ diff -Naur graphlcd-base-touchcol.git/tools/lcdtestpattern/Makefile graphlcd-bas
  
  uninstall:
  	rm -f $(BINDIR)/$(PRGNAME)
-diff -Naur graphlcd-base-touchcol.git/tools/showpic/Makefile graphlcd-base-touchcol/tools/showpic/Makefile
---- graphlcd-base-touchcol.git/tools/showpic/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/showpic/Makefile	2014-02-03 15:43:49.951114684 +0100
-@@ -36,7 +36,7 @@
+--- a/tools/showpic/Makefile
++++ b/tools/showpic/Makefile
+@@ -33,7 +33,7 @@
  
  install: $(PRGNAME)
  	install -d $(BINDIR)
@@ -1227,10 +1215,20 @@ diff -Naur graphlcd-base-touchcol.git/tools/showpic/Makefile graphlcd-base-touch
  
  uninstall:
  	rm -f $(BINDIR)/$(PRGNAME)
-diff -Naur graphlcd-base-touchcol.git/tools/showtext/Makefile graphlcd-base-touchcol/tools/showtext/Makefile
---- graphlcd-base-touchcol.git/tools/showtext/Makefile	2014-02-03 15:33:45.183140000 +0100
-+++ graphlcd-base-touchcol/tools/showtext/Makefile	2014-02-03 15:43:49.951114684 +0100
-@@ -36,7 +36,7 @@
+--- a/tools/showtext/Makefile
++++ b/tools/showtext/Makefile
+@@ -33,7 +33,7 @@
+ 
+ install: $(PRGNAME)
+ 	install -d $(BINDIR)
+-	install -m 755 -o root -g root $(HAVE_STRIP) $(PRGNAME) $(BINDIR)
++	install -m 755 $(PRGNAME) $(BINDIR)
+ 
+ uninstall:
+ 	rm -f $(BINDIR)/$(PRGNAME)
+--- a/tools/skintest/Makefile
++++ b/tools/skintest/Makefile
+@@ -33,7 +33,7 @@
  
  install: $(PRGNAME)
  	install -d $(BINDIR)
