@@ -1,6 +1,6 @@
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -56,6 +56,22 @@
+@@ -83,6 +83,22 @@
  dreambox:
  	$(MAKE) embedded TARGET=mipsel_dreambox SDK=/opt/mipsel-unknown-linux-gnu/bin
  
@@ -22,7 +22,7 @@
 +	install -m 755 xupnpd.init $(DESTDIR)/etc/init.d/xupnpd
  
  embedded:
- 	export PATH
+ 	PATH=$(PATH):$(UTILS) $(MAKE) -C $(LUA) CC=$(SDK)/$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
 --- a/src/plugins/xupnpd_coolstream.lua
 +++ b/src/plugins/xupnpd_coolstream.lua
 @@ -0,0 +1,177 @@
