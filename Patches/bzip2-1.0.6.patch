@@ -1,13 +1,16 @@
 --- a/Makefile-libbz2_so
 +++ b/Makefile-libbz2_so
-@@ -22,7 +22,6 @@
+@@ -22,9 +22,8 @@
  
  
  SHELL=/bin/sh
 -CC=gcc
  BIGFILES=-D_FILE_OFFSET_BITS=64
- CFLAGS=-fpic -fPIC -Wall -Winline -O2 -g $(BIGFILES)
+-CFLAGS=-fpic -fPIC -Wall -Winline -O2 -g $(BIGFILES)
++CFLAGS=-fpic -fPIC -Wall -pipe -Os -g0 $(BIGFILES)
  
+ OBJS= blocksort.o  \
+       huffman.o    \
 @@ -57,3 +56,17 @@
  	$(CC) $(CFLAGS) -c decompress.c
  bzlib.o: bzlib.c
