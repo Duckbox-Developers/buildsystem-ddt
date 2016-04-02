@@ -95,6 +95,7 @@ $(D)/opkg-host: $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
+		$(PATCH)/opkg-host-$(OPKG_VER).patch; \
 		autoreconf -v --install; \
 		./configure \
 			--prefix= \
@@ -110,7 +111,7 @@ $(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(D)/libcurl $(ARCHIVE)/opkg-$(OPKG_VER
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
-		$(PATCH)/opkg-0.2.0-dont-segfault.patch; \
+		$(PATCH)/opkg-$(OPKG_VER).patch; \
 		autoreconf -v --install; \
 		echo ac_cv_func_realloc_0_nonnull=yes >> config.cache; \
 		$(CONFIGURE) \
