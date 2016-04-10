@@ -37,10 +37,10 @@ $(D)/host_python: $(ARCHIVE)/Python-$(PYTHON_VER).tar.xz
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(UNTAR)/Python-$(PYTHON_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VER); \
-		$(PATCH)/python-2.7.9-xcompile.patch; \
-		$(PATCH)/python-2.7.9-revert_use_of_sysconfigdata.patch; \
-		$(PATCH)/python-2.7.9.patch; \
-		$(PATCH)/python-2.7.9-pgettext.patch; \
+		$(PATCH)/python-$(PYTHON_VER)-xcompile.patch; \
+		$(PATCH)/python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch; \
+		$(PATCH)/python-$(PYTHON_VER).patch; \
+		$(PATCH)/python-$(PYTHON_VER)-pgettext.patch; \
 		autoconf; \
 		CONFIG_SITE= \
 		OPT="$(HOST_CFLAGS)" \
@@ -71,10 +71,10 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(UNTAR)/Python-$(PYTHON_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VER); \
-		$(PATCH)/python-2.7.9-xcompile.patch; \
-		$(PATCH)/python-2.7.9-revert_use_of_sysconfigdata.patch; \
-		$(PATCH)/python-2.7.9.patch; \
-		$(PATCH)/python-2.7.9-pgettext.patch; \
+		$(PATCH)/python-$(PYTHON_VER)-xcompile.patch; \
+		$(PATCH)/python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch; \
+		$(PATCH)/python-$(PYTHON_VER).patch; \
+		$(PATCH)/python-$(PYTHON_VER)-pgettext.patch; \
 		CONFIG_SITE= \
 		$(BUILDENV) \
 		autoreconf --verbose --install --force Modules/_ctypes/libffi; \
@@ -215,7 +215,7 @@ $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/libfreetype $(D)/python $(
 	$(REMOVE)/Imaging-$(PYTHON_IMAGING_VER)
 	$(UNTAR)/Imaging-$(PYTHON_IMAGING_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/Imaging-$(PYTHON_IMAGING_VER); \
-		$(PATCH)/python-imaging-1.1.7.patch; \
+		$(PATCH)/python-imaging-$(PYTHON_IMAGING_VER).patch; \
 		sed -ie "s|"darwin"|"darwinNot"|g" "setup.py"; \
 		sed -ie "s|ZLIB_ROOT = None|ZLIB_ROOT = libinclude(\"${TARGETPREFIX}/usr\")|" "setup.py"; \
 		$(PYTHON_INSTALL)
@@ -234,7 +234,7 @@ $(D)/python_pycrypto: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIV
 	$(REMOVE)/pycrypto-$(PYTHON_PYCRYPTO_VER)
 	$(UNTAR)/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pycrypto-$(PYTHON_PYCRYPTO_VER); \
-		$(PATCH)/python-pycrypto-2.6.patch; \
+		$(PATCH)/python-pycrypto-$(PYTHON_PYCRYPTO_VER).patch; \
 		export ac_cv_func_malloc_0_nonnull=yes; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -383,7 +383,7 @@ $(D)/python_pyopenssl: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHI
 	$(REMOVE)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER)
 	$(UNTAR)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER); \
-		$(PATCH)/python-pyopenssl-0.13.1.patch; \
+		$(PATCH)/python-pyopenssl-$(PYTHON_PYOPENSSL_VER).patch; \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER)
 	touch $@

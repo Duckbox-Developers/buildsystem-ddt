@@ -98,7 +98,7 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/libffi-$(LIBFFI_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
-		$(PATCH)/libffi-3.2.1.patch; \
+		$(PATCH)/libffi-$(LIBFFI_VER).patch; \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -256,7 +256,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
 	$(UNTAR)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
 	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER); \
-		$(PATCH)/openssl-1.0.2.patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER).patch; \
 		$(BUILDENV) \
 		./Configure -DL_ENDIAN shared no-hw linux-generic32 \
 			--prefix=/usr \
@@ -283,7 +283,7 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2
 	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
 	$(UNTAR)/libbluray-$(LIBBLURAY_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libbluray-$(LIBBLURAY_VER); \
-		$(PATCH)/libbluray-0.5.0.patch; \
+		$(PATCH)/libbluray-$(LIBBLURAY_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -322,7 +322,7 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)/
 	$(UNTAR)/lua-$(LUA_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
-		$(PATCH)/lua-5.2.3-luaposix-31.patch; \
+		$(PATCH)/lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch; \
 		cp -r $(ARCHIVE)/luaposix.git .; \
 		cd luaposix.git/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
 		cd luaposix.git/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); cd ../..; \
@@ -364,7 +364,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/luaexpat-$(LUAEX
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
 	$(UNTAR)/luaexpat-$(LUAEXPAT_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VER); \
-		$(PATCH)/luaexpat-1.3.0.patch; \
+		$(PATCH)/luaexpat-$(LUAEXPAT_VER).patch; \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" PREFIX=$(TARGETPREFIX)/usr; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)/usr
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
@@ -415,7 +415,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/lu
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(UNTAR)/luasoap-$(LUASOAP_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
-		$(PATCH)/luasoap-3.0.patch; \
+		$(PATCH)/luasoap-$(LUASOAP_VER).patch; \
 		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); \
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	touch $@
@@ -463,7 +463,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
 	$(REMOVE)/zlib-$(ZLIB_VER)
 	$(UNTAR)/zlib-$(ZLIB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
-		$(PATCH)/zlib-1.2.8.patch; \
+		$(PATCH)/zlib-$(ZLIB_VER).patch; \
 		CC=$(TARGET)-gcc mandir=$(TARGETPREFIX)/.remove CFLAGS="$(TARGET_CFLAGS)" \
 		./configure \
 			--prefix=/usr \
@@ -489,7 +489,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz
 	$(REMOVE)/bzip2-$(BZIP2_VER)
 	$(UNTAR)/bzip2-$(BZIP2_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/bzip2-$(BZIP2_VER); \
-		$(PATCH)/bzip2-1.0.6.patch; \
+		$(PATCH)/bzip2-$(BZIP2_VER).patch; \
 		mv Makefile-libbz2_so Makefile; \
 		CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib \
 		$(MAKE) all; \
@@ -542,7 +542,7 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 	$(REMOVE)/freetype-$(FREETYPE_VER)
 	$(UNTAR)/freetype-$(FREETYPE_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VER); \
-		$(PATCH)/libfreetype-2.6.3.patch; \
+		$(PATCH)/libfreetype-$(FREETYPE_VER).patch; \
 		sed -i  -e "/AUX.*.gxvalid/s@^# @@" \
 			-e "/AUX.*.otvalid/s@^# @@" \
 			modules.cfg; \
@@ -585,7 +585,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 	$(REMOVE)/lirc-$(LIRC_VER)
 	$(UNTAR)/lirc-$(LIRC_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/lirc-$(LIRC_VER); \
-		$(PATCH)/lirc-0.9.0.patch; \
+		$(PATCH)/lirc-$(LIRC_VER).patch; \
 		$(CONFIGURE) \
 		ac_cv_path_LIBUSB_CONFIG= \
 		CFLAGS="$(TARGET_CFLAGS) $(LIRC_OPTS)" \
@@ -621,7 +621,7 @@ $(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
 	$(REMOVE)/jpeg-$(JPEG_VER)
 	$(UNTAR)/jpegsrc.v$(JPEG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VER); \
-		$(PATCH)/jpeg-9b.patch; \
+		$(PATCH)/jpeg-$(JPEG_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
@@ -772,7 +772,7 @@ $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).tar.bz2
 	$(UNTAR)/curl-$(CURL_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/curl-$(CURL_VER); \
-		$(PATCH)/libcurl-7.48.0.patch; \
+		$(PATCH)/libcurl-$(CURL_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -897,7 +897,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 	$(REMOVE)/libmad-$(MAD_VER)
 	$(UNTAR)/libmad-$(MAD_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libmad-$(MAD_VER); \
-		$(PATCH)/libmad-0.15.1b.patch; \
+		$(PATCH)/libmad-$(MAD_VER).patch; \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -926,7 +926,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VER).tar.
 	$(REMOVE)/libid3tag-$(ID3TAG_VER)
 	$(UNTAR)/libid3tag-$(ID3TAG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libid3tag-$(ID3TAG_VER); \
-		$(PATCH)/libid3tag-0.15.1b.patch; \
+		$(PATCH)/libid3tag-$(ID3TAG_VER).patch; \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -986,7 +986,7 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbisidec_$(VORBIS
 	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VER)
 	$(UNTAR)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
 	set -e; cd $(BUILD_TMP)/libvorbisidec-$(VORBISIDEC_VER); \
-		$(PATCH)/libvorbisidec-1.0.2+svn18153.patch; \
+		$(PATCH)/libvorbisidec-$(VORBISIDEC_VER).patch; \
 		ACLOCAL_FLAGS="-I . -I $(TARGETPREFIX)/usr/share/aclocal" \
 		$(BUILDENV) ./autogen.sh $(CONFIGURE_OPTS) --prefix=/usr; \
 		$(MAKE) all; \
@@ -1108,7 +1108,7 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_
 	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VER)
 	$(UNTAR)/libdvdnav-$(LIBDVDNAV_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VER); \
-		$(PATCH)/libdvdnav-4.2.1.patch; \
+		$(PATCH)/libdvdnav-$(LIBDVDNAV_VER).patch; \
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force; \
 		./autogen.sh \
@@ -1139,7 +1139,7 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 	$(REMOVE)/libdvdread-$(LIBDVDREAD_VER)
 	$(UNTAR)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libdvdread-$(LIBDVDREAD_VER); \
-		$(PATCH)/libdvdread-4.9.9.patch; \
+		$(PATCH)/libdvdread-$(LIBDVDREAD_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
@@ -1417,7 +1417,7 @@ $(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$
 	$(REMOVE)/libass-$(LIBASS_VER)
 	$(UNTAR)/libass-$(LIBASS_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libass-$(LIBASS_VER); \
-		$(PATCH)/libass-0.12.3.patch; \
+		$(PATCH)/libass-$(LIBASS_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-test \
@@ -1518,7 +1518,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VER).tar.xz
 	$(REMOVE)/flac-$(FLAC_VER)
 	$(UNTAR)/flac-$(FLAC_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
-		$(PATCH)/libflac-1.3.1.patch; \
+		$(PATCH)/libflac-$(FLAC_VER).patch; \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -1560,7 +1560,7 @@ $(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).t
 	$(REMOVE)/libxml2-$(LIBXML2_E2_VER).tar.gz
 	$(UNTAR)/libxml2-$(LIBXML2_E2_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_E2_VER); \
-		$(PATCH)/libxml2-2.9.0.patch; \
+		$(PATCH)/libxml2-$(LIBXML2_E2_VER).patch; \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -1814,7 +1814,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
 	$(REMOVE)/libusb-$(USB_VER)
 	$(UNTAR)/libusb-$(USB_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libusb-$(USB_VER); \
-		$(PATCH)/libusb-1.0.9.patch; \
+		$(PATCH)/libusb-$(USB_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
@@ -1865,7 +1865,7 @@ $(D)/libalsa: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 	$(REMOVE)/alsa-lib-$(ALSA_VER)
 	$(UNTAR)/alsa-lib-$(ALSA_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_VER); \
-		$(PATCH)/alsa-lib-1.1.0.patch; \
+		$(PATCH)/alsa-lib-$(ALSA_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-plugindir=/usr/lib/alsa \
@@ -1972,7 +1972,7 @@ $(D)/libdvbsi++: $(D)/bootstrap $(ARCHIVE)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
 	$(REMOVE)/libdvbsi++-$(LIBDVBSI_VER)
 	$(UNTAR)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libdvbsi++-$(LIBDVBSI_VER); \
-		$(PATCH)/libdvbsi++-0.3.7.patch; \
+		$(PATCH)/libdvbsi++-$(LIBDVBSI_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 		; \
@@ -2037,7 +2037,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 	$(REMOVE)/minidlna-$(MINIDLNA_VER)
 	$(UNTAR)/minidlna-$(MINIDLNA_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
-		$(PATCH)/minidlna-1.1.5.patch; \
+		$(PATCH)/minidlna-$(MINIDLNA_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2271,7 +2271,7 @@ $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz
 	$(REMOVE)/nettle-$(NETTLE_VER)
 	$(UNTAR)/nettle-$(NETTLE_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/nettle-$(NETTLE_VER); \
-		$(PATCH)/nettle-3.1.patch; \
+		$(PATCH)/nettle-$(NETTLE_VER).patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-documentation \
