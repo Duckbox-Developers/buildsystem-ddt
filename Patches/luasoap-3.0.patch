@@ -1,6 +1,5 @@
-diff -ur a/src/client.lua b/src/client.lua
---- a/src/client.lua	2012-04-14 02:35:31.000000000 +0200
-+++ b/src/client.lua	2013-05-12 11:21:43.212284984 +0200
+--- a/src/client.lua
++++ b/src/client.lua
 @@ -10,7 +10,7 @@
  local concat = require("table").concat
  
@@ -10,9 +9,8 @@ diff -ur a/src/client.lua b/src/client.lua
  
  
  local _M = {
-diff -ur a/src/server.lua b/src/server.lua
---- a/src/server.lua	2012-04-14 02:35:31.000000000 +0200
-+++ a/src/server.lua	2013-05-12 16:12:14.185238631 +0200
+--- a/src/server.lua
++++ a/src/server.lua
 @@ -8,7 +8,7 @@
  local table = require"table"
  local string = require"string"
@@ -22,9 +20,8 @@ diff -ur a/src/server.lua b/src/server.lua
  
  
  local encoding = "iso-8859-1"
-diff -ur a/src/soap.lua b/src/soap.lua
---- a/src/soap.lua	2012-04-14 02:35:31.000000000 +0200
-+++ b/src/soap.lua	2013-05-17 07:26:38.551190138 +0200
+--- a/src/soap.lua
++++ b/src/soap.lua
 @@ -212,7 +212,7 @@
  				return v
  			end

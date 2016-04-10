@@ -1,5 +1,5 @@
---- libid3tag-0.15.1b.orig/Makefile.am	2009-07-29 09:29:20.000000000 +0100
-+++ libid3tag-0.15.1b/Makefile.am	2009-07-29 09:29:47.000000000 +0100
+--- libid3tag-0.15.1b/Makefile.am
++++ libid3tag-0.15.1b/Makefile.am
 @@ -27,6 +27,9 @@
  lib_LTLIBRARIES =	libid3tag.la
  include_HEADERS =	id3tag.h
@@ -10,8 +10,8 @@
  ## From the libtool documentation on library versioning:
  ##
  ## CURRENT
---- libid3tag-0.15.1b.orig/configure.ac	2009-07-29 09:27:15.000000000 +0100
-+++ libid3tag-0.15.1b/configure.ac	2009-07-29 09:27:45.000000000 +0100
+--- libid3tag-0.15.1b/configure.ac
++++ libid3tag-0.15.1b/configure.ac
 @@ -201,5 +201,5 @@
  dnl AC_SUBST(LTLIBOBJS)
  
@@ -19,8 +19,8 @@
 -	libid3tag.list])
 +	libid3tag.list id3tag.pc])
  AC_OUTPUT
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ libid3tag-0.15.1b/id3tag.pc.in	2009-07-29 09:29:10.000000000 +0100
+--- /dev/null
++++ libid3tag-0.15.1b/id3tag.pc.in
 @@ -0,0 +1,11 @@
 +prefix=@prefix@
 +exec_prefix=@exec_prefix@

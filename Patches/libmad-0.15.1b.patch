@@ -1,10 +1,14 @@
---- libmad-0.15.1b.orig/configure.ac	2008-07-18 15:45:30.000000000 +0100
-+++ libmad-0.15.1b/configure.ac	2008-07-18 15:45:37.000000000 +0100
-@@ -28,7 +28,7 @@
+--- libmad-0.15.1b/configure.ac
++++ libmad-0.15.1b/configure.ac
+@@ -26,9 +26,9 @@
  
- AM_INIT_AUTOMAKE
+ AC_CONFIG_SRCDIR([decoder.h])
  
+-AM_INIT_AUTOMAKE
+-
 -AM_CONFIG_HEADER([config.h])
++AM_INIT_AUTOMAKE([foreign])
++
 +AC_CONFIG_HEADERS([config.h])
  
  dnl System type.
@@ -24,9 +28,8 @@
 -	libmad.list])
 +	libmad.list mad.pc])
  AC_OUTPUT
-diff -Naur libmad-0.15.1b.old/mad.pc.in libmad-0.15.1b/mad.pc.in
---- libmad-0.15.1b.old/mad.pc.in	1970-01-01 01:00:00.000000000 +0100
-+++ libmad-0.15.1b/mad.pc.in	2004-08-07 02:04:59.617692872 +0200
+--- libmad-0.15.1b/mad.pc.in
++++ libmad-0.15.1b/mad.pc.in
 @@ -0,0 +1,14 @@
 +# libmad pkg-config source file
 +
@@ -42,9 +45,8 @@ diff -Naur libmad-0.15.1b.old/mad.pc.in libmad-0.15.1b/mad.pc.in
 +Conflicts:
 +Libs: -L${libdir} -lmad -lm
 +Cflags: -I${includedir}
-diff -Naur libmad-0.15.1b.old/Makefile.am libmad-0.15.1b/Makefile.am
---- libmad-0.15.1b.old/Makefile.am	2004-02-17 03:02:03.000000000 +0100
-+++ libmad-0.15.1b/Makefile.am	2004-08-07 02:03:19.859858368 +0200
+--- libmad-0.15.1b/Makefile.am
++++ libmad-0.15.1b/Makefile.am
 @@ -24,6 +24,9 @@
  SUBDIRS =		
  DIST_SUBDIRS =		msvc++
