@@ -583,6 +583,25 @@ $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/hdparm-$(HDPARM_VER).tar.gz
 	touch $@
 
 #
+# hd-idle
+#
+HDIDLE_VER = 1.05
+
+$(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz:
+	$(WGET) http://downloads.sourceforge.net/project/hd-idle/hd-idle-$(HDIDLE_VER).tgz
+
+$(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
+	$(REMOVE)/hd-idle
+	$(UNTAR)/hd-idle-$(HDIDLE_VER).tgz
+	set -e; cd $(BUILD_TMP)/hd-idle; \
+		sed -i -e 's/-g root -o root//g' Makefile; \
+		$(BUILDENV) \
+		$(MAKE) CC=$(TARGET)-gcc; \
+		$(MAKE) install TARGET_DIR=$(TARGETPREFIX) install
+	$(REMOVE)/hd-idle
+	touch $@
+
+#
 # parted
 #
 PARTED_VER = 3.2
