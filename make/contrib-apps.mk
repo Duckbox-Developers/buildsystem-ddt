@@ -602,6 +602,25 @@ $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
 	touch $@
 
 #
+# fbshot
+#
+FBSHOT-VER = 0.3
+
+$(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz:
+	$(WGET) http://www.sfires.net/stuff/fbshot/fbshot-$(FBSHOT-VER).tar.gz
+
+$(D)/fbshot: $(TARGETPREFIX)/bin/fbshot
+	touch $@
+
+$(TARGETPREFIX)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz
+	$(UNTAR)/fbshot-$(FBSHOT-VER).tar.gz
+	set -e; cd $(BUILD_TMP)/fbshot-$(FBSHOT-VER); \
+		$(PATCH)/fbshot-$(FBSHOT-VER).patch; \
+		$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS) fbshot.c -lpng -lz -o $@
+	$(REMOVE)/fbshot-$(FBSHOT-VER)
+	touch $@
+
+#
 # parted
 #
 PARTED_VER = 3.2
