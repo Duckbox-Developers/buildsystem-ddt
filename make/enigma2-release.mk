@@ -96,7 +96,6 @@ release_enigma2_common_ipbox:
 	rm -f $(RELEASE_DIR)/lib/modules/simu_button.ko
 	rm -f $(RELEASE_DIR)/lib/modules/stmvbi.ko
 	rm -f $(RELEASE_DIR)/lib/modules/stmvout.ko
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/etc/network/interfaces
 	echo "config.usage.hdd_standby=0" >> $(RELEASE_DIR)/etc/enigma2/settings
 
@@ -161,7 +160,6 @@ release_enigma2_ufs912:
 	cp $(SKEL_ROOT)/boot/video_7111.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7111.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ufs912.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -178,7 +176,6 @@ release_enigma2_ufs913:
 	cp $(SKEL_ROOT)/boot/audio_7105.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ufs912.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -198,7 +195,6 @@ release_enigma2_ufs922:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx21143.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ufs910.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -215,7 +211,6 @@ release_enigma2_ufc960:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx21143.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ufs910.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -232,7 +227,6 @@ release_enigma2_spark:
 	cp $(SKEL_ROOT)/boot/video_7111.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7111.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -dp $(SKEL_ROOT)/release/lircd_spark.conf $(RELEASE_DIR)/etc/lircd.conf
@@ -253,7 +247,6 @@ release_enigma2_spark7162:
 	cp $(SKEL_ROOT)/boot/video_7105.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7105.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	rm -f $(RELEASE_DIR)/bin/gotosleep
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	rm -f $(RELEASE_DIR)/bin/eeprom
 	cp -dp $(SKEL_ROOT)/release/lircd_spark7162.conf $(RELEASE_DIR)/etc/lircd.conf
