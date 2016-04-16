@@ -1205,7 +1205,7 @@ $(D)/xupnpd: $(D)/bootstrap
 	[ -d "$(ARCHIVE)/xupnpd.git" ] || \
 	git clone git://github.com/clark15b/xupnpd.git $(ARCHIVE)/xupnpd.git; \
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd; \
-	cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
+	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) TARGET=$(TARGET) sh4; \
