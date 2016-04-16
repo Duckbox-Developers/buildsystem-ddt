@@ -1223,7 +1223,7 @@ $(D)/dvbsnoop: $(D)/bootstrap
 	[ -d "$(ARCHIVE)/dvbsnoop.git" ] || \
 	git clone https://github.com/cotdp/dvbsnoop.git $(ARCHIVE)/dvbsnoop.git; \
 	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop;
-	cd $(BUILD_TMP)/dvbsnoop; \
+	set -e; cd $(BUILD_TMP)/dvbsnoop; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
