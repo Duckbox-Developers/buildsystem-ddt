@@ -1,3 +1,29 @@
+--- a/lib/blkid/blkid.pc.in
++++ b/lib/blkid/blkid.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: blkid
+ Description: Block device id library
+--- a/lib/uuid/uuid.pc.in
++++ b/lib/uuid/uuid.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: uuid
+ Description: Universally unique id library
 --- a/lib/Makefile.elf-lib
 +++ b/lib/Makefile.elf-lib
 @@ -50,8 +50,6 @@ install-shlibs install:: $(ELF_LIB) installdirs-elf-lib $(DEP_INSTALL_SYMLINK)
