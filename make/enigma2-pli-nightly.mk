@@ -60,6 +60,7 @@ $(D)/enigma2-pli-nightly.do_prepare: | $(ENIGMA2_DEPS)
 	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION=""; \
 	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="cd5505a4b8aba823334032bb6fd7901557575455"; \
 	echo "Revision        : "$$REVISION; \
+	echo "Selection       : "$$REPLY; \
 	echo ""; \
 	if [ "$$REPLY" != "1" ]; then \
 		REPO="https://github.com/OpenPLi/enigma2.git"; \
