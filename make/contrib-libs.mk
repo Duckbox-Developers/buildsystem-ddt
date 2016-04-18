@@ -1195,10 +1195,9 @@ endif
 
 ifeq ($(IMAGE), neutrino)
 FFMPEG_EXTRA = --disable-iconv
-LIBXML2 = $(D)/libroxml
 endif
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/libass $(LIBXML2) $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass (D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/ffmpeg-$(FFMPEG_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
