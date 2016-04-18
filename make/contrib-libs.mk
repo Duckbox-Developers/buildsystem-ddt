@@ -1709,6 +1709,8 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz
 		-DCMAKE_BUILD_TYPE=Linux \
 		-DCMAKE_C_COMPILER=$(TARGET)-gcc \
 		-DCMAKE_CXX_COMPILER=$(TARGET)-g++ \
+		-DCMAKE_C_FLAGS="-pipe -Os" \
+		-DCMAKE_CXX_FLAGS="-pipe -Os" \
 		scripts; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
