@@ -10,17 +10,18 @@ $(TARGETPREFIX)/var/etc/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git describe`" >> $@
 
-NEUTRINO_DEPS  = $(D)/bootstrap $(D)/lirc $(D)/libcurl $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype $(D)/openvpn
-NEUTRINO_DEPS += $(D)/ffmpeg $(D)/libdvbsi++ $(D)/libsigc++ $(D)/libopenthreads $(D)/libusb $(D)/libalsa
+NEUTRINO_DEPS  = $(D)/bootstrap $(D)/lirc $(D)/libcurl $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype
+NEUTRINO_DEPS += $(D)/libalsa $(D)/ffmpeg $(D)/libdvbsi++ $(D)/libsigc++ $(D)/libopenthreads $(D)/libusb
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/lua-feedparser $(D)/luasoap $(D)/luajson
+NEUTRINO_DEPS += $(D)/pugixml $(D)/openvpn
 
 ifeq ($(WLANDRIVER), wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/libvorbisidec
-N_CFLAGS       = -Wall -W -Wshadow
-N_CFLAGS      += -g0 -pipe -Os -fno-strict-aliasing -DCPU_FREQ
+N_CFLAGS       = -Wall -W -Wshadow -g -pipe -Os -fno-strict-aliasing
+N_CFLAGS      += -DCPU_FREQ
 
 N_CPPFLAGS     = -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(TARGETPREFIX)/usr/include
@@ -37,6 +38,7 @@ N_CONFIG_OPTS += --enable-lua
 N_CONFIG_OPTS += --enable-giflib
 N_CONFIG_OPTS += --enable-ffmpegdec
 #N_CONFIG_OPTS += --enable-pip
+N_CONFIG_OPTS += --enable-pugixml
 
 ifeq ($(EXTERNAL_LCD), externallcd)
 N_CONFIG_OPTS += --enable-graphlcd
