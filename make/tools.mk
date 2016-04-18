@@ -14,7 +14,7 @@ $(APPS_DIR)/tools/config.status: $(D)/bootstrap $(D)/driver $(D)/bzip2 $(D)/libp
 	$(if $(EPLAYER3), --enable-eplayer3)
 
 $(D)/tools: $(APPS_DIR)/tools/config.status
-	$(MAKE) -C $(APPS_DIR)/tools all prefix=$(TARGETPREFIX) \
+	$(MAKE) -C $(APPS_DIR)/tools all prefix=$(TARGETPREFIX) DRIVER_TOPDIR=$(DRIVER_DIR) \
 	CPPFLAGS="\
 	-I$(TARGETPREFIX)/usr/include \
 	-I$(DRIVER_DIR)/bpamem \
@@ -23,6 +23,6 @@ $(D)/tools: $(APPS_DIR)/tools/config.status
 	-I$(DRIVER_DIR)/include/player2 \
 	$(if $(PLAYER191), -DPLAYER191) \
 	" ; \
-	$(MAKE) -C $(APPS_DIR)/tools install prefix=$(TARGETPREFIX)
+	$(MAKE) -C $(APPS_DIR)/tools install prefix=$(TARGETPREFIX) DRIVER_TOPDIR=$(DRIVER_DIR)
 	touch $@
 
