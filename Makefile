@@ -82,13 +82,13 @@ include make/tools.mk
 include make/root-etc.mk
 include make/python.mk
 include make/gstreamer.mk
+include make/enigma2.mk
 include make/enigma2-plugins.mk
-include make/enigma2-pli-nightly.mk
+include make/enigma2-release.mk
 include make/neutrino.mk
 include make/neutrino-plugins.mk
-include make/cleantargets.mk
-include make/enigma2-release.mk
 include make/neutrino-release.mk
+include make/cleantargets.mk
 include make/patches.mk
 
 all:

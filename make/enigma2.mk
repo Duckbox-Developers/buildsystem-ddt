@@ -1,5 +1,5 @@
 #
-# enigma2-pli-nightly
+# enigma2
 #
 ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(D)/libcurl $(D)/libid3tag $(D)/libmad $(D)/libpng $(D)/libjpeg $(D)/libgif
 ENIGMA2_DEPS += $(D)/libfreetype $(D)/libfribidi $(D)/libsigc++_e2 $(D)/libexpat $(D)/libdvbsi++ $(D)/sdparm $(D)/minidlna $(D)/ethtool
@@ -10,6 +10,7 @@ E_CPPFLAGS    = -I$(DRIVER_DIR)/include
 E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
 E_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
+E_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 ifeq ($(EXTERNAL_LCD), externallcd)
 ENIGMA2_DEPS  += $(D)/graphlcd
@@ -17,7 +18,7 @@ E_CONFIG_OPTS += --with-graphlcd
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
-E_CONFIG_OPTS += --enable-mediafwgstreamer
+E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 endif
 
 ifeq ($(MEDIAFW), eplayer3)
@@ -26,20 +27,24 @@ endif
 
 ifeq ($(MEDIAFW), gst-eplayer3)
 ENIGMA2_DEPS  += $(D)/gst_plugins_dvbmediasink
-E_CONFIG_OPTS += --enable-libeplayer3 --enable-mediafwgstreamer
+E_CONFIG_OPTS += --with-gstversion=1.0 --enable-libeplayer3 --enable-mediafwgstreamer
 endif
 
 #
-# yaud-enigma2-pli-nightly
+# yaud-enigma2
 #
-yaud-enigma2-pli-nightly: yaud-none $(D)/host_python $(D)/lirc \
-		$(D)/enigma2-pli-nightly $(D)/enigma2-plugins $(D)/release_enigma2
+yaud-enigma2: yaud-none $(D)/host_python $(D)/lirc \
+		$(D)/enigma2 $(D)/enigma2-plugins $(D)/release_enigma2
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #
-# enigma2-pli-nightly
+# enigma2
 #
-$(D)/enigma2-pli-nightly.do_prepare: | $(ENIGMA2_DEPS)
+REPO_REPLY_1="https://github.com/MaxWiesel/enigma2-openpli-fulan.git"
+
+$(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
+	rm -rf $(SOURCE_DIR)/enigma2-nightly; \
+	rm -rf $(SOURCE_DIR)/enigma2-nightly.org; \
 	REVISION=""; \
 	HEAD="master"; \
 	DIFF="0"; \
@@ -56,37 +61,36 @@ $(D)/enigma2-pli-nightly.do_prepare: | $(ENIGMA2_DEPS)
 	echo "Media Framework : $(MEDIAFW)"; \
 	echo "External LCD    : $(EXTERNALLCD)"; \
 	read -p "Select          : "; \
-	[ "$$REPLY" == "0" ] && DIFF="0"; \
-	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION=""; \
-	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="cd5505a4b8aba823334032bb6fd7901557575455"; \
+	[ "$$REPLY" == "0" ] && DIFF="0" && REVISION="" && REPO="https://github.com/OpenPLi/enigma2.git"; \
+	[ "$$REPLY" == "1" ] && DIFF="1" && REVISION="" && REPO=$(REPO_REPLY_1); \
+	[ "$$REPLY" == "2" ] && DIFF="2" && REVISION="cd5505a4b8aba823334032bb6fd7901557575455" && REPO="https://github.com/OpenPLi/enigma2.git"; \
 	echo "Revision        : "$$REVISION; \
 	echo "Selection       : "$$REPLY; \
 	echo ""; \
 	if [ "$$REPLY" != "1" ]; then \
-		REPO="https://github.com/OpenPLi/enigma2.git"; \
-		rm -rf $(SOURCE_DIR)/enigma2-nightly; \
-		rm -rf $(SOURCE_DIR)/enigma2-nightly.org; \
 		[ -d "$(ARCHIVE)/enigma2-pli-nightly.git" ] && \
 		(cd $(ARCHIVE)/enigma2-pli-nightly.git; git pull; git checkout HEAD; cd "$(BUILD_TMP)";); \
 		[ -d "$(ARCHIVE)/enigma2-pli-nightly.git" ] || \
 		git clone -b $$HEAD $$REPO $(ARCHIVE)/enigma2-pli-nightly.git; \
-		cp -ra $(ARCHIVE)/enigma2-pli-nightly.git $(SOURCE_DIR)/enigma2-nightly; \
-		[ "$$REVISION" == "" ] || (cd $(SOURCE_DIR)/enigma2-nightly; git checkout "$$REVISION"; cd "$(BUILD_TMP)";); \
-		cp -ra $(SOURCE_DIR)/enigma2-nightly $(SOURCE_DIR)/enigma2-nightly.org; \
-		set -e; cd $(SOURCE_DIR)/enigma2-nightly && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
+		cp -ra $(ARCHIVE)/enigma2-pli-nightly.git $(SOURCE_DIR)/enigma2; \
+		[ "$$REVISION" == "" ] || (cd $(SOURCE_DIR)/enigma2; git checkout "$$REVISION"; cd "$(BUILD_TMP)";); \
+		cp -ra $(SOURCE_DIR)/enigma2 $(SOURCE_DIR)/enigma2.org; \
+		set -e; cd $(SOURCE_DIR)/enigma2 && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
+	else \
+		[ -d "$(SOURCE_DIR)/enigma2" ] ; \
+		git clone -b $$HEAD $$REPO $(SOURCE_DIR)/enigma2; \
 	fi
 	touch $@
 
-$(SOURCE_DIR)/enigma2-pli-nightly/config.status:
-	cd $(SOURCE_DIR)/enigma2-nightly && \
-		./autogen.sh && \
-		export PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config && \
-		export PKG_CONFIG_PATH=$(TARGETPREFIX)/usr/lib/pkgconfig && \
-		sed -e 's|#!/usr/bin/python|#!$(HOSTPREFIX)/bin/python|' -i po/xml2po.py && \
+$(SOURCE_DIR)/enigma2/config.status:
+	cd $(SOURCE_DIR)/enigma2; \
+		./autogen.sh; \
+		sed -e 's|#!/usr/bin/python|#!$(HOSTPREFIX)/bin/python|' -i po/xml2po.py; \
 		$(BUILDENV) \
 		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
+			$(E_CONFIG_OPTS) \
 			--with-libsdl=no \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
@@ -94,18 +98,18 @@ $(SOURCE_DIR)/enigma2-pli-nightly/config.status:
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=none \
-			--with-gstversion=1.0 \
+			PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
+			PKG_CONFIG_PATH=$(TARGETPREFIX)/usr/lib/pkgconfig \
 			PY_PATH=$(TARGETPREFIX)/usr \
-			$(PLATFORM_CPPFLAGS) \
-			$(E_CONFIG_OPTS)
+			$(PLATFORM_CPPFLAGS)
 
-$(D)/enigma2-pli-nightly.do_compile: $(SOURCE_DIR)/enigma2-pli-nightly/config.status
-	cd $(SOURCE_DIR)/enigma2-nightly && \
+$(D)/enigma2.do_compile: $(SOURCE_DIR)/enigma2/config.status
+	cd $(SOURCE_DIR)/enigma2; \
 		$(MAKE) all
 	touch $@
 
-$(D)/enigma2-pli-nightly: $(D)/enigma2-pli-nightly.do_prepare $(D)/enigma2-pli-nightly.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/enigma2-nightly install DESTDIR=$(TARGETPREFIX)
+$(D)/enigma2: $(D)/enigma2.do_prepare $(D)/enigma2.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(TARGETPREFIX)
 	if [ -e $(TARGETPREFIX)/usr/bin/enigma2 ]; then \
 		$(TARGET)-strip $(TARGETPREFIX)/usr/bin/enigma2; \
 	fi
@@ -114,15 +118,15 @@ $(D)/enigma2-pli-nightly: $(D)/enigma2-pli-nightly.do_prepare $(D)/enigma2-pli-n
 	fi
 	touch $@
 
-enigma2-pli-nightly-clean:
-	rm -f $(D)/enigma2-pli-nightly
-	rm -f $(D)/enigma2-pli-nightly.do_compile
-	cd $(SOURCE_DIR)/enigma2-nightly && \
+enigma2-clean:
+	rm -f $(D)/enigma2
+	rm -f $(D)/enigma2.do_compile
+	cd $(SOURCE_DIR)/enigma2; \
 		$(MAKE) distclean
 
-enigma2-pli-nightly-distclean:
-	rm -f $(D)/enigma2-pli-nightly
-	rm -f $(D)/enigma2-pli-nightly.do_compile
-	rm -f $(D)/enigma2-pli-nightly.do_prepare
-	rm -rf $(SOURCE_DIR)/enigma2-nightly
-	rm -rf $(SOURCE_DIR)/enigma2-nightly.org
+enigma2-distclean:
+	rm -f $(D)/enigma2
+	rm -f $(D)/enigma2.do_compile
+	rm -f $(D)/enigma2.do_prepare
+	rm -rf $(SOURCE_DIR)/enigma2
+	rm -rf $(SOURCE_DIR)/enigma2.org
