@@ -43,8 +43,8 @@ yaud-enigma2: yaud-none $(D)/host_python $(D)/lirc \
 REPO_REPLY_1="https://github.com/MaxWiesel/enigma2-openpli-fulan.git"
 
 $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
-	rm -rf $(SOURCE_DIR)/enigma2-nightly; \
-	rm -rf $(SOURCE_DIR)/enigma2-nightly.org; \
+	rm -rf $(SOURCE_DIR)/enigma2; \
+	rm -rf $(SOURCE_DIR)/enigma2.org; \
 	REVISION=""; \
 	HEAD="master"; \
 	DIFF="0"; \
