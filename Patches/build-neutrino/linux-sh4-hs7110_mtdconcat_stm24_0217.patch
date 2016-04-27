@@ -5,36 +5,36 @@
  #endif
  
 +static struct mtd_partition partition_info[]=
-+{
++{ // This is the situation after flashing, as seen by the bootloader at boot
 +	{
 +		.name   = "Boot_firmware", //mtd0
 +		.size   = 0x00060000,      //384k
-+		.offset = 0x00000000,
++		.offset = 0x00000000
 +	},
 +	{
 +		.name   = "kernel",        //mtd1
-+		.size   = 0x00320000,      //3,125M
-+		.offset = 0x00060000,      //384k (0.375M)
++		.size   = 0x00220000,      //2,125M
++		.offset = 0x00060000       //384k (0.375M)
 +	},
 +	{
 +		.name   = "ROOT_FS",       //mtd2
-+		.size   = 0x00020000,      //128k (dummy)
-+		.offset = 0x00380000,      //3.5M
++		.size   = 0x00020000,      //128k (dummy, the size varies depending on the kernel size)
++		.offset = 0x00280000,      //2.5M Note: this address is in reality dependent on the kernel size)
 +	},
 +	{
 +		.name   = "Device",        //mtd3
 +		.size   = 0x00020000,      //128k (dummy)
-+		.offset = 0x003A0000,      //3.625M
++		.offset = 0x002A0000,      //2.625M Note: always flashed at this address
 +	},
 +	{
 +		.name   = "APP",           //mtd4
 +		.size   = 0x00020000,      //128k (dummy)
-+		.offset = 0x003C0000,      //3.75M
++		.offset = 0x002C0000,      //2.75M Note: always flashed at this address, together with Real_ROOT
 +	},
 +	{
 +		.name   = "Real_ROOT",     //mtd5
-+		.size   = 0x01700000,      // 23Mbyte, 128k hole at 0x1AE0000 is used for force flash
-+		.offset = 0x003E0000,      //3.875M
++		.size   = 0x01800000,      // 24Mbyte, 128k hole at 0x1AE0000 is used for force flash
++		.offset = 0x002E0000,      //2.875M
 +	},
 +	{
 +		.name   = "Config",        //mtd6
@@ -52,33 +52,33 @@
 +{
 +	{
 +		.name   = "Boot_firmware", //mtd0
-+		.size   = 0x00060000,	    //384k (0.375M)
++		.size   = 0x00060000,      //384k (0.375M)
 +		.offset = 0x00000000,
 +	},
 +	{
 +		.name   = "Kernel",        //mtd1
-+		.size   = 0x00320000,      //3,125M
++		.size   = 0x00220000,      //2,125M
 +		.offset = 0x00060000,      //0.375M
 +	},
 +	{
 +		.name   = "Fake_ROOT",     //mdt2
 +		.size   = 0x0001FFFE,      //128k (dummy) minus 1 word to force read only mount
-+		.offset = 0x00380000,      //  4M - 128k force flash hole - 128k Fake_APP - 128k Fake_DEV - 128k own size
++		.offset = 0x00280000,      //  3M - 128k force flash hole - 128k Fake_APP - 128k Fake_DEV - 128k own size
 +	},
 +	{
 +		.name   = "Fake_DEV",      //mtd3
 +		.size   = 0x0001FFFE,      //128k (dummy) minus 1 word to force read only mount
-+		.offset = 0x003A0000,      //  4M - 128k force flash hole - 128k Fake_APP - 128k own size
++		.offset = 0x002A0000,      //  3M - 128k force flash hole - 128k Fake_APP - 128k own size
 +	},
 +	{
 +		.name   = "Fake_APP",      //mtd4
 +		.size   = 0x0001FFFE,      //128k (dummy) minus 1 word to force read only mount
-+		.offset = 0x003C0000,      //  4M - 128k force flash hole - 128k own size
++		.offset = 0x002C0000,      //  3M - 128k force flash hole - 128k own size
 +	},
 +	{
 +		.name   = "Real_ROOT",     //mtd5
-+		.size   = 0x01C00000,      // 28M
-+		.offset = 0x003E0000,      //  4M - 128k force flash hole
++		.size   = 0x01D00000,      // 29M
++		.offset = 0x002E0000,      //  3M - 128k force flash hole
 +	}
 +};
 +

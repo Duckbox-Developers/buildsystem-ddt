@@ -1,3 +1,36 @@
+--- linux-sh4-2.6.32.61_stm24_0212.org/arch/sh/kernel/setup.c	2014-03-05 10:10:33.760522906 +0100
++++ linux-sh4-2.6.32.61_stm24_0212/arch/sh/kernel/setup.c	2014-03-05 08:53:35.000000000 +0100
+@@ -389,6 +389,30 @@
+ #endif
+ #endif
+ 
++	{
++		/* spider: remove bigphysarea allocation from command line */
++		int i;
++		int command_line_len = strlen(command_line);
++
++		for(i = 0; i < (command_line_len-11); i++)
++		{
++			if(!strncmp(command_line + i + 1, "bigphysarea", 11))
++			{
++				// search for next pos
++				int k;
++				int pos=command_line_len;
++				for(k=i+1; k<command_line_len; k++)
++					if(command_line[k]==' ') {
++						pos=k;
++						break;
++					}
++				memmove(command_line+i, command_line+pos, command_line_len-pos);
++				memset(&command_line[command_line_len-(pos-i)], '\0', pos-i);
++				break;
++			}
++		}
++	}
++
+ 	/* Save unparsed command line copy for /proc/cmdline */
+ 	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
+ 	*cmdline_p = command_line;
 --- linux-sh4-2.6.32.61_stm24_0212.org/arch/sh/boards/mach-hdk7105/setup.c	2014-03-05 08:32:54.000000000 +0100
 +++ linux-sh4-2.6.32.61_stm24_0212/arch/sh/boards/mach-hdk7105/setup.c	2014-03-05 08:53:35.000000000 +0100
 @@ -29,10 +29,44 @@
@@ -312,39 +345,6 @@
  
  	stx7105_configure_nand(&(struct stm_nand_config) {
  			.driver = stm_nand_flex,
---- linux-sh4-2.6.32.61_stm24_0212.org/arch/sh/kernel/setup.c	2014-03-05 10:10:33.760522906 +0100
-+++ linux-sh4-2.6.32.61_stm24_0212/arch/sh/kernel/setup.c	2014-03-05 08:53:35.000000000 +0100
-@@ -389,6 +389,30 @@
- #endif
- #endif
- 
-+	{
-+		/* spider: remove bigphysarea allocation from command line */
-+		int i;
-+		int command_line_len = strlen(command_line);
-+
-+		for(i = 0; i < (command_line_len-11); i++)
-+		{
-+			if(!strncmp(command_line + i + 1, "bigphysarea", 11))
-+			{
-+				// search for next pos
-+				int k;
-+				int pos=command_line_len;
-+				for(k=i+1; k<command_line_len; k++)
-+					if(command_line[k]==' ') {
-+						pos=k;
-+						break;
-+					}
-+				memmove(command_line+i, command_line+pos, command_line_len-pos);
-+				memset(&command_line[command_line_len-(pos-i)], '\0', pos-i);
-+				break;
-+			}
-+		}
-+	}
-+
- 	/* Save unparsed command line copy for /proc/cmdline */
- 	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
- 	*cmdline_p = command_line;
 --- linux-sh4-2.6.32.61_stm24_0212.org/drivers/mtd/devices/m25p80.c	2014-03-05 08:32:56.000000000 +0100
 +++ linux-sh4-2.6.32.61_stm24_0212/drivers/mtd/devices/m25p80.c	2014-03-05 08:53:35.000000000 +0100
 @@ -28,6 +28,14 @@

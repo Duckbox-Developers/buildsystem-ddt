@@ -1,43 +1,46 @@
-*** a/arch/sh/kernel/setup.c	2012-03-31 15:26:54.000000000 +0100
---- a/arch/sh/kernel/setup.c.patched	2012-03-31 15:26:54.340928000 +0100
-***************
-*** 389,394 ****
---- 389,422 ----
-  #endif
-  #endif
-  
-+ 	{
-+ 	char org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
-+ 	char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3 rootfstype=squashfs init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 console_loglevel=7 stmmaceth=ethaddr:";
-+ 	char mac[] = "00:00:00:00:00:00";
-+ 	int command_line_len = strlen(command_line);
-+ 	int org_command_line_len = strlen(org_command_line);
-+ 
-+ 	if(command_line_len >= org_command_line_len && !strncmp(command_line, org_command_line, org_command_line_len))
-+ 	{
-+ 		int i;
-+ 		for(i = 0; i < (command_line_len - 7); i++)
-+ 		{
-+ 			if(!strncmp(command_line + i, "ethaddr", 7))
-+ 			{
-+ 				strlcpy(mac, command_line + i + 8, sizeof(mac));
-+ 				break;
-+ 			}
-+ 			if(!strncmp(command_line + i, "hwaddr", 6))
-+ 			{
-+ 				strlcpy(mac, command_line + i + 7, sizeof(mac));
-+ 				break;
-+ 			}
-+ 		}
-+ 		strlcpy(command_line, tdt_command_line, sizeof(command_line));
-+ 		strlcat(command_line, mac, sizeof(command_line));
-+ 	}
-+ 	}
-+ 
-  	/* Save unparsed command line copy for /proc/cmdline */
-  	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
-  	*cmdline_p = command_line;
-
+--- a/arch/sh/kernel/setup.c	2012-03-31 15:26:54.000000000 +0100
++++ a/arch/sh/kernel/setup.c.patched	2012-03-31 15:26:54.340928000 +0100
+@@ -388,6 +388,40 @@
+ #endif
+ #endif
+ 
++	{
++		char flash_org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
++//		char usb_org_commandline[] = "console=ttyAS0,115200 root=/dev/root rw";
++		char flash_tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock5 rw rootfstype=jffs2 init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 console_loglevel=7 stmmaceth=ethaddr:";
++//		char usb_tdt_commandline[] = "console=ttyAS0,115200 root=/dev/root rw";
++		char mac[] = "00:00:00:00:00:00";
++		int command_line_len = strlen(command_line);
++		int flash_org_command_line_len = strlen(flash_org_command_line);
++//		int usb_org_command_line_len = strlen(usb_org_commandline);
++
++		if (command_line_len >= flash_org_command_line_len && !strncmp(command_line, flash_org_command_line, flash_org_command_line_len))
++		{ // boot from flash
++			int i;
++			for (i = 0; i < (command_line_len - 7); i++)
++			{
++				if (!strncmp(command_line + i, "ethaddr", 7))
++				{
++					strlcpy(mac, command_line + i + 8, sizeof(mac));
++					break;
++				}
++				if (!strncmp(command_line + i, "hwaddr", 6))
++				{
++					strlcpy(mac, command_line + i + 7, sizeof(mac));
++					break;
++				}
++			}
++			strlcpy(command_line, flash_tdt_command_line, sizeof(command_line));
++			strlcat(command_line, mac, sizeof(command_line));
++		}
++//		else
++//		{ // boot from USB
++//		}
++	}
++
+ 	/* Save unparsed command line copy for /proc/cmdline */
+ 	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
+ 	*cmdline_p = command_line;
 --- linux-sh4/arch/sh/boards/mach-sat7111/setup.c	2012-03-31 15:26:54.000000000 +0200
 +++ linux-sh4/arch/sh/boards/mach-sat7111/setup.c.patched	2012-07-08 20:51:17.000000000 +0200
 @@ -28,13 +28,14 @@
@@ -58,40 +61,71 @@
  
  /* The sat7111 board is populated with NOR, NAND, and Serial Flash.  The setup
   * below assumes the board is in its default boot-from-NOR configuration.  Other
-@@ -43,6 +44,32 @@
+@@ -43,9 +44,62 @@
   * been fully tested.
   */
  
-+const char *LMI_IO_partalias[] = { "v4l2-coded-video-buffers", "BPA2_Region1", "v4l2-video-buffers", "coredisplay-video", "gfx-memory", "BPA2_Region0", "LMI_VID", NULL };
++const char *LMI_IO_partalias[] = { "v4l2-coded-video-buffers", "BPA2_Region1", "v4l2-video-buffers",
++                                   "coredisplay-video", "gfx-memory", "BPA2_Region0", "LMI_VID", NULL };
 +
++#if 0 //#ifdef CONFIG_BPA2_DIRECTFBOPTIMIZED
 +/*
-+0x40000000 - 0x403FFFFF - cocpu 1 ram (4mb)
-+0x40400000 - 0x407FFFFF - cocpu 2 ram (4mb)
-+0x40800000 - 0x47FFFFFF - linux   (120mb)
-+0x48000000 - 0x49FFFFFF - bigphys ( 32mb)
-+0x4A000000 - 0x4FFFFFFF - lmi_io  ( 96mb)
++0x40000000 - 0x403FFFFF - cocpu 1 ram (4Mb)
++0x40400000 - 0x407FFFFF - cocpu 2 ram (4Mb)
++0x40800000 - 0x475FFFFF - linux     (110Mb)
++0x47600000 - 0x4F1FFFFF - lmi_io    (124Mb)
++0x4F200000 - 0x4FFFFFFF - bigphys   ( 14Mb)
 +*/
 +static struct bpa2_partition_desc bpa2_parts_table[] = {
-+    {
-+ 	    .name  = "bigphysarea",
-+ 	    .start = 0x48000000,
-+ 	    .size  = 0x02000000, /* 32 Mb */
-+ 	    .flags = 0,
-+ 	    .aka   = NULL
-+    },
-+    {
-+ 	    .name  = "LMI_IO",
-+ 	    .start = 0x4A000000,
-+ 	    .size  = 0x06000000, /* 96 Mb */
-+ 	    .flags = 0,
-+ 	    .aka   = LMI_IO_partalias
-+    },
-+ };
++	{
++		.name  = "LMI_IO",
++		.start = 0x47600000,
++		.size  = 0x07C00000, /* 124 Mb */
++		.flags = 0,
++		.aka   = LMI_IO_partalias
++	},
++	{
++		.name  = "bigphysarea",
++		.start = 0x4F200000,
++		.size  = 0x00E00000, /* 14 Mb */
++		.flags = 0,
++		.aka   = NULL
++	},
++};
++#else
++/*
++0x40000000 - 0x403FFFFF - cocpu 1 ram (4Mb)
++0x40400000 - 0x407FFFFF - cocpu 2 ram (4Mb)
++0x40800000 - 0x47FFFFFF - linux     (120Mb) 
++0x48000000 - 0x49FFFFFF - bigphys   ( 32Mb)
++0x4A000000 - 0x4FFFFFFF - lmi_io    ( 96Mb)
++*/
++static struct bpa2_partition_desc bpa2_parts_table[] = {
++	{
++		.name  = "bigphysarea",
++		.start = 0x48000000,
++		.size  = 0x02000000, /* 32 Mb */
++		.flags = 0,
++		.aka   = NULL
++	},
++	{
++		.name  = "LMI_IO",
++		.start = 0x4A000000,
++		.size  = 0x06000000, /* 96 Mb */
++		.flags = 0,
++		.aka   = LMI_IO_partalias
++		},
++};
++#endif
 +
  static void __init sat7111_setup(char** cmdline_p)
  {
- 	printk(KERN_INFO "STMicroelectronics sat7111 reference board initialisation\n");
-@@ -50,15 +77,14 @@
+-	printk(KERN_INFO "STMicroelectronics sat7111 reference board initialisation\n");
++	printk(KERN_INFO "Fortis HS7110 main board initialisation\n");
+ 
+ 	stx7111_early_device_init();
+ 
+@@ -50,15 +104,14 @@
  	stx7111_early_device_init();
  
  	stx7111_configure_asc(2, &(struct stx7111_asc_config) {
@@ -110,7 +144,7 @@
  static struct platform_device sat7111_leds = {
  	.name = "leds-gpio",
  	.id = -1,
-@@ -109,6 +135,12 @@
+@@ -109,6 +162,12 @@
  	},
  };
  
@@ -123,12 +157,12 @@
  static struct platform_device sat7111_nor_flash = {
  	.name		= "physmap-flash",
  	.id		= -1,
-@@ -118,75 +150,38 @@
+@@ -118,75 +177,58 @@
  	},
  	.dev.platform_data = &(struct physmap_flash_data) {
  		.width		= 2,
 -		.nr_parts	= 3,
-+		.nr_parts	= 6,
++		.nr_parts	= 10,
 +		.set_vpp	= sat7111_nor_set_vpp,
  		.parts		=  (struct mtd_partition []) {
  			{
@@ -143,10 +177,7 @@
 -				.name = "NOR Flash 3",
 -				.size = MTDPART_SIZ_FULL,
 -				.offset = MTDPART_OFS_NXTBLK,
-+				.name = "Boot firmware",
-+				.size = 0x00060000,	//	0,375M
-+				.offset = 0x00000000,	//	ok
- 			},
+-			},
 -		},
 -
 -
@@ -201,34 +232,58 @@
 -				.name = "Serial Flash 2",
 -				.size = MTDPART_SIZ_FULL,
 -				.offset = MTDPART_OFS_NXTBLK,
-+			{
-+				.name = "Kernel",
-+				.size = 0x001c0000,	// 	1,75M
-+				.offset = 0x0060000,	//	ok
++				.name   = "Boot firmware", //mtd0
++				.size   = 0x00060000,      // 384k
++				.offset = 0x00000000
 +			},
 +			{
-+				.name = "Fw",
-+				.size = 0x2a0000,		// 	2M
-+				.offset = 0xd20000, //0x00e20000, //0x00f80000,	//	ok
++				.name   = "kernel",        //mtd1
++				.size   = 0x001C0000,      //1,75M
++				.offset = 0x00060000       //384k (0.375M)
 +			},
 +			{
-+				.name = "Root",
-+				.size = 0x00b00000, // 11M 0x00c00000,	// 	12M .size = 0x00d60000,	// 	13,375M
-+				.offset = 0x00220000,	//	ok
-+	 		},
++				.name   = "APP",           //mtd2
++				.size   = 0x006C0000,      //6.75M (squashfs)
++				.offset = 0x00220000       //2.125M, 128k hole at end is for checksum
++			},
 +			{
-+	 			.name = "Var", // org user
-+	 			.size = MTDPART_SIZ_FULL,	/* will expand to the end of the flash */
-+	 			.offset = 0x01c00000, 
-+	 		},
++				.name   = "ROOT_FS",       //mtd3
++				.size   = 0x00F00000,      // 15M  (squashfs)
++				.offset = 0x00900000       //  9M, 128k hole at end is for checksum
++			},
 +			{
-+				.name = "Swap", // org free + config
-+				.size = 0xBC0000, //0x960000, //9m 0x7c0000, //7m 0x6c0000, //6m 0x560000,     // 4,375M unused in org kernel
-+				.offset = 0x1040000, // 0x12a0000, //0x1440000, // 0x1540000, //0x016a0000,
++				.name   = "Device",        //mtd4
++				.size   = 0x002E0000,      //2.875M (squashfs)
++				.offset = 0x01800000       // 24M, 128k hole at end is for checksum
++			},
++			{
++				.name   = "Config",        //mtd5
++				.size   = 0x00100000,      //  1M
++				.offset = 0x01B00000       // 27M
++			},
++			{
++				.name   = "User",          //mtd6
++				.size   = 0x00400000,      //  4M
++				.offset = 0x01C00000       // 28M
++			},
++			{
++				.name   = "All",           //mtd7
++				.size   = 0x02000000,      // 32M
++				.offset = 0x00000000
++			},
++			{
++				.name   = "APP_ORG",       //mtd8
++				.size   = 0x006C0000,      //6.75M (squashfs)
++				.offset = 0x00220000       //2.125M
++			},
++			{
++				.name   = "APP_BAK",       //mtd9
++				.size   = 0x006C0000,      //6.75M (squashfs)
++				.offset = 0x00220000       //2.125M
  			},
  		},
  	},
-@@ -216,15 +211,9 @@
+@@ -216,15 +258,9 @@
  
  static int __init sat7111_devices_init(void)
  {
@@ -246,7 +301,7 @@
  	stx7111_configure_ssc_i2c(3);
  
  	stx7111_configure_usb(&(struct stx7111_usb_config) {
-@@ -246,14 +235,6 @@
+@@ -246,14 +282,6 @@
  
  	gpio_direction_output(SAT7111_PHY_RESET, 0);
  
@@ -261,7 +316,6 @@
  	return platform_add_devices(sat7111_devices,
  				    ARRAY_SIZE(sat7111_devices));
  }
-
 --- linux-sh4/arch/sh/include/asm/irq-ilc.h	2012-03-31 15:26:54.634523363 +0200
 +++ linux-sh4/arch/sh/include/asm/irq-ilc.h.patched	2012-03-31 15:26:54.084558439 +0200
 @@ -40,7 +40,7 @@
@@ -291,7 +345,7 @@
  	},
  };
 @@ -125,8 +125,8 @@
- 		/* .id set in stx7111_configure_asc() */ 
+ 		/* .id set in stx7111_configure_asc() */
  		.num_resources	= 4,
  		.resource	= (struct resource[]) {
 -			STM_PLAT_RESOURCE_MEM(0xfd033000, 0x2c),
@@ -342,7 +396,7 @@
  	stm_pad_release_gpio(stm_gpio(pin->port_no, pin->pin_no));
  }
  EXPORT_SYMBOL(stpio_free_pin);
-@@ -584,6 +595,85 @@
+@@ -584,6 +595,86 @@
  	set_irq_type(irq, triggertype);
  }
  EXPORT_SYMBOL(stpio_set_irq_type);
@@ -384,6 +438,7 @@
 + {
 + 	int len;
 + 	int port_no, pin_no;
++	char *name;
 + 	off_t begin = 0;
 + 	int num_ports = stm_gpio_num / STM_GPIO_PINS_PER_PORT;
 + 	struct stm_gpio_port *port;
@@ -400,7 +455,7 @@
 + 			pin = &port->pins[pin_no];
 + 			if(!pin) continue;
 + 
-+ 			char *name = pin->stpio.pin_name ? pin->stpio.pin_name : "";
++ 			*name = (char)(pin->stpio.pin_name ? pin->stpio.pin_name : "");
 + 			len += sprintf(page + len,
 + 					"PIO %d.%d [%-10s] [%s] [%s]\n",
 + 					port_no, pin_no, name,
@@ -428,7 +483,7 @@
  
  #endif /* CONFIG_STPIO */
  
-@@ -964,7 +1054,11 @@
+@@ -964,7 +1055,11 @@
  static int __init stm_gpio_init(void)
  {
  	int ret;

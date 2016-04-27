@@ -86,7 +86,7 @@
  static const u32 default_msg_level = (NETIF_MSG_DRV | NETIF_MSG_PROBE |
  				      NETIF_MSG_LINK | NETIF_MSG_IFUP |
  				      NETIF_MSG_IFDOWN | NETIF_MSG_TIMER);
-@@ -1776,7 +1778,7 @@
+@@ -1780,7 +1782,7 @@
  
  	/* Get the MAC address */
  	priv->hw->mac->get_umac_addr((void __iomem *) dev->base_addr,
@@ -95,7 +95,7 @@
  
  	if (!is_valid_ether_addr(dev->dev_addr))
  		pr_warning("\tno valid MAC address;"
-@@ -2211,6 +2213,8 @@
+@@ -2215,6 +2217,8 @@
  					   (unsigned long *)&tmrate))
  				goto err;
  #endif

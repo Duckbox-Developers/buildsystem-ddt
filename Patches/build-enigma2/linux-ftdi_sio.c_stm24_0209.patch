@@ -1,5 +1,5 @@
---- linux-sh4/drivers/usb/serial/ftdi_sio.c	2009-12-03 04:51:21.000000000 +0100
-+++ linux-sh4/drivers/usb/serial/ftdi_sio.c	2011-07-20 18:13:53.000000000 +0200
+--- linux-sh4/drivers/usb/serial/ftdi_sio.c
++++ linux-sh4/drivers/usb/serial/ftdi_sio.c
 @@ -51,7 +51,7 @@
   */
  #define DRIVER_VERSION "v1.5.0"
@@ -65,7 +65,7 @@
  	return count;
  }
  
-@@ -1694,7 +1698,7 @@
+@@ -1678,7 +1682,7 @@
  
  	ftdi_determine_type(port);
  	ftdi_set_max_packet_size(port);

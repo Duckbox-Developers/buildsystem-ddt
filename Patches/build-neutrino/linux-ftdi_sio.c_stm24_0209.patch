@@ -65,7 +65,7 @@
  	return count;
  }
  
-@@ -1694,7 +1698,7 @@
+@@ -1678,7 +1682,7 @@
  
  	ftdi_determine_type(port);
  	ftdi_set_max_packet_size(port);

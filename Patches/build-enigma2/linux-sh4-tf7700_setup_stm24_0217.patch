@@ -373,7 +373,7 @@
  		},
  	},
  	[2] = {
-@@ -344,7 +344,7 @@
+@@ -345,7 +345,7 @@
  	BUG_ON(stx7100_ssc_configured[ssc]);
  	stx7100_ssc_configured[ssc] = 1;
  

@@ -1,33 +1,3 @@
-From: Michal Marek <mma...@suse.cz>
-Newsgroups: linux.kernel
-Subject: [PATCH v3] kbuild: generate modules.builtin
-Date: Mon, 07 Dec 2009 23:20:01 +0100
-
-To make it easier for module-init-tools and scripts like mkinitrd to
-distinguish builtin and missing modules, install a modules.builtin file
-listing all builtin modules. This is done by generating an additional
-config file (tristate.conf) with tristate options set to uppercase 'Y'
-or 'M'. If we source that config file, the builtin modules appear in
-obj-Y.
-
-Signed-off-by: Michal Marek <mma...@suse.cz>
----
-Only minor changes since the last posting:
-* checkpatch fixes
-* tristate.conf lists only tristate options, not boolean ones
-
- .gitignore                       |    1 +
- Documentation/kbuild/kbuild.txt  |   14 +++++++++
- Documentation/kbuild/kconfig.txt |    5 +++
- Makefile                         |   14 +++++++---
- scripts/Kbuild.include           |    6 ++++
- scripts/Makefile.modbuiltin      |   55 ++++++++++++++++++++++++++++++++++++++
- scripts/kconfig/confdata.c       |   22 ++++++++++++++-
- 7 files changed, 112 insertions(+), 5 deletions(-)
- create mode 100644 scripts/Makefile.modbuiltin
-
-diff --git a/.gitignore b/.gitignore
-index 4980606..9399f1a 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -22,6 +22,7 @@
@@ -38,8 +8,6 @@ index 4980606..9399f1a 100644
  *.elf
  *.bin
  *.gz
-diff --git a/Documentation/kbuild/kbuild.txt b/Documentation/kbuild/kbuild.txt
-index bb3bf38..6f8c1ca 100644
 --- a/Documentation/kbuild/kbuild.txt
 +++ b/Documentation/kbuild/kbuild.txt
 @@ -1,3 +1,17 @@
@@ -60,11 +28,9 @@ index bb3bf38..6f8c1ca 100644
  Environment variables
  
  KCPPFLAGS
-diff --git a/Documentation/kbuild/kconfig.txt b/Documentation/kbuild/kconfig.txt
-index ab8dc35..49efae7 100644
 --- a/Documentation/kbuild/kconfig.txt
 +++ b/Documentation/kbuild/kconfig.txt
-@@ -103,6 +103,11 @@ KCONFIG_AUTOCONFIG
+@@ -103,6 +103,11 @@
  This environment variable can be set to specify the path & name of the
  "auto.conf" file.  Its default value is "include/config/auto.conf".
  
