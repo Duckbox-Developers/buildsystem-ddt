@@ -200,6 +200,8 @@ case "$REPLY" in
 
 		ln -s player2_191 player2
 		ln -s multicom-3.2.4 multicom
+		echo "# Automatically generated config: don't edit" > .config
+		echo "#" >> .config
 		echo "export CONFIG_PLAYER_191=y" >> .config
 		echo "export CONFIG_MULTICOM324=y" >> .config
 		cd - &>/dev/null
@@ -242,6 +244,8 @@ case "$REPLY" in
 
 		ln -s player2_191 player2
 		ln -s multicom-3.2.4 multicom
+		echo "# Automatically generated config: don't edit" > .config
+		echo "#" >> .config
 		echo "export CONFIG_PLAYER_191=y" >> .config
 		echo "export CONFIG_MULTICOM324=y" >> .config
 		cd - &>/dev/null
