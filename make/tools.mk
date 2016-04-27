@@ -6,6 +6,7 @@ tools-clean:
 
 $(APPS_DIR)/tools/config.status: $(D)/bootstrap $(D)/driver $(D)/bzip2 $(D)/libpng $(D)/libjpeg $(D)/ffmpeg
 	set -e; cd $(APPS_DIR)/tools; \
+	./autogen.sh; \
 	$(CONFIGURE) \
 	--prefix=$(TARGETPREFIX)/usr \
 	--with-boxtype=$(BOXTYPE) \

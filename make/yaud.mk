@@ -40,5 +40,3 @@ yaud-none: \
 	$(D)/linux-kernel \
 	$(D)/system-tools
 	touch $(D)/$(notdir $@)
-
-

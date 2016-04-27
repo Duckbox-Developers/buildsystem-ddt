@@ -155,8 +155,8 @@
  	dvb_unregister_device(dmxdev->dvbdev);
  	dvb_unregister_device(dmxdev->dvr_dvbdev);
  
-*** a/drivers/media/dvb/dvb-core/dmxdev.h
---- b/drivers/media/dvb/dvb-core/dmxdev.h
+--- a/drivers/media/dvb/dvb-core/dmxdev.h
++++ b/drivers/media/dvb/dvb-core/dmxdev.h
 @@ -99,7 +99,6 @@
  	int filternum;
  	int capabilities;
@@ -165,8 +165,8 @@
  #define DMXDEV_CAP_DUPLEX 1
  	struct dmx_frontend *dvr_orig_fe;
  
-*** a/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
---- b/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
+--- a/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
 @@ -41,14 +41,15 @@
  #include "dvb_ca_en50221.h"
  #include "dvb_ringbuffer.h"
@@ -691,8 +691,8 @@
  	}
  
  	if (signal_pending(current)) {
-*** a/drivers/media/dvb/dvb-core/dvbdev.c
---- b/drivers/media/dvb/dvb-core/dvbdev.c
+--- a/drivers/media/dvb/dvb-core/dvbdev.c
++++ b/drivers/media/dvb/dvb-core/dvbdev.c
 @@ -47,7 +47,7 @@
  
  static const char * const dnames[] = {
@@ -702,8 +702,8 @@
  };
  
  #ifdef CONFIG_DVB_DYNAMIC_MINORS
-*** a/drivers/media/dvb/dvb-core/dvbdev.h
---- b/drivers/media/dvb/dvb-core/dvbdev.h
+--- a/drivers/media/dvb/dvb-core/dvbdev.h
++++ b/drivers/media/dvb/dvb-core/dvbdev.h
 @@ -47,6 +47,7 @@
  #define DVB_DEVICE_CA         6
  #define DVB_DEVICE_NET        7
@@ -712,8 +712,8 @@
  
  #define DVB_DEFINE_MOD_OPT_ADAPTER_NR(adapter_nr) \
  	static short adapter_nr[] = \
-*** a/include/linux/dvb/video.h
---- b/include/linux/dvb/video.h
+--- a/include/linux/dvb/video.h
++++ b/include/linux/dvb/video.h
 @@ -120,6 +120,11 @@
  		struct {
  			__u32 data[16];
@@ -726,8 +726,8 @@
  	};
  };
  
-*** a/include/linux/dvb/frontend.h
---- b/include/linux/dvb/frontend.h
+--- a/include/linux/dvb/frontend.h
++++ b/include/linux/dvb/frontend.h
 @@ -62,6 +62,8 @@
  	FE_CAN_8VSB			= 0x200000,
  	FE_CAN_16VSB			= 0x400000,
@@ -799,8 +799,8 @@
  
  struct dtv_cmds_h {
  	char	*name;		/* A display name for debugging purposes */
-*** a/include/linux/dvb/version.h
---- b/include/linux/dvb/version.h
+--- a/include/linux/dvb/version.h
++++ b/include/linux/dvb/version.h
 @@ -24,6 +24,6 @@
  #define _DVBVERSION_H_
  
@@ -809,8 +809,8 @@
 +#define DVB_API_VERSION_MINOR 3
  
  #endif /*_DVBVERSION_H_*/
-*** a/drivers/media/dvb/dvb-core/dvb_frontend.h
---- b/drivers/media/dvb/dvb-core/dvb_frontend.h
+--- a/drivers/media/dvb/dvb-core/dvb_frontend.h
++++ b/drivers/media/dvb/dvb-core/dvb_frontend.h
 @@ -356,8 +356,8 @@
  	    u8			interleaving;
  	} layer[3];
@@ -822,8 +822,8 @@
  };
  
  struct dvb_frontend {
-*** a/drivers/media/dvb/dvb-core/dvb_frontend.c
---- b/drivers/media/dvb/dvb-core/dvb_frontend.c
+--- a/drivers/media/dvb/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb/dvb-core/dvb_frontend.c
 @@ -883,6 +883,8 @@
  		fe->dtv_property_cache.layer[i].segment_count = -1;
  	}

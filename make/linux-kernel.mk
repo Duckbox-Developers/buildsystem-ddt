@@ -24,13 +24,10 @@ COMMON_PATCHES_24 = \
 		linux-sh4-mmap_stm24.patch \
 		$(if $(P0217),linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch) \
 		$(if $(P0217),linux-perf-warning-fix_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0215)$(P0217),linux-ratelimit-bug_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0215)$(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0209),linux-sh4-dwmac_stm24_0209.patch) \
-		$(if $(P0209),linux-sh4-directfb_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0211)$(P0214)$(P0215)$(P0217),linux-sh4-console_missing_argument_stm24_$(KERNEL_LABEL).patch)
-
-#		$(if $(P0209)$(P0211),linux-sh4-remove_pcm_reader_stm24.patch)
+		$(if $(P0217),linux-ratelimit-bug_stm24_$(KERNEL_LABEL).patch) \
+		$(if $(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
+		$(if $(P0209),linux-sh4-dwmac_stm24_$(KERNEL_LABEL).patch) \
+		$(if $(P0217),linux-sh4-console_missing_argument_stm24_$(KERNEL_LABEL).patch)
 
 TF7700_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-tf7700_setup_stm24_$(KERNEL_LABEL).patch \
@@ -76,32 +73,45 @@ HS7110_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-hs7110_setup_stm24_$(KERNEL_LABEL).patch \
 		$(if $(NEUTRINO),linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+
+HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
+		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
+		linux-sh4-hs7119_setup_stm24_$(KERNEL_LABEL).patch \
+		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+
+HS7420_PATCHES_24 = $(COMMON_PATCHES_24) \
+		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
+		linux-sh4-hs7420_setup_stm24_$(KERNEL_LABEL).patch \
+		$(if $(NEUTRINO),linux-sh4-hs7420_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
+		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+
+HS7429_PATCHES_24 = $(COMMON_PATCHES_24) \
+		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
+		linux-sh4-hs7429_setup_stm24_$(KERNEL_LABEL).patch \
+		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
 
 HS7810A_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7810a_setup_stm24_$(KERNEL_LABEL).patch \
 		$(if $(NEUTRINO),linux-sh4-hs7810a_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
-
-HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7119_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
 
 HS7819_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7819_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
 
 ATEMIO520_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-atemio520_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
 		linux-squashfs-downgrade-stm24_$(KERNEL_LABEL)-to-stm23.patch \
 		linux-squashfs3.0_lzma_stm23.patch \
 		linux-squashfs-downgrade-stm24-patch-2.6.25 \
@@ -111,7 +121,7 @@ ATEMIO530_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-atemio530_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209)$(P0211),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
+		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
 		linux-squashfs-downgrade-stm24_$(KERNEL_LABEL)-to-stm23.patch \
 		linux-squashfs3.0_lzma_stm23.patch \
 		linux-squashfs-downgrade-stm24-patch-2.6.25 \
@@ -140,8 +150,7 @@ SPARK_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-spark_setup_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
-		$(if $(P0209),linux-sh4-lirc_stm.patch) \
-		$(if $(P0211)$(P0214)$(P0215)$(P0217),linux-sh4-lirc_stm_stm24_$(KERNEL_LABEL).patch)
+		linux-sh4-lirc_stm_stm24_$(KERNEL_LABEL).patch
 
 SPARK7162_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
@@ -204,7 +213,7 @@ CUBEREVO_250HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_250hd_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0215)$(P0217),linux-sh4-cuberevo_250hd_sound_stm24_$(KERNEL_LABEL).patch)
+		$(if $(P0217),linux-sh4-cuberevo_250hd_sound_stm24_$(KERNEL_LABEL).patch)
 
 CUBEREVO_2000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_2000hd_setup_stm24_$(KERNEL_LABEL).patch \
@@ -238,16 +247,12 @@ ARIVALINK200_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-ipbox_dvb_ca_stm24_$(KERNEL_LABEL).patch
 
-FORTIS_DP7000_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-fortis_dp7000_setup_stm24_$(KERNEL_LABEL).patch
-
 #
 # HOST-KERNEL
 #
 HOST_KERNEL_PATCHES = $(KERNEL_PATCHES_24)
 HOST_KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VERSION))_$(BOXTYPE).config$(DEBUG_STR)
 
-##make -C $(KERNEL_DIR) headers_install ARCH=sh INSTALL_HDR_PATH=$(TARGETPREFIX)/usr
 $(D)/linux-kernel: $(D)/bootstrap $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) | host_u_boot_tools \
 	$(if $(HOST_KERNEL_PATCHES),$(HOST_KERNEL_PATCHES:%=$(PATCHES)/$(BUILD_CONFIG)/%))
 	rm -rf $(BUILD_TMP)/linux-sh4*

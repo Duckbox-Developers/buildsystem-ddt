@@ -1,5 +1,5 @@
---- linux-sh4/drivers/net/Kconfig	2012-04-03 22:24:47.000000000 +0900
-+++ linux-sh4/drivers/net/Kconfig	2012-04-03 22:38:05.636377828 +0900
+--- linux-sh4/drivers/net/Kconfig
++++ linux-sh4/drivers/net/Kconfig
 @@ -1015,7 +1015,6 @@
  	depends on ARM || SUPERH || BLACKFIN
  	select CRC32
@@ -8,8 +8,8 @@
  	---help---
  	  Say Y here if you want support for SMSC LAN911x and LAN921x families
  	  of ethernet controllers.
---- linux-sh4/drivers/net/smsc911x.c	2012-03-28 19:35:24.000000000 +0200
-+++ linux-sh4/drivers/net/smsc911x.c.fix	2012-04-17 09:36:25.000000000 +0200
+--- linux-sh4/drivers/net/smsc911x.c
++++ linux-sh4/drivers/net/smsc911x.c
 @@ -1,7 +1,6 @@
  /***************************************************************************
   *
@@ -362,7 +362,7 @@
 +	{
 +		/* Long packet: 4*read32 */
 +		.rw             = REQ_CONFIG_READ,
-+        	.opcode         = REQ_CONFIG_OPCODE_32,
++		.opcode         = REQ_CONFIG_OPCODE_32,
 +		.count          = 4,
 +		.increment      = 0,
 +		.hold_off       = 0,
@@ -410,8 +410,8 @@
 +#define getrest(a,b) (DWORD)((((float)a/(float)b)-(DWORD)(a/b))*100)
 +
 +#define LINK_OFF			(0x00UL)
-+#define LINK_SPEED_10HD			(0x01UL)
-+#define LINK_SPEED_10FD			(0x02UL)
++#define LINK_SPEED_10HD		(0x01UL)
++#define LINK_SPEED_10FD		(0x02UL)
 +#define LINK_SPEED_100HD		(0x04UL)
 +#define LINK_SPEED_100FD		(0x08UL)
 +#define LINK_SYMMETRIC_PAUSE		(0x10UL)
@@ -1140,7 +1140,7 @@
 +	netif_carrier_off(dev);
 +	if(!Phy_Initialize(pD))
 +		return -ENODEV;
-+        pD->dwTxDmaCh=Platform_RequestDmaChannel();
++	pD->dwTxDmaCh=Platform_RequestDmaChannel();
 +	pD->dwRxDmaCh=Platform_RequestDmaChannelSg();
  
 -	if (result != 0)

@@ -17,8 +17,6 @@ $(HOSTPREFIX)/bin/unpack-rpm.sh: | directories
 	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOSTPREFIX)/bin
 
 #
-#
-#
 STM_RELOCATE = /opt/STM/STLinux-2.4
 
 # updates / downloads
@@ -163,23 +161,6 @@ CCACHE_ENV = install -d $(CCACHE_BINDIR); \
 $(D)/ccache:
 	$(CCACHE_ENV)
 	touch $@
-
-#$(HOSTPREFIX)/ccache-bin:
-#	install -d $@
-#	install -d $(HOSTPREFIX)/bin
-#
-#$(D)/ccache: | $(HOSTPREFIX)/ccache-bin/gcc
-#	touch $@
-#
-#$(HOSTPREFIX)/ccache-bin/gcc: | $(CCACHE)
-#	make $(HOSTPREFIX)/ccache-bin
-#	ln -sf $| $@
-#	ln -sf $| $(@D)/g++
-#	ln -sf $| $(@D)/cc
-#	ln -sf $| $(@D)/$(TARGET)-gcc
-#	ln -sf $| $(@D)/$(TARGET)-g++
-#	ln -sf $| $(HOSTPREFIX)/bin/$(TARGET)-gcc
-#	ln -sf $| $(HOSTPREFIX)/bin/$(TARGET)-g++
 
 # hack to make sure they are always copied
 PHONY += ccache bootstrap

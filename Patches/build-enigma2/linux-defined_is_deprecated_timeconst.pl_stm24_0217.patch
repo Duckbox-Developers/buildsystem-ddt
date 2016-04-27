@@ -12,7 +12,7 @@ fix a couple warnings from BUG() usage
  #ifndef HAVE_ARCH_BUG_ON
 --- a/kernel/timeconst.pl
 +++ b/kernel/timeconst.pl
-@@ -370,7 +370,7 @@ if ($hz eq '--can') {
+@@ -370,7 +370,7 @@
  	}
  
  	@val = @{$canned_values{$hz}};
