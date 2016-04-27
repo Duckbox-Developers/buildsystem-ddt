@@ -1,0 +1,192 @@
+#!/bin/sh
+#Version 151230.1
+
+echo "[rcS] Start"
+echo "Fortis HS7429 Neutrino"
+
+MODDIR=/lib/modules
+
+echo "[rcS] Init frontpanel"
+if [ ! -e /dev/vfd ]; then
+   mknod -m 0660 /dev/vfd c 147 0
+fi
+insmod $MODDIR/nuvoton.ko paramDebug=0
+insmod $MODDIR/simu_button.ko
+
+if [ -e /var/etc/.firstboot ]; then
+   echo "Wait 1m." > /dev/vfd
+   echo "[rcS] WAIT 1 minute"
+   rm /var/etc/.firstboot
+   sleep 1
+   touch /dev/.devfsd
+else
+   echo "Load 10" > /dev/vfd
+fi
+
+/etc/init.d/mountvirtfs start
+
+insmod $MODDIR/e2_proc.ko
+
+# Start automounter with umount timeout of 5 seconds
+if [ -e $MODDIR/autofs4.ko ]; then
+   insmod $MODDIR/autofs4.ko
+fi
+/usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
+
+echo "[rcS] Starting DEBUG Interface"
+/etc/init.d/mountall start
+/etc/init.d/hostname start
+
+echo "[rcS] Starting telnetd"
+/usr/sbin/telnetd -l /bin/autologin
+
+echo "[rcS] Init stmfb (LOAD 9)"
+echo "Load 9" > /dev/vfd
+insmod $MODDIR/stmcore-display-sti7111.ko
+insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv;# display1=720x576-16@50:1m:pal:cvbs;
+
+echo "[rcS] Loading modules"
+
+if [ ! -e /lib/firmware/audio.elf ] || [ ! -e /lib/firmware/video.elf ]; then
+   echo "[rcS] Firmware(s) missing!"
+   echo "NO FIRMW" > /dev/vfd
+   sleep 5
+fi
+
+echo "[rcS] Load video firmware (LOAD 8)"
+echo "Load 8" > /dev/vfd
+/bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096 2> /dev/null
+/bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+echo "[rcS] Load audio firmware (LOAD 7)"
+echo "Load 7" > /dev/vfd
+/bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096 2> /dev/null
+/bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+echo "[rcS] Init embx (LOAD 6)"
+echo "Load 6" > /dev/vfd
+insmod $MODDIR/embxshell.ko
+insmod $MODDIR/embxmailbox.ko mailbox0=0xfe211000:136:set2 mailbox1=0xfe212000:0 ;
+insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0x40000000:0x10000000 ;
+insmod $MODDIR/mme_host.ko transport0=shm
+
+echo "[rcS] Init AVS (LOAD 5)"
+echo "Load 5" > /dev/vfd
+insmod $MODDIR/avs.ko type=avs_pio
+
+echo "[rcS] Init player (LOAD 4)"
+echo "Load 4" > /dev/vfd
+insmod $MODDIR/mmelog.ko
+insmod $MODDIR/ksound.ko
+insmod $MODDIR/p2div64.ko
+insmod $MODDIR/stm_v4l2.ko
+
+insmod $MODDIR/pseudocard.ko
+
+echo "[rcS] Init frontend"
+insmod $MODDIR/lnb.ko type=a8293
+insmod $MODDIR/stv090x.ko paramDebug=0
+insmod $MODDIR/starci.ko
+insmod $MODDIR/smartcard.ko
+mknod /dev/lnb c 149 0
+
+insmod $MODDIR/pti.ko
+insmod $MODDIR/stm_monitor.ko
+insmod $MODDIR/stmsysfs.ko
+insmod $MODDIR/stmdvb.ko
+
+echo "[rcS] Init player2 (LOAD 3)"
+echo "Load 3" > /dev/vfd
+insmod $MODDIR/player2.ko
+insmod $MODDIR/sth264pp.ko
+insmod $MODDIR/stmalloc.ko
+insmod $MODDIR/platform.ko
+insmod $MODDIR/silencegen.ko
+
+insmod $MODDIR/bpamem.ko
+mknod /dev/bpamem c 153 0
+
+if [ -e $MODDIR/cec.ko ]; then
+   insmod $MODDIR/cec.ko activemode=1
+fi
+if [ -e $MODDIR/exportfs.ko ]; then
+   insmod $MODDIR/exportfs.ko
+fi
+if [ -e $MODDIR/cifs.ko ]; then
+   insmod $MODDIR/cifs.ko
+fi
+if [ -e $MODDIR/ntfs.ko ]; then
+   insmod $MODDIR/ntfs.ko
+fi
+if [ -e $MODDIR/tun.ko ]; then
+   insmod $MODDIR/tun.ko
+fi
+if [ -e $MODDIR/usbserial.ko ]; then
+   insmod $MODDIR/usbserial.ko
+fi
+if [ -e $MODDIR/ftdi.ko ]; then
+   insmod $MODDIR/ftdi.ko
+fi
+if [ -e $MODDIR/pl2303.ko ]; then
+   insmod $MODDIR/pl2303.ko
+fi
+
+stfbcontrol a 0
+
+echo "[rcS] Init remote control (LOAD 2)"
+echo "Load 2" > /dev/vfd
+/bin/evremote2 10 140 &
+
+stfbcontrol a 255
+
+echo "[rcS] Init portmap & ftp (LOAD 1)"
+echo "Load 1" >/dev/vfd
+/etc/init.d/portmap start
+/etc/init.d/vsftpd start
+/usr/sbin/inetd
+
+#timefix
+date -s "201601011200"
+
+NFS=`grep -c nfs /proc/cmdline`
+if [ "$NFS" -eq "1" ]; then
+   echo "[rcS] Booting from nfs, don't set network"
+else
+   if [ -e /etc/network/interfaces ]; then
+      ip addr flush eth0
+      /etc/init.d/networking stop
+      DHCP=`grep -c dhcp /etc/network/interfaces`
+      if [ "$DHCP" -eq "1" ]; then
+         echo "[rcS] Starting DHCP"
+         /etc/init.d/udhcpc start
+      fi
+      /etc/init.d/networking start
+   fi
+fi
+
+echo "[rcS] LOADING neutrino"
+echo "Start Neutrino" > /dev/vfd
+
+until false
+do
+   echo "[rcS] Starting neutrino ->"
+   /usr/local/bin/neutrino
+   rtv=$?
+   echo "[rcS] Neutrino ended <- return value: " $rtv
+   case "$rtv" in
+      0) echo "SHUTDOWN"
+         echo "Shutdown" > /dev/vfd
+         init 0;;
+      1) echo "REBOOT"
+         echo "Reboot" > /dev/vfd
+         init 6;;
+      *) echo "ERROR"
+         echo "Error " > /dev/vfd
+         init 6;;
+   esac
+done
+
+#never reached
+echo "REBOOT Fortis HS7429"
+echo "REBOOT Fortis HS7429" > /dev/vfd
+init 6

@@ -134,8 +134,8 @@
 		<!--key id="KEY_EPG" mapto="showEventInfoPlugin" flags="b" /-->
 		<!--key id="KEY_EPG" mapto="showSimpleInfo" flags="l" /-->
 		<!--key id="KEY_INFO" mapto="showEventInfo" flags="l"/-->
-		<key id="KEY_EPG" mapto="showEventInfoPlugin" flags="l" />
-		<key id="KEY_EPG" mapto="showEventInfo" flags="b" />
+		<key id="KEY_EPG" mapto="showEventInfoSingleEPG" flags="b" />
+		<key id="KEY_EPG" mapto="showEventInfo" flags="l" />
 		<!--key id="KEY_INFO" mapto="showSimpleInfo" flags="l"/-->
 		<key id="KEY_HELP" mapto="showSimpleInfo" flags="l"/>
 	</map>
@@ -170,7 +170,7 @@
 		<!--key id="KEY_TIME" mapto="timer" flags="b" /-->
 		<!--key id="KEY_TIME" mapto="sleepTimer" flags="l" /-->
 		<key id="KEY_FAVORITES" mapto="showFavourites" flags="m" />
-		<!--key id="KEY_SAT" mapto="showSatellites" flags="m" /-->
+		<key id="KEY_SAT" mapto="showSatellites" flags="m" />
 	</map>
 	
 	<map context="MinuteInputActions">
@@ -178,7 +178,7 @@
 		<key id="KEY_DOWN" mapto="down" flags="mr" />
 		<key id="KEY_OK" mapto="ok" flags="m" />
 		<key id="KEY_ENTER" mapto="ok" flags="m" />
-		<key id="KEY_EXIT" mapto="cancel" flags="m" /> 
+		<key id="KEY_EXIT" mapto="cancel" flags="m" />
 		<key id="KEY_HOME" mapto="cancel" flags="m" />
 	</map>
 
@@ -239,8 +239,8 @@
 	</map>
 
 	<map context="InfobarActions">
-		<key id="KEY_PLAY" mapto="showMovies" flags="m" />
 		<key id="KEY_DIRECTORY" mapto="showMovies" flags="m" />
+		<key id="KEY_PLAY" mapto="showMovies" flags="m" />
 		<!--key id="KEY_AUX" mapto="showTv" flags="m" /-->
 		<!--key id="KEY_AUX" mapto="showRadio" flags="l" /-->
 		<key id="KEY_MODE" mapto="toogleTvRadio" flags="m" />
@@ -251,7 +251,7 @@
 	<map context="InfobarExtendedAudioSelectionActions">
 		<key id="KEY_YELLOW" mapto="audioSelection" flags="m" />
 	</map>
-	
+
 	<map context="InfobarAudioSelectionActions">
 		<key id="KEY_YELLOW" mapto="audioSelection" flags="m" />
 	</map>
@@ -264,7 +264,7 @@
 	<map context="InfobarSubserviceSelectionActions">
 		<key id="KEY_YELLOW" mapto="subserviceSelection" flags="m" />
 		<key id="KEY_VOLUMEUP" mapto="volumeUp" flags="mr" />
-		<key id="KEY_VOLUMEDOWN" mapto="volumeDown" flags="mr" /> 
+		<key id="KEY_VOLUMEDOWN" mapto="volumeDown" flags="mr" />
 	</map>
         
 	<map context="InfobarSubserviceQuickzapActions">
@@ -273,7 +273,7 @@
 		<key id="KEY_BACK" mapto="prevSubservice" flags="m" />
 		<key id="KEY_FORWARD" mapto="nextSubservice" flags="m" />
 		<key id="KEY_EXIT" mapto="exit" flags="m" /> 
-		<key id="KEY_HOME" mapto="exit" flags="m" />                 
+		<key id="KEY_HOME" mapto="exit" flags="m" />
 	</map>
 
 	<map context="GlobalActions">
@@ -342,7 +342,7 @@
 	</map>
 
 	<map context="InfobarTimeshiftActions">
-		<key id="KEY_PAUSE" mapto="timeshiftStart" flags="m" /> 
+		<key id="KEY_PAUSE" mapto="timeshiftStart" flags="m" />
 		<key id="KEY_STOP" mapto="timeshiftStop" flags="m" />
 	</map>
 
@@ -376,8 +376,8 @@
 	</map>
 	
 	<map context="MediaPlayerCueSheetActions">
-		<key id="KEY_0" mapto="toggleMark" flags="m" />
 		<key id="KEY_RED" mapto="toggleMark" flags="m" />
+		<key id="KEY_0" mapto="toggleMark" flags="m" />
 	</map>
 
 	<map context="VirtualKeyboardActions">
@@ -385,6 +385,10 @@
 		<key id="KEY_SELECT" mapto="showVirtualKeyboard" flags="m" />
 	</map>
 	
+	<map context="InfobarSubtitleSelectionActions">
+		<key id="KEY_SUBTITLE" mapto="subtitleSelection" flags="m" />
+	</map>
+
 	<map context="InfobarTeletextActions">
 		<key id="KEY_TEXT" mapto="startTeletext" flags="m" />
 	</map>
@@ -459,7 +463,7 @@
 		<key id="KEY_BLUE" mapto="blue" flags="mr" />
 		<key id="KEY_RED" mapto="red" flags="m" />
 		<key id="KEY_EPG" mapto="info" flags="m" />
-		<key id="KEY_MENU" mapto="input_date_time" flags="m" />
+		<key id="KEY_MENU" mapto="menu" flags="m" />
 		<key id="KEY_CHANNELUP" mapto="nextBouquet" flags="m" />
 		<key id="KEY_CHANNELDOWN" mapto="prevBouquet" flags="m" />
 		<key id="KEY_NEXT" mapto="nextService" flags="m" />
@@ -474,6 +478,7 @@
 		<key id="KEY_RIGHT" mapto="nextEvent" flags="mr" />
 		<key id="KEY_RED" mapto="openSimilarList" flags="m" />
 		<key id="KEY_GREEN" mapto="timerAdd" flags="m" />
+		<key id="KEY_MENU" mapto="contextMenu" flags="m" />
 		<key id="KEY_INFO" mapto="cancel" flags="m" />
 		<key id="KEY_HOME" mapto="cancel" flags="m" />
 	</map>
@@ -533,7 +538,7 @@
 	<map context="HelpActions">
 		<key id="KEY_SELECT" mapto="displayHelp" flags="m" />
 	</map>
-	
+
 	<map context="ShortcutActions">
 		<!--key id="KEY_F1" mapto="red" flags="mr" /-->
 		<!--key id="KEY_F2" mapto="yellow" flags="mr" /-->
@@ -606,15 +611,10 @@
 		<key id="KEY_PAGEDOWN" mapto="prevBouquet" flags="m" />
 		<key id="KEY_SUBTITLE" mapto="subtitles" flags="m" />
 		<key id="KEY_2" mapto="skipListbegin" flags="m" />
-		<key id="KEY_8" mapto="skipListend" flags="m" /> 
+		<key id="KEY_8" mapto="skipListend" flags="m" />
 	</map>
 
 	<map context="InfobarRedButtonActions">
 		<key id="KEY_RED" mapto="activateRedButton" flags="b" />
 	</map>
-
-	<map context="InfobarSubtitleSelectionActions">
-		<key id="KEY_SUBTITLE" mapto="subtitleSelection" flags="m" />
-	</map>
-
 </keymap>
