@@ -4,7 +4,7 @@
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-36)"
-	echo "Parameter 2: kernel (1-2)"
+	echo "Parameter 2: kernel (1-3)"
 	echo "Parameter 3: debug (y/N)"
 	echo "Parameter 4: player (1-2)"
 	echo "Parameter 5: Media Framework (1-4)"
@@ -133,16 +133,18 @@ echo "BOXTYPE=$TARGET" > config
 ##############################################
 
 case $2 in
-	[1-2]) REPLY=$2;;
+	[1-3]) REPLY=$2;;
 	*)	echo -e "\nKernel:"
-		echo "   1) STM 24 P0209"
-		echo "   2) STM 24 P0217 (recommended)"
+		echo "   1) STM 24 P0209 [2.6.32.46]"
+		echo "   2) STM 24 P0217 [2.6.32.61] (recommended)"
+		echo "   3) STM 24 P0217 [2.6.32.71] (experimental)"
 		read -p "Select kernel (1-2)? ";;
 esac
 
 case "$REPLY" in
 	1)  KERNEL="p0209";;
 	2)  KERNEL="p0217";;
+	3)  KERNEL="p0217_exp";;
 	*)  KERNEL="p0217";;
 esac
 echo "KERNEL=$KERNEL" >> config

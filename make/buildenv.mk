@@ -167,6 +167,12 @@ HOST_KERNEL_REVISION = b43f8252e9f72e5b205c8d622db3ac97736351fc
 P0217                = p0217
 endif
 
+ifeq ($(KERNEL), p0217_exp)
+KERNEL_VERSION       = 2.6.32.71_stm24_0217
+HOST_KERNEL_REVISION = a534b4cd32be858849d675d131a69235ff5369f0
+P0217                = p0217
+endif
+
 split_version=$(subst _, ,$(1))
 KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VERSION)))
 KERNEL_STM        :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
