@@ -74,6 +74,45 @@ $(ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 		$^
 	touch $(D)/$(notdir $@)
 
+#
+# crosstool-ng
+#
+CROSSTOOL_NG_VER = 1.22.0
+
+$(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz:
+	$(WGET) http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+
+crosstool-ng: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	make $(BUILD_TMP)
+	if [ ! -e $(BASE_DIR)/cross ]; then \
+		mkdir -p $(BASE_DIR)/cross; \
+	fi;
+	$(REMOVE)/crosstool-ng
+	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER).config .config; \
+		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
+		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
+		test $$NUM_CPUS -gt $$MEM_512M && NUM_CPUS=$$MEM_512M; \
+		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
+		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
+		export NG_ARCHIVE=$(ARCHIVE); \
+		export BS_BASE_DIR=$(BASE_DIR); \
+		./configure --enable-local; \
+		MAKELEVEL=0 make; \
+		./ct-ng oldconfig; \
+		./ct-ng build
+
+crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	make $(BUILD_TMP)
+	$(REMOVE)/crosstool-ng-$(CROSSTOOL_NG_VER)
+	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER).config .config; \
+		test -f ./configure || ./bootstrap && \
+		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \
+		./ct-ng menuconfig
+
 # install the RPMs
 crosstool: directories \
 $(HOSTPREFIX)/bin/unpack-rpm.sh \
