@@ -24,10 +24,35 @@ PREQS =
 preqs: $(PREQS)
 
 
-SYSTEM_TOOLS  = $(D)/module_init_tools $(D)/busybox $(D)/zlib $(D)/sysvinit $(D)/diverse-tools
-SYSTEM_TOOLS += $(D)/e2fsprogs $(D)/jfsutils
-SYSTEM_TOOLS += $(D)/portmap $(D)/nfs_utils $(D)/vsftpd $(D)/autofs
-SYSTEM_TOOLS += $(D)/driver $(D)/tools
+SYSTEM_TOOLS  = $(D)/module_init_tools
+SYSTEM_TOOLS += $(D)/busybox
+SYSTEM_TOOLS += $(D)/zlib
+SYSTEM_TOOLS += $(D)/sysvinit
+SYSTEM_TOOLS += $(D)/diverse-tools
+SYSTEM_TOOLS += $(D)/e2fsprogs
+SYSTEM_TOOLS += $(D)/jfsutils
+SYSTEM_TOOLS += $(D)/hd-idle
+SYSTEM_TOOLS += $(D)/fbshot
+SYSTEM_TOOLS += $(D)/portmap
+SYSTEM_TOOLS += $(D)/nfs_utils
+SYSTEM_TOOLS += $(D)/vsftpd
+SYSTEM_TOOLS += $(D)/autofs
+SYSTEM_TOOLS += $(D)/driver
+SYSTEM_TOOLS += $(D)/aio-grab
+SYSTEM_TOOLS += $(D)/devinit
+SYSTEM_TOOLS += $(D)/evremote2
+SYSTEM_TOOLS += $(D)/fp_control
+SYSTEM_TOOLS += $(D)/hotplug
+SYSTEM_TOOLS += $(D)/showiframe
+SYSTEM_TOOLS += $(D)/streamproxy
+SYSTEM_TOOLS += $(D)/ustslave
+SYSTEM_TOOLS += $(D)/vfdctl
+SYSTEM_TOOLS += $(D)/wait4button
+#SYSTEM_TOOLS += $(D)/libmme_host
+#SYSTEM_TOOLS += $(D)/libmmeimage
+ifeq ($(MEDIAFW), eplayer3)
+SYSTEM_TOOLS += $(D)/libeplayer3
+endif
 
 $(D)/system-tools: $(SYSTEM_TOOLS)
 	touch $@
