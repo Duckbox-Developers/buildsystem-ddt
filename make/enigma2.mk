@@ -17,6 +17,10 @@ ENIGMA2_DEPS  += $(D)/graphlcd
 E_CONFIG_OPTS += --with-graphlcd
 endif
 
+ifeq ($(EXTERNAL_LCD), lcd4linux)
+ENIGMA2_DEPS += $(D)/lcd4linux
+endif
+
 ifeq ($(MEDIAFW), gstreamer)
 E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 endif
