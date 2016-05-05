@@ -1758,7 +1758,7 @@ $(D)/libdpf: $(D)/bootstrap
 #
 # lcd4linux
 #--with-python
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
+$(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
 	$(REMOVE)/lcd4linux
 	[ -d "$(ARCHIVE)/lcd4linux.svn" ] && \
 	(cd $(ARCHIVE)/lcd4linux.svn; svn update;); \
@@ -1775,6 +1775,26 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
 			--without-ncurses \
 		; \
 		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REMOVE)/lcd4linux
+	touch $@
+
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
+	$(REMOVE)/lcd4linux
+	[ -d "$(ARCHIVE)/lcd4linux.git" ] && \
+	(cd $(ARCHIVE)/lcd4linux.git; git pull;); \
+	[ -d "$(ARCHIVE)/lcd4linux.git" ] || \
+	git clone https://github.com/TangoCash/lcd4linux.git $(ARCHIVE)/lcd4linux.git; \
+	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux; \
+	set -e; cd $(BUILD_TMP)/lcd4linux; \
+		$(BUILDENV) ./bootstrap; \
+		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
+			--prefix=/usr \
+			--with-drivers='DPF,SamsungSPF' \
+			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
+			--without-ncurses \
+		; \
+		$(MAKE) vcs_version all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/lcd4linux
 	touch $@
