@@ -247,7 +247,7 @@ $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VER).tar.gz
 # openssl
 #
 OPENSSL_VER = 1.0.2
-OPENSSL_SUBVER = g
+OPENSSL_SUBVER = h
 
 $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
@@ -256,7 +256,11 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
 	$(UNTAR)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
 	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER); \
-		$(PATCH)/openssl-$(OPENSSL_VER).patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER)-optimize-for-size.patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER)-makefile-dirs.patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER)-disable_doc_tests.patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER)-remove_timestamp_check.patch; \
+		$(PATCH)/openssl-$(OPENSSL_VER)-parallel_build.patch; \
 		$(BUILDENV) \
 		./Configure -DL_ENDIAN shared no-hw linux-generic32 \
 			--prefix=/usr \
