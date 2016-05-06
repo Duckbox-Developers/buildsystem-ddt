@@ -607,7 +607,7 @@ $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
 FBSHOT-VER = 0.3
 
 $(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz:
-	$(WGET) http://www.sfires.net/stuff/fbshot/fbshot-$(FBSHOT-VER).tar.gz
+	$(WGET) http://www.sourcefiles.org/Graphics/Tools/Capture/fbshot-$(FBSHOT-VER).tar.gz
 
 $(D)/fbshot: $(TARGETPREFIX)/bin/fbshot
 	touch $@
