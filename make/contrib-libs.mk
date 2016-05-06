@@ -1763,7 +1763,7 @@ $(D)/libdpf: $(D)/bootstrap
 #
 # lcd4linux
 #--with-python
-$(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
+$(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 	$(REMOVE)/lcd4linux
 	[ -d "$(ARCHIVE)/lcd4linux.svn" ] && \
 	(cd $(ARCHIVE)/lcd4linux.svn; svn update;); \
@@ -1784,7 +1784,7 @@ $(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
 	$(REMOVE)/lcd4linux
 	touch $@
 
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 	$(REMOVE)/lcd4linux
 	[ -d "$(ARCHIVE)/lcd4linux.git" ] && \
 	(cd $(ARCHIVE)/lcd4linux.git; git pull;); \
@@ -1805,14 +1805,14 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd2 $(D)/libusb
 	touch $@
 
 #
-# libgd2
+# libgd
 #
 GD_VER = 2.1.1
 
 $(ARCHIVE)/libgd-$(GD_VER).tar.xz:
 	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VER)/libgd-$(GD_VER).tar.xz
 
-$(D)/libgd2: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/libgd-$(GD_VER).tar.xz
+$(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/libgd-$(GD_VER).tar.xz
 	$(REMOVE)/libgd-$(GD_VER)
 	$(UNTAR)/libgd-$(GD_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libgd-$(GD_VER); \
