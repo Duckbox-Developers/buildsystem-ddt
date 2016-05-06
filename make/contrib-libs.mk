@@ -1681,6 +1681,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/libroxml-$(LIBROXML_VER).tar.gz
 			--prefix=/usr \
 			--enable-shared \
 			--disable-static \
+			--disable-roxml \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
