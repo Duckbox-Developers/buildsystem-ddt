@@ -1888,7 +1888,7 @@ ALSA_VER = 1.1.1
 $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2:
 	$(WGET) ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$(ALSA_VER).tar.bz2
 
-$(D)/libalsa: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
+$(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 	$(REMOVE)/alsa-lib-$(ALSA_VER)
 	$(UNTAR)/alsa-lib-$(ALSA_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_VER); \
@@ -1918,7 +1918,7 @@ $(D)/libalsa: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2:
 	$(WGET) ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$(ALSA_VER).tar.bz2
 
-$(D)/alsautils: $(D)/bootstrap $(D)/libalsa $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2
+$(D)/alsautils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2
 	$(REMOVE)/alsa-utils-$(ALSA_VER)
 	$(UNTAR)/alsa-utils-$(ALSA_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_VER); \
@@ -2268,7 +2268,7 @@ LIBAO_VER = 1.1.0
 $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz:
 	$(WGET) http://downloads.xiph.org/releases/ao/libao-$(LIBAO_VER).tar.gz
 
-$(D)/libao: $(D)/bootstrap $(D)/libalsa $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz
+$(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz
 	$(REMOVE)/libao-$(LIBAO_VER)
 	$(UNTAR)/libao-$(LIBAO_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libao-$(LIBAO_VER); \

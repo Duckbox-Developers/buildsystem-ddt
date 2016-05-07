@@ -11,7 +11,7 @@ $(TARGETPREFIX)/var/etc/.version:
 	echo "git=`git describe`" >> $@
 
 NEUTRINO_DEPS  = $(D)/bootstrap $(D)/lirc $(D)/libcurl $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype
-NEUTRINO_DEPS += $(D)/libalsa $(D)/ffmpeg $(D)/libdvbsi++ $(D)/libsigc++ $(D)/libopenthreads $(D)/libusb
+NEUTRINO_DEPS += $(D)/alsa-lib $(D)/ffmpeg $(D)/libdvbsi++ $(D)/libsigc++ $(D)/libopenthreads $(D)/libusb
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/lua-feedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(D)/pugixml $(D)/openvpn
 
