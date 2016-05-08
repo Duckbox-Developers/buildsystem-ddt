@@ -66,10 +66,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/mme_host.ko transport0=shm
 
    echo "init AVS"
-   insmod $MODDIR/avs.ko type=stv6412
-   if [ `lsmod | grep -c "avs"` -eq 0 ]; then
-      insmod $MODDIR/avs.ko type=avs_pio
-   fi
+   insmod $MODDIR/avs.ko type=stv6418
 
    echo "init player"
    insmod $MODDIR/mmelog.ko

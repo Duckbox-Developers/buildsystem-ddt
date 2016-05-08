@@ -61,7 +61,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    esac
 
    echo "init AVS"
-   insmod $MODDIR/avs.ko type=stv6412
+   insmod $MODDIR/avs.ko type=stv6418
 
    echo "load a/v firmware"
    /bin/ustslave /dev/st231-1 /boot/audio.elf
