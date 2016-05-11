@@ -712,10 +712,6 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cube
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif
 #
-# channellist / tuxtxt
-#
-	cp -aR $(TARGETPREFIX)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
-#
 # iso-codes
 #
 	cp -aR $(TARGETPREFIX)/usr/local/share/iso-codes $(RELEASE_DIR)/usr/share/
