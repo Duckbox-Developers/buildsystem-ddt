@@ -700,6 +700,10 @@ endif
 		cp $(TARGETPREFIX)/usr/local/bin/udpstreampes $(RELEASE_DIR)/usr/local/bin/; \
 	fi
 #
+# channellist / tuxtxt
+#
+	cp -aR $(TARGETPREFIX)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
+#
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
