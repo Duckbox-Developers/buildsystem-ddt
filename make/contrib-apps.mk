@@ -32,7 +32,7 @@ $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES
 #
 # host_pkgconfig
 #
-PKGCONFIG_VER = 0.29
+PKGCONFIG_VER = 0.29.1
 
 $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz:
 	$(WGET) http://pkgconfig.freedesktop.org/releases/pkg-config-$(PKGCONFIG_VER).tar.gz
