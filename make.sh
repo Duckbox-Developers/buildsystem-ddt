@@ -5,7 +5,7 @@
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-36)"
 	echo "Parameter 2: kernel (1-3)"
-	echo "Parameter 3: optimization (1-3)"
+	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: player (1-2)"
 	echo "Parameter 5: Media Framework (1-4)"
 	echo "Parameter 6: External LCD support (1-3)"
@@ -152,18 +152,20 @@ echo "KERNEL=$KERNEL" >> config
 ##############################################
 
 case $3 in
-	[1-3]) REPLY=$3;;
+	[1-4]) REPLY=$3;;
 	*)	echo -e "\nOptimization:"
 		echo "   1) optimization for size"
 		echo "   2) optimization normal"
-		echo "   3) optimization debug"
+		echo "   3) Kernel debug"
+		echo "   4) debug / Kernel debug"
 		read -p "Select optimization (1-3)? ";;
 esac
 
 case "$REPLY" in
 	1)  OPTIMIZATIONS="size";;
 	2)  OPTIMIZATIONS="normal";;
-	3)  OPTIMIZATIONS="debug / Kernel debug";;
+	3)  OPTIMIZATIONS="kerneldebug";;
+	4)  OPTIMIZATIONS="debug";;
 	*)  OPTIMIZATIONS="size";;
 esac
 echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
