@@ -50,8 +50,25 @@ CCACHE                = /usr/bin/ccache
 
 BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess || /usr/share/misc/config.guess)
 
+
+TARGET_CFLAGS         = -pipe
+
+OPTIMIZATIONS        ?= size
+ifeq ($(OPTIMIZATIONS), debug)
+TARGET_CFLAGS        += -O0 -g -ggdb3
+DEBUG_STR             = .debug
+endif
+ifeq ($(OPTIMIZATIONS), size)
+TARGET_CFLAGS        += -Os
+DEBUG_STR             =
+endif
+ifeq ($(OPTIMIZATIONS), normal)
+TARGET_CFLAGS        += -O2
+DEBUG_STR             =
+endif
+
 TARGETLIB             = $(TARGETPREFIX)/usr/lib
-TARGET_CFLAGS         = -pipe -Os -I$(TARGETPREFIX)/usr/include
+TARGET_CFLAGS        += -I$(TARGETPREFIX)/usr/include
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
 TARGET_CXXFLAGS       = $(TARGET_CFLAGS)
 TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGETPREFIX)/usr/lib -L$(TARGETPREFIX)/usr/lib -L$(TARGETPREFIX)/lib
@@ -149,12 +166,6 @@ MAKE_OPTS := \
 #
 # kernel
 #
-ifeq ($(KERNELDEBUG), debug)
-DEBUG_STR          = .debug
-else
-DEBUG_STR          =
-endif
-
 ifeq ($(KERNEL), p0209)
 KERNEL_VERSION       = 2.6.32.46_stm24_0209
 HOST_KERNEL_REVISION = 8c676f1a85935a94de1fb103c0de1dd25ff69014

@@ -5,7 +5,7 @@
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-36)"
 	echo "Parameter 2: kernel (1-3)"
-	echo "Parameter 3: debug (y/N)"
+	echo "Parameter 3: optimization (1-3)"
 	echo "Parameter 4: player (1-2)"
 	echo "Parameter 5: Media Framework (1-4)"
 	echo "Parameter 6: External LCD support (1-3)"
@@ -138,7 +138,7 @@ case $2 in
 		echo "   1) STM 24 P0209 [2.6.32.46]"
 		echo "   2) STM 24 P0217 [2.6.32.61] (recommended)"
 		echo "   3) STM 24 P0217 [2.6.32.71] (experimental)"
-		read -p "Select kernel (1-2)? ";;
+		read -p "Select kernel (1-3)? ";;
 esac
 
 case "$REPLY" in
@@ -151,14 +151,22 @@ echo "KERNEL=$KERNEL" >> config
 
 ##############################################
 
-echo -e "\nKernel debug:"
-if [ "$3" ]; then
-	REPLY="$3"
-else
-	REPLY=N
-	read -p "   Activate debug (y/N)? "
-fi
-[ "$REPLY" == "y" -o "$REPLY" == "Y" ] && echo "KERNELDEBUG=debug" >> config
+case $3 in
+	[1-3]) REPLY=$3;;
+	*)	echo -e "\nOptimization:"
+		echo "   1) optimization for size"
+		echo "   2) optimization normal"
+		echo "   3) optimization debug"
+		read -p "Select optimization (1-3)? ";;
+esac
+
+case "$REPLY" in
+	1)  OPTIMIZATIONS="size";;
+	2)  OPTIMIZATIONS="normal";;
+	3)  OPTIMIZATIONS="debug / Kernel debug";;
+	*)  OPTIMIZATIONS="size";;
+esac
+echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 
 ##############################################
 
@@ -310,7 +318,7 @@ case $7 in
 		echo "   2) Enigma2 (includes WLAN drivers)"
 		echo "   3) Neutrino"
 		echo "   4) Neutrino (includes WLAN drivers)"
-		read -p "Select Image to build (1-5)? ";;
+		read -p "Select Image to build (1-4)? ";;
 esac
 
 case "$REPLY" in
