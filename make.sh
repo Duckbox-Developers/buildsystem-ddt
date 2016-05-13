@@ -2,6 +2,16 @@
 
 ##############################################
 
+if [ "$(id -u)" = "0" ]; then
+	echo ""
+	echo "You are running as root. Don't do this, it's dangerous."
+	echo "Refusing to build. Good bye."
+	echo ""
+	exit 1
+fi
+
+##############################################
+
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-36)"
 	echo "Parameter 2: kernel (1-3)"
