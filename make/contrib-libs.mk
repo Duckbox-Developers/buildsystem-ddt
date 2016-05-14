@@ -1922,13 +1922,15 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2:
 	$(WGET) ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$(ALSA_VER).tar.bz2
 
-$(D)/alsautils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2
+$(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2
 	$(REMOVE)/alsa-utils-$(ALSA_VER)
 	$(UNTAR)/alsa-utils-$(ALSA_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_VER); \
-		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm)//g" Makefile.am; \
+		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
+		autoreconf -fi -I $(TARGETPREFIX)/usr/share/aclocal; \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--mandir=/.remove \
 			--with-curses=ncursesw \
 			--disable-bat \
 			--disable-nls \
@@ -1941,6 +1943,8 @@ $(D)/alsautils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).t
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/alsa-utils-$(ALSA_VER)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/amixer $(TARGETPREFIX)/etc/init.d/amixer
+	install -m 644 $(SKEL_ROOT)/etc/amixer.conf $(TARGETPREFIX)/etc/amixer.conf
 	touch $@
 
 #

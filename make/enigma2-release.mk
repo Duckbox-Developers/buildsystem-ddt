@@ -782,6 +782,7 @@ endif
 		cp $(TARGETPREFIX)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
 		cp $(TARGETPREFIX)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp $(TARGETPREFIX)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
+		cp $(TARGETPREFIX)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
 	fi
 #
 # nfs-utils

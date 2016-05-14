@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# restore amixer settings from /etc/amixer.conf on boot
+# card, device etc. can be configured in /etc/asound.conf
+#
+case $1 in
+start)
+	if [ -e /etc/amixer.conf ] ; then
+		amixer -s < /etc/amixer.conf &
+	fi
+	;;
+esac
+exit 0
