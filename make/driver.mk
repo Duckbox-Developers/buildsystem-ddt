@@ -21,6 +21,5 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/linux-kernel
 	touch $@
 
 driver-clean:
+	$(MAKE) -C $(DRIVER_DIR) ARCH=sh KERNEL_LOCATION=$(KERNEL_DIR) distclean
 	rm -f $(D)/driver
-	$(MAKE) -C $(DRIVER_DIR) ARCH=sh \
-	KERNEL_LOCATION=$(KERNEL_DIR) distclean

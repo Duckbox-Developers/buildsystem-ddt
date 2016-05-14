@@ -1,10 +1,17 @@
 #
 # enigma2
 #
-ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(D)/libcurl $(D)/libid3tag $(D)/libmad $(D)/libpng $(D)/libjpeg $(D)/libgif
-ENIGMA2_DEPS += $(D)/libfreetype $(D)/libfribidi $(D)/libsigc++_e2 $(D)/libexpat $(D)/libdvbsi++ $(D)/sdparm $(D)/minidlna $(D)/ethtool
+ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(D)/lirc $(D)/libcurl $(D)/libid3tag $(D)/libmad
+ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype
+ENIGMA2_DEPS += $(D)/alsa-utils $(D)/ffmpeg
+ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc++ $(D)/libexpat $(D)/libdvbsi++  $(D)/libusb
+ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
 ENIGMA2_DEPS += python-all
-ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2 $(D)/wpa_supplicant $(D)/wireless_tools
+ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
+
+ifeq ($(WLANDRIVER), wlandriver)
+ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
+endif
 
 E_CPPFLAGS    = -I$(DRIVER_DIR)/include
 E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
@@ -37,8 +44,7 @@ endif
 #
 # yaud-enigma2
 #
-yaud-enigma2: yaud-none $(D)/host_python $(D)/lirc \
-		$(D)/enigma2 $(D)/enigma2-plugins $(D)/release_enigma2
+yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/release_enigma2
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #

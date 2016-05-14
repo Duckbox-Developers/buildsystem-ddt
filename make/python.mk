@@ -563,7 +563,7 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(REMOVE)/livestreamersrv
 	touch $@
 
-PYTHON_DEPS  = $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_twisted $(D)/python_pyopenssl
+PYTHON_DEPS  = $(D)/host_python $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_twisted $(D)/python_pyopenssl
 PYTHON_DEPS += $(D)/python_wifi $(D)/python_imaging $(D)/python_pyusb $(D)/python_pycrypto $(D)/python_pyasn1 $(D)/python_mechanize
 PYTHON_DEPS += $(D)/python_six $(D)/python_requests $(D)/python_futures $(D)/python_singledispatch
 PYTHON_DEPS += $(D)/python_livestreamer $(D)/python_livestreamersrv
