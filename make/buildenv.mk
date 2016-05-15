@@ -48,7 +48,7 @@ MAINTAINER           ?= $(shell whoami)
 
 CCACHE                = /usr/bin/ccache
 
-BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess || /usr/share/misc/config.guess)
+BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess 2>/dev/null || /usr/share/misc/config.guess 2>/dev/null)
 
 OPTIMIZATIONS        ?= size
 TARGET_CFLAGS         = -pipe
