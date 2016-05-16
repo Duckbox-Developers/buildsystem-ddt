@@ -22,6 +22,7 @@ clean: depsclean
 	-$(MAKE) driver-clean
 	-rm -rf $(BASE_DIR)/tufsbox
 	-rm -rf $(D)/linux-kernel
+	-rm -rf $(D)/linux-kernel.do_compile
 
 distclean:
 	-$(MAKE) -C $(APPS_DIR)/tools/aio-grab distclean

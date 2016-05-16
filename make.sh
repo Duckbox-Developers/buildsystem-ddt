@@ -185,101 +185,19 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 case $4 in
 	[1-2]) REPLY=$4;;
 	*)	echo -e "\nPlayer:"
-		echo "   1) Player 191 (stmfb-3.1_stm24_0102)"
+		echo "   1) Player XXX (stmfb-3.1_stm24_0104, for internal testing)"
 		echo "   2) Player 191 (stmfb-3.1_stm24_0104, recommended)"
 		read -p "Select player (1-2)? ";;
 esac
 
 case "$REPLY" in
-	1) 	echo "PLAYER=player191" >> config
-		echo "MULTICOM=multicom324" >> config
-		cd ../driver/include/
-		if [ -L player2 ]; then
-			rm player2
-		fi
-
-		if [ -L stmfb ]; then
-			rm stmfb
-		fi
-
-		if [ -L multicom ]; then
-			rm multicom
-		fi
-
-		ln -s player2_191 player2
-		ln -s stmfb-3.1_stm24_0102 stmfb
-		ln -s ../multicom-3.2.4/include multicom
-		cd - &>/dev/null
-
-		cd ../driver/
-		if [ -L player2 ]; then
-			rm player2
-		fi
-
-		if [ -L multicom ]; then
-			rm multicom
-		fi
-
-		ln -s player2_191 player2
-		ln -s multicom-3.2.4 multicom
-		echo "# Automatically generated config: don't edit" > .config
-		echo "#" >> .config
-		echo "export CONFIG_PLAYER_191=y" >> .config
-		echo "export CONFIG_MULTICOM324=y" >> .config
-		cd - &>/dev/null
-
-		cd ../driver/stgfb
-		if [ -L stmfb ]; then
-			rm stmfb
-		fi
-		ln -s stmfb-3.1_stm24_0102 stmfb
-		cd - &>/dev/null
+	1)	echo "PLAYER_VER=XXX" >> config
+		echo "MULTICOM_VER=324" >> config
 	;;
-	2) 	echo "PLAYER=player191" >> config
-		echo "MULTICOM=multicom324" >> config
-		cd ../driver/include/
-		if [ -L player2 ]; then
-			rm player2
-		fi
-
-		if [ -L stmfb ]; then
-			rm stmfb
-		fi
-
-		if [ -L multicom ]; then
-			rm multicom
-		fi
-
-		ln -s player2_191 player2
-		ln -s stmfb-3.1_stm24_0104 stmfb
-		ln -s ../multicom-3.2.4/include multicom
-		cd - &>/dev/null
-
-		cd ../driver/
-		if [ -L player2 ]; then
-			rm player2
-		fi
-
-		if [ -L multicom ]; then
-			rm multicom
-		fi
-
-		ln -s player2_191 player2
-		ln -s multicom-3.2.4 multicom
-		echo "# Automatically generated config: don't edit" > .config
-		echo "#" >> .config
-		echo "export CONFIG_PLAYER_191=y" >> .config
-		echo "export CONFIG_MULTICOM324=y" >> .config
-		cd - &>/dev/null
-
-		cd ../driver/stgfb
-		if [ -L stmfb ]; then
-			rm stmfb
-		fi
-		ln -s stmfb-3.1_stm24_0104 stmfb
-		cd - &>/dev/null
+	2)	echo "PLAYER_VER=191" >> config
+		echo "MULTICOM_VER=324" >> config
 	;;
-	*) PLAYER="--enable-player191 --enable-multicom324";;
+	*) ;;
 esac
 
 ##############################################

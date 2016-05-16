@@ -221,20 +221,25 @@ endif
 #
 # multicom
 #
-ifeq ($(MULTICOM), multicom324)
+ifeq ($(MULTICOM_VER), 324)
 MULTICOM324        = multicom324
+MULTICOM_LINK      = multicom-3.2.4
 else
 MULTICOM406        = multicom406
+MULTICOM_LINK      = multicom-4.0.6
 endif
 
 #
 # player 2
 #
-ifeq ($(PLAYER), player191)
+ifeq ($(PLAYER_VER), 191)
 PLAYER2            = PLAYER191=player191
 PLAYER191          = 1
+PLAYER2_LINK       = player2_191
 else
-PLAYER2            =
+PLAYER2            = PLAYERXXX=playerxxx
+PLAYERXXX          = 1
+PLAYER2_LINK       = player2_xxx
 endif
 
 #

@@ -114,7 +114,7 @@ crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 		./ct-ng menuconfig
 
 # install the RPMs
-crosstool: directories \
+crosstool: directories driver-symlink \
 $(HOSTPREFIX)/bin/unpack-rpm.sh \
 crosstool-rpminstall
 	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
@@ -140,8 +140,6 @@ crosstool-rpminstall
 		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGETPREFIX)/etc; \
 		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGETPREFIX)/etc; \
 	fi
-	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGETPREFIX)/usr/include/linux
-	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGETPREFIX)/usr/include/linux/dvb
 	touch $(D)/$(notdir $@)
 
 #
