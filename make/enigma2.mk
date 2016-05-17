@@ -8,6 +8,7 @@ ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc++ $(D)/libexpat $(D)/libdvbsi++  $(
 ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
 ENIGMA2_DEPS += python-all
 ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
+ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
 
 ifeq ($(WLANDRIVER), wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
@@ -18,6 +19,7 @@ E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
 E_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools
+E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
 
 ifeq ($(EXTERNAL_LCD), externallcd)
 ENIGMA2_DEPS  += $(D)/graphlcd
@@ -40,6 +42,8 @@ ifeq ($(MEDIAFW), gst-eplayer3)
 ENIGMA2_DEPS  += $(D)/gst_plugins_dvbmediasink
 E_CONFIG_OPTS += --with-gstversion=1.0 --enable-libeplayer3 --enable-mediafwgstreamer
 endif
+
+E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
 
 #
 # yaud-enigma2

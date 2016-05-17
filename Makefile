@@ -47,11 +47,11 @@ printenv:
 ifeq ($(IMAGE), neutrino)
 	@echo "LOCAL_NEUTRINO_BUILD_OPTIONS :  $(LOCAL_NEUTRINO_BUILD_OPTIONS)"
 	@echo "LOCAL_NEUTRINO_CFLAGS        :  $(LOCAL_NEUTRINO_CFLAGS)"
-	@echo "LOCAL_NEUTRINO_DEPS          :  $(LOCAL_NEUTRINO_CFLAGS)"
+	@echo "LOCAL_NEUTRINO_DEPS          :  $(LOCAL_NEUTRINO_DEPS)"
 else ifeq ($(IMAGE), enigma2)
 	@echo "LOCAL_ENIGMA2_BUILD_OPTIONS  :  $(LOCAL_ENIGMA2_BUILD_OPTIONS)"
-	@echo "LOCAL_ENIGMA2_CFLAGS         :  $(LOCAL_ENIGMA2_CFLAGS)"
-	@echo "LOCAL_ENIGMA2_DEPS           :  $(LOCAL_ENIGMA2_CFLAGS)"
+	@echo "LOCAL_ENIGMA2_CPPFLAGS       :  $(LOCAL_ENIGMA2_CPPFLAGS)"
+	@echo "LOCAL_ENIGMA2_DEPS           :  $(LOCAL_ENIGMA2_DEPS)"
 endif
 	@echo ""
 	@make --no-print-directory toolcheck
