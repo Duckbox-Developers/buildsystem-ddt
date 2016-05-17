@@ -13,6 +13,15 @@ find-%:
 toolcheck: $(TOOLCHECK)
 	@echo "All required tools seem to be installed."
 	@echo
+	@for i in audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111; do \
+		if [ ! -e $(SKEL_ROOT)/boot/$$i.elf ]; then \
+			echo -e "\n    ERROR: One or more .elf files are missing in $(SKEL_ROOT)/boot!"; \
+			echo "           $$i.elf is one of them"; \
+			echo; \
+			echo "    Correct this and retry."; \
+			echo; \
+		fi; \
+	done
 	@if test "$(subst /bin/,,$(shell readlink /bin/sh))" != bash; then \
 		echo "WARNING: /bin/sh is not linked to bash."; \
 		echo "         This configuration might work, but is not supported."; \
