@@ -253,10 +253,10 @@ ARIVALINK200_PATCHES_24 = $(COMMON_PATCHES_24) \
 HOST_KERNEL_PATCHES = $(KERNEL_PATCHES_24)
 HOST_KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VERSION))_$(BOXTYPE).config$(DEBUG_STR)
 
-$(D)/linux-kernel: $(D)/bootstrap $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) | host_u_boot_tools \
+$(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	$(if $(HOST_KERNEL_PATCHES),$(HOST_KERNEL_PATCHES:%=$(PATCHES)/$(BUILD_CONFIG)/%))
-	rm -rf $(BUILD_TMP)/linux-sh4*
-	REPO=https://github.com/MaxWiesel/linux-sh4-2.6.32.y.git;protocol=git;branch=stmicro; \
+	rm -rf $(KERNEL_DIR)
+	REPO=https://github.com/MaxWiesel/linux-sh4-2.6.32.y.git;protocol=https;branch=stmicro; \
 	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.max.git" ] && \
 	(echo "Updating STlinux kernel source"; cd $(ARCHIVE)/linux-sh4-2.6.32.max.git; git pull;); \
 	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.max.git" ] || \
@@ -272,19 +272,33 @@ $(D)/linux-kernel: $(D)/bootstrap $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFI
 		sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(CDK_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
 	-rm $(KERNEL_DIR)/localversion*
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm
+	touch $@
+
+$(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
+	set -e; cd $(KERNEL_DIR); \
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- \
-		 DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
+	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
+	touch $@
+
+$(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGETPREFIX)/boot/vmlinux-sh4-$(KERNEL_VERSION)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGETPREFIX)/boot/System.map-sh4-$(KERNEL_VERSION)
-	install -m 644 $(KERNEL_DIR)/COPYING $(TARGETPREFIX)/boot/LICENSE
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGETPREFIX)/boot/
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/build || true
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/source || true
+	touch $@
+
+$(D)/kernel-headers: linux-kernel.do_prepare
+	cd $(KERNEL_DIR); \
+		install -d $(TARGETPREFIX)/usr/include; \
+		cp -a include/linux $(TARGETPREFIX)/usr/include; \
+		cp -a include/asm-sh $(TARGETPREFIX)/usr/include/asm; \
+		cp -a include/asm-generic $(TARGETPREFIX)/usr/include; \
+		cp -a include/mtd $(TARGETPREFIX)/usr/include
 	touch $@
 
 $(D)/tfkernel.do_compile:
@@ -292,8 +306,15 @@ $(D)/tfkernel.do_compile:
 		$(MAKE) $(if $(TF7700),TF7700=y) ARCH=sh CROSS_COMPILE=$(target)- uImage
 	touch $@
 
-linux-kernel-clean:
+linux-kernel-distclean:
 	rm -f $(D)/linux-kernel
+	rm -f $(D)/linux-kernel.do_compile
+	rm -f $(D)/linux-kernel.do_prepare
+
+linux-kernel-clean:
+	-$(MAKE) -C $(KERNEL_DIR) clean
+	rm -f $(D)/linux-kernel
+	rm -f $(D)/linux-kernel.do_compile
 
 #
 # Helper
