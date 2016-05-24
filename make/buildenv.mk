@@ -54,19 +54,15 @@ OPTIMIZATIONS        ?= size
 TARGET_CFLAGS         = -pipe
 ifeq ($(OPTIMIZATIONS), size)
 TARGET_CFLAGS        += -Os
-DEBUG_STR             =
 endif
 ifeq ($(OPTIMIZATIONS), normal)
 TARGET_CFLAGS        += -O2
-DEBUG_STR             =
 endif
 ifeq ($(OPTIMIZATIONS), kerneldebug)
 TARGET_CFLAGS        += -O2
-DEBUG_STR             = .debug
 endif
 ifeq ($(OPTIMIZATIONS), debug)
 TARGET_CFLAGS        += -O0 -g
-DEBUG_STR             = .debug
 endif
 
 TARGET_CFLAGS        += -I$(TARGETPREFIX)/usr/include
