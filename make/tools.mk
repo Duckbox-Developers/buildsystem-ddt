@@ -13,6 +13,7 @@ tools-clean:
 	-$(MAKE) -C $(APPS_DIR)/tools/libmme_image clean
 	-$(MAKE) -C $(APPS_DIR)/tools/showiframe clean
 	-$(MAKE) -C $(APPS_DIR)/tools/spf_tool clean
+	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol clean
 	-$(MAKE) -C $(APPS_DIR)/tools/streamproxy clean
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave clean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl clean
@@ -133,6 +134,18 @@ $(D)/tools-showiframe: $(D)/bootstrap
 #
 $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 	set -e; cd $(APPS_DIR)/tools/spf_tool; \
+		$(CONFIGURE) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	touch $@
+
+#
+# stfbcontrol
+#
+$(D)/tools-stfbcontrol: $(D)/bootstrap
+	set -e; cd $(APPS_DIR)/tools/stfbcontrol; \
 		$(CONFIGURE) \
 			--prefix= \
 		; \

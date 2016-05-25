@@ -38,6 +38,7 @@ TOOLS += $(D)/tools-evremote2
 TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-hotplug
 TOOLS += $(D)/tools-showiframe
+TOOLS += $(D)/tools-stfbcontrol
 TOOLS += $(D)/tools-streamproxy
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl

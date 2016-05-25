@@ -15,6 +15,7 @@ clean: depsclean
 	-$(MAKE) -C $(APPS_DIR)/tools/libmme_image clean
 	-$(MAKE) -C $(APPS_DIR)/tools/showiframe clean
 	-$(MAKE) -C $(APPS_DIR)/tools/spf_tool clean
+	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol clean
 	-$(MAKE) -C $(APPS_DIR)/tools/streamproxy clean
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave clean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl clean
@@ -35,6 +36,7 @@ distclean:
 	-$(MAKE) -C $(APPS_DIR)/tools/libmme_image distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/showiframe distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/spf_tool distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/streamproxy distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
