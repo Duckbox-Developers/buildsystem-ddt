@@ -772,8 +772,16 @@ endif
 # graphlcd
 #
 	if [ -e $(RELEASE_DIR)/usr/lib/libglcddrivers.so ]; then \
-		cp -f $(TARGETPREFIX)/etc/graphlcd.conf $(RELEASE_DIR)/etc/graphlcd.conf; \
+		cp -f $(TARGETPREFIX)/etc/graphlcd.conf $(RELEASE_DIR)/etc/; \
 		rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*; \
+	fi
+#
+# lcd4linux
+#
+	if [ -e $(TARGETPREFIX)/usr/bin/lcd4linux ]; then \
+		cp -f $(TARGETPREFIX)/usr/bin/lcd4linux $(RELEASE_DIR)/usr/bin/; \
+		cp -f $(TARGETPREFIX)/etc/init.d/lcd4linux $(RELEASE_DIR)/etc/init.d/; \
+		cp -a $(TARGETPREFIX)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
 	fi
 #
 # minidlna
