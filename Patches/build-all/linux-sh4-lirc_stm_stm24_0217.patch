@@ -1,0 +1,13 @@
+--- a/drivers/char/lirc/lirc_stm.c
++++ b/drivers/char/lirc/lirc_stm.c
+@@ -137,8 +137,8 @@
+ #define LIRC_STM_MAX_SYMBOLS		100
+ #define LIRC_STM_SCD_MAX_SYMBOLS        32
+ #define LIRC_STM_BUFSIZE		((LIRC_STM_SCD_MAX_SYMBOLS + \
+-					LIRC_STM_MAX_SYMBOLS) * \
+-					sizeof(lirc_t))
++					(2*LIRC_STM_MAX_SYMBOLS) * \
++					sizeof(lirc_t)))
+ 
+ /* Bit settings */
+ #define LIRC_STM_IS_OVERRUN	 	0x04

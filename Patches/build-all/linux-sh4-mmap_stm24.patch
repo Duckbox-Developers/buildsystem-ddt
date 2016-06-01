@@ -1,0 +1,12 @@
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -291,9 +291,6 @@
+ 			mem[f_k] = X;
+ 			continue;
+ 		default:
+-			WARN_RATELIMIT(1, "Unknown code:%u jt:%u tf:%u k:%u\n",
+-				       fentry->code, fentry->jt,
+-				       fentry->jf, fentry->k);
+ 			return 0;
+ 		}
+ 

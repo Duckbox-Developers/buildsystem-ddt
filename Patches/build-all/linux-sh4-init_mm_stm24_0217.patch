@@ -1,0 +1,11 @@
+--- a/arch/sh/mm/init.c
++++ b/arch/sh/mm/init.c
+@@ -133,6 +133,8 @@
+ 		j = 0;
+ 	}
+ }
++
++EXPORT_SYMBOL(init_mm);
+ #endif	/* CONFIG_MMU */
+ 
+ /*

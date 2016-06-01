@@ -1,0 +1,52 @@
+From 4be445bba4733e17715bcd40c5dfb5a08dbe09e7 Mon Sep 17 00:00:00 2001
+From: Carmelo AMOROSO <carmelo.amoroso@st.com>
+Date: Fri, 19 Sep 2014 15:03:30 +0000
+Subject: [PATCH 1/1] stm: gpio: fix build if CONFIG_BUG is not enabled
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf8
+Content-Transfer-Encoding: 8bit
+
+On hardened system CONFIG_BUG is not enabled, so __WARN macro is not
+defined leading to the following build error:
+
+ CC      drivers/stm/gpio.o
+drivers/stm/gpio.c: In function âstm_gpio_get_directionâ:
+drivers/stm/gpio.c:654:3: error: implicit declaration of function
+â__WARNâ [-Werror=implicit-function-declaration]
+   __WARN();
+   ^
+
+Fix it by replacing __WARN with WARN_ON(1) that is defined as a nop in
+!CONFIG_BUG case.
+
+Reported-by: Philippe Chatel <philippe.chatel@st.com>
+Signed-off-by: Carmelo Amoroso <carmelo.amoroso@st.com>
+---
+ drivers/stm/gpio.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/stm/gpio.c b/drivers/stm/gpio.c
+index 4e84289..d05b249 100644
+--- a/drivers/stm/gpio.c
++++ b/drivers/stm/gpio.c
+@@ -667,7 +667,7 @@
+ 			break;
+ 		default:
+ 			/* Should never get here... */
+-			__WARN();
++			WARN_ON(1);
+ 			direction = "unknown configuration";
+ 			break;
+ 		}
+@@ -709,7 +709,7 @@
+ 					trigger = "level-low";
+ 					break;
+ 				default:
+-					__WARN();
++					WARN_ON(1);
+ 					trigger = "unknown";
+ 					break;
+ 				}
+-- 
+1.7.1
+

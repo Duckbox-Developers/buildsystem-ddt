@@ -1,0 +1,11 @@
+--- a/fs/cifs/cifspdu.h
++++ b/fs/cifs/cifspdu.h
+@@ -118,7 +118,7 @@
+ /*
+  * Starting value for maximum SMB size negotiation
+  */
+-#define CIFS_MAX_MSGSIZE (4*4096)
++#define CIFS_MAX_MSGSIZE (16*4096)
+ 
+ /*
+  * Size of encrypted user password in bytes

@@ -1,11 +1,1 @@
---- linux-sh4/drivers/char/lirc/lirc_stm.c	2012-01-08 19:13:04.000000000 +0100
-+++ linux-sh4/drivers/char/lirc/lirc_stm.c	2012-02-21 12:00:05.695416629 +0100
-@@ -132,7 +132,7 @@
- 
- #define LIRC_STM_MINOR			0
- #define LIRC_STM_MAX_SYMBOLS		100
--#define LIRC_STM_BUFSIZE		(LIRC_STM_MAX_SYMBOLS*sizeof(lirc_t))
-+#define LIRC_STM_BUFSIZE		(2*LIRC_STM_MAX_SYMBOLS*sizeof(lirc_t))
- 
- /* Bit settings */
- #define LIRC_STM_IS_OVERRUN	 	0x04
+../build-all/linux-sh4-lirc_stm_stm24_0209.patch

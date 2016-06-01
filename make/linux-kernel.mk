@@ -7,9 +7,10 @@ DEPMOD = $(HOSTPREFIX)/bin/depmod
 # Patches Kernel 24
 #
 COMMON_PATCHES_24 = \
+		linux-sh4-makefile_stm24.patch \
+		linux-stm-gpio-fix-build-CONFIG_BUG.patch \
 		linux-kbuild-generate-modules-builtin_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-linuxdvb_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-makefile_stm24.patch) \
 		linux-sh4-sound_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-time_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-init_mm_stm24_$(KERNEL_LABEL).patch \
@@ -22,7 +23,7 @@ COMMON_PATCHES_24 = \
 		linux-tune_stm24.patch \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
-		$(if $(P0217),linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch) \
+		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0217),linux-perf-warning-fix_stm24_$(KERNEL_LABEL).patch) \
 		$(if $(P0217),linux-ratelimit-bug_stm24_$(KERNEL_LABEL).patch) \
 		$(if $(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
