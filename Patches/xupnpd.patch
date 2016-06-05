@@ -330,3 +330,36 @@
  cfg.ui_path='./ui/'
  cfg.drive=''                    -- reload playlists only if drive state=active/idle, example: cfg.drive='/dev/sda'
  cfg.profiles='./profiles/'      -- device profiles feature
+--- a/src/ui/xupnpd_ui.lua
++++ b/src/ui/xupnpd_ui.lua
+@@ -531,7 +531,7 @@ function ui_api_call(args)
+ end
+ 
+ function ui_restart()
+-    if core.restart(cfg.pid_file,"./xupnpd") then http.send('<h3>Attempt to restart...</h3>') else http.send('<h3>Unable to restart.</h3>') end
++    if core.restart(cfg.pid_file,"/usr/bin/xupnpd") then http.send('<h3>Attempt to restart...</h3>') else http.send('<h3>Unable to restart.</h3>') end
+ 
+     http.send('<br/><form method=get action="/ui"><input class="btn btn-primary" type=submit value=OK></form>')
+ 
+--- a/src/xupnpd_m3u.lua
++++ b/src/xupnpd_m3u.lua
+@@ -79,6 +79,7 @@ end
+ 
+ function reload_playlists()
+     playlist_data={}
++    collectgarbage()   -- free unused memory immediately
+     playlist_data.name='root'
+     playlist_data.objid='0'
+     playlist_data.size=0
+--- a/src/xupnpd_main.lua
++++ b/src/xupnpd_main.lua
+@@ -2,6 +2,9 @@
+ -- clark15b@gmail.com
+ -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+ 
++-- fix memleak on coolstream boxes by changing collectgarbage() interval from 200 (default) to 50
++collectgarbage('setpause', 50)
++
+ http.sendurl_buffer_size(32768,1);
+ 
+ if cfg.daemon==true then core.detach() end
