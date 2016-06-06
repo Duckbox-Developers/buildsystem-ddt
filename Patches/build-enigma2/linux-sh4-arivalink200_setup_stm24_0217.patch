@@ -37,7 +37,7 @@
 ! 					(phydev->phy_id == 0x00181b80) || // Davicom DM9131
 ! 					(phydev->phy_id == 0x1c040011) || // STe100p
 ! 					(phydev->phy_id == 0x00061c50) || // STe101p
-!                                      (phydev->phy_id == 0x00061c52) || // STe101p-1A
+!                   (phydev->phy_id == 0x00061c52) || // STe101p-1A
 ! 					(phydev->phy_id == 0x00008201) || // RTL8201CP
 ! 					(phydev->phy_id == 0x0007c0f1) || // Pingulux
 ! 					(phydev->phy_id == 0x001cc912)))  // RTL821x
@@ -501,7 +501,7 @@ diff -urN linux-sh4-2.6.32.61_stm24_0215.org/drivers/usb/core/hub.c linux-sh4/dr
  		}
  	} else {	/* Self-powered external hub */
  		/* FIXME: What about battery-powered external hubs that
---- linux-sh4/drivers/stm/stx7100_hispeed.c.orig
+--- linux-sh4/drivers/stm/stx7100_hispeed.c
 +++ linux-sh4/drivers/stm/stx7100_hispeed.c
 @@ -193,6 +193,12 @@
  	 */

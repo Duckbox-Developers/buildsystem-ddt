@@ -280,6 +280,23 @@ ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	@echo "CONFIG_PRINTK=y" >> "$(KERNEL_DIR)/.config"
 	@echo "CONFIG_PRINTK_TIME=y" >> "$(KERNEL_DIR)/.config"
 endif
+ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
+	@echo "Using kernel wireless"
+	@grep -v "CONFIG_WIRELESS" "$(KERNEL_DIR)/.config" > "$(KERNEL_DIR)/.config.tmp"
+	cp "$(KERNEL_DIR)/.config.tmp" "$(KERNEL_DIR)/.config"
+	@echo "CONFIG_WIRELESS=y" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_CFG80211 is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_WIRELESS_OLD_REGULATORY is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "CONFIG_WIRELESS_EXT=y" >> "$(KERNEL_DIR)/.config"
+	@echo "CONFIG_WIRELESS_EXT_SYSFS=y" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_LIB80211 is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "CONFIG_WLAN=y" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_WLAN_PRE80211 is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "CONFIG_WLAN_80211=y" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_LIBERTAS is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_USB_ZD1201 is not set" >> "$(KERNEL_DIR)/.config"
+	@echo "# CONFIG_HOSTAP is not set" >> "$(KERNEL_DIR)/.config"
+endif
 	touch $@
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare

@@ -537,7 +537,7 @@ diff -Nur linux-sh4-2.6.32.28_stm24_0207_orig/include/linux/libata.h linux-sh4/i
  struct ata_port_info {
  	unsigned long		flags;
  	unsigned long		link_flags;
---- linux-sh4/drivers/stm/stx7100_hispeed.c.orig
+--- linux-sh4/drivers/stm/stx7100_hispeed.c
 +++ linux-sh4/drivers/stm/stx7100_hispeed.c
 @@ -193,6 +193,12 @@
  	 */
