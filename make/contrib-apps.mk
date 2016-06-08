@@ -187,6 +187,7 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb  $(ARCHIVE)/module-init-tools-$(
 		$(PATCH)/module-init-tools-$(MODULE_INIT_TOOLS_VER).patch; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
+			--target=$(TARGET) \
 			--prefix= \
 			--mandir=/.remove \
 			--docdir=/.remove \
