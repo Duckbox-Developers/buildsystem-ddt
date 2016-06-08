@@ -560,7 +560,7 @@ $(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/hddtemp-$(HDDTEMP_VER).tar.bz2
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 		install -d $(TARGETPREFIX)/var/tuxbox/config
-		install -m 644 root/release/hddtemp.db $(TARGETPREFIX)/var
+		install -m 644 $(SKEL_ROOT)/release/hddtemp.db $(TARGETPREFIX)/var
 	$(REMOVE)/hddtemp-$(HDPARM_VER)
 	touch $@
 
