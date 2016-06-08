@@ -1210,6 +1210,7 @@ $(D)/xupnpd: $(D)/bootstrap
 		$(BUILDENV) \
 		$(MAKE) TARGET=$(TARGET) sh4; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGETPREFIX)/etc/init.d/
 	$(REMOVE)/xupnpd
 	touch $@
 

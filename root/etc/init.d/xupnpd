@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# yocto / OE compliant init script for xupnpd
+# (C) 2013 Stefan Seyfried, License: WTFPLv2
+
+BIN=/usr/bin/xupnpd
+PID=/var/run/xupnpd.pid
+
+case "$1" in
+	start)
+		printf "starting xupnpd daemon: "
+		start-stop-daemon -K -q -t $PID -x $BIN || rm -f $PID
+		if start-stop-daemon -q -S -p $PID -x $BIN; then
+			echo "done."
+		else
+			if start-stop-daemon -K -q -t $PID -x $BIN; then
+				echo "already running."
+			else
+				echo "failed."
+				false
+			fi
+		fi
+		;;
+	stop)
+		printf "stopping xupnpd daemon: "
+		if start-stop-daemon -q -K -p $PID -x $BIN; then
+			for i in 1 2 3 4 5 6 7 8 9 0; do
+				start-stop-daemon -K -q -t $PID -x $BIN || break
+				sleep 1
+			done
+			echo "done."
+		else
+			echo "not running."
+		fi
+		rm -f /tmp/xupnpd-feeds/*
+		# never fail on stop, because that would break prerm package scripts.
+		;;
+	restart)
+		$0 stop
+		$0 start
+		;;
+	status)
+		printf "checking for xupnpd daemon: "
+		if start-stop-daemon -q -K -t -p $PID -x $BIN; then
+			echo "running (pid `cat $PID`)."
+		else
+			echo "not running."
+			false
+		fi
+		;;
+	*)
+		echo "usage: $0 <start|stop|restart|status>"
+		false
+		;;
+esac

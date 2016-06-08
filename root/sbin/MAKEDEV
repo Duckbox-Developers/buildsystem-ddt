@@ -1995,6 +1995,9 @@ do
 			makedev sci$i c 253 $i $sci_fortis
 		done
 		;;
+	stpio)
+		makedev stpio c 60 0 $readable
+		;;
 	comedi)
 		major=98
 		for minor in 0 1 2 3
@@ -2018,7 +2021,7 @@ do
 		for i in 0
 		do
 			mkdir -p dvb/adapter$i
-			makedev dvb/adapter$i/video0	c 212 `math 64 \* $i + 0` $video
+			makedev dvb/adapter$i/video0    c 212 `math 64 \* $i + 0` $video
 			makedev dvb/adapter$i/audio0    c 212 `math 64 \* $i + 1` $video
 			makedev dvb/adapter$i/frontend0 c 212 `math 64 \* $i + 3` $video
 			makedev dvb/adapter$i/demux0    c 212 `math 64 \* $i + 4` $video
@@ -2034,7 +2037,7 @@ do
 		for i in 0
 		do
 			mkdir -p dvb/adapter$i
-			makedev dvb/adapter$i/video1	c 212 `math 64 \* $i + 16` $video
+			makedev dvb/adapter$i/video1    c 212 `math 64 \* $i + 16` $video
 			makedev dvb/adapter$i/frontend1 c 212 `math 64 \* $i + 19` $video
 			makedev dvb/adapter$i/demux2    c 212 `math 64 \* $i + 36` $video
 			makedev dvb/adapter$i/dvr2      c 212 `math 64 \* $i + 37` $video
@@ -2045,7 +2048,7 @@ do
 		for i in 0
 		do
 			mkdir -p dvb/adapter$i
-			makedev dvb/adapter$i/video2	c 212 `math 64 \* $i + 32` $video
+			makedev dvb/adapter$i/video2    c 212 `math 64 \* $i + 32` $video
 			makedev dvb/adapter$i/frontend2 c 212 `math 64 \* $i + 35` $video
 			makedev dvb/adapter$i/frontend3 c 212 `math 64 \* $i + 51` $video
 			makedev dvb/adapter$i/demux3    c 212 `math 64 \* $i + 52` $video

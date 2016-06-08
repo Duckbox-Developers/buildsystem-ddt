@@ -1,6 +1,6 @@
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -83,6 +83,22 @@
+@@ -83,6 +83,20 @@
  dreambox:
  	$(MAKE) embedded TARGET=mipsel_dreambox SDK=/opt/mipsel-unknown-linux-gnu/bin
  
@@ -18,8 +18,6 @@
 +	chmod a+x $(DESTDIR)/usr/bin/xupnpd
 +	if ( test ! -d $(DESTDIR)/usr/share/xupnpd ) ; then mkdir -p $(DESTDIR)/usr/share/xupnpd ; fi
 +	cp -ap plugins profiles ui www *.lua $(DESTDIR)/usr/share/xupnpd/
-+	if ( test ! -d $(DESTDIR)/etc/init.d ) ; then mkdir -p $(DESTDIR)/etc/init.d ; fi
-+	install -m 755 xupnpd.init $(DESTDIR)/etc/init.d/xupnpd
  
  embedded:
  	PATH=$(PATH):$(UTILS) $(MAKE) -C $(LUA) CC=$(SDK)/$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
@@ -203,23 +201,6 @@
 +plugins.coolstream.updatefeed=cst_updatefeed
 +plugins.coolstream.sendurl=cst_sendurl
 +end
---- a/src/xupnpd.init
-+++ b/src/xupnpd.init
-@@ -0,0 +1,14 @@
-+#!/bin/sh
-+case "$1" in
-+	stop)
-+		kill $(pidof xupnpd) 2>/dev/null
-+		;;
-+	start|restart)
-+		[ "$1" == "restart" ] && kill $(pidof xupnpd) 2>/dev/null
-+		(
-+			sleep 10 # Give Neutrino a couple of seconds for startup
-+			mkdir -p /tmp/xupnpd-feeds
-+			XUPNPDROOTDIR=/usr/share/xupnpd /usr/bin/xupnpd
-+		) &
-+		;;
-+esac
 --- a/src/xupnpd.lua
 +++ b/src/xupnpd.lua
 @@ -1,13 +1,13 @@
@@ -260,7 +241,7 @@
  
  -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
  -- 0-off, 1-radio, 2-radio/TV
-@@ -48,16 +48,17 @@
+@@ -48,19 +48,20 @@
  cfg.dlna_notify=true
  
  -- UPnP/DLNA subscribe ttl
@@ -280,7 +261,11 @@
 +cfg.name=io.popen("uname -n"):read("*l")..'-xupnpd'
  
  -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
- cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
+-cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
++cfg.uuid=''
+ 
+ -- max url cache size
+ cfg.cache_size=8
 @@ -72,12 +73,14 @@
  cfg.default_mime_type='mpeg'
  
