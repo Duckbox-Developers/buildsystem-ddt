@@ -746,7 +746,7 @@ $(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2
 #
 # libgif
 #
-GIFLIB_VER = 5.1.2
+GIFLIB_VER = 5.1.4
 
 $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/giflib/files/giflib-$(GIFLIB_VER).tar.bz2
