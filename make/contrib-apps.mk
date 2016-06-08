@@ -45,7 +45,7 @@ $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
 			--prefix=$(HOSTPREFIX) \
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
-			--with-pc_path=$(TARGETPREFIX)/usr/lib/pkgconfig \
+			--with-pc_path=$(PKG_CONFIG_PATH) \
 		; \
 		$(MAKE); \
 		$(MAKE) install
