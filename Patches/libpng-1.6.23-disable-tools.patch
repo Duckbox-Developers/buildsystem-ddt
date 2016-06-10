@@ -1,7 +1,7 @@
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -10,7 +10,7 @@
- check_PROGRAMS= pngtest pngunknown pngstest pngvalid pngimage
+@@ -18,7 +18,7 @@
+ endif
  
  # Utilities - installed
 -bin_PROGRAMS= pngfix png-fix-itxt
@@ -11,12 +11,11 @@
  # 'make check', but it does not add dependencies to the individual programs,
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -97,7 +97,7 @@
- host_triplet = @host@
- check_PROGRAMS = pngtest$(EXEEXT) pngunknown$(EXEEXT) \
- 	pngstest$(EXEEXT) pngvalid$(EXEEXT) pngimage$(EXEEXT)
+@@ -104,7 +104,6 @@
+ 	pngstest$(EXEEXT) pngvalid$(EXEEXT) pngimage$(EXEEXT) \
+ 	$(am__EXEEXT_1)
+ @HAVE_CLOCK_GETTIME_TRUE@am__append_1 = timepng
 -bin_PROGRAMS = pngfix$(EXEEXT) png-fix-itxt$(EXEEXT)
-+bin_PROGRAMS =
- @PNG_ARM_NEON_TRUE@am__append_1 = arm/arm_init.c\
+ @PNG_ARM_NEON_TRUE@am__append_2 = arm/arm_init.c\
  @PNG_ARM_NEON_TRUE@	arm/filter_neon.S arm/filter_neon_intrinsics.c
  
