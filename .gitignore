@@ -9,3 +9,4 @@ root/var/etc/.version
 .deps/
 config*
 *~
+Makefile.local
