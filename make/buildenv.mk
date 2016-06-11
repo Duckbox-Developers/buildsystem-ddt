@@ -143,6 +143,11 @@ CONFIGURE = \
 	$(BUILDENV) \
 	./configure $(CONFIGURE_OPTS)
 
+CONFIGURE_BIN = \
+	./autogen.sh && \
+	$(BUILDENV) \
+	./configure $(CONFIGURE_OPTS)
+
 MAKE_OPTS := \
 	CC=$(TARGET)-gcc \
 	CXX=$(TARGET)-g++ \
