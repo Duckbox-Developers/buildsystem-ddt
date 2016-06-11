@@ -10,7 +10,7 @@ ENIGMA2_DEPS += python-all
 ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
 ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
 
-ifeq ($(WLANDRIVER), wlandriver)
+ifeq ($(IMAGE), enigma2-wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
