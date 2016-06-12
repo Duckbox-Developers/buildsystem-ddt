@@ -113,6 +113,10 @@ print-targets:
 		`ls -1 make/*.mk|grep -v make/unmaintained.mk` Makefile | \
 		sort -u | fold -s -w 65
 
+# for local extensions, e.g. special plugins or similar...
+# put them into $(BASE_DIR)/local since that is ignored in .gitignore
+-include ./Makefile.local
+
 # debug target, if you need that, you know it. If you don't know if you need
 # that, you don't need it.
 .print-phony:

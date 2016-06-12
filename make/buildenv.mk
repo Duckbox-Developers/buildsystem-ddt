@@ -20,10 +20,6 @@ SOURCE_DIR            = $(BASE_DIR)/source
 
 -include $(CDK_DIR)/config
 
-# for local extensions, e.g. special plugins or similar...
-# put them into $(BASE_DIR)/local since that is ignored in .gitignore
--include ./Makefile.local
-
 # default platform...
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
