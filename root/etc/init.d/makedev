@@ -132,14 +132,6 @@ start()
     fi
   done
 
-  # neutrino
-  for TARGET in spark; do
-    if [ ${HOST} == ${TARGET} ]; then
-      ln -sf /dev/input/event1 input/nevis_ir
-      break
-    fi
-  done
-
   echo "[makedev] done."
 }
 
