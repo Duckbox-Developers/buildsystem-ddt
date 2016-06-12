@@ -10,3 +10,4 @@ root/var/etc/.version
 config*
 *~
 Makefile.local
+config.local
