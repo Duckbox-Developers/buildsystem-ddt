@@ -575,8 +575,8 @@ LIRC_VER = 0.9.0
 $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/lirc-$(LIRC_VER).tar.bz2
 
-ifeq ($(IMAGE), neutrino)
-ifeq ($(BOXTYPE), spark7162)
+ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES -DUINPUT_NEUTRINO_HACK -DSPARK -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 else
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES

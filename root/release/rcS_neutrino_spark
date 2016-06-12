@@ -3,7 +3,7 @@
 MODDIR=/lib/modules
 echo "init frontpanel"
 insmod $MODDIR/aotom.ko
-insmod $MODDIR/simu_button.ko
+#insmod $MODDIR/simu_button.ko
 
 if [ -e /var/etc/.firstboot ]; then
    echo "WAIT 1 min" >/dev/vfd
@@ -12,15 +12,11 @@ if [ -e /var/etc/.firstboot ]; then
    touch /dev/.devfsd
 fi
 
-   /etc/init.d/mountvirtfs start
+/etc/init.d/mountvirtfs start
+/etc/init.d/portmap start
 
-   /etc/init.d/portmap start
+insmod $MODDIR/e2_proc.ko
 
-  insmod $MODDIR/e2_proc.ko
-
-# start automounter with umount timeout of 5 seconds
-   insmod $MODDIR/autofs4.ko
-   /usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
 if [ ! -e /var/etc/.firstboot ]; then
 
@@ -28,8 +24,8 @@ if [ ! -e /var/etc/.firstboot ]; then
    /etc/init.d/mountall start
    /etc/init.d/hostname start
 
-   echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
+#   echo "starting telnetd"
+#   /usr/sbin/telnetd -l /bin/autologin
 
    echo "init stmfb"
    insmod $MODDIR/stmcore-display-sti7111.ko
@@ -70,6 +66,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/stmvout.ko
    insmod $MODDIR/stmvbi.ko
    insmod $MODDIR/pseudocard.ko
+
    insmod $MODDIR/stv090x.ko
    insmod $MODDIR/pti.ko
    insmod $MODDIR/stm_monitor.ko
@@ -83,21 +80,27 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/smartcard.ko
    insmod $MODDIR/bpamem.ko
 
+   stfbcontrol a 0
+
    echo "init lircd"
    mkdir -p /var/run/lirc
-   /usr/bin/lircd
+   /usr/bin/lircd -u
 
 #   major=$(awk "\$2==\"sparkid\" {print \$1}" /proc/devices)
 #   rm -f /dev/sparkid
 #   mknod /dev/sparkid c $major 0
 
-   /bin/evremote2 10 100 &
-
 # Module aus modules.extra laden
    [ -f /var/etc/modules.extra ] && eval `sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^\(.*\)/insmod \0;/' < /var/etc/modules.extra`
 
-#   echo "starting telnetd"
-#   /usr/sbin/telnetd -l /bin/autologin
+   stfbcontrol a 255
+
+   # start automounter with umount timeout of 5 seconds
+   MKDIR -p /tmp/autofs
+   insmod $MODDIR/autofs4.ko
+   /usr/sbin/automount --ghost --timeout=5 /tmp/autofs file /etc/auto.usb
+
+#   echo "starting vsftpd"
 #   /etc/init.d/vsftpd start
    /usr/sbin/inetd
 
