@@ -16,20 +16,20 @@
 +const char *LMI_SYS_partalias[] = { "BPA2_Region0", "bigphysarea", "v4l2-coded-video-buffers", NULL };
 +
 +static struct bpa2_partition_desc bpa2_parts_table[] = {
-+      {
-+	      .name  = "LMI_VID",
-+	      .start = 0x10800000,
-+	      .size  = 0x03800000,
-+	      .flags = 0,
-+	      .aka   = LMI_VID_partalias
-+      },
-+      {
-+	      .name  = "LMI_SYS",
-+	      .start = 0,
-+	      .size  = 0x01300000,
-+	      .flags = 0,
-+	      .aka   = LMI_SYS_partalias
-+      }
++	{
++		.name  = "LMI_VID",
++		.start = 0x10800000,
++		.size  = 0x03800000,
++		.flags = 0,
++		.aka   = LMI_VID_partalias
++	},
++	{
++		.name  = "LMI_SYS",
++		.start = 0,
++		.size  = 0x01300000,
++		.flags = 0,
++		.aka   = LMI_SYS_partalias
++	}
 +};
  
  
@@ -46,7 +46,7 @@
 +			.hw_flow_control = 1,
  			.is_console = 0, });
 +
-+  	bpa2_init(bpa2_parts_table, ARRAY_SIZE(bpa2_parts_table));
++	bpa2_init(bpa2_parts_table, ARRAY_SIZE(bpa2_parts_table));
  }
  
  
@@ -161,8 +161,8 @@
  	.dev.platform_data = &(struct physmap_flash_data) {
  		.width		= 2,
  		.set_vpp	= mb448_set_vpp,
-+    	.nr_parts	= ARRAY_SIZE(mtd_parts_table),
-+    	.parts		= mtd_parts_table
++		.nr_parts	= ARRAY_SIZE(mtd_parts_table),
++		.parts		= mtd_parts_table
  	},
  };
  
@@ -204,32 +204,22 @@
  	return platform_add_devices(mb448_devices,
  			ARRAY_SIZE(mb448_devices));
  }
-*** a/drivers/stm/stx7100_comms.c	2011-07-11 21:21:19.000000000 +0200
---- b/stx7100_comms.c	2011-07-14 19:51:23.729808261 +0200
-***************
-*** 240,251 ****
-  			STM_PAD_PIO_BIDIR_NAMED(3, 0, 1, "SCL"),
-  			STM_PAD_PIO_BIDIR_NAMED(3, 1, 1, "SDA"),
-  		},
-! 		.sysconfs_num = 2,
-  		.sysconfs = (struct stm_pad_sysconf []) {
-  			/* SSC1_MUX_SEL = 0 (default assignment) */
-  			STM_PAD_SYS_CFG(7, 2, 2, 0),
-! 			/* DVO_OUT_ON = 0 (SSC not DVO) */
-! 			STM_PAD_SYS_CFG(7, 10, 10, 0),
-  		},
-  	},
-  	[2] = {
---- 240,251 ----
-  			STM_PAD_PIO_BIDIR_NAMED(3, 0, 1, "SCL"),
-  			STM_PAD_PIO_BIDIR_NAMED(3, 1, 1, "SDA"),
-  		},
-! 		.sysconfs_num = 1,
-  		.sysconfs = (struct stm_pad_sysconf []) {
-  			/* SSC1_MUX_SEL = 0 (default assignment) */
-  			STM_PAD_SYS_CFG(7, 2, 2, 0),
-! 			/* DVO_OUT_ON = 0 (SSC not DVO) 
-! 			STM_PAD_SYS_CFG(7, 10, 10, 0),*/
-  		},
-  	},
-  	[2] = {
+--- a/drivers/stm/stx7100_comms.c	2011-07-11 21:21:19.000000000 +0200
++++ b/stx7100_comms.c	2011-07-14 19:51:23.729808261 +0200
+@@ -240,12 +240,12 @@
+ 			STM_PAD_PIO_BIDIR_NAMED(3, 0, 1, "SCL"),
+ 			STM_PAD_PIO_BIDIR_NAMED(3, 1, 1, "SDA"),
+ 		},
+-		.sysconfs_num = 2,
++		.sysconfs_num = 1,
+ 		.sysconfs = (struct stm_pad_sysconf []) {
+ 			/* SSC1_MUX_SEL = 0 (default assignment) */
+ 			STM_PAD_SYS_CFG(7, 2, 2, 0),
+-			/* DVO_OUT_ON = 0 (SSC not DVO) */
+-			STM_PAD_SYS_CFG(7, 10, 10, 0),
++			/* DVO_OUT_ON = 0 (SSC not DVO)
++			STM_PAD_SYS_CFG(7, 10, 10, 0),*/
+ 		},
+ 	},
+ 	[2] = {
+

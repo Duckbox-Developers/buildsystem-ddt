@@ -668,4 +668,3 @@
  			switch (phydev->irq) {
  			case PHY_POLL:
  				irq_str = "POLL";
-

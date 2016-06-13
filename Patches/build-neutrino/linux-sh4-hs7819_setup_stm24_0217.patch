@@ -1,6 +1,6 @@
---- a/arch/sh/kernel/setup.c	2012-03-31 15:26:54.000000000 +0100
-+++ a/arch/sh/kernel/setup.c.patched	2012-03-31 15:26:54.340928000 +0100
-@@ -389,6 +389,44 @
+--- a/arch/sh/kernel/setup.c
++++ a/arch/sh/kernel/setup.c
+@@ -389,6 +389,44 @@
  #endif
  #endif
 

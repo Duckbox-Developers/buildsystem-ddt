@@ -16,7 +16,7 @@
 +		int i;
 +
 +		for (i = 0; i < (command_line_len - 7); i++)
-+	{
++		{
 +			if (!strncmp(command_line + i, "ethaddr", 7))
 +			{
 +				strlcpy(mac, command_line + i + 8, sizeof(mac));
@@ -79,7 +79,7 @@
 - * boot configurations are possible but require board-level modifications to be
 - * made, and equivalent changes to the setup here.  Note, only boot-from-NOR has
 - * been fully tested.
-+/* The Fortis HS7819 main board is populated with NAND Flash.  The setup
++/* The Fortis HS7429 main board is populated with NAND Flash.  The setup
 + * below assumes the board is in its default boot-from-NAND configuration.
   */
  
@@ -139,7 +139,7 @@
  static void __init hdk7111_setup(char** cmdline_p)
  {
 -	printk(KERN_INFO "STMicroelectronics STx7111 HDK initialisation\n");
-+	printk(KERN_INFO "Fortis HS7819 main board initialisation\n");
++	printk(KERN_INFO "Fortis HS7429 main board initialisation\n");
  
  	stx7111_early_device_init();
  
@@ -668,4 +668,3 @@
  			switch (phydev->irq) {
  			case PHY_POLL:
  				irq_str = "POLL";
-

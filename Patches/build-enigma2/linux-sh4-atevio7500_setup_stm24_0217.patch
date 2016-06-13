@@ -186,7 +186,7 @@
  
  	return 0;
  }
-@@ -122,127 +95,76 @@
+@@ -122,127 +95,83 @@
  	.phy_mask = 0,
  };
  
@@ -197,31 +197,38 @@
 +		.name   = "Boot_firmware", //mtd0
 +		.size   = 0x00060000,  //384k
 +		.offset = 0x00000000,
-+	}, {
++	},
++	{
 +		.name   = "kernel",    //mtd1
 +		.size   = 0x00320000,  //3,125M
 +		.offset = 0x00060000,  //384k (0.375M)
-+	}, {
++	},
++	{
 +		.name   = "ROOT_FS",   //mtd2
 +		.size   = 0x00020000,  //128k (dummy)
 +		.offset = 0x00380000,  //3.5M
-+	}, {
++	},
++	{
 +		.name   = "Device",    //mtd3
 +		.size   = 0x00020000,  //128k (dummy)
 +		.offset = 0x003A0000,  //3.625M
-+	}, {
++	},
++	{
 +		.name   = "APP",       //mtd4
 +		.size   = 0x00020000,  //128k (dummy)
 +		.offset = 0x003C0000,  //3.75M
-+	}, {
++	},
++	{
 +		.name   = "Real_ROOT", //mtd5
 +		.size   = 0x01D00000,  //29M, 128k hole at 0x20FE0000 is used for force flash
 +		.offset = 0x003E0000,  //3.875M
-+	}, {
-+		.name   = "Config",    //mtd6
++	 },
++	{
++		name   = "Config",    //mtd6
 +		.size   = 0x00100000,  //1M
 +		.offset = 0x02100000,
-+	}, {
++	},
++	{
 +		.name   = "User",      //mtd7
 +		.size   = 0x01E00000,  //30M
 +		.offset = 0x02200000,
@@ -410,7 +417,7 @@
 -			.tx_enabled = 1,
 -			.tx_od_enabled = 1, });
 +	/* enable optical out */
-+	stpio_request_pin (10, 6, "opt_out", STPIO_ALT_OUT);
++	stpio_request_pin(10, 6, "opt_out", STPIO_ALT_OUT);
  
  	return platform_add_devices(mb680_devices, ARRAY_SIZE(mb680_devices));
  }

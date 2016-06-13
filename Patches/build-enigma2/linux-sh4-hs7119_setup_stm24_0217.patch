@@ -15,7 +15,7 @@
 +		char mac[] = "00:00:00:00:00:00";
 +		int i;
 +
-+		for(i = 0; i < (command_line_len - 7); i++)
++		for (i = 0; i < (command_line_len - 7); i++)
 +		{
 +			if (!strncmp(command_line + i, "ethaddr", 7))
 +			{
@@ -38,7 +38,7 @@
 +		if (command_line_len >= usb_org_command_line_len && !strncmp(command_line, usb_org_command_line, usb_org_command_line_len))
 +		{
 +			strlcpy(command_line, usb_new_command_line, sizeof(command_line));
-+	//		strlcat(command_line, mac, sizeof(command_line));
++//			strlcat(command_line, mac, sizeof(command_line));
 +		}
 +	}
 +
@@ -49,7 +49,7 @@
  	seq_printf(m, "cpu family\t: %s\n", init_utsname()->machine);
  	seq_printf(m, "cpu variant\t: %s\n", get_cpu_variant(c));
  	seq_printf(m, "cpu type\t: %s\n", get_cpu_subtype(c));
-+	seq_printf(m, "cpu MHz\t: 450\n");
++	seq_printf(m, "cpu MHz\t\t: 450\n");
  	if (c->cut_major == -1)
  		seq_printf(m, "cut\t\t: unknown\n");
  	else if (c->cut_minor == -1)
@@ -690,4 +690,3 @@
  			switch (phydev->irq) {
  			case PHY_POLL:
  				irq_str = "POLL";
-

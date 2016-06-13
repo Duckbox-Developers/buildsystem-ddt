@@ -1,50 +1,51 @@
-*** a/arch/sh/kernel/setup.c	2012-03-31 15:26:54.000000000 +0100
---- a/arch/sh/kernel/setup.c.patched	2012-03-31 15:26:54.340928000 +0100
-***************
-*** 389,394 ****
---- 389,422 ----
-  #endif
-  #endif
-  
-+ 	{
-+ 	char org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
-+ 	char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3 rootfstype=squashfs init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 console_loglevel=7 stmmaceth=ethaddr:";
-+ 	char mac[] = "00:00:00:00:00:00";
-+ 	int command_line_len = strlen(command_line);
-+ 	int org_command_line_len = strlen(org_command_line);
-+ 
-+ 	if(command_line_len >= org_command_line_len && !strncmp(command_line, org_command_line, org_command_line_len))
-+ 	{
-+ 		int i;
-+ 		for(i = 0; i < (command_line_len - 7); i++)
-+ 		{
-+ 			if(!strncmp(command_line + i, "ethaddr", 7))
-+ 			{
-+ 				strlcpy(mac, command_line + i + 8, sizeof(mac));
-+ 				break;
-+ 			}
-+ 			if(!strncmp(command_line + i, "hwaddr", 6))
-+ 			{
-+ 				strlcpy(mac, command_line + i + 7, sizeof(mac));
-+ 				break;
-+ 			}
-+ 		}
-+ 		strlcpy(command_line, tdt_command_line, sizeof(command_line));
-+ 		strlcat(command_line, mac, sizeof(command_line));
-+ 	}
-+ 	}
-+ 
-  	/* Save unparsed command line copy for /proc/cmdline */
-  	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
-  	*cmdline_p = command_line;
---- linux-sh4/arch/sh/boards/mach-sat7111/setup.c	2012-03-31 15:26:54.000000000 +0200
-+++ linux-sh4/arch/sh/boards/mach-sat7111/setup.c.patched	2012-07-08 20:51:17.000000000 +0200
-@@ -28,13 +28,14 @@
- #include <linux/mtd/nand.h>
- #include <linux/mtd/physmap.h>
- #include <linux/mtd/partitions.h>
--#include <linux/spi/spi.h>
--#include <linux/spi/flash.h>
+--- linux-sh4-2.6.32.61_stm24_0217.org/arch/sh/kernel/setup.c
++++ linux-sh4-2.6.32.61_stm24_0217/arch/sh/kernel/setup.c
+@@ -389,6 +389,34 @@
+ #endif
+ #endif
+ 
++	{
++		char org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
++		char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3 rootfstype=squashfs init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 console_loglevel=7 stmmaceth=ethaddr:";
++		char mac[] = "00:00:00:00:00:00";
++		int command_line_len = strlen(command_line);
++		int org_command_line_len = strlen(org_command_line);
++
++		if (command_line_len >= org_command_line_len && !strncmp(command_line, org_command_line, org_command_line_len))
++		{
++			int i;
++			for (i = 0; i < (command_line_len - 7); i++)
++			{
++				if (!strncmp(command_line + i, "ethaddr", 7))
++				{
++					strlcpy(mac, command_line + i + 8, sizeof(mac));
++					break;
++				}
++				if (!strncmp(command_line + i, "hwaddr", 6))
++				{
++					strlcpy(mac, command_line + i + 7, sizeof(mac));
++					break;
++				}
++			}
++			strlcpy(command_line, tdt_command_line, sizeof(command_line));
++			strlcat(command_line, mac, sizeof(command_line));
++		}
++	}
++
+ 	/* Save unparsed command line copy for /proc/cmdline */
+ 	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
+ 	*cmdline_p = command_line;
+@@ -555,6 +583,7 @@
+ 	seq_printf(m, "cpu family\t: %s\n", init_utsname()->machine);
+ 	seq_printf(m, "cpu variant\t: %s\n", get_cpu_variant(c));
+ 	seq_printf(m, "cpu type\t: %s\n", get_cpu_subtype(c));
++	seq_printf(m, "cpu MHz\t\t: 450\n");
+ 	if (c->cut_major == -1)
+ 		seq_printf(m, "cut\t\t: unknown\n");
+ 	else if (c->cut_minor == -1)
+--- linux-sh4/arch/sh/boards/mach-sat7111/setup.c.org
++++ linux-sh4/arch/sh/boards/mach-sat7111/setup.c
+@@ -33,8 +33,11 @@
  #include <asm/irq-ilc.h>
  #include <asm/irl.h>
  #include <sound/stm.h>
@@ -57,11 +58,12 @@
  
  /* The sat7111 board is populated with NOR, NAND, and Serial Flash.  The setup
   * below assumes the board is in its default boot-from-NOR configuration.  Other
-@@ -43,6 +44,32 @@
+@@ -43,9 +46,36 @@
   * been fully tested.
   */
  
-+const char *LMI_IO_partalias[] = { "v4l2-coded-video-buffers", "BPA2_Region1", "v4l2-video-buffers", "coredisplay-video", "gfx-memory", "BPA2_Region0", "LMI_VID", NULL };
++const char *LMI_IO_partalias[] = { "v4l2-coded-video-buffers", "BPA2_Region1", "v4l2-video-buffers",
++                                   "coredisplay-video", "gfx-memory", "BPA2_Region0", "LMI_VID", NULL };
 +
 +/*
 +0x40000000 - 0x403FFFFF - cocpu 1 ram (4mb)
@@ -89,8 +91,12 @@
 +
  static void __init sat7111_setup(char** cmdline_p)
  {
- 	printk(KERN_INFO "STMicroelectronics sat7111 reference board initialisation\n");
-@@ -50,15 +77,14 @@
+-	printk(KERN_INFO "STMicroelectronics sat7111 reference board initialisation\n");
++	printk(KERN_INFO "Fortis HS7420 main board initialisation\n");
+ 
+ 	stx7111_early_device_init();
+ 
+@@ -50,15 +78,14 @@
  	stx7111_early_device_init();
  
  	stx7111_configure_asc(2, &(struct stx7111_asc_config) {
@@ -109,7 +115,7 @@
  static struct platform_device sat7111_leds = {
  	.name = "leds-gpio",
  	.id = -1,
-@@ -109,6 +135,12 @@
+@@ -109,6 +136,12 @@
  	},
  };
  
@@ -122,7 +128,7 @@
  static struct platform_device sat7111_nor_flash = {
  	.name		= "physmap-flash",
  	.id		= -1,
-@@ -118,75 +150,60 @@
+@@ -118,75 +151,59 @@
  	},
  	.dev.platform_data = &(struct physmap_flash_data) {
  		.width		= 2,
@@ -151,7 +157,6 @@
 +				.size   = 0x00200000,           // 2M
 +				.offset = 0x00100000,           // 3M
 +			},
-+
 +			{
 +				.name   = "APP",                //mtd2
 +				.size   = 0x00a00000,           //10M
@@ -250,7 +255,7 @@
  			},
  		},
  	},
-@@ -216,15 +238,9 @@
+@@ -216,15 +246,9 @@
  
  static int __init sat7111_devices_init(void)
  {
@@ -268,7 +273,7 @@
  	stx7111_configure_ssc_i2c(3, NULL);
  
  	stx7111_configure_usb(&(struct stx7111_usb_config) {
-@@ -246,14 +262,6 @@
+@@ -246,14 +270,6 @@
  
  	gpio_direction_output(SAT7111_PHY_RESET, 0);
  

@@ -5,31 +5,31 @@
  #endif
  
 +	{
-+	char org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
-+	char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock5 rw rootfstype=jffs2 init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 stmmaceth=ethaddr:";
-+	char mac[] = "00:00:00:00:00:00";
-+	int command_line_len = strlen(command_line);
-+	int org_command_line_len = strlen(org_command_line);
++		char org_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock3";
++		char tdt_command_line[] = "console=ttyAS0,115200 root=/dev/mtdblock5 rw rootfstype=jffs2 init=/bin/devinit coprocessor_mem=4m@0x40000000,4m@0x40400000 printk=1 stmmaceth=ethaddr:";
++		char mac[] = "00:00:00:00:00:00";
++		int command_line_len = strlen(command_line);
++		int org_command_line_len = strlen(org_command_line);
 +
-+	if (command_line_len >= org_command_line_len && !strncmp(command_line, org_command_line, org_command_line_len))
-+	{
-+		int i;
-+		for (i = 0; i < (command_line_len - 7); i++)
++		if (command_line_len >= org_command_line_len && !strncmp(command_line, org_command_line, org_command_line_len))
 +		{
-+			if (!strncmp(command_line + i, "ethaddr", 7))
++			int i;
++			for (i = 0; i < (command_line_len - 7); i++)
 +			{
-+				strlcpy(mac, command_line + i + 8, sizeof(mac));
-+				break;
++				if (!strncmp(command_line + i, "ethaddr", 7))
++				{
++					strlcpy(mac, command_line + i + 8, sizeof(mac));
++					break;
++				}
++				if (!strncmp(command_line + i, "hwaddr", 6))
++				{
++					strlcpy(mac, command_line + i + 7, sizeof(mac));
++					break;
++				}
 +			}
-+			if (!strncmp(command_line + i, "hwaddr", 6))
-+			{
-+				strlcpy(mac, command_line + i + 7, sizeof(mac));
-+				break;
-+			}
++			strlcpy(command_line, tdt_command_line, sizeof(command_line));
++			strlcat(command_line, mac, sizeof(command_line));
 +		}
-+		strlcpy(command_line, tdt_command_line, sizeof(command_line));
-+		strlcat(command_line, mac, sizeof(command_line));
-+	}
 +	}
 +
  	/* Save unparsed command line copy for /proc/cmdline */
@@ -168,30 +168,30 @@
 -	&mb680_leds,
 +static struct mtd_partition mb680_physmap_flash_partitions[] = {
 +	{
-+	 .name   = "Boot_firmware", //mtd0
-+	 .size   = 0x00060000,  //384k
-+	 .offset = 0x00000000,
-+	 },
++		.name   = "Boot_firmware", //mtd0
++		.size   = 0x00060000,  //384k
++		.offset = 0x00000000,
++	},
 +	{
-+	 .name   = "kernel",    //mtd1
-+	 .size   = 0x00320000,  //3,125M
-+	 .offset = 0x00060000,  //384k (0.375M)
-+	 },
++		.name   = "kernel",    //mtd1
++		.size   = 0x00320000,  //3,125M
++		.offset = 0x00060000,  //384k (0.375M)
++	},
 +	{
-+	 .name   = "ROOT_FS",   //mtd2
-+	 .size   = 0x00020000,  //128k (dummy)
-+	 .offset = 0x00380000,  //3.5M
-+	 },
++		.name   = "ROOT_FS",   //mtd2
++		.size   = 0x00020000,  //128k (dummy)
++		.offset = 0x00380000,  //3.5M
++	},
 +	{
-+	 .name   = "Device",    //mtd3
-+	 .size   = 0x00020000,  //128k (dummy)
-+	 .offset = 0x003A0000,  //3.625M
-+	 },
++		.name   = "Device",    //mtd3
++		.size   = 0x00020000,  //128k (dummy)
++		.offset = 0x003A0000,  //3.625M
++	},
 +	{
-+	 .name   = "APP",       //mtd4
-+	 .size   = 0x00020000,  //128k (dummy)
-+	 .offset = 0x003C0000,  //3.75M
-+	 },
++		.name   = "APP",       //mtd4
++		.size   = 0x00020000,  //128k (dummy)
++		.offset = 0x003C0000,  //3.75M
++	},
 +	{
 +	 .name   = "Real_ROOT", //mtd5
 +	 .size   = 0x01D00000,  //29M, 128k hole at 0x20FE0000 is used for force flash
