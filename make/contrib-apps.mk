@@ -180,7 +180,7 @@ $(D)/host_module_init_tools: $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VE
 #
 # module_init_tools
 #
-$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb  $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
 	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER)
 	$(UNTAR)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
@@ -189,6 +189,7 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb  $(ARCHIVE)/module-init-tools-$(
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix= \
+			--program-suffix="" \
 			--mandir=/.remove \
 			--docdir=/.remove \
 			--disable-builddir \
