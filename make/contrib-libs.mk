@@ -386,10 +386,10 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/luaexpat-$(LUAEX
 #
 $(D)/luasocket: $(D)/bootstrap $(D)/lua
 	$(REMOVE)/luasocket
-	[ -d "$(ARCHIVE)/luasocket.git" ] && \
-	(cd $(ARCHIVE)/luasocket.git; git pull;); \
-	[ -d "$(ARCHIVE)/luasocket.git" ] || \
-	git clone git://github.com/diegonehab/luasocket.git $(ARCHIVE)/luasocket.git; \
+	set -e; if [ -d $(ARCHIVE)/luasocket.git ]; \
+		then cd $(ARCHIVE)/luasocket.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/diegonehab/luasocket.git luasocket.git; \
+		fi
 	cp -ra $(ARCHIVE)/luasocket.git $(BUILD_TMP)/luasocket
 	set -e; cd $(BUILD_TMP)/luasocket; \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGETPREFIX)/usr/lib@" -e "s@DESTDIR=@DESTDIR=$(TARGETPREFIX)/usr@" src/makefile; \
