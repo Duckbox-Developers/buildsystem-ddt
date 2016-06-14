@@ -350,10 +350,10 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 #
 $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
 	$(REMOVE)/luacurl
-	[ -d "$(ARCHIVE)/luacurl.git" ] && \
-	(cd $(ARCHIVE)/luacurl.git; git pull;); \
-	[ -d "$(ARCHIVE)/luacurl.git" ] || \
-	git clone git://github.com/Lua-cURL/Lua-cURLv3.git $(ARCHIVE)/luacurl.git; \
+	set -e; if [ -d $(ARCHIVE)/luacurl.git ]; \
+		then cd $(ARCHIVE)/luacurl.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/Lua-cURL/Lua-cURLv3.git luacurl.git; \
+		fi
 	cp -ra $(ARCHIVE)/luacurl.git $(BUILD_TMP)/luacurl
 	set -e; cd $(BUILD_TMP)/luacurl; \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" \
