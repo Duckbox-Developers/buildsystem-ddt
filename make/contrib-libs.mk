@@ -262,16 +262,23 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 		$(PATCH)/openssl-$(OPENSSL_VER)-remove_timestamp_check.patch; \
 		$(PATCH)/openssl-$(OPENSSL_VER)-parallel_build.patch; \
 		$(BUILDENV) \
-		./Configure -DL_ENDIAN shared no-hw linux-generic32 \
+		./Configure \
+			-DL_ENDIAN \
+			shared \
+			no-hw \
+			linux-generic32 \
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
 		; \
+		sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile; \
+		make depend; \
 		$(MAKE) all; \
 		$(MAKE) install_sw INSTALL_PREFIX=$(TARGETPREFIX)
 	chmod 0755 $(TARGETPREFIX)/usr/lib/lib{crypto,ssl}.so.*
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/openssl.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcrypto.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libssl.pc
+	cd $(TARGETPREFIX) && rm -rf etc/ssl/man
 	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
 	touch $@
 
