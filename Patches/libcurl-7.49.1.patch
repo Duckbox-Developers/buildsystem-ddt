@@ -9,7 +9,7 @@
  CURL_SET_COMPILER_OPTIMIZE_OPTS
  CURL_SET_COMPILER_WARNING_OPTS
  
-@@ -3163,6 +3163,7 @@
+@@ -3155,6 +3155,7 @@
  
  AC_CHECK_SIZEOF(size_t)
  AC_CHECK_SIZEOF(long)
@@ -22,8 +22,8 @@
 @@ -150,7 +150,7 @@
  bin_SCRIPTS = curl-config
  
- SUBDIRS = lib src include scripts
--DIST_SUBDIRS = $(SUBDIRS) tests packages docs
+ SUBDIRS = lib src include
+-DIST_SUBDIRS = $(SUBDIRS) tests packages docs scripts
 +DIST_SUBDIRS = $(SUBDIRS) packages
  
  pkgconfigdir = $(libdir)/pkgconfig
@@ -33,9 +33,9 @@
 @@ -611,7 +611,7 @@
  
  bin_SCRIPTS = curl-config
- SUBDIRS = lib src include scripts
--DIST_SUBDIRS = $(SUBDIRS) tests packages docs
+ SUBDIRS = lib src include
+-DIST_SUBDIRS = $(SUBDIRS) tests packages docs scripts
 +DIST_SUBDIRS = $(SUBDIRS) packages
  pkgconfigdir = $(libdir)/pkgconfig
  pkgconfig_DATA = libcurl.pc
- LIB_VTLS_CFILES = vtls/openssl.c vtls/gtls.c vtls/vtls.c vtls/nss.c     \
+ LIB_VAUTH_CFILES = vauth/vauth.c vauth/cleartext.c vauth/cram.c         \

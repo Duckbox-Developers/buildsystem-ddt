@@ -769,7 +769,7 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
 #
 # libcurl
 #
-CURL_VER = 7.48.0
+CURL_VER = 7.49.1
 
 $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 	$(WGET) http://curl.haxx.se/download/$(lastword $(subst /, ,$@))
