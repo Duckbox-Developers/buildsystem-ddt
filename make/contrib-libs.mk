@@ -403,10 +403,10 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua
 #
 $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 	$(REMOVE)/lua-feedparser
-	[ -d "$(ARCHIVE)/lua-feedparser.git" ] && \
-	(cd $(ARCHIVE)/lua-feedparser.git; git pull;); \
-	[ -d "$(ARCHIVE)/lua-feedparser.git" ] || \
-	git clone git://github.com/slact/lua-feedparser.git $(ARCHIVE)/lua-feedparser.git; \
+	set -e; if [ -d $(ARCHIVE)/lua-feedparser.git ]; \
+		then cd $(ARCHIVE)/lua-feedparser.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/slact/lua-feedparser.git lua-feedparser.git; \
+		fi
 	cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
 	set -e; cd $(BUILD_TMP)/lua-feedparser; \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
