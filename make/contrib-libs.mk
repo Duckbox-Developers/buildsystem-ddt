@@ -1991,11 +1991,11 @@ $(D)/libopenthreads: $(D)/bootstrap
 #
 $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 	$(REMOVE)/librtmpdump
-	[ -d "$(ARCHIVE)/rtmpdump.git" ] && \
-	(cd $(ARCHIVE)/rtmpdump.git; git pull;); \
-	[ -d "$(ARCHIVE)/rtmpdump.git" ] || \
-	git clone git://github.com/oe-alliance/rtmpdump.git $(ARCHIVE)/rtmpdump.git; \
-	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump; \
+	set -e; if [ -d $(ARCHIVE)/rtmpdump.git ]; \
+		then cd $(ARCHIVE)/rtmpdump.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/oe-alliance/rtmpdump.git rtmpdump.git; \
+		fi
+	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump
 	set -e; cd $(BUILD_TMP)/librtmpdump; \
 		$(PATCH)/rtmpdump-2.4.patch; \
 		$(BUILDENV) \
