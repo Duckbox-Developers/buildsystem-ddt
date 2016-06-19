@@ -445,7 +445,7 @@ $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 # libboost
 #
 BOOST_MAJOR = 1
-BOOST_MINOR = 53
+BOOST_MINOR = 61
 BOOST_MICRO = 0
 BOOST_VER = $(BOOST_MAJOR)_$(BOOST_MINOR)_$(BOOST_MICRO)
 
