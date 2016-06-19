@@ -4,7 +4,7 @@ custom/yaud-enigma2-*
 custom/release_*
 own_build/
 Patches/patch-neutrino/
-root/boot/*.elf
+root/boot/*
 root/var/etc/.version
 .deps/
 config*
