@@ -32,26 +32,6 @@ PREQS =
 
 preqs: $(PREQS)
 
-TOOLS += $(D)/tools-aio-grab
-TOOLS += $(D)/tools-devinit
-TOOLS += $(D)/tools-evremote2
-TOOLS += $(D)/tools-fp_control
-TOOLS += $(D)/tools-hotplug
-TOOLS += $(D)/tools-showiframe
-TOOLS += $(D)/tools-stfbcontrol
-TOOLS += $(D)/tools-streamproxy
-TOOLS += $(D)/tools-ustslave
-TOOLS += $(D)/tools-vfdctl
-TOOLS += $(D)/tools-wait4button
-#TOOLS += $(D)/tools-libmme_host
-#TOOLS += $(D)/tools-libmmeimage
-ifeq ($(MEDIAFW), eplayer3)
-TOOLS += $(D)/tools-libeplayer3
-endif
-
-$(D)/tools: $(TOOLS)
-	touch $@
-
 SYSTEM_TOOLS  = $(D)/module_init_tools
 SYSTEM_TOOLS += $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib

@@ -1,10 +1,17 @@
 #
 # enigma2
 #
+E_CPPFLAGS    = -I$(DRIVER_DIR)/include
+E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
+E_CPPFLAGS   += -I$(KERNEL_DIR)/include
+E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
+E_CPPFLAGS   += -I$(APPS_DIR)/tools
+E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
+
 ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(D)/lirc $(D)/libcurl $(D)/libid3tag $(D)/libmad
 ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype
 ENIGMA2_DEPS += $(D)/alsa-utils $(D)/ffmpeg
-ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc++ $(D)/libexpat $(D)/libdvbsi++  $(D)/libusb
+ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc++ $(D)/libexpat $(D)/libdvbsi++ $(D)/libusb
 ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
 ENIGMA2_DEPS += python-all
 ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
@@ -13,13 +20,6 @@ ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
 ifeq ($(IMAGE), enigma2-wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
-
-E_CPPFLAGS    = -I$(DRIVER_DIR)/include
-E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
-E_CPPFLAGS   += -I$(KERNEL_DIR)/include
-E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
-E_CPPFLAGS   += -I$(APPS_DIR)/tools
-E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
 
 ifeq ($(EXTERNAL_LCD), externallcd)
 ENIGMA2_DEPS  += $(D)/graphlcd
@@ -30,12 +30,14 @@ ifeq ($(EXTERNAL_LCD), lcd4linux)
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
-ifeq ($(MEDIAFW), gstreamer)
-E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
+ifeq ($(MEDIAFW), eplayer3)
+ENIGMA2_DEPS  += $(D)/tools-libeplayer3
+E_CONFIG_OPTS += --enable-libeplayer3
 endif
 
-ifeq ($(MEDIAFW), eplayer3)
-E_CONFIG_OPTS += --enable-libeplayer3
+ifeq ($(MEDIAFW), gstreamer)
+ENIGMA2_DEPS  += $(D)/gst_plugins_dvbmediasink
+E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 endif
 
 ifeq ($(MEDIAFW), gst-eplayer3)
