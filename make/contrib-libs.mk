@@ -2136,7 +2136,7 @@ $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/djmount-$(DJMOUNT_VER).tar.gz
 #
 # libupnp
 #
-LIBUPNP_VER = 1.6.17
+LIBUPNP_VER = 1.6.19
 
 $(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/libupnp-$(LIBUPNP_VER).tar.bz2
