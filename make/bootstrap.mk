@@ -40,7 +40,7 @@ $(ARCHIVE)/stlinux24-cross-%.i386.rpm \
 $(ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
 	$(WGET) $(STL_FTP_UPD_SH4)/$(subst $(ARCHIVE)/,"",$@)
 
-ifeq ($(KERNEL), $(filter $(KERNEL), p0211 p0214 p0215 p0217))
+ifeq ($(KERNEL), $(filter $(KERNEL), p0217 p0217_exp))
 STM_KERNEL_HEADERS_VER = 2.6.32.46-48
 else
 STM_KERNEL_HEADERS_VER = 2.6.32.46-47
