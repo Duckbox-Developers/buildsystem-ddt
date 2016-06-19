@@ -980,7 +980,7 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/smartmontools-$(SMARTMONTOOLS_VER)
 NFSUTILS_VER = 1.3.3
 
 $(ARCHIVE)/nfs-utils-$(NFSUTILS_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/nfs/files/nfs-utils/(NFSUTILS_VER)/nfs-utils-$(NFSUTILS_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/nfs/files/nfs-utils/$(NFSUTILS_VER)/nfs-utils-$(NFSUTILS_VER).tar.bz2
 
 $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/nfs-utils-$(NFSUTILS_VER).tar.bz2
 	$(REMOVE)/nfs-utils-$(NFSUTILS_VER)
