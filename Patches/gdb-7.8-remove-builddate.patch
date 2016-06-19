@@ -1,0 +1,30 @@
+--- a/sim/common/sim-config.c
++++ b/sim/common/sim-config.c
+@@ -314,10 +314,10 @@ void
+ print_sim_config (SIM_DESC sd)
+ {
+ #if defined (__GNUC__) && defined (__VERSION__)
+-  sim_io_printf (sd, "Compiled by GCC %s on %s %s\n",
+-			  __VERSION__, __DATE__, __TIME__);
++  sim_io_printf (sd, "Compiled by GCC %s\n",
++			  __VERSION__);
+ #else
+-  sim_io_printf (sd, "Compiled on %s %s\n", __DATE__, __TIME__);
++  sim_io_printf (sd, "Compiled ...\n");
+ #endif
+ 
+   sim_io_printf (sd, "WITH_TARGET_BYTE_ORDER   = %s\n",
+--- a/sim/ppc/options.c
++++ b/sim/ppc/options.c
+@@ -113,9 +113,9 @@ INLINE_OPTIONS\
+ print_options (void)
+ {
+ #if defined(_GNUC_) && defined(__VERSION__)
+-  printf_filtered ("Compiled by GCC %s on %s %s\n", __VERSION__, __DATE__, __TIME__);
++  printf_filtered ("Compiled by GCC %s\n", __VERSION__);
+ #else
+-  printf_filtered ("Compiled on %s %s\n", __DATE__, __TIME__);
++  printf_filtered ("Compiled ...\n");
+ #endif
+ 
+   printf_filtered ("WITH_HOST_BYTE_ORDER     = %s\n", options_byte_order (WITH_HOST_BYTE_ORDER));
