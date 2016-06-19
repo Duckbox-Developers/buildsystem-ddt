@@ -2094,7 +2094,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 #
 # libexif
 #
-LIBEXIF_VER = 0.6.20
+LIBEXIF_VER = 0.6.21
 
 $(ARCHIVE)/libexif-$(LIBEXIF_VER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/libexif/files/libexif/$(LIBEXIF_VER)/libexif-$(LIBEXIF_VER).tar.gz
