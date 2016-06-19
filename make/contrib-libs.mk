@@ -1962,11 +1962,11 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).
 #
 $(D)/libopenthreads: $(D)/bootstrap
 	$(REMOVE)/openthreads
-	[ -d "$(ARCHIVE)/cst-public-libraries-openthreads.git" ] && \
-	(cd $(ARCHIVE)/cst-public-libraries-openthreads.git; git pull; ); \
-	[ -d "$(ARCHIVE)/cst-public-libraries-openthreads.git" ] || \
-	git clone --recursive git://github.com/coolstreamtech/cst-public-libraries-openthreads.git $(ARCHIVE)/cst-public-libraries-openthreads.git; \
-	cp -ra $(ARCHIVE)/cst-public-libraries-openthreads.git $(BUILD_TMP)/openthreads; \
+	set -e; if [ -d $(ARCHIVE)/cst-public-libraries-openthreads.git ]; \
+		then cd $(ARCHIVE)/cst-public-libraries-openthreads.git; git pull; \
+		else cd $(ARCHIVE); git clone --recursive git://github.com/coolstreamtech/cst-public-libraries-openthreads.git cst-public-libraries-openthreads.git; \
+		fi
+	cp -ra $(ARCHIVE)/cst-public-libraries-openthreads.git $(BUILD_TMP)/openthreads
 	set -e; cd $(BUILD_TMP)/openthreads; \
 		$(PATCH)/libopenthreads.patch; \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
