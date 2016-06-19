@@ -328,9 +328,11 @@ $(ARCHIVE)/lua-$(LUA_VER).tar.gz:
 
 $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 	$(REMOVE)/lua-$(LUA_VER)
-	[ -d "$(ARCHIVE)/luaposix.git" ] || \
-	git clone -b release-v$(LUAPOSIX_VER) git://github.com/luaposix/luaposix.git $(ARCHIVE)/luaposix.git; \
-	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)/
+	set -e; if [ -d $(ARCHIVE)/luaposix.git ]; \
+		then cd $(ARCHIVE)/luaposix.git; git pull; \
+		else cd $(ARCHIVE); git clone -b release-v$(LUAPOSIX_VER) --single-branch --depth 1 git://github.com/luaposix/luaposix.git $(ARCHIVE)/luaposix.git; \
+		fi
+	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
 	$(UNTAR)/lua-$(LUA_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
 		$(PATCH)/lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch; \
