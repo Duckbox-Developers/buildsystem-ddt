@@ -450,7 +450,7 @@ BOOST_MICRO = 0
 BOOST_VER = $(BOOST_MAJOR)_$(BOOST_MINOR)_$(BOOST_MICRO)
 
 $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/project/boost/boost/$(BOOST_MAJOR).$(BOOST_MINOR).$(BOOST_MICRO)/boost_$(BOOST_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/boost/files/boost/$(BOOST_MAJOR).$(BOOST_MINOR).$(BOOST_MICRO)/boost_$(BOOST_VER).tar.bz2
 
 $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2
 	$(REMOVE)/boost_$(BOOST_VER)
@@ -547,7 +547,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 FREETYPE_VER = 2.6.3
 
 $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2:
-	$(WGET) http://prdownloads.sourceforge.net/sourceforge/freetype/freetype-$(FREETYPE_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/freetype-$(FREETYPE_VER).tar.bz2
 
 $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2
 	$(REMOVE)/freetype-$(FREETYPE_VER)
@@ -733,7 +733,7 @@ $(D)/png++: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/png++-$(PNGPP_VER).tar.gz
 UNGIF_VER = 4.1.4
 
 $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/project/giflib/libungif-4.x/libungif-$(UNGIF_VER)/libungif-$(UNGIF_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/giflib/files/libungif-4.x/libungif-$(UNGIF_VER)/libungif-$(UNGIF_VER).tar.bz2
 
 $(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2
 	$(RM_PKGPREFIX)
@@ -903,7 +903,7 @@ $(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz
 MAD_VER = 0.15.1b
 
 $(ARCHIVE)/libmad-$(MAD_VER).tar.gz:
-	$(WGET) http://downloads.sourceforge.net/project/mad/libmad/$(MAD_VER)/libmad-$(MAD_VER).tar.gz
+	$(WGET) http://sourceforge.net/projects/mad/files/libmad/$(MAD_VER)/libmad-$(MAD_VER).tar.gz
 
 $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 	$(REMOVE)/libmad-$(MAD_VER)
@@ -932,7 +932,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 ID3TAG_VER = 0.15.1b
 
 $(ARCHIVE)/libid3tag-$(ID3TAG_VER)$(ID3TAG_SUBVER).tar.gz:
-	$(WGET) http://downloads.sourceforge.net/project/mad/libid3tag/$(ID3TAG_VER)/libid3tag-$(ID3TAG_VER).tar.gz
+	$(WGET) http://sourceforge.net/projects/mad/files/libid3tag/$(ID3TAG_VER)/libid3tag-$(ID3TAG_VER).tar.gz
 
 $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VER).tar.gz
 	$(REMOVE)/libid3tag-$(ID3TAG_VER)
@@ -1041,7 +1041,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/libiconv-$(ICONV_VER).tar.gz
 EXPAT_VER = 2.1.1
 
 $(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/project/expat/expat/$(EXPAT_VER)/expat-$(EXPAT_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/expat-$(EXPAT_VER).tar.bz2
 
 $(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2
 	$(REMOVE)/expat-$(EXPAT_VER)
@@ -1845,7 +1845,7 @@ $(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/
 USB_VER = 1.0.9
 
 $(ARCHIVE)/libusb-$(USB_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/libusb/libusb-$(USB_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$(USB_VER)/libusb-$(USB_VER).tar.bz2
 
 $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
 	$(REMOVE)/libusb-$(USB_VER)
@@ -1873,7 +1873,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
 USBCOMPAT_VER = 0.1.5
 
 $(ARCHIVE)/libusb-compat-$(USBCOMPAT_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/libusb/libusb-compat-$(USBCOMPAT_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(USBCOMPAT_VER)/libusb-compat-$(USBCOMPAT_VER).tar.bz2
 
 $(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMPAT_VER).tar.bz2
 	$(REMOVE)/libusb-compat-$(USBCOMPAT_VER)
@@ -2032,7 +2032,7 @@ $(D)/libdvbsi++: $(D)/bootstrap $(ARCHIVE)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
 LIBMODPLUG_VER = 0.8.8.4
 
 $(ARCHIVE)/libmodplug-$(LIBMODPLUG_VER).tar.gz:
-	$(WGET) http://downloads.sourceforge.net/project/modplug-xmms/libmodplug/$(LIBMODPLUG_VER)/libmodplug-$(LIBMODPLUG_VER).tar.gz
+	$(WGET) http://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VER)/libmodplug-$(LIBMODPLUG_VER).tar.gz
 
 $(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/libmodplug-$(LIBMODPLUG_VER).tar.gz
 	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
@@ -2139,7 +2139,7 @@ $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/djmount-$(DJMOUNT_VER).tar.gz
 LIBUPNP_VER = 1.6.17
 
 $(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/project/pupnp/pupnp/libUPnP\ $(LIBUPNP_VER)/libupnp-$(LIBUPNP_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/libupnp-$(LIBUPNP_VER).tar.bz2
 
 $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2
 	$(REMOVE)/libupnp-$(LIBUPNP_VER)
@@ -2207,7 +2207,7 @@ $(D)/sshfs: $(D)/bootstrap $(D)/glib2 $(D)/fuse $(ARCHIVE)/sshfs-fuse-$(SSHFS_VE
 HOWL_VER = 1.0.0
 
 $(ARCHIVE)/howl-$(HOWL_VER).tar.gz:
-	$(WGET) http://downloads.sourceforge.net/project/howl/howl/$(HOWL_VER)/howl-$(HOWL_VER).tar.gz
+	$(WGET) http://sourceforge.net/projects/howl/files/howl/$(HOWL_VER)/howl-$(HOWL_VER).tar.gz
 
 $(D)/howl: $(D)/bootstrap $(ARCHIVE)/howl-$(HOWL_VER).tar.gz
 	$(REMOVE)/howl-$(HOWL_VER)

@@ -596,7 +596,7 @@ $(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/hddtemp-$(HDDTEMP_VER).tar.bz2
 HDPARM_VER = 9.48
 
 $(ARCHIVE)/hdparm-$(HDPARM_VER).tar.gz:
-	$(WGET) http://downloads.sourceforge.net/project/hdparm/hdparm/hdparm-$(HDPARM_VER).tar.gz
+	$(WGET) http://sourceforge.net/projects/hdparm/files/hdparm/hdparm-$(HDPARM_VER).tar.gz
 
 $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/hdparm-$(HDPARM_VER).tar.gz
 	$(REMOVE)/hdparm-$(HDPARM_VER)
@@ -614,7 +614,7 @@ $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/hdparm-$(HDPARM_VER).tar.gz
 HDIDLE_VER = 1.05
 
 $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz:
-	$(WGET) http://downloads.sourceforge.net/project/hd-idle/hd-idle-$(HDIDLE_VER).tgz
+	$(WGET) http://sourceforge.net/projects/hd-idle/files/hd-idle-$(HDIDLE_VER).tgz
 
 $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
 	$(REMOVE)/hd-idle
@@ -936,7 +936,7 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/smartmontools-$(SMARTMONTOOLS_VER)
 NFSUTILS_VER = 1.3.3
 
 $(ARCHIVE)/nfs-utils-$(NFSUTILS_VER).tar.bz2:
-	$(WGET) http://downloads.sourceforge.net/project/nfs/nfs-utils/$(NFSUTILS_VER)/nfs-utils-$(NFSUTILS_VER).tar.bz2
+	$(WGET) http://sourceforge.net/projects/nfs/files/nfs-utils/(NFSUTILS_VER)/nfs-utils-$(NFSUTILS_VER).tar.bz2
 
 $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/nfs-utils-$(NFSUTILS_VER).tar.bz2
 	$(REMOVE)/nfs-utils-$(NFSUTILS_VER)
