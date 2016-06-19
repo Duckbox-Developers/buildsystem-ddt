@@ -82,7 +82,6 @@ help:
 	@echo
 
 # define package versions first...
-include make/yaud.mk
 include make/bootstrap.mk
 include make/contrib-libs.mk
 include make/contrib-apps.mk
@@ -100,6 +99,7 @@ include make/neutrino-plugins.mk
 include make/neutrino-release.mk
 include make/cleantargets.mk
 include make/patches.mk
+include make/yaud.mk
 
 all:
 	@echo "'make all' is not a valid target. Please read the documentation."
