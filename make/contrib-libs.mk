@@ -1169,11 +1169,11 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 #
 $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(REMOVE)/libdreamdvd
-	[ -d "$(ARCHIVE)/libdreamdvd.git" ] && \
-	(cd $(ARCHIVE)/libdreamdvd.git; git pull;); \
-	[ -d "$(ARCHIVE)/libdreamdvd.git" ] || \
-	git clone git://github.com/mirakels/libdreamdvd.git $(ARCHIVE)/libdreamdvd.git; \
-	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd; \
+	set -e; if [ -d $(ARCHIVE)/libdreamdvd.git ]; \
+		then cd $(ARCHIVE)/libdreamdvd.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
+		fi
+	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
 	set -e; cd $(BUILD_TMP)/libdreamdvd; \
 		$(PATCH)/libdreamdvd-1.0-sh4-support.patch; \
 		$(BUILDENV) \
