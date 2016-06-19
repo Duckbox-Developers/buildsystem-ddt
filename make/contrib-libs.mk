@@ -1794,11 +1794,11 @@ $(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 
 $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 	$(REMOVE)/lcd4linux
-	[ -d "$(ARCHIVE)/lcd4linux.git" ] && \
-	(cd $(ARCHIVE)/lcd4linux.git; git pull;); \
-	[ -d "$(ARCHIVE)/lcd4linux.git" ] || \
-	git clone https://github.com/TangoCash/lcd4linux.git $(ARCHIVE)/lcd4linux.git; \
-	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux; \
+	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
+		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
+		fi
+	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	set -e; cd $(BUILD_TMP)/lcd4linux; \
 		$(BUILDENV) ./bootstrap; \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
