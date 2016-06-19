@@ -1734,11 +1734,11 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz
 #
 $(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
 	$(REMOVE)/graphlcd
-	[ -d "$(ARCHIVE)/graphlcd-base-touchcol.git" ] && \
-	(cd $(ARCHIVE)/graphlcd-base-touchcol.git; git pull;); \
-	[ -d "$(ARCHIVE)/graphlcd-base-touchcol.git" ] || \
-	git clone -b touchcol git://projects.vdr-developer.org/graphlcd-base.git $(ARCHIVE)/graphlcd-base-touchcol.git; \
-	cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd; \
+	set -e; if [ -d $(ARCHIVE)/graphlcd-base-touchcol.git ]; \
+		then cd $(ARCHIVE)/graphlcd-base-touchcol.git; git pull; \
+		else cd $(ARCHIVE); git clone -b touchcol git://projects.vdr-developer.org/graphlcd-base.git graphlcd-base-touchcol.git; \
+		fi
+	cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd
 	set -e; cd $(BUILD_TMP)/graphlcd; \
 		$(PATCH)/graphlcd-base-touchcol.patch; \
 		export TARGET=$(TARGET)-; \
