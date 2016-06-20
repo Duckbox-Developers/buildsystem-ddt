@@ -1289,11 +1289,11 @@ $(D)/xupnpd: $(D)/bootstrap
 #
 $(D)/dvbsnoop: $(D)/bootstrap
 	$(REMOVE)/dvbsnoop
-	[ -d "$(ARCHIVE)/dvbsnoop.git" ] && \
-	(cd $(ARCHIVE)/dvbsnoop.git; git pull; ); \
-	[ -d "$(ARCHIVE)/dvbsnoop.git" ] || \
-	git clone https://github.com/cotdp/dvbsnoop.git $(ARCHIVE)/dvbsnoop.git; \
-	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop;
+	set -e; if [ -d $(ARCHIVE)/dvbsnoop.git ]; \
+		then cd $(ARCHIVE)/dvbsnoop.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/cotdp/dvbsnoop.git dvbsnoop.git; \
+		fi
+	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop
 	set -e; cd $(BUILD_TMP)/dvbsnoop; \
 		$(CONFIGURE) \
 			--prefix=/usr \
