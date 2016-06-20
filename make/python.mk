@@ -537,11 +537,11 @@ $(D)/python_singledispatch: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(
 #
 $(D)/python_livestreamer: $(D)/bootstrap $(D)/python $(D)/python_setuptools
 	$(REMOVE)/livestreamer
-	[ -d "$(ARCHIVE)/livestreamer.git" ] && \
-	(cd $(ARCHIVE)/livestreamer.git; git pull;); \
-	[ -d "$(ARCHIVE)/livestreamer.git" ] || \
-	git clone https://github.com/chrippa/livestreamer.git $(ARCHIVE)/livestreamer.git; \
-	cp -ra $(ARCHIVE)/livestreamer.git $(BUILD_TMP)/livestreamer; \
+	set -e; if [ -d $(ARCHIVE)/livestreamer.git ]; \
+		then cd $(ARCHIVE)/livestreamer.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/chrippa/livestreamer.git livestreamer.git; \
+		fi
+	cp -ra $(ARCHIVE)/livestreamer.git $(BUILD_TMP)/livestreamer
 	set -e; cd $(BUILD_TMP)/livestreamer; \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/livestreamer
