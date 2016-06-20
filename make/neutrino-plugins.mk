@@ -3,11 +3,11 @@
 #
 $(D)/neutrino-mp-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
-	[ -d "$(ARCHIVE)/neutrino-mp-plugins-max.git" ] && \
-	(cd $(ARCHIVE)/neutrino-mp-plugins-max.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/neutrino-mp-plugins-max.git" ] || \
-	git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git $(ARCHIVE)/neutrino-mp-plugins-max.git; \
-	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins;\
+	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git.git ]; \
+		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git.git; \
+		fi
+	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
 	touch $@
 
 $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
