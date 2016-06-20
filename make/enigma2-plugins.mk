@@ -120,11 +120,11 @@ $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah
 #
 $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 	$(REMOVE)/enigma2-networkbrowser
-	[ -d "$(ARCHIVE)/enigma2-plugins.git" ] && \
-	(cd $(ARCHIVE)/enigma2-plugins.git; git pull; git checkout HEAD;); \
-	[ -d "$(ARCHIVE)/enigma2-plugins.git" ] || \
-	git clone https://github.com/OpenPLi/enigma2-plugins.git $(ARCHIVE)/enigma2-plugins.git; \
-	cp -ra $(ARCHIVE)/enigma2-plugins.git/networkbrowser/ $(BUILD_TMP)/enigma2-networkbrowser; \
+	set -e; if [ -d $(ARCHIVE)/enigma2-plugins.git ]; \
+		then cd $(ARCHIVE)/enigma2-plugins.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/OpenPLi/enigma2-plugins.git enigma2-plugins.git; \
+		fi
+	cp -ra $(ARCHIVE)/enigma2-plugins.git/networkbrowser/ $(BUILD_TMP)/enigma2-networkbrowser
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser; \
 		$(PATCH)/enigma2-networkbrowser-support-autofs.patch; \
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser/src/lib; \
