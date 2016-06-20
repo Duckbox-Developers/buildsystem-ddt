@@ -24,7 +24,7 @@ tools-clean:
 #
 $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 	set -e; cd $(APPS_DIR)/tools/aio-grab; \
-		$(CONFIGURE_BIN) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -36,7 +36,7 @@ $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 #
 $(D)/tools-devinit: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/devinit; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -48,7 +48,7 @@ $(D)/tools-devinit: $(D)/bootstrap
 #
 $(D)/tools-evremote2: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/evremote2; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -60,7 +60,7 @@ $(D)/tools-evremote2: $(D)/bootstrap
 #
 $(D)/tools-fp_control: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/fp_control; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -72,7 +72,7 @@ $(D)/tools-fp_control: $(D)/bootstrap
 #
 $(D)/tools-hotplug: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/hotplug; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -84,7 +84,7 @@ $(D)/tools-hotplug: $(D)/bootstrap
 #
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	set -e; cd $(APPS_DIR)/tools/libeplayer3; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix=$(TARGETPREFIX) \
 		; \
 		$(MAKE); \
@@ -96,7 +96,7 @@ $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 #
 $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 	set -e; cd $(APPS_DIR)/tools/libmme_host; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 			$(if $(MULTICOM324), --enable-multicom324) \
 			$(if $(MULTICOM406), --enable-multicom406) \
@@ -110,7 +110,7 @@ $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 #
 $(D)/tools-libmme_image: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/libmme_image; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE) DRIVER_TOPDIR=$(DRIVER_DIR); \
@@ -122,7 +122,7 @@ $(D)/tools-libmme_image: $(D)/bootstrap
 #
 $(D)/tools-showiframe: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/showiframe; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -134,7 +134,7 @@ $(D)/tools-showiframe: $(D)/bootstrap
 #
 $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 	set -e; cd $(APPS_DIR)/tools/spf_tool; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -146,7 +146,7 @@ $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 #
 $(D)/tools-stfbcontrol: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/stfbcontrol; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -158,7 +158,7 @@ $(D)/tools-stfbcontrol: $(D)/bootstrap
 #
 $(D)/tools-streamproxy: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/streamproxy; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -170,7 +170,7 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 #
 $(D)/tools-ustslave: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/ustslave; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -182,7 +182,7 @@ $(D)/tools-ustslave: $(D)/bootstrap
 #
 $(D)/tools-vfdctl: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/vfdctl; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -194,7 +194,7 @@ $(D)/tools-vfdctl: $(D)/bootstrap
 #
 $(D)/tools-wait4button: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/wait4button; \
-		$(CONFIGURE_BIN) \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
