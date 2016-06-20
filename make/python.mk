@@ -552,11 +552,11 @@ $(D)/python_livestreamer: $(D)/bootstrap $(D)/python $(D)/python_setuptools
 #
 $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_livestreamer
 	$(REMOVE)/livestreamersrv
-	[ -d "$(ARCHIVE)/livestreamersrv.git" ] && \
-	(cd $(ARCHIVE)/livestreamersrv.git; git pull;); \
-	[ -d "$(ARCHIVE)/livestreamersrv.git" ] || \
-	git clone https://github.com/athoik/livestreamersrv.git $(ARCHIVE)/livestreamersrv.git; \
-	cp -ra $(ARCHIVE)/livestreamersrv.git $(BUILD_TMP)/livestreamersrv; \
+	set -e; if [ -d $(ARCHIVE)/livestreamersrv.git ]; \
+		then cd $(ARCHIVE)/livestreamersrv.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/athoik/livestreamersrv.git livestreamersrv.git; \
+		fi
+	cp -ra $(ARCHIVE)/livestreamersrv.git $(BUILD_TMP)/livestreamersrv
 	set -e; cd $(BUILD_TMP)/livestreamersrv; \
 		cp -rd livestreamersrv $(TARGETPREFIX)/usr/sbin; \
 		cp -rd offline.mp4 $(TARGETPREFIX)/usr/share
