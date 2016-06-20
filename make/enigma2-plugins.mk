@@ -3,11 +3,11 @@
 #
 $(D)/hotplug_e2: $(D)/bootstrap
 	$(REMOVE)/hotplug-e2-helper
-	[ -d "$(ARCHIVE)/hotplug-e2-helper.git" ] && \
-	(cd $(ARCHIVE)/hotplug-e2-helper.git; git pull; ); \
-	[ -d "$(ARCHIVE)/hotplug-e2-helper.git" ] || \
-	git clone https://github.com/OpenPLi/hotplug-e2-helper.git $(ARCHIVE)/hotplug-e2-helper.git; \
-	cp -ra $(ARCHIVE)/hotplug-e2-helper.git $(BUILD_TMP)/hotplug-e2-helper; \
+	set -e; if [ -d $(ARCHIVE)/hotplug-e2-helper.git ]; \
+		then cd $(ARCHIVE)/hotplug-e2-helper.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/OpenPLi/hotplug-e2-helper.git hotplug-e2-helper.git; \
+		fi
+	cp -ra $(ARCHIVE)/hotplug-e2-helper.git $(BUILD_TMP)/hotplug-e2-helper
 	set -e; cd $(BUILD_TMP)/hotplug-e2-helper; \
 		$(PATCH)/hotplug-e2-helper.patch; \
 		$(CONFIGURE) \
