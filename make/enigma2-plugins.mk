@@ -92,11 +92,11 @@ $(D)/enigma2-plugins: $(D)/enigma2_networkbrowser $(D)/enigma2_openwebif
 #
 $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah
 	$(REMOVE)/e2openplugin-OpenWebif
-	[ -d "$(ARCHIVE)/e2openplugin-OpenWebif.git" ] && \
-	(cd $(ARCHIVE)/e2openplugin-OpenWebif.git; git pull; git checkout HEAD;); \
-	[ -d "$(ARCHIVE)/e2openplugin-OpenWebif.git" ] || \
-	git clone https://github.com/HDMU/e2openplugin-OpenWebif.git $(ARCHIVE)/e2openplugin-OpenWebif.git; \
-	cp -ra $(ARCHIVE)/e2openplugin-OpenWebif.git $(BUILD_TMP)/e2openplugin-OpenWebif; \
+	set -e; if [ -d $(ARCHIVE)/e2openplugin-OpenWebif.git ]; \
+		then cd $(ARCHIVE)/e2openplugin-OpenWebif.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/HDMU/e2openplugin-OpenWebif.git e2openplugin-OpenWebif.git; \
+		fi
+	cp -ra $(ARCHIVE)/e2openplugin-OpenWebif.git $(BUILD_TMP)/e2openplugin-OpenWebif
 	set -e; cd $(BUILD_TMP)/e2openplugin-OpenWebif; \
 		$(BUILDENV) \
 		cp -a plugin $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
