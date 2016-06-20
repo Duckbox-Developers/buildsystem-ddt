@@ -1270,11 +1270,11 @@ $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/
 #
 $(D)/xupnpd: $(D)/bootstrap
 	$(REMOVE)/xupnpd
-	[ -d "$(ARCHIVE)/xupnpd.git" ] && \
-	(cd $(ARCHIVE)/xupnpd.git; git pull; ); \
-	[ -d "$(ARCHIVE)/xupnpd.git" ] || \
-	git clone git://github.com/clark15b/xupnpd.git $(ARCHIVE)/xupnpd.git; \
-	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd; \
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
+		fi
+	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
 	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
