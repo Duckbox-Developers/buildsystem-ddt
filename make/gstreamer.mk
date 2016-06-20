@@ -439,11 +439,11 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/libdca-$(LIBDCA_VER).tar.bz2
 
 $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(REMOVE)/gstreamer1.0-plugin-subsink
-	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-subsink.git" ] && \
-	(cd $(ARCHIVE)/gstreamer1.0-plugin-subsink.git; git pull;); \
-	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-subsink.git" ] || \
-	git clone git://github.com/christophecvr/gstreamer1.0-plugin-subsink.git $(ARCHIVE)/gstreamer1.0-plugin-subsink.git; \
-	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-subsink.git $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
+	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-subsink.git ]; \
+		then cd $(ARCHIVE)/gstreamer1.0-plugin-subsink.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/christophecvr/gstreamer1.0-plugin-subsink.git gstreamer1.0-plugin-subsink.git; \
+		fi
+	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-subsink.git $(BUILD_TMP)/gstreamer1.0-plugin-subsink
 	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
