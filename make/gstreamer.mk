@@ -465,11 +465,11 @@ $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 #
 $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
 	$(REMOVE)/gstreamer1.0-plugin-multibox-dvbmediasink
-	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git" ] && \
-	(cd $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; git pull;); \
-	[ -d "$(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git" ] || \
-	git clone -b experimental git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; \
-	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
+	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git ]; \
+		then cd $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; git pull; \
+		else cd $(ARCHIVE); git clone -b experimental git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git gstreamer1.0-plugin-multibox-dvbmediasink.git; \
+		fi
+	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink
 	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --force; \
