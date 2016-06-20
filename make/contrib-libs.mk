@@ -1751,49 +1751,8 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
 	touch $@
 
 #
-# libdpfax
-#
-$(D)/libdpf: $(D)/bootstrap
-	$(REMOVE)/dpf-ax
-	[ -d "$(ARCHIVE)/dpf-ax.svn" ] && \
-	(cd $(ARCHIVE)/dpf-ax.svn; svn update;); \
-	[ -d "$(ARCHIVE)/dpf-ax.svn" ] || \
-	svn co https://svn.code.sf.net/p/dpf-ax/code/trunk $(ARCHIVE)/dpf-ax.svn; \
-	cp -ra $(ARCHIVE)/dpf-ax.svn $(BUILD_TMP)/dpf-ax; \
-	set -e; cd $(BUILD_TMP)/dpf-ax; \
-		$(PATCH)/libdpf-crossbuild.patch; \
-		cp include/spiflash.h $(TARGETPREFIX)/usr/include/; \
-		cp include/usbuser.h $(TARGETPREFIX)/usr/include/; \
-		$(BUILDENV) \
-		$(MAKE) default CFLAGS="$(TARGET_CFLAGS) " LDFLAGS="$(TARGET_LDFLAGS) -L."; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/dpf-ax
-	touch $@
-
-#
 # lcd4linux
-#--with-python
-$(D)/lcd4_linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
-	$(REMOVE)/lcd4linux
-	[ -d "$(ARCHIVE)/lcd4linux.svn" ] && \
-	(cd $(ARCHIVE)/lcd4linux.svn; svn update;); \
-	[ -d "$(ARCHIVE)/lcd4linux.svn" ] || \
-	svn co https://ssl.bulix.org/svn/lcd4linux/trunk $(ARCHIVE)/lcd4linux.svn; \
-	cp -ra $(ARCHIVE)/lcd4linux.svn $(BUILD_TMP)/lcd4linux; \
-	set -e; cd $(BUILD_TMP)/lcd4linux; \
-		$(PATCH)/lcd4linux.patch; \
-		$(BUILDENV) ./bootstrap; \
-		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
-			--prefix=/usr \
-			--with-drivers='DPF,SamsungSPF' \
-			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
-			--without-ncurses \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/lcd4linux
-	touch $@
-
+#
 $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
