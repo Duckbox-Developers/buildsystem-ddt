@@ -341,8 +341,9 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 		sed -i 's/<config.h>/"config.h"/' src/posix.c; \
 		sed -i '/^#define/d' src/lua52compat.h; \
 		sed -i 's|man/man1|/.remove|' Makefile; \
-		$(MAKE) linux CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" BUILDMODE=dynamic PKG_VERSION=$(LUA_VER); \
+		$(MAKE) linux CC=$(TARGET)-gcc CPPFLAGS="$(TARGET_CPPFLAGS)" LDFLAGS="-L$(TARGETPREFIX)/usr/lib" BUILDMODE=dynamic PKG_VERSION=$(LUA_VER); \
 		$(MAKE) install INSTALL_TOP=$(TARGETPREFIX)/usr INSTALL_MAN=$(TARGETPREFIX)/.remove
+	cd $(TARGETPREFIX)/usr && rm bin/lua bin/luac
 	$(REMOVE)/lua-$(LUA_VER)
 	touch $@
 
