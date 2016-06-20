@@ -822,11 +822,11 @@ $(D)/imagemagick: $(D)/bootstrap $(ARCHIVE)/ImageMagick-$(IMAGEMAGICK_VER).tar.g
 #
 $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa-lib
 	$(REMOVE)/shairport
-	[ -d "$(ARCHIVE)/shairport.git" ] && \
-	(cd $(ARCHIVE)/shairport.git; git pull; ); \
-	[ -d "$(ARCHIVE)/shairport.git" ] || \
-	git clone -b 1.0-dev git://github.com/abrasive/shairport.git $(ARCHIVE)/shairport.git; \
-	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport; \
+	set -e; if [ -d $(ARCHIVE)/shairport.git ]; \
+		then cd $(ARCHIVE)/shairport.git; git pull; \
+		else cd $(ARCHIVE); git clone -b 1.0-dev git://github.com/abrasive/shairport.git shairport.git; \
+		fi
+	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport
 	set -e; cd $(BUILD_TMP)/shairport; \
 		sed -i 's|pkg-config|$$PKG_CONFIG|g' configure; \
 		PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
