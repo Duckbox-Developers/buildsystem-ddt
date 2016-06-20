@@ -23,11 +23,11 @@ $(D)/hotplug_e2: $(D)/bootstrap
 #
 $(D)/tuxtxtlib: $(D)/bootstrap
 	$(REMOVE)/tuxtxtlib
-	[ -d "$(ARCHIVE)/tuxtxt.git" ] && \
-	(cd $(ARCHIVE)/tuxtxt.git; git pull;); \
-	[ -d "$(ARCHIVE)/tuxtxt.git" ] || \
-	git clone https://github.com/OpenPLi/tuxtxt.git $(ARCHIVE)/tuxtxt.git; \
-	cp -ra $(ARCHIVE)/tuxtxt.git/libtuxtxt $(BUILD_TMP)/tuxtxtlib; \
+	set -e; if [ -d $(ARCHIVE)/tuxtxt.git ]; \
+		then cd $(ARCHIVE)/tuxtxt.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/OpenPLi/tuxtxt.git tuxtxt.git; \
+		fi
+	cp -ra $(ARCHIVE)/tuxtxt.git/libtuxtxt $(BUILD_TMP)/tuxtxtlib
 	set -e; cd $(BUILD_TMP)/tuxtxtlib; \
 		$(PATCH)/tuxtxtlib-1.0-fix-dbox-headers.patch; \
 		aclocal; \
