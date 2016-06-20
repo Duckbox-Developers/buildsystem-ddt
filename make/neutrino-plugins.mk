@@ -3,9 +3,9 @@
 #
 $(D)/neutrino-mp-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
-	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git.git ]; \
-		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git.git; \
+	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
+		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git; \
 		fi
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
 	touch $@
@@ -57,11 +57,11 @@ NEUTRINO_HD2_PLUGINS_PATCHES =
 
 $(D)/neutrino-hd2-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
-	[ -d "$(ARCHIVE)/neutrino-hd2-plugins.git" ] && \
-	(cd $(ARCHIVE)/neutrino-hd2-plugins.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/neutrino-hd2-plugins.git" ] || \
-	git clone -b plugins https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrino-hd2-plugins.git; \
-	cp -ra $(ARCHIVE)/neutrino-hd2-plugins.git $(SOURCE_DIR)/neutrino-hd2-plugins;
+	set -e; if [ -d $(ARCHIVE)/neutrino-hd2-plugins.git ]; \
+		then cd $(ARCHIVE)/neutrino-hd2-plugins.git; git pull; \
+		else cd $(ARCHIVE); git clone -b plugins https://github.com/mohousch/neutrinohd2.git neutrino-hd2-plugins.git; \
+		fi
+	cp -ra $(ARCHIVE)/neutrino-hd2-plugins.git $(SOURCE_DIR)/neutrino-hd2-plugins
 	for i in $(NEUTRINO_HD2_PLUGINS_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
 		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
