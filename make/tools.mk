@@ -218,7 +218,6 @@ TOOLS += $(D)/tools-libmme_host
 TOOLS += $(D)/tools-libmmeimage
 endif
 ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
-ifeq ($(MEDIAFW), eplayer3)
 TOOLS += $(D)/tools-libeplayer3
 endif
 
