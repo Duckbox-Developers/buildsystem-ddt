@@ -215,7 +215,7 @@ TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
 TOOLS += $(D)/tools-libmme_host
-TOOLS += $(D)/tools-libmmeimage
+TOOLS += $(D)/tools-libmme_image
 endif
 ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
 TOOLS += $(D)/tools-libeplayer3
