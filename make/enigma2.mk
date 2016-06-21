@@ -41,6 +41,7 @@ E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 endif
 
 ifeq ($(MEDIAFW), gst-eplayer3)
+ENIGMA2_DEPS  += $(D)/tools-libeplayer3
 ENIGMA2_DEPS  += $(D)/gst_plugins_dvbmediasink
 E_CONFIG_OPTS += --with-gstversion=1.0 --enable-libeplayer3 --enable-mediafwgstreamer
 endif

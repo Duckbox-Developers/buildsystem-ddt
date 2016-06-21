@@ -85,7 +85,7 @@ $(D)/tools-hotplug: $(D)/bootstrap
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	set -e; cd $(APPS_DIR)/tools/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
-			--prefix=$(TARGETPREFIX) \
+			--prefix= \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
@@ -213,8 +213,11 @@ TOOLS += $(D)/tools-streamproxy
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
-#TOOLS += $(D)/tools-libmme_host
-#TOOLS += $(D)/tools-libmmeimage
+ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
+TOOLS += $(D)/tools-libmme_host
+TOOLS += $(D)/tools-libmmeimage
+endif
+ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
 ifeq ($(MEDIAFW), eplayer3)
 TOOLS += $(D)/tools-libeplayer3
 endif
