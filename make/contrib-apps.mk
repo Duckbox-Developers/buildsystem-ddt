@@ -1063,7 +1063,7 @@ $(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/vsftpd-$(VSFTPD_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/vsftpd-$(VSFTPD_VER); \
 		$(PATCH)/vsftpd-$(VSFTPD_VER).patch; \
 		$(MAKE) clean; \
-		$(MAKE) $(MAKE_OPTS) CFLAGS="-pipe -Os -g0"; \
+		$(MAKE) $(BUILDENV); \
 		$(MAKE) install PREFIX=$(TARGETPREFIX)
 		cp $(CDK_DIR)/root/etc/vsftpd.conf $(TARGETPREFIX)/etc
 	install -m 755 $(SKEL_ROOT)/etc/init.d/vsftpd $(TARGETPREFIX)/etc/init.d/
