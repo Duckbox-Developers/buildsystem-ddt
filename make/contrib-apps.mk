@@ -1,7 +1,7 @@
 #
 # busybox
 #
-BUSYBOX_VER = 1.24.2
+BUSYBOX_VER = 1.25.0
 
 $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2:
 	$(WGET) http://busybox.net/downloads/busybox-$(BUSYBOX_VER).tar.bz2
@@ -16,10 +16,6 @@ $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES
 	rm -fr $(BUILD_TMP)/busybox-$(BUSYBOX_VER)
 	$(UNTAR)/busybox-$(BUSYBOX_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/busybox-$(BUSYBOX_VER); \
-		$(PATCH)/busybox-1.24.2-ash-recursive-heredocs.patch; \
-		$(PATCH)/busybox-1.24.2-CVE-2016-2147.patch; \
-		$(PATCH)/busybox-1.24.2-CVE-2016-2148.patch; \
-		$(PATCH)/busybox-$(BUSYBOX_VER)-ifupdown.patch; \
 		$(PATCH)/busybox-$(BUSYBOX_VER)-unicode.patch; \
 		$(PATCH)/busybox-$(BUSYBOX_VER)-extra.patch; \
 		install -m 0644 $(lastword $^) .config; \

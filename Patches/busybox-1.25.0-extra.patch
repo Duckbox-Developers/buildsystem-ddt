@@ -18,9 +18,9 @@
 #
 # above comment added by Kevin Tian <kevin.tian@intel.com>, 2010-07-06
 
---- busybox-1.13.2/archival/libarchive/get_header_tar.c.orig	2008-11-09 18:28:02.000000000 +0100
-+++ busybox-1.13.2/archival/libarchive/get_header_tar.c	2009-02-11 22:34:52.000000000 +0100
-@@ -301,6 +301,8 @@
+--- a/archival/libarchive/get_header_tar.c
++++ b/archival/libarchive/get_header_tar.c
+@@ -310,6 +310,8 @@
  			file_header->name = concat_path_file(tar.prefix, tar.name);
  		} else
  			file_header->name = xstrdup(tar.name);
@@ -48,11 +48,9 @@
 #    Signed-off-by: Koen Kooi <koen@openembedded.org>
 #
 # above comment added by Kevin Tian <kevin.tian@intel.com>, 2010-07-06
-
-Index: busybox-1.13.2/Makefile
 ===================================================================
---- busybox-1.13.2.orig/Makefile	2009-03-19 15:44:37.419270265 +0300
-+++ busybox-1.13.2/Makefile	2009-03-19 15:45:57.737521296 +0300
+--- a/Makefile
++++ b/Makefile
 @@ -492,6 +492,10 @@
  		util-linux/ \
  		util-linux/volume_id/ \
@@ -64,10 +62,9 @@ Index: busybox-1.13.2/Makefile
  endif # KBUILD_EXTMOD
  
  ifeq ($(dot-config),1)
-diff -Nur busybox-1.22.1.org/modutils/Config.src busybox-1.22.1/modutils/Config.src
---- busybox-1.22.1.org/modutils/Config.src	2014-01-09 19:15:44.000000000 +0100
-+++ busybox-1.22.1/modutils/Config.src	2014-01-26 12:22:09.141361394 +0100
-@@ -247,7 +247,7 @@
+--- a/modutils/Config.src
++++ b/modutils/Config.src
+@@ -244,7 +244,7 @@
  config DEFAULT_MODULES_DIR
  	string "Default directory containing modules"
  	default "/lib/modules"
@@ -76,9 +73,8 @@ diff -Nur busybox-1.22.1.org/modutils/Config.src busybox-1.22.1/modutils/Config.
  	help
  	  Directory that contains kernel modules.
  	  Defaults to "/lib/modules"
-diff -Nur busybox-1.22.1.org/modutils/insmod.c busybox-1.22.1/modutils/insmod.c
---- busybox-1.22.1.org/modutils/insmod.c	2014-01-09 19:15:44.000000000 +0100
-+++ busybox-1.22.1/modutils/insmod.c	2014-01-26 12:22:09.141361394 +0100
+--- a/modutils/insmod.c
++++ b/modutils/insmod.c
 @@ -35,11 +35,42 @@
  //usage:	)
  //usage:#endif
