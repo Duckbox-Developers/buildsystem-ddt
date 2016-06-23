@@ -16,6 +16,7 @@ $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES
 	rm -fr $(BUILD_TMP)/busybox-$(BUSYBOX_VER)
 	$(UNTAR)/busybox-$(BUSYBOX_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/busybox-$(BUSYBOX_VER); \
+		$(PATCH)/busybox-$(BUSYBOX_VER)-nandwrite.patch; \
 		$(PATCH)/busybox-$(BUSYBOX_VER)-unicode.patch; \
 		$(PATCH)/busybox-$(BUSYBOX_VER)-extra.patch; \
 		install -m 0644 $(lastword $^) .config; \
