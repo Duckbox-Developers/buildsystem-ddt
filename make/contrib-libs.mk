@@ -1778,7 +1778,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 #
 # libgd
 #
-GD_VER = 2.1.1
+GD_VER = 2.2.1
 
 $(ARCHIVE)/libgd-$(GD_VER).tar.xz:
 	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VER)/libgd-$(GD_VER).tar.xz
