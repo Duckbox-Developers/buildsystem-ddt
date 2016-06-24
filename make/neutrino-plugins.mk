@@ -1,6 +1,52 @@
 #
 # Makefile to build NEUTRINO-PLUGINS
 #
+
+#
+# links
+# prefix=$(TARGETPREFIX)
+LINKS-VER = 2.7
+
+$(ARCHIVE)/links-$(LINKS-VER).tar.bz2:
+	$(WGET) http://links.twibright.com/download/links-$(LINKS-VER).tar.bz2
+
+$(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS-VER).tar.bz2
+	$(REMOVE)/links-$(LINKS-VER)
+	$(UNTAR)/links-$(LINKS-VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/links-$(LINKS-VER); \
+		$(PATCH)/links-$(LINKS-VER).patch; \
+		export CC="$(TARGET)-gcc -D$(PLATFORM)"; \
+		export SYSROOT=$(TARGETPREFIX); \
+		$(CONFIGURE) \
+			--host=$(TARGET) \
+			--build=$(BUILD) \
+			--prefix= \
+			--mandir=/.remove \
+			--without-svgalib \
+			--without-x \
+			--without-libtiff \
+			--enable-graphics \
+			--enable-javascript \
+			--with-ssl; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	mkdir -p $(TARGETPREFIX)/var/tuxbox/plugins $(TARGETPREFIX)/var/tuxbox/config/links
+	mv $(TARGETPREFIX)/bin/links $(TARGETPREFIX)/var/tuxbox/plugins/links.so
+	echo "name=Links Web Browser"	 > $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "desc=Web Browser"		>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "type=2"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "needfb=1"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "needrc=1"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "needoffsets=1"		>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
+	echo "bookmarkcount=0"		 > $(TARGETPREFIX)/var/tuxbox/config/bookmarks
+	touch $(TARGETPREFIX)/var/tuxbox/config/links/links.his
+	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGETPREFIX)/var/tuxbox/config/links
+	$(REMOVE)/links-$(LINKS-VER)
+	touch $@
+
+#
+# neutrino-mp plugins
+#
 $(D)/neutrino-mp-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
 	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
@@ -37,7 +83,6 @@ $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.st
 	touch $@
 
 $(D)/neutrino-mp-plugins: neutrino-mp-plugins.do_prepare neutrino-mp-plugins.do_compile
-	rm -rf $(TARGETPREFIX)/var/tuxbox/plugins/*
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGETPREFIX)
 #	touch $@
 
@@ -92,7 +137,6 @@ $(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.
 	touch $@
 
 $(D)/neutrino-hd2-plugins: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
-	rm -rf $(TARGETPREFIX)/var/tuxbox/plugins/*
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGETPREFIX)
 #	touch $@
 

@@ -1,0 +1,1518 @@
+#
+# This diff compares the official links download at
+#
+#   http://links.twibright.com/download/links-2.7.tar.bz2
+#
+# and the Coolstream version at
+#
+#   git://c00lstreamtech.de/cst-public-plugins-links.git
+#
+# as of Mar 23 2013, and adds a small changes for SPARK.
+#
+# Big thanks to focus for porting links to Neutrino!
+#
+# --martii
+#
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -13,7 +13,7 @@
+ else
+ endif
+ 
+-links_SOURCES=af_unix.c auth.c beos.c bfu.c block.c bookmarks.c cache.c charsets.c compress.c connect.c cookies.c default.c dip.c directfb.c directfb_cursors.h dither.c dns.c drivers.c error.c file.c finger.c fn_impl.c font_include.c framebuffer.c ftp.c gif.c html.c html_gr.c html_r.c html_tbl.c http.c https.c img.c imgcache.c jpeg.c jsint.c kbd.c language.c links_icon.c listedit.c lru.c mailto.c main.c memory.c menu.c objreq.c os_dep.c pmshell.c png.c sched.c select.c session.c smb.c svgalib.c terminal.c tiff.c types.c url.c view.c view_gr.c x.c xbm.c beos.h bits.h cfg.h codepage.h language.h links.h os_dep.h os_depx.h setup.h arrow.inc codepage.inc entity.inc fbcommon.inc language.inc uni_7b.inc upcase.inc
++links_SOURCES=af_unix.c auth.c beos.c bfu.c block.c bookmarks.c cache.c charsets.c compress.c connect.c cookies.c default.c dip.c directfb.c directfb_cursors.h dither.c dns.c drivers.c error.c file.c finger.c fn_impl.c font_include.c framebuffer.c ftp.c gif.c html.c html_gr.c html_r.c html_tbl.c http.c https.c img.c imgcache.c jpeg.c jsint.c kbd.c language.c links_icon.c listedit.c lru.c mailto.c main.c memory.c menu.c objreq.c os_dep.c pmshell.c png.c sched.c select.c session.c smb.c svgalib.c terminal.c tiff.c types.c url.c view.c view_gr.c x.c xbm.c beos.h bits.h cfg.h codepage.h language.h links.h os_dep.h os_depx.h setup.h arrow.inc codepage.inc entity.inc fbcommon.inc language.inc uni_7b.inc upcase.inc rc.c rcinput.c rcinput.h
+ 
+ dist-hook:
+ #remove the symlinka:
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -78,7 +78,7 @@
+ 
+ @ATHEOS_GR_TRUE@links_LDADD = atheos.o
+ 
+-links_SOURCES = af_unix.c auth.c beos.c bfu.c block.c bookmarks.c cache.c charsets.c compress.c connect.c cookies.c default.c dip.c directfb.c directfb_cursors.h dither.c dns.c drivers.c error.c file.c finger.c fn_impl.c font_include.c framebuffer.c ftp.c gif.c html.c html_gr.c html_r.c html_tbl.c http.c https.c img.c imgcache.c jpeg.c jsint.c kbd.c language.c links_icon.c listedit.c lru.c mailto.c main.c memory.c menu.c objreq.c os_dep.c pmshell.c png.c sched.c select.c session.c smb.c svgalib.c terminal.c tiff.c types.c url.c view.c view_gr.c x.c xbm.c beos.h bits.h cfg.h codepage.h language.h links.h os_dep.h os_depx.h setup.h arrow.inc codepage.inc entity.inc fbcommon.inc language.inc uni_7b.inc upcase.inc
++links_SOURCES = af_unix.c auth.c beos.c bfu.c block.c bookmarks.c cache.c charsets.c compress.c connect.c cookies.c default.c dip.c directfb.c directfb_cursors.h dither.c dns.c drivers.c error.c file.c finger.c fn_impl.c font_include.c framebuffer.c ftp.c gif.c html.c html_gr.c html_r.c html_tbl.c http.c https.c img.c imgcache.c jpeg.c jsint.c kbd.c language.c links_icon.c listedit.c lru.c mailto.c main.c memory.c menu.c objreq.c os_dep.c pmshell.c png.c sched.c select.c session.c smb.c svgalib.c terminal.c tiff.c types.c url.c view.c view_gr.c x.c xbm.c beos.h bits.h cfg.h codepage.h language.h links.h os_dep.h os_depx.h setup.h arrow.inc codepage.inc entity.inc fbcommon.inc language.inc uni_7b.inc upcase.inc rc.c rcinput.c rcinput.h
+ 
+ CXXFLAGS = @CXXFLAGS@
+ 
+@@ -102,7 +102,7 @@
+ language.o links_icon.o listedit.o lru.o mailto.o main.o memory.o \
+ menu.o objreq.o os_dep.o pmshell.o png.o sched.o select.o session.o \
+ smb.o svgalib.o terminal.o tiff.o types.o url.o view.o view_gr.o x.o \
+-xbm.o
++xbm.o rc.o rcinput.o rcmouse.o
+ @ATHEOS_GR_TRUE@links_DEPENDENCIES =  atheos.o
+ links_LDFLAGS = 
+ CFLAGS = @CFLAGS@
+--- a/bfu.c
++++ b/bfu.c
+@@ -1411,7 +1411,7 @@
+ 				x_display_dlg_item(dlg, di, 1);
+ 				break;
+ 			}
+-			if ((ev->x == KBD_ENTER && di->item->type == D_BUTTON) || ev->x == ' ') {
++			if ((ev->x == KBD_ENTER && (di->item->type == D_CHECKBOX || di->item->type == D_BUTTON)) || ev->x == ' ') {
+ 				dlg_select_item(dlg, di);
+ 				break;
+ 			}
+--- a/bits.h
++++ b/bits.h
+@@ -47,4 +47,6 @@
+ #elif defined(SIZEOF_UNSIGNED_LONG_LONG) && SIZEOF_UNSIGNED_LONG_LONG == 8
+ #define t8c unsigned long long
+ #endif /* #if sizeof(short) */
++#undef t4c
++#define t4c unsigned int
+ 
+--- a/configure
++++ b/configure
+@@ -8968,7 +8968,7 @@
+ fi
+ done
+ 
+-	if test "$ac_cv_header_linux_fb_h" = yes && test "$ac_cv_header_linux_kd_h" = yes && test "$ac_cv_header_linux_vt_h" = yes && test "$ac_cv_header_sys_mman_h" = yes && test "$ac_cv_header_sys_ioctl_h" = yes && test "$cf_have_gpm" = yes; then
++	if test "$ac_cv_header_linux_fb_h" = yes && test "$ac_cv_header_linux_kd_h" = yes && test "$ac_cv_header_linux_vt_h" = yes && test "$ac_cv_header_sys_mman_h" = yes && test "$ac_cv_header_sys_ioctl_h" = yes; then
+ 		cat >> confdefs.h <<\EOF
+ #define GRDRV_FB 1
+ EOF
+--- a/default.c
++++ b/default.c
+@@ -634,7 +634,7 @@
+ 		}
+ 	}
+ #endif
+-	if (!home) home = stracpy(cast_uchar getenv("HOME"));
++	if (!home) home = stracpy("/var/tuxbox/config");
+ #ifdef WIN32
+ /* When we run in Cygwin without Cygwin environment, it reports home "/".
+    Unfortunatelly, it can't write anything to that directory */
+@@ -672,10 +672,10 @@
+ 			sleep(3);
+ 			mem_free(home_links);
+ 			home_links = stracpy(home);
+-			add_to_strn(&home_links, cast_uchar ".links");
++			add_to_strn(&home_links, cast_uchar "links");
+ 		}
+ 		mem_free(config_dir);
+-	} else add_to_strn(&home_links, cast_uchar ".links");
++	} else add_to_strn(&home_links, cast_uchar "links");
+ 	EINTRLOOP(rs, stat(cast_const_char home_links, &st));
+ 	if (rs) {
+ #ifdef HAVE_MKDIR
+@@ -1814,7 +1814,7 @@
+ 	if (links_home) mem_free(links_home);
+ }
+ 
+-int ggr = 0;
++int ggr = 1;
+ unsigned char ggr_drv[MAX_STR_LEN] = "";
+ unsigned char ggr_mode[MAX_STR_LEN] = "";
+ unsigned char ggr_display[MAX_STR_LEN] = "";
+--- a/dither.c
++++ b/dither.c
+@@ -341,7 +341,7 @@
+ #define SAVE_CODE *outp=bt>>16;\
+ 	outp[1]=gt>>16;\
+ 	outp[2]=rt>>16;\
+-	outp[3]=0;\
++	outp[3]=0xFF;\
+ 	outp+=4;
+ DITHER_TEMPLATE(dither_196)
+ ROUND_TEMPLATE(round_196)
+@@ -459,7 +459,7 @@
+ 	((char *)&ret)[0]=rgb;
+ 	((char *)&ret)[1]=rgb>>8;
+ 	((char *)&ret)[2]=rgb>>16;
+-	((char *)&ret)[3]=0;
++	((char *)&ret)[3]=0xFF;
+ 
+ 	return ret;
+ }
+@@ -775,6 +775,7 @@
+ 	if (gamma_bits == 2 && x_slow_fpu == 1) slow_fpu = 1;
+ }
+ 
++#if 0
+ static void make_red_table(int bits, int pos, int dump_t2c, int be)
+ {
+ 	make_16_table(red_table,bits,pos,display_red_gamma,dump_t2c, be);
+@@ -789,7 +790,69 @@
+ {
+ 	make_16_table(blue_table,bits,pos,display_blue_gamma, dump_t2c, be);
+ }
+-
++#endif
++#define TABLE_DIR "/var/cache/"
++void make_red_table(int bits, int pos, int dump_t2c, int be)
++{
++	FILE *fd;
++
++	fd = fopen(TABLE_DIR "red_table","r");
++	if (fd <= 0)
++	{
++		make_16_table(red_table,bits,pos,display_red_gamma,dump_t2c, be);
++		fd = fopen(TABLE_DIR "red_table","w");
++		fwrite(&red_table,sizeof(red_table),1,fd);
++	}
++	else
++	{
++		fread(&red_table,sizeof(red_table),1,fd);
++	}
++	fclose(fd);
++#ifdef DEBUG_CALLS
++	fprintf(stderr, "Red load complete\n");
++#endif
++}
++
++void make_green_table(int bits, int pos, int dump_t2c, int be)
++{
++	FILE *fd;
++
++	fd = fopen(TABLE_DIR "green_table","r");
++	if (fd <= 0)
++	{
++		make_16_table(green_table,bits,pos,display_green_gamma,dump_t2c, be);
++		fd = fopen(TABLE_DIR "green_table","w");
++		fwrite(&green_table,sizeof(green_table),1,fd);
++	}
++	else
++	{
++		fread(&green_table,sizeof(green_table),1,fd);
++	}
++	fclose(fd);
++#ifdef DEBUG_CALLS
++	fprintf(stderr, "Green load complete\n");
++#endif 
++}
++void make_blue_table(int bits, int pos,int dump_t2c, int be)
++{
++	FILE *fd;
++
++	fd = fopen(TABLE_DIR "blue_table","r");
++	if (fd <= 0)
++	{
++		make_16_table(blue_table,bits,pos,display_blue_gamma, dump_t2c, be);
++		fd = fopen(TABLE_DIR "blue_table","w");
++		fwrite(&blue_table,sizeof(blue_table),1,fd);
++	}
++	else
++	{
++		fread(&blue_table,sizeof(blue_table),1,fd);
++	}
++	fclose(fd);
++#ifdef DEBUG_CALLS
++	fprintf(stderr, "Blue load complete\n");
++#endif
++}
+ void dither(unsigned short *in, struct bitmap *out)
+ {
+ 	int *dregs;
+--- a/framebuffer.c
++++ b/framebuffer.c
+@@ -8,6 +8,7 @@
+ 
+ #ifdef GRDRV_FB
+ 
++//#define SVGA // FIXME
+ #define USE_GPM_DX
+ 
+ /* #define FB_DEBUG */
+@@ -27,7 +28,7 @@
+ 
+ #include "bits.h"
+ 
+-#include <gpm.h>
++//#include <gpm.h>
+ 
+ #include <sys/mman.h>
+ #include <sys/ioctl.h>
+@@ -77,6 +78,7 @@
+ static struct fb_var_screeninfo vi;
+ static struct fb_fix_screeninfo fi;
+ 
++int xres, yres;
+ static void fb_draw_bitmap(struct graphics_device *dev,struct bitmap* hndl, int x, int y);
+ 
+ static unsigned char *fb_driver_param;
+@@ -234,7 +236,7 @@
+ 
+ static void redraw_mouse(void);
+ 
+-static void fb_mouse_move(int dx, int dy)
++void fb_mouse_move(int dx, int dy)
+ {
+ 	struct event ev;
+ 	mouse_x += dx;
+@@ -658,6 +660,7 @@
+ 
+ static void set_palette(struct palette *pal)
+ {
++	return;
+ 	struct fb_cmap cmap;
+ 	int i;
+ 	unsigned short *red=pal->red;
+@@ -802,7 +805,7 @@
+ 	install_signal_handler(SIG_ACQ, fb_switch_signal, (void*)SIG_ACQ, 0);
+ 	EINTRLOOP(rs, ioctl(TTY,VT_GETMODE, &vt_omode));
+ 	if (rs == -1) {
+-		return stracpy(cast_uchar "Could not get VT mode.\n");
++//		return stracpy(cast_uchar "Could not get VT mode.\n");
+ 	}
+ 	memcpy(&vt_mode, &vt_omode, sizeof(vt_mode));
+ 
+@@ -813,7 +816,7 @@
+ 
+ 	EINTRLOOP(rs, ioctl(TTY,VT_SETMODE, &vt_mode));
+ 	if (rs == -1) {
+-		return stracpy(cast_uchar "Could not set VT mode.\n");
++//		return stracpy(cast_uchar "Could not set VT mode.\n");
+ 	}
+ 	return NULL;
+ }
+@@ -869,6 +872,7 @@
+ 
+ static void fb_gpm_in(void *nic)
+ {
++#if 0
+ #ifndef USE_GPM_DX
+ 	static int lx = -1, ly = -1;
+ #endif
+@@ -940,10 +944,12 @@
+ 	if (!current_virtual_device) return;
+ 	if (current_virtual_device->mouse_handler) current_virtual_device->mouse_handler(current_virtual_device, ev.x, ev.y, ev.b);
+ 	redraw_mouse();
++#endif
+ }
+ 
+ static int handle_fb_mouse(void)
+ {
++#if 0
+ 	Gpm_Connect conn;
+ #ifndef USE_GPM_DX
+ 	int gpm_ver = 0;
+@@ -986,6 +992,7 @@
+ #ifdef SIGTTIN
+ 	install_signal_handler(SIGTTIN, (void (*)(void *))sig_tstp, NULL, 0);
+ #endif
++#endif
+ 
+ 	return 0;
+ }
+@@ -1001,7 +1008,7 @@
+ 		fb_old_ws_v = 0;
+ 	}
+ #endif
+-	Gpm_Close();
++//	Gpm_Close();
+ #ifdef SIGTSTP
+ 	install_signal_handler(SIGTSTP, (void (*)(void *))sig_tstp, NULL, 0);
+ #endif
+@@ -1033,14 +1040,79 @@
+ {
+ 	fb_print(seq_show_cursor);
+ }
++void read_neutrino_osd_conf(int *ex,int *sx,int *ey, int *sy)
++{
++	const char *filename="/var/tuxbox/config/neutrino.conf";
++	FILE* fd = fopen (filename, "r");
++	int ex_old = 0, sx_old = 0, ey_old = 0, sy_old = 0;
++	int ex_crt = 0, sx_crt = 0, ey_crt = 0, sy_crt = 0;
++	int ex_lcd = 0, sx_lcd = 0, ey_lcd = 0, sy_lcd = 0;
++	int crt_lcd = -1;
++	if (fd)
++	{
++		char *buffer=NULL;
++		size_t len = 0;
++		ssize_t read;
++		while (( read = getline ( &buffer, &len, fd )) != -1)
++		{
++			sscanf (buffer, "screen_EndX=%d", &ex_old);
++			sscanf (buffer, "screen_StartX=%d", &sx_old);
++			sscanf (buffer, "screen_EndY=%d", &ey_old);
++			sscanf (buffer, "screen_StartY=%d" , &sy_old);
++
++			sscanf (buffer, "screen_preset=%d", &crt_lcd);
++
++			sscanf (buffer, "screen_EndX_crt=%d", &ex_crt);
++			sscanf (buffer, "screen_StartX_crt=%d", &sx_crt);
++			sscanf (buffer, "screen_EndY_crt=%d", &ey_crt);
++			sscanf (buffer, "screen_StartY_crt=%d" , &sy_crt);
++
++			sscanf (buffer, "screen_EndX_lcd=%d", &ex_lcd);
++			sscanf (buffer, "screen_StartX_lcd=%d", &sx_lcd);
++			sscanf (buffer, "screen_EndY_lcd=%d", &ey_lcd);
++			sscanf (buffer, "screen_StartY_lcd=%d" , &sy_lcd);
++
++		}
++		fclose (fd);
++		if (buffer)
++			free (buffer);
++	}
++	if (crt_lcd == 1) {
++		*ex = ex_lcd; *sx = sx_lcd; *ey = ey_lcd; *sy = sy_lcd;
++	}
++	else if (crt_lcd == 0)
++	{
++		*ex = ex_crt; *sx = sx_crt; *ey = ey_crt; *sy = sy_crt;
++	}
++	else if (crt_lcd == -1)
++	{
++		*ex = ex_old; *sx = sx_old; *ey = ey_old; *sy = sy_old;
++	}
++#if sh4
++	struct fb_var_screeninfo s;
++	if (ioctl(fb_handler, FBIOGET_VSCREENINFO, &s) == -1)
++		perror("blit FBIOGET_VSCREENINFO");
++	*ex *= s.xres;
++	*sx *= s.xres;
++	*ey *= s.yres;
++	*sy *= s.yres;
++	*ex /= 1280;
++	*sx /= 1280;
++	*ey /= 720;
++	*sy /= 720;
++#endif
++
++}
+ 
+ static void fb_pan_display(void)
+ {
++#if 0
+ 	int rs;
+ 	vi.xoffset=0;
+ 	vi.yoffset=0;
+ 	EINTRLOOP(rs, ioctl(fb_handler, FBIOPAN_DISPLAY, &vi));
+ 	/* don't check error */
++#endif
+ }
+ 
+ static unsigned char *fb_init_driver(unsigned char *param, unsigned char *ignore)
+@@ -1102,6 +1174,16 @@
+ 	} else {
+ 		border_bottom = border_top;
+ 	}
++	if (*param) {
++		if (*param < '0' || *param > '9') goto bad_p;
++		xres = strtoul(param, (char **)(void *)&param, 10);
++		if (*param == ',') param++;
++	}
++	if (*param) {
++		if (*param < '0' || *param > '9') goto bad_p;
++		yres = strtoul(param, (char **)(void *)&param, 10);
++		if (*param == ',') param++;
++	}
+ 	if (*param) goto bad_p;
+ 
+ 	EINTRLOOP(rs, fstat(TTY, &st));
+@@ -1137,8 +1219,19 @@
+ 		fb_show_cursor();
+ 		return stracpy(cast_uchar "Cannot get FB VSCREENINFO.\n");
+ 	}
+-
+-	oldmode=vi;
++	// fix to neutrino osd
++	int ex = 0, sx = 0, ey = 0, sy = 0;
++	read_neutrino_osd_conf (&ex, &sx, &ey, &sy);
++	if (border_right == 0)
++		  border_right = vi.xres - ex;
++	if (border_left == 0)
++		border_left  = sx;
++	if (border_bottom == 0)
++		border_bottom = vi.yres - ey;
++	if (border_top == 0)
++		border_top = sy;
++
++//	oldmode=vi;
+ 
+ 	EINTRLOOP(rs, ioctl (fb_handler, FBIOGET_FSCREENINFO, &fi));
+ 	if (rs==-1)
+@@ -1237,7 +1330,9 @@
+ 		fb_show_cursor();
+ 		return stracpy(cast_uchar "Allocation of virtual devices failed.\n");
+ 	}
++#ifdef SVGA
+ 	fb_kbd = handle_svgalib_keyboard((void (*)(void *, unsigned char *, int))fb_key_in);
++#endif
+ 
+ 	/* Mikulas: nechodi to na sparcu */
+ 	if (fb_mem_size < (unsigned)((border_top + fb_ysize + border_bottom) * fb_linesize))
+@@ -1254,7 +1349,9 @@
+ 
+ 	if (vi.nonstd) {
+ 		fb_shutdown_palette();
++#ifdef SVGA
+ 		svgalib_free_trm(fb_kbd);
++#endif
+ 		shutdown_virtual_devices();
+ 		EINTRLOOP(rs, close(fb_handler));
+ 		fb_switch_shutdown();
+@@ -1288,6 +1385,10 @@
+ 			return stracpy(cast_uchar "Cannot mmap graphics memory.\n");
+ 		}
+ 	}
++
++printf("Screen: %dx%dx%d, Visual: %d, colors %d, pixel size %d line size %d\n", vi.xres, vi.yres, vi.bits_per_pixel, fi.visual, fb_colors, fb_pixelsize, fi.line_length);
++printf("Mem size: %d mem: %x\n", fb_mem_size, fb_mem);
++
+ 	fb_vmem = fb_mem + border_left * fb_pixelsize + border_top * fb_linesize;
+ 	fb_driver.depth=fb_pixelsize&7;
+ 	fb_driver.depth|=(fb_bits_pp&31)<<3;
+@@ -1300,7 +1401,9 @@
+ 	fb_driver.get_color=get_color_fn(fb_driver.depth);
+ 	if (!fb_driver.get_color) {
+ 		fb_shutdown_palette();
++#ifdef SVGA
+ 		svgalib_free_trm(fb_kbd);
++#endif
+ 		shutdown_virtual_devices();
+ 
+ 		EINTRLOOP(rs, close(fb_handler));
+@@ -1329,7 +1432,9 @@
+ 		mem_free(background_buffer);
+ 		mem_free(new_background_buffer);
+ 		fb_shutdown_palette();
++#ifdef SVGA
+ 		svgalib_free_trm(fb_kbd);
++#endif
+ 		shutdown_virtual_devices();
+ 
+ 		EINTRLOOP(rs, close(fb_handler));
+@@ -1356,7 +1461,7 @@
+ 	in_gr_operation++;
+ 	if (fb_active) {
+ 		fb_clear_videoram();
+-		EINTRLOOP(rs, ioctl (fb_handler, FBIOPUT_VSCREENINFO, &oldmode));
++//		EINTRLOOP(rs, ioctl (fb_handler, FBIOPUT_VSCREENINFO, &oldmode));
+ 	}
+ 	END_GR;
+ 	fb_shutdown_palette();
+@@ -1365,7 +1470,9 @@
+ 	EINTRLOOP(rs, munmap(fb_mem,fb_mapped_size));
+ 	shutdown_virtual_devices();
+ 	fb_switch_shutdown();
++#ifdef SVGA
+ 	svgalib_free_trm(fb_kbd);
++#endif
+ 	if(fb_driver_param) mem_free(fb_driver_param);
+ 	/* show cursor */
+ 	fb_show_cursor();
+@@ -1411,6 +1518,26 @@
+ 	return 0;
+ }
+ */
++void fb_mouse_click(int val)
++{
++	struct event ev;
++	ev.ev = EV_MOUSE;
++	ev.x = mouse_x;
++	ev.y = mouse_y;
++	ev.b = val;
++	if (!current_virtual_device) return;
++	if (current_virtual_device->mouse_handler) current_virtual_device->mouse_handler(current_virtual_device, ev.x, ev.y, ev.b);
++}
++void fb_mouse_wheel(int val)
++{
++	struct event ev;
++	ev.ev = EV_MOUSE;
++	ev.x = mouse_x;
++	ev.y = mouse_y;
++	ev.b = val;
++	if (!current_virtual_device) return;
++	if (current_virtual_device->mouse_handler) current_virtual_device->mouse_handler(current_virtual_device, ev.x, ev.y, ev.b);
++}
+ 
+ static void fb_register_bitmap(struct bitmap *bmp)
+ {
+@@ -1614,7 +1741,9 @@
+ 	unhandle_fb_mouse();
+ 	fb_old_vd = current_virtual_device;
+ 	current_virtual_device=NULL;
++#ifdef SVGA
+ 	svgalib_block_itrm(fb_kbd);
++#endif
+ 	if (have_cmap) set_palette(&old_palette);
+ 	fb_switch_shutdown();
+ 	fb_show_cursor();
+@@ -1628,7 +1757,9 @@
+ 		return 0;
+ 	}
+ 	if (dev != fb_block_dev) return -2;
++#ifdef SVGA
+ 	if (svgalib_unblock_itrm(fb_kbd)) return -1;
++#endif
+ 	fb_switch_init();
+ 	fb_hide_cursor();
+ 	fb_pan_display();
+--- a/input_fake.h
++++ b/input_fake.h
+@@ -0,0 +1,84 @@
++#ifndef _INPUT_FAKE_H
++#define _INPUT_FAKE_H
++
++#include <linux/input.h>
++
++
++#if !defined(KEY_OK)
++
++/**
++ *  define some additional remote control keys in case they 
++ *  were not already defined above in <linux/input.h>
++ */
++
++#define KEY_OK           0x160
++#define KEY_SELECT       0x161
++#define KEY_GOTO         0x162
++#define KEY_CLEAR        0x163
++#define KEY_POWER2       0x164
++#define KEY_OPTION       0x165
++#define KEY_INFO         0x166
++#define KEY_TIME         0x167
++#define KEY_VENDOR       0x168
++#define KEY_ARCHIVE      0x169
++#define KEY_PROGRAM      0x16a
++#define KEY_CHANNEL      0x16b
++#define KEY_FAVORITES    0x16c
++#define KEY_EPG          0x16d
++#define KEY_PVR          0x16e
++#define KEY_MHP          0x16f
++#define KEY_LANGUAGE     0x170
++#define KEY_TITLE        0x171
++#define KEY_SUBTITLE     0x172
++#define KEY_ANGLE        0x173
++#define KEY_ZOOM         0x174
++#define KEY_MODE         0x175
++#define KEY_KEYBOARD     0x176
++#define KEY_SCREEN       0x177
++#define KEY_PC           0x178
++#define KEY_TV           0x179
++#define KEY_TV2          0x17a
++#define KEY_VCR          0x17b
++#define KEY_VCR2         0x17c
++#define KEY_SAT          0x17d
++#define KEY_SAT2         0x17e
++#define KEY_CD           0x17f
++#define KEY_TAPE         0x180
++#define KEY_RADIO        0x181
++#define KEY_TUNER        0x182
++#define KEY_PLAYER       0x183
++#define KEY_TEXT         0x184
++#define KEY_DVD          0x185
++#define KEY_AUX          0x186
++#define KEY_MP3          0x187
++#define KEY_AUDIO        0x188
++#define KEY_VIDEO        0x189
++#define KEY_DIRECTORY    0x18a
++#define KEY_LIST         0x18b
++#define KEY_MEMO         0x18c
++#define KEY_CALENDAR     0x18d
++#define KEY_RED          0x18e
++#define KEY_GREEN        0x18f
++#define KEY_YELLOW       0x190
++#define KEY_BLUE         0x191
++#define KEY_CHANNELUP    0x192
++#define KEY_CHANNELDOWN  0x193
++#define KEY_FIRST        0x194
++#define KEY_LAST         0x195
++#define KEY_AB           0x196
++#define KEY_PLAY         0x197
++#define KEY_RESTART      0x198
++#define KEY_SLOW         0x199
++#define KEY_SHUFFLE      0x19a
++#define KEY_FASTFORWARD  0x19b
++#define KEY_PREVIOUS     0x19c
++#define KEY_NEXT         0x19d
++#define KEY_DIGITS       0x19e
++#define KEY_TEEN         0x19f
++#define KEY_TWEN         0x1a0
++#define KEY_BREAK        0x1a1
++
++
++#endif  /* !defined(KEY_OK)  */
++#endif  /* _INPUT_FAKE_H */
++
+--- a/language.inc
++++ b/language.inc
+@@ -8812,7 +8812,7 @@
+   {T_TOGGLE_HTML_PLAIN, "Umschaltung HTML/Quelltext" },
+   {T_DOCUMENT_INFO, "Dokumentinformationen" },
+   {T_FRAME_AT_FULL_SCREEN, "Rahmen im Vollbildschirm" },
+-  {T_SAVE_HTML_OPTIONS, "HTML Sicherheit" },
++  {T_SAVE_HTML_OPTIONS, "HTML-Optionen speichern" },
+   {T_CHARACTER_SET, "Zeichensatz" },
+   {T_CACHE, "Cache" },
+   {T_MAIL_AND_TELNEL, "Mail und Telnet" },
+@@ -18067,7 +18067,7 @@
+   {T_TOGGLE_HTML_PLAIN, "Umschaltig HTML/Quelltext" },
+   {T_DOCUMENT_INFO, "Dokumentinformatione" },
+   {T_FRAME_AT_FULL_SCREEN, "Rahme im Vollbildschirm" },
+-  {T_SAVE_HTML_OPTIONS, "HTML Sicherheit" },
++  {T_SAVE_HTML_OPTIONS, "HTML-Optionen speichern" },
+   {T_CHARACTER_SET, "Zeichesatz" },
+   {T_CACHE, "Cache" },
+   {T_MAIL_AND_TELNEL, "Mail und Telnet" },
+--- a/main.c
++++ b/main.c
+@@ -446,6 +446,11 @@
+ {
+ 	g_argc = argc;
+ 	g_argv = (unsigned char **)argv;
++	if (access("/tmp/red_table", R_OK) != 0)
++	{
++		printf("Untaring the tables file\n");
++		system("tar -xvzf /var/tuxbox/config/links/tables.tar.gz -C /tmp");
++	}
+ 
+ 	init_os();
+ 
+--- a/menu.c
++++ b/menu.c
+@@ -180,7 +180,7 @@
+ 
+ static void menu_about(struct terminal *term, void *d, struct session *ses)
+ {
+-	msg_box(term, NULL, TEXT_(T_ABOUT), AL_CENTER, TEXT_(T_LINKS__LYNX_LIKE), term, 2, TEXT_(T_OK), NULL, B_ENTER | B_ESC, TEXT_(T_VERSION), menu_version, 0);
++	msg_box(term, NULL, TEXT_(T_ABOUT), AL_CENTER | AL_EXTD_TEXT, TEXT_(T_LINKS__LYNX_LIKE), "\r\n\r\nadapted 2009 for Coolstream by focus\n","", NULL, term, 2, TEXT_(T_OK), NULL, B_ENTER | B_ESC, TEXT_(T_VERSION), menu_version, 0);
+ }
+ 
+ static void menu_keys(struct terminal *term, void *d, struct session *ses)
+@@ -2594,16 +2594,16 @@
+ 
+ #ifdef G
+ static struct menu_item file_menu111[] = {
+-	{ TEXT_(T_GOTO_URL), cast_uchar "g", TEXT_(T_HK_GOTO_URL), MENU_FUNC menu_goto_url, (void *)0, 0, 0 },
+-	{ TEXT_(T_GO_BACK), cast_uchar "z", TEXT_(T_HK_GO_BACK), MENU_FUNC menu_go_back, (void *)0, 0, 0 },
+-	{ TEXT_(T_GO_FORWARD), cast_uchar "x", TEXT_(T_HK_GO_FORWARD), MENU_FUNC menu_go_forward, (void *)0, 0, 0 },
+-	{ TEXT_(T_HISTORY), cast_uchar ">", TEXT_(T_HK_HISTORY), MENU_FUNC history_menu, (void *)0, 1, 0 },
++	{ TEXT_(T_GOTO_URL), cast_uchar "[epg]", TEXT_(T_HK_GOTO_URL), MENU_FUNC menu_goto_url, (void *)0, 0, 0 },
++	{ TEXT_(T_GO_BACK), cast_uchar "<", TEXT_(T_HK_GO_BACK), MENU_FUNC menu_go_back, (void *)0, 0, 0 },
++	{ TEXT_(T_GO_FORWARD), cast_uchar ">", TEXT_(T_HK_GO_FORWARD), MENU_FUNC menu_go_forward, (void *)0, 0, 0 },
++	{ TEXT_(T_HISTORY), cast_uchar "", TEXT_(T_HK_HISTORY), MENU_FUNC history_menu, (void *)0, 1, 0 },
+ 	{ TEXT_(T_RELOAD), cast_uchar "Ctrl-R", TEXT_(T_HK_RELOAD), MENU_FUNC menu_reload, (void *)0, 0, 0 },
+ };
+ #endif
+ 
+ static struct menu_item file_menu12[] = {
+-	{ TEXT_(T_BOOKMARKS), cast_uchar "s", TEXT_(T_HK_BOOKMARKS), MENU_FUNC menu_bookmark_manager, (void *)0, 0, 0 },
++	{ TEXT_(T_BOOKMARKS), cast_uchar "[fav]", TEXT_(T_HK_BOOKMARKS), MENU_FUNC menu_bookmark_manager, (void *)0, 0, 0 },
+ };
+ 
+ static struct menu_item file_menu21[] = {
+@@ -2702,6 +2702,7 @@
+ 	/*cast_uchar "", cast_uchar "", M_BAR, NULL, NULL, 0, 0,
+ 	TEXT_(T_OS_SHELL), cast_uchar "", TEXT_(T_HK_OS_SHELL), MENU_FUNC menu_shell, NULL, 0, 0,*/
+ 	x = 1;
++#if 0
+ 	if (!anonymous && can_open_os_shell(term->environment)) {
+ 		e->text = TEXT_(T_OS_SHELL);
+ 		e->rtext = cast_uchar "";
+@@ -2713,6 +2714,7 @@
+ 		e++;
+ 		x = 0;
+ 	}
++#endif
+ 	if (can_resize_window(term)) {
+ 		e->text = TEXT_(T_RESIZE_TERMINAL);
+ 		e->rtext = cast_uchar "";
+@@ -2731,15 +2733,15 @@
+ }
+ 
+ static struct menu_item view_menu[] = {
+-	{ TEXT_(T_SEARCH), cast_uchar "/", TEXT_(T_HK_SEARCH), MENU_FUNC menu_for_frame, (void *)search_dlg, 0, 0 },
+-	{ TEXT_(T_SEARCH_BACK), cast_uchar "?", TEXT_(T_HK_SEARCH_BACK), MENU_FUNC menu_for_frame, (void *)search_back_dlg, 0, 0 },
+-	{ TEXT_(T_FIND_NEXT), cast_uchar "n", TEXT_(T_HK_FIND_NEXT), MENU_FUNC menu_for_frame, (void *)find_next, 0, 0 },
+-	{ TEXT_(T_FIND_PREVIOUS), cast_uchar "N", TEXT_(T_HK_FIND_PREVIOUS), MENU_FUNC menu_for_frame, (void *)find_next_back, 0, 0 },
++	{ TEXT_(T_SEARCH), cast_uchar "[help]", TEXT_(T_HK_SEARCH), MENU_FUNC menu_for_frame, (void *)search_dlg, 0, 0 },
++	{ TEXT_(T_SEARCH_BACK), cast_uchar "[audio]", TEXT_(T_HK_SEARCH_BACK), MENU_FUNC menu_for_frame, (void *)search_back_dlg, 0, 0 },
++	{ TEXT_(T_FIND_NEXT), cast_uchar "[skip+]", TEXT_(T_HK_FIND_NEXT), MENU_FUNC menu_for_frame, (void *)find_next, 0, 0 },
++	{ TEXT_(T_FIND_PREVIOUS), cast_uchar "[skip-]", TEXT_(T_HK_FIND_PREVIOUS), MENU_FUNC menu_for_frame, (void *)find_next_back, 0, 0 },
+ 	{ cast_uchar "", cast_uchar "", M_BAR, NULL, NULL, 0, 0 },
+-	{ TEXT_(T_TOGGLE_HTML_PLAIN), cast_uchar "\\", TEXT_(T_HK_TOGGLE_HTML_PLAIN), MENU_FUNC menu_toggle, NULL, 0, 0 },
+-	{ TEXT_(T_DOCUMENT_INFO), cast_uchar "=", TEXT_(T_HK_DOCUMENT_INFO), MENU_FUNC menu_doc_info, NULL, 0, 0 },
+-	{ TEXT_(T_HEADER_INFO), cast_uchar "|", TEXT_(T_HK_HEADER_INFO), MENU_FUNC menu_head_info, NULL, 0, 0 },
+-	{ TEXT_(T_FRAME_AT_FULL_SCREEN), cast_uchar "f", TEXT_(T_HK_FRAME_AT_FULL_SCREEN), MENU_FUNC menu_for_frame, (void *)set_frame, 0, 0 },
++	{ TEXT_(T_TOGGLE_HTML_PLAIN), cast_uchar "[ttx]", TEXT_(T_HK_TOGGLE_HTML_PLAIN), MENU_FUNC menu_toggle, NULL, 0, 0 },
++	{ TEXT_(T_DOCUMENT_INFO), cast_uchar "[info]", TEXT_(T_HK_DOCUMENT_INFO), MENU_FUNC menu_doc_info, NULL, 0, 0 },
++	{ TEXT_(T_HEADER_INFO), cast_uchar "[cool]", TEXT_(T_HK_HEADER_INFO), MENU_FUNC menu_head_info, NULL, 0, 0 },
++//	{ TEXT_(T_FRAME_AT_FULL_SCREEN), cast_uchar "f", TEXT_(T_HK_FRAME_AT_FULL_SCREEN), MENU_FUNC menu_for_frame, (void *)set_frame, 0, 0 },
+ 	{ cast_uchar "", cast_uchar "", M_BAR, NULL, NULL, 0, 0 },
+ 	{ TEXT_(T_HTML_OPTIONS), cast_uchar "", TEXT_(T_HK_HTML_OPTIONS), MENU_FUNC menu_html_options, (void *)0, 0, 0 },
+ 	{ TEXT_(T_SAVE_HTML_OPTIONS), cast_uchar "", TEXT_(T_HK_SAVE_HTML_OPTIONS), MENU_FUNC menu_save_html_options, (void *)0, 0, 0 },
+--- a/rc.c
++++ b/rc.c
+@@ -0,0 +1,262 @@
++/* rc.c
++ * (c) 2004 CypherLabs International
++ * This file is a part of the Links program, released under GPL.
++ */
++
++#include "links.h"
++#include "rcinput.h"
++
++int rc_timer_id = -1;
++extern unsigned short actcode;
++
++char multitap_chars[10][9] = { 
++{'.', '-', '@', '1', '/', 0, 0, 0, 0}, // 2
++{'a', 'b', 'c', '2', 'A', 'B', 'C', 0, 0}, // 3
++{'d', 'e', 'f', '3', 'D', 'E', 'F', 0, 0}, // 4
++{'g', 'h', 'i', '4', 'G', 'H', 'I', 0, 0},
++{'j', 'k', 'l', '5', 'J', 'K', 'L', 0, 0},
++{'m', 'n', 'o', '6', 'M', 'N', 'O', 0, 0},
++{'p', 'q', 'r', 's', '7', 'P', 'Q', 'R', 'S'},
++{'t', 'u', 'v', '8', 'T', 'U', 'V', 0, 0},
++{'w', 'x', 'y', 'z', '9', 'W', 'X', 'Y', 'Z'},
++{'#', '*', '0', '?', '!', ':', ';', ',', 0}
++};
++
++void kbd_postevent(int x)
++{
++	struct event ev = { EV_KBD, x, 0, 0 };
++
++	if (current_virtual_device->keyboard_handler)
++		current_virtual_device->keyboard_handler (current_virtual_device, ev.x, ev.y);
++}
++
++void kbd_right()
++{
++	rc_timer_id = -1;
++	kbd_postevent (KBD_RIGHT);
++}
++
++void kbd_multitap()
++{
++	static int lastcode = -1;
++	static int charIndex = 0;
++
++	if (rc_timer_id != -1) {
++		kill_timer (rc_timer_id);
++
++		// Race condition is possible so check again
++		if (rc_timer_id != -1)
++		kbd_postevent (KBD_RIGHT);
++	}
++
++	if (actcode == lastcode && rc_timer_id != -1) {
++		++charIndex;
++
++		if (charIndex > 8)
++			charIndex = 0;
++
++		kbd_postevent (KBD_BS);
++	} else
++		charIndex = 0;
++
++	rc_timer_id = -1;
++
++	switch (actcode) {
++		case RC_1:
++			if (multitap_chars[0][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[0][charIndex]);
++			break;
++		case RC_2:
++			if (multitap_chars[1][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[1][charIndex]);
++			break;
++		case RC_3:
++			if (multitap_chars[2][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[2][charIndex]);
++			break;
++		case RC_4:
++			if (multitap_chars[3][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[3][charIndex]);
++			break;
++		case RC_5:
++			if (multitap_chars[4][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[4][charIndex]);
++			break;
++		case RC_6:
++			if (multitap_chars[5][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[5][charIndex]);
++			break;
++		case RC_7:
++			if (multitap_chars[6][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[6][charIndex]);
++			break;
++		case RC_8:
++			if (multitap_chars[7][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[7][charIndex]);
++			break;
++		case RC_9:
++			if (multitap_chars[8][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[8][charIndex]);
++			break;
++		case RC_0:
++			if (multitap_chars[9][charIndex] == 0)
++				charIndex = 0;
++			kbd_postevent (multitap_chars[9][charIndex]);
++			break;
++	}
++
++	kbd_postevent (KBD_LEFT);
++	rc_timer_id = install_timer (1000, kbd_right, NULL);
++
++	lastcode = actcode;
++}
++
++void kbd_remoteControl ()
++{
++	struct timezone tz;
++	struct timeval tv;
++	long currenttime;
++	static long lasttime = -1;
++	static int repeatCount = 0;
++	int accelerator = 0;
++	int kbevent = 0;
++
++#ifdef DEBUG_CALLS
++	sprintf (stderr, "Start processing RC event\n");
++#endif
++
++	gettimeofday (&tv, &tz);
++
++	currenttime = (tv.tv_sec * 1000) + (int) (tv.tv_usec / 1000);
++	if (lasttime == -1)
++		lasttime = currenttime - 5000;	// just to make sure the variable is initialised..
++
++	actcode = 0xff;
++	RcGetActCode ();
++	// Check for mouse movement (allowed to be rapid. ie no 180ms threshhold)
++	//if (actcode == RC_RIGHT || actcode == RC_LEFT || actcode == RC_UP || actcode == RC_DOWN || actcode == RC_OK) {
++	if (actcode == KEY_EXIT) //LAME button
++		kbd_postevent (/*KBD_CLOSE*/113);
++	else if (actcode != 0xff) {
++		// Test for acceleration
++		//if (actcode == RC_RIGHT || actcode == RC_LEFT || actcode == RC_UP || actcode == RC_DOWN || actcode == RC_OK) {
++		if (actcode == RC_BLUE || actcode == RC_YELLOW || actcode == RC_GREEN || actcode == RC_RED || actcode == RC_PLUS) {
++			if (currenttime - lasttime <= 250)
++				++repeatCount;
++			else
++				repeatCount = 0;
++		} else
++			repeatCount = 0;
++
++		if (repeatCount > 5)
++			accelerator = (repeatCount - 5) * 2;
++
++		switch (actcode) {
++			case RC_BLUE:
++				fb_mouse_move (9 + accelerator, 0);
++				break;
++			case RC_RED:
++				fb_mouse_move (-9 - accelerator, 0);
++				break;
++			case RC_GREEN:
++				fb_mouse_move (0, 9 + accelerator);
++				break;
++			case RC_YELLOW:
++				fb_mouse_move (0, -9 - accelerator);
++				break;
++//			case RC_PLUS:
++//				fb_mouse_click (B_LEFT | B_UP);
++				break;
++			case RC_1:
++			case RC_2:
++			case RC_3:
++			case RC_4:
++			case RC_5:
++			case RC_6:
++			case RC_7:
++			case RC_8:
++			case RC_9:
++			case RC_0:
++				kbd_multitap ();
++				break;
++			case RC_RIGHT:
++				kbd_postevent (KBD_RIGHT);
++				break;
++			case RC_LEFT:
++				kbd_postevent (KBD_LEFT);
++				break;
++			case RC_UP:
++				kbd_postevent (KBD_UP);
++				break;
++			case RC_DOWN:
++				kbd_postevent (KBD_DOWN);
++				break;
++			case RC_OK:
++				kbd_postevent (KBD_ENTER);
++				break;
++			case RC_SPKR:
++				kbd_postevent (KBD_BS);
++				break;
++			case RC_PAGE_UP:
++				kbd_postevent (KBD_PAGE_UP);
++				break;
++			case RC_HELP:
++				kbd_postevent (0x2F); //search
++				break;
++			case RC_NEXT:
++				kbd_postevent (0x4E); //search next
++				break;
++			case RC_PREVIOUS:
++				kbd_postevent (0x6E); //search prev
++				break;
++			case RC_AUDIO:
++				kbd_postevent (0x3F); //search prev
++				break;
++			case RC_PAGE_DOWN:
++				kbd_postevent (KBD_PAGE_DOWN);
++				break;
++			case RC_SETUP:
++				kbd_postevent (KBD_ESC);
++				break;
++			case RC_MINUS:
++				kbd_postevent (-265); //move up
++				break;
++			case RC_PLUS:
++				kbd_postevent (-264);//move down
++				break;
++			case RC_FAVORITES:
++				kbd_postevent(0x53);//bookmarks manager
++				break;
++			case RC_EPG:
++				kbd_postevent(0x67);//gotourl
++				break;
++			case RC_TV:
++				kbd_postevent(0x2A);//pics on/off
++				break;
++			case RC_TEXT:
++				kbd_postevent(0x5C);//toggle html/plain txt
++				break;
++			case RC_GAMES:
++				kbd_postevent(0x7C);//header info
++				break;
++			case RC_INFO:
++				kbd_postevent(0x3D);//document info
++				break;
++			default:
++				break;
++		}
++		lasttime = currenttime;
++	}
++#ifdef DEBUG_CALLS
++	sprintf ("End processing RC event\n");
++#endif
++}
+--- a/rcinput.c
++++ b/rcinput.c
+@@ -0,0 +1,195 @@
++/*
++** initial coding by fx2
++*/
++
++#include <fcntl.h>
++#include <stdio.h>
++#include <string.h>
++#include <sys/ioctl.h>
++#include <termios.h>
++#include <unistd.h>
++
++#include "rcinput.h"
++
++#define Debug	if (debug) printf
++
++static int fd = -1;
++static int kbfd = -1;
++unsigned short realcode=0xee;
++unsigned short actcode=0xee;
++int doexit=0;
++int debug=0;
++
++static struct termios tios;
++
++void KbInitialize(void)
++{
++	struct termios ntios;
++
++	kbfd = 0;
++
++	if (tcgetattr(kbfd,&tios) == -1)
++	{
++		kbfd=-1;
++		return;
++	}
++	memset(&ntios,0,sizeof(ntios));
++	tcsetattr(kbfd,TCSANOW,&ntios);
++
++	return;
++}
++
++static	unsigned short kb_translate(unsigned char c)
++{
++	switch(c)
++	{
++	case 0x41 :
++		return RC_UP;
++	case 0x42 :
++		return RC_DOWN;
++	case 0x43 :
++		return RC_RIGHT;
++	case 0x44 :
++		return RC_LEFT;
++	}
++	return 0;
++}
++
++void KbGetActCode(void)
++{
++	unsigned char	buf[256];
++	int		x=0;
++	int		left;
++	unsigned short	code = 0;
++	unsigned char	*p = buf;
++
++	realcode=0xee;
++
++	if ( kbfd != -1 )
++		x = read(kbfd,buf,256);
++	if ( x>0 )
++	{
++		for(p=buf, left=x; left; left--,p++)
++		{
++			switch(*p)
++			{
++			case 0x1b :
++				if ( left >= 3 )
++				{
++					p+=2;
++					code = kb_translate(*p);
++					if ( code )
++						actcode = code;
++					left-=2;
++				}
++				else
++					left=1;
++				break;
++			case 0x03 :
++				doexit=3;
++				break;
++			case 0x0d :
++				actcode=RC_OK;
++				break;
++#if 0
++			case 0x1c :
++				FBPrintScreen();
++				break;
++#endif
++			case '?' :
++				actcode=RC_HELP;
++				break;
++			case 'b' :
++				actcode=RC_BLUE;
++				break;
++			case 'r' :
++				actcode=RC_RED;
++				break;
++			case 'g' :
++				actcode=RC_GREEN;
++				break;
++			case 'y' :
++				actcode=RC_YELLOW;
++				break;
++			case '0' :
++			case '1' :
++			case '2' :
++			case '3' :
++			case '4' :
++			case '5' :
++			case '6' :
++			case '7' :
++			case '8' :
++			case '9' :
++				actcode=*p-48;
++				break;
++			case '-' :
++				actcode=RC_MINUS;
++				break;
++			case '+' :
++				actcode=RC_PLUS;
++				break;
++			case 'q' :
++				actcode=RC_SPKR;
++				//FBPause();
++				break;
++			default:
++			break;
++			}
++		}
++		realcode=actcode;
++	}
++}
++
++void KbClose(void)
++{
++	if (kbfd != -1)
++		tcsetattr(kbfd,TCSANOW,&tios);
++}
++
++int	RcInitialize(int extfd )
++{
++	char buf[32];
++	//KbInitialize();
++	fd = open("/dev/input/nevis_ir", O_RDONLY);
++	//fd = open("/dev/input/event0", O_RDONLY);
++	if (fd == -1)
++	{
++		return kbfd;
++	}
++	fcntl(fd, F_SETFL, O_NONBLOCK);
++	read( fd, buf, 32 );
++	return fd;
++}
++
++void RcGetActCode( void )
++{
++	int x=0;
++	unsigned short code = 0;
++	struct input_event ev;
++	static int waspress = 0;
++
++//printf("RcGetActCode\n");
++	if (fd == -1)
++		return;
++
++	x = read(fd, &ev, sizeof(struct input_event));
++printf("event: read %d type %d code %x (%d) value %d\n", x, ev.type, ev.code, ev.code, ev.value);
++
++	if ( x != sizeof(struct input_event))
++		return;
++
++	if(ev.value == 0)
++		return;
++
++	actcode=ev.code;
++	return;
++}
++
++void RcClose(void)
++{
++	KbClose();
++	if (fd == -1)
++		return;
++	close(fd);
++}
+--- a/rcinput.h
++++ b/rcinput.h
+@@ -0,0 +1,47 @@
++#ifndef RC_INPUT_H
++#define RC_INPUT_H
++
++#include "input_fake.h"
++#define RC_0			KEY_0
++#define RC_1			KEY_1
++#define RC_2			KEY_2
++#define RC_3			KEY_3
++#define RC_4			KEY_4
++#define RC_5			KEY_5
++#define RC_6			KEY_6
++#define RC_7			KEY_7
++#define RC_8			KEY_8
++#define RC_9			KEY_9
++#define RC_RIGHT		KEY_RIGHT
++#define RC_LEFT		KEY_LEFT
++#define RC_UP			KEY_UP
++#define RC_DOWN		KEY_DOWN
++#define RC_OK			KEY_OK
++#define RC_SPKR		KEY_MUTE
++#define RC_STANDBY		KEY_POWER
++#define RC_GREEN		KEY_GREEN
++#define RC_YELLOW		KEY_YELLOW
++#define RC_RED			KEY_RED
++#define RC_BLUE		KEY_BLUE
++#define RC_PLUS		KEY_VOLUMEUP
++#define RC_MINUS		KEY_VOLUMEDOWN
++#define RC_HELP		KEY_HELP
++#define RC_SETUP		KEY_MENU
++#define RC_HOME		KEY_EXIT
++#define RC_PAGE_DOWN		KEY_PAGEDOWN
++#define RC_PAGE_UP		KEY_PAGEUP
++#define RC_FAVORITES		KEY_FAVORITES
++#define RC_EPG			KEY_EPG
++#define RC_TV			KEY_TV
++#define RC_NEXT		KEY_NEXT
++#define RC_PREVIOUS		KEY_PREVIOUS
++#define RC_AUDIO		KEY_AUDIO
++#define RC_TEXT		KEY_TEXT
++#define RC_GAMES		KEY_GAMES
++#define RC_INFO		KEY_INFO
++
++void			RcGetActCode(void);
++int			RcInitialize(int extfd);
++void			RcClose(void);
++
++#endif  // RC_INPUT_H
+--- a/rcmouse.c
++++ b/rcmouse.c
+@@ -0,0 +1,151 @@
++/* rc.c
++ * (c) 2004 CypherLabs International
++ * This file is a part of the Links program, released under GPL.
++ */
++
++#include <fcntl.h>
++#include <stdio.h>
++#include <string.h>
++#include <sys/ioctl.h>
++#include <termios.h>
++#include <unistd.h>
++#include <sys/ioctl.h>
++#include <linux/input.h>
++
++#include "links.h"
++
++struct mouseinfo {
++	unsigned char status;
++	signed char xmotion;
++	signed char ymotion;
++};
++
++#define MXSCALE	1
++#define MYSCALE (MXSCALE * 1)
++
++#define BT_LEFT	0x9
++#define BT_RIGHT	0xa
++
++
++int mousefd = -1;
++
++int rc_mouse_init()
++{
++	mousefd = open("/dev/mouse", O_RDONLY);
++	
++	if (mousefd == -1)
++		mousefd = open("/dev/input/mouse0", O_RDONLY);
++//printf("mousefd %d\n", mousefd);
++	return mousefd;
++}
++/*
++UP
++event: x 16 type 2 code 1 (1) value -1
++DOWN
++event: x 16 type 2 code 1 (1) value 1
++RIGHT
++event: x 16 type 2 code 0 (0) value 1
++LEFT
++event: x 16 type 2 code 0 (0) value -1
++*/
++void rc_mouse_event()
++{
++	struct mouseinfo m;
++	int i, x = 0;
++	int val;
++
++	struct input_event ev;
++
++	if (mousefd != -1) {
++		x = read(mousefd, &ev, sizeof(struct input_event));
++//printf("event: x %d type %d code %x (%d) value %d\n", x, ev.type, ev.code, ev.code, ev.value);
++	}
++	if(x <= 0)
++		return;
++	val = ev.value < 0 ? -1 : 1;
++	switch(ev.type) {
++		case EV_KEY:
++			switch(ev.code) {
++				case BTN_LEFT:
++					fb_mouse_click(B_LEFT | ev.value ? B_DOWN : B_UP);
++					break;
++				case BTN_RIGHT:
++					fb_mouse_click(B_RIGHT | ev.value ? B_DOWN : B_UP);
++					break;
++				case BTN_MIDDLE:
++					break;
++				default:
++					break;
++			}
++			break;
++		case EV_REL:
++			switch(ev.code) {
++				case REL_X:
++					for(i = 0; i < abs(ev.value)/MXSCALE; i++)
++						fb_mouse_move(val, 0);
++					break;
++				case REL_Y:
++					for(i = 0; i < abs(ev.value)/MYSCALE; i++)
++						fb_mouse_move(0, val);
++					break;
++				case REL_WHEEL:
++					fb_mouse_wheel((val > 0) ? B_WHEELUP : B_WHEELDOWN);
++					break;
++				default:
++					break;
++			}
++		default:
++			break;
++	}
++#if 0
++//	writeLogEntry("End Mouse Event\n");
++	memset(&m, 0, sizeof(m));
++
++//	writeLogEntry("Mouse Event\n");
++	
++	if (mousefd != -1)
++		x = read(mousefd, &m, sizeof(m));
++
++//	char yo[255];
++
++//	sprintf(yo, "status=%x\n", m.status);
++//printf("x %d status=%x\n", x, m.status);
++//	writeLogEntry(yo);
++	
++	if (m.xmotion < 0)
++		for (i = 0; i < -(((int) m.xmotion) / MXSCALE); i++)
++			fb_mouse_move(-1, 0);
++	
++	if (m.xmotion > 0)
++		for (i = 0; i < (m.xmotion / MXSCALE); i++)
++			fb_mouse_move(1, 0);
++
++	if (m.ymotion < 0)
++		for (i = 0; i < -(m.ymotion / MYSCALE); i++)
++			fb_mouse_move(0, -1);
++
++	if (m.ymotion > 0)
++		for (i = 0; i < (m.ymotion / MYSCALE); i++)
++			fb_mouse_move(0, 1);
++
++	// Driver is not 100% so we must post down followed by up
++	// Side effect of this is the buttons cant remain down pressed
++	if ((m.status & BT_LEFT) == BT_LEFT) {
++			fb_mouse_click(B_LEFT | B_DOWN);
++			fb_mouse_click(B_LEFT | B_UP);
++	}
++			
++	if ((m.status & BT_RIGHT) == BT_RIGHT) {
++			fb_mouse_click(B_RIGHT | B_DOWN);
++			fb_mouse_click(B_RIGHT | B_UP);
++	}
++
++//	writeLogEntry("End Mouse Event\n");
++#endif
++}
++
++void rc_mouse_close()
++{
++	if (mousefd != -1 )
++		close(mousefd);
++}
+--- a/select.c
++++ b/select.c
+@@ -9,6 +9,7 @@
+ /*
+ #define DEBUG_CALLS
+ */
++//#define DEBUG_CALLS
+ 
+ struct thread {
+ 	void (*read_func)(void *);
+@@ -247,8 +248,12 @@
+ 	threads[fd].write_func = write_func;
+ 	threads[fd].error_func = error_func;
+ 	threads[fd].data = data;
+-	if (read_func) FD_SET(fd, &w_read);
+-	else {
++	if (read_func) {
++		FD_SET(fd, &w_read);
++#ifdef DEBUG_CALLS
++printf("set_handlers: add read fd %d\n", fd);
++#endif
++	}else {
+ 		FD_CLR(fd, &w_read);
+ 		FD_CLR(fd, &x_read);
+ 	}
+@@ -422,14 +427,19 @@
+ }
+ 
+ int terminate_loop = 0;
++void kbd_remoteControl();
++void rc_mouse_event();
++#include "rcinput.h"
+ 
+ void select_loop(void (*init)(void))
+ {
++	int rcfd=-1;
++	int mousefd=-1;
+ 	struct stat st;
+ 	int rs;
+ 	EINTRLOOP(rs, stat(".", &st));
+-	if (rs && getenv("HOME"))
+-		EINTRLOOP(rs, chdir(getenv("HOME")));
++//	if (rs && getenv("HOME"))
++//		EINTRLOOP(rs, chdir(getenv("HOME")));
+ 	memset(&sa_zero, 0, sizeof sa_zero);
+ 	memset(signal_mask, 0, sizeof signal_mask);
+ 	memset(signal_handlers, 0, sizeof signal_handlers);
+@@ -447,6 +457,14 @@
+ 	set_handlers(signal_pipe[0], signal_break, NULL, NULL, NULL);
+ 	init();
+ 	CHK_BH;
++	rcfd = RcInitialize(rcfd);
++printf("rcfd: %d\n", rcfd);
++
++	set_handlers(rcfd, (void (*)(void *))kbd_remoteControl, NULL, NULL, NULL);
++	mousefd = rc_mouse_init();
++
++	if (mousefd != -1)
++		set_handlers(mousefd, (void (*)(void *))rc_mouse_event, NULL, NULL, NULL);
+ 	while (!terminate_loop) {
+ 		volatile int n;	/* volatile because of setjmp */
+ 		int i;
+@@ -518,8 +536,10 @@
+ 		i = -1;
+ 		while (n > 0 && ++i < w_max) {
+ 			int k = 0;
+-			/*printf("C %d : %d,%d,%d\n",i,FD_ISSET(i, &w_read),FD_ISSET(i, &w_write),FD_ISSET(i, &w_error));
+-			printf("A %d : %d,%d,%d\n",i,FD_ISSET(i, &x_read),FD_ISSET(i, &x_write),FD_ISSET(i, &x_error));*/
++#ifdef DEBUG_CALLS
++			printf("C %d : %d,%d,%d\n",i,FD_ISSET(i, &w_read),FD_ISSET(i, &w_write),FD_ISSET(i, &w_error));
++			printf("A %d : %d,%d,%d\n",i,FD_ISSET(i, &x_read),FD_ISSET(i, &x_write),FD_ISSET(i, &x_error));
++#endif
+ 			if (FD_ISSET(i, &x_read)) {
+ 				if (threads[i].read_func) {
+ #ifdef DEBUG_CALLS
+--- a/view_gr.c
++++ b/view_gr.c
+@@ -1026,7 +1026,7 @@
+ 		redraw_link(fd, n);
+ 	}
+ }
+-
++extern int mousefd;
+ int g_frame_ev(struct session *ses, struct f_data_c *fd, struct event *ev)
+ {
+ 	if (!fd->f_data) return 0;
+@@ -1068,6 +1068,25 @@
+ 				process_sb_event(fd, ev->x, 1);
+ 				break;
+ 			}
++			if(mousefd == -1) {
++				if (fd->vsb && ev_in_rect(ev, fd->xw - G_SCROLL_BAR_WIDTH, 0, fd->xw, fd->yw))
++				{
++					ses->scrolltype=0;
++					process_sb_move(fd, ses->scrolltype ? ev->x : ev->y);
++
++					break;
++					//return 0;
++				}
++				if (fd->hsb && ev_in_rect(ev, 0, fd->yw - G_SCROLL_BAR_WIDTH, fd->xw, fd->yw))
++				{
++					ses->scrolltype=1;
++					process_sb_move(fd, ses->scrolltype ? ev->x : ev->y);
++					break;
++
++					//return 0;
++				}
++			}
++
+ 			if (fd->vsb && ev_in_rect(ev, fd->xw - G_SCROLL_BAR_WIDTH, 0, fd->xw, fd->yw)) return 0;
+ 			if (fd->hsb && ev_in_rect(ev, 0, fd->yw - G_SCROLL_BAR_WIDTH, fd->xw, fd->yw)) return 0;
+ 

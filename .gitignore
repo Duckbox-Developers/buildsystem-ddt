@@ -5,7 +5,6 @@ custom/release_*
 own_build/
 Patches/patch-neutrino/
 root/boot/*
-root/var/etc/.version
 .deps/
 config*
 *~

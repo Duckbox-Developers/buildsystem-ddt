@@ -1,7 +1,7 @@
-KERNEL_DIR=../linux-sh4
+##KERNEL_DIR=../linux-sh4
 BASE_DIR=..
-TFINSTALLER_DIR=.
-all:	
+TFINSTALLER_DIR= $(CDK_DIR)/tfinstaller
+all:
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage.gz $(TFINSTALLER_DIR)/uImage.gz.org
 	if [ -e $(KERNEL_DIR)/arch/sh/boot/uImage ]; then \
 		rm $(KERNEL_DIR)/arch/sh/boot/uImage; \
@@ -62,7 +62,7 @@ all:
 		echo "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" >> $(KERNEL_DIR)/.config; \
 	fi
 #	cp $(KERNEL_DIR)/.config $(TFINSTALLER_DIR)/.config.tf
-	@export PATH=$(hostprefix)/bin:$(PATH) && \
+	@export PATH=$(HOSTPREFIX)/bin:$(PATH) && \
 	$(MAKE) -C $(BASE_DIR) tfkernel.do_compile
 	rm $(KERNEL_DIR)/initramfs_list
 	rm $(KERNEL_DIR)/.config
