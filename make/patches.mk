@@ -15,9 +15,6 @@ libstb-hal-cst-next-patch :
 #
 # Neutrino MP Max from github
 NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES +=
-NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES +=
-
-NEUTRINO_MP_CST_NEXT_MAX_PATCHES +=
 NEUTRINO_MP_CST_NEXT_MAX_PATCHES +=
 
 # Neutrino MP from github
