@@ -16,6 +16,7 @@ include make/buildenv.mk
 # maybe a help about all supported targets would be nice here, too...
 #
 printenv:
+	clear
 	@echo '================================================================================'
 	@echo "Build Environment Varibles:"
 	@echo "MAINTAINER       : $(MAINTAINER)"
