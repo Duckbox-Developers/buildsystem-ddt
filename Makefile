@@ -53,6 +53,7 @@ else ifeq ($(IMAGE), enigma2)
 	@echo "LOCAL_ENIGMA2_CPPFLAGS       :  $(LOCAL_ENIGMA2_CPPFLAGS)"
 	@echo "LOCAL_ENIGMA2_DEPS           :  $(LOCAL_ENIGMA2_DEPS)"
 endif
+	@echo '================================================================================'
 	@echo ""
 	@make --no-print-directory toolcheck
 ifeq ($(MAINTAINER),)
