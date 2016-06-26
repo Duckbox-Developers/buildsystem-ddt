@@ -903,7 +903,7 @@ $(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/ava
 #
 # wget
 #
-WGET_VER = 1.17.1
+WGET_VER = 1.18
 
 $(ARCHIVE)/wget-$(WGET_VER).tar.xz:
 	$(WGET) http://ftp.gnu.org/gnu/wget/wget-$(WGET_VER).tar.xz
@@ -914,6 +914,8 @@ $(D)/wget: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/wget-$(WGET_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/wget-$(WGET_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--mandir=/.remove \
+			--infodir=/.remove \
 			--with-openssl \
 			--with-ssl=openssl \
 			--with-libssl-prefix=$(TARGETPREFIX) \
