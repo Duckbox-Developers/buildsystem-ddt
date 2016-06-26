@@ -1354,7 +1354,7 @@ $(D)/openvpn: $(D)/bootstrap $(D)/openssl $(D)/lzo $(ARCHIVE)/openvpn-$(OPENVPN_
 #
 # openssh
 #
-OPENSSH_VER = 7.1p1
+OPENSSH_VER = 7.2p2
 
 $(ARCHIVE)/openssh-$(OPENSSH_VER).tar.gz:
 	$(WGET) http://artfiles.org/openbsd/OpenSSH/portable/openssh-$(OPENSSH_VER).tar.gz
@@ -1370,13 +1370,14 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/openssh-$(OPENSSH
 			--mandir=/.remove \
 			--sysconfdir=/etc/ssh \
 			--libexecdir=/sbin \
-			--with-privsep-path=/share/empty \
+			--with-privsep-path=/var/empty \
 			--with-cppflags="-pipe -Os -I$(TARGETPREFIX)/usr/include" \
 			--with-ldflags=-"L$(TARGETPREFIX)/usr/lib" \
 		; \
 		$(MAKE); \
-		$(MAKE) install-nokeys prefix=$(TARGETPREFIX)
-	install -m 755 $(SKEL_ROOT)/etc/init.d/openssh $(TARGETPREFIX)/etc/init.d/
+		$(MAKE) install-nokeys DESTDIR=$(TARGETPREFIX)
+	install -m 755 $(BUILD_TMP)/openssh-$(OPENSSH_VER)/opensshd.init $(TARGETPREFIX)/etc/init.d/openssh
+	sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' $(TARGETPREFIX)/etc/ssh/sshd_config
 	$(REMOVE)/openssh-$(OPENSSH_VER)
 	touch $@
 
