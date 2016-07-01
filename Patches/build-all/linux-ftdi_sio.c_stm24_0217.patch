@@ -43,15 +43,17 @@
  	if (!buf)
  		return -ENOMEM;
  
-@@ -1549,7 +1549,8 @@
+@@ -1549,9 +1549,10 @@
  	struct usb_serial_port *port = to_usb_serial_port(dev);
  	struct ftdi_private *priv = usb_get_serial_port_data(port);
  	struct usb_device *udev = port->serial->dev;
 -	char buf[1];
 +	unsigned char *buf;
-+	buf = kzalloc (2, GFP_KERNEL);
  	int v = simple_strtoul(valbuf, NULL, 10);
  	int rv = 0;
++	buf = kzalloc (2, GFP_KERNEL);
+ 
+ 	dbg("%s: setting event char = %i", __func__, v);
  
 @@ -1566,6 +1567,7 @@
  		dbg("Unable to write event character: %i", rv);

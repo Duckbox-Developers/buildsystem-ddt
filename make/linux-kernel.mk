@@ -24,11 +24,8 @@ COMMON_PATCHES_24 = \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0217),linux-perf-warning-fix_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0217),linux-ratelimit-bug_stm24_$(KERNEL_LABEL).patch) \
 		$(if $(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0209),linux-sh4-dwmac_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0217),linux-sh4-console_missing_argument_stm24_$(KERNEL_LABEL).patch)
+		$(if $(P0209),linux-sh4-dwmac_stm24_$(KERNEL_LABEL).patch)
 
 TF7700_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-tf7700_setup_stm24_$(KERNEL_LABEL).patch \
@@ -347,7 +344,7 @@ linux-kernel-clean:
 linux-kernel.menuconfig linux-kernel.xconfig: \
 linux-kernel.%:
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- $*
-	@echo
+	@echo ""
 	@echo "You have to edit m a n u a l l y $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) to make changes permanent !!!"
 	@echo ""
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config

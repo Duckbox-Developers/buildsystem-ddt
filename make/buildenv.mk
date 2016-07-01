@@ -116,7 +116,8 @@ TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VER
 #
 #
 CONFIGURE_OPTS = \
-	--build=$(BUILD) --host=$(TARGET)
+	--build=$(BUILD) \
+	--host=$(TARGET)
 
 BUILDENV = \
 	CC=$(TARGET)-gcc \
@@ -134,7 +135,7 @@ BUILDENV = \
 	CPPFLAGS="$(TARGET_CPPFLAGS)" \
 	CXXFLAGS="$(TARGET_CXXFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
+	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)
 
 CONFIGURE = \
 	test -f ./configure || ./autogen.sh && \
@@ -174,7 +175,7 @@ endif
 ifeq ($(KERNEL), p0217)
 KERNEL_VERSION         = 2.6.32.71_stm24_0217
 STM_KERNEL_HEADERS_VER = 2.6.32.46-48
-HOST_KERNEL_REVISION   = a534b4cd32be858849d675d131a69235ff5369f0
+HOST_KERNEL_REVISION   = 4d0fd3d8bfe37dc6cbabfc044d56219c3c14b42c
 P0217                  = p0217
 endif
 
