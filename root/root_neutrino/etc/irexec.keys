@@ -1,0 +1,29 @@
+begin
+	button = KEY_OK
+	button = KEY_POWER
+	button = KEY_POWER
+	button = KEY_POWER
+	button = KEY_POWER
+	button = KEY_POWER
+	prog   = irexec
+	config = init 6
+	mode   = mode_POWER
+	repeat = 0
+	delay  = 0
+	flags  = mode
+end
+
+begin
+	button = KEY_OK
+	button = KEY_HOME
+	button = KEY_MUTE
+	button = KEY_MUTE
+	button = KEY_MUTE
+	button = KEY_MUTE
+	prog   = irexec
+	config = touch /tmp/.neutrino_restart;killall neutrino
+	mode   = mode_POWER
+	repeat = 0
+	delay  = 0
+	flags  = mode
+end

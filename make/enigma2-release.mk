@@ -15,9 +15,6 @@ release_enigma2_cube_common:
 	cp $(TARGETPREFIX)/bin/eeprom $(RELEASE_DIR)/bin
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
-	rm -f $(RELEASE_DIR)/bin/tffpctl
-	rm -f $(RELEASE_DIR)/bin/vfdctl
-	rm -f $(RELEASE_DIR)/bin/tfd2mtd
 
 #
 # release_cube_common_tuner
@@ -544,7 +541,7 @@ release_enigma2_base:
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,lib,media,mnt,proc,ram,root,sbin,share,sys,tmp,usr,var}
 	install -d $(RELEASE_DIR)/etc/{enigma2,init.d,network,mdev,tuxbox,tuxtxt}
-	install -d $(RELEASE_DIR)/etc/network/{if-down.d,if-post-down.d,if-pre-up.d,if-up.d}
+	install -d $(RELEASE_DIR)/etc/network/if-{post-{up,down},pre-{up,down},up,down}.d
 	install -d $(RELEASE_DIR)/lib/{modules,udev,firmware}
 	install -d $(RELEASE_DIR)/media/{dvd,hdd,net}
 	ln -sf /media/hdd $(RELEASE_DIR)/hdd
@@ -589,6 +586,7 @@ release_enigma2_base:
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 	echo "576i50" > $(RELEASE_DIR)/etc/videomode
 	cp -dp $(TARGETPREFIX)/usr/bin/vsftpd $(RELEASE_DIR)/usr/bin/
+	cp -dp $(TARGETPREFIX)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/ffmpeg $(RELEASE_DIR)/sbin/
 	cp -aR $(TARGETPREFIX)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGETPREFIX)/etc/* $(RELEASE_DIR)/etc/
@@ -702,7 +700,7 @@ endif
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
 	cp -R $(TARGETPREFIX)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-	rm -rf $(RELEASE_DIR)/usr/lib/{engines,enigma2,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VERSION),sigc++-1.2}
+	rm -rf $(RELEASE_DIR)/usr/lib/{engines,enigma2,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VERSION),sigc++-1.2,sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
 #
@@ -814,7 +812,15 @@ endif
 # graphlcd
 #
 	if [ -e $(RELEASE_DIR)/usr/lib/libglcddrivers.so ]; then \
-		cp -f $(TARGETPREFIX)/etc/graphlcd.conf $(RELEASE_DIR)/etc/graphlcd.conf; \
+		cp -f $(TARGETPREFIX)/etc/graphlcd.conf $(RELEASE_DIR)/etc/; \
+	fi
+#
+# lcd4linux
+#
+	if [ -e $(TARGETPREFIX)/usr/bin/lcd4linux ]; then \
+		cp -f $(TARGETPREFIX)/usr/bin/lcd4linux $(RELEASE_DIR)/usr/bin/; \
+		cp -f $(TARGETPREFIX)/etc/init.d/lcd4linux $(RELEASE_DIR)/etc/init.d/; \
+		cp -a $(TARGETPREFIX)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
 	fi
 #
 # minidlna
@@ -961,12 +967,14 @@ $(D)/%release_enigma2: release_enigma2_base release_enigma2_$(BOXTYPE)
 	find $(CDK_DIR)/own_build/enigma2/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} +
 #	receiver specific (only if directory exist)
 	[ -d "$(CDK_DIR)/own_build/enigma2.$(BOXTYPE)" ] && find $(CDK_DIR)/own_build/enigma2.$(BOXTYPE)/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} + || true
+	echo $(BOXTYPE) > $(RELEASE_DIR)/etc/model
 	rm -f $(RELEASE_DIR)/for_your_own_changes
 #
 # sh4-linux-strip all
 #
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
-
+endif
 #
 # release-clean
 #

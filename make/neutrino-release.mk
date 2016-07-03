@@ -83,7 +83,8 @@ release_neutrino_common_ipbox:
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/lib/firmware/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp -dp $(SKEL_ROOT)/release/lircd_ipbox.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(SKEL_ROOT)/release/lircd_ipbox $(RELEASE_DIR)/usr/bin/lircd
+	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
+	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
 	rm -f $(RELEASE_DIR)/lib/modules/bpamem.ko
@@ -552,6 +553,7 @@ release_neutrino_base:
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 	echo "576i50" > $(RELEASE_DIR)/etc/videomode
 	cp -dp $(TARGETPREFIX)/usr/bin/vsftpd $(RELEASE_DIR)/usr/bin/
+	cp -dp $(TARGETPREFIX)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/ffmpeg $(RELEASE_DIR)/sbin/
 	cp -aR $(TARGETPREFIX)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGETPREFIX)/etc/* $(RELEASE_DIR)/etc/
@@ -942,8 +944,9 @@ endif
 #
 # sh4-linux-strip all
 #
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
-
+endif
 #
 # release-clean
 #
