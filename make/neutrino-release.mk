@@ -84,7 +84,6 @@ release_neutrino_common_ipbox:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp -dp $(SKEL_ROOT)/release/lircd_ipbox.conf $(RELEASE_DIR)/etc/lircd.conf
 	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
-	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
 	rm -f $(RELEASE_DIR)/lib/modules/bpamem.ko
@@ -490,7 +489,6 @@ release_neutrino_arivalink200:
 	cp -p $(TARGETPREFIX)/usr/bin/irrecord $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/irsend $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/irw $(RELEASE_DIR)/usr/bin/
-	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	cp -dp $(SKEL_ROOT)/release/lircd_arivalink200.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
