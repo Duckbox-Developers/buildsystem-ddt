@@ -546,7 +546,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 #
 # libfreetype
 #
-FREETYPE_VER = 2.6.3
+FREETYPE_VER = 2.6.4
 
 $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/freetype-$(FREETYPE_VER).tar.bz2
@@ -559,8 +559,6 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 		sed -i  -e "/AUX.*.gxvalid/s@^# @@" \
 			-e "/AUX.*.otvalid/s@^# @@" \
 			modules.cfg; \
-		sed -ri -e 's:.*(#.*SUBPIXEL.*) .*:\1:' \
-			include/freetype/config/ftoption.h; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 			--mandir=$(TARGETPREFIX)/.remove \
