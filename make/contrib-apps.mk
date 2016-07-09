@@ -1248,7 +1248,7 @@ $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/
 	$(UNTAR)/wpa_supplicant-$(WPA_SUPPLICANT_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/wpa_supplicant-$(WPA_SUPPLICANT_VER)/wpa_supplicant; \
 		cp -f defconfig .config; \
-		sed -i 's/CONFIG_DRIVER_NL80211=y/#CONFIG_DRIVER_NL80211=y/' .config; \
+		sed -i 's/#CONFIG_DRIVER_RALINK=y/CONFIG_DRIVER_RALINK=y/' .config; \
 		sed -i 's/#CONFIG_IEEE80211W=y/CONFIG_IEEE80211W=y/' .config; \
 		sed -i 's/#CONFIG_OS=unix/CONFIG_OS=unix/' .config; \
 		sed -i 's/#CONFIG_TLS=openssl/CONFIG_TLS=openssl/' .config; \
