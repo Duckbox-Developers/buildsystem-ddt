@@ -698,8 +698,18 @@ endif
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/release/lib/modules || true
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
-		install -d $(RELEASE_DIR)/etc/Wireless
-		cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/
+	install -d $(RELEASE_DIR)/etc/Wireless
+	cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/
+	cp -dp $(TARGETPREFIX)/usr/sbin/ifrename $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwconfig $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwevent $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwgetid $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwlist $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwpriv $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/iwspy $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/wpa_cli $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/wpa_passphrase $(RELEASE_DIR)/usr/sbin/
+	cp -dp $(TARGETPREFIX)/usr/sbin/wpa_supplicant $(RELEASE_DIR)/usr/sbin/
 endif
 #
 # lib usr/lib
@@ -761,21 +771,6 @@ endif
 		cp -dp $(TARGETPREFIX)/usr/bin/bdpoll $(RELEASE_DIR)/sbin/; \
 	else \
 		cp -dp $(TARGETPREFIX)/sbin/hotplug $(RELEASE_DIR)/sbin/; \
-	fi
-#
-# wlan
-#
-	if [ -e $(TARGETPREFIX)/usr/sbin/ifrename ]; then \
-		cp -dp $(TARGETPREFIX)/usr/sbin/ifrename $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwconfig $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwevent $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwgetid $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwlist $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwpriv $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/iwspy $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/wpa_cli $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/wpa_passphrase $(RELEASE_DIR)/usr/sbin/; \
-		cp -dp $(TARGETPREFIX)/usr/sbin/wpa_supplicant $(RELEASE_DIR)/usr/sbin/; \
 	fi
 #
 # alsa
