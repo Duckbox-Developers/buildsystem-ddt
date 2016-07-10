@@ -645,6 +645,11 @@ endif
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/exportfs/exportfs.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/exportfs/exportfs.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/nfs_common/nfs_acl.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/nfs_common/nfs_acl.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/nfs/nfs.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/nfs/nfs.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/sata_switch/sata.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/sata_switch/sata.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/mini_fo/mini_fo.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/mini_fo/mini_fo.ko $(RELEASE_DIR)/lib/modules/ || true
+#
+# wlan
+#
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt2870sta/rt2870sta.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt2870sta/rt2870sta.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt3070sta/rt3070sta.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt3070sta/rt3070sta.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt5370sta/rt5370sta.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rt5370sta/rt5370sta.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -652,8 +657,10 @@ endif
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8188eu/8188eu.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8188eu/8188eu.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/release/lib/modules || true
-	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/sata_switch/sata.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/sata_switch/sata.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/mini_fo/mini_fo.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/kernel/fs/mini_fo/mini_fo.ko $(RELEASE_DIR)/lib/modules/ || true
+	if [ -e $(RELEASE_DIR)/lib/modules/rt5370sta.ko ]; then \
+		install -d $(RELEASE_DIR)/etc/Wireless; \
+		cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/; \
+	fi
 #
 # lib usr/lib
 #
