@@ -105,11 +105,8 @@ NEUTRINO_HD2_PLUGINS_PATCHES =
 
 $(D)/neutrino-hd2-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
-	set -e; if [ -d $(ARCHIVE)/neutrino-hd2-plugins.git ]; \
-		then cd $(ARCHIVE)/neutrino-hd2-plugins.git; git pull; \
-		else cd $(ARCHIVE); git clone -b plugins https://github.com/mohousch/neutrinohd2.git neutrino-hd2-plugins.git; \
-		fi
-	cp -ra $(ARCHIVE)/neutrino-hd2-plugins.git $(SOURCE_DIR)/neutrino-hd2-plugins
+	cp -ra $(ARCHIVE)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
+	cd $(SOURCE_DIR)/neutrino-hd2-plugins && find ./ -name "Makefile.am" -exec sed -i -e "s/\/..\/nhd2-exp//g" {} \;
 	for i in $(NEUTRINO_HD2_PLUGINS_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
 		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
@@ -136,11 +133,11 @@ $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
 
 $(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
-	$(MAKE)
+	$(MAKE) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
 	touch $@
 
 $(D)/neutrino-hd2-plugins: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGETPREFIX)
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGETPREFIX) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
 #	touch $@
 
 neutrino-hd2-plugins-clean:
