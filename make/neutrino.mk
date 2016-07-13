@@ -562,12 +562,14 @@ NEUTRINO_HD2_PATCHES =
 $(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
 	rm -rf $(SOURCE_DIR)/neutrino-hd2
 	rm -rf $(SOURCE_DIR)/neutrino-hd2.org
+	rm -rf $(SOURCE_DIR)/neutrino-hd2.git
 	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] && \
 	(cd $(ARCHIVE)/neutrino-hd2.git; git pull;); \
 	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] || \
 	git clone https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrino-hd2.git; \
-	cp -ra $(ARCHIVE)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2; \
-	cp -ra $(SOURCE_DIR)/neutrino-hd2 $(SOURCE_DIR)/neutrino-hd2.org
+	cp -ra $(ARCHIVE)/neutrino-hd2.git $(SOURCE_DIR)/neutrino-hd2.git; \
+	ln -s $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2;\
+	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
 	for i in $(NEUTRINO_HD2_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
 		set -e; cd $(SOURCE_DIR)/neutrino-hd2 && patch -p1 -i $$i; \

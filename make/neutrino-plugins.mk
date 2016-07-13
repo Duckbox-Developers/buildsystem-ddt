@@ -147,8 +147,9 @@ NEUTRINO_HD2_PLUGINS_PATCHES =
 
 $(D)/neutrino-hd2-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
-	cp -ra $(ARCHIVE)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
+	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins && find ./ -name "Makefile.am" -exec sed -i -e "s/\/..\/nhd2-exp//g" {} \;
+	cd $(SOURCE_DIR)/neutrino-hd2.git && git add --all
 	for i in $(NEUTRINO_HD2_PLUGINS_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
 		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
@@ -188,7 +189,7 @@ neutrino-hd2-plugins-clean:
 	$(MAKE) clean
 	rm -f $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
 
-neutrino-hd2-plugins-distclean:
+neutrino-hd2-plugins-distclean: neutrino-hd2-plugins-clean
 	rm -f $(D)/neutrino-hd2-plugins.do_prepare
 	rm -f $(D)/neutrino-hd2-plugins.do_compile
 
