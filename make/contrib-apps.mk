@@ -469,7 +469,7 @@ $(D)/utillinux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/util-linux-$(UTIL_LINUX_VER)
 			--without-python \
 			--disable-makeinstall-chown \
 			--without-systemdsystemunitdir \
-			; \
+		; \
 		$(MAKE); \
 		install -D -m 755 sfdisk $(TARGETPREFIX)/sbin/sfdisk; \
 		install -D -m 755 mkfs $(TARGETPREFIX)/sbin/mkfs
@@ -1262,25 +1262,6 @@ $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/
 		$(MAKE) CC=$(TARGET)-gcc; \
 		$(MAKE) install BINDIR=/usr/sbin DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/wpa_supplicant-$(WPA_SUPPLICANT_VER)
-	touch $@
-
-#
-# xupnpd
-#
-$(D)/xupnpd: $(D)/bootstrap
-	$(REMOVE)/xupnpd
-	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
-		then cd $(ARCHIVE)/xupnpd.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
-		fi
-	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
-	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
-	set -e; cd $(BUILD_TMP)/xupnpd/src; \
-		$(BUILDENV) \
-		$(MAKE) TARGET=$(TARGET) sh4; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGETPREFIX)/etc/init.d/
-	$(REMOVE)/xupnpd
 	touch $@
 
 #

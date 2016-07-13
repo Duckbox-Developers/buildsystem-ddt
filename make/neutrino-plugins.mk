@@ -59,7 +59,7 @@ $(D)/neutrino-mp-plugins.do_prepare:
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
 	touch $@
 
-$(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
+$(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/plugins-scripts-lua $(D)/xupnpd
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		./autogen.sh && automake --add-missing; \
 		$(BUILDENV) \
@@ -97,6 +97,48 @@ neutrino-mp-plugins-clean:
 neutrino-mp-plugins-distclean:
 	rm -f $(D)/neutrino-mp-plugins.do_prepare
 	rm -f $(D)/neutrino-mp-plugins.do_compile
+
+#
+# xupnpd
+#
+$(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
+	$(REMOVE)/xupnpd
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
+		fi
+	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
+	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
+	set -e; cd $(BUILD_TMP)/xupnpd/src; \
+		$(BUILDENV) \
+		$(MAKE) TARGET=$(TARGET) sh4; \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGETPREFIX)/etc/init.d/
+	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
+	$(REMOVE)/xupnpd
+	touch $@
+
+#
+# plugins-scripts-lua
+#
+$(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
+	$(REMOVE)/plugins-scripts-lua
+	set -e; if [ -d $(ARCHIVE)/cst-public-plugins-scripts-lua.git ]; \
+		then cd $(ARCHIVE)/cst-public-plugins-scripts-lua.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/coolstreamtech/cst-public-plugins-scripts-lua.git cst-public-plugins-scripts-lua.git; \
+		fi
+	cp -ra $(ARCHIVE)/cst-public-plugins-scripts-lua.git/plugins $(BUILD_TMP)/plugins-scripts-lua
+	set -e; cd $(BUILD_TMP)/plugins-scripts-lua; \
+		install -d $(TARGETPREFIX)/var/tuxbox/plugins
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/ard_mediathek/* $(TARGETPREFIX)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/favorites2bin/* $(TARGETPREFIX)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/mtv/* $(TARGETPREFIX)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/netzkino/* $(TARGETPREFIX)/var/tuxbox/plugins/
+	$(REMOVE)/plugins-scripts-lua
+	touch $@
 
 #
 # neutrino-hd2 plugins
