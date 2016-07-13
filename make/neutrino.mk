@@ -533,6 +533,7 @@ neutrino-cdkroot-clean:
 	[ -e $(TARGETPREFIX)/usr/local/share/iso-codes ] && cd $(TARGETPREFIX)/usr/local/share/iso-codes && find -name '*' -delete || true
 	[ -e $(TARGETPREFIX)/usr/share/tuxbox/neutrino ] && cd $(TARGETPREFIX)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
 	[ -e $(TARGETPREFIX)/usr/share/fonts ] && cd $(TARGETPREFIX)/usr/share/fonts && find -name '*' -delete || true
+	[ -e $(TARGETPREFIX)/var/tuxbox ] && cd $(TARGETPREFIX)/var/tuxbox && find -name '*' -delete || true
 ################################################################################
 #
 # yaud-neutrino-hd2
@@ -560,6 +561,7 @@ NEUTRINO_HD2_PATCHES =
 
 $(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
 	rm -rf $(SOURCE_DIR)/neutrino-hd2
+	rm -rf $(SOURCE_DIR)/neutrino-hd2.org
 	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] && \
 	(cd $(ARCHIVE)/neutrino-hd2.git; git pull;); \
 	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] || \
@@ -609,7 +611,7 @@ $(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
 	touch $@
 
 neutrino-hd2-clean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrinohd2
+	rm -f $(D)/neutrino-hd2
 	cd $(SOURCE_DIR)/neutrino-hd2; \
 		$(MAKE) clean
 
