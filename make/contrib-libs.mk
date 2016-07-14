@@ -546,7 +546,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 #
 # libfreetype
 #
-FREETYPE_VER = 2.6.4
+FREETYPE_VER = 2.6.5
 
 $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/freetype-$(FREETYPE_VER).tar.bz2
