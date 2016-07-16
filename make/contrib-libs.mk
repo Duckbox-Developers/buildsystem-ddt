@@ -556,9 +556,9 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 	$(UNTAR)/freetype-$(FREETYPE_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VER); \
 		$(PATCH)/libfreetype-$(FREETYPE_VER).patch; \
-		sed -i  -e "/AUX.*.gxvalid/s@^# @@" \
-			-e "/AUX.*.otvalid/s@^# @@" \
-			modules.cfg; \
+		sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg; \
+		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
+			-i include/freetype/config/ftoption.h; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 			--mandir=$(TARGETPREFIX)/.remove \
