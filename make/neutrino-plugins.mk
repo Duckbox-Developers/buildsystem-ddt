@@ -59,7 +59,7 @@ $(D)/neutrino-mp-plugins.do_prepare:
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
 	touch $@
 
-$(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/plugins-scripts-lua $(D)/xupnpd
+$(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		./autogen.sh && automake --add-missing; \
 		$(BUILDENV) \
