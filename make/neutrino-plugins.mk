@@ -63,7 +63,7 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		./autogen.sh && automake --add-missing; \
 		$(BUILDENV) \
-		./configure  --enable-silent-rules \
+		./configure --enable-silent-rules \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
@@ -75,7 +75,7 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 			--with-libdir=/usr/lib \
 			--with-datadir=/usr/share/tuxbox \
 			--with-fontdir=/usr/share/fonts \
-			PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
+			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS) -DMARTII -DNEW_LIBCURL" \
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(SOURCE_DIR)/neutrino-mp-plugins/fx2/lib/.libs"
