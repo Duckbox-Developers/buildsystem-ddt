@@ -72,7 +72,7 @@ $(D)/libstb-hal-cst-next-max.do_prepare:
 	(cd $(ARCHIVE)/libstb-hal-cst-next-max.git; git pull; cd "$(BUILD_TMP)";); \
 	[ -d "$(ARCHIVE)/libstb-hal-cst-next-max.git" ] || \
 	git clone git://github.com/MaxWiesel/libstb-hal-cst-next-max.git $(ARCHIVE)/libstb-hal-cst-next-max.git; \
-	cp -ra $(ARCHIVE)/libstb-hal-cst-next-max.git $(SOURCE_DIR)/libstb-hal-cst-next-max;\$(PKG_CONFIG)$(PKG_CONFIG)
+	cp -ra $(ARCHIVE)/libstb-hal-cst-next-max.git $(SOURCE_DIR)/libstb-hal-cst-next-max;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-max $(SOURCE_DIR)/libstb-hal-cst-next-max.org
 	for i in $(NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
