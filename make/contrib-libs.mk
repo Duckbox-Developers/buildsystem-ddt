@@ -2129,7 +2129,7 @@ $(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/rarfs-$(RARFS_VER).tar.gz
 	$(REMOVE)/rarfs-$(RARFS_VER)
 	$(UNTAR)/rarfs-$(RARFS_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/rarfs-$(RARFS_VER); \
-		export PKG_CONFIG_PATH=$(TARGETPREFIX)/usr/lib/pkgconfig; \
+		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
 		$(CONFIGURE) \
 		CFLAGS="$(TARGET_CFLAGS) -D_FILE_OFFSET_BITS=64" \
 			--disable-option-checking \
@@ -2219,7 +2219,7 @@ $(ARCHIVE)/libplist-$(LIBPLIST_VER).tar.gz:
 $(D)/libplist: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libplist-$(LIBPLIST_VER).tar.gz
 	$(REMOVE)/libplist-$(LIBPLIST_VER)
 	$(UNTAR)/libplist-$(LIBPLIST_VER).tar.gz
-	export PKG_CONFIG_PATH=$(TARGETPREFIX)/usr/lib/pkgconfig:$(PKG_CONFIG_PATH); \
+	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
 	set -e; cd $(BUILD_TMP)/libplist-$(LIBPLIST_VER); \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \

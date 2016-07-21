@@ -115,8 +115,8 @@ $(SOURCE_DIR)/enigma2/config.status:
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=none \
-			PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
-			PKG_CONFIG_PATH=$(TARGETPREFIX)/usr/lib/pkgconfig \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGETPREFIX)/usr \
 			$(PLATFORM_CPPFLAGS)
 

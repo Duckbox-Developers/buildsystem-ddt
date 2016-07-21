@@ -779,7 +779,7 @@ $(D)/imagemagick: $(D)/bootstrap $(ARCHIVE)/ImageMagick-$(IMAGEMAGICK_VER).tar.g
 	set -e; cd $(BUILD_TMP)/ImageMagick-$(IMAGEMAGICK_VER); \
 		$(BUILDENV) \
 		CFLAGS="-O1" \
-		PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
+		PKG_CONFIG=$(PKG_CONFIG) \
 		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
@@ -826,7 +826,7 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa-lib
 	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport
 	set -e; cd $(BUILD_TMP)/shairport; \
 		sed -i 's|pkg-config|$$PKG_CONFIG|g' configure; \
-		PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
+		PKG_CONFIG=$(PKG_CONFIG) \
 		$(BUILDENV) \
 		$(MAKE); \
 		$(MAKE) install PREFIX=$(TARGETPREFIX)/usr
