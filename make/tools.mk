@@ -180,12 +180,16 @@ $(D)/tools-ustslave: $(D)/bootstrap
 #
 # vfdctl
 #
+ifeq ($(BOXTYPE), spark7162)
+EXTRA_CPPFLAGS=-DHAVE_SPARK7162_HARDWARE
+endif
+
 $(D)/tools-vfdctl: $(D)/bootstrap
 	set -e; cd $(APPS_DIR)/tools/vfdctl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
-		$(MAKE); \
+		$(MAKE) CPPFLAGS="$(EXTRA_CPPFLAGS)"; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	touch $@
 
