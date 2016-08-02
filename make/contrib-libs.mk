@@ -1967,22 +1967,21 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 #
 # libdvbsi++
 #
-LIBDVBSI_VER = 0.3.7
-
-$(ARCHIVE)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2:
-	$(WGET) http://www.saftware.de/libdvbsi++/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
-
-$(D)/libdvbsi++: $(D)/bootstrap $(ARCHIVE)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
-	$(REMOVE)/libdvbsi++-$(LIBDVBSI_VER)
-	$(UNTAR)/libdvbsi++-$(LIBDVBSI_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libdvbsi++-$(LIBDVBSI_VER); \
-		$(PATCH)/libdvbsi++-$(LIBDVBSI_VER).patch; \
+$(D)/libdvbsi++: $(D)/bootstrap
+	$(REMOVE)/libdvbsi++
+	set -e; if [ -d $(ARCHIVE)/libdvbsi++.git ]; \
+		then cd $(ARCHIVE)/libdvbsi++.git; git pull; \
+		else cd $(ARCHIVE); git clone git://git.opendreambox.org/git/obi/libdvbsi++.git libdvbsi++.git; \
+		fi
+	cp -ra $(ARCHIVE)/libdvbsi++.git $(BUILD_TMP)/libdvbsi++
+	set -e; cd $(BUILD_TMP)/libdvbsi++; \
+		$(PATCH)/libdvbsi++-git.patch; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	$(REMOVE)/libdvbsi++-$(LIBDVBSI_VER)
+	$(REMOVE)/libdvbsi++
 	touch $@
 
 #

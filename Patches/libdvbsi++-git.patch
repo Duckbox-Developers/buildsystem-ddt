@@ -1,0 +1,35 @@
+--- a/include/dvbsi++/byte_stream.h
++++ b/include/dvbsi++/byte_stream.h
+@@ -23,8 +23,21 @@
+ #define w32(p,v)	do { *(uint32_t * const)(p) = ((const uint32_t)v) } while (0)
+ #define w64(p,v)	do { *(uint64_t * const)(p) = ((const uint64_t)v) } while (0)
+ #else
++#ifdef __sh__
++/* Dagobert / Phantomias: sh4 cant access u16/u32 on unaligned address */
++#define r8(p)           (*(const __uint8_t * const)(p))
++
++#define r16(p)          (r8((const __uint8_t * const) p + 0) << 8 | \
++                        r8((const __uint8_t * const) p + 1))
++
++#define r32(p)          (r8((const __uint8_t * const) p + 0) << 24 | \
++                        r8((const __uint8_t * const) p + 1) << 16 | \
++                        r8((const __uint8_t * const) p + 2) << 8 | \
++                        r8((const __uint8_t * const) p + 3))
++#else
+ #define r16(p)		bswap_16(*(const uint16_t * const)p)
+ #define r32(p)		bswap_32(*(const uint32_t * const)p)
++#endif
+ #define r64(p)		bswap_64(*(const uint64_t * const)p)
+ #define w16(p,v)	do { *(uint16_t * const)(p) = bswap_16((const uint16_t)v) } while (0)
+ #define w32(p,v)	do { *(uint32_t * const)(p) = bswap_32((const uint32_t)v) } while (0)
+--- a/src/time_date_section.cpp
++++ b/src/time_date_section.cpp
+@@ -15,7 +15,7 @@
+ 
+ TimeAndDateSection::TimeAndDateSection(const uint8_t * const buffer) : ShortSection(buffer)
+ {
+-	if (sectionLength > 8) {
++	if (sectionLength >= 5) {
+ 		utcTimeMjd = UINT16(&buffer[3]);
+ 		utcTimeBcd = (buffer[5] << 16) | UINT16(&buffer[6]);
+ 	}
