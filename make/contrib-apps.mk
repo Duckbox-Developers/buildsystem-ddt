@@ -719,7 +719,7 @@ $(D)/parted: $(D)/bootstrap $(D)/libncurses $(D)/libreadline $(D)/e2fsprogs $(AR
 #
 # sysstat
 #
-SYSSTAT_VER = 11.2.0
+SYSSTAT_VER = 11.3.5
 
 $(ARCHIVE)/sysstat-$(SYSSTAT_VER).tar.bz2:
 	$(WGET) http://pagesperso-orange.fr/sebastien.godard/sysstat-$(SYSSTAT_VER).tar.bz2
