@@ -2,9 +2,7 @@ depsclean:
 	( cd $(D) && find . ! -name "*\.*" -delete )
 
 clean: depsclean
-	-$(MAKE) -C $(DRIVER_DIR) KERNEL_LOCATION=$(KERNEL_DIR) \
-		BIN_DEST=$(TARGETPREFIX)/bin \
-		INSTALL_MOD_PATH=$(TARGETPREFIX) clean
+	-$(MAKE) linux-kernel-clean
 	-$(MAKE) tools-clean
 	-$(MAKE) driver-clean
 	-rm -rf $(BASE_DIR)/tufsbox
