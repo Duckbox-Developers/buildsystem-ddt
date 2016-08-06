@@ -560,10 +560,10 @@ $(D)/rsync: $(D)/bootstrap $(ARCHIVE)/rsync-$(RSYNC_VER).tar.gz
 #
 # fuse
 #
-FUSE_VER = 2.9.3
+FUSE_VER = 2.9.7
 
 $(ARCHIVE)/fuse-$(FUSE_VER).tar.gz:
-	$(WGET) https://github.com/libfuse/libfuse/releases/download/fuse_2_9_4/fuse-2.9.3.tar.gz
+	$(WGET) https://github.com/libfuse/libfuse/releases/download/fuse-$(FUSE_VER)/fuse-$(FUSE_VER).tar.gz
 
 $(D)/fuse: $(D)/bootstrap $(ARCHIVE)/fuse-$(FUSE_VER).tar.gz
 	$(REMOVE)/fuse-$(FUSE_VER)
@@ -571,7 +571,6 @@ $(D)/fuse: $(D)/bootstrap $(ARCHIVE)/fuse-$(FUSE_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/fuse-$(FUSE_VER); \
 		$(CONFIGURE) \
 			CFLAGS="$(TARGET_CFLAGS) -I$(KERNEL_DIR)/arch/sh" \
-			--target=$(TARGET) \
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
@@ -579,8 +578,6 @@ $(D)/fuse: $(D)/bootstrap $(ARCHIVE)/fuse-$(FUSE_VER).tar.gz
 		-rm $(TARGETPREFIX)/etc/udev/rules.d/99-fuse.rules
 		-rmdir $(TARGETPREFIX)/etc/udev/rules.d
 		-rmdir $(TARGETPREFIX)/etc/udev
-		ln -sf sh4-linux-fusermount $(TARGETPREFIX)/usr/bin/fusermount
-		ln -sf sh4-linux-ulockmgr_server $(TARGETPREFIX)/usr/bin/ulockmgr_server
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fuse.pc
 	$(REWRITE_LIBTOOL)/libfuse.la
 	$(REMOVE)/fuse-$(FUSE_VER)
