@@ -832,7 +832,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2
 			--disable-debug \
 			--disable-deprecated \
 			--enable-charsets \
-			--without-glib \
+			--with-glib=no \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
