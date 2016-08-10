@@ -6,6 +6,7 @@ neutrino-hd2-patch \
 neutrino-mp-next-patch \
 neutrino-mp-tangos-patch \
 neutrino-mp-cst-next-patch \
+neutrino-mp-cst-next-ni-patch \
 neutrino-mp-cst-next-max-patch \
 libstb-hal-next-patch \
 libstb-hal-cst-next-patch :
@@ -18,13 +19,14 @@ libstb-hal-cst-next-patch :
 NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES +=
 NEUTRINO_MP_CST_NEXT_MAX_PATCHES +=
 
-# Neutrino MP from github
+# LIB-STB-Hal for MP CST Next / NI from github
 NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES +=
+
+# Neutrino MP CST Next from github
 NEUTRINO_MP_CST_NEXT_PATCHES +=
 
-# Neutrino MP Next from github
-NEUTRINO_MP_LIBSTB_NEXT_PATCHES +=
-NEUTRINO_MP_NEXT_PATCHES +=
+# Neutrino MP CST Next NI from github
+NEUTRINO_MP_CST_NEXT_NI_PATCHES +=
 
 # Neutrino MP Tango
 NEUTRINO_MP_TANGOS_PATCHES +=
