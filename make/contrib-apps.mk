@@ -584,6 +584,31 @@ $(D)/fuse: $(D)/bootstrap $(ARCHIVE)/fuse-$(FUSE_VER).tar.gz
 	touch $@
 
 #
+# curlftpfs
+#
+CURLFTPFS_VER = 0.9.2
+
+$(ARCHIVE)/curlftpfs-$(CURLFTPFS_VER).tar.gz:
+	$(WGET) http://sourceforge.net/projects/curlftpfs/files/latest/download/curlftpfs-$(CURLFTPFS_VER).tar.gz
+
+$(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/glib2 $(ARCHIVE)/curlftpfs-$(CURLFTPFS_VER).tar.gz
+	$(REMOVE)/curlftpfs-$(CURLFTPFS_VER)
+	$(UNTAR)/curlftpfs-$(CURLFTPFS_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/curlftpfs-$(CURLFTPFS_VER); \
+		$(PATCH)/curlftpfs-$(CURLFTPFS_VER).patch; \
+		export ac_cv_func_malloc_0_nonnull=yes && \
+		export ac_cv_func_realloc_0_nonnull=yes && \
+		$(CONFIGURE) \
+			CFLAGS="$(TARGET_CFLAGS) -I$(KERNEL_DIR)/arch/sh" \
+			--target=$(TARGET) \
+			--prefix=/usr \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REMOVE)/curlftpfs-$(CURLFTPFS_VER)
+	touch $@
+
+#
 # sdparm
 #
 SDPARM_VER = 1.09

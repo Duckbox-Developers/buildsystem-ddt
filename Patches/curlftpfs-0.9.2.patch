@@ -1,0 +1,10 @@
+--- a/ftpfs.c
++++ b/ftpfs.c
+@@ -1523,6 +1523,7 @@
+   curl_easy_setopt_or_die(easy, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
+   curl_easy_setopt_or_die(easy, CURLOPT_NOSIGNAL, 1);
+   curl_easy_setopt_or_die(easy, CURLOPT_CUSTOMREQUEST, "LIST -a");
++  curl_easy_setopt_or_die(easy, CURLOPT_FTP_USE_PRET, 1);
+ 
+   if (ftpfs.custom_list) {
+     curl_easy_setopt_or_die(easy, CURLOPT_CUSTOMREQUEST, ftpfs.custom_list);
