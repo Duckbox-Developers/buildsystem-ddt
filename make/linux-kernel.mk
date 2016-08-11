@@ -254,12 +254,12 @@ HOST_KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VERSION))_$(BOXTYPE).c
 $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	$(if $(HOST_KERNEL_PATCHES),$(HOST_KERNEL_PATCHES:%=$(PATCHES)/$(BUILD_CONFIG)/%))
 	rm -rf $(KERNEL_DIR)
-	REPO=https://github.com/MaxWiesel/linux-sh4-2.6.32.y.git;protocol=https;branch=stmicro; \
-	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.max.git" ] && \
-	(echo "Updating STlinux kernel source"; cd $(ARCHIVE)/linux-sh4-2.6.32.max.git; git pull;); \
-	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.max.git" ] || \
-	(echo "Getting STlinux kernel source"; git clone -n $$REPO $(ARCHIVE)/linux-sh4-2.6.32.max.git); \
-	(echo "Copying kernel source code to build environment"; cp -ra $(ARCHIVE)/linux-sh4-2.6.32.max.git $(KERNEL_DIR)); \
+	REPO=https://github.com/Duckbox-Developers/linux-sh4-2.6.32.71.git;protocol=https;branch=stmicro; \
+	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.71.git" ] && \
+	(echo "Updating STlinux kernel source"; cd $(ARCHIVE)/linux-sh4-2.6.32.71.git; git pull;); \
+	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.71.git" ] || \
+	(echo "Getting STlinux kernel source"; git clone -n $$REPO $(ARCHIVE)/linux-sh4-2.6.32.71.git); \
+	(echo "Copying kernel source code to build environment"; cp -ra $(ARCHIVE)/linux-sh4-2.6.32.71.git $(KERNEL_DIR)); \
 	(echo "Applying patch level P$(KERNEL_LABEL)"; cd $(KERNEL_DIR); git checkout -q $(HOST_KERNEL_REVISION))
 	set -e; cd $(KERNEL_DIR); \
 		for i in $(HOST_KERNEL_PATCHES); do \
