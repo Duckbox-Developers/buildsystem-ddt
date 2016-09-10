@@ -690,7 +690,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).ta
 #
 # libpng
 #
-PNG_VER = 1.6.23
+PNG_VER = 1.6.25
 PNG_VER_X = 16
 
 $(ARCHIVE)/libpng-$(PNG_VER).tar.xz:
