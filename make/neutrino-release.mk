@@ -548,10 +548,9 @@ release_neutrino_base:
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
-	echo "576i50" > $(RELEASE_DIR)/etc/videomode
 	cp -dp $(TARGETPREFIX)/usr/bin/vsftpd $(RELEASE_DIR)/usr/bin/
 	cp -dp $(TARGETPREFIX)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGETPREFIX)/usr/bin/ffmpeg $(RELEASE_DIR)/sbin/
+	cp -p $(TARGETPREFIX)/usr/bin/ffmpeg $(RELEASE_DIR)/usr/bin/
 	cp -aR $(TARGETPREFIX)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGETPREFIX)/etc/* $(RELEASE_DIR)/etc/
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
@@ -866,15 +865,12 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
-	rm -rf $(RELEASE_DIR)/usr/lib/m4-nofpu/
 	rm -f $(RELEASE_DIR)/lib/modules/lzo*.ko
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VERSION)
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
-	rm -rf $(RELEASE_DIR)/usr/lib/alsaplayer
-	rm -rf $(RELEASE_DIR)/usr/lib/audit
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
-#	rm -f $(RELEASE_DIR)/usr/lib/libexpat*
+	rm -rf $(RELEASE_DIR)/usr/lib/cmake
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
 	rm -f $(RELEASE_DIR)/usr/lib/libtermcap*
@@ -889,7 +885,6 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
 	rm -f $(RELEASE_DIR)/bin/gitVCInfo
 	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
-	rm -f $(RELEASE_DIR)/bin/wdctl
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
 #
 # The main target depends on the model.
