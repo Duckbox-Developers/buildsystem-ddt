@@ -507,6 +507,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz
 		CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib \
 		$(MAKE) all; \
 		$(MAKE) install PREFIX=$(TARGETPREFIX)/usr
+	cd $(TARGETPREFIX) && rm -f usr/bin/bzip2
 	$(REMOVE)/bzip2-$(BZIP2_VER)
 	touch $@
 
