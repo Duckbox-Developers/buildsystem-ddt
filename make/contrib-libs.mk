@@ -840,6 +840,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fribidi.pc
 	$(REWRITE_LIBTOOL)/libfribidi.la
+	cd $(TARGETPREFIX) && rm usr/bin/fribidi
 	$(REMOVE)/fribidi-$(FRIBIDI_VER)
 	touch $@
 
