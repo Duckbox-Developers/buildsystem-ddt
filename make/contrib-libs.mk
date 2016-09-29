@@ -1843,6 +1843,9 @@ $(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMP
 	set -e; cd $(BUILD_TMP)/libusb-compat-$(USBCOMPAT_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--disable-log \
+			--disable-debug-log \
+			--disable-examples-build \
 		; \
 		$(MAKE) ; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
