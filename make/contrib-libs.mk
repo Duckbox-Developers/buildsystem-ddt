@@ -1871,11 +1871,13 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 		$(PATCH)/alsa-lib-$(ALSA_VER)-link_fix.patch; \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--with-alsa-devdir=/dev/snd/ \
 			--with-plugindir=/usr/lib/alsa \
 			--without-debug \
 			--with-debug=no \
 			--disable-aload \
 			--disable-rawmidi \
+			--disable-resmgr \
 			--disable-old-symbols \
 			--disable-alisp \
 			--disable-hwdep \
