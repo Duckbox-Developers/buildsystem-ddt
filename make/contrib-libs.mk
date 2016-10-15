@@ -1930,12 +1930,14 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).
 #
 $(D)/libopenthreads: $(D)/bootstrap
 	$(REMOVE)/openthreads
-	set -e; if [ -d $(ARCHIVE)/cst-public-libraries-openthreads.git ]; \
-		then cd $(ARCHIVE)/cst-public-libraries-openthreads.git; git pull; \
-		else cd $(ARCHIVE); git clone --recursive git://github.com/coolstreamtech/cst-public-libraries-openthreads.git cst-public-libraries-openthreads.git; \
+	set -e; if [ -d $(ARCHIVE)/library-openthreads.git ]; \
+		then cd $(ARCHIVE)/library-openthreads.git; git pull; \
+		else cd $(ARCHIVE); git clone --recursive git://github.com/tuxbox-neutrino/library-openthreads.git library-openthreads.git; \
 		fi
-	cp -ra $(ARCHIVE)/cst-public-libraries-openthreads.git $(BUILD_TMP)/openthreads
+	cp -ra $(ARCHIVE)/library-openthreads.git $(BUILD_TMP)/openthreads
 	set -e; cd $(BUILD_TMP)/openthreads; \
+		git submodule init; \
+		git submodule update; \
 		$(PATCH)/libopenthreads.patch; \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
 		echo "# dummy file to prevent warning message" > $(BUILD_TMP)/openthreads/examples/CMakeLists.txt; \
