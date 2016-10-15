@@ -1,6 +1,5 @@
 BUILDLOG/
-custom/yaud-neutrino-*
-custom/yaud-enigma2-*
+custom/yaud-*
 custom/release_*
 own_build/
 Patches/patch-neutrino/
