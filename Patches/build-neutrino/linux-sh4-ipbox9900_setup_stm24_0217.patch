@@ -325,20 +325,35 @@ diff -urN linux-sh4-2.6.32.16_stm24_0205.org/drivers/usb/core/hub.c linux-sh4-2.
  		}
  	} else {	/* Self-powered external hub */
  		/* FIXME: What about battery-powered external hubs that
+--- linux-sh4/drivers/stm/stx7100_hispeed.c.orig
++++ linux-sh4/drivers/stm/stx7100_hispeed.c
+@@ -193,6 +193,12 @@
+ 	 */
+ 	stx7100_usb_pwr_gpio = stm_pad_gpio_request_output(state, "PWR", 1);
+ 	BUG_ON(stx7100_usb_pwr_gpio == STM_GPIO_INVALID);
++
++	//reset usb on boot - some DVB-T dongles (as102) need it to work properly.
++	gpio_set_value(stx7100_usb_pwr_gpio, 0);
++	mdelay(2000);
++	gpio_set_value(stx7100_usb_pwr_gpio, 1);
++	mdelay(600);
+ 
+ 	return 0;
+ }
 diff -urN linux-sh4-2.6.32.16_stm24_0205.org/drivers/media/dvb/dvb-core/dvb_ca_en50221.c linux-sh4-2.6.32.16_stm24_0205/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
 --- linux-sh4-2.6.32.16_stm24_0205.org/drivers/media/dvb/dvb-core/dvb_ca_en50221.c	2011-08-28 17:32:52.000000000 +0200
 +++ linux-sh4-2.6.32.16_stm24_0205/drivers/media/dvb/dvb-core/dvb_ca_en50221.c	2011-08-28 18:33:15.580391981 +0200
-@@ -2036,13 +2036,13 @@
+@@ -2008,13 +2008,13 @@
  		atomic_set(&ca->slot_info[i].camchange_count, 0);
  		ca->slot_info[i].camchange_type = DVB_CA_EN50221_CAMCHANGE_REMOVED;
  		mutex_init(&ca->slot_info[i].slot_lock);
 -
 +#if defined(CONFIG_SH_IPBOX9900)
  		/* add a ci device entry */
- 	        ret = dvb_register_device(dvb_adapter, &ca->dvbdev_ci[i], &dvbdev_ci[i], ca, DVB_DEVICE_CI);
+ 		ret = dvb_register_device(dvb_adapter, &ca->dvbdev_ci[i], &dvbdev_ci[i], ca, DVB_DEVICE_CI);
  		ca->slot_states[i] = DVB_CA_EN50221_CAMCHANGE_REMOVED;
- 	        if (ret)
- 		    printk("error creating ci device for slot %d\n", i);
+ 		if (ret)
+ 			printk("error creating ci device for slot %d\n", i);
 -
 +#endif
  	}
