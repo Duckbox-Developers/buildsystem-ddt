@@ -18,6 +18,7 @@ tools-clean:
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/ipbox_eeprom distclean
 
 #
 # aio-grab
@@ -205,6 +206,17 @@ $(D)/tools-wait4button: $(D)/bootstrap
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	touch $@
 
+#
+# wait4button
+#
+$(D)/tools-ipbox_eeprom: $(D)/bootstrap
+	set -e; cd $(APPS_DIR)/tools/ipbox_eeprom; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	touch $@
 
 TOOLS  = $(D)/tools-aio-grab
 TOOLS += $(D)/tools-devinit
@@ -217,6 +229,7 @@ TOOLS += $(D)/tools-streamproxy
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
+TOOLS += $(D)/tools-ipbox_eeprom
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
 TOOLS += $(D)/tools-libmme_host
 TOOLS += $(D)/tools-libmme_image
