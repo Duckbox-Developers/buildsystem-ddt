@@ -597,13 +597,10 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
  
  # General driver settings
  #  This section lists the display settings that are parsed and
-@@ -114,467 +114,7 @@
- #  A value of 0 completely disables complete refreshs. 
- #  Possible values: 0 <= x <= 50
- #  Default value: 5
--
--########################################################################
--
+@@ -117,487 +117,6 @@
+ 
+ ########################################################################
+ 
 -[framebuffer]
 -# framebuffer driver
 -#  Output goes to a framebuffer device
@@ -797,7 +794,8 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
 -
 -Device=/dev/parport0
 -#Port=0x378
--#Width=128
+-Width=128
+-#Width=192
 -#Height=64
 -#UpsideDown=no
 -#Invert=no
@@ -931,6 +929,8 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
 -#Controller=nokia7110
 -#Controller=sed1335
 -Controller=optrex323
+-#Controller=l4m132c
+-#Controller=l4m320t
 -
 -# Options
 -#  Pass display specific options
@@ -967,6 +967,9 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
 -
 -Device=/dev/parport0
 -#Port=0x378
+-#Device=HID:/dev/usb/hiddev0
+-#Device=HID:/dev/hiddev0
+-#Device=USB:USB:4243/ee20 # Linux4Media 320T TouchLCD
 -#UpsideDown=no
 -#Invert=no
 -Contrast=5
@@ -994,7 +997,7 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
 -#Invert=no
 -Brightness=50
 -AdjustTiming=50
- RefreshDisplay=50
+-RefreshDisplay=50
 -
 -# Wiring
 -#  Select the type of wiring your display is connected with.
@@ -1062,10 +1065,27 @@ diff -Naur graphlcd-base-touchcol.git/graphlcd.conf graphlcd-base-touchcol/graph
 -# USB ID activy 5xx:
 -#Vendor=0x1509
 -#Product=0x925d
- ########################################################################
- 
+-########################################################################
+-
+-[futabaMDM166A]
+-#  futabaMDM166A driver
+-#  This is an driver module for Futaba MDM166A VFD displays.
+-#  The VFD is built-in in Targa HTPC cases and connected to USB port.
+-#  Default size: 96 x 16
+-Driver=futabaMDM166A
+-
+-#Width=96
+-#Height=16
+-#UpsideDown=no
+-#Invert=no
+-#Brightness=50
+-#RefreshDisplay=1000
+-########################################################################
+-
  [ax206dpf]
-@@ -588,8 +128,8 @@
+ #  THIS IS AN EXPERIMENTAL DRIVER!
+ #  You have to uncomment the variable HAVE_DRIVER_AX206DPF
+@@ -609,8 +128,8 @@
  #
  #  Default size: 320 x 240 or 240 x 320 (see "Portrait")
  Driver=ax206dpf
