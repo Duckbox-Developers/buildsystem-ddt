@@ -25,7 +25,7 @@ endif
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/libflac
 
 N_CFLAGS       = -Wall -W -Wshadow -pipe -Os -fno-strict-aliasing
-N_CFLAGS      += -DCPU_FREQ
+#N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
 N_CPPFLAGS     = -I$(DRIVER_DIR)/bpamem
