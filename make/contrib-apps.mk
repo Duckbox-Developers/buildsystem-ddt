@@ -198,14 +198,14 @@ endif
 #
 # host_module_init_tools
 #
-MODULE_INIT_TOOLS_VER = 3.16
+MODULE_INIT_TOOLS_VER = 3.15
 
-$(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2:
-	$(WGET) http://ftp.be.debian.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+$(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz:
+	$(WGET) https://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz
 
-$(D)/host_module_init_tools: $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+$(D)/host_module_init_tools: $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz
 	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER)
-	$(UNTAR)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+	$(UNTAR)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
 		$(PATCH)/module-init-tools-$(MODULE_INIT_TOOLS_VER).patch; \
 		autoreconf -fi; \
@@ -221,9 +221,9 @@ $(D)/host_module_init_tools: $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VE
 #
 # module_init_tools
 #
-$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz
 	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VER)
-	$(UNTAR)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.bz2
+	$(UNTAR)/module-init-tools-$(MODULE_INIT_TOOLS_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
 		$(PATCH)/module-init-tools-$(MODULE_INIT_TOOLS_VER).patch; \
 		autoreconf -fi; \
