@@ -668,3 +668,19 @@
  
  	/* I2C bus number reservation (to prevent any hot-plug device
  	 * from using it) */	
+--- linux-sh4/drivers/stm/stx7100_hispeed.c.orig
++++ linux-sh4/drivers/stm/stx7100_hispeed.c
+@@ -193,6 +193,12 @@
+ 	 */
+ 	stx7100_usb_pwr_gpio = stm_pad_gpio_request_output(state, "PWR", 1);
+ 	BUG_ON(stx7100_usb_pwr_gpio == STM_GPIO_INVALID);
++
++	//reset usb on boot - some DVB-T dongles (as102) need it to work properly.
++	gpio_set_value(stx7100_usb_pwr_gpio, 0);
++	mdelay(2000);
++	gpio_set_value(stx7100_usb_pwr_gpio, 1);
++	mdelay(600);
+ 
+ 	return 0;
+ }
+ }
