@@ -9,7 +9,7 @@
  CURL_SET_COMPILER_OPTIMIZE_OPTS
  CURL_SET_COMPILER_WARNING_OPTS
  
-@@ -3156,6 +3156,7 @@
+@@ -3152,6 +3152,7 @@
  
  AC_CHECK_SIZEOF(size_t)
  AC_CHECK_SIZEOF(long)
@@ -19,7 +19,7 @@
  CURL_CONFIGURE_LONG
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -150,7 +150,7 @@
+@@ -153,7 +153,7 @@
  bin_SCRIPTS = curl-config
  
  SUBDIRS = lib src include
@@ -30,7 +30,7 @@
  pkgconfig_DATA = libcurl.pc
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -611,7 +611,7 @@
+@@ -613,7 +613,7 @@
  
  bin_SCRIPTS = curl-config
  SUBDIRS = lib src include
