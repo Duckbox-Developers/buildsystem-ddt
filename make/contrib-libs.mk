@@ -653,8 +653,13 @@ JPEG_TURBO_VER = 1.5.0
 $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VER)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+$(D)/libjpeg: $(D)/libjpeg_old
+	touch $@
+else
 $(D)/libjpeg: $(D)/libjpeg_turbo
 	touch $@
+endif
 
 $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
 	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VER)
