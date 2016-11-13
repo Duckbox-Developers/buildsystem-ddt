@@ -1,6 +1,6 @@
 --- a/minidlna.c
 +++ b/minidlna.c
-@@ -324,10 +324,8 @@
+@@ -295,10 +295,8 @@
  	if (sq3)
  		*sq3 = db;
  	sqlite3_busy_timeout(db, 5000);
