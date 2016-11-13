@@ -1,6 +1,6 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -1773,8 +1773,10 @@
+@@ -1795,8 +1795,10 @@
      HLSContext *c = s->priv_data;
      int ret, i, minplaylist = -1;
  
@@ -38,10 +38,11 @@
      pkt->buf                  = NULL;
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -113,6 +113,26 @@ MAKE_ACCESSORS(AVFormatContext, format, int, metadata_header_padding)
+@@ -113,6 +113,25 @@
  MAKE_ACCESSORS(AVFormatContext, format, void *, opaque)
  MAKE_ACCESSORS(AVFormatContext, format, av_format_control_message, control_message_cb)
- 
+ MAKE_ACCESSORS(AVFormatContext, format, AVOpenCallback, open_cb)
++
 +void *av_fast_realloc(void *ptr, unsigned int *size, size_t min_size)
 +{
 +    if (min_size < *size)
@@ -60,8 +61,6 @@
 +
 +    return ptr;
 +}
-+
-+
+ 
  int64_t av_stream_get_end_pts(const AVStream *st)
  {
-     return st->pts.val;

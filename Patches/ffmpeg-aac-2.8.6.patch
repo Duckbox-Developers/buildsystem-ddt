@@ -1,6 +1,6 @@
 --- a/libavcodec/aacdec_template.c
 +++ b/libavcodec/aacdec_template.c
-@@ -2343,7 +2343,7 @@
+@@ -2347,7 +2347,7 @@
   * @param   decode  1 if tool is used normally, 0 if tool is used in LTP.
   * @param   coef    spectral coefficients
   */
@@ -11,7 +11,7 @@
      const int mmm = FFMIN(ics->tns_max_bands, ics->max_sfb);
 --- a/libavcodec/mdct_template.c
 +++ b/libavcodec/mdct_template.c
-@@ -96,7 +96,7 @@ av_cold int ff_mdct_init(FFTContext *s, int nbits, int inverse, double scale)
+@@ -101,7 +101,7 @@ av_cold int ff_mdct_init(FFTContext *s, int nbits, int inverse, double scale)
   * @param output N/2 samples
   * @param input N/2 samples
   */
