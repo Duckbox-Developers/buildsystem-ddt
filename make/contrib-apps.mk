@@ -1347,7 +1347,6 @@ $(D)/openvpn: $(D)/bootstrap $(D)/openssl $(D)/lzo $(ARCHIVE)/openvpn-$(OPENVPN_
 			--disable-plugins \
 			--disable-debug \
 			--disable-pkcs11 \
-			--enable-password-save \
 			--enable-small \
 		; \
 		$(MAKE); \
