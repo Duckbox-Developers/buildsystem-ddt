@@ -1,6 +1,6 @@
---- pycrypto-2.5/setup.py
-+++ pycrypto-2.5/setup.py
-@@ -366,7 +366,7 @@
+--- a/setup.py
++++ b/setup.py
+@@ -370,7 +370,7 @@
        'ext_modules': plat_ext + [
              # _fastmath (uses GNU mp library)
              Extension("Crypto.PublicKey._fastmath",
