@@ -1,5 +1,5 @@
-*** a/arch/sh/kernel/setup.c
---- b/arch/sh/kernel/setup.c
+--- a/arch/sh/kernel/setup.c
++++ b/arch/sh/kernel/setup.c
 @@ -389,6 +389,34 @@
  #endif
  #endif
@@ -224,7 +224,7 @@
 +		.offset = 0x003E0000,  //3.875M
 +	 },
 +	{
-+		name   = "Config",    //mtd6
++		.name   = "Config",    //mtd6
 +		.size   = 0x00100000,  //1M
 +		.offset = 0x02100000,
 +	},
