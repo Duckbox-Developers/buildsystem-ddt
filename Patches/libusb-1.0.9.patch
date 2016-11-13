@@ -11,15 +11,15 @@
  AC_PREREQ([2.50])
 --- a/libusb/io.c
 +++ b/libusb/io.c
-@@ -32,6 +32,7 @@
- #include <sys/time.h>
+@@ -31,6 +31,7 @@
  #endif
+ 
  #ifdef USBI_TIMERFD_AVAILABLE
 +#include <fcntl.h>
  #include <sys/timerfd.h>
  #endif
  
-@@ -1141,7 +1142,7 @@ int usbi_io_init(struct libusb_context *
+@@ -1072,7 +1073,7 @@
  
  #ifdef USBI_TIMERFD_AVAILABLE
  	ctx->timerfd = timerfd_create(usbi_backend->get_timerfd_clockid(),
