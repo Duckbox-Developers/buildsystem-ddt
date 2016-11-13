@@ -92,7 +92,7 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 		cp -ra $(ARCHIVE)/enigma2-pli-nightly.git $(SOURCE_DIR)/enigma2; \
 		[ "$$REVISION" == "" ] || (cd $(SOURCE_DIR)/enigma2; git checkout "$$REVISION"; cd "$(BUILD_TMP)";); \
 		cp -ra $(SOURCE_DIR)/enigma2 $(SOURCE_DIR)/enigma2.org; \
-		set -e; cd $(SOURCE_DIR)/enigma2 && patch -p1 < "../../cdk/Patches/enigma2-pli-nightly.$$DIFF.diff"; \
+		set -e; cd $(SOURCE_DIR)/enigma2 && patch -p1 < "$(PATCHES)/enigma2-pli-nightly.$$DIFF.diff"; \
 	else \
 		[ -d "$(SOURCE_DIR)/enigma2" ] ; \
 		git clone -b $$HEAD $$REPO $(SOURCE_DIR)/enigma2; \
