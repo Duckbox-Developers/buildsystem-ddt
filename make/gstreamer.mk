@@ -153,7 +153,7 @@ GSTREAMER_BAD_VER = $(GSTREAMER_VER)
 $(ARCHIVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
 
-$(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base libmodplug $(ARCHIVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
+$(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base  $(ARCHIVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
 	$(REMOVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER)
 	$(UNTAR)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VER); \
