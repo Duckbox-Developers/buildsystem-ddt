@@ -1105,6 +1105,7 @@ $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2:
 	$(WGET) http://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VER)/$(lastword $(subst /, ,$@))
 
 $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
+	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VER)
 	$(UNTAR)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libdvdcss-$(LIBDVDCSS_VER); \
 		$(CONFIGURE) \
