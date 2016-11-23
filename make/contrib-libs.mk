@@ -148,7 +148,7 @@ $(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 #
 # libglib2
 #
-$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
+$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(D)/libpcre $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/glib-$(GLIB_VER)
 	$(UNTAR)/glib-$(GLIB_VER).tar.xz
@@ -192,6 +192,38 @@ $(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(AR
 	$(REWRITE_LIBTOOLDEP)/libgobject-2.0.la
 	$(REWRITE_LIBTOOLDEP)/libgthread-2.0.la
 	$(REMOVE)/glib-$(GLIB_VER)
+	$(TOUCH)
+
+#
+# libpcre
+#
+LIBPCRE_VER = 8.39
+
+$(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VER)/pcre-$(LIBPCRE_VER).tar.bz2
+
+$(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2
+	$(START_BUILD)
+	$(REMOVE)/pcre-$(LIBPCRE_VER)
+	$(UNTAR)/pcre-$(LIBPCRE_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/pcre-$(LIBPCRE_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--enable-utf8 \
+			--enable-unicode-properties \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+		mv $(TARGETPREFIX)/usr/bin/pcre-config $(HOSTPREFIX)/bin/pcre-config
+	$(REWRITE_PKGCONF) $(HOSTPREFIX)/bin/pcre-config
+	$(REWRITE_LIBTOOL)/libpcre.la
+	$(REWRITE_LIBTOOL)/libpcrecpp.la
+	$(REWRITE_LIBTOOL)/libpcreposix.la
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcre.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcrecpp.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcreposix.pc
+	$(REMOVE)/pcre-$(LIBPCRE_VER)
 	$(TOUCH)
 
 #
