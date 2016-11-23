@@ -13,6 +13,7 @@ BUSYBOX_CONFIG = busybox.config
 endif
 
 $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES)/$(BUSYBOX_CONFIG)
+	$(START_BUILD)
 	$(REMOVE)/busybox-$(BUSYBOX_VER)
 	$(UNTAR)/busybox-$(BUSYBOX_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/busybox-$(BUSYBOX_VER); \
@@ -24,7 +25,7 @@ $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES
 		$(BUILDENV) $(MAKE) busybox CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
 		$(MAKE) install CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGETPREFIX)
 #	$(REMOVE)/busybox-$(BUSYBOX_VER)
-	touch $@
+	$(TOUCH)
 
 #
 # host_pkgconfig
@@ -35,6 +36,7 @@ $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz:
 	$(WGET) http://pkgconfig.freedesktop.org/releases/pkg-config-$(PKGCONFIG_VER).tar.gz
 
 $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
+	$(START_BUILD)
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
 	$(UNTAR)/pkg-config-$(PKGCONFIG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VER); \
@@ -47,7 +49,7 @@ $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
 		$(MAKE); \
 		$(MAKE) install
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
-	touch $@
+	$(TOUCH)
 
 #
 # host_mtd_utils
@@ -58,6 +60,7 @@ $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2:
 	$(WGET) ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-$(MTD_UTILS_VER).tar.bz2
 
 $(D)/host_mtd_utils: $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2
+	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
 	$(UNTAR)/mtd-utils-$(MTD_UTILS_VER).tar.bz2; \
 	set -e; cd $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER); \
@@ -65,12 +68,13 @@ $(D)/host_mtd_utils: $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2
 		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOSTPREFIX); \
 		$(MAKE) install DESTDIR=$(HOSTPREFIX)/bin
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
-	touch $@
+	$(TOUCH)
 
 #
 # mtd_utils
 #
 $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2
+	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
 	$(UNTAR)/mtd-utils-$(MTD_UTILS_VER).tar.bz2 ; \
 	set -e; cd $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER); \
@@ -78,7 +82,7 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/mtd-
 		$(MAKE) PREFIX= CC=$(TARGET)-gcc LD=$(TARGET)-ld STRIP=$(TARGET)-strip WITHOUT_XATTR=1 DESTDIR=$(TARGETPREFIX); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
-	touch $@
+	$(TOUCH)
 
 #
 #
@@ -90,6 +94,7 @@ $(ARCHIVE)/gdb-$(GDB_VER).tar.xz:
 
 # gdb-remote built for local-PC or target
 $(D)/gdb-remote: $(ARCHIVE)/gdb-$(GDB_VER).tar.xz | $(TARGETPREFIX)
+	$(REMOVE)/gdb-$(GDB_VER)
 	$(UNTAR)/gdb-$(GDB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
 		./configure \
