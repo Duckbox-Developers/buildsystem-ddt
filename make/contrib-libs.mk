@@ -1977,7 +1977,7 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 		$(PATCH)/rtmpdump-2.4.patch; \
 		$(BUILDENV) \
 		$(MAKE) CROSS_COMPILE=$(TARGET)- ; \
-		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX) MANDIR=$(TARGETPREFIX)/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/librtmp.pc
 	$(REMOVE)/librtmpdump
 	touch $@
