@@ -722,11 +722,11 @@ $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
 #
 FBSHOT_VER = 0.3
 
-$(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz:
+$(ARCHIVE)/fbshot-$(FBSHOT_VER).tar.gz:
 	$(WGET) http://www.sourcefiles.org/Graphics/Tools/Capture/fbshot-$(FBSHOT_VER).tar.gz
 
 $(D)/fbshot: $(TARGETPREFIX)/bin/fbshot
-	touch $@
+	$(TOUCH)
 
 $(TARGETPREFIX)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/fbshot-$(FBSHOT_VER).tar.gz
 	$(START_BUILD)
@@ -736,7 +736,7 @@ $(TARGETPREFIX)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/fbshot-$(FBSHO
 		$(PATCH)/fbshot-$(FBSHOT_VER).patch; \
 		$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS) fbshot.c -lpng -lz -o $@
 	$(REMOVE)/fbshot-$(FBSHOT_VER)
-	$(TOUCH)
+	@touch $@
 
 #
 # parted
