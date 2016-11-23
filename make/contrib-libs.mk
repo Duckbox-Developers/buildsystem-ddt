@@ -788,6 +788,7 @@ $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 	$(WGET) https://curl.haxx.se/download/curl-$(CURL_VER).tar.bz2
 
 $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).tar.bz2
+	$(REMOVE)/curl-$(CURL_VER)
 	$(UNTAR)/curl-$(CURL_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/curl-$(CURL_VER); \
 		$(PATCH)/libcurl-$(CURL_VER).patch; \
