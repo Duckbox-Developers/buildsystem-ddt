@@ -499,6 +499,7 @@ release_neutrino_arivalink200:
 #
 # the following target creates the common file base
 release_neutrino_base:
+	$(START_BUILD)
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
@@ -897,7 +898,7 @@ endif
 $(D)/release_neutrino: \
 $(D)/%release_neutrino: release_neutrino_base release_neutrino_$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
-	touch $@
+	$(TOUCH)
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/neutrino-hd
 #
@@ -946,6 +947,13 @@ endif
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
+
+	@echo "***************************************************************"
+	@echo -e "\033[01;32m"
+	@echo " Build of Neutrino for $(BOXTYPE) successfully completed."
+	@echo -e "\033[00m"
+	@echo "***************************************************************"
+
 #
 # release-clean
 #

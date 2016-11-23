@@ -2,6 +2,7 @@
 # DIVERSE STUFF / TOOLS
 #
 $(D)/diverse-tools:
+	$(START_BUILD)
 	( cd root/etc && for i in $(DIVERSE_TOOLS_ADAPTED_ETC_FILES); do \
 		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
@@ -18,7 +19,7 @@ $(D)/diverse-tools:
 		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
 	ln -sf /usr/share/zoneinfo/CET $(TARGETPREFIX)/etc/localtime
-	touch $@
+	$(TOUCH)
 
 #
 # Adapted etc files and etc read-write files

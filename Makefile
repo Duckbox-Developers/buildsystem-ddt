@@ -4,8 +4,8 @@ SHELL = /bin/bash
 UID := $(shell id -u)
 ifeq ($(UID), 0)
 warn:
-	@echo "You are running as root. Don't do this, it's dangerous."
-	@echo "Refusing to build. Good bye."
+	@echo "You are running as root. Do not do this, it is dangerous."
+	@echo "Aborting the build. Goodbye."
 else
 
 include make/buildenv.mk
@@ -18,7 +18,7 @@ include make/buildenv.mk
 printenv:
 	clear
 	@echo '================================================================================'
-	@echo "Build Environment Varibles:"
+	@echo "Build Environment Variables:"
 	@echo "MAINTAINER       : $(MAINTAINER)"
 	@echo "ARCHIVE_DIR      : $(ARCHIVE)"
 	@echo "BASE_DIR         : $(BASE_DIR)"
@@ -46,17 +46,17 @@ printenv:
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
-	@echo "LOCAL_NEUTRINO_BUILD_OPTIONS :  $(LOCAL_NEUTRINO_BUILD_OPTIONS)"
-	@echo "LOCAL_NEUTRINO_CFLAGS        :  $(LOCAL_NEUTRINO_CFLAGS)"
-	@echo "LOCAL_NEUTRINO_DEPS          :  $(LOCAL_NEUTRINO_DEPS)"
+	@echo "LOCAL_NEUTRINO_BUILD_OPTIONS : $(LOCAL_NEUTRINO_BUILD_OPTIONS)"
+	@echo "LOCAL_NEUTRINO_CFLAGS        : $(LOCAL_NEUTRINO_CFLAGS)"
+	@echo "LOCAL_NEUTRINO_DEPS          : $(LOCAL_NEUTRINO_DEPS)"
 else ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
-	@echo "LOCAL_ENIGMA2_BUILD_OPTIONS  :  $(LOCAL_ENIGMA2_BUILD_OPTIONS)"
-	@echo "LOCAL_ENIGMA2_CPPFLAGS       :  $(LOCAL_ENIGMA2_CPPFLAGS)"
-	@echo "LOCAL_ENIGMA2_DEPS           :  $(LOCAL_ENIGMA2_DEPS)"
+	@echo "LOCAL_ENIGMA2_BUILD_OPTIONS  : $(LOCAL_ENIGMA2_BUILD_OPTIONS)"
+	@echo "LOCAL_ENIGMA2_CPPFLAGS       : $(LOCAL_ENIGMA2_CPPFLAGS)"
+	@echo "LOCAL_ENIGMA2_DEPS           : $(LOCAL_ENIGMA2_DEPS)"
 endif
 	@echo '================================================================================'
 	@echo ""
-	@make --no-print-directory toolcheck
+	@$(MAKE) --no-print-directory toolcheck
 ifeq ($(MAINTAINER),)
 	@echo "##########################################################################"
 	@echo "# The MAINTAINER variable is not set. It defaults to your name from the  #"

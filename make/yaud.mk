@@ -48,7 +48,7 @@ SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
-	touch $@
+	$(TOUCH)
 
 #
 # YAUD NONE

@@ -535,6 +535,7 @@ release_enigma2_arivalink200:
 #
 # the following target creates the common file base
 release_enigma2_base:
+	$(START_BUILD)
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{bin,boot,dev,dev.static,etc,lib,media,mnt,proc,ram,root,sbin,share,sys,tmp,usr,var}
@@ -960,7 +961,7 @@ endif
 $(D)/release_enigma2: \
 $(D)/%release_enigma2: release_enigma2_base release_enigma2_$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
-	touch $@
+	@touch $@
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2
 #
@@ -976,6 +977,13 @@ $(D)/%release_enigma2: release_enigma2_base release_enigma2_$(BOXTYPE)
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
+
+	@echo "***************************************************************"
+	@echo -e "\033[01;32m"
+	@echo " Build of Enigma2 for $(BOXTYPE) successfully completed."
+	@echo -e "\033[00m"
+	@echo "***************************************************************"
+
 #
 # release-clean
 #

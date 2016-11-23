@@ -15,6 +15,7 @@ BOXEVENT = $(PATCH)/links-2.7-spark-input.patch;
 endif
 
 $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS-VER).tar.bz2
+	$(START_BUILD)
 	$(REMOVE)/links-$(LINKS-VER)
 	$(UNTAR)/links-$(LINKS-VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/links-$(LINKS-VER); \
@@ -45,21 +46,23 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS-VER
 	touch $(TARGETPREFIX)/var/tuxbox/config/links/links.his
 	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGETPREFIX)/var/tuxbox/config/links
 	$(REMOVE)/links-$(LINKS-VER)
-	touch $@
+	$(TOUCH)
 
 #
 # neutrino-mp plugins
 #
 $(D)/neutrino-mp-plugins.do_prepare:
+	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
 	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
 		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git; git pull; \
 		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git; \
 		fi
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
-	touch $@
+	$(TOUCH)
 
 $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		./autogen.sh && automake --add-missing; \
 		$(BUILDENV) \
@@ -81,13 +84,15 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(SOURCE_DIR)/neutrino-mp-plugins/fx2/lib/.libs"
 
 $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.status
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		$(MAKE)
-	touch $@
+	$(TOUCH)
 
 $(D)/neutrino-mp-plugins: neutrino-mp-plugins.do_prepare neutrino-mp-plugins.do_compile
+	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGETPREFIX)
-#	touch $@
+	$(TOUCH)
 
 neutrino-mp-plugins-clean:
 	rm -f $(D)/neutrino-mp-plugins
@@ -102,6 +107,7 @@ neutrino-mp-plugins-distclean:
 # xupnpd
 #
 $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
+	$(START_BUILD)
 	$(REMOVE)/xupnpd
 	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
 		then cd $(ARCHIVE)/xupnpd.git; git pull; \
@@ -119,12 +125,13 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 	: install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
 	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
 	$(REMOVE)/xupnpd
-	touch $@
+	$(TOUCH)
 
 #
 # plugins-scripts-lua
 #
 $(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
+	$(START_BUILD)
 	$(REMOVE)/plugins-scripts-lua
 	set -e; if [ -d $(ARCHIVE)/cst-public-plugins-scripts-lua.git ]; \
 		then cd $(ARCHIVE)/cst-public-plugins-scripts-lua.git; git pull; \
@@ -138,7 +145,7 @@ $(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 		cp -R $(BUILD_TMP)/plugins-scripts-lua/mtv/* $(TARGETPREFIX)/var/tuxbox/plugins/
 		cp -R $(BUILD_TMP)/plugins-scripts-lua/netzkino/* $(TARGETPREFIX)/var/tuxbox/plugins/
 	$(REMOVE)/plugins-scripts-lua
-	touch $@
+	$(TOUCH)
 
 #
 # neutrino-hd2 plugins
@@ -146,6 +153,7 @@ $(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 NEUTRINO_HD2_PLUGINS_PATCHES =
 
 $(D)/neutrino-hd2-plugins.do_prepare:
+	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins && find ./ -name "Makefile.am" -exec sed -i -e "s/\/..\/nhd2-exp//g" {} \;
@@ -154,9 +162,10 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
 		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
 	done;
-	touch $@
+	$(TOUCH)
 
 $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 		./autogen.sh; \
 		$(BUILDENV) \
@@ -175,13 +184,15 @@ $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
 			LDFLAGS="$(TARGET_LDFLAGS)"
 
 $(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 	$(MAKE) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
-	touch $@
+	$(TOUCH)
 
 $(D)/neutrino-hd2-plugins: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
+	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGETPREFIX) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
-#	touch $@
+	$(TOUCH)
 
 neutrino-hd2-plugins-clean:
 	rm -f $(D)/neutrino-hd2-plugins

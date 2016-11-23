@@ -253,6 +253,7 @@ HOST_KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VERSION))_$(BOXTYPE).c
 
 $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	$(if $(HOST_KERNEL_PATCHES),$(HOST_KERNEL_PATCHES:%=$(PATCHES)/$(BUILD_CONFIG)/%))
+	$(START_BUILD)
 	rm -rf $(KERNEL_DIR)
 	REPO=https://github.com/Duckbox-Developers/linux-sh4-2.6.32.71.git;protocol=https;branch=stmicro; \
 	[ -d "$(ARCHIVE)/linux-sh4-2.6.32.71.git" ] && \
@@ -294,39 +295,43 @@ ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	@echo "# CONFIG_USB_ZD1201 is not set" >> "$(KERNEL_DIR)/.config"
 	@echo "# CONFIG_HOSTAP is not set" >> "$(KERNEL_DIR)/.config"
 endif
-	touch $@
+	$(TOUCH)
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
+	$(START_BUILD)
 	set -e; cd $(KERNEL_DIR); \
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
-	touch $@
+	$(TOUCH)
 
 $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
+	$(START_BUILD)
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGETPREFIX)/boot/vmlinux-sh4-$(KERNEL_VERSION)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGETPREFIX)/boot/System.map-sh4-$(KERNEL_VERSION)
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGETPREFIX)/boot/
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/build || true
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/source || true
-	touch $@
+	$(TOUCH)
 
 $(D)/kernel-headers: linux-kernel.do_prepare
+	$(START_BUILD)
 	cd $(KERNEL_DIR); \
 		install -d $(TARGETPREFIX)/usr/include; \
 		cp -a include/linux $(TARGETPREFIX)/usr/include; \
 		cp -a include/asm-sh $(TARGETPREFIX)/usr/include/asm; \
 		cp -a include/asm-generic $(TARGETPREFIX)/usr/include; \
 		cp -a include/mtd $(TARGETPREFIX)/usr/include
-	touch $@
+	$(TOUCH)
 
 $(D)/tfkernel.do_compile:
+	$(START_BUILD)
 	cd $(KERNEL_DIR); \
 		$(MAKE) $(if $(TF7700),TF7700=y) ARCH=sh CROSS_COMPILE=$(target)- uImage
-	touch $@
+	$(TOUCH)
 
 linux-kernel-distclean:
 	rm -f $(D)/linux-kernel

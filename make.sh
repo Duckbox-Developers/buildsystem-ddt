@@ -4,8 +4,8 @@
 
 if [ "$(id -u)" = "0" ]; then
 	echo ""
-	echo "You are running as root. Don't do this, it's dangerous."
-	echo "Refusing to build. Good bye."
+	echo "You are running as root. Do not do this, it is dangerous."
+	echo "Aborting the build. Log in as a regular user and retry."
 	echo ""
 	exit 1
 fi
@@ -41,14 +41,14 @@ echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
 set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
 for i in $set;
 do
-  if [ ! -e $CURDIR/root/boot/$i.elf ]; then
-    echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
-    echo "           ($i.elf is one of them)"
-    echo
-    echo "    Correct this and retry."
-    echo
-    exit
-  fi
+	if [ ! -e $CURDIR/root/boot/$i.elf ]; then
+		echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
+		echo "           ($i.elf is one of them)"
+		echo
+		echo "    Correct this and retry."
+		echo
+		exit
+	fi
 done
 echo " [OK]"
 echo
@@ -60,43 +60,43 @@ case $1 in
 	[1-9] | 1[0-9] | 2[0-9] | 3[0-9]) REPLY=$1;;
 	*)
 		echo "Target receivers:"
-		echo "    1) Kathrein UFS-910"
-		echo "    2) Kathrein UFS-912"
-		echo "    3) Kathrein UFS-913"
-		echo "    4) Kathrein UFS-922"
-		echo "    5) Kathrein UFC-960"
-		echo "    6) Topfield TF77X0 HDPVR"
-		echo "    7) IPBOX55"
-		echo "    8) IPBOX99"
-		echo "    9) IPBOX9900"
-		echo "   10) Cuberevo [ IPBOX 9000 ]"
-		echo "   11) Cuberevo mini [ IPBOX 900 ]"
-		echo "   12) Cuberevo mini2 [ IPBOX 910 ]"
-		echo "   13) Cuberevo 250 [ IPBOX 91 ]"
-		echo "   14) Cuberevo 9500HD [ 7000HD ]"
-		echo "   15) Cuberevo 2000HD"
-		echo "   16) Cuberevo mini_fta [ 200HD ]"
-		echo "   17) Xsarius Alpha [ Cuberevo 3000HD ]"
-		echo "   18) Fortis HDbox [ Fortis FS9000/9200 ]"
-		echo "   19) Octagon SF1008P [ Fortis HS9510 ]"
-		echo "   20) Atevio AV7500 [ Fortis HS8200 ]"
-		echo "   21) Atemio AM520"
-		echo "   22) Atemio AM530"
-		echo "   23) Fortis HS7110"
-		echo "   24) Fortis HS7119"
-		echo "   25) Fortis HS7420"
-		echo "   26) Fortis HS7429"
-		echo "   27) Fortis HS7810A"
-		echo "   28) Fortis HS7819"
-		echo "   29) Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
-		echo "   30) SpiderBox HL-101"
-		echo "   31) SPARK"
-		echo "   32) SPARK7162"
-		echo "   33) B4Team ADB 5800S"
-		echo "   34) Vitamin HD5000"
-		echo "   35) SagemCom 88 series"
-		echo "   36) Ferguson Ariva @Link 200"
-		read -p "Select target (1-34)? ";;
+		echo "    1)  Kathrein UFS-910"
+		echo "    2)  Kathrein UFS-912"
+		echo "    3)  Kathrein UFS-913"
+		echo "    4)  Kathrein UFS-922"
+		echo "    5)  Kathrein UFC-960"
+		echo "    6)  Topfield TF77X0 HDPVR"
+		echo "    7)  IPBOX55"
+		echo "    8)  IPBOX99"
+		echo "    9)  IPBOX9900"
+		echo "   10)  Cuberevo [ IPBOX 9000 ]"
+		echo "   11)  Cuberevo mini [ IPBOX 900 ]"
+		echo "   12)  Cuberevo mini2 [ IPBOX 910 ]"
+		echo "   13)  Cuberevo 250 [ IPBOX 91 ]"
+		echo "   14)  Cuberevo 9500HD [ 7000HD ]"
+		echo "   15)  Cuberevo 2000HD"
+		echo "   16)  Cuberevo mini_fta [ 200HD ]"
+		echo "   17)  Xsarius Alpha [ Cuberevo 3000HD ]"
+		echo "   18)  Fortis HDbox [ Fortis FS9000/9200 ]"
+		echo "   19)  Octagon SF1008P [ Fortis HS9510 ]"
+		echo "   20)  Atevio AV7500 [ Fortis HS8200 ]"
+		echo "   21)  Atemio AM520"
+		echo "   22)  Atemio AM530"
+		echo "   23)  Fortis HS7110"
+		echo "   24)  Fortis HS7119"
+		echo "   25)  Fortis HS7420"
+		echo "   26)  Fortis HS7429"
+		echo "   27)  Fortis HS7810A"
+		echo "   28)  Fortis HS7819"
+		echo "   29)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
+		echo "   30)  SpiderBox HL-101"
+		echo "   31)  SPARK"
+		echo "   32)  SPARK7162"
+		echo "   33)  B4Team ADB 5800S"
+		echo "   34)  Vitamin HD5000"
+		echo "   35)  SagemCom 88 series"
+		echo "   36)  Ferguson Ariva @Link 200"
+		read -p "Select target (1-36)? ";;
 esac
 
 case "$REPLY" in
@@ -143,10 +143,10 @@ echo "BOXTYPE=$TARGET" > config
 ##############################################
 
 case $2 in
-	[1-3]) REPLY=$2;;
+	[1-2]) REPLY=$2;;
 	*)	echo -e "\nKernel:"
-		echo "   1) STM 24 P0209 [2.6.32.46]"
-		echo "   2) STM 24 P0217 [2.6.32.71]"
+		echo "   1)  STM 24 P0209 [2.6.32.46]"
+		echo "   2)  STM 24 P0217 [2.6.32.71]"
 		read -p "Select kernel (1-2)? ";;
 esac
 
@@ -162,10 +162,10 @@ echo "KERNEL=$KERNEL" >> config
 case $3 in
 	[1-4]) REPLY=$3;;
 	*)	echo -e "\nOptimization:"
-		echo "   1) optimization for size"
-		echo "   2) optimization normal"
-		echo "   3) Kernel debug"
-		echo "   4) debug / Kernel debug"
+		echo "   1)  optimization for size"
+		echo "   2)  optimization normal"
+		echo "   3)  Kernel debug"
+		echo "   4)  debug / Kernel debug"
 		read -p "Select optimization (1-3)? ";;
 esac
 
@@ -183,18 +183,18 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 case $4 in
 	[1-2]) REPLY=$4;;
 	*)	echo -e "\nPlayer:"
-		echo "   1) Player XXX (stmfb-3.1_stm24_0104, for internal testing)"
-		echo "   2) Player 191 (stmfb-3.1_stm24_0104, recommended)"
+		echo "   1)  Player XXX (stmfb-3.1_stm24_0104, for internal testing)"
+		echo "   2)  Player 191 (stmfb-3.1_stm24_0104, recommended)"
 		read -p "Select player (1-2)? ";;
 esac
 
 case "$REPLY" in
 	1)	echo "PLAYER_VER=XXX" >> config
 		echo "MULTICOM_VER=324" >> config
-	;;
+		;;
 	2)	echo "PLAYER_VER=191" >> config
 		echo "MULTICOM_VER=324" >> config
-	;;
+		;;
 	*) ;;
 esac
 
@@ -224,17 +224,17 @@ echo "MEDIAFW=$MEDIAFW" >> config
 case $6 in
 	[1-3]) REPLY=$6;;
 	*)	echo -e "\nExternal LCD support:"
-		echo "   1) No external LCD"
-		echo "   2) graphlcd for external LCD"
-		echo "   3) lcd4linux for external LCD"
+		echo "   1)  No external LCD"
+		echo "   2)  graphlcd for external LCD"
+		echo "   3)  lcd4linux for external LCD"
 		read -p "Select external LCD support (1-3)? ";;
 esac
 
 case "$REPLY" in
-	1) EXTERNAL_LCD="";;
+	1) EXTERNAL_LCD="none";;
 	2) EXTERNAL_LCD="externallcd";;
 	3) EXTERNAL_LCD="lcd4linux";;
-	*) EXTERNAL_LCD="";;
+	*) EXTERNAL_LCD="none";;
 esac
 echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 ##############################################
@@ -242,10 +242,10 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 case $7 in
 	[1-4]) REPLY=$7;;
 	*)	echo -e "\nWhich Image do you want to build:"
-		echo "   1) Enigma2"
-		echo "   2) Enigma2 (includes WLAN drivers)"
-		echo "   3) Neutrino"
-		echo "   4) Neutrino (includes WLAN drivers)"
+		echo "   1)  Enigma2"
+		echo "   2)  Enigma2 (includes WLAN drivers)"
+		echo "   3)  Neutrino"
+		echo "   4)  Neutrino (includes WLAN drivers)"
 		read -p "Select Image to build (1-4)? ";;
 esac
 

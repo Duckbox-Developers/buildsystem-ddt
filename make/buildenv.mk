@@ -95,6 +95,8 @@ UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 REMOVE                = rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
+START_BUILD           = @echo "---------------------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m."
+TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; echo
 
 #
 #

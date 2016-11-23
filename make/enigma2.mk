@@ -60,6 +60,7 @@ yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/release_enigma2
 REPO_REPLY_1="https://github.com/MaxWiesel/enigma2-openpli-fulan.git"
 
 $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
+	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/enigma2; \
 	rm -rf $(SOURCE_DIR)/enigma2.org; \
 	REVISION=""; \
@@ -97,9 +98,10 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 		[ -d "$(SOURCE_DIR)/enigma2" ] ; \
 		git clone -b $$HEAD $$REPO $(SOURCE_DIR)/enigma2; \
 	fi
-	touch $@
+	$(TOUCH)
 
 $(SOURCE_DIR)/enigma2/config.status:
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/enigma2; \
 		./autogen.sh; \
 		sed -e 's|#!/usr/bin/python|#!$(HOSTPREFIX)/bin/python|' -i po/xml2po.py; \
@@ -121,11 +123,13 @@ $(SOURCE_DIR)/enigma2/config.status:
 			$(PLATFORM_CPPFLAGS)
 
 $(D)/enigma2.do_compile: $(SOURCE_DIR)/enigma2/config.status
+	$(START_BUILD)
 	cd $(SOURCE_DIR)/enigma2; \
 		$(MAKE) all
-	touch $@
+	$(TOUCH)
 
 $(D)/enigma2: $(D)/enigma2.do_prepare $(D)/enigma2.do_compile
+	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(TARGETPREFIX)
 	if [ -e $(TARGETPREFIX)/usr/bin/enigma2 ]; then \
 		$(TARGET)-strip $(TARGETPREFIX)/usr/bin/enigma2; \
@@ -133,7 +137,7 @@ $(D)/enigma2: $(D)/enigma2.do_prepare $(D)/enigma2.do_compile
 	if [ -e $(TARGETPREFIX)/usr/local/bin/enigma2 ]; then \
 		$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/enigma2; \
 	fi
-	touch $@
+	$(TOUCH)
 
 enigma2-clean:
 	rm -f $(D)/enigma2
