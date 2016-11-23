@@ -742,7 +742,7 @@ $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/giflib/files/libungif-4.x/libungif-$(UNGIF_VER)/libungif-$(UNGIF_VER).tar.bz2
 
 $(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2
-	$(RM_PKGPREFIX)
+	$(REMOVE)/libungif-$(UNGIF_VER)
 	$(UNTAR)/libungif-$(UNGIF_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libungif-$(UNGIF_VER); \
 		$(CONFIGURE) \
