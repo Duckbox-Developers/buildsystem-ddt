@@ -2339,7 +2339,7 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz
 	touch $@
 
 #
-# glibnetworking
+# glib-networking
 #
 GLIBNETW_MAJOR = 2.45
 GLIBNETW_MINOR = 1
@@ -2348,7 +2348,7 @@ GLIBNETW_VER = $(GLIBNETW_MAJOR).$(GLIBNETW_MINOR)
 $(ARCHIVE)/glib-networking-$(GLIBNETW_VER).tar.xz:
 	$(WGET) http://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIBNETW_MAJOR)/glib-networking-$(GLIBNETW_VER).tar.xz
 
-$(D)/glibnetworking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-networking-$(GLIBNETW_VER).tar.xz
+$(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-networking-$(GLIBNETW_VER).tar.xz
 	$(REMOVE)/glib-networking-$(GLIBNETW_VER)
 	$(UNTAR)/glib-networking-$(GLIBNETW_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/glib-networking-$(GLIBNETW_VER); \
