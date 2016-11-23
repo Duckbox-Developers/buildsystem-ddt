@@ -166,7 +166,7 @@ case $3 in
 		echo "   2)  optimization normal"
 		echo "   3)  Kernel debug"
 		echo "   4)  debug / Kernel debug"
-		read -p "Select optimization (1-3)? ";;
+		read -p "Select optimization (1-4)? ";;
 esac
 
 case "$REPLY" in
