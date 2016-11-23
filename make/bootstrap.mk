@@ -40,6 +40,10 @@ $(ARCHIVE)/stlinux24-cross-%.i386.rpm \
 $(ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
 	$(WGET) $(STL_FTP_UPD_SH4)/$(subst $(ARCHIVE)/,"",$@)
 
+#
+# install the RPMs
+#
+
 # 4.6.3
 #BINUTILS_VER  = 2.22-64
 #GCC_VER       = 4.6.3-111
@@ -65,6 +69,43 @@ $(ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
 $(ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
 $(ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
+		$^
+	touch $(D)/$(notdir $@)
+
+crosstool: directories driver-symlink \
+$(HOSTPREFIX)/bin/unpack-rpm.sh \
+crosstool-rpminstall
+	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
+	if [ -e $(CROSS_DIR)/target/usr/lib/libstdc++.la ]; then \
+		sed -i "s,^libdir=.*,libdir='$(CROSS_DIR)/target/usr/lib'," $(CROSS_DIR)/target/usr/lib/lib{std,sup}c++.la; \
+	fi
+	if test -e $(CROSS_DIR)/target/usr/lib/libstdc++.so; then \
+		cp -a $(CROSS_DIR)/target/usr/lib/libstdc++.s*[!y] $(TARGETPREFIX)/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGETPREFIX)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGETPREFIX)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGETPREFIX)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGETPREFIX)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGETPREFIX)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGETPREFIX)/usr/lib; \
+		ln -s $(CROSS_DIR)/target/usr/lib/libc.so $(TARGETPREFIX)/usr/lib/libc.so; \
+		ln -s $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGETPREFIX)/usr/lib/libc_nonshared.a; \
+	fi
+	if test -e $(CROSS_DIR)/target/lib; then \
+		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGETPREFIX)/lib; \
+	fi
+	if test -e $(CROSS_DIR)/target/sbin/ldconfig; then \
+		cp -a $(CROSS_DIR)/target/sbin/ldconfig $(TARGETPREFIX)/sbin; \
+		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGETPREFIX)/etc; \
+		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGETPREFIX)/etc; \
+	fi
+	touch $(D)/$(notdir $@)
+
+#
+# host_u_boot_tools
+#
+host_u_boot_tools: \
+$(ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
+	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOSTPREFIX)/bin \
 		$^
 	touch $(D)/$(notdir $@)
 
@@ -106,44 +147,6 @@ crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \
 		./ct-ng menuconfig
-
-# install the RPMs
-crosstool: directories driver-symlink \
-$(HOSTPREFIX)/bin/unpack-rpm.sh \
-crosstool-rpminstall
-	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
-	if [ -e $(CROSS_DIR)/target/usr/lib/libstdc++.la ]; then \
-		sed -i "s,^libdir=.*,libdir='$(CROSS_DIR)/target/usr/lib'," $(CROSS_DIR)/target/usr/lib/lib{std,sup}c++.la; \
-	fi
-	if test -e $(CROSS_DIR)/target/usr/lib/libstdc++.so; then \
-		cp -a $(CROSS_DIR)/target/usr/lib/libstdc++.s*[!y] $(TARGETPREFIX)/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGETPREFIX)/usr/lib; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc.so $(TARGETPREFIX)/usr/lib/libc.so; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGETPREFIX)/usr/lib/libc_nonshared.a; \
-	fi
-	if test -e $(CROSS_DIR)/target/lib; then \
-		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGETPREFIX)/lib; \
-	fi
-	if test -e $(CROSS_DIR)/target/sbin/ldconfig; then \
-		cp -a $(CROSS_DIR)/target/sbin/ldconfig $(TARGETPREFIX)/sbin; \
-		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGETPREFIX)/etc; \
-		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGETPREFIX)/etc; \
-	fi
-	touch $(D)/$(notdir $@)
-
-#
-# host_u_boot_tools
-#
-host_u_boot_tools: \
-$(ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
-	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOSTPREFIX)/bin \
-		$^
-	touch $(D)/$(notdir $@)
 
 #
 # directories
