@@ -693,20 +693,21 @@ $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/hd-idle-$(HDIDLE_VER).tgz
 #
 # fbshot
 #
-FBSHOT-VER = 0.3
+FBSHOT_VER = 0.3
 
 $(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz:
-	$(WGET) http://www.sourcefiles.org/Graphics/Tools/Capture/fbshot-$(FBSHOT-VER).tar.gz
+	$(WGET) http://www.sourcefiles.org/Graphics/Tools/Capture/fbshot-$(FBSHOT_VER).tar.gz
 
 $(D)/fbshot: $(TARGETPREFIX)/bin/fbshot
 	touch $@
 
-$(TARGETPREFIX)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/fbshot-$(FBSHOT-VER).tar.gz
-	$(UNTAR)/fbshot-$(FBSHOT-VER).tar.gz
-	set -e; cd $(BUILD_TMP)/fbshot-$(FBSHOT-VER); \
-		$(PATCH)/fbshot-$(FBSHOT-VER).patch; \
+$(TARGETPREFIX)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/fbshot-$(FBSHOT_VER).tar.gz
+	$(REMOVE)/fbshot-$(FBSHOT_VER)
+	$(UNTAR)/fbshot-$(FBSHOT_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/fbshot-$(FBSHOT_VER); \
+		$(PATCH)/fbshot-$(FBSHOT_VER).patch; \
 		$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS) fbshot.c -lpng -lz -o $@
-	$(REMOVE)/fbshot-$(FBSHOT-VER)
+	$(REMOVE)/fbshot-$(FBSHOT_VER)
 	touch $@
 
 #
