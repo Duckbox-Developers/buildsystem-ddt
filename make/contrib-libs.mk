@@ -887,6 +887,7 @@ $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz:
 	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGCPP_MAJOR).$(LIBSIGCPP_MINOR)/libsigc++-$(LIBSIGCPP_VER).tar.xz
 
 $(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz
+	$(REMOVE)/libsigc++-$(LIBSIGCPP_VER)
 	$(UNTAR)/libsigc++-$(LIBSIGCPP_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGCPP_VER); \
 		$(CONFIGURE) \
