@@ -106,7 +106,7 @@ $(D)/gdb-remote: $(ARCHIVE)/gdb-$(GDB_VER).tar.xz | $(TARGETPREFIX)
 
 # gdb built for target or local-PC
 $(D)/gdb: $(D)/bootstrap $(D)/libncurses $(D)/zlib $(ARCHIVE)/gdb-$(GDB_VER).tar.xz
-	$(RM_PKGPREFIX)
+	$(REMOVE)/gdb-$(GDB_VER)
 	$(UNTAR)/gdb-$(GDB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
 		$(PATCH)/gdb-$(GDB_VER)-remove-builddate.patch; \
