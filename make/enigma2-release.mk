@@ -595,7 +595,7 @@ release_enigma2_base:
 	cp -dp $(TARGETPREFIX)/usr/bin/python* $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/sbin/ethtool $(RELEASE_DIR)/usr/sbin/
 	cp -p $(TARGETPREFIX)/usr/sbin/livestreamersrv $(RELEASE_DIR)/usr/sbin/
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 fortis_hdbox octagon1008 ufs910 ufs912 ufs913 ufs922 ufs960 spark spark7162 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250 hd cuberevo_2000hd cuberevo_3000hd adb_box tf7700 vitamin_hd5000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 fortis_hdbox octagon1008 ufs910 ufs912 ufs913 ufs922 ufc960 spark spark7162 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250 hd cuberevo_2000hd cuberevo_3000hd adb_box tf7700 vitamin_hd5000))
 	cp $(SKEL_ROOT)/release/fw_env.config_$(BOXTYPE) $(RELEASE_DIR)/etc/fw_env.config
 endif
 	install -m 0755 $(SKEL_ROOT)/release/rcS_enigma2_$(BOXTYPE) $(RELEASE_DIR)/etc/init.d/rcS
