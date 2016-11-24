@@ -248,7 +248,7 @@
 +{
 +    int ret;
 +
-+    while(!url_feof(in))
++    while(!avio_feof(in))
 +	if((ret = amf_metadata_parse_object_property(in, metadata)) < 0)
 +	    break;
 +
@@ -261,7 +261,7 @@
 +    int ret;
 +
 +    length = avio_rb32(in);
-+    while(!url_feof(in) && length > 0) {
++    while(!avio_feof(in) && length > 0) {
 +	if((ret = amf_metadata_parse_value(in, metadata, NULL)) < 0)
 +	    return ret;
 +	length--;
@@ -296,14 +296,14 @@
 +	ret = amf_metadata_parse_object(in, metadata);
 +    }
 +    else if(type == AMF_DATA_TYPE_MIXEDARRAY) {
-+	avio_skip(in, 4);
-+	ret = amf_metadata_parse_object(in, metadata);
++        avio_skip(in, 4);
++        ret = amf_metadata_parse_object(in, metadata);
 +    }
 +    else if(type == AMF_DATA_TYPE_ARRAY) {
-+	ret = amf_metadata_parse_strict_array(in, metadata);
++        ret = amf_metadata_parse_strict_array(in, metadata);
 +    }
 +    else if(type == AMF_END_OF_OBJECT) {
-+	ret = -1; // EOF
++        ret = -1; // EOF
 +    }
 +
 +    return ret;
@@ -315,13 +315,13 @@
 +    int ret;
 +
 +    if((ret = amf_metadata_read_string_value(in, name, sizeof(name))) < 0) {
-+	av_log(NULL, AV_LOG_ERROR, "amfmetadata Failed to read onMetadata string, ret: %d \n", ret);
-+	return ret;
++        av_log(NULL, AV_LOG_ERROR, "amfmetadata Failed to read onMetadata string, ret: %d \n", ret);
++        return ret;
 +    }
 +
 +    if(av_strcasecmp(name, "onMetaData")) {
-+	av_log(NULL, AV_LOG_ERROR, "amfmetadata Expected onMetadata, str = %s \n", name);
-+	return -1;
++        av_log(NULL, AV_LOG_ERROR, "amfmetadata Expected onMetadata, str = %s \n", name);
++        return -1;
 +    }
 +
 +    return amf_metadata_parse_value(in, metadata, name);
@@ -333,24 +333,21 @@
 +    int ret;
 +
 +    if(!buffer)
-+	return 0;
++        return 0;
 +    if(buffer_size <= 0)
-+	return 0;
++        return 0;
 +
 +    in = avio_alloc_context(buffer, buffer_size,
-+	0, NULL, NULL, NULL, NULL);
++        0, NULL, NULL, NULL, NULL);
 +    if(!in)
-+	return AVERROR(ENOMEM);
++        return AVERROR(ENOMEM);
 +
 +    ret = amf_metadata_parse(in, metadata);
 +    av_free(in);
 +
 +    return ret;
 +}
-diff --git a/libavformat/amfmetadata.h b/libavformat/amfmetadata.h
-new file mode 100644
-index 0000000..c47cd6e
---- /dev/null
+--- a/libavformat/amfmetadata.h
 +++ b/libavformat/amfmetadata.h
 @@ -0,0 +1,47 @@
 +/*
@@ -400,10 +397,7 @@ index 0000000..c47cd6e
 +} AMFMetadata;
 +
 +int ff_parse_amf_metadata(uint8_t *buffer, int buffer_size, AMFMetadata *metadata);
-diff --git a/libavformat/f4fbox.c b/libavformat/f4fbox.c
-new file mode 100644
-index 0000000..393fbee
---- /dev/null
+--- a/libavformat/f4fbox.c
 +++ b/libavformat/f4fbox.c
 @@ -0,0 +1,345 @@
 +/*
@@ -460,11 +454,11 @@ index 0000000..393fbee
 +
 +    asrt->nb_quality_entries = avio_r8(in);
 +    if (asrt->nb_quality_entries)
-+	asrt->quality_entries = (char **) av_malloc(asrt->nb_quality_entries * sizeof(char *));
++        asrt->quality_entries = (char **) av_malloc(asrt->nb_quality_entries * sizeof(char *));
 +    for(i = 0; i < asrt->nb_quality_entries; i++) {
 +        avio_get_str(in, sizeof(url), url, sizeof(url));
 +        av_log(NULL, AV_LOG_DEBUG, "f4fbox asrt quality[%d]=%s\n", i, url);
-+	asrt->quality_entries[i] = av_strdup(url);
++        asrt->quality_entries[i] = av_strdup(url);
 +    }
 +
 +    segment_run_entry_count = avio_rb32(in);
@@ -512,11 +506,11 @@ index 0000000..393fbee
 +
 +    afrt->nb_quality_entries = avio_r8(in);
 +    if (afrt->nb_quality_entries)
-+	afrt->quality_entries = (char **) av_malloc(afrt->nb_quality_entries * sizeof(char *));
++        afrt->quality_entries = (char **) av_malloc(afrt->nb_quality_entries * sizeof(char *));
 +    for(i = 0; i < afrt->nb_quality_entries; i++) {
 +        avio_get_str(in, sizeof(url), url, sizeof(url));
 +        av_log(NULL, AV_LOG_DEBUG, "f4fbox afrt quality[%d]=%s\n", i, url);
-+	afrt->quality_entries[i] = av_strdup(url);
++        afrt->quality_entries[i] = av_strdup(url);
 +    }
 +
 +    fragment_run_entry_count = avio_rb32(in);
@@ -578,11 +572,11 @@ index 0000000..393fbee
 +
 +    abst->nb_quality_entries = avio_r8(in);
 +    if (abst->nb_quality_entries)
-+	abst->quality_entries = (char **) av_malloc(abst->nb_quality_entries * sizeof(char *));
++        abst->quality_entries = (char **) av_malloc(abst->nb_quality_entries * sizeof(char *));
 +    for(i = 0; i < abst->nb_quality_entries; i++) {
 +        avio_get_str(in, sizeof(url), url, sizeof(url));
 +        av_log(NULL, AV_LOG_DEBUG, "f4fbox abst quality[%d]=%s\n", i, url);
-+	abst->quality_entries[i] = av_strdup(url);
++        abst->quality_entries[i] = av_strdup(url);
 +    }
 +
 +    avio_get_str(in, sizeof(abst->drm_data), abst->drm_data, sizeof(abst->drm_data));
@@ -675,7 +669,7 @@ index 0000000..393fbee
 +    int64_t bytes_read = 0;
 +    int ret;
 +
-+    while(!url_feof(in) && bytes_read + 8 < data_size) {
++    while(!avio_feof(in) && bytes_read + 8 < data_size) {
 +        if((ret = f4fbox_parse_single_box(in, opague)) < 0) {
 +            av_log(NULL, AV_LOG_ERROR, "f4fbox Failed to parse box, ret: %d \n", ret);
 +            return ret;
@@ -713,16 +707,16 @@ index 0000000..393fbee
 +
 +    abst = &(box->abst);
 +    for(j = 0; j < abst->nb_quality_entries; j++)
-+	av_freep(&abst->quality_entries[j]);
++        av_freep(&abst->quality_entries[j]);
 +    if (abst->quality_entries)
-+	av_freep(&abst->quality_entries);
++        av_freep(&abst->quality_entries);
 +
 +    for(i = 0; i < abst->nb_segment_run_table_boxes; i++) {
 +        asrt = abst->segment_run_table_boxes[i];
 +        for(j = 0; j < asrt->nb_quality_entries; j++)
-+	    av_freep(&asrt->quality_entries[j]);
-+	if (asrt->quality_entries)
-+	    av_freep(&asrt->quality_entries);
++            av_freep(&asrt->quality_entries[j]);
++        if (asrt->quality_entries)
++            av_freep(&asrt->quality_entries);
 +        for(j = 0; j < asrt->nb_segment_run_entries; j++) {
 +            sre = asrt->segment_run_entries[j];
 +            av_freep(&sre);
@@ -733,9 +727,9 @@ index 0000000..393fbee
 +    for(i = 0; i < abst->nb_fragment_run_table_boxes; i++) {
 +        afrt = abst->fragment_run_table_boxes[i];
 +        for(j = 0; j < afrt->nb_quality_entries; j++)
-+	    av_freep(&afrt->quality_entries[j]);
-+	if (afrt->quality_entries)
-+	    av_freep(&afrt->quality_entries);
++            av_freep(&afrt->quality_entries[j]);
++        if (afrt->quality_entries)
++            av_freep(&afrt->quality_entries);
 +        for(j = 0; j < afrt->nb_fragment_run_entries; j++) {
 +            fre = afrt->fragment_run_entries[j];
 +            av_freep(&fre);
@@ -751,7 +745,7 @@ index 0000000..393fbee
 +
 +    return 0;
 +}
---- /dev/null
+--- a/libavformat/f4fbox.h
 +++ b/libavformat/f4fbox.h
 @@ -0,0 +1,110 @@
 +/*
@@ -864,7 +858,7 @@ index 0000000..393fbee
 +
 +int ff_parse_f4f_box(uint8_t *buffer, int buffer_size, F4FBox *box);
 +int ff_free_f4f_box(F4FBox *box);
---- /dev/null
+--- a/libavformat/f4mmanifest.c
 +++ b/libavformat/f4mmanifest.c
 @@ -0,0 +1,256 @@
 +/*
@@ -902,7 +896,7 @@ index 0000000..393fbee
 +
 +static int f4m_parse_bootstrap_info_node(node_t * node, F4MBootstrapInfo *bootstrap_info)
 +{
-+    const char  *p;
++    const char *p;
 +    uint8_t *dst;
 +    int ret;
 +    node_t *attr;
@@ -1123,7 +1117,7 @@ index 0000000..393fbee
 +
 +    return 0;
 +}
---- /dev/null
+--- a/libavformat/f4mmanifest.h
 +++ b/libavformat/f4mmanifest.h
 @@ -0,0 +1,65 @@
 +/*
@@ -1193,7 +1187,7 @@ index 0000000..393fbee
 +int ff_free_manifest(F4MManifest *manifest);
 --- a/libavformat/flv.h
 +++ b/libavformat/flv.h
-@@ -135,4 +135,6 @@ typedef enum {
+@@ -135,4 +135,6 @@
      AMF_DATA_TYPE_UNSUPPORTED = 0x0d,
  } AMFDataType;
  
@@ -1214,10 +1208,7 @@ index 0000000..393fbee
  }
  
  static int parse_keyframes_index(AVFormatContext *s, AVIOContext *ioc, int64_t max_pos)
-diff --git a/libavformat/flvtag.c b/libavformat/flvtag.c
-new file mode 100644
-index 0000000..a611ea0
---- /dev/null
+--- a/libavformat/flvtag.c
 +++ b/libavformat/flvtag.c
 @@ -0,0 +1,408 @@
 +/*
@@ -1541,7 +1532,7 @@ index 0000000..a611ea0
 +    if(!in)
 +	return AVERROR(ENOMEM);
 +
-+    while(!url_feof(in)) {
++    while(!avio_feof(in)) {
 +	byte = avio_r8(in);
 +	filter = byte & 0x20;
 +	tag_type = (byte & 0x01F);
@@ -1628,10 +1619,7 @@ index 0000000..a611ea0
 +{
 +    return flv_tag_decode_body(buffer, buffer_size, samples, nb_samples_out);
 +}
-diff --git a/libavformat/flvtag.h b/libavformat/flvtag.h
-new file mode 100644
-index 0000000..51b94b4
---- /dev/null
+--- a/libavformat/flvtag.h
 +++ b/libavformat/flvtag.h
 @@ -0,0 +1,40 @@
 +/*
@@ -1674,10 +1662,7 @@ index 0000000..51b94b4
 +
 +int ff_decode_flv_body(uint8_t *buffer, int buffer_size,
 +    FLVMediaSample **samples, int *nb_samples_out);
-diff --git a/libavformat/hdsdec.c b/libavformat/hdsdec.c
-new file mode 100644
-index 0000000..1fadfc8
---- /dev/null
+--- a/libavformat/hdsdec.c
 +++ b/libavformat/hdsdec.c
 @@ -0,0 +1,1036 @@
 +/*
@@ -2024,9 +2009,9 @@ index 0000000..1fadfc8
 +	    av_asprintf("%d kbit/s", media->bitrate), 0);
 +
 +	if (media->video_stream)
-+	    ff_program_add_stream_index(s, p->id, media->video_stream->index);
++	    av_program_add_stream_index(s, p->id, media->video_stream->index);
 +	if (media->audio_stream)
-+	    ff_program_add_stream_index(s, p->id, media->audio_stream->index);
++	    av_program_add_stream_index(s, p->id, media->audio_stream->index);
 +    }
 +
 +    return 0;

@@ -76,16 +76,6 @@
  
      for (i = 0; i < c->n_playlists; i++) {
          struct playlist *pls = c->playlists[i];
---- a/libavcodec/avpacket.c
-+++ b/libavcodec/avpacket.c
-@@ -39,6 +39,7 @@
- #if FF_API_CONVERGENCE_DURATION
- FF_DISABLE_DEPRECATION_WARNINGS
-     pkt->convergence_duration = 0;
-+    pkt->priv                 = NULL;
- FF_ENABLE_DEPRECATION_WARNINGS
- #endif
-     pkt->flags                = 0;
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
 @@ -118,6 +118,25 @@
