@@ -1285,7 +1285,8 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 # ffmpeg
 #
 #FFMPEG_VER = 2.6.4
-FFMPEG_VER = 2.8.6
+#FFMPEG_VER = 2.8.6
+FFMPEG_VER = 3.2
 
 $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz:
 	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VER).tar.xz
@@ -1307,7 +1308,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 		$(PATCH)/ffmpeg-buffer-size-$(FFMPEG_VER).patch; \
 		$(PATCH)/ffmpeg-hds-libroxml-$(FFMPEG_VER).patch; \
 		$(PATCH)/ffmpeg-aac-$(FFMPEG_VER).patch; \
-		$(PATCH)/ffmpeg-kodi-$(FFMPEG_VER).patch; \
+		: $(PATCH)/ffmpeg-kodi-$(FFMPEG_VER).patch; \
 		./configure \
 			--disable-ffserver \
 			--disable-ffplay \
