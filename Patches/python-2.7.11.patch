@@ -1,0 +1,545 @@
+--- a/Lib/httplib.py
++++ b/Lib/httplib.py
+@@ -1259,7 +1259,7 @@
+             self.key_file = key_file
+             self.cert_file = cert_file
+             if context is None:
+-                context = ssl._create_default_https_context()
++                context = ssl._create_unverified_context()
+             if key_file or cert_file:
+                 context.load_cert_chain(cert_file, key_file)
+             self._context = context
+--- a/Modules/_ctypes/_ctypes.c
++++ b/Modules/_ctypes/_ctypes.c
+@@ -645,7 +645,13 @@
+                      "symbol '%s' not found",
+                      name);
+ #else
+-        PyErr_SetString(PyExc_ValueError, ctypes_dlerror());
++        const char *err = ctypes_dlerror();
++        if (!err)
++            PyErr_Format(PyExc_ValueError,
++                         "symbol '%s' not found",
++                         name);
++        else
++            PyErr_SetString(PyExc_ValueError, err);
+ #endif
+         return NULL;
+     }
+@@ -3396,7 +3402,13 @@
+                      "function '%s' not found",
+                      name);
+ #else
+-        PyErr_SetString(PyExc_AttributeError, ctypes_dlerror());
++        const char *err = ctypes_dlerror();
++        if (!err)
++            PyErr_Format(PyExc_AttributeError,
++                         "function '%s' not found",
++                         name);
++        else
++            PyErr_SetString(PyExc_AttributeError, err);
+ #endif
+         Py_DECREF(ftuple);
+         return NULL;
+--- a/Lib/ctypes/util.py
++++ b/Lib/ctypes/util.py
+@@ -239,7 +239,16 @@
+             return res.group(1)
+ 
+         def find_library(name):
+-            return _findSoname_ldconfig(name) or _get_soname(_findLib_gcc(name))
++            from glob import glob
++            paths = ['/lib', '/usr/lib']
++            if os.environ.has_key('LD_LIBRARY_PATH'):
++                paths = os.environ['LD_LIBRARY_PATH'].split(':') + paths
++            for path in paths:
++                for lib in glob("%s/lib%s.so.*" % (path, name)):
++                    rpath = os.path.realpath(lib)
++                    if os.path.isfile(rpath):
++                        return rpath
++            return None
+ 
+ ################################################################
+ # test code
+--- a/Lib/distutils/command/build_ext.py
++++ b/Lib/distutils/command/build_ext.py
+@@ -437,7 +437,9 @@
+         # "build" tree.
+         outputs = []
+         for ext in self.extensions:
+-            outputs.append(self.get_ext_fullpath(ext.name))
++            fullname = self.get_ext_fullname(ext.name)
++            outputs.append(os.path.join(self.build_lib,
++                                        self.get_ext_filename(fullname)))
+         return outputs
+ 
+     def build_extensions(self):
+@@ -456,9 +458,24 @@
+                    "a list of source filenames") % ext.name
+         sources = list(sources)
+ 
+-        ext_path = self.get_ext_fullpath(ext.name)
++        fullname = self.get_ext_fullname(ext.name)
++        if self.inplace:
++            # ignore build-lib -- put the compiled extension into
++            # the source tree along with pure Python modules
++
++            modpath = string.split(fullname, '.')
++            package = string.join(modpath[0:-1], '.')
++            base = modpath[-1]
++
++            build_py = self.get_finalized_command('build_py')
++            package_dir = build_py.get_package_dir(package)
++            ext_filename = os.path.join(package_dir,
++                                        self.get_ext_filename(base))
++        else:
++            ext_filename = os.path.join(self.build_lib,
++                                        self.get_ext_filename(fullname))
+         depends = sources + ext.depends
+-        if not (self.force or newer_group(depends, ext_path, 'newer')):
++        if not (self.force or newer_group(depends, ext_filename, 'newer')):
+             log.debug("skipping '%s' extension (up-to-date)", ext.name)
+             return
+         else:
+@@ -519,7 +536,7 @@
+         language = ext.language or self.compiler.detect_language(sources)
+ 
+         self.compiler.link_shared_object(
+-            objects, ext_path,
++            objects, ext_filename,
+             libraries=self.get_libraries(ext),
+             library_dirs=ext.library_dirs,
+             runtime_library_dirs=ext.runtime_library_dirs,
+@@ -530,7 +547,7 @@
+             target_lang=language)
+ 
+ 
+-    def swig_sources (self, sources, extension):
++    def swig_sources (self, sources, extension=None):
+ 
+         """Walk the list of source files in 'sources', looking for SWIG
+         interface (.i) files.  Run SWIG on all that are found, and
+--- a/Lib/plat-linux3/regen
++++ b/Lib/plat-linux3/regen
+@@ -0,0 +1,8 @@
++#! /bin/sh
++case `uname` in
++Linux*) ;;
++*) echo Probably not on a Linux system 1>&2
++ exit 1;;
++esac
++set -v
++h2py -i '(u_long)' /usr/include/sys/types.h /usr/include/netinet/in.h /usr/include/dlfcn.h
+--- a/Lib/sitecustomize.py
++++ b/Lib/sitecustomize.py
+@@ -0,0 +1,45 @@
++# OpenEmbedded sitecustomize.py (C) 2002-2008 Michael 'Mickey' Lauer <mlauer@vanille-media.de>
++# GPLv2 or later
++# Version: 20081123
++# Features:
++# * set proper default encoding
++# * enable readline completion in the interactive interpreter
++# * load command line history on startup
++# * save command line history on exit
++
++import os
++
++def __exithandler():
++    try:
++        readline.write_history_file( "%s/.python-history" % os.getenv( "HOME", "/tmp" ) )
++    except IOError:
++        pass
++
++def __registerExitHandler():
++    import atexit
++    atexit.register( __exithandler )
++
++def __enableReadlineSupport():
++    readline.set_history_length( 1000 )
++    readline.parse_and_bind( "tab: complete" )
++    try:
++        readline.read_history_file( "%s/.python-history" % os.getenv( "HOME", "/tmp" ) )
++    except IOError:
++        pass
++
++def __enableDefaultEncoding():
++    import sys
++    try:
++        sys.setdefaultencoding( "utf8" )
++    except LookupError:
++        pass
++
++import sys
++try:
++    import rlcompleter, readline
++except ImportError:
++    pass
++else:
++    __enableDefaultEncoding()
++    __registerExitHandler()
++    __enableReadlineSupport()
+--- a/Modules/_ctypes/libffi/configure.ac
++++ b/Modules/_ctypes/libffi/configure.ac
+@@ -3,7 +3,7 @@
+ # file from libffi - slightly patched for Python's ctypes
+ #
+ 
+-AC_PREREQ(2.68)
++AC_PREREQ(2.64)
+ 
+ AC_INIT([libffi], [3.1], [http://github.com/atgreen/libffi/issues])
+ AC_CONFIG_HEADERS([fficonfig.h])
+@@ -49,11 +49,6 @@
+ 
+ AX_COMPILER_VENDOR
+ AX_CC_MAXOPT
+-# The AX_CFLAGS_WARN_ALL macro doesn't currently work for sunpro
+-# compiler.
+-if test "$ax_cv_c_compiler_vendor" != "sun"; then
+-  AX_CFLAGS_WARN_ALL
+-fi
+ 
+ if test "x$GCC" = "xyes"; then
+   CFLAGS="$CFLAGS -fexceptions"
+--- a/Modules/_ctypes/libffi/fficonfig.py.in
++++ b/Modules/_ctypes/libffi/fficonfig.py.in
+@@ -32,4 +32,4 @@
+ 
+ ffi_sources += ffi_platforms['@TARGET@']
+ 
+-ffi_cflags = '@CFLAGS@'
++ffi_cflags = '@CFLAGS@ -DPIC'
+--- a/Python/compile.c
++++ b/Python/compile.c
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
+--- a/Modules/termios.c
++++ b/Modules/termios.c
+@@ -17,6 +17,12 @@
+ #include <termio.h>
+ #endif
+ #include <sys/ioctl.h>
++ 
++#if defined(__sh__)
++#include <linux/serial.h>
++#define TIOCGICOUNT    0x545D
++#define TIOCSERGSTRUCT 0x5458
++#endif
+ 
+ /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
+  * MDTR, MRI, and MRTS (appearantly used internally by some things
+--- a/setup.py
++++ b/setup.py
+@@ -34,6 +34,21 @@
+ 
+ # This global variable is used to hold the list of modules to be disabled.
+ disabled_module_list = []
++
++def target_is_64bit_platform ():
++    """
++    In case of cross-compile, some modules are not build as setup checks if HOST
++    is 64bit and not TARGET.
++    As python was built for TARGET we can check this in pyconfig.h in this way:
++        Sizeof LONG on a 32 bit platform is 4 bytes
++        Sizeof LONG on a 64 bit platform is 8 bytes
++    """
++    pyconf = open("pyconfig.h").read()
++    aux = re.search(r"#s*define\s+SIZEOF_LONG\s+8\s*", pyconf)
++    if aux is not None:
++        return True
++    else:
++        return False
+ 
+ def add_dir_to_list(dirlist, dir):
+     """Add the directory 'dir' to the list 'dirlist' (at the front) if
+@@ -159,6 +174,7 @@
+     def __init__(self, dist):
+         build_ext.__init__(self, dist)
+         self.failed = []
++        self.cross_compile = os.environ.get('CROSS_COMPILE_TARGET') == 'yes'
+ 
+     def build_extensions(self):
+ 
+@@ -294,6 +310,14 @@
+                           (ext.name, sys.exc_info()[1]))
+             self.failed.append(ext.name)
+             return
++
++        # Import check will not work when cross-compiling.
++        if os.environ.has_key('PYTHONXCPREFIX'):
++            self.announce(
++                'WARNING: skipping import check for cross-compiled: "%s"' %
++                ext.name)
++            return
++
+         # Workaround for Mac OS X: The Carbon-based modules cannot be
+         # reliably imported into a command-line Python
+         if 'Carbon' in ext.extra_link_args:
+@@ -334,6 +358,7 @@
+             self.failed.append(ext.name)
+             self.announce('*** WARNING: renaming "%s" since importing it'
+                           ' failed: %s' % (ext.name, why), level=3)
++            return
+             assert not self.inplace
+             basename, tail = os.path.splitext(ext_filename)
+             newname = basename + "_failed" + tail
+@@ -439,11 +464,18 @@
+ 
+     def detect_modules(self):
+         # Ensure that /usr/local is always used
+-        if not cross_compiling:
+-            add_dir_to_list(self.compiler.library_dirs, '/usr/local/lib')
+-            add_dir_to_list(self.compiler.include_dirs, '/usr/local/include')
+-        if cross_compiling:
+-            self.add_gcc_paths()
++        try:
++            modules_include_dirs = os.environ["PYTHON_MODULES_INCLUDE"].split()
++        except KeyError:
++            modules_include_dirs = ['/usr/local/include']
++        try:
++            modules_lib_dirs = os.environ["PYTHON_MODULES_LIB"].split()
++        except KeyError:
++            modules_lib_dirs = ['/usr/local/lib']
++        for dir in modules_include_dirs:
++            add_dir_to_list(self.compiler.include_dirs, dir)
++        for dir in modules_lib_dirs:
++            add_dir_to_list(self.compiler.library_dirs, dir)
+         self.add_multiarch_paths()
+ 
+         # Add paths specified in the environment variables LDFLAGS and
+@@ -480,16 +512,16 @@
+                     for directory in reversed(options.dirs):
+                         add_dir_to_list(dir_list, directory)
+ 
+-        if os.path.normpath(sys.prefix) != '/usr' \
+-                and not sysconfig.get_config_var('PYTHONFRAMEWORK'):
++#        if os.path.normpath(sys.prefix) != '/usr' \
++#                and not sysconfig.get_config_var('PYTHONFRAMEWORK'):
+             # OSX note: Don't add LIBDIR and INCLUDEDIR to building a framework
+             # (PYTHONFRAMEWORK is set) to avoid # linking problems when
+             # building a framework with different architectures than
+             # the one that is currently installed (issue #7473)
+-            add_dir_to_list(self.compiler.library_dirs,
+-                            sysconfig.get_config_var("LIBDIR"))
+-            add_dir_to_list(self.compiler.include_dirs,
+-                            sysconfig.get_config_var("INCLUDEDIR"))
++#            add_dir_to_list(self.compiler.library_dirs,
++#                            sysconfig.get_config_var("LIBDIR"))
++#            add_dir_to_list(self.compiler.include_dirs,
++#                            sysconfig.get_config_var("INCLUDEDIR"))
+ 
+         try:
+             have_unicode = unicode
+@@ -499,18 +531,22 @@
+         # lib_dirs and inc_dirs are used to search for files;
+         # if a file is found in one of those directories, it can
+         # be assumed that no additional -I,-L directives are needed.
+-        inc_dirs = self.compiler.include_dirs[:]
+-        lib_dirs = self.compiler.library_dirs[:]
+-        if not cross_compiling:
+-            for d in (
+-                '/usr/include',
+-                ):
+-                add_dir_to_list(inc_dirs, d)
+-            for d in (
++        lib_dirs = self.compiler.library_dirs
++        inc_dirs = self.compiler.include_dirs
++        if not self.cross_compile:
++            lib_dirs += [
+                 '/lib64', '/usr/lib64',
+                 '/lib', '/usr/lib',
+-                ):
+-                add_dir_to_list(lib_dirs, d)
++                ]
++            inc_dirs += ['/usr/include']
++        else:
++            # The common install prefix of 3rd party libraries used during
++            # cross compilation
++            mydir = os.environ.get('PYTHON_XCOMPILE_DEPENDENCIES_PREFIX')
++            if mydir:
++                inc_dirs += [mydir + '/include' ]
++                inc_dirs += [mydir + '/lib/libffi-3.0.10/include']
++                lib_dirs += [mydir + '/lib' ]
+         exts = []
+         missing = []
+ 
+@@ -518,6 +554,18 @@
+         config_h_vars = sysconfig.parse_config_h(open(config_h))
+ 
+         srcdir = sysconfig.get_config_var('srcdir')
++
++        # add paths from CFLAGS and LDFLAGS
++        cflags, ldflags = sysconfig.get_config_vars(
++                    'CFLAGS', 'LDFLAGS')
++        for item in cflags.split():
++            if item.startswith('-I'):
++                inc_dirs.append(item[2:])
++
++        for item in ldflags.split():
++            if item.startswith('-L'):
++                lib_dirs.append(item[2:])
++        print (inc_dirs)
+ 
+         # Check for AtheOS which has libraries in non-standard locations
+         if host_platform == 'atheos':
+@@ -696,7 +744,7 @@
+         exts.append( Extension('audioop', ['audioop.c']) )
+ 
+         # Disabled on 64-bit platforms
+-        if sys.maxsize != 9223372036854775807L:
++        if not target_is_64bit_platform():
+             # Operations on images
+             exts.append( Extension('imageop', ['imageop.c']) )
+         else:
+@@ -761,12 +809,10 @@
+                 pass # Issue 7384: Already linked against curses or tinfo.
+             elif curses_library:
+                 readline_libs.append(curses_library)
+-            elif self.compiler.find_library_file(lib_dirs +
+-                                                     ['/usr/lib/termcap'],
++            elif self.compiler.find_library_file(lib_dirs,
+                                                      'termcap'):
+                 readline_libs.append('termcap')
+             exts.append( Extension('readline', ['readline.c'],
+-                                   library_dirs=['/usr/lib/termcap'],
+                                    extra_link_args=readline_extra_link_args,
+                                    libraries=readline_libs) )
+         else:
+@@ -1105,7 +1151,13 @@
+                              '/usr/local/include/sqlite3',
+                            ]
+         if cross_compiling:
+-            sqlite_inc_paths = []
++            # The common install prefix of 3rd party headers used during
++            # cross compilation
++            mydir = os.environ.get('PYTHON_XCOMPILE_DEPENDENCIES_PREFIX')
++            if mydir:
++                sqlite_inc_paths = [mydir + '/include' ]
++            else:
++                sqlite_inc_paths = []
+         MIN_SQLITE_VERSION_NUMBER = (3, 0, 8)
+         MIN_SQLITE_VERSION = ".".join([str(x)
+                                     for x in MIN_SQLITE_VERSION_NUMBER])
+@@ -1145,12 +1197,21 @@
+                     print "sqlite: %s had no SQLITE_VERSION"%(f,)
+ 
+         if sqlite_incdir:
+-            sqlite_dirs_to_check = [
+-                os.path.join(sqlite_incdir, '..', 'lib64'),
+-                os.path.join(sqlite_incdir, '..', 'lib'),
+-                os.path.join(sqlite_incdir, '..', '..', 'lib64'),
+-                os.path.join(sqlite_incdir, '..', '..', 'lib'),
+-            ]
++            if not self.cross_compile:
++                sqlite_dirs_to_check = [
++                    os.path.join(sqlite_incdir, '..', 'lib64'),
++                    os.path.join(sqlite_incdir, '..', 'lib'),
++                    os.path.join(sqlite_incdir, '..', '..', 'lib64'),
++                    os.path.join(sqlite_incdir, '..', '..', 'lib'),
++                ]
++            else:
++                # The common install prefix of 3rd party headers used during
++                # cross compilation
++                mydir = os.environ.get('PYTHON_XCOMPILE_DEPENDENCIES_PREFIX')
++                if mydir:
++                    sqlite_dirs_to_check = [mydir + '/lib' ]
++                else:
++                    sqlite_dirs_to_check = []
+             sqlite_libfile = self.compiler.find_library_file(
+                                 sqlite_dirs_to_check + lib_dirs, 'sqlite3')
+             if sqlite_libfile:
+@@ -1228,8 +1289,10 @@
+                                           libraries=libraries))
+                 else:
+                     exts.append(Extension('bsddb185', ['bsddbmodule.c']))
+-            else:
+-                missing.append('bsddb185')
++            # If a newer version is detected don't report an useless
++            # warning
++            #else:
++            #    missing.append('bsddb185')
+         else:
+             missing.append('bsddb185')
+ 
+@@ -1527,7 +1590,7 @@
+                 missing.append('_codecs_%s' % loc)
+ 
+         # Dynamic loading module
+-        if sys.maxint == 0x7fffffff:
++        if not target_is_64bit_platform():
+             # This requires sizeof(int) == sizeof(long) == sizeof(char*)
+             dl_inc = find_file('dlfcn.h', [], inc_dirs)
+             if (dl_inc is not None) and (host_platform not in ['atheos']):
+@@ -1614,8 +1677,9 @@
+         if host_platform == 'sunos5':
+             # SunOS specific modules
+             exts.append( Extension('sunaudiodev', ['sunaudiodev.c']) )
+-        else:
+-            missing.append('sunaudiodev')
++        # If platform is not sunos warning is useless
++        #else:
++        #    missing.append('sunaudiodev')
+ 
+         if host_platform == 'darwin':
+             # _scproxy
+@@ -1728,8 +1792,10 @@
+         # Call the method for detecting whether _tkinter can be compiled
+         self.detect_tkinter(inc_dirs, lib_dirs)
+ 
+-        if '_tkinter' not in [e.name for e in self.extensions]:
+-            missing.append('_tkinter')
++        # tkinter module will not be avalaible as yocto
++        # doesn't have tk integrated (yet)
++        #if '_tkinter' not in [e.name for e in self.extensions]:
++        #    missing.append('_tkinter')
+ 
+ ##         # Uncomment these lines if you want to play with xxmodule.c
+ ##         ext = Extension('xx', ['xxmodule.c'])
+@@ -1915,22 +1981,6 @@
+             if dir not in include_dirs:
+                 include_dirs.append(dir)
+ 
+-        # Check for various platform-specific directories
+-        if host_platform == 'sunos5':
+-            include_dirs.append('/usr/openwin/include')
+-            added_lib_dirs.append('/usr/openwin/lib')
+-        elif os.path.exists('/usr/X11R6/include'):
+-            include_dirs.append('/usr/X11R6/include')
+-            added_lib_dirs.append('/usr/X11R6/lib64')
+-            added_lib_dirs.append('/usr/X11R6/lib')
+-        elif os.path.exists('/usr/X11R5/include'):
+-            include_dirs.append('/usr/X11R5/include')
+-            added_lib_dirs.append('/usr/X11R5/lib')
+-        else:
+-            # Assume default location for X11
+-            include_dirs.append('/usr/X11/include')
+-            added_lib_dirs.append('/usr/X11/lib')
+-
+         # If Cygwin, then verify that X is installed before proceeding
+         if host_platform == 'cygwin':
+             x11_inc = find_file('X11/Xlib.h', [], include_dirs)
+@@ -2028,8 +2078,15 @@
+ 
+                 # Pass empty CFLAGS because we'll just append the resulting
+                 # CFLAGS to Python's; -g or -O2 is to be avoided.
+-                cmd = "cd %s && env CFLAGS='' '%s/configure' %s" \
+-                      % (ffi_builddir, ffi_srcdir, " ".join(config_args))
++                if self.cross_compile:
++                    cmd = "cd %s && env CFLAGS='' %s/configure --host=%s --build=%s %s" \
++                          % (ffi_builddir, ffi_srcdir,
++                             os.environ.get('HOSTARCH'),
++                             os.environ.get('BUILDARCH'),
++                             " ".join(config_args))
++                else:
++                    cmd = "cd %s && env CFLAGS='' '%s/configure' %s" \
++                          % (ffi_builddir, ffi_srcdir, " ".join(config_args))
+ 
+                 res = os.system(cmd)
+                 if res or not os.path.exists(ffi_configfile):
