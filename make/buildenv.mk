@@ -95,11 +95,32 @@ UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 REMOVE                = rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
+APATCH                = patch -p1 -i
 START_BUILD           = @echo "---------------------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m."
 TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; echo
 
 define post_patch
-	for i in $(1) ; do echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(PATCH)/$$i; done
+	echo "---------------------------------------------------------------------------------"; \
+	for i in $(1); do \
+		if [ -d $$i ] ; then \
+			for p in $$i/*; do \
+				if [ $${p:0:1} == "/" ]; then \
+					echo -e "==> \033[31mApplying Patch:\033[0m $$p"; $(APATCH) $$p; \
+				else \
+					echo -e "==> \033[31mApplying Patch:\033[0m $$p"; $(PATCH)/$$p; \
+				fi; \
+			done; \
+		else \
+			if [ $${i:0:1} == "/" ]; then \
+				echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(APATCH) $$i; \
+			else \
+				echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(PATCH)/$$i; \
+			fi; \
+		fi; \
+	done; \
+	echo -e "Patch of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; \
+	echo "---------------------------------------------------------------------------------"; \
+	echo ""
 endef
 
 #
