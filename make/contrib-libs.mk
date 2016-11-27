@@ -461,7 +461,7 @@ $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 	@cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
 	@set -e; cd $(BUILD_TMP)/lua-feedparser; \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
-		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); \
+		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/lua-feedparser
 	$(TOUCH)
 
@@ -479,7 +479,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/lu
 	$(UNTAR)/luasoap-$(LUASOAP_VER).tar.gz
 	@set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
 		$(PATCH)/luasoap-$(LUASOAP_VER).patch; \
-		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); \
+		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(TOUCH)
 
@@ -512,7 +512,7 @@ $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2
 	@set -e; cd $(BUILD_TMP)/boost_$(BOOST_VER); \
 		$(PATCH)/libboost.patch; \
 		rm -rf $(TARGETPREFIX)/usr/include/boost; \
-		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGETPREFIX)/usr/include/boost; \
+		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGETPREFIX)/usr/include/boost
 	$(REMOVE)/boost_$(BOOST_VER)
 	$(TOUCH)
 
