@@ -148,7 +148,7 @@ $(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 #
 # libglib2
 #
-$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(D)/libpcre $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
+$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/glib-$(GLIB_VER)
 	$(UNTAR)/glib-$(GLIB_VER).tar.xz
@@ -168,7 +168,6 @@ $(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(D)
 			--disable-gtk-doc-html \
 			--with-threads="posix" \
 			--with-html-dir=/.remove \
-			--with-pcre=system \
 			--enable-static \
 		; \
 		$(MAKE) all; \
