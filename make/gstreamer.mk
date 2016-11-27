@@ -1,7 +1,7 @@
 #
 # gstreamer
 #
-GSTREAMER_VER = 1.8.0
+GSTREAMER_VER = 1.8.3
 
 $(ARCHIVE)/gstreamer-$(GSTREAMER_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$(GSTREAMER_VER).tar.xz

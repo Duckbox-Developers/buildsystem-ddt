@@ -1,6 +1,6 @@
 --- a/gst-libs/gst/riff/riff-media.c
 +++ b/gst-libs/gst/riff/riff-media.c
-@@ -456,12 +456,18 @@
+@@ -466,12 +466,18 @@
      case GST_MAKE_FOURCC ('F', 'M', 'P', '4'):
      case GST_MAKE_FOURCC ('U', 'M', 'P', '4'):
      case GST_MAKE_FOURCC ('F', 'F', 'D', 'S'):
