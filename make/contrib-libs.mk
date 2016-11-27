@@ -220,6 +220,8 @@ $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2
 	$(REWRITE_LIBTOOL)/libpcre.la
 	$(REWRITE_LIBTOOL)/libpcrecpp.la
 	$(REWRITE_LIBTOOL)/libpcreposix.la
+	$(REWRITE_LIBTOOLDEP)/libpcrecpp.la
+	$(REWRITE_LIBTOOLDEP)/libpcreposix.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcre.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcrecpp.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcreposix.pc
