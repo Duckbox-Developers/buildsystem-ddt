@@ -2,8 +2,8 @@
 # gstreamer
 #
 GSTREAMER_VER = 1.8.3
-GSTREAMER_PATCH  = gstreamer-1.0-fix-crash-with-gst-inspect.patch
-GSTREAMER_PATCH += gstreamer-1.0-revert-use-new-gst-adapter-get-buffer.patch
+GSTREAMER_PATCH  = gstreamer-$(GSTREAMER_VER)-fix-crash-with-gst-inspect.patch
+GSTREAMER_PATCH += gstreamer-$(GSTREAMER_VER)-revert-use-new-gst-adapter-get-buffer.patch
 
 $(ARCHIVE)/gstreamer-$(GSTREAMER_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$(GSTREAMER_VER).tar.xz
@@ -51,11 +51,11 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glib-networking $
 # gst_plugins_base
 #
 GSTREAMER_BASE_VER = $(GSTREAMER_VER)
-GSTREAMER_BASE_PATCH  = gst-1.0-plugins-base-get-caps-from-src-pad-when-query-caps.patch
-GSTREAMER_BASE_PATCH += gst-1.0-plugins-base-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch
-GSTREAMER_BASE_PATCH += gst-1.0-plugins-base-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-ca.patch
-GSTREAMER_BASE_PATCH += gst-1.0-plugins-base-subparse-avoid-false-negatives-dealing-with-UTF-8.patch
-GSTREAMER_BASE_PATCH += gst-1.0-plugins-base-taglist-not-send-to-down-stream-if-all-the-frame-cor.patch
+GSTREAMER_BASE_PATCH  = gst-plugins-base-$(GSTREAMER_BASE_VER)-get-caps-from-src-pad-when-query-caps.patch
+GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch
+GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-ca.patch
+GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-subparse-avoid-false-negatives-dealing-with-UTF-8.patch
+GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-taglist-not-send-to-down-stream-if-all-the-frame-cor.patch
 
 $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
@@ -122,7 +122,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 # gst_plugins_good
 #
 GSTREAMER_GOOD_VER = $(GSTREAMER_VER)
-GSTREAMER_GOOD_PATCH = gst-1.0-plugins-good-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch
+GSTREAMER_GOOD_PATCH = gst-plugins-good-$(GSTREAMER_GOOD_VER)-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch
 
 $(ARCHIVE)/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz
@@ -155,8 +155,8 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 # gst_plugins_bad
 #
 GSTREAMER_BAD_VER = $(GSTREAMER_VER)
-GSTREAMER_BAD_PATCH  = gst-1.0-plugins-bad-fix-compile-error.patch
-GSTREAMER_BAD_PATCH += gst-1.0-plugins-bad-rtmp-fix-seeking-and-potential-segfault.patch
+GSTREAMER_BAD_PATCH  = gst-plugins-bad-$(GSTREAMER_BAD_VER)-fix-compile-error.patch
+GSTREAMER_BAD_PATCH += gst-plugins-bad-$(GSTREAMER_BAD_VER)-rtmp-fix-seeking-and-potential-segfault.patch
 
 $(ARCHIVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
@@ -298,8 +298,8 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 # gst_libav
 #
 GSTREAMER_LIBAV_VER = $(GSTREAMER_VER)
-GSTREAMER_LIBAV_PATCH  = gst-1.0-libav-disable-yasm-for-libav-when-disable-yasm.patch
-GSTREAMER_LIBAV_PATCH += gst-1.0-libav-fix-sh4-compile-gcc48.patch
+GSTREAMER_LIBAV_PATCH  = gst-libav-$(GSTREAMER_LIBAV_VER)-disable-yasm-for-libav-when-disable-yasm.patch
+GSTREAMER_LIBAV_PATCH += gst-libav-$(GSTREAMER_LIBAV_VER)-fix-sh4-compile-gcc48.patch
 
 $(ARCHIVE)/gst-libav-$(GSTREAMER_LIBAV_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-libav/gst-libav-$(GSTREAMER_LIBAV_VER).tar.xz
@@ -357,7 +357,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/g
 # gst_plugins_fluendo_mpegdemux
 #
 GSTREAMER_FLUENDO_VER = 0.10.71
-GSTREAMER_FLUENDO_PATCH = gst-plugins-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER).patch
+GSTREAMER_FLUENDO_PATCH = gst-plugins-fluendo-$(GSTREAMER_FLUENDO_VER)-mpegdemux.patch
 
 $(ARCHIVE)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER).tar.gz:
 	$(WGET) http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER).tar.gz
