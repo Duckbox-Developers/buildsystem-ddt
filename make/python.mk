@@ -63,7 +63,7 @@ $(D)/host_python: $(ARCHIVE)/Python-$(PYTHON_VER).tar.xz
 			--with-threads \
 		; \
 		$(MAKE) all install; \
-		cp ./hostpgen $(HOSTPREFIX)/bin/pgen; \
+		cp ./hostpgen $(HOSTPREFIX)/bin/pgen
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(TOUCH)
 
