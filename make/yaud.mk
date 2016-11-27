@@ -57,4 +57,4 @@ yaud-none: \
 	$(D)/bootstrap \
 	$(D)/linux-kernel \
 	$(D)/system-tools
-	touch $(D)/$(notdir $@)
+	@touch $(D)/$(notdir $@)

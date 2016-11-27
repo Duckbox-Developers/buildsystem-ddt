@@ -12,7 +12,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glib-networking $
 	$(START_BUILD)
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
 	$(UNTAR)/gstreamer-$(GSTREAMER_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
+	@set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
 		$(call post_patch,$(GSTREAMER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -64,7 +64,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-base-$(GSTREAMER_BASE_VER)
 	$(UNTAR)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GSTREAMER_BASE_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GSTREAMER_BASE_VER); \
 		$(call post_patch,$(GSTREAMER_BASE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -131,7 +131,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-good-$(GSTREAMER_GOOD_VER)
 	$(UNTAR)/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GSTREAMER_GOOD_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GSTREAMER_GOOD_VER); \
 		$(call post_patch,$(GSTREAMER_GOOD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -165,7 +165,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-bad-$(GSTREAMER_BAD_VER)
 	$(UNTAR)/gst-plugins-bad-$(GSTREAMER_BAD_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VER); \
 		$(call post_patch,$(GSTREAMER_BAD_PATCH)); \
 		$(BUILDENV) \
 		autoreconf --force --install; \
@@ -273,7 +273,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-ugly-$(GSTREAMER_UGLY_VER)
 	$(UNTAR)/gst-plugins-ugly-$(GSTREAMER_UGLY_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GSTREAMER_UGLY_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GSTREAMER_UGLY_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-fatal-warnings \
@@ -308,7 +308,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/g
 	$(START_BUILD)
 	$(REMOVE)/gst-libav-$(GSTREAMER_LIBAV_VER)
 	$(UNTAR)/gst-libav-$(GSTREAMER_LIBAV_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-libav-$(GSTREAMER_LIBAV_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-libav-$(GSTREAMER_LIBAV_VER); \
 		$(call post_patch,$(GSTREAMER_LIBAV_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -366,7 +366,7 @@ $(D)/gst_plugins_fluendo_mpegdemux: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugi
 	$(START_BUILD)
 	$(REMOVE)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER)
 	$(UNTAR)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER); \
+	@set -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VER); \
 		$(call post_patch,$(GSTREAMER_FLUENDO_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -390,7 +390,7 @@ $(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp
 	$(START_BUILD)
 	$(REMOVE)/gmediarender-$(GSTREAMER_GMEDIARENDER_VER)
 	$(UNTAR)/gmediarender-$(GSTREAMER_GMEDIARENDER_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/gmediarender-$(GSTREAMER_GMEDIARENDER_VER); \
+	@set -e; cd $(BUILD_TMP)/gmediarender-$(GSTREAMER_GMEDIARENDER_VER); \
 		$(call post_patch,$(GSTREAMER_GMEDIARENDER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -413,7 +413,7 @@ $(D)/orc: $(D)/bootstrap $(ARCHIVE)/orc-$(ORC_VER).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/orc-$(ORC_VER)
 	$(UNTAR)/orc-$(ORC_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/orc-$(ORC_VER); \
+	@set -e; cd $(BUILD_TMP)/orc-$(ORC_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -438,7 +438,7 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/libdca-$(LIBDCA_VER).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/libdca-$(LIBDCA_VER)
 	$(UNTAR)/libdca-$(LIBDCA_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VER); \
+	@set -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -457,12 +457,12 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/libdca-$(LIBDCA_VER).tar.bz2
 $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(START_BUILD)
 	$(REMOVE)/gstreamer1.0-plugin-subsink
-	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-subsink.git ]; \
+	@set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-subsink.git ]; \
 		then cd $(ARCHIVE)/gstreamer1.0-plugin-subsink.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/christophecvr/gstreamer1.0-plugin-subsink.git gstreamer1.0-plugin-subsink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-subsink.git $(BUILD_TMP)/gstreamer1.0-plugin-subsink
-	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
+	@set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
 		autoconf --force; \
@@ -484,12 +484,12 @@ $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
 	$(START_BUILD)
 	$(REMOVE)/gstreamer1.0-plugin-multibox-dvbmediasink
-	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git ]; \
+	@set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git ]; \
 		then cd $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; git pull; \
 		else cd $(ARCHIVE); git clone -b experimental git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git gstreamer1.0-plugin-multibox-dvbmediasink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink
-	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
+	@set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --force; \
 		autoconf --force; \
