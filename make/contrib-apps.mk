@@ -292,7 +292,7 @@ $(D)/portmap: $(D)/bootstrap $(ARCHIVE)/portmap_$(PORTMAP_VER).orig.tar.gz $(ARC
 		gunzip -cd $(lastword $^) | cat > debian.patch; \
 		patch -p1 <debian.patch && \
 		sed -e 's/### BEGIN INIT INFO/# chkconfig: S 41 10\n### BEGIN INIT INFO/g' -i debian/init.d; \
-		$(PATCH)/portmap-6.0.patch; \
+		$(PATCH)/portmap-$(PORTMAP_VER).patch; \
 		$(BUILDENV) $(MAKE) NO_TCP_WRAPPER=1 DAEMON_UID=65534 DAEMON_GID=65535 CC="$(TARGET)-gcc"; \
 		install -m 0755 portmap $(TARGETPREFIX)/sbin; \
 		install -m 0755 pmap_dump $(TARGETPREFIX)/sbin; \
