@@ -2481,4 +2481,3 @@ $(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-netw
 		$(MAKE) install prefix=$(TARGETPREFIX) giomoduledir=$(TARGETPREFIX)/usr/lib/gio/modules
 	$(REMOVE)/glib-networking-$(GLIBNETW_VER)
 	$(TOUCH)
-
