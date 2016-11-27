@@ -520,6 +520,7 @@ $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2
 # zlib
 #
 ZLIB_VER = 1.2.8
+ZLIB_Patch = zlib-$(ZLIB_VER).patch
 
 $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz:
 	$(WGET) http://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VER)/zlib-$(ZLIB_VER).tar.xz
@@ -529,7 +530,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
 	$(REMOVE)/zlib-$(ZLIB_VER)
 	$(UNTAR)/zlib-$(ZLIB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
-		$(PATCH)/zlib-$(ZLIB_VER).patch; \
+		$(call post_patch,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGETPREFIX)/.remove CFLAGS="$(TARGET_CFLAGS)" \
 		./configure \
 			--prefix=/usr \
@@ -547,6 +548,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
 # bzip2
 #
 BZIP2_VER = 1.0.6
+BZIP2_Patch = bzip2-$(BZIP2_VER).patch
 
 $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz:
 	$(WGET) http://www.bzip.org/$(BZIP2_VER)/bzip2-$(BZIP2_VER).tar.gz
@@ -556,7 +558,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz
 	$(REMOVE)/bzip2-$(BZIP2_VER)
 	$(UNTAR)/bzip2-$(BZIP2_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/bzip2-$(BZIP2_VER); \
-		$(PATCH)/bzip2-$(BZIP2_VER).patch; \
+		$(call post_patch,$(BZIP2_Patch)); \
 		mv Makefile-libbz2_so Makefile; \
 		CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib \
 		$(MAKE) all; \
@@ -603,6 +605,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 # libfreetype
 #
 FREETYPE_VER = 2.6.5
+FREETYPE_PATCH = libfreetype-$(FREETYPE_VER).patch
 
 $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/freetype-$(FREETYPE_VER).tar.bz2
@@ -612,7 +615,7 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 	$(REMOVE)/freetype-$(FREETYPE_VER)
 	$(UNTAR)/freetype-$(FREETYPE_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VER); \
-		$(PATCH)/libfreetype-$(FREETYPE_VER).patch; \
+		$(call post_patch,$(FREETYPE_PATCH)); \
 		sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg; \
 		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
 			-i include/freetype/config/ftoption.h; \
@@ -636,6 +639,7 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 # lirc
 #
 LIRC_VER = 0.9.0
+LIRC_PATCH = lirc-$(LIRC_VER).patch
 
 $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/lirc-$(LIRC_VER).tar.bz2
@@ -655,7 +659,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 	$(REMOVE)/lirc-$(LIRC_VER)
 	$(UNTAR)/lirc-$(LIRC_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/lirc-$(LIRC_VER); \
-		$(PATCH)/lirc-$(LIRC_VER).patch; \
+		$(call post_patch,$(LIRC_PATCH)); \
 		$(CONFIGURE) \
 		ac_cv_path_LIBUSB_CONFIG= \
 		CFLAGS="$(TARGET_CFLAGS) $(LIRC_OPTS)" \
@@ -683,6 +687,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 # libjpeg
 #
 JPEG_VER = 9b
+JPEG_PATCH = jpeg-$(JPEG_VER).patch
 
 $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz:
 	$(WGET) http://www.ijg.org/files/jpegsrc.v$(JPEG_VER).tar.gz
@@ -692,7 +697,7 @@ $(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
 	$(REMOVE)/jpeg-$(JPEG_VER)
 	$(UNTAR)/jpegsrc.v$(JPEG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VER); \
-		$(PATCH)/jpeg-$(JPEG_VER).patch; \
+		$(call post_patch,$(JPEG_VER)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
@@ -759,6 +764,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).ta
 #
 PNG_VER = 1.6.25
 PNG_VER_X = 16
+PNG_PATCH = libpng-$(PNG_VER)-disable-tools.patch
 
 $(ARCHIVE)/libpng-$(PNG_VER).tar.xz:
 	$(WGET) http://sourceforge.net/projects/libpng/files/libpng$(PNG_VER_X)/$(PNG_VER)/libpng-$(PNG_VER).tar.xz
@@ -768,7 +774,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libpng-$(PNG_VER).tar.xz
 	$(REMOVE)/libpng-$(PNG_VER)
 	$(UNTAR)/libpng-$(PNG_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libpng-$(PNG_VER); \
-		$(PATCH)/libpng-$(PNG_VER)-disable-tools.patch; \
+		$(call post_patch,$(PNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 			--mandir=$(TARGETPREFIX)/.remove \
@@ -848,6 +854,7 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
 # libcurl
 #
 CURL_VER = 7.51.0
+CURL_PATCH = libcurl-$(CURL_VER).patch
 
 $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
 	$(WGET) https://curl.haxx.se/download/curl-$(CURL_VER).tar.bz2
@@ -857,7 +864,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).
 	$(REMOVE)/curl-$(CURL_VER)
 	$(UNTAR)/curl-$(CURL_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/curl-$(CURL_VER); \
-		$(PATCH)/libcurl-$(CURL_VER).patch; \
+		$(call post_patch,$(CURL_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -981,6 +988,7 @@ $(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz
 # libmad
 #
 MAD_VER = 0.15.1b
+MAD_PATCH = libmad-$(MAD_VER).patch
 
 $(ARCHIVE)/libmad-$(MAD_VER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/mad/files/libmad/$(MAD_VER)/libmad-$(MAD_VER).tar.gz
@@ -990,7 +998,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 	$(REMOVE)/libmad-$(MAD_VER)
 	$(UNTAR)/libmad-$(MAD_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libmad-$(MAD_VER); \
-		$(PATCH)/libmad-$(MAD_VER).patch; \
+		$(call post_patch,$(MAD_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -1011,6 +1019,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 # libid3tag
 #
 ID3TAG_VER = 0.15.1b
+ID3TAG_PATCH = libid3tag-$(ID3TAG_VER).patch
 
 $(ARCHIVE)/libid3tag-$(ID3TAG_VER)$(ID3TAG_SUBVER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/mad/files/libid3tag/$(ID3TAG_VER)/libid3tag-$(ID3TAG_VER).tar.gz
@@ -1020,7 +1029,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VER).tar.
 	$(REMOVE)/libid3tag-$(ID3TAG_VER)
 	$(UNTAR)/libid3tag-$(ID3TAG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libid3tag-$(ID3TAG_VER); \
-		$(PATCH)/libid3tag-$(ID3TAG_VER).patch; \
+		$(call post_patch,$(ID3TAG_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -1073,6 +1082,7 @@ $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbis-$(VORBIS_VER).ta
 VORBISIDEC_SVN = 18153
 VORBISIDEC_VER = 1.0.2+svn$(VORBISIDEC_SVN)
 VORBISIDEC_VER_APPEND = .orig
+VORBISIDEC_PATCH = libvorbisidec-$(VORBISIDEC_VER).patch
 
 $(ARCHIVE)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz:
 	$(WGET) http://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
@@ -1082,7 +1092,7 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbisidec_$(VORBIS
 	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VER)
 	$(UNTAR)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
 	set -e; cd $(BUILD_TMP)/libvorbisidec-$(VORBISIDEC_VER); \
-		$(PATCH)/libvorbisidec-$(VORBISIDEC_VER).patch; \
+		$(call post_patch,$(VORBISIDEC_PATCH)); \
 		ACLOCAL_FLAGS="-I . -I $(TARGETPREFIX)/usr/share/aclocal" \
 		$(BUILDENV) ./autogen.sh $(CONFIGURE_OPTS) --prefix=/usr; \
 		$(MAKE) all; \
@@ -1201,6 +1211,7 @@ $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
 # libdvdnav
 #
 LIBDVDNAV_VER = 4.2.1
+LIBDVDNAV_PATCH = libdvdnav-$(LIBDVDNAV_VER).patch
 
 $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_VER).tar.xz:
 	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdnav-$(LIBDVDNAV_VER).tar.xz
@@ -1210,7 +1221,7 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_
 	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VER)
 	$(UNTAR)/libdvdnav-$(LIBDVDNAV_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VER); \
-		$(PATCH)/libdvdnav-$(LIBDVDNAV_VER).patch; \
+		$(call post_patch,$(LIBDVDNAV_PATCH)); \
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force; \
 		./autogen.sh \
@@ -1233,6 +1244,7 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_
 # libdvdread
 #
 LIBDVDREAD_VER = 4.9.9
+LIBDVDREAD_PATCH = libdvdread-$(LIBDVDREAD_VER).patch
 
 $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz:
 	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdread-$(LIBDVDREAD_VER).tar.xz
@@ -1242,7 +1254,7 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 	$(REMOVE)/libdvdread-$(LIBDVDREAD_VER)
 	$(UNTAR)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libdvdread-$(LIBDVDREAD_VER); \
-		$(PATCH)/libdvdread-$(LIBDVDREAD_VER).patch; \
+		$(call post_patch,$(LIBDVDREAD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
@@ -1258,6 +1270,8 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 #
 # libdreamdvd
 #
+LIBDREAMDVD_PATCH = libdreamdvd-1.0-sh4-support.patch
+
 $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(START_BUILD)
 	$(REMOVE)/libdreamdvd
@@ -1267,7 +1281,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 		fi
 	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
 	set -e; cd $(BUILD_TMP)/libdreamdvd; \
-		$(PATCH)/libdreamdvd-1.0-sh4-support.patch; \
+		$(call post_patch,$(LIBDREAMDVD_PATCH)); \
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force; \
 		autoreconf --verbose --force --install; \
@@ -1286,9 +1300,11 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 #
 # ffmpeg
 #
-#FFMPEG_VER = 2.6.4
 FFMPEG_VER = 2.8.6
-#FFMPEG_VER = 3.2
+FFMPEG_PATCH  = ffmpeg-buffer-size-$(FFMPEG_VER).patch
+FFMPEG_PATCH += ffmpeg-hds-libroxml-$(FFMPEG_VER).patch
+FFMPEG_PATCH += ffmpeg-aac-$(FFMPEG_VER).patch
+FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VER).patch
 
 $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz:
 	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VER).tar.xz
@@ -1307,10 +1323,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/ffmpeg-$(FFMPEG_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
-		$(PATCH)/ffmpeg-buffer-size-$(FFMPEG_VER).patch; \
-		$(PATCH)/ffmpeg-hds-libroxml-$(FFMPEG_VER).patch; \
-		$(PATCH)/ffmpeg-aac-$(FFMPEG_VER).patch; \
-		$(PATCH)/ffmpeg-kodi-$(FFMPEG_VER).patch; \
+		$(call post_patch,$(FFMPEG_PATCH)); \
 		./configure \
 			--disable-ffserver \
 			--disable-ffplay \
@@ -1514,6 +1527,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 # libass
 #
 LIBASS_VER = 0.12.3
+LIBASS_PATCH = libass-$(LIBASS_VER).patch
 
 $(ARCHIVE)/libass-$(LIBASS_VER).tar.xz:
 	$(WGET) https://github.com/libass/libass/releases/download/$(LIBASS_VER)/libass-$(LIBASS_VER).tar.xz
@@ -1523,7 +1537,7 @@ $(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$
 	$(REMOVE)/libass-$(LIBASS_VER)
 	$(UNTAR)/libass-$(LIBASS_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/libass-$(LIBASS_VER); \
-		$(PATCH)/libass-$(LIBASS_VER).patch; \
+		$(call post_patch,$(LIBASS_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-static \
@@ -1620,6 +1634,7 @@ $(D)/libogg: $(D)/bootstrap $(ARCHIVE)/libogg-$(OGG_VER).tar.gz
 # libflac
 #
 FLAC_VER = 1.3.1
+FLAC_PATCH = libflac-$(FLAC_VER).patch
 
 $(ARCHIVE)/flac-$(FLAC_VER).tar.xz:
 	$(WGET) http://downloads.xiph.org/releases/flac/flac-$(FLAC_VER).tar.xz
@@ -1629,7 +1644,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VER).tar.xz
 	$(REMOVE)/flac-$(FLAC_VER)
 	$(UNTAR)/flac-$(FLAC_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
-		$(PATCH)/libflac-$(FLAC_VER).patch; \
+		$(call post_patch,$(FLAC_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -1663,6 +1678,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VER).tar.xz
 # libxml2_e2
 #
 LIBXML2_E2_VER = 2.9.0
+LIBXML2_E2_PATCH = libxml2-$(LIBXML2_E2_VER).patch
 
 $(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).tar.gz:
 	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_E2_VER).tar.gz
@@ -1672,7 +1688,7 @@ $(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).t
 	$(REMOVE)/libxml2-$(LIBXML2_E2_VER).tar.gz
 	$(UNTAR)/libxml2-$(LIBXML2_E2_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_E2_VER); \
-		$(PATCH)/libxml2-$(LIBXML2_E2_VER).patch; \
+		$(call post_patch,$(LIBXML2_E2_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -1837,6 +1853,8 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz
 #
 # graphlcd
 #
+GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
+
 $(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
 	$(START_BUILD)
 	$(REMOVE)/graphlcd
@@ -1846,7 +1864,7 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
 		fi
 	cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd
 	set -e; cd $(BUILD_TMP)/graphlcd; \
-		$(PATCH)/graphlcd-base-touchcol.patch; \
+		$(call post_patch,$(GRAPHLCD_PATCH)); \
 		export TARGET=$(TARGET)-; \
 		$(BUILDENV) \
 		$(MAKE) DESTDIR=$(TARGETPREFIX); \
@@ -1910,6 +1928,7 @@ $(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/
 # libusb
 #
 USB_VER = 1.0.9
+USB_PATCH = libusb-$(USB_VER).patch
 
 $(ARCHIVE)/libusb-$(USB_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$(USB_VER)/libusb-$(USB_VER).tar.bz2
@@ -1919,7 +1938,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
 	$(REMOVE)/libusb-$(USB_VER)
 	$(UNTAR)/libusb-$(USB_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/libusb-$(USB_VER); \
-		$(PATCH)/libusb-$(USB_VER).patch; \
+		$(call post_patch,$(USB_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
@@ -1965,6 +1984,8 @@ $(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMP
 # alsa-lib
 #
 ALSA_VER = 1.1.2
+ALSA_PATCH  = alsa-lib-$(ALSA_VER).patch
+ALSA_PATCH += alsa-lib-$(ALSA_VER)-link_fix.patch
 
 $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2:
 	$(WGET) ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$(ALSA_VER).tar.bz2
@@ -1974,8 +1995,7 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 	$(REMOVE)/alsa-lib-$(ALSA_VER)
 	$(UNTAR)/alsa-lib-$(ALSA_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_VER); \
-		$(PATCH)/alsa-lib-$(ALSA_VER).patch; \
-		$(PATCH)/alsa-lib-$(ALSA_VER)-link_fix.patch; \
+		$(call post_patch,$(ALSA_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-alsa-devdir=/dev/snd/ \
@@ -2036,6 +2056,8 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).
 #
 # libopenthreads
 #
+LIBOPENTHREADS_PATCH = libopenthreads.patch
+
 $(D)/libopenthreads: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/openthreads
@@ -2047,7 +2069,7 @@ $(D)/libopenthreads: $(D)/bootstrap
 	set -e; cd $(BUILD_TMP)/openthreads; \
 		git submodule init; \
 		git submodule update; \
-		$(PATCH)/libopenthreads.patch; \
+		$(call post_patch,$(LIBOPENTHREADS_PATCH)); \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
 		echo "# dummy file to prevent warning message" > $(BUILD_TMP)/openthreads/examples/CMakeLists.txt; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \
@@ -2068,6 +2090,8 @@ $(D)/libopenthreads: $(D)/bootstrap
 #
 # librtmpdump
 #
+LIBRTMPDUMP_PATCH = rtmpdump-2.4.patch
+
 $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 	$(START_BUILD)
 	$(REMOVE)/librtmpdump
@@ -2077,7 +2101,7 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 		fi
 	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump
 	set -e; cd $(BUILD_TMP)/librtmpdump; \
-		$(PATCH)/rtmpdump-2.4.patch; \
+		$(call post_patch,$(LIBRTMPDUMP_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) CROSS_COMPILE=$(TARGET)- ; \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX) MANDIR=$(TARGETPREFIX)/.remove
@@ -2088,6 +2112,8 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 #
 # libdvbsi++
 #
+LIBDVBSI++_PATCH = libdvbsi++-git.patch
+
 $(D)/libdvbsi++: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/libdvbsi++
@@ -2097,7 +2123,7 @@ $(D)/libdvbsi++: $(D)/bootstrap
 		fi
 	cp -ra $(ARCHIVE)/libdvbsi++.git $(BUILD_TMP)/libdvbsi++
 	set -e; cd $(BUILD_TMP)/libdvbsi++; \
-		$(PATCH)/libdvbsi++-git.patch; \
+		$(call post_patch,$(LIBDVBSI++_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 		; \
@@ -2156,6 +2182,7 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/lzo-$(LZO_VER).tar.gz
 # minidlna
 #
 MINIDLNA_VER = 1.1.5
+MINIDLNA_PATCH = minidlna-$(MINIDLNA_VER).patch
 
 $(ARCHIVE)/minidlna-$(MINIDLNA_VER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VER)/minidlna-$(MINIDLNA_VER).tar.gz
@@ -2165,7 +2192,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 	$(REMOVE)/minidlna-$(MINIDLNA_VER)
 	$(UNTAR)/minidlna-$(MINIDLNA_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
-		$(PATCH)/minidlna-$(MINIDLNA_VER).patch; \
+		$(call post_patch,$(MINIDLNA_PATCH)); \
 		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2401,6 +2428,7 @@ $(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz
 # nettle
 #
 NETTLE_VER = 3.1
+NETTLE_PATCH = nettle-$(NETTLE_VER).patch
 
 $(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz:
 	$(WGET) http://www.lysator.liu.se/~nisse/archive/nettle-$(NETTLE_VER).tar.gz
@@ -2410,7 +2438,7 @@ $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz
 	$(REMOVE)/nettle-$(NETTLE_VER)
 	$(UNTAR)/nettle-$(NETTLE_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/nettle-$(NETTLE_VER); \
-		$(PATCH)/nettle-$(NETTLE_VER).patch; \
+		$(call post_patch,$(NETTLE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-documentation \

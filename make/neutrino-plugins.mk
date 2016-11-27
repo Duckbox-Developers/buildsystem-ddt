@@ -5,22 +5,21 @@
 #
 # links
 #
-LINKS-VER = 2.7
-
-$(ARCHIVE)/links-$(LINKS-VER).tar.bz2:
-	$(WGET) http://links.twibright.com/download/links-$(LINKS-VER).tar.bz2
-
+LINKS_VER = 2.7
+LINKS_PATCH  = links-$(LINKS_VER).patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
-BOXEVENT = $(PATCH)/links-2.7-spark-input.patch;
+LINKS_PATCH += links-$(LINKS_VER)-spark-input.patch
 endif
 
-$(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS-VER).tar.bz2
+$(ARCHIVE)/links-$(LINKS_VER).tar.bz2:
+	$(WGET) http://links.twibright.com/download/links-$(LINKS_VER).tar.bz2
+
+$(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/links-$(LINKS-VER)
-	$(UNTAR)/links-$(LINKS-VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/links-$(LINKS-VER); \
-		$(PATCH)/links-$(LINKS-VER).patch; \
-		$(BOXEVENT) \
+	$(REMOVE)/links-$(LINKS_VER)
+	$(UNTAR)/links-$(LINKS_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/links-$(LINKS_VER); \
+		$(call post_patch,$(LINKS_PATCH)); \
 		$(CONFIGURE) \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
@@ -45,7 +44,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS-VER
 	echo "bookmarkcount=0"		 > $(TARGETPREFIX)/var/tuxbox/config/bookmarks
 	touch $(TARGETPREFIX)/var/tuxbox/config/links/links.his
 	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGETPREFIX)/var/tuxbox/config/links
-	$(REMOVE)/links-$(LINKS-VER)
+	$(REMOVE)/links-$(LINKS_VER)
 	$(TOUCH)
 
 #

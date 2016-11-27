@@ -98,6 +98,10 @@ PATCH                 = patch -p1 -i $(PATCHES)
 START_BUILD           = @echo "---------------------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m."
 TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; echo
 
+define post_patch
+	for i in $(1) ; do echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(PATCH)/$$i; done
+endef
+
 #
 #
 #

@@ -25,6 +25,11 @@ PYTHON_INSTALL = \
 PYTHON_MAJOR = 2.7
 PYTHON_MINOR = 11
 PYTHON_VER = $(PYTHON_MAJOR).$(PYTHON_MINOR)
+PYTHON_PATCH  = python-$(PYTHON_VER)-xcompile.patch
+PYTHON_PATCH += python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch
+PYTHON_PATCH += python-$(PYTHON_VER).patch
+PYTHON_PATCH += python-$(PYTHON_VER)-pgettext.patch
+
 # backwards compatibility
 PYTHON_VERSION = $(PYTHON_MAJOR)
 PYTHON_DIR = /usr/lib/python$(PYTHON_VERSION)
@@ -38,10 +43,7 @@ $(D)/host_python: $(ARCHIVE)/Python-$(PYTHON_VER).tar.xz
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(UNTAR)/Python-$(PYTHON_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VER); \
-		$(PATCH)/python-$(PYTHON_VER)-xcompile.patch; \
-		$(PATCH)/python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch; \
-		$(PATCH)/python-$(PYTHON_VER).patch; \
-		$(PATCH)/python-$(PYTHON_VER)-pgettext.patch; \
+		$(call post_patch,$(PYTHON_PATCH)); \
 		autoconf; \
 		CONFIG_SITE= \
 		OPT="$(HOST_CFLAGS)" \
@@ -73,10 +75,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(UNTAR)/Python-$(PYTHON_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VER); \
-		$(PATCH)/python-$(PYTHON_VER)-xcompile.patch; \
-		$(PATCH)/python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch; \
-		$(PATCH)/python-$(PYTHON_VER).patch; \
-		$(PATCH)/python-$(PYTHON_VER)-pgettext.patch; \
+		$(call post_patch,$(PYTHON_PATCH)); \
 		CONFIG_SITE= \
 		$(BUILDENV) \
 		autoreconf --verbose --install --force Modules/_ctypes/libffi; \
@@ -213,6 +212,7 @@ $(D)/python_twisted: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE
 # python_imaging
 #
 PYTHON_IMAGING_VER = 1.1.7
+PYTHON_IMAGING_PATCH = python-imaging-$(PYTHON_IMAGING_VER).patch
 
 $(ARCHIVE)/Imaging-$(PYTHON_IMAGING_VER).tar.gz:
 	$(WGET) http://effbot.org/downloads/Imaging-$(PYTHON_IMAGING_VER).tar.gz
@@ -222,7 +222,7 @@ $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/libfreetype $(D)/python $(
 	$(REMOVE)/Imaging-$(PYTHON_IMAGING_VER)
 	$(UNTAR)/Imaging-$(PYTHON_IMAGING_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/Imaging-$(PYTHON_IMAGING_VER); \
-		$(PATCH)/python-imaging-$(PYTHON_IMAGING_VER).patch; \
+		$(call post_patch,$(PYTHON_IMAGING_PATCH)); \
 		sed -ie "s|"darwin"|"darwinNot"|g" "setup.py"; \
 		sed -ie "s|ZLIB_ROOT = None|ZLIB_ROOT = libinclude(\"${TARGETPREFIX}/usr\")|" "setup.py"; \
 		$(PYTHON_INSTALL)
@@ -233,6 +233,7 @@ $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/libfreetype $(D)/python $(
 # python_pycrypto
 #
 PYTHON_PYCRYPTO_VER = 2.6.1
+PYTHON_PYCRYPTO_PATCH = python-pycrypto-$(PYTHON_PYCRYPTO_VER).patch
 
 $(ARCHIVE)/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz:
 	$(WGET) http://pypi.python.org/packages/source/p/pycrypto/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
@@ -242,7 +243,7 @@ $(D)/python_pycrypto: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIV
 	$(REMOVE)/pycrypto-$(PYTHON_PYCRYPTO_VER)
 	$(UNTAR)/pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pycrypto-$(PYTHON_PYCRYPTO_VER); \
-		$(PATCH)/python-pycrypto-$(PYTHON_PYCRYPTO_VER).patch; \
+		$(call post_patch,$(PYTHON_PYCRYPTO_PATCH)); \
 		export ac_cv_func_malloc_0_nonnull=yes; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -391,6 +392,7 @@ $(D)/python_cryptography: $(D)/bootstrap $(D)/libffi $(D)/python $(D)/python_set
 # python_pyopenssl
 #
 PYTHON_PYOPENSSL_VER = 0.13.1
+PYTHON_PYOPENSSL_PATCH = python-pyopenssl-$(PYTHON_PYOPENSSL_VER).patch
 
 $(ARCHIVE)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER).tar.gz:
 	$(WGET) http://pypi.python.org/packages/source/p/pyOpenSSL/pyOpenSSL-$(PYTHON_PYOPENSSL_VER).tar.gz
@@ -400,7 +402,7 @@ $(D)/python_pyopenssl: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHI
 	$(REMOVE)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER)
 	$(UNTAR)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER); \
-		$(PATCH)/python-pyopenssl-$(PYTHON_PYOPENSSL_VER).patch; \
+		$(call post_patch,$(PYTHON_PYOPENSSL_PATCH)); \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/pyOpenSSL-$(PYTHON_PYOPENSSL_VER)
 	$(TOUCH)
