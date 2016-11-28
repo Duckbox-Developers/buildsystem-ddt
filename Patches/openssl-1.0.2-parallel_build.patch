@@ -24,7 +24,7 @@
  
  all_testapps: build_libs build_testapps
  build_testapps:
-@@ -464,7 +464,7 @@
+@@ -469,7 +469,7 @@
  	@set -e; target=update; $(RECURSIVE_BUILD_CMD)
  
  depend:
@@ -33,7 +33,7 @@
  
  lint:
  	@set -e; target=lint; $(RECURSIVE_BUILD_CMD)
-@@ -526,9 +526,9 @@
+@@ -531,9 +531,9 @@
  	@$(MAKE) SDIRS='$(SDIRS)' clean
  	@$(MAKE) TAR='$(TAR)' TARFLAGS='$(TARFLAGS)' $(DISTTARVARS) tar
  
@@ -45,7 +45,7 @@
  	@$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/bin \
  		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR) \
  		$(INSTALL_PREFIX)$(INSTALLTOP)/$(LIBDIR)/engines \
-@@ -537,12 +537,19 @@
+@@ -542,12 +542,19 @@
  		$(INSTALL_PREFIX)$(OPENSSLDIR)/misc \
  		$(INSTALL_PREFIX)$(OPENSSLDIR)/certs \
  		$(INSTALL_PREFIX)$(OPENSSLDIR)/private
@@ -66,7 +66,7 @@
  	@set -e; liblist="$(LIBS)"; for i in $$liblist ;\
  	do \
  		if [ -f "$$i" ]; then \
-@@ -626,12 +633,7 @@
+@@ -631,12 +633,7 @@
  		done; \
  	done
  
