@@ -178,7 +178,7 @@ $(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(D)/libcurl $(ARCHIVE)/opkg-$(OPKG_VER
 		; \
 		$(MAKE) all ; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	install -d -m 0755 $(TARGETPREFIX)/var/lib/opkg
+	install -d -m 0755 $(TARGETPREFIX)/usr/lib/opkg
 	install -d -m 0755 $(TARGETPREFIX)/etc/opkg
 	$(REWRITE_LIBTOOL)/libopkg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libopkg.pc
