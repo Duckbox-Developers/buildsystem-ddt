@@ -1,0 +1,16 @@
+Use max playlist quality if connection speed not set.
+Based on christophecvr idea: http://forums.openpli.org/topic/29501-gstreamer-10/page-119#entry542926
+
+--- a/ext/hls/gsthlsdemux.c	2016-11-19 18:29:30.904483471 +0200
++++ b/ext/hls/gsthlsdemux.c	2016-11-19 18:35:03.735842813 +0200
+@@ -587,6 +587,10 @@
+     return FALSE;
+   }
+ 
++  /* use max playlist quality if connection speed not set */
++  if (demux->connection_speed == 0)
++    demux->connection_speed = 4294967;
++
+   /* select the initial variant stream */
+   if (demux->connection_speed == 0) {
+     variant = hlsdemux->master->default_variant;
