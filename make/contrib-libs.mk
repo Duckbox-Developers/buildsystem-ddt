@@ -97,12 +97,14 @@ $(D)/host_libffi: $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 #
 # libffi
 #
+LIBFFI_PATCH = libffi-$(LIBFFI_VER).patch
+
 $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/libffi-$(LIBFFI_VER).tar.gz
 	@set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
-		$(PATCH)/libffi-$(LIBFFI_VER).patch; \
+		$(call post_patch,$(LIBFFI_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -290,6 +292,10 @@ $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VER).tar.gz
 #
 OPENSSL_VER = 1.0.2
 OPENSSL_SUBVER = j
+OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-optimize-for-size.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-makefile-dirs.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-disable_doc_tests.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-parallel_build.patch
 
 $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
@@ -299,11 +305,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
 	$(UNTAR)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
 	@set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER); \
-		$(PATCH)/openssl-$(OPENSSL_VER)-optimize-for-size.patch; \
-		$(PATCH)/openssl-$(OPENSSL_VER)-makefile-dirs.patch; \
-		$(PATCH)/openssl-$(OPENSSL_VER)-disable_doc_tests.patch; \
-		$(PATCH)/openssl-$(OPENSSL_VER)-remove_timestamp_check.patch; \
-		$(PATCH)/openssl-$(OPENSSL_VER)-parallel_build.patch; \
+		$(call post_patch,$(OPENSSL_PATCH)); \
 		$(BUILDENV) \
 		./Configure \
 			-DL_ENDIAN \
@@ -329,6 +331,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 # libbluray
 #
 LIBBLURAY_VER = 0.5.0
+LIBBLURAY_PATCH = libbluray-$(LIBBLURAY_VER).patch
 
 $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2:
 	$(WGET) http://ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VER)/libbluray-$(LIBBLURAY_VER).tar.bz2
@@ -338,7 +341,7 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2
 	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
 	$(UNTAR)/libbluray-$(LIBBLURAY_VER).tar.bz2
 	@set -e; cd $(BUILD_TMP)/libbluray-$(LIBBLURAY_VER); \
-		$(PATCH)/libbluray-$(LIBBLURAY_VER).patch; \
+		$(call post_patch,$(LIBBLURAY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -366,6 +369,7 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2
 LUA_VER = 5.2.4
 LUA_VER_SHORT = 5.2
 LUAPOSIX_VER = 31
+LUAPOSIX_PATCH = lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch
 
 $(ARCHIVE)/lua-$(LUA_VER).tar.gz:
 	$(WGET) http://www.lua.org/ftp/lua-$(LUA_VER).tar.gz
@@ -379,7 +383,7 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
 	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
 	$(UNTAR)/lua-$(LUA_VER).tar.gz
 	@set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
-		$(PATCH)/lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch; \
+		$(call post_patch,$(LUAPOSIX_PATCH)); \
 		cp -r $(ARCHIVE)/luaposix.git .; \
 		cd luaposix.git/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
 		cd luaposix.git/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); cd ../..; \
@@ -415,6 +419,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
 # luaexpat
 #
 LUAEXPAT_VER = 1.3.0
+LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
 
 $(ARCHIVE)/luaexpat-$(LUAEXPAT_VER).tar.gz:
 	$(WGET) http://matthewwild.co.uk/projects/luaexpat/luaexpat-$(LUAEXPAT_VER).tar.gz
@@ -424,7 +429,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/luaexpat-$(LUAEX
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
 	$(UNTAR)/luaexpat-$(LUAEXPAT_VER).tar.gz
 	@set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VER); \
-		$(PATCH)/luaexpat-$(LUAEXPAT_VER).patch; \
+		$(call post_patch,$(LUAEXPAT_PATCH)); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" PREFIX=$(TARGETPREFIX)/usr; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)/usr
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
@@ -469,6 +474,7 @@ $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 # luasoap
 #
 LUASOAP_VER = 3.0
+LUASOAP_PATCH = luasoap-$(LUASOAP_VER).patch
 
 $(ARCHIVE)/luasoap-$(LUASOAP_VER).tar.gz:
 	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/luasoap-$(LUASOAP_VER).tar.gz
@@ -478,7 +484,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/lu
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(UNTAR)/luasoap-$(LUASOAP_VER).tar.gz
 	@set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
-		$(PATCH)/luasoap-$(LUASOAP_VER).patch; \
+		$(call post_patch,$(LUASOAP_PATCH)); \
 		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(TOUCH)
@@ -501,6 +507,7 @@ BOOST_MAJOR = 1
 BOOST_MINOR = 61
 BOOST_MICRO = 0
 BOOST_VER = $(BOOST_MAJOR)_$(BOOST_MINOR)_$(BOOST_MICRO)
+BOOST_PATCH = libboost.patch
 
 $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/boost/files/boost/$(BOOST_MAJOR).$(BOOST_MINOR).$(BOOST_MICRO)/boost_$(BOOST_VER).tar.bz2
@@ -510,7 +517,7 @@ $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2
 	$(REMOVE)/boost_$(BOOST_VER)
 	$(UNTAR)/boost_$(BOOST_VER).tar.bz2
 	@set -e; cd $(BUILD_TMP)/boost_$(BOOST_VER); \
-		$(PATCH)/libboost.patch; \
+		$(call post_patch,$(BOOST_PATCH)); \
 		rm -rf $(TARGETPREFIX)/usr/include/boost; \
 		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGETPREFIX)/usr/include/boost
 	$(REMOVE)/boost_$(BOOST_VER)
