@@ -693,7 +693,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 #
 # libjpeg
 #
-JPEG_VER = 9b
+JPEG_VER = 8d
 JPEG_PATCH = jpeg-$(JPEG_VER).patch
 
 $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz:
