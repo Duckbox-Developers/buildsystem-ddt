@@ -60,18 +60,24 @@ OCTAGON1008_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
 
-ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) \
+ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) $(ATEVIO7500_KERNEL_PATCH) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-atevio7500_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(ENIGMA2),linux-sh4-atevio7500_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch
 
-HS7110_PATCHES_24 = $(COMMON_PATCHES_24) \
+ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
+ATEVIO7500_KERNEL_PATCH += linux-sh4-atevio7500_mtdconcat_stm24_$(KERNEL_LABEL).patch
+endif
+
+HS7110_PATCHES_24 = $(COMMON_PATCHES_24) $(HS7110_KERNEL_PATCH) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7110_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(NEUTRINO),linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+
+ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+HS7110_KERNEL_PATCH += linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch
+endif
 
 HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
@@ -262,13 +268,13 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	(echo "Getting STlinux kernel source"; git clone -n $$REPO $(ARCHIVE)/linux-sh4-2.6.32.71.git); \
 	(echo "Copying kernel source code to build environment"; cp -ra $(ARCHIVE)/linux-sh4-2.6.32.71.git $(KERNEL_DIR)); \
 	(echo "Applying patch level P$(KERNEL_LABEL)"; cd $(KERNEL_DIR); git checkout -q $(HOST_KERNEL_REVISION))
-	set -e; cd $(KERNEL_DIR); \
+	@set -e; cd $(KERNEL_DIR); \
 		for i in $(HOST_KERNEL_PATCHES); do \
 			echo -e "==> \033[31mApplying Patch:\033[0m $$i"; \
 			patch -p1 -i $(PATCHES)/$(BUILD_CONFIG)/$$i; \
 		done
-		install -m 644 $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) $(KERNEL_DIR)/.config
-		sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(CDK_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
+	install -m 644 $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) $(KERNEL_DIR)/.config
+	sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(CDK_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
 	-rm $(KERNEL_DIR)/localversion*
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm
 ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
@@ -299,12 +305,12 @@ endif
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
-	set -e; cd $(KERNEL_DIR); \
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
-	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
+	@set -e; cd $(KERNEL_DIR); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
 	$(TOUCH)
 
 $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
