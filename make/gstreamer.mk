@@ -53,7 +53,6 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glib-networking $
 # gst_plugins_base
 #
 GSTREAMER_BASE_VER = $(GSTREAMER_VER)
-#GSTREAMER_BASE_PATCH  = gst-plugins-base-$(GSTREAMER_BASE_VER)-get-caps-from-src-pad-when-query-caps.patch
 GSTREAMER_BASE_PATCH  = gst-plugins-base-$(GSTREAMER_BASE_VER)-riff-media-added-fourcc-to-all-mpeg4-video-caps.patch
 GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-ca.patch
 GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-subparse-avoid-false-negatives-dealing-with-UTF-8.patch
@@ -125,7 +124,6 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 #
 GSTREAMER_GOOD_VER = $(GSTREAMER_VER)
 GSTREAMER_GOOD_PATCH  =
-#GSTREAMER_GOOD_PATCH += gst-plugins-good-$(GSTREAMER_GOOD_VER)-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch
 
 $(ARCHIVE)/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-$(GSTREAMER_GOOD_VER).tar.xz
