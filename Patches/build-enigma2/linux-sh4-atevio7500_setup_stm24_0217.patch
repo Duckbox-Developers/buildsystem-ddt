@@ -35,8 +35,8 @@
  	/* Save unparsed command line copy for /proc/cmdline */
  	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
  	*cmdline_p = command_line;
---- linux-sh4/arch/sh/boards/mach-mb680/setup.c.orig	2012-03-12 06:26:12.000000000 -0700
-+++ linux-sh4/arch/sh/boards/mach-mb680/setup.c	2012-03-24 01:32:14.571136001 -0700
+--- a/arch/sh/boards/mach-mb680/setup.c
++++ b/arch/sh/boards/mach-mb680/setup.c
 @@ -26,11 +26,12 @@
  #include <linux/mtd/mtd.h>
  #include <linux/mtd/physmap.h>
@@ -222,7 +222,7 @@
 +		.name   = "Real_ROOT", //mtd5
 +		.size   = 0x01D00000,  //29M, 128k hole at 0x20FE0000 is used for force flash
 +		.offset = 0x003E0000,  //3.875M
-+	 },
++	},
 +	{
 +		.name   = "Config",    //mtd6
 +		.size   = 0x00100000,  //1M

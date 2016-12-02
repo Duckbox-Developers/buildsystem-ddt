@@ -1,5 +1,6 @@
 --- b/drivers/stm/stx7100_audio.c
 +++ a/drivers/stm/stx7100_audio.c
+@@ -1,5 +1,5 @@
  /*
 - * Copyright (c) 2010-2011 STMicroelectronics Limited
 + * (c) 2010 STMicroelectronics Limited
