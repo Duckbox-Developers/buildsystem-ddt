@@ -192,6 +192,32 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# tfd2mtd
+#
+$(D)/tools-tfd2mtd: $(D)/bootstrap
+	$(START_BUILD)
+	@set -e; cd $(APPS_DIR)/tools/tfd2mtd; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(TOUCH)
+
+#
+# tffpctl
+#
+$(D)/tools-tffpctl: $(D)/bootstrap
+	$(START_BUILD)
+	@set -e; cd $(APPS_DIR)/tools/tffpctl; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(TOUCH)
+
+#
 # ustslave
 #
 $(D)/tools-ustslave: $(D)/bootstrap
@@ -240,10 +266,16 @@ TOOLS += $(D)/tools-devinit
 TOOLS += $(D)/tools-evremote2
 TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-hotplug
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250 hd cuberevo_2000hd cuberevo_3000hd))
 TOOLS += $(D)/tools-ipbox_eeprom
+endif
 TOOLS += $(D)/tools-showiframe
 TOOLS += $(D)/tools-stfbcontrol
 TOOLS += $(D)/tools-streamproxy
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
+TOOLS += $(D)/tools-tfd2mtd
+TOOLS += $(D)/tools-tffpctl
+endif
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
