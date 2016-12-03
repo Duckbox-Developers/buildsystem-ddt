@@ -274,7 +274,7 @@ endif
 TOOLS += $(D)/tools-showiframe
 TOOLS += $(D)/tools-stfbcontrol
 TOOLS += $(D)/tools-streamproxy
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 TOOLS += $(D)/tools-tfd2mtd
 TOOLS += $(D)/tools-tffpctl
 endif
