@@ -99,8 +99,8 @@ release_neutrino_ipbox9900: release_neutrino_common_ipbox
 	echo "ipbox9900" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/rmu/rmu.ko $(RELEASE_DIR)/lib/modules/
-	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
+	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 
 #
 # release_ipbox99
@@ -108,8 +108,8 @@ release_neutrino_ipbox9900: release_neutrino_common_ipbox
 release_neutrino_ipbox99: release_neutrino_common_ipbox
 	echo "ipbox99" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
-	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
+	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 
 #
 # release_ipbox55
@@ -310,8 +310,8 @@ release_neutrino_hs7429: release_enigma2_common_utils
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGETPREFIX)/boot/video_7111.elf $(RELEASE_DIR)/lib/firmware/video.elf
-	cp $(TARGETPREFIX)/boot/audio_7111.elf $(RELEASE_DIR)/lib/firmware/audio.elf
+	cp $(SKEL_ROOT)/boot/video_7111.elf $(RELEASE_DIR)/lib/firmware/video.elf
+	cp $(SKEL_ROOT)/boot/audio_7111.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #

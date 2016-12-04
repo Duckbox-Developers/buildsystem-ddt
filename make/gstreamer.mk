@@ -171,7 +171,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 		$(call post_patch,$(GSTREAMER_BAD_PATCH)); \
 		$(BUILDENV) \
 		autoreconf --force --install; \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \

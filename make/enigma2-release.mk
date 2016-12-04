@@ -102,8 +102,8 @@ release_enigma2_ipbox9900: release_enigma2_common_ipbox
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/rmu/rmu.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
-	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
+	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
 #
 # release_ipbox99
@@ -112,8 +112,8 @@ release_enigma2_ipbox99: release_enigma2_common_ipbox
 	echo "ipbox99" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
-	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
+	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
 #
 # release_ipbox55
@@ -121,8 +121,8 @@ release_enigma2_ipbox99: release_enigma2_common_ipbox
 release_enigma2_ipbox55: release_enigma2_common_ipbox
 	echo "ipbox55" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox55/front.ko $(RELEASE_DIR)/lib/modules/
-	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox55 $(RELEASE_DIR)/usr/bin/tvmode
+	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ipbox.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
 #
 # release_ufs910
@@ -329,8 +329,8 @@ release_enigma2_hs7429: release_enigma2_common_utils
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGETPREFIX)/boot/video_7111.elf $(RELEASE_DIR)/boot/video.elf
-	cp $(TARGETPREFIX)/boot/audio_7111.elf $(RELEASE_DIR)/boot/audio.elf
+	cp $(SKEL_ROOT)/boot/video_7111.elf $(RELEASE_DIR)/boot/video.elf
+	cp $(SKEL_ROOT)/boot/audio_7111.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_fortis.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -499,7 +499,6 @@ release_enigma2_sagemcom88:
 	cp $(SKEL_ROOT)/boot/audio_7105.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_sagemcom88.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/sbin/lircmd $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
@@ -507,6 +506,7 @@ release_enigma2_sagemcom88:
 	cp -p $(TARGETPREFIX)/usr/bin/irsend $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/irw $(RELEASE_DIR)/usr/bin/
 	cp -dp $(SKEL_ROOT)/release/lircd_sagemcom88.conf $(RELEASE_DIR)/etc/lircd.conf
+	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_sagemcom88.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
 #
 # release_arivalink200
@@ -520,7 +520,6 @@ release_enigma2_arivalink200:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
-	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_arivalink200.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	cp -p $(TARGETPREFIX)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/sbin/lircmd $(RELEASE_DIR)/usr/bin/
 	cp -p $(TARGETPREFIX)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
@@ -529,6 +528,7 @@ release_enigma2_arivalink200:
 	cp -p $(TARGETPREFIX)/usr/bin/irw $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	cp -dp $(SKEL_ROOT)/release/lircd_arivalink200.conf $(RELEASE_DIR)/etc/lircd.conf
+	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_arivalink200.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
 #
 # release_base

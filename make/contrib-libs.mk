@@ -85,7 +85,7 @@ $(D)/host_libffi: $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/libffi-$(LIBFFI_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
 			--disable-static \
 		; \
@@ -137,7 +137,7 @@ $(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 	export PKG_CONFIG=/usr/bin/pkg-config; \
 	export PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig; \
 	set -e; cd $(BUILD_TMP)/glib-$(GLIB_VER); \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--enable-static=yes \
 			--enable-shared=no \
 			--prefix=`pwd`/out \
@@ -406,7 +406,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
 		then cd $(ARCHIVE)/luacurl.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/Lua-cURL/Lua-cURLv3.git luacurl.git; \
 		fi
-	@cp -ra $(ARCHIVE)/luacurl.git $(BUILD_TMP)/luacurl
+	cp -ra $(ARCHIVE)/luacurl.git $(BUILD_TMP)/luacurl
 	set -e; cd $(BUILD_TMP)/luacurl; \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" \
 			LIBDIR=$(TARGETPREFIX)/usr/lib \
@@ -445,7 +445,7 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua
 		then cd $(ARCHIVE)/luasocket.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/diegonehab/luasocket.git luasocket.git; \
 		fi
-	@cp -ra $(ARCHIVE)/luasocket.git $(BUILD_TMP)/luasocket
+	cp -ra $(ARCHIVE)/luasocket.git $(BUILD_TMP)/luasocket
 	set -e; cd $(BUILD_TMP)/luasocket; \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGETPREFIX)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGETPREFIX)/usr@" src/makefile; \
 		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VER_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGETPREFIX)/usr/include LUAPREFIX_linux=; \
@@ -463,7 +463,7 @@ $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 		then cd $(ARCHIVE)/lua-feedparser.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/slact/lua-feedparser.git lua-feedparser.git; \
 		fi
-	@cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
+	cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
 	set -e; cd $(BUILD_TMP)/lua-feedparser; \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
 		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
@@ -878,6 +878,9 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).
 			--disable-pop3 \
 			--disable-smtp \
 			--enable-shared \
+			--disable-ldap \
+			--without-libidn \
+			--without-libpsl \
 			--with-random \
 			--with-ssl=$(TARGETPREFIX) \
 		; \
@@ -1222,7 +1225,7 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_
 	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VER); \
 		$(call post_patch,$(LIBDVDNAV_PATCH)); \
 		$(BUILDENV) \
-		libtoolize --copy --ltdl --force; \
+		libtoolize --copy --force --quiet --ltdl; \
 		./autogen.sh \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
@@ -1278,13 +1281,13 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 		then cd $(ARCHIVE)/libdreamdvd.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
 		fi
-	@cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
+	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
 	set -e; cd $(BUILD_TMP)/libdreamdvd; \
 		$(call post_patch,$(LIBDREAMDVD_PATCH)); \
 		$(BUILDENV) \
-		libtoolize --copy --ltdl --force; \
+		libtoolize --copy --ltdl --force --quiet; \
 		autoreconf --verbose --force --install; \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1861,7 +1864,7 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
 		then cd $(ARCHIVE)/graphlcd-base-touchcol.git; git pull; \
 		else cd $(ARCHIVE); git clone -b touchcol git://projects.vdr-developer.org/graphlcd-base.git graphlcd-base-touchcol.git; \
 		fi
-	@cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd
+	cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd
 	set -e; cd $(BUILD_TMP)/graphlcd; \
 		$(call post_patch,$(GRAPHLCD_PATCH)); \
 		export TARGET=$(TARGET)-; \
@@ -1881,10 +1884,10 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
 		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
 		fi
-	@cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
+	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	set -e; cd $(BUILD_TMP)/lcd4linux; \
 		$(BUILDENV) ./bootstrap; \
-		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
+		$(BUILDENV) ./configure $(CONFIGURE_SILENT) $(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--with-drivers='DPF,SamsungSPF' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
@@ -2064,7 +2067,7 @@ $(D)/libopenthreads: $(D)/bootstrap
 		then cd $(ARCHIVE)/library-openthreads.git; git pull; \
 		else cd $(ARCHIVE); git clone --recursive git://github.com/tuxbox-neutrino/library-openthreads.git library-openthreads.git; \
 		fi
-	@cp -ra $(ARCHIVE)/library-openthreads.git $(BUILD_TMP)/openthreads
+	cp -ra $(ARCHIVE)/library-openthreads.git $(BUILD_TMP)/openthreads
 	set -e; cd $(BUILD_TMP)/openthreads; \
 		git submodule init; \
 		git submodule update; \
@@ -2098,7 +2101,7 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 		then cd $(ARCHIVE)/rtmpdump.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/oe-alliance/rtmpdump.git rtmpdump.git; \
 		fi
-	@cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump
+	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump
 	set -e; cd $(BUILD_TMP)/librtmpdump; \
 		$(call post_patch,$(LIBRTMPDUMP_PATCH)); \
 		$(BUILDENV) \
@@ -2120,7 +2123,7 @@ $(D)/libdvbsi++: $(D)/bootstrap
 		then cd $(ARCHIVE)/libdvbsi++.git; git pull; \
 		else cd $(ARCHIVE); git clone git://git.opendreambox.org/git/obi/libdvbsi++.git libdvbsi++.git; \
 		fi
-	@cp -ra $(ARCHIVE)/libdvbsi++.git $(BUILD_TMP)/libdvbsi++
+	cp -ra $(ARCHIVE)/libdvbsi++.git $(BUILD_TMP)/libdvbsi++
 	set -e; cd $(BUILD_TMP)/libdvbsi++; \
 		$(call post_patch,$(LIBDVBSI++_PATCH)); \
 		$(CONFIGURE) \

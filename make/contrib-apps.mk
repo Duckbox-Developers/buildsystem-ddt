@@ -41,7 +41,7 @@ $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
 	$(UNTAR)/pkg-config-$(PKGCONFIG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VER); \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
@@ -102,7 +102,7 @@ $(D)/gdb-remote: $(ARCHIVE)/gdb-$(GDB_VER).tar.xz | $(TARGETPREFIX)
 	$(REMOVE)/gdb-$(GDB_VER)
 	$(UNTAR)/gdb-$(GDB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--nfp --disable-werror \
 			--prefix=$(HOSTPREFIX) \
 			--build=$(BUILD) \
@@ -121,7 +121,7 @@ $(D)/gdb: $(D)/bootstrap $(D)/libncurses $(D)/zlib $(ARCHIVE)/gdb-$(GDB_VER).tar
 	$(UNTAR)/gdb-$(GDB_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
 		$(call post_patch,$(GDB_PATCH)); \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--host=$(BUILD) \
 			--build=$(BUILD) \
 			--target=$(TARGET) \
@@ -152,7 +152,7 @@ $(D)/opkg-host: $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
 		autoreconf -v --install; \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--prefix= \
 			--disable-gpg \
 			--disable-shared \
@@ -229,7 +229,7 @@ $(D)/host_module_init_tools: $(ARCHIVE)/module-init-tools-$(MODULE_INIT_TOOLS_VE
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
 		$(call post_patch,$(MODULE_INIT_TOOLS_HOST_PATCH)); \
 		autoreconf -fi; \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
 			--sbindir=$(HOSTPREFIX)/bin \
 		; \
@@ -521,7 +521,7 @@ $(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/glib2 $(ARCHIVE)/mc-$(MC_VER).tar.x
 	set -e; cd $(BUILD_TMP)/mc-$(MC_VER); \
 		autoreconf -fi; \
 		$(BUILDENV) \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=$(DEFAULT_PREFIX) \
@@ -851,7 +851,7 @@ $(D)/imagemagick: $(D)/bootstrap $(ARCHIVE)/ImageMagick-$(IMAGEMAGICK_VER).tar.g
 		$(BUILDENV) \
 		CFLAGS="-O1" \
 		PKG_CONFIG=$(PKG_CONFIG) \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1197,7 +1197,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/samba-$(SAMBA_VER).tar.gz
 		$(BUILDENV) \
 		libreplace_cv_HAVE_GETADDRINFO=no \
 		libreplace_cv_READDIR_NEEDED=no \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix= \
@@ -1444,7 +1444,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/openssh-$(OPENSSH
 	$(UNTAR)/openssh-$(OPENSSH_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/openssh-$(OPENSSH_VER); \
 		CC=$(TARGET)-gcc; \
-		./configure \
+		./configure $(CONFIGURE_SILENT) \
 			$(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--mandir=/.remove \
