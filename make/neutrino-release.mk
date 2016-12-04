@@ -947,13 +947,11 @@ endif
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-
 	@echo "***************************************************************"
 	@echo -e "\033[01;32m"
 	@echo " Build of Neutrino for $(BOXTYPE) successfully completed."
 	@echo -e "\033[00m"
 	@echo "***************************************************************"
-
 #
 # release-clean
 #

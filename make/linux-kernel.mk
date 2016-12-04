@@ -1,6 +1,3 @@
-#
-# IMPORTANT: it is expected that only one define is set
-#
 DEPMOD = $(HOSTPREFIX)/bin/depmod
 
 #
@@ -60,23 +57,21 @@ OCTAGON1008_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
 
-ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) $(ATEVIO7500_KERNEL_PATCH) \
+ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-atevio7500_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch
-
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
-ATEVIO7500_KERNEL_PATCH += linux-sh4-atevio7500_mtdconcat_stm24_$(KERNEL_LABEL).patch
+ATEVIO7500_PATCHES_24 += linux-sh4-atevio7500_mtdconcat_stm24_$(KERNEL_LABEL).patch
 endif
 
-HS7110_PATCHES_24 = $(COMMON_PATCHES_24) $(HS7110_KERNEL_PATCH) \
+HS7110_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7110_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
-
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
-HS7110_KERNEL_PATCH += linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch
+HS7110_PATCHES_24 += linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch
 endif
 
 HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
@@ -88,9 +83,11 @@ HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
 HS7420_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7420_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(NEUTRINO),linux-sh4-hs7420_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+HS7420_PATCHES_24 += linux-sh4-hs7420_mtdconcat_stm24_$(KERNEL_LABEL).patch
+endif
 
 HS7429_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
@@ -101,9 +98,11 @@ HS7429_PATCHES_24 = $(COMMON_PATCHES_24) \
 HS7810A_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-hs7810a_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(NEUTRINO),linux-sh4-hs7810a_mtdconcat_stm24_$(KERNEL_LABEL).patch) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
+ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+HS7810A_PATCHES_24 += linux-sh4-hs7810a_mtdconcat_stm24_$(KERNEL_LABEL).patch
+endif
 
 HS7819_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
@@ -268,7 +267,7 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	(echo "Getting STlinux kernel source"; git clone -n $$REPO $(ARCHIVE)/linux-sh4-2.6.32.71.git); \
 	(echo "Copying kernel source code to build environment"; cp -ra $(ARCHIVE)/linux-sh4-2.6.32.71.git $(KERNEL_DIR)); \
 	(echo "Applying patch level P$(KERNEL_LABEL)"; cd $(KERNEL_DIR); git checkout -q $(HOST_KERNEL_REVISION))
-	@set -e; cd $(KERNEL_DIR); \
+	set -e; cd $(KERNEL_DIR); \
 		for i in $(HOST_KERNEL_PATCHES); do \
 			echo -e "==> \033[31mApplying Patch:\033[0m $$i"; \
 			patch -p1 -i $(PATCHES)/$(BUILD_CONFIG)/$$i; \
@@ -305,7 +304,7 @@ endif
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
-	@set -e; cd $(KERNEL_DIR); \
+	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig; \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm; \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h; \
@@ -356,7 +355,7 @@ linux-kernel.menuconfig linux-kernel.xconfig: \
 linux-kernel.%:
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- $*
 	@echo ""
-	@echo "You have to edit m a n u a l l y $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) to make changes permanent !!!"
+	@echo "You have to edit $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) m a n u a l l y to make changes permanent !!!"
 	@echo ""
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config
 	@echo ""

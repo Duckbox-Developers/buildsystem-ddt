@@ -18,7 +18,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 	$(START_BUILD)
 	$(REMOVE)/links-$(LINKS_VER)
 	$(UNTAR)/links-$(LINKS_VER).tar.bz2
-	@set -e; cd $(BUILD_TMP)/links-$(LINKS_VER); \
+	set -e; cd $(BUILD_TMP)/links-$(LINKS_VER); \
 		$(call post_patch,$(LINKS_PATCH)); \
 		$(CONFIGURE) \
 			--host=$(TARGET) \
@@ -53,7 +53,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 $(D)/neutrino-mp-plugins.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
-	@set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
+	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
 		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git; git pull; \
 		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git; \
 		fi
@@ -108,13 +108,13 @@ neutrino-mp-plugins-distclean:
 $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 	$(START_BUILD)
 	$(REMOVE)/xupnpd
-	@set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
 		then cd $(ARCHIVE)/xupnpd.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
-	@set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
-	@set -e; cd $(BUILD_TMP)/xupnpd/src; \
+	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
+	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) TARGET=$(TARGET) sh4; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
@@ -132,12 +132,12 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 $(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 	$(START_BUILD)
 	$(REMOVE)/plugins-scripts-lua
-	@set -e; if [ -d $(ARCHIVE)/cst-public-plugins-scripts-lua.git ]; \
+	set -e; if [ -d $(ARCHIVE)/cst-public-plugins-scripts-lua.git ]; \
 		then cd $(ARCHIVE)/cst-public-plugins-scripts-lua.git; git pull; \
 		else cd $(ARCHIVE); git clone https://github.com/coolstreamtech/cst-public-plugins-scripts-lua.git cst-public-plugins-scripts-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/cst-public-plugins-scripts-lua.git/plugins $(BUILD_TMP)/plugins-scripts-lua
-	@set -e; cd $(BUILD_TMP)/plugins-scripts-lua; \
+	set -e; cd $(BUILD_TMP)/plugins-scripts-lua; \
 		install -d $(TARGETPREFIX)/var/tuxbox/plugins
 		cp -R $(BUILD_TMP)/plugins-scripts-lua/ard_mediathek/* $(TARGETPREFIX)/var/tuxbox/plugins/
 		cp -R $(BUILD_TMP)/plugins-scripts-lua/favorites2bin/* $(TARGETPREFIX)/var/tuxbox/plugins/
@@ -159,7 +159,7 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 	cd $(SOURCE_DIR)/neutrino-hd2.git && git add --all
 	for i in $(NEUTRINO_HD2_PLUGINS_PATCHES); do \
 		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
-		@set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
+		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
 	done;
 	$(TOUCH)
 

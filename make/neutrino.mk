@@ -75,7 +75,7 @@ $(D)/libstb-hal-cst-next-max.do_prepare:
 	git clone git://github.com/MaxWiesel/libstb-hal-cst-next-max.git $(ARCHIVE)/libstb-hal-cst-next-max.git; \
 	cp -ra $(ARCHIVE)/libstb-hal-cst-next-max.git $(SOURCE_DIR)/libstb-hal-cst-next-max;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-max $(SOURCE_DIR)/libstb-hal-cst-next-max.org
-	@set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-max; \
+	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-max; \
 		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES))
 	$(TOUCH)
 
@@ -141,7 +141,7 @@ $(D)/neutrino-mp-cst-next-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst
 	git clone -b duckbox git://github.com/MaxWiesel/cst-public-gui-neutrino.git $(ARCHIVE)/cst-public-gui-neutrino-max.git; \
 	cp -ra $(ARCHIVE)/cst-public-gui-neutrino-max.git $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next-max $(SOURCE_DIR)/neutrino-mp-cst-next-max.org
-	@set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_MAX_PATCHES))
 	$(TOUCH)
 
@@ -231,7 +231,7 @@ $(D)/libstb-hal-cst-next.do_prepare:
 	git clone https://github.com/Duckbox-Developers/libstb-hal-cst-next.git $(ARCHIVE)/libstb-hal-cst-next.git; \
 	cp -ra $(ARCHIVE)/libstb-hal-cst-next.git $(SOURCE_DIR)/libstb-hal-cst-next;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next $(SOURCE_DIR)/libstb-hal-cst-next.org
-	@set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next; \
+	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next; \
 		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
 	$(TOUCH)
 
@@ -297,7 +297,7 @@ $(D)/neutrino-mp-cst-next.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-nex
 	git clone https://github.com/Duckbox-Developers/neutrino-mp-cst-next.git $(ARCHIVE)/neutrino-mp-cst-next.git; \
 	cp -ra $(ARCHIVE)/neutrino-mp-cst-next.git $(SOURCE_DIR)/neutrino-mp-cst-next; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next $(SOURCE_DIR)/neutrino-mp-cst-next.org
-	@set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_PATCHES))
 	$(TOUCH)
 
@@ -402,7 +402,7 @@ $(D)/neutrino-mp-cst-next-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-
 	git clone -b ni https://github.com/Duckbox-Developers/neutrino-mp-cst-next.git $(ARCHIVE)/neutrino-mp-cst-next-ni.git; \
 	cp -ra $(ARCHIVE)/neutrino-mp-cst-next-ni.git $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next-ni $(SOURCE_DIR)/neutrino-mp-cst-next-ni.org
-	@set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_NI_PATCHES))
 	$(TOUCH)
 
@@ -526,7 +526,7 @@ $(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
 	cp -ra $(ARCHIVE)/neutrino-hd2.git $(SOURCE_DIR)/neutrino-hd2.git; \
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2;\
 	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
-	@set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
+	set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
 		$(call post_patch,$(NEUTRINO_HD2_PATCHES))
 	$(TOUCH)
 
@@ -612,7 +612,7 @@ $(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next
 	git clone https://github.com/TangoCash/neutrino-mp-cst-next.git $(ARCHIVE)/neutrino-mp-tangos.git; \
 	cp -ra $(ARCHIVE)/neutrino-mp-tangos.git $(SOURCE_DIR)/neutrino-mp-tangos; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-tangos $(SOURCE_DIR)/neutrino-mp-tangos.org
-	@set -e; cd $(SOURCE_DIR)/neutrino-mp-tangos; \
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-tangos; \
 		$(call post_patch,$(NEUTRINO_MP_TANGOS_PATCHES))
 	$(TOUCH)
 

@@ -78,6 +78,12 @@ VPATH                 = $(D)
 
 PATH                 := $(HOSTPREFIX)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
 
+# Adjust according to the number CPU cores to use for parallel build.
+# Default: Number of processors in /proc/cpuinfo, if present, or 1.
+NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
+PARALLEL_MAKE        ?= -j $(NR_CPU)
+MAKEFLAGS            += $(PARALLEL_MAKE) no-print-directory, --silent
+
 PKG_CONFIG            = $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
 PKG_CONFIG_PATH       = $(TARGETPREFIX)/usr/lib/pkgconfig
 
@@ -91,9 +97,9 @@ REWRITE_PKGCONF_OPT   = sed -i "s,^prefix=.*,prefix='$(TARGETPREFIX)/opt/pkg',"
 export RM=$(shell which rm) -f
 
 # unpack tarballs, clean up
-UNTAR                 = @tar -C $(BUILD_TMP) -xf $(ARCHIVE)
-REMOVE                = @rm -rf $(BUILD_TMP)
-RM_PKGPREFIX          = @rm -rf $(PKGPREFIX)
+UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
+REMOVE                = rm -rf $(BUILD_TMP)
+RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
 START_BUILD           = @echo "----------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m."
@@ -141,9 +147,12 @@ TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VER
 #
 #
 #
+CONFIGURE_SILENT=-q
+
 CONFIGURE_OPTS = \
 	--build=$(BUILD) \
-	--host=$(TARGET)
+	--host=$(TARGET) \
+	$(CONFIGURE_SILENT)
 
 BUILDENV = \
 	CC=$(TARGET)-gcc \
