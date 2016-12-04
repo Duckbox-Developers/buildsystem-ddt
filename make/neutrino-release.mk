@@ -702,23 +702,23 @@ endif
 # neutrino
 #
 	ln -sf /usr/share $(RELEASE_DIR)/usr/local/share
-	cp $(TARGETPREFIX)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
-	cp $(TARGETPREFIX)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
-	cp $(TARGETPREFIX)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
-	if [ -e $(TARGETPREFIX)/usr/local/bin/install.sh ]; then \
-		cp -aR $(TARGETPREFIX)/usr/local/bin/install.sh $(RELEASE_DIR)/bin/; \
+	cp $(TARGETPREFIX)/usr/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
+	cp $(TARGETPREFIX)/usr/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
+	cp $(TARGETPREFIX)/usr/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
+	if [ -e $(TARGETPREFIX)/usr/bin/install.sh ]; then \
+		cp -aR $(TARGETPREFIX)/usr/bin/install.sh $(RELEASE_DIR)/bin/; \
 	fi
-	if [ -e $(TARGETPREFIX)/usr/local/bin/luaclient ]; then \
-		cp $(TARGETPREFIX)/usr/local/bin/luaclient $(RELEASE_DIR)/bin/; \
+	if [ -e $(TARGETPREFIX)/usr/bin/luaclient ]; then \
+		cp $(TARGETPREFIX)/usr/bin/luaclient $(RELEASE_DIR)/bin/; \
 	fi
-	if [ -e $(TARGETPREFIX)/usr/local/bin/rcsim ]; then \
-		cp $(TARGETPREFIX)/usr/local/bin/rcsim $(RELEASE_DIR)/bin/; \
+	if [ -e $(TARGETPREFIX)/usr/bin/rcsim ]; then \
+		cp $(TARGETPREFIX)/usr/bin/rcsim $(RELEASE_DIR)/bin/; \
 	fi
-	if [ -e $(TARGETPREFIX)/usr/local/sbin/udpstreampes ]; then \
-		cp $(TARGETPREFIX)/usr/local/sbin/udpstreampes $(RELEASE_DIR)/usr/local/sbin/; \
+	if [ -e $(TARGETPREFIX)/usr/sbin/udpstreampes ]; then \
+		cp $(TARGETPREFIX)/usr/sbin/udpstreampes $(RELEASE_DIR)/usr/local/sbin/; \
 	fi
-	if [ -e $(TARGETPREFIX)/usr/local/bin/udpstreampes ]; then \
-		cp $(TARGETPREFIX)/usr/local/bin/udpstreampes $(RELEASE_DIR)/usr/local/bin/; \
+	if [ -e $(TARGETPREFIX)/usr/bin/udpstreampes ]; then \
+		cp $(TARGETPREFIX)/usr/bin/udpstreampes $(RELEASE_DIR)/usr/local/bin/; \
 	fi
 #
 # channellist / tuxtxt
@@ -735,7 +735,7 @@ endif
 #
 # iso-codes
 #
-	cp -aR $(TARGETPREFIX)/usr/local/share/iso-codes $(RELEASE_DIR)/usr/share/
+	cp -aR $(TARGETPREFIX)/usr/share/iso-codes $(RELEASE_DIR)/usr/share/
 #
 # httpd/icons/locale/themes
 #
