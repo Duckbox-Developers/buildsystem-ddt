@@ -162,15 +162,14 @@ $(D)/neutrino-mp-cst-next-max.config.status:
 			--enable-upnp \
 			--with-tremor \
 			--with-libdir=/usr/lib \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
 			--with-configdir=/var/tuxbox/config \
 			--with-gamesdir=/var/tuxbox/games \
+			--with-iconsdir_var=/var/tuxbox/icons \
+			--with-luaplugindir=/var/tuxbox/plugins \
 			--with-plugindir=/var/tuxbox/plugins \
-			--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
-			--with-localedir=/usr/share/tuxbox/neutrino/locale \
-			--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
-			--with-themesdir=/usr/share/tuxbox/neutrino/themes \
+			--with-plugindir_var=/var/tuxbox/plugins \
+			--with-themesdir_var=/var/tuxbox/themes \
+			--with-localedir_var=/var/tuxbox/locale \
 			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next-max/include \
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
@@ -317,17 +316,15 @@ $(D)/neutrino-mp-cst-next.config.status:
 			--enable-ffmpegdec \
 			--enable-giflib \
 			--with-tremor \
-			--enable-lua \
 			--with-libdir=/usr/lib \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
 			--with-configdir=/var/tuxbox/config \
 			--with-gamesdir=/var/tuxbox/games \
+			--with-iconsdir_var=/var/tuxbox/icons \
+			--with-luaplugindir=/var/tuxbox/plugins \
 			--with-plugindir=/var/tuxbox/plugins \
-			--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
-			--with-localedir=/usr/share/tuxbox/neutrino/locale \
-			--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
-			--with-themesdir=/usr/share/tuxbox/neutrino/themes \
+			--with-plugindir_var=/var/tuxbox/plugins \
+			--with-themesdir_var=/var/tuxbox/themes \
+			--with-localedir_var=/var/tuxbox/locale \
 			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next/include \
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			PKG_CONFIG=$(PKG_CONFIG) \
@@ -422,17 +419,15 @@ $(D)/neutrino-mp-cst-next-ni.config.status:
 			--enable-ffmpegdec \
 			--enable-giflib \
 			--with-tremor \
-			--enable-lua \
 			--with-libdir=/usr/lib \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
 			--with-configdir=/var/tuxbox/config \
 			--with-gamesdir=/var/tuxbox/games \
+			--with-iconsdir_var=/var/tuxbox/icons \
+			--with-luaplugindir=/var/tuxbox/plugins \
 			--with-plugindir=/var/tuxbox/plugins \
-			--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
-			--with-localedir=/usr/share/tuxbox/neutrino/locale \
-			--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
-			--with-themesdir=/usr/share/tuxbox/neutrino/themes \
+			--with-plugindir_var=/var/tuxbox/plugins \
+			--with-themesdir_var=/var/tuxbox/themes \
+			--with-localedir_var=/var/tuxbox/locale \
 			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next/include \
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			PKG_CONFIG=$(PKG_CONFIG) \
@@ -631,15 +626,14 @@ $(D)/neutrino-mp-tangos.config.status:
 			--with-boxtype=$(BOXTYPE) \
 			--with-tremor \
 			--with-libdir=/usr/lib \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
 			--with-configdir=/var/tuxbox/config \
 			--with-gamesdir=/var/tuxbox/games \
+			--with-iconsdir_var=/var/tuxbox/icons \
+			--with-luaplugindir=/var/tuxbox/plugins \
 			--with-plugindir=/var/tuxbox/plugins \
-			--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
-			--with-localedir=/usr/share/tuxbox/neutrino/locale \
-			--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
-			--with-themesdir=/usr/share/tuxbox/neutrino/themes \
+			--with-plugindir_var=/var/tuxbox/plugins \
+			--with-themesdir_var=/var/tuxbox/themes \
+			--with-localedir_var=/var/tuxbox/locale \
 			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next/include \
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			PKG_CONFIG=$(PKG_CONFIG) \
