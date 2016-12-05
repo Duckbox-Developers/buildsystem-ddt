@@ -199,7 +199,7 @@ PYTHON_TWISTED_VER = 16.0.0
 $(ARCHIVE)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2:
 	$(WGET) http://pypi.python.org/packages/source/T/Twisted/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
 
-$(D)/python_twisted: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
+$(D)/python_twisted: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_zope_interface $(D)/python_pyopenssl $(D)/python_service_identity $(ARCHIVE)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/Twisted-$(PYTHON_TWISTED_VER)
 	$(UNTAR)/Twisted-$(PYTHON_TWISTED_VER).tar.bz2
@@ -408,6 +408,25 @@ $(D)/python_pyopenssl: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHI
 	$(TOUCH)
 
 #
+# python_service_identity
+#
+PYTHON_SERVICE_IDENTITY_VER = 16.0.0
+PYTHON_SERVICE_IDENTITY_PATCH =
+
+$(ARCHIVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz:
+	$(WGET) https://pypi.python.org/packages/source/s/service_identity/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
+
+$(D)/python_service_identity: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER)
+	$(UNTAR)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER); \
+		$(call post_patch,$(PYTHON_SERVICE_IDENTITY_PATCH)); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER)
+	$(TOUCH)
+
+#
 # python_elementtree
 #
 PYTHON_ELEMENTTREE_VER = 1.2.6-20050316
@@ -593,7 +612,7 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(REMOVE)/livestreamersrv
 	$(TOUCH)
 
-PYTHON_DEPS  = $(D)/host_python $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_twisted $(D)/python_pyopenssl
+PYTHON_DEPS  = $(D)/host_python $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_pyopenssl $(D)/python_twisted
 PYTHON_DEPS += $(D)/python_wifi $(D)/python_imaging $(D)/python_pyusb $(D)/python_pycrypto $(D)/python_pyasn1 $(D)/python_mechanize
 PYTHON_DEPS += $(D)/python_six $(D)/python_requests $(D)/python_futures $(D)/python_singledispatch
 PYTHON_DEPS += $(D)/python_livestreamer $(D)/python_livestreamersrv
