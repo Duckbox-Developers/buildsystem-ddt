@@ -16,7 +16,7 @@ tools-clean:
 	-$(MAKE) -C $(APPS_DIR)/tools/spf_tool distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/streamproxy distclean
-	-$(MAKE) -C $(APPS_DIR)/tools/tffpctl distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/tfd2mtd distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/tffpctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
