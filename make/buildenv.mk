@@ -84,9 +84,9 @@ NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:'
 PARALLEL_MAKE        ?= -j $(NR_CPU)
 MAKEFLAGS            += $(PARALLEL_MAKE)
 ifndef VERBOSE
-VERBOSE               = 1
+VERBOSE               = 0
 endif
-ifeq ($(VERBOSE), 1)
+ifeq ($(VERBOSE), 0)
 MAKEFLAGS            +=  no-print-directory, --silent
 CONFIGURE_SILENT=-q
 endif
