@@ -1,6 +1,5 @@
-##KERNEL_DIR=../linux-sh4
-BASE_DIR=..
-TFINSTALLER_DIR= $(CDK_DIR)/tfinstaller
+TFINSTALLER_DIR=.
+
 all:
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage.gz $(TFINSTALLER_DIR)/uImage.gz.org
 	if [ -e $(KERNEL_DIR)/arch/sh/boot/uImage ]; then \
@@ -22,7 +21,7 @@ all:
 	if [ `grep -x -c "# CONFIG_RD_GZIP is not set" $(KERNEL_DIR)/.config` == 1 ]; then \
 		sed -i 's/# CONFIG_RD_GZIP is not set/CONFIG_RD_GZIP=y/g' $(KERNEL_DIR)/.config; \
 	fi
-	if [ `grep -x -c "CONFIG_RD_GZIP=y" $(KERNEL_DIR)/config` == 0 ]; then \
+	if [ `grep -x -c "CONFIG_RD_GZIP=y" $(KERNEL_DIR)/.config` == 0 ]; then \
 		echo "CONFIG_RD_GZIP=y" >> $(KERNEL_DIR)/.config; \
 	fi
 	if [ `grep -x -c "CONFIG_RD_BZIP2=y" $(KERNEL_DIR)/.config` == 1 ]; then \
@@ -61,15 +60,13 @@ all:
 	if [ `grep -x -c "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" $(KERNEL_DIR)/.config` == 0 ]; then \
 		echo "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" >> $(KERNEL_DIR)/.config; \
 	fi
-#	cp $(KERNEL_DIR)/.config $(TFINSTALLER_DIR)/.config.tf
 	@export PATH=$(HOSTPREFIX)/bin:$(PATH) && \
-	$(MAKE) -C $(BASE_DIR) tfkernel.do_compile
+	$(MAKE) -C $(CDK_DIR) tfkernel
 	rm $(KERNEL_DIR)/initramfs_list
 	rm $(KERNEL_DIR)/.config
 	mv $(TFINSTALLER_DIR)/.config.org $(KERNEL_DIR)/.config
 	mv $(KERNEL_DIR)/arch/sh/boot/uImage.gz $(TFINSTALLER_DIR)/uImage
 	mv $(TFINSTALLER_DIR)/uImage.gz.org $(KERNEL_DIR)/arch/sh/boot/uImage.gz
-
 
 TFP_OBJS = io.o encode.o decode.o maketree.o maketbl.o huf.o tfpacker.o
 

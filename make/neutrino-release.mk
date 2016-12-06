@@ -586,16 +586,13 @@ endif
 		stm/platform/p2div64.ko \
 		media/sysfs/stm/stmsysfs.ko \
 	;do \
-		echo `pwd` player2/linux/drivers/$$mod; \
 		if [ -e player2/linux/drivers/$$mod ]; then \
 			cp player2/linux/drivers/$$mod $(RELEASE_DIR)/lib/modules/; \
 			$(TARGET)-strip --strip-unneeded $(RELEASE_DIR)/lib/modules/`basename $$mod`; \
 		else \
 			touch $(RELEASE_DIR)/lib/modules/`basename $$mod`; \
 		fi; \
-		echo "."; \
 	done
-	echo "touched";
 #
 # modules
 #

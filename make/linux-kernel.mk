@@ -332,12 +332,6 @@ $(D)/kernel-headers: linux-kernel.do_prepare
 		cp -a include/mtd $(TARGETPREFIX)/usr/include
 	$(TOUCH)
 
-$(D)/tfkernel.do_compile:
-	$(START_BUILD)
-	cd $(KERNEL_DIR); \
-		$(MAKE) $(if $(TF7700),TF7700=y) ARCH=sh CROSS_COMPILE=$(target)- uImage
-	$(TOUCH)
-
 linux-kernel-distclean:
 	rm -f $(D)/linux-kernel
 	rm -f $(D)/linux-kernel.do_compile
@@ -347,6 +341,57 @@ linux-kernel-clean:
 	-$(MAKE) -C $(KERNEL_DIR) clean
 	rm -f $(D)/linux-kernel
 	rm -f $(D)/linux-kernel.do_compile
+
+#
+# TF7700 installer
+#
+TFINSTALLER_DIR := $(CDK_DIR)/tfinstaller
+
+tfinstaller: $(D)/bootstrap $(D)/linux-kernel $(TFINSTALLER_DIR)/u-boot.ftfd
+	$(START_BUILD)
+	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOSTPREFIX=$(HOSTPREFIX) CDK_DIR=$(CDK_DIR) KERNEL_DIR=$(KERNEL_DIR)
+	$(TOUCH)
+
+$(TFINSTALLER_DIR)/u-boot.ftfd: $(D)/uboot $(TFINSTALLER_DIR)/tfpacker
+	$(START_BUILD)
+	$(TFINSTALLER_DIR)/tfpacker $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/u-boot.ftfd
+	$(TFINSTALLER_DIR)/tfpacker -t $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/Enigma_Installer.tfd
+	$(REMOVE)/u-boot-$(U_BOOT_VER)
+	$(TOUCH)
+
+$(TFINSTALLER_DIR)/tfpacker:
+	$(START_BUILD)
+	$(MAKE) -C $(TFINSTALLER_DIR) tfpacker
+	$(TOUCH)
+
+$(D)/tfkernel:
+	$(START_BUILD)
+	cd $(KERNEL_DIR); \
+		$(MAKE) $(if $(TF7700),TF7700=y) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage
+	$(TOUCH)
+
+#
+# u-boot
+#
+U_BOOT_VER = 1.3.1
+U_BOOT_PATCH  =  u-boot-$(U_BOOT_VER).patch
+ifeq ($(BOXTYPE), tf7700)
+U_BOOT_PATCH += u-boot-$(U_BOOT_VER)-tf7700.patch
+endif
+
+$(ARCHIVE)/u-boot-$(U_BOOT_VER).tar.bz2:
+	$(WGET) ftp://ftp.denx.de/pub/u-boot/u-boot-$(U_BOOT_VER).tar.bz2
+
+$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(U_BOOT_VER).tar.bz2
+	$(START_BUILD)
+	$(REMOVE)/u-boot-$(U_BOOT_VER)
+	$(UNTAR)/u-boot-$(U_BOOT_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/u-boot-$(U_BOOT_VER); \
+		$(call post_patch,$(U_BOOT_PATCH)); \
+		$(MAKE) $(BOXTYPE)_config; \
+		$(MAKE)
+#	$(REMOVE)/u-boot-$(U_BOOT_VER)
+	$(TOUCH)
 
 #
 # Helper
