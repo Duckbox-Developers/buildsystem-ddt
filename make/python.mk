@@ -88,6 +88,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			--mandir=/.remove \
 			--sysconfdir=/etc \
 			--enable-shared \
+			--with-lto \
 			--enable-ipv6 \
 			--with-threads \
 			--with-pymalloc \
