@@ -23,7 +23,7 @@ PYTHON_INSTALL = \
 # host_python
 #
 PYTHON_MAJOR = 2.7
-PYTHON_MINOR = 11
+PYTHON_MINOR = 12
 PYTHON_VER = $(PYTHON_MAJOR).$(PYTHON_MINOR)
 PYTHON_PATCH  = python-$(PYTHON_VER)-xcompile.patch
 PYTHON_PATCH += python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch

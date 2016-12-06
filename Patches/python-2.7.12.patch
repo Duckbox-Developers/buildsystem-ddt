@@ -26,7 +26,7 @@
  #endif
          return NULL;
      }
-@@ -3396,7 +3402,13 @@
+@@ -3385,7 +3391,13 @@
                       "function '%s' not found",
                       name);
  #else
@@ -43,7 +43,7 @@
          return NULL;
 --- a/Lib/ctypes/util.py
 +++ b/Lib/ctypes/util.py
-@@ -239,7 +239,16 @@
+@@ -234,7 +234,16 @@
              return res.group(1)
  
          def find_library(name):
@@ -259,7 +259,7 @@
  
  def add_dir_to_list(dirlist, dir):
      """Add the directory 'dir' to the list 'dirlist' (at the front) if
-@@ -159,6 +174,7 @@
+@@ -175,6 +190,7 @@
      def __init__(self, dist):
          build_ext.__init__(self, dist)
          self.failed = []
@@ -267,7 +267,7 @@
  
      def build_extensions(self):
  
-@@ -294,6 +310,14 @@
+@@ -310,6 +326,14 @@
                            (ext.name, sys.exc_info()[1]))
              self.failed.append(ext.name)
              return
@@ -282,7 +282,7 @@
          # Workaround for Mac OS X: The Carbon-based modules cannot be
          # reliably imported into a command-line Python
          if 'Carbon' in ext.extra_link_args:
-@@ -334,6 +358,7 @@
+@@ -350,6 +374,7 @@
              self.failed.append(ext.name)
              self.announce('*** WARNING: renaming "%s" since importing it'
                            ' failed: %s' % (ext.name, why), level=3)
@@ -290,7 +290,7 @@
              assert not self.inplace
              basename, tail = os.path.splitext(ext_filename)
              newname = basename + "_failed" + tail
-@@ -439,11 +464,18 @@
+@@ -455,11 +480,18 @@
  
      def detect_modules(self):
          # Ensure that /usr/local is always used
@@ -314,7 +314,7 @@
          self.add_multiarch_paths()
  
          # Add paths specified in the environment variables LDFLAGS and
-@@ -480,16 +512,16 @@
+@@ -496,16 +528,16 @@
                      for directory in reversed(options.dirs):
                          add_dir_to_list(dir_list, directory)
  
@@ -337,7 +337,7 @@
  
          try:
              have_unicode = unicode
-@@ -499,18 +531,22 @@
+@@ -515,18 +547,22 @@
          # lib_dirs and inc_dirs are used to search for files;
          # if a file is found in one of those directories, it can
          # be assumed that no additional -I,-L directives are needed.
@@ -370,7 +370,7 @@
          exts = []
          missing = []
  
-@@ -518,6 +554,18 @@
+@@ -534,6 +570,18 @@
          config_h_vars = sysconfig.parse_config_h(open(config_h))
  
          srcdir = sysconfig.get_config_var('srcdir')
@@ -389,7 +389,7 @@
  
          # Check for AtheOS which has libraries in non-standard locations
          if host_platform == 'atheos':
-@@ -696,7 +744,7 @@
+@@ -716,7 +764,7 @@
          exts.append( Extension('audioop', ['audioop.c']) )
  
          # Disabled on 64-bit platforms
@@ -398,7 +398,7 @@
              # Operations on images
              exts.append( Extension('imageop', ['imageop.c']) )
          else:
-@@ -761,12 +809,10 @@
+@@ -781,12 +829,10 @@
                  pass # Issue 7384: Already linked against curses or tinfo.
              elif curses_library:
                  readline_libs.append(curses_library)
@@ -412,7 +412,7 @@
                                     extra_link_args=readline_extra_link_args,
                                     libraries=readline_libs) )
          else:
-@@ -1105,7 +1151,13 @@
+@@ -1125,7 +1171,13 @@
                               '/usr/local/include/sqlite3',
                             ]
          if cross_compiling:
@@ -427,7 +427,7 @@
          MIN_SQLITE_VERSION_NUMBER = (3, 0, 8)
          MIN_SQLITE_VERSION = ".".join([str(x)
                                      for x in MIN_SQLITE_VERSION_NUMBER])
-@@ -1145,12 +1197,21 @@
+@@ -1165,12 +1217,21 @@
                      print "sqlite: %s had no SQLITE_VERSION"%(f,)
  
          if sqlite_incdir:
@@ -455,7 +455,7 @@
              sqlite_libfile = self.compiler.find_library_file(
                                  sqlite_dirs_to_check + lib_dirs, 'sqlite3')
              if sqlite_libfile:
-@@ -1228,8 +1289,10 @@
+@@ -1248,8 +1309,10 @@
                                            libraries=libraries))
                  else:
                      exts.append(Extension('bsddb185', ['bsddbmodule.c']))
@@ -468,7 +468,7 @@
          else:
              missing.append('bsddb185')
  
-@@ -1527,7 +1590,7 @@
+@@ -1547,7 +1610,7 @@
                  missing.append('_codecs_%s' % loc)
  
          # Dynamic loading module
@@ -477,7 +477,7 @@
              # This requires sizeof(int) == sizeof(long) == sizeof(char*)
              dl_inc = find_file('dlfcn.h', [], inc_dirs)
              if (dl_inc is not None) and (host_platform not in ['atheos']):
-@@ -1614,8 +1677,9 @@
+@@ -1634,8 +1697,9 @@
          if host_platform == 'sunos5':
              # SunOS specific modules
              exts.append( Extension('sunaudiodev', ['sunaudiodev.c']) )
@@ -489,7 +489,7 @@
  
          if host_platform == 'darwin':
              # _scproxy
-@@ -1728,8 +1792,10 @@
+@@ -1748,8 +1812,10 @@
          # Call the method for detecting whether _tkinter can be compiled
          self.detect_tkinter(inc_dirs, lib_dirs)
  
@@ -502,7 +502,7 @@
  
  ##         # Uncomment these lines if you want to play with xxmodule.c
  ##         ext = Extension('xx', ['xxmodule.c'])
-@@ -1915,22 +1981,6 @@
+@@ -1935,22 +2001,6 @@
              if dir not in include_dirs:
                  include_dirs.append(dir)
  
@@ -525,7 +525,7 @@
          # If Cygwin, then verify that X is installed before proceeding
          if host_platform == 'cygwin':
              x11_inc = find_file('X11/Xlib.h', [], include_dirs)
-@@ -2028,8 +2078,15 @@
+@@ -2048,8 +2098,15 @@
  
                  # Pass empty CFLAGS because we'll just append the resulting
                  # CFLAGS to Python's; -g or -O2 is to be avoided.
