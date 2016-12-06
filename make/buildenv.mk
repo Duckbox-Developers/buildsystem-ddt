@@ -82,7 +82,14 @@ PATH                 := $(HOSTPREFIX)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sb
 # Default: Number of processors in /proc/cpuinfo, if present, or 1.
 NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
 PARALLEL_MAKE        ?= -j $(NR_CPU)
-MAKEFLAGS            += $(PARALLEL_MAKE) no-print-directory, --silent
+MAKEFLAGS            += $(PARALLEL_MAKE)
+ifndef VERBOSE
+VERBOSE               = 1
+endif
+ifeq ($(VERBOSE), 1)
+MAKEFLAGS            +=  no-print-directory, --silent
+CONFIGURE_SILENT=-q
+endif
 
 PKG_CONFIG            = $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
 PKG_CONFIG_PATH       = $(TARGETPREFIX)/usr/lib/pkgconfig
@@ -147,8 +154,6 @@ TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VER
 #
 #
 #
-CONFIGURE_SILENT=-q
-
 CONFIGURE_OPTS = \
 	--build=$(BUILD) \
 	--host=$(TARGET) \
@@ -215,12 +220,12 @@ P0217                  = p0217
 endif
 
 split_version=$(subst _, ,$(1))
-KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_STM        :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_LABEL      :=$(word 3,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_RELEASE    :=$(subst ^0,,^$(KERNEL_LABEL))
-KERNEL_STM_LABEL  := _$(KERNEL_STM)_$(KERNEL_LABEL)
-KERNEL_DIR         =$(BUILD_TMP)/linux-sh4-$(KERNEL_VERSION)
+KERNEL_UPSTREAM        =$(word 1,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_STM            :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_LABEL          :=$(word 3,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_RELEASE        :=$(subst ^0,,^$(KERNEL_LABEL))
+KERNEL_STM_LABEL      := _$(KERNEL_STM)_$(KERNEL_LABEL)
+KERNEL_DIR             =$(BUILD_TMP)/linux-sh4-$(KERNEL_VERSION)
 
 #
 # image
