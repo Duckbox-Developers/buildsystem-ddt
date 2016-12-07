@@ -428,6 +428,24 @@ $(D)/python_service_identity: $(D)/bootstrap $(D)/python $(D)/python_setuptools 
 	$(TOUCH)
 
 #
+# python_attr
+#
+PYTHON_ATTR_VER = 0.1.0
+PYTHON_ATTR_PATCH =
+
+$(ARCHIVE)/attr-$(PYTHON_ATTR_VER).tar.gz:
+	$(WGET) http://pypi.python.org/packages/source/a/attr/attr-$(PYTHON_ATTR_VER).tar.gz
+
+$(D)/python_attr: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/attr-$(PYTHON_ATTR_VER).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/attr-$(PYTHON_ATTR_VER)
+	$(UNTAR)/attr-$(PYTHON_ATTR_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/attr-$(PYTHON_ATTR_VER); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/attr-$(PYTHON_ATTR_VER)
+	$(TOUCH)
+
+#
 # python_elementtree
 #
 PYTHON_ELEMENTTREE_VER = 1.2.6-20050316
