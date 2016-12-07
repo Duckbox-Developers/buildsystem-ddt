@@ -417,7 +417,7 @@ PYTHON_SERVICE_IDENTITY_PATCH =
 $(ARCHIVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz:
 	$(WGET) https://pypi.python.org/packages/source/s/service_identity/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
 
-$(D)/python_service_identity: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
+$(D)/python_service_identity: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_attr $(D)/python_attrs $(D)/python_pyasn1 $(ARCHIVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER)
 	$(UNTAR)/service_identity-$(PYTHON_SERVICE_IDENTITY_VER).tar.gz
@@ -443,6 +443,24 @@ $(D)/python_attr: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/a
 	set -e; cd $(BUILD_TMP)/attr-$(PYTHON_ATTR_VER); \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/attr-$(PYTHON_ATTR_VER)
+	$(TOUCH)
+
+#
+# python_attrs
+#
+PYTHON_ATTRS_VER = 16.3.0
+PYTHON_ATTRS_PARCH =
+
+$(ARCHIVE)/attrs-$(PYTHON_ATTRS_VER).tar.gz:
+	$(WGET) https://pypi.io/packages/source/a/attrs/attrs-$(PYTHON_ATTRS_VER).tar.gz
+
+$(D)/python_attrs: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/attrs-$(PYTHON_ATTRS_VER).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/attrs-$(PYTHON_ATTRS_VER)
+	$(UNTAR)/attrs-$(PYTHON_ATTRS_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/attrs-$(PYTHON_ATTRS_VER); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/attrs-$(PYTHON_ATTRS_VER)
 	$(TOUCH)
 
 #
