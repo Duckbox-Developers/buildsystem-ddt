@@ -305,7 +305,7 @@ release_enigma2_hs7110:
 #
 # release_hs7420
 #
-release_enigma2_hs7420: release_enigma2_common_utils
+release_enigma2_hs7420:
 	echo "hs7420" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
@@ -321,7 +321,7 @@ release_enigma2_hs7420: release_enigma2_common_utils
 #
 # release_hs7429
 #
-release_enigma2_hs7429: release_enigma2_common_utils
+release_enigma2_hs7429:
 	echo "hs7429" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt

@@ -12,6 +12,7 @@ release_neutrino_cube_common:
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/lib/firmware/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
+	cp $(TARGETPREFIX)/bin/eeprom $(RELEASE_DIR)/bin
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
@@ -287,8 +288,8 @@ release_neutrino_hs7110:
 #
 # release_hs7420
 #
-release_neutrino_hs7420: release_enigma2_common_utils
-	echo "hs7420" > $(RELEASE_DIR)/release/etc/hostname
+release_neutrino_hs7420:
+	echo "hs7420" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -302,8 +303,8 @@ release_neutrino_hs7420: release_enigma2_common_utils
 #
 # release_hs7429
 #
-release_neutrino_hs7429: release_enigma2_common_utils
-	echo "hs7429" > $(RELEASE_DIR)/release/etc/hostname
+release_neutrino_hs7429:
+	echo "hs7429" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -656,7 +657,7 @@ endif
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl871x/8712u.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl871x/8712u.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8188eu/8188eu.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8188eu/8188eu.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192cu/8192cu.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/release/lib/modules || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/lib/modules || true
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	install -d $(RELEASE_DIR)/etc/Wireless
 	cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/
