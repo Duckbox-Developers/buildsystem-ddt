@@ -162,18 +162,18 @@ $(D)/opkg-host: $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(TOUCH)
 
-$(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(D)/libcurl $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
+$(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_PATCH)); \
 		autoreconf -v --install; \
-		echo ac_cv_func_realloc_0_nonnull=yes >> config.cache; \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--disable-curl \
 			--disable-gpg \
-			--config-cache \
+			--with-opkglibdir=/usr/lib \
 			--mandir=/.remove \
 		; \
 		$(MAKE) all ; \
