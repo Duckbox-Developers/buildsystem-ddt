@@ -38,6 +38,7 @@ PKGPREFIX             = $(BUILD_TMP)/pkg
 TARGETPREFIX          = $(BASE_DIR)/tufsbox/cdkroot
 
 CUSTOM_DIR            = $(CDK_DIR)/custom
+OWN_BUILD             = $(CDK_DIR)/own_build
 SCRIPTS_DIR           = $(CDK_DIR)/scripts
 PATCHES               = $(CDK_DIR)/Patches
 SKEL_ROOT             = $(CDK_DIR)/root
