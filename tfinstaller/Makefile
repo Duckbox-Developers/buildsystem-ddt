@@ -61,7 +61,7 @@ all:
 		echo "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" >> $(KERNEL_DIR)/.config; \
 	fi
 	@export PATH=$(HOSTPREFIX)/bin:$(PATH) && \
-	$(MAKE) -C $(CDK_DIR) tfkernel
+	$(MAKE) -C $(BASE_DIR) tfkernel
 	rm $(KERNEL_DIR)/initramfs_list
 	rm $(KERNEL_DIR)/.config
 	mv $(TFINSTALLER_DIR)/.config.org $(KERNEL_DIR)/.config

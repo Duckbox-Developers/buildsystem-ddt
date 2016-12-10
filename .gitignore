@@ -1,3 +1,6 @@
+apps/
+driver/
+flash/
 BUILDLOG/
 custom/yaud-*
 custom/release_*

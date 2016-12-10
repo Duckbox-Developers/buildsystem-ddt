@@ -8,24 +8,41 @@ export CONFIG_SITE
 CCACHE_DIR            = $(HOME)/.ccache-ddt
 export CCACHE_DIR
 
-BASE_DIR             := $(shell cd .. && pwd)
+BASE_DIR             := $(shell pwd)
 
 ARCHIVE               = $(HOME)/Archive
 APPS_DIR              = $(BASE_DIR)/apps
 BUILD_TMP             = $(BASE_DIR)/build_tmp
-CDK_DIR               = $(BASE_DIR)/cdk_new
 DRIVER_DIR            = $(BASE_DIR)/driver
 FLASH_DIR             = $(BASE_DIR)/flash
 SOURCE_DIR            = $(BASE_DIR)/source
 
--include $(CDK_DIR)/config
+-include $(BASE_DIR)/config
 
 # for local extensions, e.g. LOCAL_NEUTRINO_DEPS
--include $(CDK_DIR)/config.local
+-include $(BASE_DIR)/config.local
 
 # default platform...
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
+
+
+GIT_PROTOCOL         ?= http
+ifneq ($(GIT_PROTOCOL), http)
+GITHUB               ?= git://github.com
+else
+GITHUB               ?= https://github.com
+endif
+GIT_NAME             := Duckbox-Developers
+GIT_NAME_DRIVER      ?= Duckbox-Developers
+GIT_NAME_APPS        ?= Duckbox-Developers
+GIT_NAME_FLASH       ?= Duckbox-Developers
+
+ifneq ($(GIT_STASH_PULL), stashpull)
+GIT_PULL              = git pull
+else
+GIT_PULL              = git stash && git stash show -p stash@{0} > ./pull-stash.patch || true && git pull && git stash pop || true
+endif
 
 BOOT_DIR              = $(BASE_DIR)/tufsbox/cdkroot-tftpboot
 CROSS_BASE            = $(BASE_DIR)/tufsbox/cross
@@ -37,12 +54,12 @@ RELEASE_DIR           = $(BASE_DIR)/tufsbox/release
 PKGPREFIX             = $(BUILD_TMP)/pkg
 TARGETPREFIX          = $(BASE_DIR)/tufsbox/cdkroot
 
-CUSTOM_DIR            = $(CDK_DIR)/custom
-OWN_BUILD             = $(CDK_DIR)/own_build
-SCRIPTS_DIR           = $(CDK_DIR)/scripts
-PATCHES               = $(CDK_DIR)/Patches
-SKEL_ROOT             = $(CDK_DIR)/root
-D                     = $(CDK_DIR)/.deps
+CUSTOM_DIR            = $(BASE_DIR)/custom
+OWN_BUILD             = $(BASE_DIR)/own_build
+PATCHES               = $(BASE_DIR)/Patches
+SCRIPTS_DIR           = $(BASE_DIR)/scripts
+SKEL_ROOT             = $(BASE_DIR)/root
+D                     = $(BASE_DIR)/.deps
 # backwards compatibility
 DEPDIR                = $(D)
 
@@ -111,8 +128,8 @@ REMOVE                = rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
-START_BUILD           = @echo "----------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m."
-TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; echo
+START_BUILD           = @echo "----------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m."
+TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m completed."; echo
 
 define post_patch
 	for i in $(1); do \
@@ -132,7 +149,7 @@ define post_patch
 			fi; \
 		fi; \
 	done; \
-	echo -e "Patch of \033[01;32m$(subst $(CDK_DIR)/.deps/,,$@)\033[0m completed."; \
+	echo -e "Patch of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m completed."; \
 	echo
 endef
 
@@ -150,8 +167,8 @@ OPKG_SH = $(OPKG_SH_ENV) opkg.sh
 # wget tarballs into archive directory
 WGET = wget --progress=bar:force --no-check-certificate -t6 -T20 -c -P $(ARCHIVE)
 
-TUXBOX_YAUD_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGETPREFIX) $(CDK_DIR) $(SOURCE_DIR) $(FLASH_DIR) $(BOXTYPE) || true
-TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGETPREFIX) $(CDK_DIR) $(BOXTYPE) || true
+TUXBOX_YAUD_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGETPREFIX) $(BASE_DIR) $(SOURCE_DIR) $(FLASH_DIR) $(BOXTYPE) || true
+TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGETPREFIX) $(BASE_DIR) $(BOXTYPE) || true
 
 #
 #

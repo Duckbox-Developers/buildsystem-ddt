@@ -1,4 +1,4 @@
-BOOTSTRAP  = directories crosstool $(D)/ccache
+BOOTSTRAP  = preqs directories crosstool $(D)/ccache
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg.sh
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-chksvn.sh
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-gitdescribe.sh

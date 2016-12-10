@@ -273,7 +273,7 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 			patch -p1 -i $(PATCHES)/$(BUILD_CONFIG)/$$i; \
 		done
 	install -m 644 $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) $(KERNEL_DIR)/.config
-	sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(CDK_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
+	sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(BASE_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
 	-rm $(KERNEL_DIR)/localversion*
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm
 ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
@@ -345,11 +345,11 @@ linux-kernel-clean:
 #
 # TF7700 installer
 #
-TFINSTALLER_DIR := $(CDK_DIR)/tfinstaller
+TFINSTALLER_DIR := $(BASE_DIR)/tfinstaller
 
 tfinstaller: $(D)/bootstrap $(D)/linux-kernel $(TFINSTALLER_DIR)/u-boot.ftfd
 	$(START_BUILD)
-	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOSTPREFIX=$(HOSTPREFIX) CDK_DIR=$(CDK_DIR) KERNEL_DIR=$(KERNEL_DIR)
+	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOSTPREFIX=$(HOSTPREFIX) BASE_DIR=$(BASE_DIR) KERNEL_DIR=$(KERNEL_DIR)
 	$(TOUCH)
 
 $(TFINSTALLER_DIR)/u-boot.ftfd: $(D)/uboot $(TFINSTALLER_DIR)/tfpacker

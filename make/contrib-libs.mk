@@ -295,7 +295,7 @@ OPENSSL_SUBVER = j
 OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-optimize-for-size.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-makefile-dirs.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-disable_doc_tests.patch
-OPENSSL_PATCH += openssl-$(OPENSSL_VER)-parallel_build.patch
+#OPENSSL_PATCH += openssl-$(OPENSSL_VER)-parallel_build.patch
 
 $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz

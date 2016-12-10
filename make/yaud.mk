@@ -28,7 +28,29 @@ toolcheck: $(TOOLCHECK)
 		echo; \
 	fi
 
-PREQS =
+$(DRIVER_DIR)/.git: | $(DRIVER_DIR)
+$(DRIVER_DIR):
+	@echo '=============================================================='
+	@echo '                Cloning ddt-driver git repo                  '
+	@echo '=============================================================='
+	git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver
+
+$(APPS_DIR)/.git: | $(APPS_DIR)
+$(APPS_DIR):
+	@echo '=============================================================='
+	@echo '                 Cloning ddt-apps git repo                    '
+	@echo '=============================================================='
+	git clone $(GITHUB)/$(GIT_NAME_APPS)/apps.git apps
+
+$(FLASH_DIR)/.git: | $(FLASH_DIR)
+$(FLASH_DIR):
+	@echo '=============================================================='
+	@echo '                 Cloning ddt-flash git repo                   '
+	@echo '=============================================================='
+	git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash
+	@echo ''
+
+PREQS = $(DRIVER_DIR)/.git $(APPS_DIR)/.git $(FLASH_DIR)/.git
 
 preqs: $(PREQS)
 

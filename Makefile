@@ -22,7 +22,6 @@ printenv:
 	@echo "MAINTAINER       : $(MAINTAINER)"
 	@echo "ARCHIVE_DIR      : $(ARCHIVE)"
 	@echo "BASE_DIR         : $(BASE_DIR)"
-	@echo "CDK_DIR          : $(CDK_DIR)"
 	@echo "CUSTOM_DIR       : $(CUSTOM_DIR)"
 	@echo "APPS_DIR         : $(APPS_DIR)"
 	@echo "DRIVER_DIR       : $(DRIVER_DIR)"
@@ -56,7 +55,7 @@ else ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
 endif
 	@echo '================================================================================'
 	@echo ""
-	@$(MAKE) --no-print-directory toolcheck
+	@$(MAKE) --no-print-directory preqs toolcheck
 ifeq ($(MAINTAINER),)
 	@echo "##########################################################################"
 	@echo "# The MAINTAINER variable is not set. It defaults to your name from the  #"
@@ -64,18 +63,7 @@ ifeq ($(MAINTAINER),)
 	@echo "##########################################################################"
 	@echo
 endif
-#	@LC_ALL=C make -n preqs|grep -q "Nothing to be done" && P=false || P=true; \
-#	test -d $(TARGETPREFIX) && T=false || T=true; \
-#	type -p $(TARGET)-pkg-config >/dev/null 2>&1 || T=true; \
-#	PATH=$(PATH):$(CROSS_DIR)/bin; \
-#	type -p $(TARGET)-gcc >/dev/null 2>&1 && C=false || C=true; \
-#	if $$P || $$T || $$C; then \
-#		echo "Your next steps are most likely (in this order):"; \
-#		$$P && echo "	* 'make preqs'		for prerequisites"; \
-#		$$C && echo "	* 'make crosstool'	for the cross compiler"; \
-#		$$T && echo "	* 'make bootstrap'	to prepare the target root"; \
-#		echo; \
-#	fi
+	@LC_ALL=C
 
 help:
 	@echo "a few helpful make targets:"
@@ -102,6 +90,40 @@ include make/neutrino-release.mk
 include make/cleantargets.mk
 include make/patches.mk
 include make/yaud.mk
+
+update:
+	@if test -d $(BASE_DIR); then \
+		cd $(BASE_DIR)/; \
+		echo '=============================================================='; \
+		echo '                 updating ddt-cdk git repo                    '; \
+		echo '=============================================================='; \
+		echo; \
+		$(GIT_PULL); fi
+		@echo;
+	@if test -d $(DRIVER_DIR); then \
+		cd $(DRIVER_DIR)/; \
+		echo '=============================================================='; \
+		echo '                 updating ddt-driver git repo                 '; \
+		echo '=============================================================='; \
+		echo; \
+		$(GIT_PULL); fi
+		@echo;
+	@if test -d $(APPS_DIR); then \
+		cd $(APPS_DIR)/; \
+		echo '=============================================================='; \
+		echo '                 updating ddt-apps git repo                   '; \
+		echo '=============================================================='; \
+		echo; \
+		$(GIT_PULL); fi
+		@echo;
+	@if test -d $(FLASH_DIR); then \
+		cd $(FLASH_DIR)/; \
+		echo '=============================================================='; \
+		echo '                 updating ddt-flash git repo                  '; \
+		echo '=============================================================='; \
+		echo; \
+		$(GIT_PULL); fi
+		@echo;
 
 all:
 	@echo "'make all' is not a valid target. Please read the documentation."

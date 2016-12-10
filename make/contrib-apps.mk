@@ -110,7 +110,7 @@ $(D)/gdb-remote: $(ARCHIVE)/gdb-$(GDB_VER).tar.xz | $(TARGETPREFIX)
 			--target=$(TARGET) \
 		; \
 		$(MAKE) all-gdb; \
-		make install-gdb; \
+		$(MAKE) install-gdb; \
 	$(REMOVE)/gdb-$(GDB_VER)
 	$(TOUCH)
 
@@ -1148,7 +1148,6 @@ $(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/vsftpd-$(VSFTPD_VER).tar.gz
 		$(MAKE) clean; \
 		$(MAKE) $(BUILDENV); \
 		$(MAKE) install PREFIX=$(TARGETPREFIX)
-		cp $(CDK_DIR)/root/etc/vsftpd.conf $(TARGETPREFIX)/etc
 	install -m 755 $(SKEL_ROOT)/etc/init.d/vsftpd $(TARGETPREFIX)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/vsftpd.conf $(TARGETPREFIX)/etc/
 	$(REMOVE)/vsftpd-$(VSFTPD_VER)
@@ -1173,7 +1172,7 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/ethtool-$(ETHTOOL_VER).tar.gz
 			--libdir=$(TARGETPREFIX)/usr/lib \
 		; \
 		$(MAKE); \
-		make install DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/ethtool-$(ETHTOOL_VER)
 	$(TOUCH)
 
