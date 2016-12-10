@@ -84,12 +84,13 @@ PATH                 := $(HOSTPREFIX)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sb
 NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
 PARALLEL_MAKE        ?= -j $(NR_CPU)
 MAKEFLAGS            += $(PARALLEL_MAKE)
+MAKEFLAGS            += --no-print-directory
 ifndef VERBOSE
-VERBOSE               = 0
+VERBOSE               = 1
 endif
-ifeq ($(VERBOSE), 0)
-MAKEFLAGS            +=  no-print-directory, --silent
-CONFIGURE_SILENT=-q
+ifeq ($(VERBOSE), 1)
+MAKEFLAGS            += --silent
+CONFIGURE_SILENT      = -q
 endif
 
 PKG_CONFIG            = $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
