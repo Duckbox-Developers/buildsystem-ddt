@@ -72,7 +72,6 @@ help:
 	@echo
 
 # define package versions first...
-include make/bootstrap.mk
 include make/contrib-libs.mk
 include make/contrib-apps.mk
 include make/linux-kernel.mk
@@ -89,6 +88,7 @@ include make/neutrino-plugins.mk
 include make/neutrino-release.mk
 include make/cleantargets.mk
 include make/patches.mk
+include make/bootstrap.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
