@@ -1,6 +1,9 @@
 apps/
+build_tmp/
 driver/
 flash/
+source/
+tufsbox/
 BUILDLOG/
 custom/yaud-*
 custom/release_*
