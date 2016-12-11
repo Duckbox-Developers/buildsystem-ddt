@@ -205,7 +205,7 @@ preqs: $(PREQS)
 
 $(DRIVER_DIR):
 	@echo '=============================================================='
-	@echo '                Cloning ddt-driver git repo                  '
+	@echo '      Cloning $(GIT_NAME)-driver git repo                     '
 	@echo '=============================================================='
 	if [ ! -e $(DRIVER_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
@@ -213,7 +213,7 @@ $(DRIVER_DIR):
 
 $(APPS_DIR):
 	@echo '=============================================================='
-	@echo '                 Cloning ddt-apps git repo                    '
+	@echo '      Cloning $(GIT_NAME_APPS)-apps git repo                  '
 	@echo '=============================================================='
 	if [ ! -e $(APPS_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_APPS)/apps.git apps; \
@@ -221,7 +221,7 @@ $(APPS_DIR):
 
 $(FLASH_DIR):
 	@echo '=============================================================='
-	@echo '                 Cloning ddt-flash git repo                   '
+	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repo                '
 	@echo '=============================================================='
 	if [ ! -e $(FLASH_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash; \
