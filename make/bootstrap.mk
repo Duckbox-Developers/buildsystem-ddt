@@ -205,7 +205,7 @@ preqs: $(PREQS)
 
 $(DRIVER_DIR):
 	@echo '=============================================================='
-	@echo '      Cloning $(GIT_NAME)-driver git repo                     '
+	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repo                     '
 	@echo '=============================================================='
 	if [ ! -e $(DRIVER_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
