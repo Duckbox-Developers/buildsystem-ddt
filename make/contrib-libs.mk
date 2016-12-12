@@ -237,6 +237,21 @@ LIBARCHIVE_VER = 3.1.2
 $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz:
 	$(WGET) http://www.libarchive.org/downloads/libarchive-$(LIBARCHIVE_VER).tar.gz
 
+$(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
+	$(UNTAR)/libarchive-$(LIBARCHIVE_VER).tar.gz
+	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
+		./configure \
+			--build=$(BUILD) \
+			--host=$(BUILD) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(HOSTPREFIX)
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
+	$(TOUCH)
+
 $(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
@@ -258,6 +273,7 @@ $(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libarchive.pc
+	$(REWRITE_LIBTOOL)/libarchive.la
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
 	$(TOUCH)
 
