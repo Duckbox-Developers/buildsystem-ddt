@@ -43,12 +43,11 @@ $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VER); \
 		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
-			--program-prefix=$(TARGET)- \
-			--disable-host-tool \
 			--with-pc_path=$(PKG_CONFIG_PATH) \
 		; \
 		$(MAKE); \
 		$(MAKE) install
+	ln -sf pkg-config $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
 	$(TOUCH)
 
@@ -88,7 +87,7 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/mtd-
 	$(TOUCH)
 
 #
-#
+# gdb
 #
 GDB_VER = 7.8
 GDB_PATCH = gdb-$(GDB_VER)-remove-builddate.patch
@@ -138,14 +137,14 @@ $(D)/gdb: $(D)/bootstrap $(D)/libncurses $(D)/zlib $(ARCHIVE)/gdb-$(GDB_VER).tar
 #
 # opkg
 #
-OPKG_VER = 0.2.2
+OPKG_VER = 0.3.3
 OPKG_PATCH = opkg-$(OPKG_VER).patch
-OPKG_HOST_PATCH = opkg-host-$(OPKG_VER).patch
+OPKG_HOST_PATCH = opkg-$(OPKG_VER).patch
 
 $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz:
-	$(WGET) http://git.yoctoproject.org/cgit/cgit.cgi/opkg/snapshot/opkg-$(OPKG_VER).tar.gz
+	$(WGET) https://downloads.yoctoproject.org/releases/opkg/opkg-$(OPKG_VER).tar.gz
 
-$(D)/opkg-host: $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
+$(D)/opkg_host: $(D)/host_libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
@@ -153,16 +152,17 @@ $(D)/opkg-host: $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
 		autoreconf -v --install; \
 		./configure $(CONFIGURE_SILENT) \
+			PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig \
 			--prefix= \
+			--disable-curl \
 			--disable-gpg \
-			--disable-shared \
 		; \
 		$(MAKE) all; \
-		cp -a src/opkg-cl $(HOSTPREFIX)/bin
+		$(MAKE) install DESTDIR=$(HOSTPREFIX)
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(TOUCH)
 
-$(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
+$(D)/opkg: $(D)/bootstrap $(D)/opkg_host $(D)/libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
@@ -180,6 +180,7 @@ $(D)/opkg: $(D)/bootstrap $(D)/opkg-host $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	install -d -m 0755 $(TARGETPREFIX)/usr/lib/opkg
 	install -d -m 0755 $(TARGETPREFIX)/etc/opkg
+	ln -s opkg $(TARGETPREFIX)/usr/bin/opkg-cl
 	$(REWRITE_LIBTOOL)/libopkg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libopkg.pc
 	$(REMOVE)/opkg-$(OPKG_VER)
