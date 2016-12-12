@@ -1,0 +1,124 @@
+--- a/libopkg/pkg.c
++++ b/libopkg/pkg.c
+@@ -694,6 +694,7 @@
+             if (pkg->provides_count > 1) {
+                 fprintf(fp, "Provides:");
+                 for (i = 1; i < pkg->provides_count; i++) {
++                    if (!pkg->provides[i]) break;
+                     fprintf(fp, "%s %s", i == 1 ? "" : ",",
+                             pkg->provides[i]->name);
+                 }
+--- a/libopkg/opkg_install.c
++++ b/libopkg/opkg_install.c
+@@ -65,7 +65,7 @@
+                  owner ? owner->name : "<NULL>");
+ 
+         if (!owner || (owner == old_pkg) || obs)
+-            file_hash_set_file_owner(new_file, new_pkg);
++            file_hash_set_file_owner_with_old(new_file, new_pkg, old_pkg);
+     }
+ 
+     if (old_pkg) {
+--- a/libopkg/pkg_hash.c
++++ b/libopkg/pkg_hash.c
+@@ -803,3 +803,21 @@ file_hash_set_file_owner(const char *file_name, pkg_t *owning_pkg)
+         owning_pkg->state_flag |= SF_FILELIST_CHANGED;
+     }
+ }
++
++void
++file_hash_set_file_owner_with_old(const char *file_name, pkg_t *owning_pkg, pkg_t *old_owning_pkg)
++{
++	file_name = strip_offline_root(file_name);
++
++	hash_table_insert(&opkg_config->file_hash, file_name, owning_pkg);
++
++	/* mark this package to have its filelist written */
++	owning_pkg->state_flag |= SF_FILELIST_CHANGED;
++
++	if (old_owning_pkg) {
++		pkg_get_installed_files(old_owning_pkg);
++		str_list_remove_elt(old_owning_pkg->installed_files, file_name);
++		/* mark the old package to have its filelist written */
++		old_owning_pkg->state_flag |= SF_FILELIST_CHANGED;
++	}
++}
+--- a/libopkg/pkg_hash.h
++++ b/libopkg/pkg_hash.h
+@@ -54,6 +54,7 @@
+ void file_hash_remove(const char *file_name);
+ pkg_t *file_hash_get_file_owner(const char *file_name);
+ void file_hash_set_file_owner(const char *file_name, pkg_t * pkg);
++void file_hash_set_file_owner_with_old(const char *file_name, pkg_t *owning_pkg, pkg_t *old_owning_pkg);
+ 
+ #ifdef __cplusplus
+ }
+--- a/libopkg/opkg_conf.h
++++ b/libopkg/opkg_conf.h
+@@ -35,10 +35,10 @@
+ #define OPKG_CONF_TMP_DIR_SUFFIX "opkg-XXXXXX"
+ #define OPKG_BACKUP_SUFFIX "-opkg.backup"
+ 
+-#define OPKG_CONF_DEFAULT_LISTS_DIR     "/var/lib/opkg/lists"
+-#define OPKG_CONF_DEFAULT_INFO_DIR      "/var/lib/opkg/info"
+-#define OPKG_CONF_DEFAULT_STATUS_FILE   "/var/lib/opkg/status"
+-#define OPKG_CONF_DEFAULT_CACHE_DIR     "/var/cache/opkg"
++#define OPKG_CONF_DEFAULT_LISTS_DIR     "/usr/lib/opkg/lists"
++#define OPKG_CONF_DEFAULT_INFO_DIR      "/usr/lib/opkg/info"
++#define OPKG_CONF_DEFAULT_STATUS_FILE   "/usr/lib/opkg/status"
++#define OPKG_CONF_DEFAULT_CACHE_DIR     "/tmp/opkg"
+ #define OPKG_CONF_DEFAULT_CONF_FILE_DIR "/etc/opkg"
+ #define OPKG_CONF_DEFAULT_LOCK_FILE     "/var/run/opkg.lock"
+ 
+--- a/src/opkg.c
++++ b/src/opkg.c
+@@ -54,7 +54,7 @@
+     ARGS_OPT_DOWNLOAD_ONLY,
+     ARGS_OPT_NODEPS,
+     ARGS_OPT_AUTOREMOVE,
+-    ARGS_OPT_VOLATILE_CACHE,
++//    ARGS_OPT_VOLATILE_CACHE,
+     ARGS_OPT_COMBINE,
+     ARGS_OPT_NO_INSTALL_RECOMMENDS,
+     ARGS_OPT_CACHE_DIR,
+@@ -111,7 +111,7 @@
+     {"tmp_dir", 1, 0, 't'},
+     {"cache-dir", 1, 0, ARGS_OPT_CACHE_DIR},
+     {"host-cache-dir", 0, 0, ARGS_OPT_HOST_CACHE_DIR},
+-    {"volatile-cache", 0, 0, ARGS_OPT_VOLATILE_CACHE},
++//    {"volatile-cache", 0, 0, ARGS_OPT_VOLATILE_CACHE},
+     {"verbosity", 2, 0, 'V'},
+     {"version", 0, 0, 'v'},
+     {0, 0, 0, 0}
+@@ -123,6 +123,7 @@
+     int option_index = 0;
+     int parse_err = 0;
+     char *tuple, *targ;
++    opkg_config->volatile_cache = 1;
+ 
+     while (1) {
+         c = getopt_long_only(argc, argv, "Ad:f:no:p:t:vV::", long_options,
+@@ -223,9 +224,9 @@
+         case ARGS_OPT_HOST_CACHE_DIR:
+             opkg_config->host_cache_dir = 1;
+             break;
+-        case ARGS_OPT_VOLATILE_CACHE:
+-            opkg_config->volatile_cache = 1;
+-            break;
++//        case ARGS_OPT_VOLATILE_CACHE:
++//            opkg_config->volatile_cache = 1;
++//            break;
+         case ARGS_OPT_NO_INSTALL_RECOMMENDS:
+             opkg_config->no_install_recommends = 1;
+             break;
+@@ -335,8 +336,8 @@
+     printf("\t--tmp-dir                       Specify tmp-dir.\n");
+     printf("\t--cache-dir <path>              Specify cache directory.\n");
+     printf("\t--host-cache-dir                Don't place cache in offline root dir.\n");
+-    printf("\t--volatile-cache                Use volatile cache.\n");
+-    printf("\t                                Volatile cache will be cleared on exit\n");
++//    printf("\t--volatile-cache                Use volatile cache.\n");
++//    printf("\t                                Volatile cache will be cleared on exit\n");
+ 
+     printf("\n");
+ 
