@@ -142,7 +142,7 @@ OPKG_PATCH = opkg-$(OPKG_VER).patch
 OPKG_HOST_PATCH = opkg-$(OPKG_VER).patch
 
 $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz:
-	$(WGET) https://downloads.yoctoproject.org/releases/opkg/opkg-$(OPKG_VER).tar.gz
+	$(WGET) https://git.yoctoproject.org/cgit/cgit.cgi/opkg/snapshot/opkg-$(OPKG_VER).tar.gz
 
 $(D)/opkg_host: $(D)/host_libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(START_BUILD)
@@ -150,7 +150,7 @@ $(D)/opkg_host: $(D)/host_libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
-		autoreconf -v --install; \
+		./autogen.sh; \
 		./configure $(CONFIGURE_SILENT) \
 			PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig \
 			--prefix= \
@@ -168,19 +168,17 @@ $(D)/opkg: $(D)/bootstrap $(D)/opkg_host $(D)/libarchive $(ARCHIVE)/opkg-$(OPKG_
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_PATCH)); \
-		autoreconf -v --install; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-curl \
 			--disable-gpg \
-			--with-opkglibdir=/usr/lib \
 			--mandir=/.remove \
 		; \
 		$(MAKE) all ; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	install -d -m 0755 $(TARGETPREFIX)/usr/lib/opkg
 	install -d -m 0755 $(TARGETPREFIX)/etc/opkg
-	ln -s opkg $(TARGETPREFIX)/usr/bin/opkg-cl
+	ln -sf opkg $(TARGETPREFIX)/usr/bin/opkg-cl
 	$(REWRITE_LIBTOOL)/libopkg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libopkg.pc
 	$(REMOVE)/opkg-$(OPKG_VER)
