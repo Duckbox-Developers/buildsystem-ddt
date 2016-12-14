@@ -720,7 +720,7 @@ JPEG_PATCH = jpeg-$(JPEG_VER).patch
 $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz:
 	$(WGET) http://www.ijg.org/files/jpegsrc.v$(JPEG_VER).tar.gz
 
-$(D)/libjpeg: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
+$(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/jpeg-$(JPEG_VER)
 	$(UNTAR)/jpegsrc.v$(JPEG_VER).tar.gz
@@ -744,6 +744,14 @@ JPEG_TURBO_VER = 1.5.0
 
 $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz:
 	$(WGET) http://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VER)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
+
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+$(D)/libjpeg: $(D)/libjpeg_old
+	@touch $@
+else
+$(D)/libjpeg: $(D)/libjpeg_turbo
+	@touch $@
+endif
 
 $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
 	$(START_BUILD)
