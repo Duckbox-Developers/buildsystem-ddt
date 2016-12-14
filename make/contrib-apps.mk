@@ -146,13 +146,15 @@ OPKG_HOST_PATCH = opkg-$(OPKG_VER).patch
 $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz:
 	$(WGET) https://git.yoctoproject.org/cgit/cgit.cgi/opkg/snapshot/opkg-$(OPKG_VER).tar.gz
 
-$(D)/opkg_host: $(D)/host_libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
+$(D)/opkg_host: directories $(D)/host_libarchive $(ARCHIVE)/opkg-$(OPKG_VER).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/opkg-$(OPKG_VER)
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
 		./autogen.sh; \
+		CFLAGS="-I$(HOSTPREFIX)/include" \
+		LDFLAGS="-L$(HOSTPREFIX)/lib" \
 		./configure $(CONFIGURE_SILENT) \
 			PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig \
 			--prefix= \
@@ -170,6 +172,8 @@ $(D)/opkg: $(D)/bootstrap $(D)/opkg_host $(D)/libarchive $(ARCHIVE)/opkg-$(OPKG_
 	$(UNTAR)/opkg-$(OPKG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_PATCH)); \
+		LIBARCHIVE_LIBS="-L$(TARGETPREFIX)/usr/lib -larchive" \
+		LIBARCHIVE_CFLAGS="-I$(TARGETPREFIX)/usr/include" \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-curl \

@@ -63,7 +63,6 @@ ifeq ($(MAINTAINER),)
 	@echo "##########################################################################"
 	@echo
 endif
-	@LC_ALL=C
 
 help:
 	@echo "a few helpful make targets:"
