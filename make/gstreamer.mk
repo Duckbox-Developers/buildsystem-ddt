@@ -137,6 +137,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 		$(call post_patch,$(GSTREAMER_GOOD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--enable-oss \
 			--enable-gst_v4l2 \
 			--without-libv4l2 \
