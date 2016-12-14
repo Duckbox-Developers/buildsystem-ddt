@@ -65,6 +65,7 @@ $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/gmp-$(GMP_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/gmp-$(GMP_MAJOR); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--infodir=/.remove \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
