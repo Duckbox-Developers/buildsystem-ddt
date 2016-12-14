@@ -294,6 +294,8 @@ $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VER).tar.gz
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
+			--infodir=/.remove \
+			--datadir=/.remove \
 			bash_cv_must_reinstall_sighandlers=no \
 			bash_cv_func_sigsetjmp=present \
 			bash_cv_func_strcoll_broken=no \
