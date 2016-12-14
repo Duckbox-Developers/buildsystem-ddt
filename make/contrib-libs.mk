@@ -167,11 +167,12 @@ $(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(AR
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
+			--datarootdir=/.remove \
+			--with-html-dir=/.remove \
 			--cache-file=config.cache \
 			--disable-gtk-doc \
 			--disable-gtk-doc-html \
 			--with-threads="posix" \
-			--with-html-dir=/.remove \
 			--enable-static \
 		; \
 		$(MAKE) all; \
