@@ -36,7 +36,13 @@ PKGCONFIG_VER = 0.29.1
 $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz:
 	$(WGET) http://pkgconfig.freedesktop.org/releases/pkg-config-$(PKGCONFIG_VER).tar.gz
 
-$(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
+pkg-config-preqs:
+	@PATH=$(subst $(HOSTPREFIX)/bin:,,$(PATH)); \
+	if ! pkg-config --exists glib-2.0; then \
+		echo "pkg-config and glib2-devel packages are needed for building cross-pkg-config."; false; \
+	fi
+
+$(D)/host_pkgconfig: directories $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz | pkg-config-preqs
 	$(START_BUILD)
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
 	$(UNTAR)/pkg-config-$(PKGCONFIG_VER).tar.gz
@@ -63,7 +69,7 @@ MTD_UTILS_HOST_PATCH = host-mtd-utils-$(MTD_UTILS_VER).patch
 $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2:
 	$(WGET) ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-$(MTD_UTILS_VER).tar.bz2
 
-$(D)/host_mtd_utils: $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2
+$(D)/host_mtd_utils: directories $(ARCHIVE)/mtd-utils-$(MTD_UTILS_VER).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
 	$(UNTAR)/mtd-utils-$(MTD_UTILS_VER).tar.bz2; \
