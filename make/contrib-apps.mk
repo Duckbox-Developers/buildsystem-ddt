@@ -43,11 +43,13 @@ $(D)/host_pkgconfig: $(ARCHIVE)/pkg-config-$(PKGCONFIG_VER).tar.gz
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VER); \
 		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
+			--program-prefix=$(TARGET)- \
+			--disable-host-tool \
 			--with-pc_path=$(PKG_CONFIG_PATH) \
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	ln -sf pkg-config $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
+	ln -sf $(TARGET)-pkg-config $(HOSTPREFIX)/bin/pkg-config
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VER)
 	$(TOUCH)
 
