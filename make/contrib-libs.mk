@@ -2492,6 +2492,7 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
+			--infodir=/.remove \
 			--disable-rpath \
 			--with-included-libtasn1 \
 			--enable-local-libopts \
