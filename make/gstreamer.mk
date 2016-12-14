@@ -285,6 +285,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 		$(call post_patch,$(GSTREAMER_UGLY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--disable-fatal-warnings \
 			--disable-amrnb \
 			--disable-amrwb \
@@ -426,6 +427,7 @@ $(D)/orc: $(D)/bootstrap $(ARCHIVE)/orc-$(ORC_VER).tar.xz
 	set -e; cd $(BUILD_TMP)/orc-$(ORC_VER); \
 		$(call post_patch,$(ORC_PATCH)); \
 		$(CONFIGURE) \
+			--datarootdir=/.remove \
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
