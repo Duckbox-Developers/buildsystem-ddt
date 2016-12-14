@@ -178,6 +178,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--disable-gtk-doc \
 			--disable-gtk-doc-html \
 			--disable-gtk-doc-pdf \
@@ -228,6 +229,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 			--disable-voaacenc \
 			--disable-voamrwbenc \
 			--disable-wasapi \
+			--disable-wayland \
 			--disable-wildmidi \
 			--disable-wininet \
 			--disable-winscreencap \
