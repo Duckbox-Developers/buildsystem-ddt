@@ -109,6 +109,7 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 			--target=$(TARGET) \
 			--prefix=/usr \
 			--mandir=/.remove \
+			--infodir=/.remove \
 			--disable-static \
 			--enable-builddir=libffi \
 		; \
