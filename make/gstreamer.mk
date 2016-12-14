@@ -61,7 +61,7 @@ GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VER)-taglist-not-send-
 $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz:
 	$(WGET) http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
 
-$(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/libogg $(D)/alsa-lib $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
+$(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/alsa-lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-base-$(GSTREAMER_BASE_VER)
 	$(UNTAR)/gst-plugins-base-$(GSTREAMER_BASE_VER).tar.xz
@@ -69,6 +69,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/li
 		$(call post_patch,$(GSTREAMER_BASE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--disable-libvisual \
 			--disable-valgrind \
 			--disable-debug \
