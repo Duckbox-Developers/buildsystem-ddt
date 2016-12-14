@@ -1617,8 +1617,12 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2_e2 $(D)/glib2 $(ARCHIVE)/l
 	set -e; cd $(BUILD_TMP)/libsoup-$(LIBSOUP_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--disable-more-warnings \
 			--without-gnome \
+			--disable-gtk-doc \
+			--disable-gtk-doc-html \
+			--disable-gtk-doc-pdf \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
