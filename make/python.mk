@@ -493,7 +493,7 @@ $(D)/python_wifi: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/p
 	$(REMOVE)/pythonwifi-$(PYTHON_WIFI_VER)
 	$(UNTAR)/pythonwifi-$(PYTHON_WIFI_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/pythonwifi-$(PYTHON_WIFI_VER); \
-		$(PYTHON_INSTALL)
+		$(PYTHON_INSTALL) --install-data=/.remove
 	$(REMOVE)/pythonwifi-$(PYTHON_WIFI_VER)
 	$(TOUCH)
 
