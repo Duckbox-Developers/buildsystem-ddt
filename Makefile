@@ -64,10 +64,23 @@ ifeq ($(MAINTAINER),)
 	@echo
 endif
 
+	@if ! test -e $(BASE_DIR)/config; then \
+		echo;echo "If you want to create or modify the configuration, run './make.sh'"; \
+		echo; fi
+
 help:
 	@echo "a few helpful make targets:"
 	@echo "* make crosstool           - build cross toolchain"
 	@echo "* make bootstrap           - prepares for building"
+	@echo "* make print-targets       - print out all available targets"
+	@echo ""
+	@echo "later, you might find those useful:"
+	@echo "* make update-self         - update the build system"
+	@echo "* make update              - update the build system, apps, driver and flash"
+	@echo ""
+	@echo "cleantargets:"
+	@echo "make clean                 - Clears everything except kernel."
+	@echo "make distclean             - Clears the whole construction."
 	@echo
 
 # define package versions first...
@@ -88,6 +101,9 @@ include make/neutrino-release.mk
 include make/cleantargets.mk
 include make/patches.mk
 include make/bootstrap.mk
+
+update-self:
+	git pull
 
 update:
 	@if test -d $(BASE_DIR); then \
@@ -131,7 +147,7 @@ everything: $(shell sed -n 's/^\$$.D.\/\(.*\):.*/\1/p' make/*.mk)
 
 # print all present targets...
 print-targets:
-	sed -n 's/^\$$.D.\/\(.*\):.*/\1/p; s/^\([a-z].*\):\( \|$$\).*/\1/p;' \
+	@sed -n 's/^\$$.D.\/\(.*\):.*/\1/p; s/^\([a-z].*\):\( \|$$\).*/\1/p;' \
 		`ls -1 make/*.mk|grep -v make/unmaintained.mk` Makefile | \
 		sort -u | fold -s -w 65
 
@@ -146,6 +162,7 @@ print-targets:
 
 PHONY += everything print-targets
 PHONY += all printenv .print-phony
+PHONY += update update-self
 .PHONY: $(PHONY)
 
 # this makes sure we do not build top-level dependencies in parallel
