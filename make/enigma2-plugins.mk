@@ -1,6 +1,8 @@
 #
 # hotplug_e2
 #
+HOTPLUG_E2_PATCH = hotplug-e2-helper.patch
+
 $(D)/hotplug_e2: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/hotplug-e2-helper
@@ -10,7 +12,7 @@ $(D)/hotplug_e2: $(D)/bootstrap
 		fi
 	cp -ra $(ARCHIVE)/hotplug-e2-helper.git $(BUILD_TMP)/hotplug-e2-helper
 	set -e; cd $(BUILD_TMP)/hotplug-e2-helper; \
-		$(PATCH)/hotplug-e2-helper.patch; \
+		$(call post_patch,$(HOTPLUG_E2_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -22,6 +24,8 @@ $(D)/hotplug_e2: $(D)/bootstrap
 #
 # tuxtxtlib
 #
+TUXTXTLIB_PATCH = tuxtxtlib-1.0-fix-dbox-headers.patch
+
 $(D)/tuxtxtlib: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/tuxtxtlib
@@ -31,7 +35,7 @@ $(D)/tuxtxtlib: $(D)/bootstrap
 		fi
 	cp -ra $(ARCHIVE)/tuxtxt.git/libtuxtxt $(BUILD_TMP)/tuxtxtlib
 	set -e; cd $(BUILD_TMP)/tuxtxtlib; \
-		$(PATCH)/tuxtxtlib-1.0-fix-dbox-headers.patch; \
+		$(call post_patch,$(TUXTXTLIB_PATCH)); \
 		aclocal; \
 		autoheader; \
 		autoconf; \
@@ -57,12 +61,14 @@ $(D)/tuxtxtlib: $(D)/bootstrap
 #
 # tuxtxt32bpp
 #
+TUXTXT32BPP_PATCH = tuxtxt32bpp-1.0-fix-dbox-headers.patch
+
 $(D)/tuxtxt32bpp: $(D)/bootstrap $(D)/tuxtxtlib
 	$(START_BUILD)
 	$(REMOVE)/tuxtxt
 	cp -ra $(ARCHIVE)/tuxtxt.git/tuxtxt $(BUILD_TMP)/tuxtxt; \
 	set -e; cd $(BUILD_TMP)/tuxtxt; \
-		$(PATCH)/tuxtxt32bpp-1.0-fix-dbox-headers.patch; \
+		$(call post_patch,$(TUXTXT32BPP_PATCH)); \
 		aclocal; \
 		autoheader; \
 		autoconf; \
@@ -122,6 +128,8 @@ $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah
 #
 # enigma2-networkbrowser
 #
+ENIGMA2_NETWORBROWSER_PATCH = enigma2-networkbrowser-support-autofs.patch
+
 $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 	$(START_BUILD)
 	$(REMOVE)/enigma2-networkbrowser
@@ -131,7 +139,7 @@ $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 		fi
 	cp -ra $(ARCHIVE)/enigma2-plugins.git/networkbrowser/ $(BUILD_TMP)/enigma2-networkbrowser
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser; \
-		$(PATCH)/enigma2-networkbrowser-support-autofs.patch
+		$(call post_patch,$(ENIGMA2_NETWORBROWSER_PATCH))
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser/src/lib; \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
