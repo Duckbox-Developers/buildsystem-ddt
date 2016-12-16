@@ -105,6 +105,8 @@ neutrino-mp-plugins-distclean:
 #
 # xupnpd
 #
+XUPNPD_PATCH = xupnpd.patch
+
 $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 	$(START_BUILD)
 	$(REMOVE)/xupnpd
@@ -113,7 +115,8 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
-	set -e; cd $(BUILD_TMP)/xupnpd && $(PATCH)/xupnpd.patch
+	set -e; cd $(BUILD_TMP)/xupnpd; \
+		$(call post_patch,$(XUPNPD_PATCH))
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) TARGET=$(TARGET) sh4; \
@@ -157,10 +160,8 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins && find ./ -name "Makefile.am" -exec sed -i -e "s/\/..\/nhd2-exp//g" {} \;
 	cd $(SOURCE_DIR)/neutrino-hd2.git && git add --all
-	for i in $(NEUTRINO_HD2_PLUGINS_PATCHES); do \
-		echo "==> Applying Patch: $(subst $(PATCHES)/,'',$$i)"; \
-		set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins && patch -p1 -i $$i; \
-	done;
+	set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
+		$(call post_patch,$(NEUTRINO_HD2_PLUGINS_PATCHES))
 	$(TOUCH)
 
 $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
