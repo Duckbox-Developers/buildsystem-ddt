@@ -96,6 +96,9 @@ VPATH                 = $(D)
 
 PATH                 := $(HOSTPREFIX)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
 
+TERM_BOLD            := $(shell tput smso 2>/dev/null)
+TERM_RESET           := $(shell tput rmso 2>/dev/null)
+
 # Adjust according to the number CPU cores to use for parallel build.
 # Default: Number of processors in /proc/cpuinfo, if present, or 1.
 NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
@@ -128,8 +131,8 @@ REMOVE                = rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
-START_BUILD           = @echo "----------------------------------------------------------------------"; echo; echo -e "Start build of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m."
-TOUCH                 = @touch $@; echo -e "Build of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m completed."; echo
+START_BUILD           = @echo "=============================================================="; echo; echo -e " $(TERM_BOLD) Start build of $(subst $(BASE_DIR)/.deps/,,$@). $(TERM_RESET)"
+TOUCH                 = @touch $@; echo -e " $(TERM_BOLD) Build of $(subst $(BASE_DIR)/.deps/,,$@) completed. $(TERM_RESET)"; echo
 
 define post_patch
 	for i in $(1); do \
