@@ -1,0 +1,128 @@
+#!/bin/sh
+
+MODDIR=/lib/modules
+
+insmod $MODDIR/vfd.ko
+echo "    Welcome     " > /dev/vfd
+
+if [ -e /var/etc/.firstboot ]; then
+   echo "WAIT 1 min" > /dev/vfd
+   echo "WAIT 1 min"
+   rm /var/etc/.firstboot
+   touch /dev/.devfsd
+fi
+
+/etc/init.d/mountvirtfs start
+
+if [ ! -e /var/etc/.firstboot ]; then
+
+   insmod $MODDIR/e2_proc.ko
+
+   echo "load video firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
+#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
+   /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+   echo "load audio firmware"
+   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
+#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
+   /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+   echo "Starting DEBUG Interface"
+   mount -av -t nonfs,nonfs4,nosmbfs,nocifs,noncp,noncpfs,nocoda
+   /etc/init.d/hostname start
+
+#   echo "starting telnetd"
+#   /usr/sbin/telnetd -l /bin/autologin
+
+   #used by fp_control! otherwise crash
+   insmod $MODDIR/boxtype.ko
+
+   echo "LOADING MODULES"
+   fp_control -c
+
+   echo "init embxshell"
+   insmod $MODDIR/embxshell.ko
+   echo "init embxmailbox"
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:137:set2 ;
+   echo "init embxshm"
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000 ;
+   echo "init mme_host"
+   insmod $MODDIR/mme_host.ko transport0=shm
+
+   echo "init AVS"
+   insmod $MODDIR/avs.ko
+
+   echo "init stmfb"
+   insmod $MODDIR/stmcore-display-stx7100.ko
+   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:8m:pal:yuv:yuv;# display1=720x576-16@50:1m:pal:cvbs;
+
+   echo "init player"
+   insmod $MODDIR/mmelog.ko
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+   insmod $MODDIR/ksound.ko
+# only for stm23
+   insmod $MODDIR/p2div64.ko
+# only for stm23
+   insmod $MODDIR/stm_v4l2.ko
+   insmod $MODDIR/stmvout.ko
+   insmod $MODDIR/stmvbi.ko
+   insmod $MODDIR/pseudocard.ko
+   insmod $MODDIR/cx24116.ko
+   insmod $MODDIR/cimax.ko
+   insmod $MODDIR/pti.ko
+   insmod $MODDIR/stm_monitor.ko
+   insmod $MODDIR/stmsysfs.ko
+   insmod $MODDIR/stmdvb.ko
+   insmod $MODDIR/player2.ko
+   insmod $MODDIR/sth264pp.ko
+   insmod $MODDIR/stmalloc.ko
+   insmod $MODDIR/platform.ko
+   insmod $MODDIR/silencegen.ko
+   insmod $MODDIR/bpamem.ko
+
+   echo "init frontpanel"
+   insmod $MODDIR/simu_button.ko
+
+   /bin/evremote2 &
+
+   #DVD-PLAYER EXIT-TASTE LOAD OR EJECT DVD
+   #mount /dev/sr0 /media/dvd
+   #mount -t ext3 /dev/sda1 /hdd/movie
+
+   /etc/init.d/portmap start
+#   /etc/init.d/vsftpd start
+   /usr/sbin/inetd
+
+   #timefix
+   date -s "200901011200"
+
+   stfbcontrol a 255
+
+   echo "LOADING neutrino" > /dev/vfd
+   echo "LOADING neutrino"
+
+   until false
+   do
+      echo "starting neutrino ->"
+      /usr/local/bin/neutrino
+      rtv=$?
+      echo "neutrino ended <- RTV: " $rtv
+      case "$rtv" in
+		0) echo "0"
+		   echo "SHUTDOWN"
+		   init 0;;
+		1) echo "1"
+		   echo "REBOOT"
+		   init 6;;
+		*) echo "*"
+		   echo "ERROR"
+		   init 6;;
+      esac
+   done
+fi
+
+#never reached
+echo "REBOOT Ariva" > /dev/vfd
+echo "REBOOT Ariva"
+init 6
