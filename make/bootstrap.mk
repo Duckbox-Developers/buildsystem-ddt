@@ -63,28 +63,30 @@ $(HOSTPREFIX)/bin/unpack-rpm.sh: | directories
 	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOSTPREFIX)/bin
 
 #
-STM_RELOCATE = /opt/STM/STLinux-2.4
+STM_RELOCATE     = /opt/STM/STLinux-2.4
 
 # updates / downloads
-STL_FTP = http://ftp.stlinux.com/pub/stlinux/2.4
+STL_FTP          = http://archive.stlinux.com/stlinux/2.4
 STL_FTP_UPD_SRC  = $(STL_FTP)/updates/SRPMS
 STL_FTP_UPD_SH4  = $(STL_FTP)/updates/RPMS/sh4
 STL_FTP_UPD_HOST = $(STL_FTP)/updates/RPMS/host
+STL_ARCHIVE      = $(ARCHIVE)/stlinux
+STL_GET          = $(WGET)/stlinux
 
 ## ordering is important here. The /host/ rule must stay before the less
 ## specific %.sh4/%.i386/%.noarch rule. No idea if this is portable or
 ## even reliable :-(
-$(ARCHIVE)/stlinux24-host-%.i386.rpm \
-$(ARCHIVE)/stlinux24-host-%noarch.rpm:
-	$(WGET) $(STL_FTP_UPD_HOST)/$(subst $(ARCHIVE)/,"",$@)
+$(STL_ARCHIVE)/stlinux24-host-%.i386.rpm \
+$(STL_ARCHIVE)/stlinux24-host-%noarch.rpm:
+	$(STL_GET) $(STL_FTP_UPD_HOST)/$(subst $(STL_ARCHIVE)/,"",$@)
 
-$(ARCHIVE)/stlinux24-host-%.src.rpm:
-	$(WGET) $(STL_FTP_UPD_SRC)/$(subst $(ARCHIVE)/,"",$@)
+$(STL_ARCHIVE)/stlinux24-host-%.src.rpm:
+	$(STL_GET) $(STL_FTP_UPD_SRC)/$(subst $(STL_ARCHIVE)/,"",$@)
 
-$(ARCHIVE)/stlinux24-sh4-%.sh4.rpm \
-$(ARCHIVE)/stlinux24-cross-%.i386.rpm \
-$(ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
-	$(WGET) $(STL_FTP_UPD_SH4)/$(subst $(ARCHIVE)/,"",$@)
+$(STL_ARCHIVE)/stlinux24-sh4-%.sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-%.i386.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
+	$(STL_GET) $(STL_FTP_UPD_SH4)/$(subst $(STL_ARCHIVE)/,"",$@)
 
 #
 # install the RPMs
@@ -103,17 +105,17 @@ LIBGCC_VER    = 4.8.4-148
 GLIBC_VER     = 2.14.1-59
 
 crosstool-rpminstall: \
-$(ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VER).i386.rpm \
-$(ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VER).i386.rpm \
-$(ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VER).i386.rpm \
-$(ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VER).i386.rpm \
-$(ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VER).i386.rpm \
-$(ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VER).noarch.rpm \
-$(ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VER).sh4.rpm \
-$(ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VER).sh4.rpm \
-$(ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
-$(ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
-$(ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VER).noarch.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
 		$^
 	touch $(D)/$(notdir $@)
@@ -150,7 +152,7 @@ crosstool-rpminstall
 # host_u_boot_tools
 #
 host_u_boot_tools: \
-$(ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
+$(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOSTPREFIX)/bin \
 		$^
 	touch $(D)/$(notdir $@)
@@ -194,9 +196,6 @@ crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \
 		./ct-ng menuconfig
 
-#
-# directories
-#
 PREQS  = $(DRIVER_DIR)
 PREQS += $(APPS_DIR)
 PREQS += $(FLASH_DIR)
@@ -228,9 +227,13 @@ $(FLASH_DIR):
 	fi
 	@echo ''
 
+#
+# directories
+#
 directories:
 	test -d $(D) || mkdir $(D)
 	test -d $(ARCHIVE) || mkdir $(ARCHIVE)
+	test -d $(STL_ARCHIVE) || mkdir $(STL_ARCHIVE)
 	test -d $(BUILD_TMP) || mkdir $(BUILD_TMP)
 	test -d $(SOURCE_DIR) || mkdir $(SOURCE_DIR)
 	install -d $(TARGETPREFIX)
