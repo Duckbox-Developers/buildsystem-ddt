@@ -13,7 +13,7 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1: target system (1-36)"
+	echo "Parameter 1: target system (1-37)"
 	echo "Parameter 2: kernel (1-2)"
 	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: player (1-2)"
@@ -60,85 +60,88 @@ case $1 in
 	[1-9] | 1[0-9] | 2[0-9] | 3[0-9]) REPLY=$1;;
 	*)
 		echo "Target receivers:"
-		echo "    1)  Kathrein UFS-910"
-		echo "    2)  Kathrein UFS-912"
-		echo "    3)  Kathrein UFS-913"
-		echo "    4)  Kathrein UFS-922"
-		echo "    5)  Kathrein UFC-960"
-		echo "    6)  Topfield TF77X0 HDPVR"
-		echo "    7)  IPBOX55"
-		echo "    8)  IPBOX99"
-		echo "    9)  IPBOX9900"
-		echo "   10)  Cuberevo [ IPBOX 9000 ]"
-		echo "   11)  Cuberevo mini [ IPBOX 900 ]"
-		echo "   12)  Cuberevo mini2 [ IPBOX 910 ]"
-		echo "   13)  Cuberevo 250 [ IPBOX 91 ]"
-		echo "   14)  Cuberevo 9500HD [ 7000HD ]"
-		echo "   15)  Cuberevo 2000HD"
-		echo "   16)  Cuberevo mini_fta [ 200HD ]"
-		echo "   17)  Xsarius Alpha [ Cuberevo 3000HD ]"
-		echo "   18)  Fortis HDbox [ Fortis FS9000/9200 ]"
-		echo "   19)  Octagon SF1008P [ Fortis HS9510 ]"
-		echo "   20)  Atevio AV7500 [ Fortis HS8200 ]"
-		echo "   21)  Atemio AM520"
-		echo "   22)  Atemio AM530"
-		echo "   23)  Fortis HS7110"
-		echo "   24)  Fortis HS7119"
-		echo "   25)  Fortis HS7420"
-		echo "   26)  Fortis HS7429"
-		echo "   27)  Fortis HS7810A"
-		echo "   28)  Fortis HS7819"
-		echo "   29)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
-		echo "   30)  SpiderBox HL-101"
-		echo "   31)  SPARK"
-		echo "   32)  SPARK7162"
-		echo "   33)  B4Team ADB 5800S"
-		echo "   34)  Vitamin HD5000"
-		echo "   35)  SagemCom 88 series"
-		echo "   36)  Ferguson Ariva @Link 200"
-		read -p "Select target (1-36)? ";;
+		echo "    1)  build for PC"
+		echo "    2)  Kathrein UFS-910"
+		echo "    3)  Kathrein UFS-912"
+		echo "    4)  Kathrein UFS-913"
+		echo "    5)  Kathrein UFS-922"
+		echo "    6)  Kathrein UFC-960"
+		echo "    7)  Topfield TF77X0 HDPVR"
+		echo "    8)  IPBOX55"
+		echo "    9)  IPBOX99"
+		echo "   10)  IPBOX9900"
+		echo "   11)  Cuberevo [ IPBOX 9000 ]"
+		echo "   12)  Cuberevo mini [ IPBOX 900 ]"
+		echo "   13)  Cuberevo mini2 [ IPBOX 910 ]"
+		echo "   14)  Cuberevo 250 [ IPBOX 91 ]"
+		echo "   15)  Cuberevo 9500HD [ 7000HD ]"
+		echo "   16)  Cuberevo 2000HD"
+		echo "   17)  Cuberevo mini_fta [ 200HD ]"
+		echo "   18)  Xsarius Alpha [ Cuberevo 3000HD ]"
+		echo "   19)  Fortis HDbox [ Fortis FS9000/9200 ]"
+		echo "   20)  Octagon SF1008P [ Fortis HS9510 ]"
+		echo "   21)  Atevio AV7500 [ Fortis HS8200 ]"
+		echo "   22)  Atemio AM520"
+		echo "   23)  Atemio AM530"
+		echo "   24)  Fortis HS7110"
+		echo "   25)  Fortis HS7119"
+		echo "   26)  Fortis HS7420"
+		echo "   27)  Fortis HS7429"
+		echo "   28)  Fortis HS7810A"
+		echo "   29)  Fortis HS7819"
+		echo "   30)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
+		echo "   31)  SpiderBox HL-101"
+		echo "   32)  SPARK"
+		echo "   33)  SPARK7162"
+		echo "   34)  B4Team ADB 5800S"
+		echo "   35)  Vitamin HD5000"
+		echo "   36)  SagemCom 88 series"
+		echo "   37)  Ferguson Ariva @Link 200"
+		read -p "Select target (1-37)? ";;
 esac
 
 case "$REPLY" in
-	 1) TARGET="ufs910";;
-	 2) TARGET="ufs912";;
-	 3) TARGET="ufs913";;
-	 4) TARGET="ufs922";;
-	 5) TARGET="ufc960";;
-	 6) TARGET="tf7700";;
-	 7) TARGET="ipbox55";;
-	 8) TARGET="ipbox99";;
-	 9) TARGET="ipbox9900";;
-	10) TARGET="cuberevo";;
-	11) TARGET="cuberevo_mini";;
-	12) TARGET="cuberevo_mini2";;
-	13) TARGET="cuberevo_250hd";;
-	14) TARGET="cuberevo_9500hd";;
-	15) TARGET="cuberevo_2000hd";;
-	16) TARGET="cuberevo_mini_fta";;
-	17) TARGET="cuberevo_3000hd";;
-	18) TARGET="fortis_hdbox";;
-	19) TARGET="octagon1008";;
-	20) TARGET="atevio7500";;
-	21) TARGET="atemio520";;
-	22) TARGET="atemio530";;
-	23) TARGET="hs7110";;
-	24) TARGET="hs7119";;
-	25) TARGET="hs7420";;
-	26) TARGET="hs7429";;
-	27) TARGET="hs7810a";;
-	28) TARGET="hs7819";;
-	29) TARGET="hl101";;
-	30) TARGET="hl101";;
-	31) TARGET="spark";;
-	32) TARGET="spark7162";;
-	33) TARGET="adb_box";;
-	34) TARGET="vitamin_hd5000";;
-	35) TARGET="sagemcom88";;
-	36) TARGET="arivalink200";;
-	 *) TARGET="atevio7500";;
+	 1) PLATFORM="pc";BOXTYPE="generic";;
+	 2) PLATFORM="sh4";BOXTYPE="ufs910";;
+	 3) PLATFORM="sh4";BOXTYPE="ufs912";;
+	 4) PLATFORM="sh4";BOXTYPE="ufs913";;
+	 5) PLATFORM="sh4";BOXTYPE="ufs922";;
+	 6) PLATFORM="sh4";BOXTYPE="ufc960";;
+	 7) PLATFORM="sh4";BOXTYPE="tf7700";;
+	 8) PLATFORM="sh4";BOXTYPE="ipbox55";;
+	 9) PLATFORM="sh4";BOXTYPE="ipbox99";;
+	10) PLATFORM="sh4";BOXTYPE="ipbox9900";;
+	11) PLATFORM="sh4";BOXTYPE="cuberevo";;
+	12) PLATFORM="sh4";BOXTYPE="cuberevo_mini";;
+	13) PLATFORM="sh4";BOXTYPE="cuberevo_mini2";;
+	14) PLATFORM="sh4";BOXTYPE="cuberevo_250hd";;
+	15) PLATFORM="sh4";BOXTYPE="cuberevo_9500hd";;
+	16) PLATFORM="sh4";BOXTYPE="cuberevo_2000hd";;
+	17) PLATFORM="sh4";BOXTYPE="cuberevo_mini_fta";;
+	18) PLATFORM="sh4";BOXTYPE="cuberevo_3000hd";;
+	19) PLATFORM="sh4";BOXTYPE="fortis_hdbox";;
+	20) PLATFORM="sh4";BOXTYPE="octagon1008";;
+	21) PLATFORM="sh4";BOXTYPE="atevio7500";;
+	22) PLATFORM="sh4";BOXTYPE="atemio520";;
+	23) PLATFORM="sh4";BOXTYPE="atemio530";;
+	24) PLATFORM="sh4";BOXTYPE="hs7110";;
+	25) PLATFORM="sh4";BOXTYPE="hs7119";;
+	26) PLATFORM="sh4";BOXTYPE="hs7420";;
+	27) PLATFORM="sh4";BOXTYPE="hs7429";;
+	28) PLATFORM="sh4";BOXTYPE="hs7810a";;
+	29) PLATFORM="sh4";BOXTYPE="hs7819";;
+	30) PLATFORM="sh4";BOXTYPE="hl101";;
+	31) PLATFORM="sh4";BOXTYPE="hl101";;
+	32) PLATFORM="sh4";BOXTYPE="spark";;
+	33) PLATFORM="sh4";BOXTYPE="spark7162";;
+	34) PLATFORM="sh4";BOXTYPE="adb_box";;
+	35) PLATFORM="sh4";BOXTYPE="vitamin_hd5000";;
+	36) PLATFORM="sh4";BOXTYPE="sagemcom88";;
+	37) PLATFORM="sh4";BOXTYPE="arivalink200";;
+	 *) PLATFORM="sh4";BOXTYPE="atevio7500";;
 esac
-echo "BOXTYPE=$TARGET" > config
+echo "PLATFORM=$PLATFORM" > config
+echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
 
