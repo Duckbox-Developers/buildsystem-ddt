@@ -1,7 +1,7 @@
 #
 # busybox
 #
-BUSYBOX_VER = 1.25.1
+BUSYBOX_VER = 1.26.0
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VER)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-extra.patch
@@ -10,9 +10,9 @@ $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2:
 	$(WGET) http://busybox.net/downloads/busybox-$(BUSYBOX_VER).tar.bz2
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
-BUSYBOX_CONFIG = busybox.config_nandwrite
+BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config_nandwrite
 else
-BUSYBOX_CONFIG = busybox.config
+BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 
 $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/busybox-$(BUSYBOX_VER).tar.bz2 $(PATCHES)/$(BUSYBOX_CONFIG)

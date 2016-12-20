@@ -1,0 +1,245 @@
+--- a/Makefile.flags
++++ b/Makefile.flags
+@@ -51,7 +51,7 @@
+ # -fno-guess-branch-probability: prohibit pseudo-random guessing
+ # of branch probabilities (hopefully makes bloatcheck more stable):
+ CFLAGS += $(call cc-option,-fno-guess-branch-probability,)
+-CFLAGS += $(call cc-option,-funsigned-char -static-libgcc,)
++CFLAGS += $(call cc-option,-funsigned-char,)
+ CFLAGS += $(call cc-option,-falign-functions=1 -falign-jumps=1 -falign-labels=1 -falign-loops=1,)
+ # Defeat .eh_frame bloat (gcc 4.6.3 x86-32 defconfig: 20% smaller busybox binary):
+ CFLAGS += $(call cc-option,-fno-unwind-tables,)
+@@ -153,7 +153,9 @@
+ SELINUX_PC_MODULES = libselinux libsepol
+ $(eval $(call pkg_check_modules,SELINUX,$(SELINUX_PC_MODULES)))
+ CPPFLAGS += $(SELINUX_CFLAGS)
+-LDLIBS += $(if $(SELINUX_LIBS),$(SELINUX_LIBS:-l%=%),$(SELINUX_PC_MODULES:lib%=%))
++LDLIBS += $(if $(SELINUX_LIBS),\
++       $(patsubst -l%,%,$(filter -l%,$(SELINUX_LIBS))),\
++       $(SELINUX_PC_MODULES:lib%=%))
+ endif
+ 
+ ifeq ($(CONFIG_EFENCE),y)
+# copy commit message from OE as the patch comment:
+#    commit 5a0e1d473ca7aca5ffefffe9a2ec44ae7a1f35bc
+#    Author: Frans Meulenbroeks <fransmeulenbroeks@gmail.com>
+#    Date:   Wed Feb 11 22:40:21 2009 +0100
+#
+#    busybox: fix tar problem with filenames that are exactly 100 bytes
+#
+# above comment added by Kevin Tian <kevin.tian@intel.com>, 2010-07-06
+
+--- a/archival/libarchive/get_header_tar.c
++++ b/archival/libarchive/get_header_tar.c
+@@ -328,6 +328,8 @@
+ 			file_header->name = concat_path_file(tar.prefix, tar.name);
+ 		} else
+ 			file_header->name = xstrdup(tar.name);
++		if (strlen(file_header->name) > 100)
++			file_header->name[100] = 0;
+ 	}
+ 
+ 	/* Set bits 12-15 of the files mode */
+# copy commit message from OE as the patch comment:
+#    commit 98c24291aa165f53423c27ae033831ce0b3bb676
+#    Author: Roman I Khimov <khimov@altell.ru>
+#    Date:   Thu Mar 26 23:03:58 2009 +0000
+#
+#    busybox: update appletlib dependency patch
+#    
+#    Previous version still failed from time to time on clean-start builds
+#    with 4 bitbake threads and '-j16'. Building busybox as sole target worked
+#    well.
+#    
+#    The reason is that previous version introduced a race between applets make
+#    processes spawned from top-level Makefile and from libbb Makefile.
+#    
+#    Fix it with high-level dependency that doesn't create races.
+#    
+#    Signed-off-by: Koen Kooi <koen@openembedded.org>
+#
+# above comment added by Kevin Tian <kevin.tian@intel.com>, 2010-07-06
+===================================================================
+--- a/Makefile
++++ b/Makefile
+@@ -492,6 +492,10 @@
+ 		util-linux/ \
+ 		util-linux/volume_id/ \
+ 
++# Lib interdeps
++# libbb uses headers generated in applets
++libbb: applets
++
+ endif # KBUILD_EXTMOD
+ 
+ ifeq ($(dot-config),1)
+--- a/modutils/Config.src
++++ b/modutils/Config.src
+@@ -133,7 +133,7 @@
+ config DEFAULT_MODULES_DIR
+ 	string "Default directory containing modules"
+ 	default "/lib/modules"
+-	depends on DEPMOD || MODPROBE || MODPROBE_SMALL || MODINFO
++	depends on DEPMOD || MODPROBE || MODPROBE_SMALL || MODINFO || INSMOD
+ 	help
+ 	  Directory that contains kernel modules.
+ 	  Defaults to "/lib/modules"
+--- a/modutils/insmod.c
++++ b/modutils/insmod.c
+@@ -44,11 +44,42 @@
+ //usage:	)
+ //usage:#endif
+ 
++#include <sys/utsname.h>
++static char *m_filename;
++static char *m_fullName;
++
++static int FAST_FUNC check_module_name_match(const char *filename,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userdata, int depth UNUSED_PARAM)
++{
++	char *fullname = (char *) userdata;
++	char *tmp;
++
++	if (fullname[0] == '\0')
++		return FALSE;
++
++	tmp = bb_get_last_path_component_nostrip(filename);
++	if (strcmp(tmp, fullname) == 0) {
++		/* Stop searching if we find a match */
++		m_filename = xstrdup(filename);
++		return FALSE;
++	}
++	return TRUE;
++}
++
+ int insmod_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
+ int insmod_main(int argc UNUSED_PARAM, char **argv)
+ {
+ 	char *filename;
+ 	int rc;
++int len;
++char *tmp;
++char *tmp2;
++int k_version = 0;
++struct stat st;
++struct utsname uts;
++char *m_name;
++FILE *fp;
+ 
+ 	/* Compat note:
+ 	 * 2.6 style insmod has no options and required filename
+@@ -67,9 +98,91 @@
+ 	if (!filename)
+ 		bb_show_usage();
+ 
+-	rc = bb_init_module(filename, parse_cmdline_module_options(argv, /*quote_spaces:*/ 0));
++	/* Grab the module name */
++	tmp = xstrdup(filename);
++	len = strlen(filename);
++
++	if (uname(&uts) == 0) {
++		if (uts.release[0] == '2') {
++			k_version = uts.release[2] - '0';
++		}
++	}
++
++	if (k_version > 4 && len > 3 && tmp[len - 3] == '.' && tmp[len - 2] == 'k' && tmp[len - 1] == 'o') {
++		len -= 3;
++		tmp[len] = '\0';
++	} else
++		if (len > 2 && tmp[len - 2] == '.' && tmp[len - 1] == 'o') {
++			len -= 2;
++			tmp[len] = '\0';
++		}
++
++	if (k_version > 4)
++		m_fullName = xasprintf("%s.ko", tmp);
++	else
++		m_fullName = xasprintf("%s.o", tmp);
++
++	if (!m_name) {
++		m_name = tmp;
++	}
++	free(tmp);
++
++	/* first look in /var/lib/modules */
++	tmp2 = alloca(strlen(m_fullName) + sizeof("/var/lib/modules/"));
++	strcpy(tmp2, "/var/lib/modules/");
++	strcat(tmp2, m_fullName);
++	if (stat(tmp2, &st) >= 0 && S_ISREG(st.st_mode) && (fp = fopen(tmp2, "r")) != NULL) {
++		m_filename = xstrdup(tmp2);
++		printf("insmod: preferring module %s\n", m_filename);
++	} else
++	/* Get a filedesc for the module.  Check that we have a complete path */
++	if (stat(filename, &st) < 0 || !S_ISREG(st.st_mode) || (fp = fopen_for_read(filename)) == NULL) {
++		/* Hmm.  Could not open it.  First search under /lib/modules/`uname -r`,
++		 * but do not error out yet if we fail to find it... */
++		if (k_version) {	/* uname succeedd */
++			char *module_dir;
++			char *tmdn;
++
++			tmdn = concat_path_file(CONFIG_DEFAULT_MODULES_DIR, uts.release);
++			/* Jump through hoops in case /lib/modules/`uname -r`
++			 * is a symlink.  We do not want recursive_action to
++			 * follow symlinks, but we do want to follow the
++			 * /lib/modules/`uname -r` dir, So resolve it ourselves
++			 * if it is a link... */
++			module_dir = xmalloc_readlink(tmdn);
++			if (!module_dir)
++				module_dir = xstrdup(CONFIG_DEFAULT_MODULES_DIR);
++			recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, 0);
++			free(module_dir);
++			free(tmdn);
++		}
++
++		/* Check if we have found anything yet */
++		if (!m_filename || ((fp = fopen_for_read(m_filename)) == NULL)) {
++			int r;
++			char *module_dir;
++
++			free(m_filename);
++			m_filename = NULL;
++			module_dir = xmalloc_readlink(CONFIG_DEFAULT_MODULES_DIR);
++			if (!module_dir)
++				module_dir = xstrdup(CONFIG_DEFAULT_MODULES_DIR);
++			/* No module found under /lib/modules/`uname -r`, this
++			 * time cast the net a bit wider.  Search /lib/modules/ */
++			r = recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, 0);
++			if (r)
++				bb_error_msg_and_die("%s: module not found", m_fullName);
++			free(module_dir);
++			if (m_filename == NULL || ((fp = fopen_for_read(m_filename)) == NULL)) {
++				bb_error_msg_and_die("%s: module not found", m_fullName);
++			}
++		}
++	} else
++		m_filename = xstrdup(filename);
++
++	rc = bb_init_module(m_filename, parse_cmdline_module_options(argv, /*quote_spaces:*/ 0));
+ 	if (rc)
+-		bb_error_msg("can't insert '%s': %s", filename, moderror(rc));
++		bb_error_msg("can't insert '%s': %s", m_filename, moderror(rc));
+ 
+ 	return rc;
+ }
+--- a/scripts/trylink
++++ b/scripts/trylink
+@@ -46,7 +46,7 @@
+ }
+ 
+ check_cc() {
+-    local tempname="$(mktemp tmp.XXXXXXXXXX)"
++    local tempname="$(mktemp /tmp/tmp.XXXXXXXXXX)"
+     local r
+     echo "int main(int argc,char**argv){return argv?argc:0;}" >"$tempname".c
+     # Can use "-o /dev/null", but older gcc tend to *unlink it* on failure! :(
+@@ -61,7 +61,7 @@
+ }
+ 
+ check_libc_is_glibc() {
+-    local tempname="$(mktemp tmp.XXXXXXXXXX)"
++    local tempname="$(mktemp /tmp/tmp.XXXXXXXXXX)"
+     local r
+     echo "\
+ 	#include <stdlib.h>
