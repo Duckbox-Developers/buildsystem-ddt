@@ -881,7 +881,7 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
 #
 # libcurl
 #
-CURL_VER = 7.51.0
+CURL_VER = 7.52.0
 CURL_PATCH = libcurl-$(CURL_VER).patch
 
 $(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
