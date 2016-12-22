@@ -2017,7 +2017,7 @@ $(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMP
 #
 # alsa-lib
 #
-ALSA_VER = 1.1.2
+ALSA_VER = 1.1.3
 ALSA_PATCH  = alsa-lib-$(ALSA_VER).patch
 ALSA_PATCH += alsa-lib-$(ALSA_VER)-link_fix.patch
 
