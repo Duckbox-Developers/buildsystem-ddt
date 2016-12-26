@@ -93,29 +93,29 @@ $(STL_ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
 #
 
 # 4.6.3
-#BINUTILS_VER  = 2.22-64
-#GCC_VER       = 4.6.3-111
-#LIBGCC_VER    = 4.6.3-111
-#GLIBC_VER     = 2.10.2-42
+#BINUTILS_VERSION = 2.22-64
+#GCC_VERSION      = 4.6.3-111
+#LIBGCC_VERSION   = 4.6.3-111
+#GLIBC_VERSION    = 2.10.2-42
 
 # 4.8.4
-BINUTILS_VER  = 2.24.51.0.3-76
-GCC_VER       = 4.8.4-139
-LIBGCC_VER    = 4.8.4-148
-GLIBC_VER     = 2.14.1-59
+BINUTILS_VERSION = 2.24.51.0.3-76
+GCC_VERSION      = 4.8.4-139
+LIBGCC_VERSION   = 4.8.4-148
+GLIBC_VERSION    = 2.14.1-59
 
 crosstool-rpminstall: \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VER).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VER).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VER).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VER).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VER).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VER).noarch.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VER).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VER).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VERSION).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VERSION).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VERSION).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VERSION).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VERSION).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VERSION).noarch.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VERSION).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VERSION).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VERSION).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VERSION).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VERSION).sh4.rpm
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
 		$^
 	touch $(D)/$(notdir $@)
@@ -160,20 +160,20 @@ $(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
 #
 # crosstool-ng
 #
-CROSSTOOL_NG_VER = 1.22.0
+CROSSTOOL_NG_VERSION = 1.22.0
 
-$(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz:
-	$(WGET) http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+$(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz:
+	$(WGET) http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 
-crosstool-ng: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+crosstool-ng: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	make $(BUILD_TMP)
 	if [ ! -e $(BASE_DIR)/cross ]; then \
 		mkdir -p $(BASE_DIR)/cross; \
 	fi;
 	$(REMOVE)/crosstool-ng
-	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
-		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER).config .config; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION).config .config; \
 		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
 		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
 		test $$NUM_CPUS -gt $$MEM_512M && NUM_CPUS=$$MEM_512M; \
@@ -186,12 +186,12 @@ crosstool-ng: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 		./ct-ng oldconfig; \
 		./ct-ng build
 
-crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	make $(BUILD_TMP)
-	$(REMOVE)/crosstool-ng-$(CROSSTOOL_NG_VER)
-	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
+	$(REMOVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION)
+	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
-		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER).config .config; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \
 		./ct-ng menuconfig
