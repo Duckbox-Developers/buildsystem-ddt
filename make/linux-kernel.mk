@@ -354,9 +354,9 @@ tfinstaller: $(D)/bootstrap $(D)/linux-kernel $(TFINSTALLER_DIR)/u-boot.ftfd
 
 $(TFINSTALLER_DIR)/u-boot.ftfd: $(D)/uboot $(TFINSTALLER_DIR)/tfpacker
 	$(START_BUILD)
-	$(TFINSTALLER_DIR)/tfpacker $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/u-boot.ftfd
-	$(TFINSTALLER_DIR)/tfpacker -t $(BUILD_TMP)/u-boot-$(U_BOOT_VER)/u-boot.bin $(TFINSTALLER_DIR)/Enigma_Installer.tfd
-	$(REMOVE)/u-boot-$(U_BOOT_VER)
+	$(TFINSTALLER_DIR)/tfpacker $(BUILD_TMP)/u-boot-$(U_BOOT_VERSION)/u-boot.bin $(TFINSTALLER_DIR)/u-boot.ftfd
+	$(TFINSTALLER_DIR)/tfpacker -t $(BUILD_TMP)/u-boot-$(U_BOOT_VERSION)/u-boot.bin $(TFINSTALLER_DIR)/Enigma_Installer.tfd
+	$(REMOVE)/u-boot-$(U_BOOT_VERSION)
 	$(TOUCH)
 
 $(TFINSTALLER_DIR)/tfpacker:
@@ -373,24 +373,24 @@ $(D)/tfkernel:
 #
 # u-boot
 #
-U_BOOT_VER = 1.3.1
-U_BOOT_PATCH  =  u-boot-$(U_BOOT_VER).patch
+U_BOOT_VERSION = 1.3.1
+U_BOOT_PATCH  =  u-boot-$(U_BOOT_VERSION).patch
 ifeq ($(BOXTYPE), tf7700)
-U_BOOT_PATCH += u-boot-$(U_BOOT_VER)-tf7700.patch
+U_BOOT_PATCH += u-boot-$(U_BOOT_VERSION)-tf7700.patch
 endif
 
-$(ARCHIVE)/u-boot-$(U_BOOT_VER).tar.bz2:
-	$(WGET) ftp://ftp.denx.de/pub/u-boot/u-boot-$(U_BOOT_VER).tar.bz2
+$(ARCHIVE)/u-boot-$(U_BOOT_VERSION).tar.bz2:
+	$(WGET) ftp://ftp.denx.de/pub/u-boot/u-boot-$(U_BOOT_VERSION).tar.bz2
 
-$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(U_BOOT_VER).tar.bz2
+$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(U_BOOT_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/u-boot-$(U_BOOT_VER)
-	$(UNTAR)/u-boot-$(U_BOOT_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/u-boot-$(U_BOOT_VER); \
+	$(REMOVE)/u-boot-$(U_BOOT_VERSION)
+	$(UNTAR)/u-boot-$(U_BOOT_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/u-boot-$(U_BOOT_VERSION); \
 		$(call post_patch,$(U_BOOT_PATCH)); \
 		$(MAKE) $(BOXTYPE)_config; \
 		$(MAKE)
-#	$(REMOVE)/u-boot-$(U_BOOT_VER)
+#	$(REMOVE)/u-boot-$(U_BOOT_VERSION)
 	$(TOUCH)
 
 #
