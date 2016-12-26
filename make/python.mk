@@ -98,6 +98,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			ac_sys_release=2 \
 			ac_cv_file__dev_ptmx=no \
 			ac_cv_file__dev_ptc=no \
+			ac_cv_have_long_long_format=yes \
 			ac_cv_no_strict_aliasing_ok=yes \
 			ac_cv_pthread=yes \
 			ac_cv_cxx_thread=yes \
