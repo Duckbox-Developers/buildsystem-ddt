@@ -521,7 +521,7 @@ release_neutrino_base:
 	install -d $(RELEASE_DIR)/var/lib/nfs
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
-	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VER) CONFIG_PREFIX=$(RELEASE_DIR)
+	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VERSION) CONFIG_PREFIX=$(RELEASE_DIR)
 #	remove the slink to busybox
 	rm -f $(RELEASE_DIR)/sbin/halt
 	cp -f $(TARGETPREFIX)/sbin/halt $(RELEASE_DIR)/sbin/
@@ -620,6 +620,17 @@ endif
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/ics/ics_user.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/ics/ics_user.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/mme/mme.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/mme/mme.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/mme/mme_user.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/multicom/src/mme/mme_user.ko $(RELEASE_DIR)/lib/modules/ || true
+#
+# infrastructure
+#
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/event/stm_event.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/event/stm_event.ko $(RELEASE_DIR)/lib/modules || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/memsink/stm_memsink.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/memsink/stm_memsink.ko $(RELEASE_DIR)/lib/modules || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/memsrc/stm_memsrc.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/memsrc/stm_memsrc.ko $(RELEASE_DIR)/lib/modules || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/registry/stm_registry.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/registry/stm_registry.ko $(RELEASE_DIR)/lib/modules || true
+	[ -e $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/wrapper/stm_wrapper.ko ] && cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/infrastructure/linux/wrapper/stm_wrapper.ko $(RELEASE_DIR)/lib/modules || true
+#
+#
+#
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/simu_button/simu_button.ko $(RELEASE_DIR)/lib/modules/
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), vip2_v1 spark spark7162))
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/cic/*.ko $(RELEASE_DIR)/lib/modules/
@@ -896,7 +907,7 @@ endif
 $(D)/release_neutrino: \
 $(D)/%release_neutrino: release_neutrino_base release_neutrino_$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
-	$(TOUCH)
+	@touch $@
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/neutrino-hd
 #

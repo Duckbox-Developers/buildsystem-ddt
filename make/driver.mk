@@ -21,9 +21,9 @@ driver-symlink:
 		ln -s stmfb-3.1_stm24_0104 stmfb
 	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGETPREFIX)/usr/include/linux
 	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGETPREFIX)/usr/include/linux/dvb
-	$(if $(PLAYERXXX),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_audio.h $(TARGETPREFIX)/usr/include/linux/dvb)
-	$(if $(PLAYERXXX),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_dvb.h $(TARGETPREFIX)/usr/include/linux/dvb)
-	$(if $(PLAYERXXX),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_video.h $(TARGETPREFIX)/usr/include/linux/dvb)
+	$(if $(PLAYER228),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_audio.h $(TARGETPREFIX)/usr/include/linux/dvb)
+	$(if $(PLAYER228),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_dvb.h $(TARGETPREFIX)/usr/include/linux/dvb)
+	$(if $(PLAYER228),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_video.h $(TARGETPREFIX)/usr/include/linux/dvb)
 	touch $(D)/$(notdir $@)
 
 $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/linux-kernel

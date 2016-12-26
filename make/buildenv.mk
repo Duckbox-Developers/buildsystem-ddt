@@ -298,10 +298,10 @@ ifeq ($(PLAYER_VER), 191)
 PLAYER2            = PLAYER191=player191
 PLAYER191          = 1
 PLAYER2_LINK       = player2_191
-else
-PLAYER2            = PLAYERXXX=playerxxx
-PLAYERXXX          = 1
-PLAYER2_LINK       = player2_xxx
+else ifeq ($(PLAYER_VER), 228)
+PLAYER2            = PLAYER228=player228
+PLAYER228          = 1
+PLAYER2_LINK       = player2_228
 endif
 
 #

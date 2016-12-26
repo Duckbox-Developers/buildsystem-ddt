@@ -1,16 +1,16 @@
 #
 # libncurses
 #
-NCURSES_VER = 5.9
+NCURSES_VERSION = 5.9
 
-$(ARCHIVE)/ncurses-$(NCURSES_VER).tar.gz:
-	$(WGET) http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$(NCURSES_VER).tar.gz
+$(ARCHIVE)/ncurses-$(NCURSES_VERSION).tar.gz:
+	$(WGET) http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$(NCURSES_VERSION).tar.gz
 
-$(D)/libncurses: $(D)/bootstrap $(ARCHIVE)/ncurses-$(NCURSES_VER).tar.gz
+$(D)/libncurses: $(D)/bootstrap $(ARCHIVE)/ncurses-$(NCURSES_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/ncurses-$(NCURSES_VER)
-	$(UNTAR)/ncurses-$(NCURSES_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/ncurses-$(NCURSES_VER); \
+	$(REMOVE)/ncurses-$(NCURSES_VERSION)
+	$(UNTAR)/ncurses-$(NCURSES_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/ncurses-$(NCURSES_VERSION); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -45,7 +45,7 @@ $(D)/libncurses: $(D)/bootstrap $(ARCHIVE)/ncurses-$(NCURSES_VER).tar.gz
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/menu.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ncurses.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/panel.pc
-	$(REMOVE)/ncurses-$(NCURSES_VER)
+	$(REMOVE)/ncurses-$(NCURSES_VERSION)
 	$(TOUCH)
 
 #
@@ -53,15 +53,15 @@ $(D)/libncurses: $(D)/bootstrap $(ARCHIVE)/ncurses-$(NCURSES_VER).tar.gz
 #
 GMP_MAJOR = 6.0.0
 GMP_MINOR = a
-GMP_VER = $(GMP_MAJOR)$(GMP_MINOR)
+GMP_VERSION = $(GMP_MAJOR)$(GMP_MINOR)
 
-$(ARCHIVE)/gmp-$(GMP_VER)$(GMP_SUBVER).tar.xz:
-	$(WGET) ftp://ftp.gmplib.org/pub/gmp-$(GMP_MAJOR)/gmp-$(GMP_VER).tar.xz
+$(ARCHIVE)/gmp-$(GMP_VERSION)$(GMP_SUBVER).tar.xz:
+	$(WGET) ftp://ftp.gmplib.org/pub/gmp-$(GMP_MAJOR)/gmp-$(GMP_VERSION).tar.xz
 
-$(D)/gmp: $(D)/bootstrap $(ARCHIVE)/gmp-$(GMP_VER).tar.xz
+$(D)/gmp: $(D)/bootstrap $(ARCHIVE)/gmp-$(GMP_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/gmp-$(GMP_MAJOR)
-	$(UNTAR)/gmp-$(GMP_VER).tar.xz
+	$(UNTAR)/gmp-$(GMP_VERSION).tar.xz
 	set -e; cd $(BUILD_TMP)/gmp-$(GMP_MAJOR); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -76,35 +76,35 @@ $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/gmp-$(GMP_VER).tar.xz
 #
 # host_libffi
 #
-LIBFFI_VER = 3.2.1
+LIBFFI_VERSION = 3.2.1
 
-$(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz:
-	$(WGET) ftp://sourceware.org/pub/libffi/libffi-$(LIBFFI_VER).tar.gz
+$(ARCHIVE)/libffi-$(LIBFFI_VERSION).tar.gz:
+	$(WGET) ftp://sourceware.org/pub/libffi/libffi-$(LIBFFI_VERSION).tar.gz
 
-$(D)/host_libffi: $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
+$(D)/host_libffi: $(ARCHIVE)/libffi-$(LIBFFI_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libffi-$(LIBFFI_VER)
-	$(UNTAR)/libffi-$(LIBFFI_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
+	$(REMOVE)/libffi-$(LIBFFI_VERSION)
+	$(UNTAR)/libffi-$(LIBFFI_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VERSION); \
 		./configure $(CONFIGURE_SILENT) \
 			--prefix=$(HOSTPREFIX) \
 			--disable-static \
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	$(REMOVE)/libffi-$(LIBFFI_VER)
+	$(REMOVE)/libffi-$(LIBFFI_VERSION)
 	$(TOUCH)
 
 #
 # libffi
 #
-LIBFFI_PATCH = libffi-$(LIBFFI_VER).patch
+LIBFFI_PATCH = libffi-$(LIBFFI_VERSION).patch
 
-$(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
+$(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libffi-$(LIBFFI_VER)
-	$(UNTAR)/libffi-$(LIBFFI_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
+	$(REMOVE)/libffi-$(LIBFFI_VERSION)
+	$(UNTAR)/libffi-$(LIBFFI_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VERSION); \
 		$(call post_patch,$(LIBFFI_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
@@ -118,7 +118,7 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libffi.pc
 	$(REWRITE_LIBTOOL)/libffi.la
-	$(REMOVE)/libffi-$(LIBFFI_VER)
+	$(REMOVE)/libffi-$(LIBFFI_VERSION)
 	$(TOUCH)
 
 #
@@ -127,18 +127,18 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/libffi-$(LIBFFI_VER).tar.gz
 GLIB_MAJOR=2
 GLIB_MINOR=45
 GLIB_MICRO=4
-GLIB_VER=$(GLIB_MAJOR).$(GLIB_MINOR).$(GLIB_MICRO)
+GLIB_VERSION=$(GLIB_MAJOR).$(GLIB_MINOR).$(GLIB_MICRO)
 
-$(ARCHIVE)/glib-$(GLIB_VER).tar.xz:
+$(ARCHIVE)/glib-$(GLIB_VERSION).tar.xz:
 	$(WGET) http://ftp.gnome.org/pub/gnome/sources/glib/$(GLIB_MAJOR).$(GLIB_MINOR)/$(lastword $(subst /, ,$@))
 
-$(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
+$(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/glib-$(GLIB_VER)
-	$(UNTAR)/glib-$(GLIB_VER).tar.xz
+	$(REMOVE)/glib-$(GLIB_VERSION)
+	$(UNTAR)/glib-$(GLIB_VERSION).tar.xz
 	export PKG_CONFIG=/usr/bin/pkg-config; \
 	export PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig; \
-	set -e; cd $(BUILD_TMP)/glib-$(GLIB_VER); \
+	set -e; cd $(BUILD_TMP)/glib-$(GLIB_VERSION); \
 		./configure $(CONFIGURE_SILENT) \
 			--enable-static=yes \
 			--enable-shared=no \
@@ -146,17 +146,17 @@ $(D)/host_glib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
 		; \
 		$(MAKE) install; \
 		cp -a out/bin/glib-* $(HOSTPREFIX)/bin
-	$(REMOVE)/glib-$(GLIB_VER)
+	$(REMOVE)/glib-$(GLIB_VERSION)
 	$(TOUCH)
 
 #
 # libglib2
 #
-$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/glib-$(GLIB_VER).tar.xz
+$(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/glib-$(GLIB_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/glib-$(GLIB_VER)
-	$(UNTAR)/glib-$(GLIB_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/glib-$(GLIB_VER); \
+	$(REMOVE)/glib-$(GLIB_VERSION)
+	$(UNTAR)/glib-$(GLIB_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/glib-$(GLIB_VERSION); \
 		echo "glib_cv_va_copy=no" > config.cache; \
 		echo "glib_cv___va_copy=yes" >> config.cache; \
 		echo "glib_cv_va_val_copy=yes" >> config.cache; \
@@ -195,22 +195,22 @@ $(D)/glib2: $(D)/bootstrap $(D)/host_glib2_genmarshal $(D)/zlib $(D)/libffi $(AR
 	$(REWRITE_LIBTOOLDEP)/libgio-2.0.la
 	$(REWRITE_LIBTOOLDEP)/libgobject-2.0.la
 	$(REWRITE_LIBTOOLDEP)/libgthread-2.0.la
-	$(REMOVE)/glib-$(GLIB_VER)
+	$(REMOVE)/glib-$(GLIB_VERSION)
 	$(TOUCH)
 
 #
 # libpcre
 #
-LIBPCRE_VER = 8.39
+LIBPCRE_VERSION = 8.39
 
-$(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VER)/pcre-$(LIBPCRE_VER).tar.bz2
+$(ARCHIVE)/pcre-$(LIBPCRE_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VERSION)/pcre-$(LIBPCRE_VERSION).tar.bz2
 
-$(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2
+$(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/pcre-$(LIBPCRE_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/pcre-$(LIBPCRE_VER)
-	$(UNTAR)/pcre-$(LIBPCRE_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/pcre-$(LIBPCRE_VER); \
+	$(REMOVE)/pcre-$(LIBPCRE_VERSION)
+	$(UNTAR)/pcre-$(LIBPCRE_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/pcre-$(LIBPCRE_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -229,22 +229,22 @@ $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/pcre-$(LIBPCRE_VER).tar.bz2
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcre.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcrecpp.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcreposix.pc
-	$(REMOVE)/pcre-$(LIBPCRE_VER)
+	$(REMOVE)/pcre-$(LIBPCRE_VERSION)
 	$(TOUCH)
 
 #
 # libarchive
 #
-LIBARCHIVE_VER = 3.1.2
+LIBARCHIVE_VERSION = 3.1.2
 
-$(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz:
-	$(WGET) http://www.libarchive.org/downloads/libarchive-$(LIBARCHIVE_VER).tar.gz
+$(ARCHIVE)/libarchive-$(LIBARCHIVE_VERSION).tar.gz:
+	$(WGET) http://www.libarchive.org/downloads/libarchive-$(LIBARCHIVE_VERSION).tar.gz
 
-$(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
+$(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
-	$(UNTAR)/libarchive-$(LIBARCHIVE_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VERSION)
+	$(UNTAR)/libarchive-$(LIBARCHIVE_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VERSION); \
 		./configure \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
@@ -252,14 +252,14 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(HOSTPREFIX)
-	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VERSION)
 	$(TOUCH)
 
-$(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
+$(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
-	$(UNTAR)/libarchive-$(LIBARCHIVE_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VERSION)
+	$(UNTAR)/libarchive-$(LIBARCHIVE_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -277,22 +277,22 @@ $(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libarchive.pc
 	$(REWRITE_LIBTOOL)/libarchive.la
-	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
+	$(REMOVE)/libarchive-$(LIBARCHIVE_VERSION)
 	$(TOUCH)
 
 #
 # libreadline
 #
-READLINE_VER = 6.2
+READLINE_VERSION = 6.2
 
-$(ARCHIVE)/readline-$(READLINE_VER).tar.gz:
-	$(WGET) http://ftp.gnu.org/gnu/readline/readline-$(READLINE_VER).tar.gz
+$(ARCHIVE)/readline-$(READLINE_VERSION).tar.gz:
+	$(WGET) http://ftp.gnu.org/gnu/readline/readline-$(READLINE_VERSION).tar.gz
 
-$(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VER).tar.gz
+$(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/readline-$(READLINE_VER)
-	$(UNTAR)/readline-$(READLINE_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/readline-$(READLINE_VER); \
+	$(REMOVE)/readline-$(READLINE_VERSION)
+	$(UNTAR)/readline-$(READLINE_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/readline-$(READLINE_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -305,27 +305,27 @@ $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VER).tar.gz
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/readline-$(READLINE_VER)
+	$(REMOVE)/readline-$(READLINE_VERSION)
 	$(TOUCH)
 
 #
 # openssl
 #
-OPENSSL_VER = 1.0.2
+OPENSSL_VERSION = 1.0.2
 OPENSSL_SUBVER = j
-OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-optimize-for-size.patch
-OPENSSL_PATCH += openssl-$(OPENSSL_VER)-makefile-dirs.patch
-OPENSSL_PATCH += openssl-$(OPENSSL_VER)-disable_doc_tests.patch
-#OPENSSL_PATCH += openssl-$(OPENSSL_VER)-parallel_build.patch
+OPENSSL_PATCH  = openssl-$(OPENSSL_VERSION)-optimize-for-size.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-makefile-dirs.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-disable_doc_tests.patch
+#OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-parallel_build.patch
 
-$(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz:
-	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
+$(ARCHIVE)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER).tar.gz:
+	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER).tar.gz
 
-$(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
+$(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
-	$(UNTAR)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).tar.gz
-	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER); \
+	$(REMOVE)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER)
+	$(UNTAR)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER).tar.gz
+	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER); \
 		$(call post_patch,$(OPENSSL_PATCH)); \
 		$(BUILDENV) \
 		./Configure \
@@ -345,23 +345,23 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER).
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcrypto.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libssl.pc
 	cd $(TARGETPREFIX) && rm -rf etc/ssl/man usr/bin/openssl
-	$(REMOVE)/openssl-$(OPENSSL_VER)$(OPENSSL_SUBVER)
+	$(REMOVE)/openssl-$(OPENSSL_VERSION)$(OPENSSL_SUBVER)
 	$(TOUCH)
 
 #
 # libbluray
 #
-LIBBLURAY_VER = 0.5.0
-LIBBLURAY_PATCH = libbluray-$(LIBBLURAY_VER).patch
+LIBBLURAY_VERSION = 0.5.0
+LIBBLURAY_PATCH = libbluray-$(LIBBLURAY_VERSION).patch
 
-$(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2:
-	$(WGET) http://ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VER)/libbluray-$(LIBBLURAY_VER).tar.bz2
+$(ARCHIVE)/libbluray-$(LIBBLURAY_VERSION).tar.bz2:
+	$(WGET) http://ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VERSION)/libbluray-$(LIBBLURAY_VERSION).tar.bz2
 
-$(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2
+$(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
-	$(UNTAR)/libbluray-$(LIBBLURAY_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libbluray-$(LIBBLURAY_VER); \
+	$(REMOVE)/libbluray-$(LIBBLURAY_VERSION)
+	$(UNTAR)/libbluray-$(LIBBLURAY_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libbluray-$(LIBBLURAY_VERSION); \
 		$(call post_patch,$(LIBBLURAY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -381,40 +381,40 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/libbluray-$(LIBBLURAY_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libbluray.pc
 	$(REWRITE_LIBTOOL)/libbluray.la
-	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
+	$(REMOVE)/libbluray-$(LIBBLURAY_VERSION)
 	$(TOUCH)
 
 #
 # lua
 #
-LUA_VER = 5.2.4
-LUA_VER_SHORT = 5.2
-LUAPOSIX_VER = 31
-LUAPOSIX_PATCH = lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch
+LUA_VERSION = 5.2.4
+LUA_VERSION_SHORT = 5.2
+LUAPOSIX_VERSION = 31
+LUAPOSIX_PATCH = lua-$(LUA_VERSION)-luaposix-$(LUAPOSIX_VERSION).patch
 
-$(ARCHIVE)/lua-$(LUA_VER).tar.gz:
-	$(WGET) http://www.lua.org/ftp/lua-$(LUA_VER).tar.gz
+$(ARCHIVE)/lua-$(LUA_VERSION).tar.gz:
+	$(WGET) http://www.lua.org/ftp/lua-$(LUA_VERSION).tar.gz
 
-$(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VER).tar.gz
+$(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/lua-$(LUA_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/lua-$(LUA_VER)
+	$(REMOVE)/lua-$(LUA_VERSION)
 	set -e; if [ ! -d $(ARCHIVE)/luaposix.git ]; \
-		then cd $(ARCHIVE); git clone -b release-v$(LUAPOSIX_VER) git://github.com/luaposix/luaposix.git luaposix.git; \
+		then cd $(ARCHIVE); git clone -b release-v$(LUAPOSIX_VERSION) git://github.com/luaposix/luaposix.git luaposix.git; \
 		fi
-	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
-	$(UNTAR)/lua-$(LUA_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
+	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
+	$(UNTAR)/lua-$(LUA_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/lua-$(LUA_VERSION); \
 		$(call post_patch,$(LUAPOSIX_PATCH)); \
 		cp -r $(ARCHIVE)/luaposix.git .; \
 		cd luaposix.git/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
-		cd luaposix.git/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT); cd ../..; \
+		cd luaposix.git/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT); cd ../..; \
 		sed -i 's/<config.h>/"config.h"/' src/posix.c; \
 		sed -i '/^#define/d' src/lua52compat.h; \
 		sed -i 's|man/man1|/.remove|' Makefile; \
-		$(MAKE) linux CC=$(TARGET)-gcc CPPFLAGS="$(TARGET_CPPFLAGS)" LDFLAGS="-L$(TARGETPREFIX)/usr/lib" BUILDMODE=dynamic PKG_VERSION=$(LUA_VER); \
+		$(MAKE) linux CC=$(TARGET)-gcc CPPFLAGS="$(TARGET_CPPFLAGS)" LDFLAGS="-L$(TARGETPREFIX)/usr/lib" BUILDMODE=dynamic PKG_VERSIONSION=$(LUA_VERSION); \
 		$(MAKE) install INSTALL_TOP=$(TARGETPREFIX)/usr INSTALL_MAN=$(TARGETPREFIX)/.remove
 	cd $(TARGETPREFIX)/usr && rm bin/lua bin/luac
-	$(REMOVE)/lua-$(LUA_VER)
+	$(REMOVE)/lua-$(LUA_VERSION)
 	$(TOUCH)
 
 #
@@ -432,28 +432,28 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" \
 			LIBDIR=$(TARGETPREFIX)/usr/lib \
 			LUA_INC=$(TARGETPREFIX)/usr/include; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX) LUA_CMOD=/usr/lib/lua/$(LUA_VER_SHORT) LUA_LMOD=/usr/share/lua/$(LUA_VER_SHORT)
+		$(MAKE) install DESTDIR=$(TARGETPREFIX) LUA_CMOD=/usr/lib/lua/$(LUA_VERSION_SHORT) LUA_LMOD=/usr/share/lua/$(LUA_VERSION_SHORT)
 	$(REMOVE)/luacurl
 	$(TOUCH)
 
 #
 # luaexpat
 #
-LUAEXPAT_VER = 1.3.0
-LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
+LUAEXPAT_VERSION = 1.3.0
+LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VERSION).patch
 
-$(ARCHIVE)/luaexpat-$(LUAEXPAT_VER).tar.gz:
-	$(WGET) http://matthewwild.co.uk/projects/luaexpat/luaexpat-$(LUAEXPAT_VER).tar.gz
+$(ARCHIVE)/luaexpat-$(LUAEXPAT_VERSION).tar.gz:
+	$(WGET) http://matthewwild.co.uk/projects/luaexpat/luaexpat-$(LUAEXPAT_VERSION).tar.gz
 
-$(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/luaexpat-$(LUAEXPAT_VER).tar.gz
+$(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/luaexpat-$(LUAEXPAT_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
-	$(UNTAR)/luaexpat-$(LUAEXPAT_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VER); \
+	$(REMOVE)/luaexpat-$(LUAEXPAT_VERSION)
+	$(UNTAR)/luaexpat-$(LUAEXPAT_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VERSION); \
 		$(call post_patch,$(LUAEXPAT_PATCH)); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" PREFIX=$(TARGETPREFIX)/usr; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)/usr
-	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
+	$(REMOVE)/luaexpat-$(LUAEXPAT_VERSION)
 	$(TOUCH)
 
 #
@@ -469,8 +469,8 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua
 	cp -ra $(ARCHIVE)/luasocket.git $(BUILD_TMP)/luasocket
 	set -e; cd $(BUILD_TMP)/luasocket; \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGETPREFIX)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGETPREFIX)/usr@" src/makefile; \
-		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VER_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGETPREFIX)/usr/include LUAPREFIX_linux=; \
-		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VER_SHORT)
+		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VERSION_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGETPREFIX)/usr/include LUAPREFIX_linux=; \
+		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VERSION_SHORT)
 	$(REMOVE)/luasocket
 	$(TOUCH)
 
@@ -487,27 +487,27 @@ $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 	cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
 	set -e; cd $(BUILD_TMP)/lua-feedparser; \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
-		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
+		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
 	$(REMOVE)/lua-feedparser
 	$(TOUCH)
 
 #
 # luasoap
 #
-LUASOAP_VER = 3.0
-LUASOAP_PATCH = luasoap-$(LUASOAP_VER).patch
+LUASOAP_VERSION = 3.0
+LUASOAP_PATCH = luasoap-$(LUASOAP_VERSION).patch
 
-$(ARCHIVE)/luasoap-$(LUASOAP_VER).tar.gz:
-	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/luasoap-$(LUASOAP_VER).tar.gz
+$(ARCHIVE)/luasoap-$(LUASOAP_VERSION).tar.gz:
+	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/luasoap-$(LUASOAP_VERSION).tar.gz
 
-$(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/luasoap-$(LUASOAP_VER).tar.gz
+$(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/luasoap-$(LUASOAP_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/luasoap-$(LUASOAP_VER)
-	$(UNTAR)/luasoap-$(LUASOAP_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
+	$(REMOVE)/luasoap-$(LUASOAP_VERSION)
+	$(UNTAR)/luasoap-$(LUASOAP_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VERSION); \
 		$(call post_patch,$(LUASOAP_PATCH)); \
-		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
-	$(REMOVE)/luasoap-$(LUASOAP_VER)
+		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
+	$(REMOVE)/luasoap-$(LUASOAP_VERSION)
 	$(TOUCH)
 
 #
@@ -518,7 +518,7 @@ $(ARCHIVE)/json.lua:
 
 $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 	$(START_BUILD)
-	cp $(ARCHIVE)/json.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VER_SHORT)/json.lua
+	cp $(ARCHIVE)/json.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)/json.lua
 	$(TOUCH)
 
 #
@@ -527,37 +527,37 @@ $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 BOOST_MAJOR = 1
 BOOST_MINOR = 61
 BOOST_MICRO = 0
-BOOST_VER = $(BOOST_MAJOR)_$(BOOST_MINOR)_$(BOOST_MICRO)
+BOOST_VERSION = $(BOOST_MAJOR)_$(BOOST_MINOR)_$(BOOST_MICRO)
 BOOST_PATCH = libboost.patch
 
-$(ARCHIVE)/boost_$(BOOST_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/boost/files/boost/$(BOOST_MAJOR).$(BOOST_MINOR).$(BOOST_MICRO)/boost_$(BOOST_VER).tar.bz2
+$(ARCHIVE)/boost_$(BOOST_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/boost/files/boost/$(BOOST_MAJOR).$(BOOST_MINOR).$(BOOST_MICRO)/boost_$(BOOST_VERSION).tar.bz2
 
-$(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VER).tar.bz2
+$(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/boost_$(BOOST_VER)
-	$(UNTAR)/boost_$(BOOST_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/boost_$(BOOST_VER); \
+	$(REMOVE)/boost_$(BOOST_VERSION)
+	$(UNTAR)/boost_$(BOOST_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/boost_$(BOOST_VERSION); \
 		$(call post_patch,$(BOOST_PATCH)); \
 		rm -rf $(TARGETPREFIX)/usr/include/boost; \
-		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGETPREFIX)/usr/include/boost
-	$(REMOVE)/boost_$(BOOST_VER)
+		mv $(BUILD_TMP)/boost_$(BOOST_VERSION)/boost $(TARGETPREFIX)/usr/include/boost
+	$(REMOVE)/boost_$(BOOST_VERSION)
 	$(TOUCH)
 
 #
 # zlib
 #
-ZLIB_VER = 1.2.8
-ZLIB_Patch = zlib-$(ZLIB_VER).patch
+ZLIB_VERSION = 1.2.8
+ZLIB_Patch = zlib-$(ZLIB_VERSION).patch
 
-$(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz:
-	$(WGET) http://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VER)/zlib-$(ZLIB_VER).tar.xz
+$(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz:
+	$(WGET) http://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VERSION)/zlib-$(ZLIB_VERSION).tar.xz
 
-$(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
+$(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/zlib-$(ZLIB_VER)
-	$(UNTAR)/zlib-$(ZLIB_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
+	$(REMOVE)/zlib-$(ZLIB_VERSION)
+	$(UNTAR)/zlib-$(ZLIB_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VERSION); \
 		$(call post_patch,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGETPREFIX)/.remove CFLAGS="$(TARGET_CFLAGS)" \
 		./configure \
@@ -569,48 +569,48 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VER).tar.xz
 		ln -sf /bin/true ldconfig; \
 		$(MAKE) install prefix=$(TARGETPREFIX)/usr
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/zlib.pc
-	$(REMOVE)/zlib-$(ZLIB_VER)
+	$(REMOVE)/zlib-$(ZLIB_VERSION)
 	$(TOUCH)
 
 #
 # bzip2
 #
-BZIP2_VER = 1.0.6
-BZIP2_Patch = bzip2-$(BZIP2_VER).patch
+BZIP2_VERSION = 1.0.6
+BZIP2_Patch = bzip2-$(BZIP2_VERSION).patch
 
-$(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz:
-	$(WGET) http://www.bzip.org/$(BZIP2_VER)/bzip2-$(BZIP2_VER).tar.gz
+$(ARCHIVE)/bzip2-$(BZIP2_VERSION).tar.gz:
+	$(WGET) http://www.bzip.org/$(BZIP2_VERSION)/bzip2-$(BZIP2_VERSION).tar.gz
 
-$(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VER).tar.gz
+$(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/bzip2-$(BZIP2_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/bzip2-$(BZIP2_VER)
-	$(UNTAR)/bzip2-$(BZIP2_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/bzip2-$(BZIP2_VER); \
+	$(REMOVE)/bzip2-$(BZIP2_VERSION)
+	$(UNTAR)/bzip2-$(BZIP2_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/bzip2-$(BZIP2_VERSION); \
 		$(call post_patch,$(BZIP2_Patch)); \
 		mv Makefile-libbz2_so Makefile; \
 		CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib \
 		$(MAKE) all; \
 		$(MAKE) install PREFIX=$(TARGETPREFIX)/usr
 	cd $(TARGETPREFIX) && rm -f usr/bin/bzip2
-	$(REMOVE)/bzip2-$(BZIP2_VER)
+	$(REMOVE)/bzip2-$(BZIP2_VERSION)
 	$(TOUCH)
 
 #
 # timezone
 #
-TZ_VER = 2016a
+TZ_VERSION = 2016a
 TZDATA_ZONELIST = africa antarctica asia australasia europe northamerica southamerica pacificnew etcetera backward
 DEFAULT_TIMEZONE ?= "CET"
 #ln -s /usr/share/zoneinfo/<country>/<city> /etc/localtime
 
-$(ARCHIVE)/tzdata$(TZ_VER).tar.gz:
-	$(WGET) ftp://ftp.iana.org/tz/releases/tzdata$(TZ_VER).tar.gz
+$(ARCHIVE)/tzdata$(TZ_VERSION).tar.gz:
+	$(WGET) ftp://ftp.iana.org/tz/releases/tzdata$(TZ_VERSION).tar.gz
 
-$(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
+$(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/timezone
 	mkdir $(BUILD_TMP)/timezone
-	tar -C $(BUILD_TMP)/timezone -xf $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
+	tar -C $(BUILD_TMP)/timezone -xf $(ARCHIVE)/tzdata$(TZ_VERSION).tar.gz
 	set -e; cd $(BUILD_TMP)/timezone; \
 		unset ${!LC_*}; LANG=POSIX; LC_ALL=POSIX; export LANG LC_ALL; \
 		for zone in $(TZDATA_ZONELIST); do \
@@ -632,17 +632,17 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VER).tar.gz
 #
 # libfreetype
 #
-FREETYPE_VER = 2.6.5
-FREETYPE_PATCH = libfreetype-$(FREETYPE_VER).patch
+FREETYPE_VERSION = 2.6.5
+FREETYPE_PATCH = libfreetype-$(FREETYPE_VERSION).patch
 
-$(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/freetype-$(FREETYPE_VER).tar.bz2
+$(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
-$(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VER).tar.bz2
+$(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/freetype-$(FREETYPE_VER)
-	$(UNTAR)/freetype-$(FREETYPE_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VER); \
+	$(REMOVE)/freetype-$(FREETYPE_VERSION)
+	$(UNTAR)/freetype-$(FREETYPE_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VERSION); \
 		$(call post_patch,$(FREETYPE_PATCH)); \
 		sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg; \
 		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
@@ -660,17 +660,17 @@ $(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/fre
 		mv $(TARGETPREFIX)/usr/bin/freetype-config $(HOSTPREFIX)/bin/freetype-config
 	$(REWRITE_LIBTOOL)/libfreetype.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/freetype2.pc
-	$(REMOVE)/freetype-$(FREETYPE_VER)
+	$(REMOVE)/freetype-$(FREETYPE_VERSION)
 	$(TOUCH)
 
 #
 # lirc
 #
-LIRC_VER = 0.9.0
-LIRC_PATCH = lirc-$(LIRC_VER).patch
+LIRC_VERSION = 0.9.0
+LIRC_PATCH = lirc-$(LIRC_VERSION).patch
 
-$(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/lirc-$(LIRC_VER).tar.bz2
+$(ARCHIVE)/lirc-$(LIRC_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VERSION)/lirc-$(LIRC_VERSION).tar.bz2
 
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
@@ -682,11 +682,11 @@ else
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES
 endif
 
-$(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
+$(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/lirc-$(LIRC_VER)
-	$(UNTAR)/lirc-$(LIRC_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/lirc-$(LIRC_VER); \
+	$(REMOVE)/lirc-$(LIRC_VERSION)
+	$(UNTAR)/lirc-$(LIRC_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/lirc-$(LIRC_VERSION); \
 		$(call post_patch,$(LIRC_PATCH)); \
 		$(CONFIGURE) \
 		ac_cv_path_LIBUSB_CONFIG= \
@@ -708,23 +708,23 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/lirc-$(LIRC_VER).tar.bz2
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/liblirc_client.la
-	$(REMOVE)/lirc-$(LIRC_VER)
+	$(REMOVE)/lirc-$(LIRC_VERSION)
 	$(TOUCH)
 
 #
 # libjpeg
 #
-JPEG_VER = 8d
-JPEG_PATCH = jpeg-$(JPEG_VER).patch
+JPEG_VERSION = 8d
+JPEG_PATCH = jpeg-$(JPEG_VERSION).patch
 
-$(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz:
-	$(WGET) http://www.ijg.org/files/jpegsrc.v$(JPEG_VER).tar.gz
+$(ARCHIVE)/jpegsrc.v$(JPEG_VERSION).tar.gz:
+	$(WGET) http://www.ijg.org/files/jpegsrc.v$(JPEG_VERSION).tar.gz
 
-$(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
+$(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/jpeg-$(JPEG_VER)
-	$(UNTAR)/jpegsrc.v$(JPEG_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VER); \
+	$(REMOVE)/jpeg-$(JPEG_VERSION)
+	$(UNTAR)/jpegsrc.v$(JPEG_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VERSION); \
 		$(call post_patch,$(JPEG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -734,16 +734,16 @@ $(D)/libjpeg_old: $(D)/bootstrap $(ARCHIVE)/jpegsrc.v$(JPEG_VER).tar.gz
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/libjpeg.la
-	$(REMOVE)/jpeg-$(JPEG_VER)
+	$(REMOVE)/jpeg-$(JPEG_VERSION)
 	$(TOUCH)
 
 #
 # libjpeg_turbo
 #
-JPEG_TURBO_VER = 1.5.1
+JPEG_TURBO_VERSION = 1.5.1
 
-$(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VER)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
+$(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VERSION)/libjpeg-turbo-$(JPEG_TURBO_VERSION).tar.gz
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 $(D)/libjpeg: $(D)/libjpeg_old
@@ -753,11 +753,11 @@ $(D)/libjpeg: $(D)/libjpeg_turbo
 	@touch $@
 endif
 
-$(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
+$(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VER)
-	$(UNTAR)/libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(JPEG_TURBO_VER); \
+	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VERSION)
+	$(UNTAR)/libjpeg-turbo-$(JPEG_TURBO_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(JPEG_TURBO_VERSION); \
 		export CC=$(TARGET)-gcc; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -784,24 +784,24 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/libjpeg-turbo-$(JPEG_TURBO_VER).ta
 	$(REWRITE_LIBTOOL)/libjpeg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libjpeg.pc
 	rm -f $(TARGETPREFIX)/usr/lib/libturbojpeg* $(TARGETPREFIX)/usr/include/turbojpeg.h $(PKG_CONFIG_PATH)/libturbojpeg.pc
-	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VER)
+	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VERSION)
 	$(TOUCH)
 
 #
 # libpng
 #
-PNG_VER = 1.6.25
-PNG_VER_X = 16
-PNG_PATCH = libpng-$(PNG_VER)-disable-tools.patch
+PNG_VERSION = 1.6.25
+PNG_VERSION_X = 16
+PNG_PATCH = libpng-$(PNG_VERSION)-disable-tools.patch
 
-$(ARCHIVE)/libpng-$(PNG_VER).tar.xz:
-	$(WGET) http://sourceforge.net/projects/libpng/files/libpng$(PNG_VER_X)/$(PNG_VER)/libpng-$(PNG_VER).tar.xz
+$(ARCHIVE)/libpng-$(PNG_VERSION).tar.xz:
+	$(WGET) http://sourceforge.net/projects/libpng/files/libpng$(PNG_VERSION_X)/$(PNG_VERSION)/libpng-$(PNG_VERSION).tar.xz
 
-$(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libpng-$(PNG_VER).tar.xz
+$(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libpng-$(PNG_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libpng-$(PNG_VER)
-	$(UNTAR)/libpng-$(PNG_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libpng-$(PNG_VER); \
+	$(REMOVE)/libpng-$(PNG_VERSION)
+	$(UNTAR)/libpng-$(PNG_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libpng-$(PNG_VERSION); \
 		$(call post_patch,$(PNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
@@ -810,39 +810,39 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libpng-$(PNG_VER).tar.xz
 		; \
 		ECHO=echo $(MAKE) all; \
 		$(MAKE) install
-	$(REMOVE)/libpng-$(PNG_VER)
+	$(REMOVE)/libpng-$(PNG_VERSION)
 	$(TOUCH)
 
 #
 # png++
 #
-PNGPP_VER = 0.2.9
+PNGPP_VERSION = 0.2.9
 
-$(ARCHIVE)/png++-$(PNGPP_VER).tar.gz:
-	$(WGET) http://download.savannah.gnu.org/releases/pngpp/png++-$(PNGPP_VER).tar.gz
+$(ARCHIVE)/png++-$(PNGPP_VERSION).tar.gz:
+	$(WGET) http://download.savannah.gnu.org/releases/pngpp/png++-$(PNGPP_VERSION).tar.gz
 
-$(D)/png++: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/png++-$(PNGPP_VER).tar.gz
+$(D)/png++: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/png++-$(PNGPP_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/png++-$(PNGPP_VER)
-	$(UNTAR)/png++-$(PNGPP_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/png++-$(PNGPP_VER); \
+	$(REMOVE)/png++-$(PNGPP_VERSION)
+	$(UNTAR)/png++-$(PNGPP_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/png++-$(PNGPP_VERSION); \
 		$(MAKE) install-headers PREFIX=$(TARGETPREFIX)/usr
-	$(REMOVE)/png++-$(PNGPP_VER)
+	$(REMOVE)/png++-$(PNGPP_VERSION)
 	$(TOUCH)
 
 #
 # libungif
 #
-UNGIF_VER = 4.1.4
+UNGIF_VERSION = 4.1.4
 
-$(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/giflib/files/libungif-4.x/libungif-$(UNGIF_VER)/libungif-$(UNGIF_VER).tar.bz2
+$(ARCHIVE)/libungif-$(UNGIF_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/giflib/files/libungif-4.x/libungif-$(UNGIF_VERSION)/libungif-$(UNGIF_VERSION).tar.bz2
 
-$(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2
+$(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libungif-$(UNGIF_VER)
-	$(UNTAR)/libungif-$(UNGIF_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libungif-$(UNGIF_VER); \
+	$(REMOVE)/libungif-$(UNGIF_VERSION)
+	$(UNTAR)/libungif-$(UNGIF_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libungif-$(UNGIF_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
@@ -851,22 +851,22 @@ $(D)/libungif: $(D)/bootstrap $(ARCHIVE)/libungif-$(UNGIF_VER).tar.bz2
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX); \
 	$(REWRITE_LIBTOOL)/libungif.la
-	$(REMOVE)/libungif-$(UNGIF_VER)
+	$(REMOVE)/libungif-$(UNGIF_VERSION)
 	$(TOUCH)
 
 #
 # libgif
 #
-GIFLIB_VER = 5.1.4
+GIFLIB_VERSION = 5.1.4
 
-$(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/giflib/files/giflib-$(GIFLIB_VER).tar.bz2
+$(ARCHIVE)/giflib-$(GIFLIB_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/giflib/files/giflib-$(GIFLIB_VERSION).tar.bz2
 
-$(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
+$(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/giflib-$(GIFLIB_VER)
-	$(UNTAR)/giflib-$(GIFLIB_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/giflib-$(GIFLIB_VER); \
+	$(REMOVE)/giflib-$(GIFLIB_VERSION)
+	$(UNTAR)/giflib-$(GIFLIB_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/giflib-$(GIFLIB_VERSION); \
 		export ac_cv_prog_have_xmlto=no; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -875,23 +875,23 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/giflib-$(GIFLIB_VER).tar.bz2
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX); \
 	$(REWRITE_LIBTOOL)/libgif.la
-	$(REMOVE)/giflib-$(GIFLIB_VER)
+	$(REMOVE)/giflib-$(GIFLIB_VERSION)
 	$(TOUCH)
 
 #
 # libcurl
 #
-CURL_VER = 7.52.1
-CURL_PATCH = libcurl-$(CURL_VER).patch
+CURL_VERSION = 7.52.1
+CURL_PATCH = libcurl-$(CURL_VERSION).patch
 
-$(ARCHIVE)/curl-$(CURL_VER).tar.bz2:
-	$(WGET) https://curl.haxx.se/download/curl-$(CURL_VER).tar.bz2
+$(ARCHIVE)/curl-$(CURL_VERSION).tar.bz2:
+	$(WGET) https://curl.haxx.se/download/curl-$(CURL_VERSION).tar.bz2
 
-$(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).tar.bz2
+$(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/curl-$(CURL_VER)
-	$(UNTAR)/curl-$(CURL_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/curl-$(CURL_VER); \
+	$(REMOVE)/curl-$(CURL_VERSION)
+	$(UNTAR)/curl-$(CURL_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/curl-$(CURL_VERSION); \
 		$(call post_patch,$(CURL_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -921,22 +921,22 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/curl-$(CURL_VER).
 	$(REWRITE_LIBTOOL)/libcurl.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcurl.pc
 	cd $(TARGETPREFIX) && rm usr/bin/curl
-	$(REMOVE)/curl-$(CURL_VER)
+	$(REMOVE)/curl-$(CURL_VERSION)
 	$(TOUCH)
 
 #
 # libfribidi
 #
-FRIBIDI_VER = 0.19.7
+FRIBIDI_VERSION = 0.19.7
 
-$(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2:
-	$(WGET) http://fribidi.org/download/fribidi-$(FRIBIDI_VER).tar.bz2
+$(ARCHIVE)/fribidi-$(FRIBIDI_VERSION).tar.bz2:
+	$(WGET) http://fribidi.org/download/fribidi-$(FRIBIDI_VERSION).tar.bz2
 
-$(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2
+$(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/fribidi-$(FRIBIDI_VER)
-	$(UNTAR)/fribidi-$(FRIBIDI_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/fribidi-$(FRIBIDI_VER); \
+	$(REMOVE)/fribidi-$(FRIBIDI_VERSION)
+	$(UNTAR)/fribidi-$(FRIBIDI_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/fribidi-$(FRIBIDI_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -952,7 +952,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fribidi.pc
 	$(REWRITE_LIBTOOL)/libfribidi.la
 	cd $(TARGETPREFIX) && rm usr/bin/fribidi
-	$(REMOVE)/fribidi-$(FRIBIDI_VER)
+	$(REMOVE)/fribidi-$(FRIBIDI_VERSION)
 	$(TOUCH)
 
 #
@@ -961,16 +961,16 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/fribidi-$(FRIBIDI_VER).tar.bz2
 LIBSIGCPP_E2_MAJOR = 1
 LIBSIGCPP_E2_MINOR = 2
 LIBSIGCPP_E2_MICRO = 7
-LIBSIGCPP_E2_VER=$(LIBSIGCPP_E2_MAJOR).$(LIBSIGCPP_E2_MINOR).$(LIBSIGCPP_E2_MICRO)
+LIBSIGCPP_E2_VERSION=$(LIBSIGCPP_E2_MAJOR).$(LIBSIGCPP_E2_MINOR).$(LIBSIGCPP_E2_MICRO)
 
-$(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VER).tar.gz:
-	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGCPP_E2_MAJOR).$(LIBSIGCPP_E2_MINOR)/libsigc++-$(LIBSIGCPP_E2_VER).tar.gz
+$(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VERSION).tar.gz:
+	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGCPP_E2_MAJOR).$(LIBSIGCPP_E2_MINOR)/libsigc++-$(LIBSIGCPP_E2_VERSION).tar.gz
 
-$(D)/libsigc++_e2: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VER).tar.gz
+$(D)/libsigc++_e2: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libsigc++-$(LIBSIGCPP_E2_VER)
-	$(UNTAR)/libsigc++-$(LIBSIGCPP_E2_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGCPP_E2_VER); \
+	$(REMOVE)/libsigc++-$(LIBSIGCPP_E2_VERSION)
+	$(UNTAR)/libsigc++-$(LIBSIGCPP_E2_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGCPP_E2_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-checks \
@@ -979,7 +979,7 @@ $(D)/libsigc++_e2: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VER).tar.g
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sigc++-1.2.pc
 	$(REWRITE_LIBTOOL)/libsigc-1.2.la
-	$(REMOVE)/libsigc++-$(LIBSIGCPP_E2_VER)
+	$(REMOVE)/libsigc++-$(LIBSIGCPP_E2_VERSION)
 	$(TOUCH)
 
 #
@@ -988,16 +988,16 @@ $(D)/libsigc++_e2: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_E2_VER).tar.g
 LIBSIGCPP_MAJOR = 2
 LIBSIGCPP_MINOR = 4
 LIBSIGCPP_MICRO = 1
-LIBSIGCPP_VER=$(LIBSIGCPP_MAJOR).$(LIBSIGCPP_MINOR).$(LIBSIGCPP_MICRO)
+LIBSIGCPP_VERSION=$(LIBSIGCPP_MAJOR).$(LIBSIGCPP_MINOR).$(LIBSIGCPP_MICRO)
 
-$(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz:
-	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGCPP_MAJOR).$(LIBSIGCPP_MINOR)/libsigc++-$(LIBSIGCPP_VER).tar.xz
+$(ARCHIVE)/libsigc++-$(LIBSIGCPP_VERSION).tar.xz:
+	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGCPP_MAJOR).$(LIBSIGCPP_MINOR)/libsigc++-$(LIBSIGCPP_VERSION).tar.xz
 
-$(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz
+$(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libsigc++-$(LIBSIGCPP_VER)
-	$(UNTAR)/libsigc++-$(LIBSIGCPP_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGCPP_VER); \
+	$(REMOVE)/libsigc++-$(LIBSIGCPP_VERSION)
+	$(UNTAR)/libsigc++-$(LIBSIGCPP_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGCPP_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -1012,23 +1012,23 @@ $(D)/libsigc++: $(D)/bootstrap $(ARCHIVE)/libsigc++-$(LIBSIGCPP_VER).tar.xz
 		rm -fr $(TARGETPREFIX)/usr/lib/sigc++-2.0
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sigc++-2.0.pc
 	$(REWRITE_LIBTOOL)/libsigc-2.0.la
-	$(REMOVE)/libsigc++-$(LIBSIGCPP_VER)
+	$(REMOVE)/libsigc++-$(LIBSIGCPP_VERSION)
 	$(TOUCH)
 
 #
 # libmad
 #
-MAD_VER = 0.15.1b
-MAD_PATCH = libmad-$(MAD_VER).patch
+MAD_VERSION = 0.15.1b
+MAD_PATCH = libmad-$(MAD_VERSION).patch
 
-$(ARCHIVE)/libmad-$(MAD_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/mad/files/libmad/$(MAD_VER)/libmad-$(MAD_VER).tar.gz
+$(ARCHIVE)/libmad-$(MAD_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/mad/files/libmad/$(MAD_VERSION)/libmad-$(MAD_VERSION).tar.gz
 
-$(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
+$(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libmad-$(MAD_VER)
-	$(UNTAR)/libmad-$(MAD_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libmad-$(MAD_VER); \
+	$(REMOVE)/libmad-$(MAD_VERSION)
+	$(UNTAR)/libmad-$(MAD_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libmad-$(MAD_VERSION); \
 		$(call post_patch,$(MAD_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
@@ -1043,23 +1043,23 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/libmad-$(MAD_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/mad.pc
 	$(REWRITE_LIBTOOL)/libmad.la
-	$(REMOVE)/libmad-$(MAD_VER)
+	$(REMOVE)/libmad-$(MAD_VERSION)
 	$(TOUCH)
 
 #
 # libid3tag
 #
-ID3TAG_VER = 0.15.1b
-ID3TAG_PATCH = libid3tag-$(ID3TAG_VER).patch
+ID3TAG_VERSION = 0.15.1b
+ID3TAG_PATCH = libid3tag-$(ID3TAG_VERSION).patch
 
-$(ARCHIVE)/libid3tag-$(ID3TAG_VER)$(ID3TAG_SUBVER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/mad/files/libid3tag/$(ID3TAG_VER)/libid3tag-$(ID3TAG_VER).tar.gz
+$(ARCHIVE)/libid3tag-$(ID3TAG_VERSION)$(ID3TAG_SUBVER).tar.gz:
+	$(WGET) http://sourceforge.net/projects/mad/files/libid3tag/$(ID3TAG_VERSION)/libid3tag-$(ID3TAG_VERSION).tar.gz
 
-$(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VER).tar.gz
+$(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libid3tag-$(ID3TAG_VER)
-	$(UNTAR)/libid3tag-$(ID3TAG_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libid3tag-$(ID3TAG_VER); \
+	$(REMOVE)/libid3tag-$(ID3TAG_VERSION)
+	$(UNTAR)/libid3tag-$(ID3TAG_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libid3tag-$(ID3TAG_VERSION); \
 		$(call post_patch,$(ID3TAG_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
@@ -1071,22 +1071,22 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libid3tag-$(ID3TAG_VER).tar.
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/id3tag.pc
 	$(REWRITE_LIBTOOL)/libid3tag.la
-	$(REMOVE)/libid3tag-$(ID3TAG_VER)
+	$(REMOVE)/libid3tag-$(ID3TAG_VERSION)
 	$(TOUCH)
 
 #
 # libvorbis
 #
-VORBIS_VER = 1.3.5
+VORBIS_VERSION = 1.3.5
 
-$(ARCHIVE)/libvorbis-$(VORBIS_VER).tar.xz:
-	$(WGET) http://downloads.xiph.org/releases/vorbis/libvorbis-$(VORBIS_VER).tar.xz
+$(ARCHIVE)/libvorbis-$(VORBIS_VERSION).tar.xz:
+	$(WGET) http://downloads.xiph.org/releases/vorbis/libvorbis-$(VORBIS_VERSION).tar.xz
 
-$(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbis-$(VORBIS_VER).tar.xz
+$(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbis-$(VORBIS_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libvorbis-$(VORBIS_VER)
-	$(UNTAR)/libvorbis-$(VORBIS_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libvorbis-$(VORBIS_VER); \
+	$(REMOVE)/libvorbis-$(VORBIS_VERSION)
+	$(UNTAR)/libvorbis-$(VORBIS_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libvorbis-$(VORBIS_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -1104,25 +1104,25 @@ $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbis-$(VORBIS_VER).ta
 	$(REWRITE_LIBTOOLDEP)/libvorbis.la
 	$(REWRITE_LIBTOOLDEP)/libvorbisenc.la
 	$(REWRITE_LIBTOOLDEP)/libvorbisfile.la
-	$(REMOVE)/libvorbis-$(VORBIS_VER)
+	$(REMOVE)/libvorbis-$(VORBIS_VERSION)
 	$(TOUCH)
 
 #
 # libvorbisidec
 #
 VORBISIDEC_SVN = 18153
-VORBISIDEC_VER = 1.0.2+svn$(VORBISIDEC_SVN)
-VORBISIDEC_VER_APPEND = .orig
-VORBISIDEC_PATCH = libvorbisidec-$(VORBISIDEC_VER).patch
+VORBISIDEC_VERSION = 1.0.2+svn$(VORBISIDEC_SVN)
+VORBISIDEC_VERSION_APPEND = .orig
+VORBISIDEC_PATCH = libvorbisidec-$(VORBISIDEC_VERSION).patch
 
-$(ARCHIVE)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz:
-	$(WGET) http://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
+$(ARCHIVE)/libvorbisidec_$(VORBISIDEC_VERSION)$(VORBISIDEC_VERSION_APPEND).tar.gz:
+	$(WGET) http://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/libvorbisidec_$(VORBISIDEC_VERSION)$(VORBISIDEC_VERSION_APPEND).tar.gz
 
-$(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
+$(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbisidec_$(VORBISIDEC_VERSION)$(VORBISIDEC_VERSION_APPEND).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VER)
-	$(UNTAR)/libvorbisidec_$(VORBISIDEC_VER)$(VORBISIDEC_VER_APPEND).tar.gz
-	set -e; cd $(BUILD_TMP)/libvorbisidec-$(VORBISIDEC_VER); \
+	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VERSION)
+	$(UNTAR)/libvorbisidec_$(VORBISIDEC_VERSION)$(VORBISIDEC_VERSION_APPEND).tar.gz
+	set -e; cd $(BUILD_TMP)/libvorbisidec-$(VORBISIDEC_VERSION); \
 		$(call post_patch,$(VORBISIDEC_PATCH)); \
 		ACLOCAL_FLAGS="-I . -I $(TARGETPREFIX)/usr/share/aclocal" \
 		$(BUILDENV) ./autogen.sh $(CONFIGURE_OPTS) --prefix=/usr; \
@@ -1130,22 +1130,22 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/libvorbisidec_$(VORBIS
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/vorbisidec.pc
 	$(REWRITE_LIBTOOL)/libvorbisidec.la
-	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VER)
+	$(REMOVE)/libvorbisidec-$(VORBISIDEC_VERSION)
 	$(TOUCH)
 
 #
 # libiconv
 #
-ICONV_VER = 1.14
+ICONV_VERSION = 1.14
 
-$(ARCHIVE)/libiconv-$(ICONV_VER).tar.gz:
-	$(WGET) http://ftp.gnu.org/gnu/libiconv/libiconv-$(ICONV_VER).tar.gz
+$(ARCHIVE)/libiconv-$(ICONV_VERSION).tar.gz:
+	$(WGET) http://ftp.gnu.org/gnu/libiconv/libiconv-$(ICONV_VERSION).tar.gz
 
-$(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/libiconv-$(ICONV_VER).tar.gz
+$(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/libiconv-$(ICONV_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/libiconv-$(ICONV_ER)
-	$(UNTAR)/libiconv-$(ICONV_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libiconv-$(ICONV_VER); \
+	$(UNTAR)/libiconv-$(ICONV_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libiconv-$(ICONV_VERSION); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -1158,22 +1158,22 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/libiconv-$(ICONV_VER).tar.gz
 		cp ./srcm4/* $(HOSTPREFIX)/share/aclocal/ ; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/libiconv.la
-	$(REMOVE)/libiconv-$(ICONV_VER)
+	$(REMOVE)/libiconv-$(ICONV_VERSION)
 	$(TOUCH)
 
 #
 # libexpat
 #
-EXPAT_VER = 2.1.1
+EXPAT_VERSION = 2.1.1
 
-$(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/expat-$(EXPAT_VER).tar.bz2
+$(ARCHIVE)/expat-$(EXPAT_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/expat/files/expat/$(EXPAT_VERSION)/expat-$(EXPAT_VERSION).tar.bz2
 
-$(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2
+$(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/expat-$(EXPAT_VER)
-	$(UNTAR)/expat-$(EXPAT_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/expat-$(EXPAT_VER); \
+	$(REMOVE)/expat-$(EXPAT_VERSION)
+	$(UNTAR)/expat-$(EXPAT_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/expat-$(EXPAT_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1183,22 +1183,22 @@ $(D)/libexpat: $(D)/bootstrap $(ARCHIVE)/expat-$(EXPAT_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/expat.pc
 	$(REWRITE_LIBTOOL)/libexpat.la
-	$(REMOVE)/expat-$(EXPAT_VER)
+	$(REMOVE)/expat-$(EXPAT_VERSION)
 	$(TOUCH)
 
 #
 # fontconfig
 #
-FONTCONFIG_VER = 2.11.93
+FONTCONFIG_VERSION = 2.11.93
 
-$(ARCHIVE)/fontconfig-$(FONTCONFIG_VER).tar.bz2:
-	$(WGET) http://www.freedesktop.org/software/fontconfig/release/fontconfig-$(FONTCONFIG_VER).tar.bz2
+$(ARCHIVE)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2:
+	$(WGET) http://www.freedesktop.org/software/fontconfig/release/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
 
-$(D)/fontconfig: $(D)/bootstrap $(D)/libfreetype $(D)/libexpat $(ARCHIVE)/fontconfig-$(FONTCONFIG_VER).tar.bz2
+$(D)/fontconfig: $(D)/bootstrap $(D)/libfreetype $(D)/libexpat $(ARCHIVE)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/fontconfig-$(FONTCONFIG_VER)
-	$(UNTAR)/fontconfig-$(FONTCONFIG_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/fontconfig-$(FONTCONFIG_VER); \
+	$(REMOVE)/fontconfig-$(FONTCONFIG_VERSION)
+	$(UNTAR)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/fontconfig-$(FONTCONFIG_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-freetype-config=$(hostprefix)/bin/freetype-config \
@@ -1211,22 +1211,22 @@ $(D)/fontconfig: $(D)/bootstrap $(D)/libfreetype $(D)/libexpat $(ARCHIVE)/fontco
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/libfontconfig.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fontconfig.pc
-	$(REMOVE)/fontconfig-$(FONTCONFIG_VER)
+	$(REMOVE)/fontconfig-$(FONTCONFIG_VERSION)
 	$(TOUCH)
 
 #
 # libdvdcss
 #
-LIBDVDCSS_VER = 1.2.13
+LIBDVDCSS_VERSION = 1.2.13
 
-$(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2:
-	$(WGET) http://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VER)/$(lastword $(subst /, ,$@))
+$(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VERSION).tar.bz2:
+	$(WGET) http://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VERSION)/$(lastword $(subst /, ,$@))
 
-$(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
+$(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VER)
-	$(UNTAR)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libdvdcss-$(LIBDVDCSS_VER); \
+	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VERSION)
+	$(UNTAR)/libdvdcss-$(LIBDVDCSS_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libdvdcss-$(LIBDVDCSS_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-doc \
@@ -1235,23 +1235,23 @@ $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/libdvdcss-$(LIBDVDCSS_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdvdcss.pc
 	$(REWRITE_LIBTOOL)/libdvdcss.la
-	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VER)
+	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VERSION)
 	$(TOUCH)
 
 #
 # libdvdnav
 #
-LIBDVDNAV_VER = 4.2.1
-LIBDVDNAV_PATCH = libdvdnav-$(LIBDVDNAV_VER).patch
+LIBDVDNAV_VERSION = 4.2.1
+LIBDVDNAV_PATCH = libdvdnav-$(LIBDVDNAV_VERSION).patch
 
-$(ARCHIVE)/libdvdnav-$(LIBDVDNAV_VER).tar.xz:
-	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdnav-$(LIBDVDNAV_VER).tar.xz
+$(ARCHIVE)/libdvdnav-$(LIBDVDNAV_VERSION).tar.xz:
+	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdnav-$(LIBDVDNAV_VERSION).tar.xz
 
-$(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_VER).tar.xz
+$(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VER)
-	$(UNTAR)/libdvdnav-$(LIBDVDNAV_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VER); \
+	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VERSION)
+	$(UNTAR)/libdvdnav-$(LIBDVDNAV_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VERSION); \
 		$(call post_patch,$(LIBDVDNAV_PATCH)); \
 		$(BUILDENV) \
 		libtoolize --copy --force --quiet --ltdl; \
@@ -1268,23 +1268,23 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/libdvdnav-$(LIBDVDNAV_
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/dvdnavmini.pc
 	$(REWRITE_LIBTOOL)/libdvdnav.la
 	$(REWRITE_LIBTOOL)/libdvdnavmini.la
-	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VER)
+	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VERSION)
 	$(TOUCH)
 
 #
 # libdvdread
 #
-LIBDVDREAD_VER = 4.9.9
-LIBDVDREAD_PATCH = libdvdread-$(LIBDVDREAD_VER).patch
+LIBDVDREAD_VERSION = 4.9.9
+LIBDVDREAD_PATCH = libdvdread-$(LIBDVDREAD_VERSION).patch
 
-$(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz:
-	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdread-$(LIBDVDREAD_VER).tar.xz
+$(ARCHIVE)/libdvdread-$(LIBDVDREAD_VERSION).tar.xz:
+	$(WGET) http://dvdnav.mplayerhq.hu/releases/libdvdread-$(LIBDVDREAD_VERSION).tar.xz
 
-$(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
+$(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libdvdread-$(LIBDVDREAD_VER)
-	$(UNTAR)/libdvdread-$(LIBDVDREAD_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libdvdread-$(LIBDVDREAD_VER); \
+	$(REMOVE)/libdvdread-$(LIBDVDREAD_VERSION)
+	$(UNTAR)/libdvdread-$(LIBDVDREAD_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libdvdread-$(LIBDVDREAD_VERSION); \
 		$(call post_patch,$(LIBDVDREAD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1295,7 +1295,7 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/libdvdread-$(LIBDVDREAD_VER).tar.xz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/dvdread.pc
 	$(REWRITE_LIBTOOL)/libdvdread.la
-	$(REMOVE)/libdvdread-$(LIBDVDREAD_VER)
+	$(REMOVE)/libdvdread-$(LIBDVDREAD_VERSION)
 	$(TOUCH)
 
 #
@@ -1331,14 +1331,14 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 #
 # ffmpeg
 #
-FFMPEG_VER = 2.8.6
-FFMPEG_PATCH  = ffmpeg-buffer-size-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-hds-libroxml-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-aac-$(FFMPEG_VER).patch
-FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VER).patch
+FFMPEG_VERSION = 2.8.6
+FFMPEG_PATCH  = ffmpeg-buffer-size-$(FFMPEG_VERSION).patch
+FFMPEG_PATCH += ffmpeg-hds-libroxml-$(FFMPEG_VERSION).patch
+FFMPEG_PATCH += ffmpeg-aac-$(FFMPEG_VERSION).patch
+FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VERSION).patch
 
-$(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz:
-	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VER).tar.xz
+$(ARCHIVE)/ffmpeg-$(FFMPEG_VERSION).tar.xz:
+	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.xz
 
 ifeq ($(IMAGE), enigma2)
 FFMPEG_EXTRA  = --enable-librtmp
@@ -1349,11 +1349,11 @@ ifeq ($(IMAGE), neutrino)
 FFMPEG_EXTRA = --disable-iconv
 endif
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VER).tar.xz
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
-	$(UNTAR)/ffmpeg-$(FFMPEG_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
+	$(REMOVE)/ffmpeg-$(FFMPEG_VERSION)
+	$(UNTAR)/ffmpeg-$(FFMPEG_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VERSION); \
 		$(call post_patch,$(FFMPEG_PATCH)); \
 		./configure \
 			--disable-ffserver \
@@ -1551,23 +1551,23 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libavutil.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswresample.pc
 	test -e $(PKG_CONFIG_PATH)/libswscale.pc && $(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswscale.pc || true
-	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
+	$(REMOVE)/ffmpeg-$(FFMPEG_VERSION)
 	$(TOUCH)
 
 #
 # libass
 #
-LIBASS_VER = 0.12.3
-LIBASS_PATCH = libass-$(LIBASS_VER).patch
+LIBASS_VERSION = 0.12.3
+LIBASS_PATCH = libass-$(LIBASS_VERSION).patch
 
-$(ARCHIVE)/libass-$(LIBASS_VER).tar.xz:
-	$(WGET) https://github.com/libass/libass/releases/download/$(LIBASS_VER)/libass-$(LIBASS_VER).tar.xz
+$(ARCHIVE)/libass-$(LIBASS_VERSION).tar.xz:
+	$(WGET) https://github.com/libass/libass/releases/download/$(LIBASS_VERSION)/libass-$(LIBASS_VERSION).tar.xz
 
-$(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$(LIBASS_VER).tar.xz
+$(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$(LIBASS_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libass-$(LIBASS_VER)
-	$(UNTAR)/libass-$(LIBASS_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libass-$(LIBASS_VER); \
+	$(REMOVE)/libass-$(LIBASS_VERSION)
+	$(UNTAR)/libass-$(LIBASS_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libass-$(LIBASS_VERSION); \
 		$(call post_patch,$(LIBASS_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1581,22 +1581,22 @@ $(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libass.pc
 	$(REWRITE_LIBTOOL)/libass.la
-	$(REMOVE)/libass-$(LIBASS_VER)
+	$(REMOVE)/libass-$(LIBASS_VERSION)
 	$(TOUCH)
 
 #
 # sqlite
 #
-SQLITE_VER = 3110000
+SQLITE_VERSION = 3110000
 
-$(ARCHIVE)/sqlite-autoconf-$(SQLITE_VER).tar.gz:
-	$(WGET) http://www.sqlite.org/2016/sqlite-autoconf-$(SQLITE_VER).tar.gz
+$(ARCHIVE)/sqlite-autoconf-$(SQLITE_VERSION).tar.gz:
+	$(WGET) http://www.sqlite.org/2016/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
 
-$(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VER).tar.gz
+$(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/sqlite-autoconf-$(SQLITE_VER)
-	$(UNTAR)/sqlite-autoconf-$(SQLITE_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/sqlite-autoconf-$(SQLITE_VER); \
+	$(REMOVE)/sqlite-autoconf-$(SQLITE_VERSION)
+	$(UNTAR)/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/sqlite-autoconf-$(SQLITE_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1605,7 +1605,7 @@ $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sqlite3.pc
 	$(REWRITE_LIBTOOL)/libsqlite3.la
-	$(REMOVE)/sqlite-autoconf-$(SQLITE_VER)
+	$(REMOVE)/sqlite-autoconf-$(SQLITE_VERSION)
 	$(TOUCH)
 
 #
@@ -1613,16 +1613,16 @@ $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VER).tar.gz
 #
 LIBSOUP_MAJOR = 2.50
 LIBSOUP_MINOR = 0
-LIBSOUP_VER = $(LIBSOUP_MAJOR).$(LIBSOUP_MINOR)
+LIBSOUP_VERSION = $(LIBSOUP_MAJOR).$(LIBSOUP_MINOR)
 
-$(ARCHIVE)/libsoup-$(LIBSOUP_VER).tar.xz:
-	$(WGET) http://download.gnome.org/sources/libsoup/$(LIBSOUP_MAJOR)/libsoup-$(LIBSOUP_VER).tar.xz
+$(ARCHIVE)/libsoup-$(LIBSOUP_VERSION).tar.xz:
+	$(WGET) http://download.gnome.org/sources/libsoup/$(LIBSOUP_MAJOR)/libsoup-$(LIBSOUP_VERSION).tar.xz
 
-$(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2_e2 $(D)/glib2 $(ARCHIVE)/libsoup-$(LIBSOUP_VER).tar.xz
+$(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2_e2 $(D)/glib2 $(ARCHIVE)/libsoup-$(LIBSOUP_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libsoup-$(LIBSOUP_VER)
-	$(UNTAR)/libsoup-$(LIBSOUP_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libsoup-$(LIBSOUP_VER); \
+	$(REMOVE)/libsoup-$(LIBSOUP_VERSION)
+	$(UNTAR)/libsoup-$(LIBSOUP_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libsoup-$(LIBSOUP_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \
@@ -1636,22 +1636,22 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2_e2 $(D)/glib2 $(ARCHIVE)/l
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libsoup-2.4.pc
 	$(REWRITE_LIBTOOL)/libsoup-2.4.la
-	$(REMOVE)/libsoup-$(LIBSOUP_VER)
+	$(REMOVE)/libsoup-$(LIBSOUP_VERSION)
 	$(TOUCH)
 
 #
 # libogg
 #
-OGG_VER = 1.3.2
+OGG_VERSION = 1.3.2
 
-$(ARCHIVE)/libogg-$(OGG_VER).tar.gz:
-	$(WGET) http://downloads.xiph.org/releases/ogg/libogg-$(OGG_VER).tar.gz
+$(ARCHIVE)/libogg-$(OGG_VERSION).tar.gz:
+	$(WGET) http://downloads.xiph.org/releases/ogg/libogg-$(OGG_VERSION).tar.gz
 
-$(D)/libogg: $(D)/bootstrap $(ARCHIVE)/libogg-$(OGG_VER).tar.gz
+$(D)/libogg: $(D)/bootstrap $(ARCHIVE)/libogg-$(OGG_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libogg-$(OGG_VER)
-	$(UNTAR)/libogg-$(OGG_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libogg-$(OGG_VER); \
+	$(REMOVE)/libogg-$(OGG_VERSION)
+	$(UNTAR)/libogg-$(OGG_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libogg-$(OGG_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -1662,23 +1662,23 @@ $(D)/libogg: $(D)/bootstrap $(ARCHIVE)/libogg-$(OGG_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ogg.pc
 	$(REWRITE_LIBTOOL)/libogg.la
-	$(REMOVE)/libogg-$(OGG_VER)
+	$(REMOVE)/libogg-$(OGG_VERSION)
 	$(TOUCH)
 
 #
 # libflac
 #
-FLAC_VER = 1.3.1
-FLAC_PATCH = libflac-$(FLAC_VER).patch
+FLAC_VERSION = 1.3.1
+FLAC_PATCH = libflac-$(FLAC_VERSION).patch
 
-$(ARCHIVE)/flac-$(FLAC_VER).tar.xz:
-	$(WGET) http://downloads.xiph.org/releases/flac/flac-$(FLAC_VER).tar.xz
+$(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz:
+	$(WGET) http://downloads.xiph.org/releases/flac/flac-$(FLAC_VERSION).tar.xz
 
-$(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VER).tar.xz
+$(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/flac-$(FLAC_VER)
-	$(UNTAR)/flac-$(FLAC_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
+	$(REMOVE)/flac-$(FLAC_VERSION)
+	$(UNTAR)/flac-$(FLAC_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VERSION); \
 		$(call post_patch,$(FLAC_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi; \
@@ -1705,23 +1705,23 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VER).tar.xz
 	$(REWRITE_LIBTOOL)/libFLAC.la
 	$(REWRITE_LIBTOOL)/libFLAC++.la
 	$(REWRITE_LIBTOOLDEP)/libFLAC++.la
-	$(REMOVE)/flac-$(FLAC_VER)
+	$(REMOVE)/flac-$(FLAC_VERSION)
 	$(TOUCH)
 
 #
 # libxml2_e2
 #
-LIBXML2_E2_VER = 2.9.0
-LIBXML2_E2_PATCH = libxml2-$(LIBXML2_E2_VER).patch
+LIBXML2_E2_VERSION = 2.9.0
+LIBXML2_E2_PATCH = libxml2-$(LIBXML2_E2_VERSION).patch
 
-$(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).tar.gz:
-	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_E2_VER).tar.gz
+$(ARCHIVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz:
+	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_E2_VERSION).tar.gz
 
-$(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).tar.gz
+$(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libxml2-$(LIBXML2_E2_VER).tar.gz
-	$(UNTAR)/libxml2-$(LIBXML2_E2_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_E2_VER); \
+	$(REMOVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
+	$(UNTAR)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_E2_VERSION); \
 		$(call post_patch,$(LIBXML2_E2_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
@@ -1747,22 +1747,22 @@ $(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VER).t
 		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(TARGETPREFIX)/usr/lib,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh; \
 		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(TARGETPREFIX)/usr/include,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
 	$(REWRITE_LIBTOOL)/libxml2.la
-	$(REMOVE)/libxml2-$(LIBXML2_E2_VER)
+	$(REMOVE)/libxml2-$(LIBXML2_E2_VERSION)
 	$(TOUCH)
 
 #
 # libxslt
 #
-LIBXSLT_VER = 1.1.28
+LIBXSLT_VERSION = 1.1.28
 
-$(ARCHIVE)/libxslt-$(LIBXSLT_VER).tar.gz:
-	$(WGET) ftp://xmlsoft.org/libxml2/libxslt-$(LIBXSLT_VER).tar.gz
+$(ARCHIVE)/libxslt-$(LIBXSLT_VERSION).tar.gz:
+	$(WGET) ftp://xmlsoft.org/libxml2/libxslt-$(LIBXSLT_VERSION).tar.gz
 
-$(D)/libxslt: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libxslt-$(LIBXSLT_VER).tar.gz
+$(D)/libxslt: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libxslt-$(LIBXSLT_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libxslt-$(LIBXSLT_VER)
-	$(UNTAR)/libxslt-$(LIBXSLT_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libxslt-$(LIBXSLT_VER); \
+	$(REMOVE)/libxslt-$(LIBXSLT_VERSION)
+	$(UNTAR)/libxslt-$(LIBXSLT_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libxslt-$(LIBXSLT_VERSION); \
 		$(CONFIGURE) \
 			CPPFLAGS="$(CPPFLAGS) -I$(TARGETPREFIX)/usr/include/libxml2" \
 			--prefix=/usr \
@@ -1790,22 +1790,22 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libxslt-$(LIBXSLT_VER).t
 	$(REWRITE_LIBTOOL)/libexslt.la
 	$(REWRITE_LIBTOOL)/libxslt.la
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
-	$(REMOVE)/libxslt-$(LIBXSLT_VER)
+	$(REMOVE)/libxslt-$(LIBXSLT_VERSION)
 	$(TOUCH)
 
 #
 # libxml2 neutrino
 #
-LIBXML2_VER = 2.8.0
+LIBXML2_VERSION = 2.8.0
 
-$(ARCHIVE)/libxml2-$(LIBXML2_VER).tar.gz:
-	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_VER).tar.gz
+$(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz:
+	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_VERSION).tar.gz
 
-$(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VER).tar.gz
+$(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libxml2-$(LIBXML2_VER).tar.gz
-	$(UNTAR)/libxml2-$(LIBXML2_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VER); \
+	$(REMOVE)/libxml2-$(LIBXML2_VERSION).tar.gz
+	$(UNTAR)/libxml2-$(LIBXML2_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \
@@ -1827,22 +1827,22 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VER).tar.gz
 	sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(TARGETPREFIX)/usr/lib,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
 	sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(TARGETPREFIX)/usr/include,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
 	$(REWRITE_LIBTOOL)/libxml2.la
-	$(REMOVE)/libxml2-$(LIBXML2_VER)
+	$(REMOVE)/libxml2-$(LIBXML2_VERSION)
 	$(TOUCH)
 
 #
 #libroxml
 #
-LIBROXML_VER = 2.3.0
+LIBROXML_VERSION = 2.3.0
 
-$(ARCHIVE)/libroxml-$(LIBROXML_VER).tar.gz:
-	$(WGET) http://download.libroxml.net/pool/v2.x/libroxml-$(LIBROXML_VER).tar.gz
+$(ARCHIVE)/libroxml-$(LIBROXML_VERSION).tar.gz:
+	$(WGET) http://download.libroxml.net/pool/v2.x/libroxml-$(LIBROXML_VERSION).tar.gz
 
-$(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/libroxml-$(LIBROXML_VER).tar.gz
+$(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/libroxml-$(LIBROXML_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libroxml-$(LIBROXML_VER)
-	$(UNTAR)/libroxml-$(LIBROXML_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libroxml-$(LIBROXML_VER); \
+	$(REMOVE)/libroxml-$(LIBROXML_VERSION)
+	$(UNTAR)/libroxml-$(LIBROXML_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libroxml-$(LIBROXML_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -1853,22 +1853,22 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/libroxml-$(LIBROXML_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libroxml.pc
 	$(REWRITE_LIBTOOL)/libroxml.la
-	$(REMOVE)/libroxml-$(LIBROXML_VER)
+	$(REMOVE)/libroxml-$(LIBROXML_VERSION)
 	$(TOUCH)
 
 #
 # pugixml
 #
-PUGIXML_VER = 1.7
+PUGIXML_VERSION = 1.7
 
-$(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz:
-	$(WGET) http://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VER)/pugixml-$(PUGIXML_VER).tar.gz
+$(ARCHIVE)/pugixml-$(PUGIXML_VERSION).tar.gz:
+	$(WGET) http://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VERSION)/pugixml-$(PUGIXML_VERSION).tar.gz
 
-$(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz
+$(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/pugixml-$(PUGIXML_VER)
-	$(UNTAR)/pugixml-$(PUGIXML_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/pugixml-$(PUGIXML_VER); \
+	$(REMOVE)/pugixml-$(PUGIXML_VERSION)
+	$(UNTAR)/pugixml-$(PUGIXML_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/pugixml-$(PUGIXML_VERSION); \
 		cmake \
 		--no-warn-unused-cli \
 		-DCMAKE_INSTALL_PREFIX=/usr \
@@ -1881,7 +1881,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VER).tar.gz
 		scripts; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/pugixml-$(PUGIXML_VER)
+	$(REMOVE)/pugixml-$(PUGIXML_VERSION)
 	$(TOUCH)
 
 #
@@ -1925,7 +1925,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
 			--without-ncurses \
 		; \
-		$(MAKE) vcs_version all; \
+		$(MAKE) vcs_VERSIONsion all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(TARGETPREFIX)/etc/init.d/
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_ni.conf $(TARGETPREFIX)/etc/lcd4linux.conf
@@ -1935,16 +1935,16 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusbcompat $(D)/libgd $(D)/libusb
 #
 # libgd
 #
-GD_VER = 2.2.1
+GD_VERSION = 2.2.1
 
-$(ARCHIVE)/libgd-$(GD_VER).tar.xz:
-	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VER)/libgd-$(GD_VER).tar.xz
+$(ARCHIVE)/libgd-$(GD_VERSION).tar.xz:
+	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VERSION)/libgd-$(GD_VERSION).tar.xz
 
-$(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/libgd-$(GD_VER).tar.xz
+$(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/libgd-$(GD_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/libgd-$(GD_VER)
-	$(UNTAR)/libgd-$(GD_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/libgd-$(GD_VER); \
+	$(REMOVE)/libgd-$(GD_VERSION)
+	$(UNTAR)/libgd-$(GD_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/libgd-$(GD_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
@@ -1955,23 +1955,23 @@ $(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/libgd.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gdlib.pc
-	$(REMOVE)/libgd-$(GD_VER)
+	$(REMOVE)/libgd-$(GD_VERSION)
 	$(TOUCH)
 
 #
 # libusb
 #
-USB_VER = 1.0.9
-USB_PATCH = libusb-$(USB_VER).patch
+USB_VERSION = 1.0.9
+USB_PATCH = libusb-$(USB_VERSION).patch
 
-$(ARCHIVE)/libusb-$(USB_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$(USB_VER)/libusb-$(USB_VER).tar.bz2
+$(ARCHIVE)/libusb-$(USB_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-1.0/libusb-$(USB_VERSION)/libusb-$(USB_VERSION).tar.bz2
 
-$(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
+$(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libusb-$(USB_VER)
-	$(UNTAR)/libusb-$(USB_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libusb-$(USB_VER); \
+	$(REMOVE)/libusb-$(USB_VERSION)
+	$(UNTAR)/libusb-$(USB_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libusb-$(USB_VERSION); \
 		$(call post_patch,$(USB_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1984,22 +1984,22 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/libusb-$(USB_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/libusb-1.0.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libusb-1.0.pc
-	$(REMOVE)/libusb-$(USB_VER)
+	$(REMOVE)/libusb-$(USB_VERSION)
 	$(TOUCH)
 
 #
 # libusbcompat
 #
-USBCOMPAT_VER = 0.1.5
+USBCOMPAT_VERSION = 0.1.5
 
-$(ARCHIVE)/libusb-compat-$(USBCOMPAT_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(USBCOMPAT_VER)/libusb-compat-$(USBCOMPAT_VER).tar.bz2
+$(ARCHIVE)/libusb-compat-$(USBCOMPAT_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(USBCOMPAT_VERSION)/libusb-compat-$(USBCOMPAT_VERSION).tar.bz2
 
-$(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMPAT_VER).tar.bz2
+$(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMPAT_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libusb-compat-$(USBCOMPAT_VER)
-	$(UNTAR)/libusb-compat-$(USBCOMPAT_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libusb-compat-$(USBCOMPAT_VER); \
+	$(REMOVE)/libusb-compat-$(USBCOMPAT_VERSION)
+	$(UNTAR)/libusb-compat-$(USBCOMPAT_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libusb-compat-$(USBCOMPAT_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-log \
@@ -2011,24 +2011,24 @@ $(D)/libusbcompat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/libusb-compat-$(USBCOMP
 	rm -f $(TARGETPREFIX)/usr/bin/libusb-config
 	$(REWRITE_LIBTOOL)/libusb.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libusb.pc
-	$(REMOVE)/libusb-compat-$(USBCOMPAT_VER)
+	$(REMOVE)/libusb-compat-$(USBCOMPAT_VERSION)
 	$(TOUCH)
 
 #
 # alsa-lib
 #
-ALSA_VER = 1.1.3
-ALSA_PATCH  = alsa-lib-$(ALSA_VER).patch
-ALSA_PATCH += alsa-lib-$(ALSA_VER)-link_fix.patch
+ALSA_VERSION = 1.1.3
+ALSA_PATCH  = alsa-lib-$(ALSA_VERSION).patch
+ALSA_PATCH += alsa-lib-$(ALSA_VERSION)-link_fix.patch
 
-$(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2:
-	$(WGET) ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$(ALSA_VER).tar.bz2
+$(ARCHIVE)/alsa-lib-$(ALSA_VERSION).tar.bz2:
+	$(WGET) ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$(ALSA_VERSION).tar.bz2
 
-$(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
+$(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/alsa-lib-$(ALSA_VER)
-	$(UNTAR)/alsa-lib-$(ALSA_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_VER); \
+	$(REMOVE)/alsa-lib-$(ALSA_VERSION)
+	$(UNTAR)/alsa-lib-$(ALSA_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_VERSION); \
 		$(call post_patch,$(ALSA_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2048,20 +2048,20 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/alsa-lib-$(ALSA_VER).tar.bz2
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/alsa.pc
 	$(REWRITE_LIBTOOL)/libasound.la
-	$(REMOVE)/alsa-lib-$(ALSA_VER)
+	$(REMOVE)/alsa-lib-$(ALSA_VERSION)
 	$(TOUCH)
 
 #
 # alsa-utils
 #
-$(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2:
-	$(WGET) ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$(ALSA_VER).tar.bz2
+$(ARCHIVE)/alsa-utils-$(ALSA_VERSION).tar.bz2:
+	$(WGET) ftp://ftp.alsa-project.org/pub/utils/alsa-utils-$(ALSA_VERSION).tar.bz2
 
-$(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).tar.bz2
+$(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/alsa-utils-$(ALSA_VER)
-	$(UNTAR)/alsa-utils-$(ALSA_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_VER); \
+	$(REMOVE)/alsa-utils-$(ALSA_VERSION)
+	$(UNTAR)/alsa-utils-$(ALSA_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_VERSION); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
 		autoreconf -fi -I $(TARGETPREFIX)/usr/share/aclocal; \
 		$(CONFIGURE) \
@@ -2078,7 +2078,7 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_VER).
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/alsa-utils-$(ALSA_VER)
+	$(REMOVE)/alsa-utils-$(ALSA_VERSION)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/amixer $(TARGETPREFIX)/etc/init.d/amixer
 	install -m 644 $(SKEL_ROOT)/etc/amixer.conf $(TARGETPREFIX)/etc/amixer.conf
 	install -m 644 $(SKEL_ROOT)/etc/asound.conf $(TARGETPREFIX)/etc/asound.conf
@@ -2167,16 +2167,16 @@ $(D)/libdvbsi++: $(D)/bootstrap
 #
 # libmodplug
 #
-LIBMODPLUG_VER = 0.8.8.4
+LIBMODPLUG_VERSION = 0.8.8.4
 
-$(ARCHIVE)/libmodplug-$(LIBMODPLUG_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VER)/libmodplug-$(LIBMODPLUG_VER).tar.gz
+$(ARCHIVE)/libmodplug-$(LIBMODPLUG_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VERSION)/libmodplug-$(LIBMODPLUG_VERSION).tar.gz
 
-$(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/libmodplug-$(LIBMODPLUG_VER).tar.gz
+$(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/libmodplug-$(LIBMODPLUG_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
-	$(UNTAR)/libmodplug-$(LIBMODPLUG_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libmodplug-$(LIBMODPLUG_VER); \
+	$(REMOVE)/libmodplug-$(LIBMODPLUG_VERSION)
+	$(UNTAR)/libmodplug-$(LIBMODPLUG_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libmodplug-$(LIBMODPLUG_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2184,22 +2184,22 @@ $(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/libmodplug-$(LIBMODPLUG_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libmodplug.pc
 	$(REWRITE_LIBTOOL)/libmodplug.la
-	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
+	$(REMOVE)/libmodplug-$(LIBMODPLUG_VERSION)
 	$(TOUCH)
 
 #
 # lzo
 #
-LZO_VER = 2.09
+LZO_VERSION = 2.09
 
-$(ARCHIVE)/lzo-$(LZO_VER).tar.gz:
-	$(WGET) http://www.oberhumer.com/opensource/lzo/download/lzo-$(LZO_VER).tar.gz
+$(ARCHIVE)/lzo-$(LZO_VERSION).tar.gz:
+	$(WGET) http://www.oberhumer.com/opensource/lzo/download/lzo-$(LZO_VERSION).tar.gz
 
-$(D)/lzo: $(D)/bootstrap $(ARCHIVE)/lzo-$(LZO_VER).tar.gz
+$(D)/lzo: $(D)/bootstrap $(ARCHIVE)/lzo-$(LZO_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/lzo-$(LZO_VER)
-	$(UNTAR)/lzo-$(LZO_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/lzo-$(LZO_VER); \
+	$(REMOVE)/lzo-$(LZO_VERSION)
+	$(UNTAR)/lzo-$(LZO_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/lzo-$(LZO_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -2207,23 +2207,23 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/lzo-$(LZO_VER).tar.gz
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_LIBTOOL)/liblzo2.la
-	$(REMOVE)/lzo-$(LZO_VER)
+	$(REMOVE)/lzo-$(LZO_VERSION)
 	$(TOUCH)
 
 #
 # minidlna
 #
-MINIDLNA_VER = 1.1.5
-MINIDLNA_PATCH = minidlna-$(MINIDLNA_VER).patch
+MINIDLNA_VERSION = 1.1.5
+MINIDLNA_PATCH = minidlna-$(MINIDLNA_VERSION).patch
 
-$(ARCHIVE)/minidlna-$(MINIDLNA_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VER)/minidlna-$(MINIDLNA_VER).tar.gz
+$(ARCHIVE)/minidlna-$(MINIDLNA_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VERSION)/minidlna-$(MINIDLNA_VERSION).tar.gz
 
-$(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/libflac $(D)/ffmpeg $(ARCHIVE)/minidlna-$(MINIDLNA_VER).tar.gz
+$(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/libflac $(D)/ffmpeg $(ARCHIVE)/minidlna-$(MINIDLNA_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/minidlna-$(MINIDLNA_VER)
-	$(UNTAR)/minidlna-$(MINIDLNA_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
+	$(REMOVE)/minidlna-$(MINIDLNA_VERSION)
+	$(UNTAR)/minidlna-$(MINIDLNA_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VERSION); \
 		$(call post_patch,$(MINIDLNA_PATCH)); \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -2231,22 +2231,22 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 		; \
 		$(MAKE); \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/minidlna-$(MINIDLNA_VER)
+	$(REMOVE)/minidlna-$(MINIDLNA_VERSION)
 	$(TOUCH)
 
 #
 # libexif
 #
-LIBEXIF_VER = 0.6.21
+LIBEXIF_VERSION = 0.6.21
 
-$(ARCHIVE)/libexif-$(LIBEXIF_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/libexif/files/libexif/$(LIBEXIF_VER)/libexif-$(LIBEXIF_VER).tar.gz
+$(ARCHIVE)/libexif-$(LIBEXIF_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/libexif/files/libexif/$(LIBEXIF_VERSION)/libexif-$(LIBEXIF_VERSION).tar.gz
 
-$(D)/libexif: $(D)/bootstrap $(ARCHIVE)/libexif-$(LIBEXIF_VER).tar.gz
+$(D)/libexif: $(D)/bootstrap $(ARCHIVE)/libexif-$(LIBEXIF_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libexif-$(LIBEXIF_VER)
-	$(UNTAR)/libexif-$(LIBEXIF_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libexif-$(LIBEXIF_VER); \
+	$(REMOVE)/libexif-$(LIBEXIF_VERSION)
+	$(UNTAR)/libexif-$(LIBEXIF_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libexif-$(LIBEXIF_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2254,43 +2254,43 @@ $(D)/libexif: $(D)/bootstrap $(ARCHIVE)/libexif-$(LIBEXIF_VER).tar.gz
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libexif.pc
 	$(REWRITE_LIBTOOL)/libexif.la
-	$(REMOVE)/libexif-$(LIBEXIF_VER)
+	$(REMOVE)/libexif-$(LIBEXIF_VERSION)
 	$(TOUCH)
 
 #
 # djmount
 #
-DJMOUNT_VER = 0.71
+DJMOUNT_VERSION = 0.71
 
-$(ARCHIVE)/djmount-$(DJMOUNT_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/djmount/files/djmount/$(DJMOUNT_VER)/djmount-$(DJMOUNT_VER).tar.gz
+$(ARCHIVE)/djmount-$(DJMOUNT_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/djmount/files/djmount/$(DJMOUNT_VERSION)/djmount-$(DJMOUNT_VERSION).tar.gz
 
-$(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/djmount-$(DJMOUNT_VER).tar.gz
+$(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/djmount-$(DJMOUNT_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/djmount-$(DJMOUNT_VER)
-	$(UNTAR)/djmount-$(DJMOUNT_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/djmount-$(DJMOUNT_VER); \
+	$(REMOVE)/djmount-$(DJMOUNT_VERSION)
+	$(UNTAR)/djmount-$(DJMOUNT_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/djmount-$(DJMOUNT_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/djmount-$(DJMOUNT_VER)
+	$(REMOVE)/djmount-$(DJMOUNT_VERSION)
 	$(TOUCH)
 
 #
 # libupnp
 #
-LIBUPNP_VER = 1.6.19
+LIBUPNP_VERSION = 1.6.19
 
-$(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2:
-	$(WGET) http://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/libupnp-$(LIBUPNP_VER).tar.bz2
+$(ARCHIVE)/libupnp-$(LIBUPNP_VERSION).tar.bz2:
+	$(WGET) http://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VERSION)/libupnp-$(LIBUPNP_VERSION).tar.bz2
 
-$(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2
+$(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/libupnp-$(LIBUPNP_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/libupnp-$(LIBUPNP_VER)
-	$(UNTAR)/libupnp-$(LIBUPNP_VER).tar.bz2
-	set -e; cd $(BUILD_TMP)/libupnp-$(LIBUPNP_VER); \
+	$(REMOVE)/libupnp-$(LIBUPNP_VERSION)
+	$(UNTAR)/libupnp-$(LIBUPNP_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/libupnp-$(LIBUPNP_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2300,22 +2300,22 @@ $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/libupnp-$(LIBUPNP_VER).tar.bz2
 	$(REWRITE_LIBTOOL)/libixml.la
 	$(REWRITE_LIBTOOL)/libthreadutil.la
 	$(REWRITE_LIBTOOL)/libupnp.la
-	$(REMOVE)/libupnp-$(LIBUPNP_VER)
+	$(REMOVE)/libupnp-$(LIBUPNP_VERSION)
 	$(TOUCH)
 
 #
 # rarfs
 #
-RARFS_VER = 0.1.1
+RARFS_VERSION = 0.1.1
 
-$(ARCHIVE)/rarfs-$(RARFS_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/rarfs/files/rarfs/$(RARFS_VER)/rarfs-$(RARFS_VER).tar.gz
+$(ARCHIVE)/rarfs-$(RARFS_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/rarfs/files/rarfs/$(RARFS_VERSION)/rarfs-$(RARFS_VERSION).tar.gz
 
-$(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/rarfs-$(RARFS_VER).tar.gz
+$(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/rarfs-$(RARFS_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/rarfs-$(RARFS_VER)
-	$(UNTAR)/rarfs-$(RARFS_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/rarfs-$(RARFS_VER); \
+	$(REMOVE)/rarfs-$(RARFS_VERSION)
+	$(UNTAR)/rarfs-$(RARFS_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/rarfs-$(RARFS_VERSION); \
 		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
 		$(CONFIGURE) \
 		CFLAGS="$(TARGET_CFLAGS) -D_FILE_OFFSET_BITS=64" \
@@ -2325,43 +2325,43 @@ $(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/rarfs-$(RARFS_VER).tar.gz
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/rarfs-$(RARFS_VER)
+	$(REMOVE)/rarfs-$(RARFS_VERSION)
 	$(TOUCH)
 
 #
 # sshfs
 #
-SSHFS_VER = 2.5
+SSHFS_VERSION = 2.5
 
-$(ARCHIVE)/sshfs-fuse-$(SSHFS_VER).tar.gz:
-	$(WGET) https://fossies.org/linux/misc/sshfs-fuse-$(SSHFS_VER).tar.gz
+$(ARCHIVE)/sshfs-fuse-$(SSHFS_VERSION).tar.gz:
+	$(WGET) https://fossies.org/linux/misc/sshfs-fuse-$(SSHFS_VERSION).tar.gz
 
-$(D)/sshfs: $(D)/bootstrap $(D)/glib2 $(D)/fuse $(ARCHIVE)/sshfs-fuse-$(SSHFS_VER).tar.gz
+$(D)/sshfs: $(D)/bootstrap $(D)/glib2 $(D)/fuse $(ARCHIVE)/sshfs-fuse-$(SSHFS_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/sshfs-fuse-$(SSHFS_VER)
-	$(UNTAR)/sshfs-fuse-$(SSHFS_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/sshfs-fuse-$(SSHFS_VER); \
+	$(REMOVE)/sshfs-fuse-$(SSHFS_VERSION)
+	$(UNTAR)/sshfs-fuse-$(SSHFS_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/sshfs-fuse-$(SSHFS_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/sshfs-fuse-$(SSHFS_VER)
+	$(REMOVE)/sshfs-fuse-$(SSHFS_VERSION)
 	$(TOUCH)
 
 #
 # howl
 #
-HOWL_VER = 1.0.0
+HOWL_VERSION = 1.0.0
 
-$(ARCHIVE)/howl-$(HOWL_VER).tar.gz:
-	$(WGET) http://sourceforge.net/projects/howl/files/howl/$(HOWL_VER)/howl-$(HOWL_VER).tar.gz
+$(ARCHIVE)/howl-$(HOWL_VERSION).tar.gz:
+	$(WGET) http://sourceforge.net/projects/howl/files/howl/$(HOWL_VERSION)/howl-$(HOWL_VERSION).tar.gz
 
-$(D)/howl: $(D)/bootstrap $(ARCHIVE)/howl-$(HOWL_VER).tar.gz
+$(D)/howl: $(D)/bootstrap $(ARCHIVE)/howl-$(HOWL_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/howl-$(HOWL_VER)
-	$(UNTAR)/howl-$(HOWL_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/howl-$(HOWL_VER); \
+	$(REMOVE)/howl-$(HOWL_VERSION)
+	$(UNTAR)/howl-$(HOWL_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/howl-$(HOWL_VERSION); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -2370,22 +2370,22 @@ $(D)/howl: $(D)/bootstrap $(ARCHIVE)/howl-$(HOWL_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/howl.pc
 	$(REWRITE_LIBTOOL)/libhowl.la
-	$(REMOVE)/howl-$(HOWL_VER)
+	$(REMOVE)/howl-$(HOWL_VERSION)
 	$(TOUCH)
 
 #
 # libdaemon
 #
-LIBDAEMON_VER = 0.14
+LIBDAEMON_VERSION = 0.14
 
-$(ARCHIVE)/libdaemon-$(LIBDAEMON_VER).tar.gz:
-	$(WGET) http://0pointer.de/lennart/projects/libdaemon/libdaemon-$(LIBDAEMON_VER).tar.gz
+$(ARCHIVE)/libdaemon-$(LIBDAEMON_VERSION).tar.gz:
+	$(WGET) http://0pointer.de/lennart/projects/libdaemon/libdaemon-$(LIBDAEMON_VERSION).tar.gz
 
-$(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/libdaemon-$(LIBDAEMON_VER).tar.gz
+$(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/libdaemon-$(LIBDAEMON_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libdaemon-$(LIBDAEMON_VER)
-	$(UNTAR)/libdaemon-$(LIBDAEMON_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libdaemon-$(LIBDAEMON_VER); \
+	$(REMOVE)/libdaemon-$(LIBDAEMON_VERSION)
+	$(UNTAR)/libdaemon-$(LIBDAEMON_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libdaemon-$(LIBDAEMON_VERSION); \
 		$(CONFIGURE) \
 			ac_cv_func_setpgrp_void=yes \
 			--prefix=/usr \
@@ -2395,23 +2395,23 @@ $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/libdaemon-$(LIBDAEMON_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdaemon.pc
 	$(REWRITE_LIBTOOL)/libdaemon.la
-	$(REMOVE)/libdaemon-$(LIBDAEMON_VER)
+	$(REMOVE)/libdaemon-$(LIBDAEMON_VERSION)
 	$(TOUCH)
 
 #
 # libplist
 #
-LIBPLIST_VER = 1.10
+LIBPLIST_VERSION = 1.10
 
-$(ARCHIVE)/libplist-$(LIBPLIST_VER).tar.gz:
-	$(WGET) http://cgit.sukimashita.com/libplist.git/snapshot/libplist-$(LIBPLIST_VER).tar.gz
+$(ARCHIVE)/libplist-$(LIBPLIST_VERSION).tar.gz:
+	$(WGET) http://cgit.sukimashita.com/libplist.git/snapshot/libplist-$(LIBPLIST_VERSION).tar.gz
 
-$(D)/libplist: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libplist-$(LIBPLIST_VER).tar.gz
+$(D)/libplist: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libplist-$(LIBPLIST_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libplist-$(LIBPLIST_VER)
-	$(UNTAR)/libplist-$(LIBPLIST_VER).tar.gz
+	$(REMOVE)/libplist-$(LIBPLIST_VERSION)
+	$(UNTAR)/libplist-$(LIBPLIST_VERSION).tar.gz
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
-	set -e; cd $(BUILD_TMP)/libplist-$(LIBPLIST_VER); \
+	set -e; cd $(BUILD_TMP)/libplist-$(LIBPLIST_VERSION); \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_SYSTEM_NAME="Linux" \
@@ -2426,22 +2426,22 @@ $(D)/libplist: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libplist-$(LIBPLIST_VER
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libplist.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libplist++.pc
-	$(REMOVE)/libplist-$(LIBPLIST_VER)
+	$(REMOVE)/libplist-$(LIBPLIST_VERSION)
 	$(TOUCH)
 
 #
 # libao
 #
-LIBAO_VER = 1.1.0
+LIBAO_VERSION = 1.1.0
 
-$(ARCHIVE)/libao-$(LIBAO_VER).tar.gz:
-	$(WGET) http://downloads.xiph.org/releases/ao/libao-$(LIBAO_VER).tar.gz
+$(ARCHIVE)/libao-$(LIBAO_VERSION).tar.gz:
+	$(WGET) http://downloads.xiph.org/releases/ao/libao-$(LIBAO_VERSION).tar.gz
 
-$(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz
+$(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/libao-$(LIBAO_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libao-$(LIBAO_VER)
-	$(UNTAR)/libao-$(LIBAO_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/libao-$(LIBAO_VER); \
+	$(REMOVE)/libao-$(LIBAO_VERSION)
+	$(UNTAR)/libao-$(LIBAO_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libao-$(LIBAO_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -2453,23 +2453,23 @@ $(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/libao-$(LIBAO_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ao.pc
 	$(REWRITE_LIBTOOL)/libao.la
-	$(REMOVE)/libao-$(LIBAO_VER)
+	$(REMOVE)/libao-$(LIBAO_VERSION)
 	$(TOUCH)
 
 #
 # nettle
 #
-NETTLE_VER = 3.1
-NETTLE_PATCH = nettle-$(NETTLE_VER).patch
+NETTLE_VERSION = 3.1
+NETTLE_PATCH = nettle-$(NETTLE_VERSION).patch
 
-$(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz:
-	$(WGET) http://www.lysator.liu.se/~nisse/archive/nettle-$(NETTLE_VER).tar.gz
+$(ARCHIVE)/nettle-$(NETTLE_VERSION).tar.gz:
+	$(WGET) http://www.lysator.liu.se/~nisse/archive/nettle-$(NETTLE_VERSION).tar.gz
 
-$(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz
+$(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/nettle-$(NETTLE_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/nettle-$(NETTLE_VER)
-	$(UNTAR)/nettle-$(NETTLE_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/nettle-$(NETTLE_VER); \
+	$(REMOVE)/nettle-$(NETTLE_VERSION)
+	$(UNTAR)/nettle-$(NETTLE_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/nettle-$(NETTLE_VERSION); \
 		$(call post_patch,$(NETTLE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2479,22 +2479,22 @@ $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/nettle-$(NETTLE_VER).tar.gz
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/hogweed.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/nettle.pc
-	$(REMOVE)/nettle-$(NETTLE_VER)
+	$(REMOVE)/nettle-$(NETTLE_VERSION)
 	$(TOUCH)
 
 #
 # gnutls
 #
-GNUTLS_VER = 3.4.3
+GNUTLS_VERSION = 3.4.3
 
-$(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz:
-	$(WGET) ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-$(GNUTLS_VER).tar.xz
+$(ARCHIVE)/gnutls-$(GNUTLS_VERSION).tar.xz:
+	$(WGET) ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-$(GNUTLS_VERSION).tar.xz
 
-$(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz
+$(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/gnutls-$(GNUTLS_VER)
-	$(UNTAR)/gnutls-$(GNUTLS_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/gnutls-$(GNUTLS_VER); \
+	$(REMOVE)/gnutls-$(GNUTLS_VERSION)
+	$(UNTAR)/gnutls-$(GNUTLS_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/gnutls-$(GNUTLS_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2514,7 +2514,7 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz
 	$(REWRITE_LIBTOOL)/libgnutls.la
 	$(REWRITE_LIBTOOL)/libgnutlsxx.la
 	$(REWRITE_LIBTOOLDEP)/libgnutlsxx.la
-	$(REMOVE)/gnutls-$(GNUTLS_VER)
+	$(REMOVE)/gnutls-$(GNUTLS_VERSION)
 	$(TOUCH)
 
 #
@@ -2522,16 +2522,16 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/gnutls-$(GNUTLS_VER).tar.xz
 #
 GLIBNETW_MAJOR = 2.45
 GLIBNETW_MINOR = 1
-GLIBNETW_VER = $(GLIBNETW_MAJOR).$(GLIBNETW_MINOR)
+GLIBNETW_VERSION = $(GLIBNETW_MAJOR).$(GLIBNETW_MINOR)
 
-$(ARCHIVE)/glib-networking-$(GLIBNETW_VER).tar.xz:
-	$(WGET) http://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIBNETW_MAJOR)/glib-networking-$(GLIBNETW_VER).tar.xz
+$(ARCHIVE)/glib-networking-$(GLIBNETW_VERSION).tar.xz:
+	$(WGET) http://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIBNETW_MAJOR)/glib-networking-$(GLIBNETW_VERSION).tar.xz
 
-$(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-networking-$(GLIBNETW_VER).tar.xz
+$(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-networking-$(GLIBNETW_VERSION).tar.xz
 	$(START_BUILD)
-	$(REMOVE)/glib-networking-$(GLIBNETW_VER)
-	$(UNTAR)/glib-networking-$(GLIBNETW_VER).tar.xz
-	set -e; cd $(BUILD_TMP)/glib-networking-$(GLIBNETW_VER); \
+	$(REMOVE)/glib-networking-$(GLIBNETW_VERSION)
+	$(UNTAR)/glib-networking-$(GLIBNETW_VERSION).tar.xz
+	set -e; cd $(BUILD_TMP)/glib-networking-$(GLIBNETW_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datadir=/.remove \
@@ -2540,5 +2540,5 @@ $(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/glib2 $(ARCHIVE)/glib-netw
 		; \
 		$(MAKE); \
 		$(MAKE) install prefix=$(TARGETPREFIX) giomoduledir=$(TARGETPREFIX)/usr/lib/gio/modules
-	$(REMOVE)/glib-networking-$(GLIBNETW_VER)
+	$(REMOVE)/glib-networking-$(GLIBNETW_VERSION)
 	$(TOUCH)

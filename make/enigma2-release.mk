@@ -552,7 +552,7 @@ release_enigma2_base:
 	ln -s /usr/local/share/keymaps $(RELEASE_DIR)/usr/share/keymaps
 	install -d $(RELEASE_DIR)/usr/share/{fonts,zoneinfo,udhcpc}
 	install -d $(RELEASE_DIR)/var/{etc,opkg}
-	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VER) CONFIG_PREFIX=$(RELEASE_DIR)
+	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VERSION) CONFIG_PREFIX=$(RELEASE_DIR)
 #	remove the slink to busybox
 	rm -f $(RELEASE_DIR)/sbin/halt
 	cp -f $(TARGETPREFIX)/sbin/halt $(RELEASE_DIR)/sbin/
@@ -748,7 +748,7 @@ endif
 #
 # python2.7
 #
-	if [ $(PYTHON_VERSION) == 2.7 ]; then \
+	if [ $(PYTHON_MAJOR) == 2.7 ]; then \
 		install -d $(RELEASE_DIR)/usr/include; \
 		install -d $(RELEASE_DIR)$(PYTHON_INCLUDE_DIR); \
 		cp $(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)$(PYTHON_INCLUDE_DIR); \
@@ -934,7 +934,7 @@ endif
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/trial/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/words/test
-	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION).egg-info
+	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/*-py$(PYTHON_MAJOR).egg-info
 #
 # Dont remove pyo files, remove pyc instead
 #
