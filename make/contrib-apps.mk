@@ -688,18 +688,20 @@ $(ARCHIVE)/hddtemp-$(HDDTEMP_VER).tar.bz2:
 
 $(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/hddtemp-$(HDDTEMP_VER).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/hddtemp-$(HDPARM_VER)
-	$(UNTAR)/hddtemp-$(HDPARM_VER).tar.gz
-	set -e; cd $(BUILD_TMP)/hddtemp-$(HDPARM_VER); \
+	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
+	$(UNTAR)/hddtemp-$(HDDTEMP_VER).tar.bz2
+	set -e; cd $(BUILD_TMP)/hddtemp-$(HDDTEMP_VER); \
 		$(CONFIGURE) \
 			--prefix= \
+			--mandir=/.remove \
+			--datadir=/.remove \
 			--with-db_path=/var/hddtemp.db \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 		install -d $(TARGETPREFIX)/var/tuxbox/config
 		install -m 644 $(SKEL_ROOT)/release/hddtemp.db $(TARGETPREFIX)/var
-	$(REMOVE)/hddtemp-$(HDPARM_VER)
+	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
 	$(TOUCH)
 
 #
