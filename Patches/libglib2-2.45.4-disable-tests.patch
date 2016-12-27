@@ -1,0 +1,35 @@
+--- a/gio/Makefile.am
++++ b/gio/Makefile.am
+@@ -233,7 +233,7 @@
+ platform_deps += win32/libgiowin32.la
+ endif
+ 
+-SUBDIRS += . tests
++SUBDIRS += .
+ 
+ if HAVE_FAM
+ SUBDIRS += fam
+--- a/glib/Makefile.am
++++ b/glib/Makefile.am
+@@ -33,8 +33,8 @@
+ MAYBE_PCRE = pcre 
+ endif
+ 
+-SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre . tests
+-DIST_SUBDIRS = libcharset gnulib pcre update-pcre tests
++SUBDIRS = libcharset $(PRINTF_SUBDIR) $(MAYBE_PCRE) update-pcre .
++DIST_SUBDIRS = libcharset gnulib pcre update-pcre
+ 
+ AM_CPPFLAGS = 				\
+ 	$(glib_INCLUDES) 		\
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -6,7 +6,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
+ 
+-SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs tests
++SUBDIRS = . m4macros glib gmodule gthread gobject gio
+ DIST_SUBDIRS = $(SUBDIRS) build
+ 
+ bin_SCRIPTS = glib-gettextize

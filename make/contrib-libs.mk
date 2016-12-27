@@ -152,7 +152,7 @@ $(D)/host_libglib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/glib-$(LIBGLIB2_VERSI
 #
 # libglib2
 #
-LIBGLIB2_PATCH = glib2-$(LIBGLIB2_VERSION)-disable-tests.patch
+LIBGLIB2_PATCH = libglib2-$(LIBGLIB2_VERSION)-disable-tests.patch
 
 $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/glib-$(LIBGLIB2_VERSION).tar.xz
 	$(START_BUILD)
