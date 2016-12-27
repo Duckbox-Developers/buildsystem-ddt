@@ -518,7 +518,7 @@ release_neutrino_base:
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share $(RELEASE_DIR)/share
 	install -d $(RELEASE_DIR)/var/{bin,boot,etc,httpd,lib,tuxbox,update}
-	install -d $(RELEASE_DIR)/var/lib/nfs
+	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
 	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VERSION) CONFIG_PREFIX=$(RELEASE_DIR)
