@@ -1,8 +1,8 @@
 #
 # python helpers
 #
-PYTHON_DIR         = /usr/lib/python$(PYTHON_MAJOR)
-PYTHON_INCLUDE_DIR = /usr/include/python$(PYTHON_MAJOR)
+PYTHON_DIR         = /usr/lib/python$(PYTHON_VERSION_MAJOR)
+PYTHON_INCLUDE_DIR = /usr/include/python$(PYTHON_VERSION_MAJOR)
 
 PYTHON_BUILD = \
 	CC="$(TARGET)-gcc" \
@@ -10,7 +10,7 @@ PYTHON_BUILD = \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)/usr/include/python$(PYTHON_MAJOR)" \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)/usr/include/python$(PYTHON_VERSION_MAJOR)" \
 	$(HOSTPREFIX)/bin/python ./setup.py build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
@@ -19,15 +19,15 @@ PYTHON_INSTALL = \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)/usr/include/python$(PYTHON_MAJOR)" \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)/usr/include/python$(PYTHON_VERSION_MAJOR)" \
 	$(HOSTPREFIX)/bin/python ./setup.py install --root=$(TARGETPREFIX) --prefix=/usr
 
 #
 # host_python
 #
-PYTHON_MAJOR = 2.7
-PYTHON_MINOR = 12
-PYTHON_VERSION = $(PYTHON_MAJOR).$(PYTHON_MINOR)
+PYTHON_VERSION_MAJOR = 2.7
+PYTHON_VERSION_MINOR = 12
+PYTHON_VERSION = $(PYTHON_VERSION_MAJOR).$(PYTHON_VERSION_MINOR)
 PYTHON_PATCH  = python-$(PYTHON_VERSION)-xcompile.patch
 PYTHON_PATCH += python-$(PYTHON_VERSION)-revert_use_of_sysconfigdata.patch
 PYTHON_PATCH += python-$(PYTHON_VERSION).patch
@@ -123,7 +123,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			all install DESTDIR=$(TARGETPREFIX) \
 		; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	ln -sf ../../libpython$(PYTHON_MAJOR).so.1.0 $(TARGETPREFIX)/$(PYTHON_DIR)/config/libpython$(PYTHON_MAJOR).so; \
+	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGETPREFIX)/$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
 	ln -sf $(TARGETPREFIX)/$(PYTHON_INCLUDE_DIR) $(TARGETPREFIX)/usr/include/python
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
 	$(REMOVE)/Python-$(PYTHON_VERSION)

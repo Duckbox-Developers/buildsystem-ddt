@@ -143,7 +143,7 @@ $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser/src/lib; \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
-			-I $(TARGETPREFIX)/usr/include/python$(PYTHON_MAJOR) \
+			-I $(TARGETPREFIX)/usr/include/python$(PYTHON_VERSION_MAJOR) \
 			-include Python.h \
 			errors.h \
 			list.c \

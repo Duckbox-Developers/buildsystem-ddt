@@ -748,7 +748,7 @@ endif
 #
 # python2.7
 #
-	if [ $(PYTHON_MAJOR) == 2.7 ]; then \
+	if [ $(PYTHON_VERSION_MAJOR) == 2.7 ]; then \
 		install -d $(RELEASE_DIR)/usr/include; \
 		install -d $(RELEASE_DIR)$(PYTHON_INCLUDE_DIR); \
 		cp $(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)$(PYTHON_INCLUDE_DIR); \
