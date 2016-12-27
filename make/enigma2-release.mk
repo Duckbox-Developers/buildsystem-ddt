@@ -934,7 +934,7 @@ endif
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/trial/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/words/test
-	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/*-py$(PYTHON_MAJOR).egg-info
+	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION_MAJOR).egg-info
 #
 # Dont remove pyo files, remove pyc instead
 #
