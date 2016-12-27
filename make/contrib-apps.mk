@@ -525,7 +525,7 @@ MC_VERSION = 4.8.14
 $(ARCHIVE)/mc-$(MC_VERSION).tar.xz:
 	$(WGET) http://ftp.midnight-commander.org/mc-$(MC_VERSION).tar.xz
 
-$(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/glib2 $(ARCHIVE)/mc-$(MC_VERSION).tar.xz
+$(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/libglib2 $(ARCHIVE)/mc-$(MC_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/mc-$(MC_VERSION)
 	$(UNTAR)/mc-$(MC_VERSION).tar.xz
@@ -637,7 +637,7 @@ CURLFTPFS_PATCH = curlftpfs-$(CURLFTPFS_VERSION).patch
 $(ARCHIVE)/curlftpfs-$(CURLFTPFS_VERSION).tar.gz:
 	$(WGET) http://sourceforge.net/projects/curlftpfs/files/latest/download/curlftpfs-$(CURLFTPFS_VERSION).tar.gz
 
-$(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/glib2 $(ARCHIVE)/curlftpfs-$(CURLFTPFS_VERSION).tar.gz
+$(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/libglib2 $(ARCHIVE)/curlftpfs-$(CURLFTPFS_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/curlftpfs-$(CURLFTPFS_VERSION)
 	$(UNTAR)/curlftpfs-$(CURLFTPFS_VERSION).tar.gz

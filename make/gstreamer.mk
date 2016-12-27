@@ -8,7 +8,7 @@ GSTREAMER_PATCH += gstreamer-$(GSTREAMER_VERSION)-revert-use-new-gst-adapter-get
 $(ARCHIVE)/gstreamer-$(GSTREAMER_VERSION).tar.xz:
 	$(WGET) https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$(GSTREAMER_VERSION).tar.xz
 
-$(D)/gstreamer: $(D)/bootstrap $(D)/glib2 $(D)/libxml2_e2 $(D)/glib-networking $(ARCHIVE)/gstreamer-$(GSTREAMER_VERSION).tar.xz
+$(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2_e2 $(D)/glib-networking $(ARCHIVE)/gstreamer-$(GSTREAMER_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/gstreamer-$(GSTREAMER_VERSION)
 	$(UNTAR)/gstreamer-$(GSTREAMER_VERSION).tar.xz
@@ -61,7 +61,7 @@ GSTREAMER_BASE_PATCH += gst-plugins-base-$(GSTREAMER_BASE_VERSION)-taglist-not-s
 $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VERSION).tar.xz:
 	$(WGET) https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-$(GSTREAMER_BASE_VERSION).tar.xz
 
-$(D)/gst_plugins_base: $(D)/bootstrap $(D)/glib2 $(D)/orc $(D)/gstreamer $(D)/alsa-lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VERSION).tar.xz
+$(D)/gst_plugins_base: $(D)/bootstrap $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)/alsa-lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/gst-plugins-base-$(GSTREAMER_BASE_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-base-$(GSTREAMER_BASE_VERSION)
 	$(UNTAR)/gst-plugins-base-$(GSTREAMER_BASE_VERSION).tar.xz
