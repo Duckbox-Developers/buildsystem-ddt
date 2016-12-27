@@ -28,10 +28,8 @@ PYTHON_INSTALL = \
 PYTHON_VERSION_MAJOR = 2.7
 PYTHON_VERSION_MINOR = 12
 PYTHON_VERSION = $(PYTHON_VERSION_MAJOR).$(PYTHON_VERSION_MINOR)
-PYTHON_PATCH  = python-$(PYTHON_VERSION)-xcompile.patch
-PYTHON_PATCH += python-$(PYTHON_VERSION)-revert_use_of_sysconfigdata.patch
-PYTHON_PATCH += python-$(PYTHON_VERSION).patch
-PYTHON_PATCH += python-$(PYTHON_VERSION)-pgettext.patch
+
+HOST_PYTHON_PATCH = python-$(PYTHON_VERSION).patch
 
 $(ARCHIVE)/Python-$(PYTHON_VERSION).tar.xz:
 	$(WGET) http://www.python.org/ftp/python/$(PYTHON_VERSION)/Python-$(PYTHON_VERSION).tar.xz
@@ -41,7 +39,7 @@ $(D)/host_python: $(ARCHIVE)/Python-$(PYTHON_VERSION).tar.xz
 	$(REMOVE)/Python-$(PYTHON_VERSION)
 	$(UNTAR)/Python-$(PYTHON_VERSION).tar.xz
 	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VERSION); \
-		$(call post_patch,$(PYTHON_PATCH)); \
+		$(call post_patch,$(HOST_PYTHON_PATCH)); \
 		autoconf; \
 		CONFIG_SITE= \
 		OPT="$(HOST_CFLAGS)" \
@@ -68,6 +66,11 @@ $(D)/host_python: $(ARCHIVE)/Python-$(PYTHON_VERSION).tar.xz
 #
 # python
 #
+PYTHON_PATCH  = python-$(PYTHON_VERSION).patch
+PYTHON_PATCH += python-$(PYTHON_VERSION)-xcompile.patch
+PYTHON_PATCH += python-$(PYTHON_VERSION)-revert_use_of_sysconfigdata.patch
+PYTHON_PATCH += python-$(PYTHON_VERSION)-pgettext.patch
+
 $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(D)/libreadline $(D)/sqlite $(ARCHIVE)/Python-$(PYTHON_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/Python-$(PYTHON_VERSION)
@@ -105,7 +108,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			ac_cv_have_lchflags=no \
 			ac_cv_py_format_size_t=yes \
 			ac_cv_broken_sem_getvalue=no \
-			HOSTPYTHON=$(HOSTPREFIX)/bin/python \
+			HOSTPYTHON=$(HOSTPREFIX)/bin/python$(PYTHON_VERSION_MAJOR) \
 		; \
 		$(MAKE) $(MAKE_OPTS) \
 			PYTHON_MODULES_INCLUDE="$(TARGETPREFIX)/usr/include" \
@@ -118,7 +121,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			CFLAGS="$(TARGET_CFLAGS)" \
 			LDFLAGS="$(TARGET_LDFLAGS)" \
 			LD="$(TARGET)-gcc" \
-			HOSTPYTHON=$(HOSTPREFIX)/bin/python \
+			HOSTPYTHON=$(HOSTPREFIX)/bin/python$(PYTHON_VERSION_MAJOR) \
 			HOSTPGEN=$(HOSTPREFIX)/bin/pgen \
 			all install DESTDIR=$(TARGETPREFIX) \
 		; \

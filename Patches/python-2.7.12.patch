@@ -1,3 +1,36 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -5,7 +5,7 @@
+ # Set VERSION so we only need to edit in one place (i.e., here)
+ m4_define(PYTHON_VERSION, 2.7)
+ 
+-AC_PREREQ(2.65)
++AC_PREREQ(2.64)
+ 
+ AC_REVISION($Revision$)
+ AC_INIT(python, PYTHON_VERSION, http://bugs.python.org/)
+--- a/configure
++++ b/configure
+@@ -14777,7 +14777,7 @@
+ $as_echo "$ac_cv_have_long_long_format" >&6; }
+ fi
+ 
+-if test "$ac_cv_have_long_long_format" = yes
++if test "$ac_cv_have_long_long_format" != no
+ then
+ 
+ $as_echo "#define PY_FORMAT_LONG_LONG \"ll\"" >>confdefs.h
+--- a/Include/pyport.h
++++ b/Include/pyport.h
+@@ -883,7 +883,7 @@
+  * rather than waiting for integer multiplication to trigger bogus
+  * overflows.
+  */
+-#error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."
++/* #error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)." */
+ #endif
+ 
+ #ifdef __cplusplus
 --- a/Lib/httplib.py
 +++ b/Lib/httplib.py
 @@ -1259,7 +1259,7 @@

@@ -1,14 +1,5 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -5,7 +5,7 @@
- # Set VERSION so we only need to edit in one place (i.e., here)
- m4_define(PYTHON_VERSION, 2.7)
- 
--AC_PREREQ(2.65)
-+AC_PREREQ(2.64)
- 
- AC_REVISION($Revision$)
- AC_INIT(python, PYTHON_VERSION, http://bugs.python.org/)
 @@ -3451,7 +3451,7 @@
  
  AC_MSG_RESULT($ac_cv_buggy_getaddrinfo)
@@ -18,35 +9,13 @@
  then
  	if test $ipv6 = yes
  	then
---- a/configure
-+++ b/configure
-@@ -14777,7 +14777,7 @@
- $as_echo "$ac_cv_have_long_long_format" >&6; }
- fi
- 
--if test "$ac_cv_have_long_long_format" = yes
-+if test "$ac_cv_have_long_long_format" != no
- then
- 
- $as_echo "#define PY_FORMAT_LONG_LONG \"ll\"" >>confdefs.h
---- a/Include/pyport.h
-+++ b/Include/pyport.h
-@@ -883,7 +883,7 @@
-  * rather than waiting for integer multiplication to trigger bogus
-  * overflows.
-  */
--#error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."
-+/* #error "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)." */
- #endif
- 
- #ifdef __cplusplus
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -199,6 +199,7 @@
  
  PYTHON=		python$(EXE)
  BUILDPYTHON=	python$(BUILDEXE)
-+HOSTPYTHON=	./$(BUILDPYTHON)
++HOSTPYTHON=	$(BUILDPYTHON)
  
  cross_compiling=@cross_compiling@
  PYTHON_FOR_BUILD=@PYTHON_FOR_BUILD@
@@ -67,16 +36,14 @@
  
  # Create build directory and generate the sysconfig build-time data there.
  # pybuilddir.txt contains the name of the build dir and is used for
-@@ -546,7 +548,8 @@
+@@ -546,6 +548,7 @@
  	esac; \
  	$(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' \
  		_TCLTK_INCLUDES='$(TCLTK_INCLUDES)' _TCLTK_LIBS='$(TCLTK_LIBS)' \
--		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
-+		PYTHONXCPREFIX='$(DESTDIR)$(prefix)' $(PYTHON_FOR_BUILD) \
-+		$(srcdir)/setup.py $$quiet build
++		PYTHONXCPREFIX='$(DESTDIR)$(prefix)' \
+ 		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
  
  # Build static library
- # avoid long command lines, same as LIBRARY_OBJS
 @@ -684,7 +687,7 @@
  	@$(MKDIR_P) Include
  	# Avoid copying the file onto itself for an in-tree build
@@ -86,20 +53,17 @@
  	else \
  		cp $(srcdir)/Include/graminit.h $(GRAMMAR_H).tmp; \
  		mv $(GRAMMAR_H).tmp $(GRAMMAR_H); \
-@@ -1132,28 +1135,28 @@
- 		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
+@@ -1133,27 +1136,27 @@
  			$(DESTDIR)$(LIBDEST)/distutils/tests ; \
  	fi
--	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+ 	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
 -		$(PYTHON_FOR_BUILD) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
-+	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
 +		$(HOSTPYTHON) -Wi -tt $(DESTDIR)$(LIBDEST)/compileall.py \
  		-d $(LIBDEST) -f \
  		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
  		$(DESTDIR)$(LIBDEST)
--	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+ 	PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 -		$(PYTHON_FOR_BUILD) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
-+	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 +		$(HOSTPYTHON) -Wi -tt -O $(DESTDIR)$(LIBDEST)/compileall.py \
  		-d $(LIBDEST) -f \
  		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
@@ -123,7 +87,7 @@
  
  # Create the PLATDIR source directory, if one wasn't distributed..
  $(srcdir)/Lib/$(PLATDIR):
-@@ -1265,7 +1268,9 @@
+@@ -1265,11 +1268,13 @@
  # Install the dynamically loadable modules
  # This goes into $(exec_prefix)
  sharedinstall: sharedmods
@@ -131,5 +95,12 @@
  	$(RUNSHARED) $(PYTHON_FOR_BUILD) $(srcdir)/setup.py install \
 +		--skip-build \
  	   	--prefix=$(prefix) \
- 		--install-scripts=$(BINDIR) \
- 		--install-platlib=$(DESTSHARED) \
+-		--install-scripts=$(BINDIR) \
+-		--install-platlib=$(DESTSHARED) \
+-		--root=$(DESTDIR)/
++		--install-scripts=$(DESTDIR)$(BINDIR) \
++		--install-platlib=$(DESTDIR)$(DESTSHARED) \
++		--root=/
+ 	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata.py*
+ 
+ # Here are a couple of targets for MacOSX again, to install a full

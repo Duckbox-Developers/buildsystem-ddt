@@ -1,5 +1,5 @@
---- Python-2.7.9.orig/Lib/distutils/sysconfig.py
-+++ Python-2.7.9/Lib/distutils/sysconfig.py
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
 @@ -394,12 +394,66 @@
  
  def _init_posix():
@@ -72,8 +72,8 @@
  
  def _init_nt():
      """Initialize the module as appropriate for NT"""
---- Python-2.7.9.orig/Lib/sysconfig.py
-+++ Python-2.7.9/Lib/sysconfig.py
+--- a/Lib/sysconfig.py
++++ b/Lib/sysconfig.py
 @@ -352,9 +352,32 @@
  
  def _init_posix(vars):
