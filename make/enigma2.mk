@@ -13,6 +13,7 @@ ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/libfreetype
 ENIGMA2_DEPS += $(D)/alsa-utils $(D)/ffmpeg
 ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc_e2 $(D)/libexpat $(D)/libdvbsi++ $(D)/libusb
 ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
+ENIGMA2_DEPS += $(D)/avahi
 ENIGMA2_DEPS += python-all
 ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
 ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
