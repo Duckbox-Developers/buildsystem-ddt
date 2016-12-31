@@ -959,7 +959,7 @@ AVAHI_VERSION = 0.6.32
 $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz:
 	$(WGET) https://github.com/lathiat/avahi/releases/download/v$(AVAHI_VERSION)/avahi-$(AVAHI_VERSION).tar.gz
 
-$(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz
+$(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/avahi-$(AVAHI_VERSION)
 	$(UNTAR)/avahi-$(AVAHI_VERSION).tar.gz
@@ -985,7 +985,6 @@ $(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(ARCHIVE)/avahi-$(AVAHI
 			--disable-gtk3 \
 			--disable-dbm \
 			--disable-gdbm \
-			--disable-dbus \
 			--disable-python \
 			--disable-pygtk \
 			--disable-python-dbus \
@@ -1010,8 +1009,10 @@ $(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(ARCHIVE)/avahi-$(AVAHI
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/avahi-core.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/avahi-client.pc
 	$(REWRITE_LIBTOOL)/libavahi-common.la
 	$(REWRITE_LIBTOOL)/libavahi-core.la
+	$(REWRITE_LIBTOOL)/libavahi-client.la
 	$(REMOVE)/avahi-$(AVAHI_VERSION)
 	$(TOUCH)
 
