@@ -954,37 +954,64 @@ $(D)/dbus: $(D)/bootstrap $(D)/libexpat $(ARCHIVE)/dbus-$(DBUS_VERSION).tar.gz
 #
 # avahi
 #
-AVAHI_VERSION = 0.6.31
+AVAHI_VERSION = 0.6.32
 
 $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz:
-	$(WGET) http://www.avahi.org/download/avahi-$(AVAHI_VERSION).tar.gz
+	$(WGET) https://github.com/lathiat/avahi/releases/download/v$(AVAHI_VERSION)/avahi-$(AVAHI_VERSION).tar.gz
 
-$(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz
+$(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(ARCHIVE)/avahi-$(AVAHI_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/avahi-$(AVAHI_VERSION)
 	$(UNTAR)/avahi-$(AVAHI_VERSION).tar.gz
 	set -e; cd $(BUILD_TMP)/avahi-$(AVAHI_VERSION); \
-		sed -i 's/\(CFLAGS=.*\)-Werror \(.*\)/\1\2/' configure; \
-		sed -i -e 's/-DG_DISABLE_DEPRECATED=1//' -e '/-DGDK_DISABLE_DEPRECATED/d' avahi-ui/Makefile.in; \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--target=$(TARGET) \
 			--sysconfdir=/etc \
 			--localstatedir=/var \
-			--disable-static \
-			--disable-mono \
-			--disable-monodoc \
-			--disable-python \
-			--disable-gdbm \
-			--disable-gtk \
-			--disable-gtk3 \
+			--with-distro=none \
+			--with-avahi-user=nobody \
+			--with-avahi-group=nogroup \
+			--with-autoipd-user=nobody \
+			--with-autoipd-group=nogroup \
+			--with-xml=expat \
+			--enable-libdaemon \
+			--disable-nls \
+			--disable-glib \
+			--disable-gobject \
 			--disable-qt3 \
 			--disable-qt4 \
-			--disable-nls \
-			--enable-core-docs \
-			--with-distro=none \
+			--disable-gtk \
+			--disable-gtk3 \
+			--disable-dbm \
+			--disable-gdbm \
+			--disable-dbus \
+			--disable-python \
+			--disable-pygtk \
+			--disable-python-dbus \
+			--disable-mono \
+			--disable-monodoc \
+			--disable-autoipd \
+			--disable-doxygen-doc \
+			--disable-doxygen-dot \
+			--disable-doxygen-man \
+			--disable-doxygen-rtf \
+			--disable-doxygen-xml \
+			--disable-doxygen-chm \
+			--disable-doxygen-chi \
+			--disable-doxygen-html \
+			--disable-doxygen-ps \
+			--disable-doxygen-pdf \
+			--disable-core-docs \
+			--disable-manpages \
+			--disable-xmltoman \
+			--disable-tests \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/avahi-core.pc
+	$(REWRITE_LIBTOOL)/libavahi-common.la
+	$(REWRITE_LIBTOOL)/libavahi-core.la
 	$(REMOVE)/avahi-$(AVAHI_VERSION)
 	$(TOUCH)
 
