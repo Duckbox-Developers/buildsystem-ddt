@@ -331,7 +331,7 @@ E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VERSION).patch
 $(ARCHIVE)/e2fsprogs-$(E2FSPROGS_VERSION).tar.gz:
 	$(WGET) http://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v$(E2FSPROGS_VERSION)/e2fsprogs-$(E2FSPROGS_VERSION).tar.gz
 
-$(D)/e2fsprogs: $(D)/bootstrap $(D)/utillinux $(ARCHIVE)/e2fsprogs-$(E2FSPROGS_VERSION).tar.gz
+$(D)/e2fsprogs: $(D)/bootstrap $(D)/util-linux $(ARCHIVE)/e2fsprogs-$(E2FSPROGS_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/e2fsprogs-$(E2FSPROGS_VERSION)
 	$(UNTAR)/e2fsprogs-$(E2FSPROGS_VERSION).tar.gz
@@ -428,7 +428,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/jfsutils-$(JFSUTILS_VERS
 	$(TOUCH)
 
 #
-# utillinux
+# util-linux
 #
 UTIL_LINUX_MAJOR = 2.25
 UTIL_LINUX_MINOR = 2
@@ -437,7 +437,7 @@ UTIL_LINUX_VERSION = $(UTIL_LINUX_MAJOR).$(UTIL_LINUX_MINOR)
 $(ARCHIVE)/util-linux-$(UTIL_LINUX_VERSION).tar.xz:
 	$(WGET) http://ftp.kernel.org/pub/linux/utils/util-linux/v$(UTIL_LINUX_MAJOR)/util-linux-$(UTIL_LINUX_VERSION).tar.xz
 
-$(D)/utillinux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/util-linux-$(UTIL_LINUX_VERSION).tar.xz
+$(D)/util-linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/util-linux-$(UTIL_LINUX_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/util-linux-$(UTIL_LINUX_VERSION)
 	$(UNTAR)/util-linux-$(UTIL_LINUX_VERSION).tar.xz
