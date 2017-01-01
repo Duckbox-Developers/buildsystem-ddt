@@ -2093,22 +2093,19 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_UTILS
 #
 # libopenthreads
 #
-LIBOPENTHREADS_PATCH = libopenthreads.patch
+LIBOPENTHREADS_VERSION = 2.6.0
+LIBOPENTHREADS_PATCH = libopenthreads-$(LIBOPENTHREADS_VERSION).patch
 
-$(D)/libopenthreads: $(D)/bootstrap
+$(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip:
+	$(WGET) http://trac.openscenegraph.org/downloads/developer_releases/OpenThreads-$(LIBOPENTHREADS_VERSION).zip
+
+$(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip
 	$(START_BUILD)
-	$(REMOVE)/openthreads
-	set -e; if [ -d $(ARCHIVE)/library-openthreads.git ]; \
-		then cd $(ARCHIVE)/library-openthreads.git; git pull; \
-		else cd $(ARCHIVE); git clone --recursive git://github.com/tuxbox-neutrino/library-openthreads.git library-openthreads.git; \
-		fi
-	cp -ra $(ARCHIVE)/library-openthreads.git $(BUILD_TMP)/openthreads
-	set -e; cd $(BUILD_TMP)/openthreads; \
-		git submodule init; \
-		git submodule update; \
+	$(REMOVE)/OpenThreads-$(LIBOPENTHREADS_VERSION)
+	unzip $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip -d $(BUILD_TMP)
+	set -e; cd $(BUILD_TMP)/OpenThreads-$(LIBOPENTHREADS_VERSION); \
 		$(call post_patch,$(LIBOPENTHREADS_PATCH)); \
-		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
-		echo "# dummy file to prevent warning message" > $(BUILD_TMP)/openthreads/examples/CMakeLists.txt; \
+		echo "# dummy file to prevent warning message" > examples/CMakeLists.txt; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_SYSTEM_NAME="Linux" \
 			-DCMAKE_INSTALL_PREFIX="" \
@@ -2121,7 +2118,7 @@ $(D)/libopenthreads: $(D)/bootstrap
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)/usr
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/openthreads.pc
-	$(REMOVE)/openthreads
+	$(REMOVE)/OpenThreads-$(LIBOPENTHREADS_VERSION)
 	$(TOUCH)
 
 #
