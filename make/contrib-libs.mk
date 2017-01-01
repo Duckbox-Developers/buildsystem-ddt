@@ -2102,7 +2102,7 @@ $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip:
 $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip
 	$(START_BUILD)
 	$(REMOVE)/OpenThreads-$(LIBOPENTHREADS_VERSION)
-	unzip $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip -d $(BUILD_TMP)
+	unzip -qq $(ARCHIVE)/OpenThreads-$(LIBOPENTHREADS_VERSION).zip -d $(BUILD_TMP)
 	set -e; cd $(BUILD_TMP)/OpenThreads-$(LIBOPENTHREADS_VERSION); \
 		$(call post_patch,$(LIBOPENTHREADS_PATCH)); \
 		echo "# dummy file to prevent warning message" > examples/CMakeLists.txt; \
