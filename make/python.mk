@@ -273,6 +273,23 @@ $(D)/python_pyusb: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/
 	$(TOUCH)
 
 #
+# python_ipaddress
+#
+PYTHON_IPADDRESS_VERSION = 1.0.17
+
+$(ARCHIVE)/ipaddress-$(PYTHON_IPADDRESS_VERSION).tar.gz:
+	$(WGET) https://distfiles.macports.org/py-ipaddress/ipaddress-$(PYTHON_IPADDRESS_VERSION).tar.gz
+
+$(D)/python_ipaddress: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/ipaddress-$(PYTHON_IPADDRESS_VERSION).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/ipaddress-$(PYTHON_IPADDRESS_VERSION)
+	$(UNTAR)/ipaddress-$(PYTHON_IPADDRESS_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/ipaddress-$(PYTHON_IPADDRESS_VERSION); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/ipaddress-$(PYTHON_IPADDRESS_VERSION)
+	$(TOUCH)
+
+#
 # python_six
 #
 PYTHON_SIX_VERSION = 1.9.0
@@ -653,7 +670,7 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 
 PYTHON_DEPS  = $(D)/host_python $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_pyopenssl $(D)/python_twisted
 PYTHON_DEPS += $(D)/python_wifi $(D)/python_imaging $(D)/python_pyusb $(D)/python_pycrypto $(D)/python_pyasn1 $(D)/python_mechanize
-PYTHON_DEPS += $(D)/python_six $(D)/python_requests $(D)/python_futures $(D)/python_singledispatch
+PYTHON_DEPS += $(D)/python_six $(D)/python_requests $(D)/python_futures $(D)/python_singledispatch $(D)/python_ipaddress
 PYTHON_DEPS += $(D)/python_livestreamer $(D)/python_livestreamersrv
 
 python-all: $(PYTHON_DEPS)
