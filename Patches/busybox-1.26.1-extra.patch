@@ -75,7 +75,7 @@
  ifeq ($(dot-config),1)
 --- a/modutils/Config.src
 +++ b/modutils/Config.src
-@@ -133,7 +133,7 @@
+@@ -164,7 +164,7 @@
  config DEFAULT_MODULES_DIR
  	string "Default directory containing modules"
  	default "/lib/modules"
@@ -86,7 +86,7 @@
  	  Defaults to "/lib/modules"
 --- a/modutils/insmod.c
 +++ b/modutils/insmod.c
-@@ -44,11 +44,42 @@
+@@ -45,11 +45,42 @@
  //usage:	)
  //usage:#endif
  
@@ -118,18 +118,18 @@
  {
  	char *filename;
  	int rc;
-+int len;
-+char *tmp;
-+char *tmp2;
-+int k_version = 0;
-+struct stat st;
-+struct utsname uts;
-+char *m_name;
-+FILE *fp;
++	int len;
++	char *tmp;
++	char *tmp2;
++	int k_version = 0;
++	struct stat st;
++	struct utsname uts;
++	char *m_name;
++	FILE *fp;
  
  	/* Compat note:
  	 * 2.6 style insmod has no options and required filename
-@@ -67,9 +98,91 @@
+@@ -68,9 +99,91 @@
  	if (!filename)
  		bb_show_usage();
  

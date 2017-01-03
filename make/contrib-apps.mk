@@ -1,7 +1,7 @@
 #
 # busybox
 #
-BUSYBOX_VERSION = 1.26.0
+BUSYBOX_VERSION = 1.26.1
 BUSYBOX_PATCH   = busybox-$(BUSYBOX_VERSION)-nandwrite.patch
 BUSYBOX_PATCH  += busybox-$(BUSYBOX_VERSION)-unicode.patch
 BUSYBOX_PATCH  += busybox-$(BUSYBOX_VERSION)-extra.patch
