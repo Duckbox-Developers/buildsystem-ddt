@@ -1689,6 +1689,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
+			--disable-cpplibs \
 			--disable-sse \
 			--disable-asm-optimizations \
 			--disable-doxygen-docs \
@@ -1698,6 +1699,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 			--disable-valgrind-testing \
 			--disable-dependency-tracking \
 			--disable-ogg \
+			--disable-oggtest \
 			--disable-xmms-plugin \
 			--disable-thorough-tests \
 			--disable-altivec \
@@ -1705,10 +1707,7 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX) docdir=/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/flac.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/flac++.pc
 	$(REWRITE_LIBTOOL)/libFLAC.la
-	$(REWRITE_LIBTOOL)/libFLAC++.la
-	$(REWRITE_LIBTOOLDEP)/libFLAC++.la
 	$(REMOVE)/flac-$(FLAC_VERSION)
 	$(TOUCH)
 
