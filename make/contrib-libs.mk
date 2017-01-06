@@ -1690,19 +1690,19 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 			--prefix=/usr \
 			--mandir=/.remove \
 			--disable-cpplibs \
-			--disable-sse \
-			--disable-asm-optimizations \
-			--disable-doxygen-docs \
-			--disable-exhaustive-tests \
-			--disable-thorough-tests \
 			--disable-debug \
+			--disable-asm-optimizations \
+			--disable-sse \
+			--disable-3dnow \
+			--disable-altivec \
+			--disable-doxygen-docs \
+			--disable-thorough-tests \
+			--disable-exhaustive-tests \
 			--disable-valgrind-testing \
-			--disable-dependency-tracking \
 			--disable-ogg \
 			--disable-oggtest \
+			--disable-local-xmms-plugin \
 			--disable-xmms-plugin \
-			--disable-thorough-tests \
-			--disable-altivec \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX) docdir=/.remove
