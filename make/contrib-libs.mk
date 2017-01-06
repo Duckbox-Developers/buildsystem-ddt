@@ -2082,6 +2082,7 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/alsa-utils-$(ALSA_UTILS
 			--disable-alsaloop \
 			--disable-alsamixer \
 			--disable-xmlto \
+			--disable-rst2man \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
