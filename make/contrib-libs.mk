@@ -1591,10 +1591,10 @@ $(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$
 #
 # sqlite
 #
-SQLITE_VERSION = 3110000
+SQLITE_VERSION = 3160100
 
 $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VERSION).tar.gz:
-	$(WGET) http://www.sqlite.org/2016/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
+	$(WGET) http://www.sqlite.org/2017/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
 
 $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/sqlite-autoconf-$(SQLITE_VERSION).tar.gz
 	$(START_BUILD)
