@@ -50,7 +50,7 @@ index 2eada0e..30f75e0 100755
      librtmp
      libschroedinger
      libshine
-@@ -2579,6 +2581,7 @@
+@@ -2580,6 +2582,7 @@
  eac3_demuxer_select="ac3_parser"
  f4v_muxer_select="mov_muxer"
  flac_demuxer_select="flac_parser"
@@ -58,7 +58,7 @@ index 2eada0e..30f75e0 100755
  hds_muxer_select="flv_muxer"
  hls_muxer_select="mpegts_muxer"
  image2_alias_pix_demuxer_select="image2_demuxer"
-@@ -5191,6 +5194,8 @@
+@@ -5193,6 +5196,8 @@
  disabled bzlib || check_lib2 bzlib.h BZ2_bzlibVersion -lbz2 || disable bzlib
  disabled  lzma || check_lib2  lzma.h lzma_version_number -llzma || disable lzma
  
@@ -83,7 +83,7 @@ diff --git a/libavformat/allformats.c b/libavformat/allformats.c
 index 0f53d4c..06652e5 100644
 --- a/libavformat/allformats.c
 +++ b/libavformat/allformats.c
-@@ -144,7 +144,7 @@ void av_register_all(void)
+@@ -143,7 +143,7 @@ void av_register_all(void)
      REGISTER_MUXDEMUX(H261,             h261);
      REGISTER_MUXDEMUX(H263,             h263);
      REGISTER_MUXDEMUX(H264,             h264);

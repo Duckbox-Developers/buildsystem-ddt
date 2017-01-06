@@ -1332,7 +1332,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 #
 # ffmpeg
 #
-FFMPEG_VERSION = 2.8.6
+FFMPEG_VERSION = 2.8.10
 FFMPEG_PATCH  = ffmpeg-buffer-size-$(FFMPEG_VERSION).patch
 FFMPEG_PATCH += ffmpeg-hds-libroxml-$(FFMPEG_VERSION).patch
 FFMPEG_PATCH += ffmpeg-aac-$(FFMPEG_VERSION).patch
@@ -1542,6 +1542,9 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--target-os=linux \
 			--arch=sh4 \
 			--prefix=/usr \
+			--mandir=/.remove \
+			--datadir=/.remove \
+			--docdir=/.remove \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
