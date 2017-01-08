@@ -220,7 +220,7 @@ PYTHON_IMAGING_PATCH = python-imaging-$(PYTHON_IMAGING_VERSION).patch
 $(ARCHIVE)/Imaging-$(PYTHON_IMAGING_VERSION).tar.gz:
 	$(WGET) http://effbot.org/downloads/Imaging-$(PYTHON_IMAGING_VERSION).tar.gz
 
-$(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/libfreetype $(D)/python $(D)/python_setuptools $(ARCHIVE)/Imaging-$(PYTHON_IMAGING_VERSION).tar.gz
+$(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/freetype $(D)/python $(D)/python_setuptools $(ARCHIVE)/Imaging-$(PYTHON_IMAGING_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/Imaging-$(PYTHON_IMAGING_VERSION)
 	$(UNTAR)/Imaging-$(PYTHON_IMAGING_VERSION).tar.gz

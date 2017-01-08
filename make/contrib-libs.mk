@@ -631,15 +631,15 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/tzdata$(TZ_VERSION).tar.gz
 	$(TOUCH)
 
 #
-# libfreetype
+# freetype
 #
 FREETYPE_VERSION = 2.7.1
-FREETYPE_PATCH = libfreetype-$(FREETYPE_VERSION).patch
+FREETYPE_PATCH = freetype-$(FREETYPE_VERSION).patch
 
 $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
-$(D)/libfreetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2
+$(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/freetype-$(FREETYPE_VERSION)
 	$(UNTAR)/freetype-$(FREETYPE_VERSION).tar.bz2
@@ -1195,7 +1195,7 @@ FONTCONFIG_VERSION = 2.11.93
 $(ARCHIVE)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2:
 	$(WGET) http://www.freedesktop.org/software/fontconfig/release/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
 
-$(D)/fontconfig: $(D)/bootstrap $(D)/libfreetype $(D)/libexpat $(ARCHIVE)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
+$(D)/fontconfig: $(D)/bootstrap $(D)/freetype $(D)/libexpat $(ARCHIVE)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/fontconfig-$(FONTCONFIG_VERSION)
 	$(UNTAR)/fontconfig-$(FONTCONFIG_VERSION).tar.bz2
@@ -1567,7 +1567,7 @@ LIBASS_PATCH = libass-$(LIBASS_VERSION).patch
 $(ARCHIVE)/libass-$(LIBASS_VERSION).tar.xz:
 	$(WGET) https://github.com/libass/libass/releases/download/$(LIBASS_VERSION)/libass-$(LIBASS_VERSION).tar.xz
 
-$(D)/libass: $(D)/bootstrap $(D)/libfreetype $(D)/libfribidi $(ARCHIVE)/libass-$(LIBASS_VERSION).tar.xz
+$(D)/libass: $(D)/bootstrap $(D)/freetype $(D)/libfribidi $(ARCHIVE)/libass-$(LIBASS_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/libass-$(LIBASS_VERSION)
 	$(UNTAR)/libass-$(LIBASS_VERSION).tar.xz
@@ -1892,7 +1892,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/pugixml-$(PUGIXML_VERSION).tar.gz
 #
 GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
 
-$(D)/graphlcd: $(D)/bootstrap $(D)/libfreetype $(D)/libusb
+$(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb
 	$(START_BUILD)
 	$(REMOVE)/graphlcd
 	set -e; if [ -d $(ARCHIVE)/graphlcd-base-touchcol.git ]; \
@@ -1943,7 +1943,7 @@ GD_VERSION = 2.2.1
 $(ARCHIVE)/libgd-$(GD_VERSION).tar.xz:
 	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VERSION)/libgd-$(GD_VERSION).tar.xz
 
-$(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/libfreetype $(ARCHIVE)/libgd-$(GD_VERSION).tar.xz
+$(D)/libgd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/libgd-$(GD_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/libgd-$(GD_VERSION)
 	$(UNTAR)/libgd-$(GD_VERSION).tar.xz
