@@ -645,9 +645,9 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freety
 	$(UNTAR)/freetype-$(FREETYPE_VERSION).tar.bz2
 	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VERSION); \
 		$(call post_patch,$(FREETYPE_PATCH)); \
-		sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg; \
 		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
 			-i include/freetype/config/ftoption.h; \
+		sed -i '/^FONT_MODULES += \(type1\|cid\|pfr\|type42\|pcf\|bdf\)/d' modules.cfg; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 			--mandir=$(TARGETPREFIX)/.remove \
