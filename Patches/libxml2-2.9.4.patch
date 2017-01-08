@@ -1,17 +1,6 @@
---- libxml2-2.9.0.org/configure.in
-+++ libxml2-2.9.0/configure.in
-@@ -812,7 +812,7 @@ if test "$with_python" != "no" ; then
- 		    PYTHON_SITE_PACKAGES=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib()"`
- 	    fi
- 	fi
--	PYTHON_LIBS=`python$PYTHON_VERSION-config --ldflags`
-+	PYTHON_LIBS=''
-     fi
-     if test "$with_python" != ""
-     then
---- libxml2-2.9.0.orig/libxml.h
-+++ libxml2-2..0/libxml.h
-@@ -11,10 +11,13 @@
+--- a/libxml.h
++++ b/libxml.h
+@@ -13,10 +13,13 @@
  
  #ifndef NO_LARGEFILE_SOURCE
  #ifndef _LARGEFILE_SOURCE
@@ -25,8 +14,8 @@
  #endif
  #endif
  
---- libxml2-2.9.0/Makefile.am.org
-+++ libxml2-2.9.0/Makefile.am
+--- a/Makefile.am
++++ b/Makefile.am
 @@ -2,9 +2,9 @@
  
  ACLOCAL_AMFLAGS = -I m4

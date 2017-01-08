@@ -1342,12 +1342,12 @@ $(ARCHIVE)/ffmpeg-$(FFMPEG_VERSION).tar.xz:
 	$(WGET) http://www.ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.xz
 
 ifeq ($(IMAGE), enigma2)
-FFMPEG_EXTRA  = --enable-librtmp
+FFMPEG_CONF_OPTS  = --enable-librtmp
 LIBRTMPDUMP = $(D)/librtmpdump
 endif
 
 ifeq ($(IMAGE), neutrino)
-FFMPEG_EXTRA = --disable-iconv
+FFMPEG_CONF_OPTS = --disable-iconv
 endif
 
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/ffmpeg-$(FFMPEG_VERSION).tar.xz
@@ -1526,7 +1526,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--disable-outdevs \
 			--enable-bzlib \
 			--enable-zlib \
-			$(FFMPEG_EXTRA) \
+			$(FFMPEG_CONF_OPTS) \
 			--disable-static \
 			--enable-openssl \
 			--enable-network \
@@ -1622,7 +1622,7 @@ LIBSOUP_VERSION = $(LIBSOUP_VERSION_MAJOR).$(LIBSOUP_VERSION_MINOR)
 $(ARCHIVE)/libsoup-$(LIBSOUP_VERSION).tar.xz:
 	$(WGET) http://download.gnome.org/sources/libsoup/$(LIBSOUP_VERSION_MAJOR)/libsoup-$(LIBSOUP_VERSION).tar.xz
 
-$(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2_e2 $(D)/libglib2 $(ARCHIVE)/libsoup-$(LIBSOUP_VERSION).tar.xz
+$(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/libsoup-$(LIBSOUP_VERSION).tar.xz
 	$(START_BUILD)
 	$(REMOVE)/libsoup-$(LIBSOUP_VERSION)
 	$(UNTAR)/libsoup-$(LIBSOUP_VERSION).tar.xz
@@ -1712,45 +1712,56 @@ $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/flac-$(FLAC_VERSION).tar.xz
 	$(TOUCH)
 
 #
-# libxml2_e2
+# libxml2
 #
-LIBXML2_E2_VERSION = 2.9.0
-LIBXML2_E2_PATCH = libxml2-$(LIBXML2_E2_VERSION).patch
+LIBXML2_VERSION = 2.9.4
+LIBXML2_PATCH = libxml2-$(LIBXML2_VERSION).patch
 
-$(ARCHIVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz:
-	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_E2_VERSION).tar.gz
+$(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz:
+	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_VERSION).tar.gz
 
-$(D)/libxml2_e2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
+ifeq ($(IMAGE), enigma2)
+LIBXML2_CONF_OPTS  = --with-python=$(HOSTPREFIX)
+endif
+
+ifeq ($(IMAGE), neutrino)
+LIBXML2_CONF_OPTS  = --without-python
+LIBXML2_CONF_OPTS += --without-iconv
+LIBXML2_CONF_OPTS += --with-minimum
+endif
+
+$(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz
 	$(START_BUILD)
-	$(REMOVE)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
-	$(UNTAR)/libxml2-$(LIBXML2_E2_VERSION).tar.gz
-	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_E2_VERSION); \
-		$(call post_patch,$(LIBXML2_E2_PATCH)); \
+	$(REMOVE)/libxml2-$(LIBXML2_VERSION).tar.gz
+	$(UNTAR)/libxml2-$(LIBXML2_VERSION).tar.gz
+	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VERSION); \
+		$(call post_patch,$(LIBXML2_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
+			--datarootdir=/.remove \
 			--enable-shared \
 			--disable-static \
-			--datarootdir=/.remove \
-			--with-python=$(HOSTPREFIX) \
 			--without-c14n \
+			--without-catalog \
 			--without-debug \
 			--without-docbook \
 			--without-mem-debug \
+			$(LIBXML2_CONF_OPTS) \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX);
 		mv $(TARGETPREFIX)/usr/bin/xml2-config $(HOSTPREFIX)/bin
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libxml-2.0.pc $(HOSTPREFIX)/bin/xml2-config
 	sed -i 's/^\(Libs:.*\)/\1 -lz/' $(PKG_CONFIG_PATH)/libxml-2.0.pc
-		if [ -e "$(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la" ]; then \
-			sed -e "/^dependency_libs/ s,/usr/lib/libxml2.la,$(TARGETPREFIX)/usr/lib/libxml2.la,g" -i $(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la; \
-			sed -e "/^libdir/ s,$(PYTHON_DIR)/site-packages,$(TARGETPREFIX)$(PYTHON_DIR)/site-packages,g" -i $(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la; \
-		fi; \
-		sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(TARGETPREFIX)/usr/lib,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh; \
-		sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(TARGETPREFIX)/usr/include,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
+	if [ -e "$(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la" ]; then \
+		sed -e "/^dependency_libs/ s,/usr/lib/libxml2.la,$(TARGETPREFIX)/usr/lib/libxml2.la,g" -i $(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la; \
+		sed -e "/^libdir/ s,$(PYTHON_DIR)/site-packages,$(TARGETPREFIX)$(PYTHON_DIR)/site-packages,g" -i $(TARGETPREFIX)$(PYTHON_DIR)/site-packages/libxml2mod.la; \
+	fi; \
+	sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(TARGETPREFIX)/usr/lib,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh; \
+	sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(TARGETPREFIX)/usr/include,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
 	$(REWRITE_LIBTOOL)/libxml2.la
-	$(REMOVE)/libxml2-$(LIBXML2_E2_VERSION)
+	$(REMOVE)/libxml2-$(LIBXML2_VERSION)
 	$(TOUCH)
 
 #
@@ -1761,7 +1772,7 @@ LIBXSLT_VERSION = 1.1.28
 $(ARCHIVE)/libxslt-$(LIBXSLT_VERSION).tar.gz:
 	$(WGET) ftp://xmlsoft.org/libxml2/libxslt-$(LIBXSLT_VERSION).tar.gz
 
-$(D)/libxslt: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libxslt-$(LIBXSLT_VERSION).tar.gz
+$(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/libxslt-$(LIBXSLT_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/libxslt-$(LIBXSLT_VERSION)
 	$(UNTAR)/libxslt-$(LIBXSLT_VERSION).tar.gz
@@ -1794,43 +1805,6 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libxslt-$(LIBXSLT_VERSIO
 	$(REWRITE_LIBTOOL)/libxslt.la
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
 	$(REMOVE)/libxslt-$(LIBXSLT_VERSION)
-	$(TOUCH)
-
-#
-# libxml2 neutrino
-#
-LIBXML2_VERSION = 2.8.0
-
-$(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz:
-	$(WGET) ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_VERSION).tar.gz
-
-$(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz
-	$(START_BUILD)
-	$(REMOVE)/libxml2-$(LIBXML2_VERSION).tar.gz
-	$(UNTAR)/libxml2-$(LIBXML2_VERSION).tar.gz
-	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VERSION); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--datarootdir=/.remove \
-			--enable-shared \
-			--disable-static \
-			--without-python \
-			--with-minimum \
-			--without-iconv \
-			--without-c14n \
-			--without-debug \
-			--without-docbook \
-			--without-mem-debug \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX);
-		mv $(TARGETPREFIX)/usr/bin/xml2-config $(HOSTPREFIX)/bin
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libxml-2.0.pc $(HOSTPREFIX)/bin/xml2-config
-	sed -i 's/^\(Libs:.*\)/\1 -lz/' $(PKG_CONFIG_PATH)/libxml-2.0.pc
-	sed -e "/^XML2_LIBDIR/ s,/usr/lib,$(TARGETPREFIX)/usr/lib,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
-	sed -e "/^XML2_INCLUDEDIR/ s,/usr/include,$(TARGETPREFIX)/usr/include,g" -i $(TARGETPREFIX)/usr/lib/xml2Conf.sh
-	$(REWRITE_LIBTOOL)/libxml2.la
-	$(REMOVE)/libxml2-$(LIBXML2_VERSION)
 	$(TOUCH)
 
 #
@@ -2411,7 +2385,7 @@ LIBPLIST_VERSION = 1.10
 $(ARCHIVE)/libplist-$(LIBPLIST_VERSION).tar.gz:
 	$(WGET) http://cgit.sukimashita.com/libplist.git/snapshot/libplist-$(LIBPLIST_VERSION).tar.gz
 
-$(D)/libplist: $(D)/bootstrap $(D)/libxml2_e2 $(ARCHIVE)/libplist-$(LIBPLIST_VERSION).tar.gz
+$(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/libplist-$(LIBPLIST_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/libplist-$(LIBPLIST_VERSION)
 	$(UNTAR)/libplist-$(LIBPLIST_VERSION).tar.gz
