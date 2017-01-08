@@ -1,4 +1,4 @@
---- a/builds/unix/freetype2.in.org
+--- a/builds/unix/freetype2.in
 +++ b/builds/unix/freetype2.in
 @@ -1,7 +1,7 @@
  prefix=%prefix%
