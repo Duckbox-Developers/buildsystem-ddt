@@ -1743,7 +1743,6 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar
 			--enable-shared \
 			--disable-static \
 			--without-c14n \
-			--without-catalog \
 			--without-debug \
 			--without-docbook \
 			--without-mem-debug \
