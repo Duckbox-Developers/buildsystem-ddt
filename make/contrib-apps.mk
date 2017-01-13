@@ -1442,7 +1442,7 @@ $(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/udpxy.$(UDPXY_VERSION)-prod.tar.gz
 #
 # openvpn
 #
-OPENVPN_VERSION = 2.3.14
+OPENVPN_VERSION = 2.4.0
 
 $(ARCHIVE)/openvpn-$(OPENVPN_VERSION).tar.xz:
 	$(WGET) http://swupdate.openvpn.org/community/releases/openvpn-$(OPENVPN_VERSION).tar.xz
