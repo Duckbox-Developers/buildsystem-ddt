@@ -552,12 +552,11 @@ ZLIB_VERSION = 1.2.10
 ZLIB_Patch = zlib-$(ZLIB_VERSION).patch
 
 $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz:
-	$(WGET) http://www.zlib.net/zlib-$(ZLIB_VERSION).tar.xz
-
-$(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz
+	$(WGET) http://www.zlib.net/fossils/zlib-$(ZLIB_VERSION).tar.gz
+$(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.gz
 	$(START_BUILD)
 	$(REMOVE)/zlib-$(ZLIB_VERSION)
-	$(UNTAR)/zlib-$(ZLIB_VERSION).tar.xz
+	$(UNTAR)/zlib-$(ZLIB_VERSION).tar.gz
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VERSION); \
 		$(call post_patch,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGETPREFIX)/.remove CFLAGS="$(TARGET_CFLAGS)" \
