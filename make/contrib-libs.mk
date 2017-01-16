@@ -548,11 +548,11 @@ $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/boost_$(BOOST_VERSION).tar.bz2
 #
 # zlib
 #
-ZLIB_VERSION = 1.2.10
+ZLIB_VERSION = 1.2.11
 ZLIB_Patch = zlib-$(ZLIB_VERSION).patch
 
 $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz:
-	$(WGET) http://www.zlib.net/zlib-$(ZLIB_VERSION).tar.xz
+	$(WGET) https://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VERSION)/zlib-$(ZLIB_VERSION).tar.xz
 
 $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/zlib-$(ZLIB_VERSION).tar.xz
 	$(START_BUILD)
