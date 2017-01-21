@@ -5,6 +5,7 @@ BUSYBOX_VERSION = 1.26.2
 BUSYBOX_PATCH   = busybox-$(BUSYBOX_VERSION)-nandwrite.patch
 BUSYBOX_PATCH  += busybox-$(BUSYBOX_VERSION)-unicode.patch
 BUSYBOX_PATCH  += busybox-$(BUSYBOX_VERSION)-extra.patch
+BUSYBOX_PATCH  += busybox-$(BUSYBOX_VERSION)-wget_fix_for_brain-damaged_HTTP_servers.patch
 
 $(ARCHIVE)/busybox-$(BUSYBOX_VERSION).tar.bz2:
 	$(WGET) http://busybox.net/downloads/busybox-$(BUSYBOX_VERSION).tar.bz2
