@@ -17,3 +17,6 @@ distclean:
 	-rm -rf $(SOURCE_DIR)
 	-rm -rf $(D)
 	test -d $(D) || mkdir $(D)
+
+%-clean:
+	( cd $(D) && find . -name $(subst -clean,,$@) -delete )
