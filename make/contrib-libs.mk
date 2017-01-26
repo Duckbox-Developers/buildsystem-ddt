@@ -639,7 +639,7 @@ FREETYPE_PATCH = freetype-$(FREETYPE_VERSION).patch
 $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2:
 	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/freetype-$(FREETYPE_VERSION).tar.bz2
 
-$(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2
+$(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/freetype-$(FREETYPE_VERSION).tar.bz2
 	$(START_BUILD)
 	$(REMOVE)/freetype-$(FREETYPE_VERSION)
 	$(UNTAR)/freetype-$(FREETYPE_VERSION).tar.bz2
@@ -647,11 +647,16 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/bzip2 $(D)/libpng $(ARCHIVE)/freety
 		$(call post_patch,$(FREETYPE_PATCH)); \
 		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
 			-i include/freetype/config/ftoption.h; \
-		sed -i '/^FONT_MODULES += \(type1\|cid\|pfr\|type42\|pcf\|bdf\)/d' modules.cfg; \
+		sed -i '/^FONT_MODULES += \(type1\|cid\|pfr\|type42\|pcf\|bdf\|winfonts\|cff\)/d' modules.cfg; \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 			--mandir=$(TARGETPREFIX)/.remove \
 			--disable-static \
+			--enable-shared \
+			--with-png \
+			--with-zlib \
+			--without-harfbuzz \
+			--without-bzip2 \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install; \
