@@ -468,6 +468,7 @@ release_enigma2_tf7700:
 	cp -f $(TARGETPREFIX)/sbin/shutdown $(RELEASE_DIR)/sbin/
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_tf7700.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
+	$(MAKE) tfinstaller
 
 #
 # release_vitamin_hd5000

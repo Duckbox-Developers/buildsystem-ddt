@@ -437,6 +437,7 @@ release_neutrino_tf7700:
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/lib/firmware/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp -f $(SKEL_ROOT)/release/fstab_tf7700 $(RELEASE_DIR)/etc/fstab
+	$(MAKE) tfinstaller
 
 #
 # release_vitamin_hd5000
