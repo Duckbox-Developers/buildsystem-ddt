@@ -347,7 +347,7 @@ linux-kernel-clean:
 #
 TFINSTALLER_DIR := $(BASE_DIR)/tfinstaller
 
-tfinstaller: $(D)/bootstrap $(D)/linux-kernel $(TFINSTALLER_DIR)/u-boot.ftfd
+tfinstaller: $(D)/bootstrap $(TFINSTALLER_DIR)/u-boot.ftfd $(D)/linux-kernel
 	$(START_BUILD)
 	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOSTPREFIX=$(HOSTPREFIX) BASE_DIR=$(BASE_DIR) KERNEL_DIR=$(KERNEL_DIR)
 	$(TOUCH)

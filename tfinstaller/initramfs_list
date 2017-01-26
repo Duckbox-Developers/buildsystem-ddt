@@ -84,11 +84,11 @@ slink /bin/sed                         /bin/busybox                             
 slink /bin/tar                         /bin/busybox                                       0777 0 0
 
 dir   /etc                                                                                0777 0 0
-file  /etc/inittab                     ../../cdk_new/tfinstaller/inittab                  0755 0 0
+file  /etc/inittab                     ../../tfinstaller/inittab                          0755 0 0
 
 dir   /etc/init.d                                                                         0777 0 0
-file  /etc/init.d/rc                   ../../tufsbox/release/etc/init.d/rc                0755 0 0
-file  /etc/init.d/rcS                  ../../cdk_new/tfinstaller/rcS                      0755 0 0
+file  /etc/init.d/rc                   ../../tufsbox/release/var/etc/init.d/rc            0755 0 0
+file  /etc/init.d/rcS                  ../../tfinstaller/rcS                              0755 0 0
 
 dir   /etc/rc.d                                                                           0777 0 0
 dir   /etc/rc.d/rc0.d                                                                     0777 0 0
@@ -101,11 +101,11 @@ dir   /etc/rc.d/rc6.d                                                           
 dir   /etc/rc.d/rcS.d                                                                     0777 0 0
 
 dir   /deploy                                                                             0777 0 0
-file  /deploy/deploy.sh                ../../cdk_new/tfinstaller/deploy.sh                0755 0 0
-file  /deploy/U-Boot_Settings_hdd.mtd2 ../../cdk_new/tfinstaller/U-Boot_Settings_hdd.mtd2 0755 0 0
-file  /deploy/U-Boot_Settings_usb.mtd2 ../../cdk_new/tfinstaller/U-Boot_Settings_usb.mtd2 0755 0 0
-file  /deploy/u-boot.mtd1              ../../cdk_new/tfinstaller/u-boot.ftfd              0755 0 0
-file  /deploy/go_back.sh               ../../cdk_new/tfinstaller/go_back.sh               0755 0 0
+file  /deploy/deploy.sh                ../../tfinstaller/deploy.sh                        0755 0 0
+file  /deploy/U-Boot_Settings_hdd.mtd2 ../../tfinstaller/U-Boot_Settings_hdd.mtd2         0755 0 0
+file  /deploy/U-Boot_Settings_usb.mtd2 ../../tfinstaller/U-Boot_Settings_usb.mtd2         0755 0 0
+file  /deploy/u-boot.mtd1              ../../tfinstaller/u-boot.ftfd                      0755 0 0
+file  /deploy/go_back.sh               ../../tfinstaller/go_back.sh                       0755 0 0
 
 dir   /drvko                                                                              0777 0 0
 file  /drvko/e2_proc.ko                ../../tufsbox/release/lib/modules/e2_proc.ko       0755 0 0
