@@ -87,7 +87,7 @@ dir   /etc                                                                      
 file  /etc/inittab                     ../../tfinstaller/inittab                          0755 0 0
 
 dir   /etc/init.d                                                                         0777 0 0
-file  /etc/init.d/rc                   ../../tufsbox/release/var/etc/init.d/rc            0755 0 0
+file  /etc/init.d/rc                   ../../tufsbox/release/etc/init.d/rc                0755 0 0
 file  /etc/init.d/rcS                  ../../tfinstaller/rcS                              0755 0 0
 
 dir   /etc/rc.d                                                                           0777 0 0
