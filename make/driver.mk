@@ -26,6 +26,7 @@ driver-symlink:
 	$(if $(PLAYER228),cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_video.h $(TARGETPREFIX)/usr/include/linux/dvb)
 	touch $(D)/$(notdir $@)
 
+driver: $(D)/driver
 $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/linux-kernel
 	$(START_BUILD)
 	$(MAKE) -C $(DRIVER_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
