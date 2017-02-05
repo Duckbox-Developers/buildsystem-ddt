@@ -281,7 +281,7 @@ LSB_MAJOR = 3.2
 LSB_MINOR = 20
 LSB_VERSION = $(LSB_MAJOR)-$(LSB_MINOR)
 
-$(ARCHIVE)/lsb_$(LSB_VERSION)$(LSB_SUBVER).tar.gz:
+$(ARCHIVE)/lsb_$(LSB_VERSION).tar.gz:
 	$(WGET) http://debian.sdinet.de/etch/sdinet/lsb/lsb_$(LSB_VERSION).tar.gz
 
 $(D)/lsb: $(D)/bootstrap $(ARCHIVE)/lsb_$(LSB_VERSION).tar.gz
