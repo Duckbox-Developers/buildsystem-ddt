@@ -315,7 +315,7 @@ $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/readline-$(READLINE_VERSION).tar.gz
 #
 OPENSSL_MAJOR = 1.0.2
 OPENSSL_MINOR = k
-OPENSSL_VERSION = $(OPENSSL_MAJOR)-$(OPENSSL_MINOR)
+OPENSSL_VERSION = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
 
 OPENSSL_PATCH  = openssl-$(OPENSSL_MAJOR)-optimize-for-size.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_MAJOR)-makefile-dirs.patch
