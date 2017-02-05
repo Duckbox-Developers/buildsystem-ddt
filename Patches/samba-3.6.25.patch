@@ -1,9 +1,11 @@
---- samba-3.6.12/source3/configure.in.org
-+++ samba-3.6.12/source3/configure.in
-@@ -325,38 +325,6 @@
+--- a/source3/configure.in
++++ b/source3/configure.in
+@@ -317,38 +317,6 @@
  fi
  fi
- 
+ fi
+-fi
+-
 -############################################
 -# check if the compiler can handle negative enum values
 -# and don't truncate the values to INT_MAX
@@ -34,12 +36,10 @@
 -if test x"$samba_cv_CC_NEGATIVE_ENUM_VALUES" != x"yes"; then
 -	AC_MSG_WARN([using --uint-enums for pidl])
 -	PIDL_ARGS="$PIDL_ARGS --uint-enums"
--fi
--
- dnl Figure out the flags to support named structure initializers
+ fi
  
- LIBREPLACE_C99_STRUCT_INIT([],[AC_MSG_ERROR([c99 structure initializer are not supported])])
-@@ -624,7 +592,7 @@
+ dnl Figure out the flags to support named structure initializers
+@@ -618,7 +586,7 @@
  # Tests for linux LFS support. Need kernel 2.4 and glibc2.2 or greater support.
  #
      *linux*)
@@ -48,7 +48,7 @@
          old_CPPFLAGS="$CPPFLAGS"
          CPPFLAGS="-D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE $CPPFLAGS"
         AC_TRY_RUN([
-@@ -663,13 +631,14 @@
+@@ -657,13 +625,14 @@
         exit(1);
  #endif
  }
@@ -70,7 +70,7 @@
  	fi
  	AC_MSG_RESULT([$LINUX_LFS_SUPPORT])
  	;;
-@@ -1147,10 +1116,8 @@
+@@ -1141,10 +1110,8 @@
  # Check to see if core dump directory is defined in linux
  # with /proc/sys/kernel/core_pattern
  
@@ -82,7 +82,7 @@
  
  #############################
  # check if building with gpfs
-@@ -2593,40 +2564,6 @@
+@@ -2622,40 +2589,6 @@
  fi
  # end utmp details
  
@@ -123,18 +123,18 @@
  ICONV_LOOK_DIRS="/usr /usr/local /sw /opt"
  AC_ARG_WITH(libiconv,
  [AS_HELP_STRING([--with-libiconv=BASEDIR], [Use libiconv in BASEDIR/lib and BASEDIR/include (default=auto)])],
-@@ -2833,6 +2770,10 @@
-     AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
- fi
- 
-+if test x"$samba_cv_HAVE_KERNEL_OPLOCKS_LINUX" = x"cross"; then
+@@ -2859,6 +2792,10 @@
+ ],
+ samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=yes,samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=no,samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=cross)])
+ if test x"$samba_cv_HAVE_KERNEL_OPLOCKS_LINUX" = x"yes"; then
 +    AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
 +fi
 +
- AC_CACHE_CHECK([for kernel change notify support],samba_cv_HAVE_KERNEL_CHANGE_NOTIFY,[
- AC_TRY_RUN([
- #include <sys/types.h>
-@@ -3845,7 +3785,6 @@
++if test x"$samba_cv_HAVE_KERNEL_OPLOCKS_LINUX" = x"cross"; then
+     AC_DEFINE(HAVE_KERNEL_OPLOCKS_LINUX,1,[Whether to use linux kernel oplocks])
+ fi
+ 
+@@ -3874,7 +3811,6 @@
    # Heimdal checks.
    AC_CHECK_LIB_EXT(crypto, KRB5_LIBS, des_set_key)
    AC_CHECK_LIB_EXT(asn1, KRB5_LIBS, copy_Authenticator)
@@ -142,8 +142,8 @@
  
    # Heimdal checks. On static Heimdal gssapi must be linked before krb5.
    AC_CHECK_LIB_EXT(gssapi, KRB5_LIBS, gss_display_status,[],[],have_gssapi=yes)
---- samba-3.6.12/source3/lib/util_sock.c.org
-+++ samba-3.6.12/source3/lib/util_sock.c
+--- a/source3/lib/util_sock.c
++++ b/source3/lib/util_sock.c
 @@ -1341,7 +1341,6 @@
  				((st.st_mode & 0777) != dir_perms)) {
  			DEBUG(0, ("invalid permissions on socket directory "

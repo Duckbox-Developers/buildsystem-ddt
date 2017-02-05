@@ -250,6 +250,7 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/libarchive-$(LIBARCHIVE_VERSION)
 			--build=$(BUILD) \
 			--host=$(BUILD) \
 			--prefix= \
+			--without-xml2 \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(HOSTPREFIX)

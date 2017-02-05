@@ -580,10 +580,10 @@ $(D)/nano: $(D)/bootstrap $(ARCHIVE)/nano-$(NANO_VERSION).tar.gz
 #
 # rsync
 #
-RSYNC_VERSION = 3.1.1
+RSYNC_VERSION = 3.1.2
 
 $(ARCHIVE)/rsync-$(RSYNC_VERSION).tar.gz:
-	$(WGET) http://samba.anu.edu.au/ftp/rsync/src/rsync-$(RSYNC_VERSION).tar.gz
+	$(WGET) https://ftp.samba.org/pub/rsync/rsync-$(RSYNC_VERSION).tar.gz
 
 $(D)/rsync: $(D)/bootstrap $(ARCHIVE)/rsync-$(RSYNC_VERSION).tar.gz
 	$(START_BUILD)
@@ -1225,7 +1225,7 @@ SAMBA_VERSION = 3.6.25
 SAMBA_PATCH = samba-$(SAMBA_VERSION).patch
 
 $(ARCHIVE)/samba-$(SAMBA_VERSION).tar.gz:
-	$(WGET) http://ftp.samba.org/pub/samba/stable/samba-$(SAMBA_VERSION).tar.gz
+	$(WGET) https://ftp.samba.org/pub/samba/stable/samba-$(SAMBA_VERSION).tar.gz
 
 $(D)/samba: $(D)/bootstrap $(ARCHIVE)/samba-$(SAMBA_VERSION).tar.gz
 	$(START_BUILD)
@@ -1291,7 +1291,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/samba-$(SAMBA_VERSION).tar.gz
 		$(MAKE) $(MAKE_OPTS) installservers installbin installscripts installdat installmodules \
 			SBIN_PROGS="bin/smbd bin/nmbd bin/winbindd" DESTDIR=$(TARGETPREFIX) prefix=./. ; \
 	install -m 755 $(SKEL_ROOT)/etc/init.d/samba $(TARGETPREFIX)/etc/init.d/
-	install -m 644 $(SKEL_ROOT)/etc/smb.conf $(TARGETPREFIX)/etc/samba/
+	install -m 644 $(SKEL_ROOT)/etc/samba/smb.conf $(TARGETPREFIX)/etc/samba/
 	$(REMOVE)/samba-$(SAMBA_VERSION)
 	$(TOUCH)
 
