@@ -1302,7 +1302,7 @@ NTP_VERSION = 4.2.8p3
 NTP_PATCH = ntp-$(NTP_VERSION).patch
 
 $(ARCHIVE)/ntp-$(NTP_VERSION).tar.gz:
-	$(WGET) http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-$(NTP_VERSION).tar.gz
+	$(WGET) https://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/ntp-$(NTP_VERSION).tar.gz
 
 $(D)/ntp: $(D)/bootstrap $(ARCHIVE)/ntp-$(NTP_VERSION).tar.gz
 	$(START_BUILD)

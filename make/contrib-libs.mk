@@ -317,9 +317,9 @@ OPENSSL_MAJOR = 1.0.2
 OPENSSL_MINOR = k
 OPENSSL_VERSION = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
 
-OPENSSL_PATCH  = openssl-$(OPENSSL_MAJOR)-optimize-for-size.patch
-OPENSSL_PATCH += openssl-$(OPENSSL_MAJOR)-makefile-dirs.patch
-OPENSSL_PATCH += openssl-$(OPENSSL_MAJOR)-disable_doc_tests.patch
+OPENSSL_PATCH  = openssl-$(OPENSSL_VERSION)-optimize-for-size.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-makefile-dirs.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-disable_doc_tests.patch
 
 $(ARCHIVE)/openssl-$(OPENSSL_VERSION).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz

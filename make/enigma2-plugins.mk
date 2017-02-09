@@ -99,7 +99,7 @@ $(D)/enigma2-plugins: $(D)/enigma2_networkbrowser $(D)/enigma2_openwebif
 #
 # enigma2-openwebif
 #
-$(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah
+$(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah $(D)/python_ipaddress
 	$(START_BUILD)
 	$(REMOVE)/e2openplugin-OpenWebif
 	set -e; if [ -d $(ARCHIVE)/e2openplugin-OpenWebif.git ]; \
