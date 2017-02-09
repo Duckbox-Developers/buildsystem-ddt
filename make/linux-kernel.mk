@@ -270,7 +270,7 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	set -e; cd $(KERNEL_DIR); \
 		for i in $(HOST_KERNEL_PATCHES); do \
 			echo -e "==> \033[31mApplying Patch:\033[0m $$i"; \
-			patch -p1 -i $(PATCHES)/$(BUILD_CONFIG)/$$i; \
+			$(PATCH)/$(BUILD_CONFIG)/$$i; \
 		done
 	install -m 644 $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) $(KERNEL_DIR)/.config
 	sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(BASE_DIR)/integrated_firmware\"#" $(KERNEL_DIR)/.config
@@ -278,37 +278,37 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm
 ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 	@echo "Using kernel debug"
-	@grep -v "CONFIG_PRINTK" "$(KERNEL_DIR)/.config" > "$(KERNEL_DIR)/.config.tmp"
-	cp "$(KERNEL_DIR)/.config.tmp" "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_PRINTK=y" >> "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_PRINTK_TIME=y" >> "$(KERNEL_DIR)/.config"
+	@grep -v "CONFIG_PRINTK" "$(KERNEL_DIR)/.config" > $(KERNEL_DIR)/.config.tmp
+	cp $(KERNEL_DIR)/.config.tmp $(KERNEL_DIR)/.config
+	@echo "CONFIG_PRINTK=y" >> $(KERNEL_DIR)/.config
+	@echo "CONFIG_PRINTK_TIME=y" >> $(KERNEL_DIR)/.config
 endif
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	@echo "Using kernel wireless"
-	@grep -v "CONFIG_WIRELESS" "$(KERNEL_DIR)/.config" > "$(KERNEL_DIR)/.config.tmp"
-	cp "$(KERNEL_DIR)/.config.tmp" "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_WIRELESS=y" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_CFG80211 is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_WIRELESS_OLD_REGULATORY is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_WIRELESS_EXT=y" >> "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_WIRELESS_EXT_SYSFS=y" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_LIB80211 is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_WLAN=y" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_WLAN_PRE80211 is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "CONFIG_WLAN_80211=y" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_LIBERTAS is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_USB_ZD1201 is not set" >> "$(KERNEL_DIR)/.config"
-	@echo "# CONFIG_HOSTAP is not set" >> "$(KERNEL_DIR)/.config"
+	@grep -v "CONFIG_WIRELESS" "$(KERNEL_DIR)/.config" > $(KERNEL_DIR)/.config.tmp
+	cp $(KERNEL_DIR)/.config.tmp $(KERNEL_DIR)/.config
+	@echo "CONFIG_WIRELESS=y" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_CFG80211 is not set" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_WIRELESS_OLD_REGULATORY is not set" >> $(KERNEL_DIR)/.config
+	@echo "CONFIG_WIRELESS_EXT=y" >> $(KERNEL_DIR)/.config
+	@echo "CONFIG_WIRELESS_EXT_SYSFS=y" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_LIB80211 is not set" >> $(KERNEL_DIR)/.config
+	@echo "CONFIG_WLAN=y" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_WLAN_PRE80211 is not set" >> $(KERNEL_DIR)/.config
+	@echo "CONFIG_WLAN_80211=y" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_LIBERTAS is not set" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_USB_ZD1201 is not set" >> $(KERNEL_DIR)/.config
+	@echo "# CONFIG_HOSTAP is not set" >> $(KERNEL_DIR)/.config
 endif
 	$(TOUCH)
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
 	set -e; cd $(KERNEL_DIR); \
-		$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig; \
-		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm; \
-		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h; \
-		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
 	$(TOUCH)
 
