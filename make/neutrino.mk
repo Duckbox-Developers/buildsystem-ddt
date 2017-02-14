@@ -370,10 +370,6 @@ $(D)/neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
 	rm -f $(TARGETPREFIX)/var/etc/.version
 	make $(TARGETPREFIX)/var/etc/.version
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/neutrino
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/pzapit
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/sectionsdcontrol
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/sbin/udpstreampes
 	$(TOUCH)
 
 neutrino-mp-cst-next-clean:
@@ -479,10 +475,6 @@ $(D)/neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutr
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
 	rm -f $(TARGETPREFIX)/var/etc/.version
 	make $(TARGETPREFIX)/var/etc/.version
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/neutrino
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/pzapit
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/sectionsdcontrol
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/sbin/udpstreampes
 	$(TOUCH)
 
 neutrino-mp-cst-next-ni-clean:
@@ -571,9 +563,6 @@ $(D)/neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGETPREFIX); \
 	rm -f $(TARGETPREFIX)/var/etc/.version
 	make $(TARGETPREFIX)/var/etc/.version
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/neutrino
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/pzapit
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/sectionsdcontrol
 	$(TOUCH)
 
 $(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
@@ -750,10 +739,6 @@ $(D)/neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tan
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
 	rm -f $(TARGETPREFIX)/var/etc/.version
 	make $(TARGETPREFIX)/var/etc/.version
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/neutrino
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/pzapit
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/sectionsdcontrol
-	$(TARGET)-strip $(TARGETPREFIX)/usr/local/sbin/udpstreampes
 	$(TOUCH)
 
 neutrino-mp-tangos-clean:
