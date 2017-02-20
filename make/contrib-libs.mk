@@ -1730,6 +1730,7 @@ $(ARCHIVE)/libxml2-$(LIBXML2_VERSION).tar.gz:
 
 ifeq ($(IMAGE), enigma2)
 LIBXML2_CONF_OPTS  = --with-python=$(HOSTPREFIX)
+LIBXML2_CONF_OPTS += --with-python-install-dir=$(PYTHON_DIR)/site-packages
 endif
 
 ifeq ($(IMAGE), neutrino)
