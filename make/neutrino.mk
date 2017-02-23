@@ -24,7 +24,8 @@ endif
 
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/libflac
 
-N_CFLAGS       = -Wall -W -Wshadow -pipe -Os -fno-strict-aliasing
+N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
+N_CFLAGS      += -fno-strict-aliasing -funsigned-char
 #N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
