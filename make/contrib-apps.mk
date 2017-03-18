@@ -814,7 +814,7 @@ $(ARCHIVE)/$(PARTED_SOURCE):
 $(D)/parted: $(D)/bootstrap $(D)/libncurses $(D)/libreadline $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/parted-$(PARTED_VERSION)
-	$(UNTAR)$(PARTED_SOURCE)
+	$(UNTAR)/$(PARTED_SOURCE)
 	set -e; cd $(BUILD_TMP)/parted-$(PARTED_VERSION); \
 		$(call post_patch,$(PARTED_PATCH)); \
 		$(CONFIGURE) \
