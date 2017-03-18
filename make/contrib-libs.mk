@@ -207,7 +207,7 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 LIBPCRE_VERSION = 8.39
 LIBPCRE_SOURCE = pcre-$(LIBPCRE_VERSION).tar.bz2
 
-$(ARCHIVE)$(LIBPCRE_SOURCE):
+$(ARCHIVE)/$(LIBPCRE_SOURCE):
 	$(WGET) http://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VERSION)/$(LIBPCRE_SOURCE)
 
 $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
