@@ -322,7 +322,7 @@ $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
 	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/source || true
 	$(TOUCH)
 
-$(D)/kernel-headers: linux-kernel.do_prepare
+$(D)/kernel-headers: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
 	cd $(KERNEL_DIR); \
 		install -d $(TARGETPREFIX)/usr/include; \

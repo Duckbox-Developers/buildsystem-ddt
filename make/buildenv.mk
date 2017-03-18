@@ -242,12 +242,12 @@ P0217                      = p0217
 endif
 
 split_version=$(subst _, ,$(1))
-KERNEL_UPSTREAM        =$(word 1,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_STM            :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_LABEL          :=$(word 3,$(call split_version,$(KERNEL_VERSION)))
-KERNEL_RELEASE        :=$(subst ^0,,^$(KERNEL_LABEL))
-KERNEL_STM_LABEL      := _$(KERNEL_STM)_$(KERNEL_LABEL)
-KERNEL_DIR             =$(BUILD_TMP)/linux-sh4-$(KERNEL_VERSION)
+KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_STM        :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_LABEL      :=$(word 3,$(call split_version,$(KERNEL_VERSION)))
+KERNEL_RELEASE    :=$(subst ^0,,^$(KERNEL_LABEL))
+KERNEL_STM_LABEL  := _$(KERNEL_STM)_$(KERNEL_LABEL)
+KERNEL_DIR         =$(BUILD_TMP)/linux-sh4-$(KERNEL_VERSION)
 
 #
 # image
