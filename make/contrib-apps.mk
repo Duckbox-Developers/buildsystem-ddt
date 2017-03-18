@@ -89,7 +89,7 @@ $(D)/host_mtd_utils: directories $(ARCHIVE)/$(MTD_UTILS_SOURCE)
 $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MTD_UTILS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VERSION)
-	$(UNTAR)$(MTD_UTILS_SOURCE)
+	$(UNTAR)/$(MTD_UTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VERSION); \
 		$(BUILDENV) \
 		$(MAKE) PREFIX= CC=$(TARGET)-gcc LD=$(TARGET)-ld STRIP=$(TARGET)-strip WITHOUT_XATTR=1 DESTDIR=$(TARGETPREFIX); \
