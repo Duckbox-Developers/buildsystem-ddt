@@ -295,13 +295,15 @@ endif
 # player 2
 #
 ifeq ($(PLAYER_VERSION), 191)
-PLAYER2            = PLAYER191=player191
-PLAYER191          = 1
-PLAYER2_LINK       = player2_191
-else ifeq ($(PLAYER_VERSION), 228)
-PLAYER2            = PLAYER228=player228
-PLAYER228          = 1
-PLAYER2_LINK       = player2_228
+PLAYER2               = PLAYER191=player191
+PLAYER191             = 1
+PLAYER_VERSION_DRIVER = 191
+PLAYER2_LINK          = player2_191
+else ifeq ($(PLAYER_VERSION), 191_test)
+PLAYER2               = PLAYER191=player191
+PLAYER191             = 1
+PLAYER_VERSION_DRIVER = 191
+PLAYER2_LINK          = player2_191_test
 endif
 
 #

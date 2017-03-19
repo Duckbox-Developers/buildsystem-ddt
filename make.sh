@@ -186,13 +186,13 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 case $4 in
 	[1-2]) REPLY=$4;;
 	*)	echo -e "\nPlayer:"
-		echo "   1)  Player 228 (stmfb-3.1_stm24_0104, for internal testing)"
-		echo "   2)  Player 191 (stmfb-3.1_stm24_0104, recommended)"
+		echo "   1)  Player 191 test (stmfb-3.1_stm24_0104, for internal testing)"
+		echo "   2)  Player 191      (stmfb-3.1_stm24_0104, recommended)"
 		read -p "Select player (1-2)? ";;
 esac
 
 case "$REPLY" in
-	1)	echo "PLAYER_VERSION=228" >> config
+	1)	echo "PLAYER_VERSION=191_test" >> config
 		echo "MULTICOM_VERSION=324" >> config
 		;;
 	2)	echo "PLAYER_VERSION=191" >> config
