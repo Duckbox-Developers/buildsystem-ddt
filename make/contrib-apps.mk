@@ -100,19 +100,19 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 #
 # gdb-remote
 #
-GDB_REMOTE_VERSION = 7.8
-GDB_REMOTE_SOURCE = gdb-$(GDB_VERSION).tar.xz
-GDB_REMOTE_PATCH =
+GDB_VERSION = 7.8
+GDB_SOURCE = gdb-$(GDB_VERSION).tar.xz
+GDB_PATCH = gdb-$(GDB_VERSION)-remove-builddate.patch
 
-$(ARCHIVE)/$(GDB_REMOTE_SOURCE):
-	$(WGET) ftp://sourceware.org/pub/gdb/releases/$(GDB_REMOTE_SOURCE)
+$(ARCHIVE)/$(GDB_SOURCE):
+	$(WGET) ftp://sourceware.org/pub/gdb/releases/$(GDB_SOURCE)
 
 # gdb-remote built for local-PC or target
-$(D)/gdb-remote: $(ARCHIVE)/$(GDB_REMOTE_SOURCE)
+$(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/gdb-$(GDB_REMOTE_VERSION)
-	$(UNTAR)/$(GDB_REMOTE_SOURCE)
-	set -e; cd $(BUILD_TMP)/gdb-$(GDB_REMOTE_VERSION); \
+	$(REMOVE)/gdb-$(GDB_VERSION)
+	$(UNTAR)/$(GDB_SOURCE)
+	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VERSION); \
 		./configure $(CONFIGURE_SILENT) \
 			--nfp --disable-werror \
 			--prefix=$(HOSTPREFIX) \
@@ -122,18 +122,12 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_REMOTE_SOURCE)
 		; \
 		$(MAKE) all-gdb; \
 		$(MAKE) install-gdb; \
-	$(REMOVE)/gdb-$(GDB_REMOTE_VERSION)
+	$(REMOVE)/gdb-$(GDB_VERSION)
 	$(TOUCH)
 
 #
 # gdb
 #
-GDB_VERSION = 7.8
-GDB_SOURCE = gdb-$(GDB_VERSION).tar.xz
-GDB_PATCH = gdb-$(GDB_VERSION)-remove-builddate.patch
-
-$(ARCHIVE)/$(GDB_SOURCE):
-	$(WGET) ftp://sourceware.org/pub/gdb/releases/$(GDB_SOURCE)
 
 # gdb built for target or local-PC
 $(D)/gdb: $(D)/bootstrap $(D)/libncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
@@ -666,7 +660,7 @@ CURLFTPFS_SOURCE = curlftpfs-$(CURLFTPFS_VERSION).tar.gz
 CURLFTPFS_PATCH = curlftpfs-$(CURLFTPFS_VERSION).patch
 
 $(ARCHIVE)/$(CURLFTPFS_SOURCE):
-	$(WGET) http://sourceforge.net/projects/curlftpfs/files/latest/download/$(CURLFTPFS_SOURCE)
+	$(WGET) https://sourceforge.net/projects/curlftpfs/files/latest/download/$(CURLFTPFS_SOURCE)
 
 $(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/libglib2 $(ARCHIVE)/$(CURLFTPFS_SOURCE)
 	$(START_BUILD)
@@ -744,7 +738,7 @@ HDPARM_VERSION = 9.50
 HDPARM_SOURCE = hdparm-$(HDPARM_VERSION).tar.gz
 
 $(ARCHIVE)/$(HDPARM_SOURCE):
-	$(WGET) http://sourceforge.net/projects/hdparm/files/hdparm/$(HDPARM_SOURCE)
+	$(WGET) https://sourceforge.net/projects/hdparm/files/hdparm/$(HDPARM_SOURCE)
 
 $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/$(HDPARM_SOURCE)
 	$(START_BUILD)
@@ -764,7 +758,7 @@ HDIDLE_VERSION = 1.05
 HDIDLE_SOURCE = hd-idle-$(HDIDLE_VERSION).tgz
 
 $(ARCHIVE)/$(HDIDLE_SOURCE):
-	$(WGET) http://sourceforge.net/projects/hd-idle/files/$(HDIDLE_SOURCE)
+	$(WGET) https://sourceforge.net/projects/hd-idle/files/$(HDIDLE_SOURCE)
 
 $(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/$(HDIDLE_SOURCE)
 	$(START_BUILD)
@@ -1122,7 +1116,7 @@ SMARTMONTOOLS_VERSION = 6.4
 SMARTMONTOOLS_SOURCE = smartmontools-$(SMARTMONTOOLS_VERSION).tar.gz
 
 $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE):
-	$(WGET) http://sourceforge.net/projects/smartmontools/files/smartmontools/$(SMARTMONTOOLS_VERSION)/$(SMARTMONTOOLS_SOURCE)
+	$(WGET) https://sourceforge.net/projects/smartmontools/files/smartmontools/$(SMARTMONTOOLS_VERSION)/$(SMARTMONTOOLS_SOURCE)
 
 $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE)
 	$(START_BUILD)
@@ -1145,7 +1139,7 @@ NFSUTILS_SOURCE = nfs-utils-$(NFSUTILS_VERSION).tar.bz2
 NFSUTILS_PATCH = nfs-utils-$(NFSUTILS_VERSION).patch
 
 $(ARCHIVE)/$(NFSUTILS_SOURCE):
-	$(WGET) http://sourceforge.net/projects/nfs/files/nfs-utils/$(NFSUTILS_VERSION)/$(NFSUTILS_SOURCE)
+	$(WGET) https://sourceforge.net/projects/nfs/files/nfs-utils/$(NFSUTILS_VERSION)/$(NFSUTILS_SOURCE)
 
 $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFSUTILS_SOURCE)
 	$(START_BUILD)
@@ -1598,7 +1592,7 @@ $(D)/usb-modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb-modeswitch-data $(ARCHI
 		$(call post_patch,$(USB_MODESWITCH_PATCH)); \
 		sed -i -e "s/= gcc/= $(TARGET)-gcc/" -e "s/-l usb/-lusb -lusb-1.0 -lpthread -lrt/" -e "s/install -D -s/install -D --strip-program=$(TARGET)-strip -s/" Makefile; \
 		sed -i -e "s/@CC@/$(TARGET)-gcc/g" jim/Makefile.in; \
-		$(BUILDENV) $(MAKE) DESTDIR=$(TARGETPREFIX)  install-static; \
+		$(BUILDENV) $(MAKE) DESTDIR=$(TARGETPREFIX); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	$(REMOVE)/usb-modeswitch-$(USB_MODESWITCH_VERSION)
 	$(TOUCH)

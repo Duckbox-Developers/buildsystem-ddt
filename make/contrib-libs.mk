@@ -208,7 +208,7 @@ LIBPCRE_VERSION = 8.39
 LIBPCRE_SOURCE = pcre-$(LIBPCRE_VERSION).tar.bz2
 
 $(ARCHIVE)/$(LIBPCRE_SOURCE):
-	$(WGET) http://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VERSION)/$(LIBPCRE_SOURCE)
+	$(WGET) https://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VERSION)/$(LIBPCRE_SOURCE)
 
 $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
 	$(START_BUILD)
@@ -545,10 +545,10 @@ BOOST_VERSION_MICRO = 0
 BOOST_VERSION_ARCHIVE = $(BOOST_VERSION_MAJOR).$(BOOST_VERSION_MINOR).$(BOOST_VERSION_MICRO)
 BOOST_VERSION = $(BOOST_VERSION_MAJOR)_$(BOOST_VERSION_MINOR)_$(BOOST_VERSION_MICRO)
 BOOST_SOURCE = boost_$(BOOST_VERSION).tar.bz2
-BOOST_PATCH = libboost$(BOOST_VERSION).patch
+BOOST_PATCH = libboost-$(BOOST_VERSION).patch
 
 $(ARCHIVE)/$(BOOST_SOURCE):
-	$(WGET) http://sourceforge.net/projects/boost/files/boost/$(BOOST_VERSION_ARCHIVE)/$(BOOST_SOURCE)
+	$(WGET) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VERSION_ARCHIVE)/$(BOOST_SOURCE)
 
 $(D)/libboost: $(D)/bootstrap $(ARCHIVE)/$(BOOST_SOURCE)
 	$(START_BUILD)
@@ -657,7 +657,7 @@ FREETYPE_SOURCE = freetype-$(FREETYPE_VERSION).tar.bz2
 FREETYPE_PATCH = freetype-$(FREETYPE_VERSION).patch
 
 $(ARCHIVE)/$(FREETYPE_SOURCE):
-	$(WGET) http://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/$(FREETYPE_SOURCE)
+	$(WGET) https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VERSION)/$(FREETYPE_SOURCE)
 
 $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE)
 	$(START_BUILD)
@@ -697,7 +697,7 @@ LIRC_SOURCE = lirc-$(LIRC_VERSION).tar.bz2
 LIRC_PATCH = lirc-$(LIRC_VERSION).patch
 
 $(ARCHIVE)/$(LIRC_SOURCE):
-	$(WGET) http://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VERSION)/$(LIRC_SOURCE)
+	$(WGET) https://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VERSION)/$(LIRC_SOURCE)
 
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
@@ -1060,7 +1060,7 @@ MAD_SOURCE = libmad-$(MAD_VERSION).tar.gz
 MAD_PATCH = libmad-$(MAD_VERSION).patch
 
 $(ARCHIVE)/$(MAD_SOURCE):
-	$(WGET) http://sourceforge.net/projects/mad/files/libmad/$(MAD_VERSION)/$(MAD_SOURCE)
+	$(WGET) https://sourceforge.net/projects/mad/files/libmad/$(MAD_VERSION)/$(MAD_SOURCE)
 
 $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(MAD_SOURCE)
 	$(START_BUILD)
@@ -2031,7 +2031,7 @@ LIBUSB_COMPAT_VERSION = 0.1.5
 LIBUSB_COMPAT_SOURCE = libusb-compat-$(LIBUSB_COMPAT_VERSION).tar.bz2
 
 $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE):
-	$(WGET) http://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(LIBUSB_COMPAT_VERSION)/$(LIBUSB_COMPAT_SOURCE)
+	$(WGET) https://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(LIBUSB_COMPAT_VERSION)/$(LIBUSB_COMPAT_SOURCE)
 
 $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE)
 	$(START_BUILD)
