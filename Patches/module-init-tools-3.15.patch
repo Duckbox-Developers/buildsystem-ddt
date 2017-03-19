@@ -1,5 +1,5 @@
---- a/Makefile.am.org	2011-06-02 19:56:45.000000000 +0200
-+++ b/Makefile.am	2012-08-05 02:52:39.934756834 +0200
+--- a/Makefile.am
++++ b/Makefile.am
 @@ -40,7 +40,6 @@
  	modules.dep.5 modules.dep.bin.5
  MAN8 = depmod.8 insmod.8 lsmod.8 rmmod.8 modprobe.8 modinfo.8
@@ -8,8 +8,8 @@
  # If they haven't overridden mandir, fix it (never /man!)
  mandir =$(shell if [ @mandir@ = $(prefix)/man ]; then if [ $(prefix) = / ]; then echo /usr/share/man; else echo $(prefix)/share/man; fi; else echo @mandir@; fi)
  
---- a/configure.ac.org	2011-06-02 19:55:01.000000000 +0200
-+++ b/configure.ac	2012-08-05 03:11:00.010802446 +0200
+--- a/configure.ac
++++ b/configure.ac
 @@ -29,13 +29,12 @@
  AC_PROG_CC
  AC_PROG_RANLIB

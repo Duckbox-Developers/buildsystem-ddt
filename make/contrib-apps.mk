@@ -399,10 +399,10 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util-linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 # dosfstools
 #
-DOSFSTOOLS_VERSION = 4.0
+DOSFSTOOLS_VERSION = 4.1
 DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VERSION).tar.xz
 
-$(ARCHIVE)/(DOSFSTOOLS_SOURCE):
+$(ARCHIVE)/$(DOSFSTOOLS_SOURCE):
 	$(WGET) https://github.com/dosfstools/dosfstools/releases/download/v$(DOSFSTOOLS_VERSION)/$(DOSFSTOOLS_SOURCE)
 
 $(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
@@ -1200,15 +1200,15 @@ $(D)/libevent: $(D)/bootstrap $(ARCHIVE)/$(LIBEVENT_SOURCE)
 # libnfsidmap
 #
 LIBNFSIDMAP_VERSION = 0.25
-LIBEVENT_SOURCE = libnfsidmap-$(LIBNFSIDMAP_VERSION).tar.gz
+LIBNFSIDMAP_SOURCE = libnfsidmap-$(LIBNFSIDMAP_VERSION).tar.gz
 
-$(ARCHIVE)/$(LIBEVENT_SOURCE):
-	$(WGET) http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/$(LIBEVENT_SOURCE)
+$(ARCHIVE)/$(LIBNFSIDMAP_SOURCE):
+	$(WGET) http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/$(LIBNFSIDMAP_SOURCE)
 
-$(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBEVENT_SOURCE)
+$(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBNFSIDMAP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libnfsidmap-$(LIBNFSIDMAP_VERSION)
-	$(UNTAR)/$(LIBEVENT_SOURCE)
+	$(UNTAR)/$(LIBNFSIDMAP_SOURCE)
 	set -e; cd $(BUILD_TMP)/libnfsidmap-$(LIBNFSIDMAP_VERSION);\
 		$(CONFIGURE) \
 		ac_cv_func_malloc_0_nonnull=yes \
