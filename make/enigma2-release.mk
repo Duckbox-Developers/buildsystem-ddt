@@ -464,6 +464,7 @@ release_enigma2_tf7700:
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
+	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp -f $(SKEL_ROOT)/release/fstab_tf7700 $(RELEASE_DIR)/etc/fstab
 	cp -f $(TARGETPREFIX)/sbin/shutdown $(RELEASE_DIR)/sbin/
 	rm -f $(RELEASE_DIR)/bin/vdstandby
