@@ -325,10 +325,10 @@ $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
 $(D)/kernel-headers: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
 	cd $(KERNEL_DIR); \
-		install -d $(TARGETPREFIX)/usr/include; \
-		cp -a include/linux $(TARGETPREFIX)/usr/include; \
-		cp -a include/asm-sh $(TARGETPREFIX)/usr/include/asm; \
-		cp -a include/asm-generic $(TARGETPREFIX)/usr/include; \
+		install -d $(TARGETPREFIX)/usr/include
+		cp -a include/linux $(TARGETPREFIX)/usr/include
+		cp -a include/asm-sh $(TARGETPREFIX)/usr/include/asm
+		cp -a include/asm-generic $(TARGETPREFIX)/usr/include
 		cp -a include/mtd $(TARGETPREFIX)/usr/include
 	$(TOUCH)
 
