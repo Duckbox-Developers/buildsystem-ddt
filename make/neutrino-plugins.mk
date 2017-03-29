@@ -105,7 +105,7 @@ neutrino-mp-plugins-distclean:
 #
 XUPNPD_PATCH = xupnpd.patch
 
-$(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
+$(D)/xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/plugins-scripts-lua
 	$(START_BUILD)
 	$(REMOVE)/xupnpd
 	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
@@ -117,7 +117,7 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/plugins-scripts-lua
 		$(call post_patch,$(XUPNPD_PATCH))
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
-		$(MAKE) TARGET=$(TARGET) sh4; \
+		$(MAKE) sh4 TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGETPREFIX)/etc/init.d/
 	install -m 644 $(ARCHIVE)/cst-public-plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
