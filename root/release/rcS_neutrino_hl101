@@ -1,171 +1,165 @@
 #!/bin/sh
 
+echo "[rcS] start"
+echo "SpiderBox HL-101 Neutrino"
+
 MODDIR=/lib/modules
-echo "init frontpanel"
+
+echo "[rcS] Init frontpanel"
 insmod $MODDIR/proton.ko
 insmod $MODDIR/simu_button.ko
 
 if [ -e /var/etc/.firstboot ]; then
-   echo "WAIT 3 min" > /dev/vfd
-   echo "WAIT 3 min"
+   echo "Wait 1m." > /dev/vfd
+   echo "[rcS] WAIT 1 minute"
    rm /var/etc/.firstboot
+   sleep 1
    touch /dev/.devfsd
+else
+   echo "Load 10" > /dev/vfd
 fi
 
 /etc/init.d/mountvirtfs start
-/etc/init.d/portmap start
 
 insmod $MODDIR/e2_proc.ko
 
-# start automounter with umount timeout of 5 seconds
-insmod $MODDIR/autofs4.ko
+# Start automounter with umount timeout of 5 seconds
+if [ -e $MODDIR/autofs4.ko ]; then
+   insmod $MODDIR/autofs4.ko
+fi
 /usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
-if [ ! -e /var/etc/.firstboot ]; then
+echo "[rcS] Starting DEBUG Interface"
+/etc/init.d/mountall start
+/etc/init.d/hostname start
 
-   echo "Starting DEBUG Interface"
-   /etc/init.d/mountall start
-   /etc/init.d/hostname start
+echo "[rcS] Starting telnetd"
+/usr/sbin/telnetd -l /bin/autologin
 
-   echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
+echo "[rcS] Init stmfb (LOAD 9)"
+echo "Load 9" > /dev/vfd
+insmod $MODDIR/stmcore-display-stx7109c3.ko
+insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
 
-   echo "init stmfb"
-   insmod $MODDIR/stmcore-display-stx7109c3.ko
-   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
+echo "[rcS] Loading modules"
 
-   echo "LOADING MODULES"
-   echo "LOADING" >/dev/vfd
-
-   if [ ! -e /lib/firmware/audio.elf ]; then
-      echo "FW MISSING!!!"
-   fi
-
-   echo "load video firmware"
-   /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
-#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
-   /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
-
-   echo "load audio firmware"
-   /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
-#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
-   /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
-
-   echo "init embx"
-   insmod $MODDIR/embxshell.ko
-   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
-   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
-   insmod $MODDIR/mme_host.ko transport0=shm
-
-   echo "init AVS"
-   insmod $MODDIR/avs.ko type=stv6418
-
-   player=`cat /proc/stb/player/version`
-   player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
-   echo "init player $player"
-
-   insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
-   insmod $MODDIR/ksound.ko
-   insmod $MODDIR/p2div64.ko
-   insmod $MODDIR/stm_v4l2.ko
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/stmvout.ko
-	insmod $MODDIR/stmvbi.ko
-   fi
-   insmod $MODDIR/pseudocard.ko
-   
-   echo "init frontends"
-   insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
-
-   echo "init drivers"
-   insmod $MODDIR/cimax.ko
-   insmod $MODDIR/pti.ko
-
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stm_monitor.ko
-	insmod $MODDIR/stmsysfs.ko
-    	insmod $MODDIR/stmdvb.ko
-   else
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stmdvb.ko
-	insmod $MODDIR/stm_monitor.ko
-   fi	
-
-   insmod $MODDIR/player2.ko
-   insmod $MODDIR/sth264pp.ko
-   insmod $MODDIR/stmalloc.ko
-   insmod $MODDIR/platform.ko
-   insmod $MODDIR/smartcard.ko
-
-   showiframe -p /var/boot/bootlogo.mvi &
-   stfbcontrol a 0
-
-   echo "init lircd"
-   mkdir -p /var/run/lirc
-   /usr/bin/lircd
-
-   mknod /dev/rc c 147 1 
-   mknod /dev/sci0 c 169 0
-   mknod /dev/sci1 c 169 1 
-
-   /bin/evremote2 hl101 &
-
-# Module aus modules.extra laden
-   [ -f /var/etc/modules.extra ] && eval `sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^\(.*\)/insmod \0;/' < /var/etc/modules.extra`
-
-#   echo "starting telnetd"
-#   /usr/sbin/telnetd -l /bin/autologin
-#   /etc/init.d/vsftpd start
-   /usr/sbin/inetd
-
-   NFS=`grep -c nfs /proc/cmdline`
-   if [ "$NFS" -eq "1" ]; then
-      echo "Booting from nfs, don't set network"
-   else
-      if [ -e /etc/network/interfaces ]; then
-	 ip addr flush eth0
-	 /etc/init.d/networking stop
-	 DHCP=`grep -c dhcp /etc/network/interfaces`
-	 if [ "$DHCP" -eq "1" ]; then
-	    echo "Starting dhcp"
-            /etc/init.d/udhcpc start
-	 fi
-	 /etc/init.d/networking start
-      fi
-   fi
-
-   #timefix
-   date -s "200901011200"
-
-   echo "run app" > /dev/vfd
-   echo "LOADING neutrino"
-
-   until false
-   do
-      echo "starting neutrino->"
-      /etc/init.d/networking restart
-      /usr/bin/start-emu.sh
-      /usr/bin/timeset.sh all &
-      /usr/local/bin/neutrino
-      rtv=$?
-      echo "neutrino ended <- RTV: " $rtv
-      case "$rtv" in
-		0) echo "0"
-		   echo "SHUTDOWN"
-		   init 0;;
-		1) echo "1"
-		   echo "REBOOT"
-		   init 6;;
-		*) echo "*"
-		   echo "ERROR"
-		   init 6;;
-      esac
-   done
+if [ ! -e /lib/firmware/audio.elf ] || [ ! -e /lib/firmware/video.elf ]; then
+   echo "[rcS] Firmware(s) missing!"
+   echo "NO FIRMW" > /dev/vfd
+   sleep 5
 fi
 
+echo "[rcS] Load video firmware (LOAD 8)"
+echo "Load 8" > /dev/vfd
+/bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096 2> /dev/null
+/bin/ustslave /dev/st231-0 /lib/firmware/video.elf
+
+echo "[rcS] Load audio firmware (LOAD 7)"
+echo "Load 7" > /dev/vfd
+/bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096 2> /dev/null
+/bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
+
+echo "[rcS] Init embx (LOAD 6)"
+echo "Load 6" > /dev/vfd
+insmod $MODDIR/embxshell.ko
+insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
+insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
+insmod $MODDIR/mme_host.ko transport0=shm
+
+echo "[rcS] Init AVS (LOAD 5)"
+echo "Load 5" > /dev/vfd
+insmod $MODDIR/avs.ko type=stv6418
+
+echo "[rcS] Init player (LOAD 4)"
+echo "Load 4" > /dev/vfd
+insmod $MODDIR/mmelog.ko
+insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+insmod $MODDIR/ksound.ko
+insmod $MODDIR/p2div64.ko
+insmod $MODDIR/stm_v4l2.ko
+insmod $MODDIR/stmvout.ko
+insmod $MODDIR/stmvbi.ko
+insmod $MODDIR/pseudocard.ko
+insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
+insmod $MODDIR/cimax.ko
+insmod $MODDIR/smartcard.ko
+insmod $MODDIR/pti.ko
+insmod $MODDIR/stm_monitor.ko
+insmod $MODDIR/stmsysfs.ko
+insmod $MODDIR/stmdvb.ko
+
+echo "[rcS] Init player2 (LOAD 3)"
+echo "Load 3" > /dev/vfd
+insmod $MODDIR/player2.ko discardlateframe=0
+insmod $MODDIR/sth264pp.ko
+insmod $MODDIR/stmalloc.ko
+insmod $MODDIR/platform.ko
+insmod $MODDIR/bpamem.ko
+
+# Module aus modules.extra laden
+[ -f /var/etc/modules.extra ] && eval `sed -e 's/#.*//' -e '/^\s*$/d' -e 's/^\(.*\)/insmod \0;/' < /var/etc/modules.extra`
+
+stfbcontrol a 0
+
+echo "[rcS] Init remote control (LOAD 2)"
+echo "Load 2" > /dev/vfd
+mkdir -p /var/run/lirc
+/usr/bin/lircd
+mknod /dev/rc c 147 1 
+mknod /dev/sci0 c 169 0
+mknod /dev/sci1 c 169 1 
+/bin/evremote2 10 120 &
+
+stfbcontrol a 255
+
+echo "[rcS] Init portmap & ftp (LOAD 1)"
+echo "Load 1" >/dev/vfd
+/etc/init.d/portmap start
+/etc/init.d/vsftpd start
+/usr/sbin/inetd
+
+#timefix
+date -s "201601011200"
+
+NFS=`grep -c nfs /proc/cmdline`
+if [ "$NFS" -eq "1" ]; then
+   echo "[rcS] Booting from nfs, don't set network"
+else
+   if [ -e /etc/network/interfaces ]; then
+      ip addr flush eth0
+      /etc/init.d/networking stop
+      DHCP=`grep -c dhcp /etc/network/interfaces`
+      if [ "$DHCP" -eq "1" ]; then
+         echo "[rcS] Starting DHCP"
+         /etc/init.d/udhcpc start
+      fi
+      /etc/init.d/networking start
+   fi
+fi
+
+echo "[rcS] LOADING neutrino"
+echo "Start Neutrino" > /dev/vfd
+
+until false
+do
+   echo "[rcS] Starting neutrino ->"
+   /usr/local/bin/neutrino
+   rtv=$?
+   echo "[rcS] Neutrino ended <- return value: " $rtv
+   case "$rtv" in
+      0) echo "SHUTDOWN"
+         echo "Shutdown" > /dev/vfd
+         init 0;;
+      1) echo "REBOOT"
+         echo "Reboot" > /dev/vfd
+         init 6;;
+      *) echo "ERROR"
+         echo "Error " > /dev/vfd
+         init 6;;
+   esac
+done
+
 #never reached
-echo "REBOOT HL101" > /dev/vfd
-echo "REBOOT HL101"
+echo "REBOOT SpiderBox HL-101 Neutrino" > /dev/vfd
+echo "REBOOT SpiderBox HL-101 Neutrino"
 init 6
