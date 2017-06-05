@@ -1492,7 +1492,7 @@ $(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
 #
 # openvpn
 #
-OPENVPN_VERSION = 2.4.0
+OPENVPN_VERSION = 2.4.2
 OPENVPN_SOURCE = openvpn-$(OPENVPN_VERSION).tar.xz
 
 $(ARCHIVE)/$(OPENVPN_SOURCE):
