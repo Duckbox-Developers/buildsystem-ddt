@@ -2232,7 +2232,7 @@ $(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/$(LIBMODPLUG_SOURCE)
 #
 # lzo
 #
-LZO_VERSION = 2.09
+LZO_VERSION = 2.10
 LZO_SOURCE = lzo-$(LZO_VERSION).tar.gz
 
 $(ARCHIVE)/$(LZO_SOURCE):
