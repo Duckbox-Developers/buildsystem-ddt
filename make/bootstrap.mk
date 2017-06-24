@@ -1,6 +1,6 @@
 TOOLCHECK  = find-git find-svn find-gzip find-bzip2 find-patch find-gawk
 TOOLCHECK += find-makeinfo find-automake find-gcc find-libtool
-TOOLCHECK += find-yacc find-flex find-tic find-pkg-config
+TOOLCHECK += find-yacc find-flex find-tic find-pkg-config find-help2man
 TOOLCHECK += find-cmake find-gperf
 
 find-%:
@@ -33,6 +33,7 @@ BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-gitdescribe.sh
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-find-requires.sh
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-find-provides.sh
 BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-module-deps.sh
+BOOTSTRAP += $(HOSTPREFIX)/bin/get-git-archive.sh
 BOOTSTRAP += $(D)/host_pkgconfig $(D)/host_module_init_tools $(D)/host_mtd_utils
 
 $(D)/bootstrap: $(BOOTSTRAP)
@@ -56,10 +57,9 @@ SYSTEM_TOOLS += $(D)/driver
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	$(TOUCH)
 
+$(HOSTPREFIX)/bin/unpack%.sh \
+$(HOSTPREFIX)/bin/get%.sh \
 $(HOSTPREFIX)/bin/opkg%sh: | directories
-	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOSTPREFIX)/bin
-
-$(HOSTPREFIX)/bin/unpack-rpm.sh: | directories
 	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOSTPREFIX)/bin
 
 #
