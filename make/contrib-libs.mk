@@ -1920,23 +1920,26 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 #
 # graphlcd
 #
+GRAPHLCD_VERSION = 7958e1b
+GRAPHLCD_SOURCE = graphlcd-$(GRAPHLCD_VERSION).tar.bz2
+GRAPHLCD_URL = git://projects.vdr-developer.org/graphlcd-base.git
+GRAPHLCD_SOURCE_GIT = $(ARCHIVE)/graphlcd-base.git
 GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
 
-$(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb
+$(ARCHIVE)/$(GRAPHLCD_SOURCE):
+	get-git-archive.sh $(GRAPHLCD_URL) $(GRAPHLCD_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/graphlcd
-	set -e; if [ -d $(ARCHIVE)/graphlcd-base-touchcol.git ]; \
-		then cd $(ARCHIVE)/graphlcd-base-touchcol.git; git pull; \
-		else cd $(ARCHIVE); git clone -b touchcol git://projects.vdr-developer.org/graphlcd-base.git graphlcd-base-touchcol.git; \
-		fi
-	cp -ra $(ARCHIVE)/graphlcd-base-touchcol.git $(BUILD_TMP)/graphlcd
-	set -e; cd $(BUILD_TMP)/graphlcd; \
+	$(REMOVE)/graphlcd-$(GRAPHLCD_VERSION)
+	$(UNTAR)/$(GRAPHLCD_SOURCE)
+	set -e; cd $(BUILD_TMP)/graphlcd-$(GRAPHLCD_VERSION); \
 		$(call post_patch,$(GRAPHLCD_PATCH)); \
 		export TARGET=$(TARGET)-; \
 		$(BUILDENV) \
 		$(MAKE) DESTDIR=$(TARGETPREFIX); \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	$(REMOVE)/graphlcd
+	$(REMOVE)/graphlcd-$(GRAPHLCD_VERSION)
 	$(TOUCH)
 
 #
