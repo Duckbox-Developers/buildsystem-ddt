@@ -473,19 +473,22 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/$(LUAEXPAT_SOURC
 #
 # luasocket
 #
-$(D)/luasocket: $(D)/bootstrap $(D)/lua
+LUA_SOCKET_VERSION = 5a17f79
+LUA_SOCKET_SOURCE = luasocket-$(LUA_SOCKET_VERSION).tar.bz2
+LUA_SOCKET_URL = git://github.com/diegonehab/luasocket.git
+
+$(ARCHIVE)/$(LUA_SOCKET_SOURCE):
+	get-git-archive.sh $(LUA_SOCKET_URL) $(LUA_SOCKET_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUA_SOCKET_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luasocket
-	set -e; if [ -d $(ARCHIVE)/luasocket.git ]; \
-		then cd $(ARCHIVE)/luasocket.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/diegonehab/luasocket.git luasocket.git; \
-		fi
-	cp -ra $(ARCHIVE)/luasocket.git $(BUILD_TMP)/luasocket
-	set -e; cd $(BUILD_TMP)/luasocket; \
+	$(REMOVE)/luasocket-$(LUA_SOCKET_VERSION)
+	$(UNTAR)/$(LUA_SOCKET_SOURCE)
+	set -e; cd $(BUILD_TMP)/luasocket-$(LUA_SOCKET_VERSION); \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGETPREFIX)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGETPREFIX)/usr@" src/makefile; \
 		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VERSION_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGETPREFIX)/usr/include LUAPREFIX_linux=; \
 		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VERSION_SHORT)
-	$(REMOVE)/luasocket
+	$(REMOVE)/luasocket-$(LUA_SOCKET_VERSION)
 	$(TOUCH)
 
 #
