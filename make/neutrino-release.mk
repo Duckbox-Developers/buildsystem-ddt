@@ -305,7 +305,7 @@ release_neutrino_hs7420:
 #
 release_neutrino_hs7429:
 	echo "hs7429" > $(RELEASE_DIR)/etc/hostname
-	install -m 0755 $(SKEL_ROOT)release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
+	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
