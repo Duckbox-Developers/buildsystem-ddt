@@ -489,20 +489,23 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua
 	$(TOUCH)
 
 #
-# lua-feedparser
+# luafeedparser
 #
-$(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
+LUA_FEEDPARSER_VERSION = 9b284bc
+LUA_FEEDPARSER_SOURCE = luafeedparser-$(LUA_FEEDPARSER_VERSION).tar.bz2
+LUA_FEEDPARSER_URL = git://github.com/slact/lua-feedparser.git
+
+$(ARCHIVE)/$(LUA_FEEDPARSER_SOURCE):
+	get-git-archive.sh $(LUA_FEEDPARSER_URL) $(LUA_FEEDPARSER_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUA_FEEDPARSER_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/lua-feedparser
-	set -e; if [ -d $(ARCHIVE)/lua-feedparser.git ]; \
-		then cd $(ARCHIVE)/lua-feedparser.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/slact/lua-feedparser.git lua-feedparser.git; \
-		fi
-	cp -ra $(ARCHIVE)/lua-feedparser.git $(BUILD_TMP)/lua-feedparser
-	set -e; cd $(BUILD_TMP)/lua-feedparser; \
+	$(REMOVE)/luafeedparser-$(LUA_FEEDPARSER_VERSION)
+	$(UNTAR)/$(LUA_FEEDPARSER_SOURCE)
+	set -e; cd $(BUILD_TMP)/luafeedparser-$(LUA_FEEDPARSER_VERSION); \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
 		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
-	$(REMOVE)/lua-feedparser
+	$(REMOVE)/luafeedparser-$(LUA_FEEDPARSER_VERSION)
 	$(TOUCH)
 
 #
