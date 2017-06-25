@@ -15,7 +15,7 @@ NEUTRINO_DEPS += $(D)/libpng $(D)/libjpeg $(D)/libgif $(D)/freetype
 NEUTRINO_DEPS += $(D)/alsa-utils $(D)/ffmpeg
 NEUTRINO_DEPS += $(D)/libfribidi  $(D)/libsigc $(D)/libdvbsi++ $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
-NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/lua-feedparser $(D)/luasoap $(D)/luajson
+NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
 ifeq ($(IMAGE), neutrino-wlandriver)

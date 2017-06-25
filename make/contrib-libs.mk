@@ -452,22 +452,22 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
 #
 # luaexpat
 #
-LUAEXPAT_VERSION = 1.3.0
-LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VERSION).tar.gz
-LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VERSION).patch
+LUA_EXPAT_VERSION = 1.3.0
+LUA_EXPAT_SOURCE = luaexpat-$(LUA_EXPAT_VERSION).tar.gz
+LUA_EXPAT_PATCH = luaexpat-$(LUA_EXPAT_VERSION).patch
 
-$(ARCHIVE)/$(LUAEXPAT_SOURCE):
-	$(WGET) http://matthewwild.co.uk/projects/luaexpat/$(LUAEXPAT_SOURCE)
+$(ARCHIVE)/$(LUA_EXPAT_SOURCE):
+	$(WGET) http://matthewwild.co.uk/projects/luaexpat/$(LUA_EXPAT_SOURCE)
 
-$(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
+$(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/$(LUA_EXPAT_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luaexpat-$(LUAEXPAT_VERSION)
-	$(UNTAR)/$(LUAEXPAT_SOURCE)
-	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VERSION); \
-		$(call post_patch,$(LUAEXPAT_PATCH)); \
+	$(REMOVE)/luaexpat-$(LUA_EXPAT_VERSION)
+	$(UNTAR)/$(LUA_EXPAT_SOURCE)
+	set -e; cd $(BUILD_TMP)/luaexpat-$(LUA_EXPAT_VERSION); \
+		$(call post_patch,$(LUA_EXPAT_PATCH)); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" PREFIX=$(TARGETPREFIX)/usr; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)/usr
-	$(REMOVE)/luaexpat-$(LUAEXPAT_VERSION)
+	$(REMOVE)/luaexpat-$(LUA_EXPAT_VERSION)
 	$(TOUCH)
 
 #
