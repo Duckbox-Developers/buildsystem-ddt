@@ -508,21 +508,21 @@ $(D)/lua-feedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat
 #
 # luasoap
 #
-LUASOAP_VERSION = 3.0
-LUASOAP_SOURCE = luasoap-$(LUASOAP_VERSION).tar.gz
-LUASOAP_PATCH = luasoap-$(LUASOAP_VERSION).patch
+LUA_SOAP_VERSION = 3.0
+LUA_SOAP_SOURCE = luasoap-$(LUA_SOAP_VERSION).tar.gz
+LUA_SOAP_PATCH = luasoap-$(LUA_SOAP_VERSION).patch
 
-$(ARCHIVE)/$(LUASOAP_SOURCE):
-	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/$(LUASOAP_SOURCE)
+$(ARCHIVE)/$(LUA_SOAP_SOURCE):
+	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/$(LUA_SOAP_SOURCE)
 
-$(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUASOAP_SOURCE)
+$(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUA_SOAP_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luasoap-$(LUASOAP_VERSION)
-	$(UNTAR)/$(LUASOAP_SOURCE)
-	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VERSION); \
+	$(REMOVE)/luasoap-$(LUA_SOAP_VERSION)
+	$(UNTAR)/$(LUA_SOAP_SOURCE)
+	set -e; cd $(BUILD_TMP)/luasoap-$(LUA_SOAP_VERSION); \
 		$(call post_patch,$(LUASOAP_PATCH)); \
 		$(MAKE) install LUA_DIR=$(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
-	$(REMOVE)/luasoap-$(LUASOAP_VERSION)
+	$(REMOVE)/luasoap-$(LUA_SOAP_VERSION)
 	$(TOUCH)
 
 #
