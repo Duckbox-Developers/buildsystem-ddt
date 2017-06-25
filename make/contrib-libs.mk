@@ -2188,24 +2188,26 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
 #
 # libdvbsi++
 #
+LIBDVBSI++_VERSION = ff57e58
+LIBDVBSI++_SOURCE = libdvbsi++-$(LIBDVBSI++_VERSION).tar.bz2
+LIBDVBSI++_URL = git://git.opendreambox.org/git/obi/libdvbsi++.git
 LIBDVBSI++_PATCH = libdvbsi++-git.patch
 
-$(D)/libdvbsi++: $(D)/bootstrap
+$(ARCHIVE)/$(LIBDVBSI++_SOURCE):
+	get-git-archive.sh $(LIBDVBSI++_URL) $(LIBDVBSI++_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/libdvbsi++: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI++_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/libdvbsi++
-	set -e; if [ -d $(ARCHIVE)/libdvbsi++.git ]; \
-		then cd $(ARCHIVE)/libdvbsi++.git; git pull; \
-		else cd $(ARCHIVE); git clone git://git.opendreambox.org/git/obi/libdvbsi++.git libdvbsi++.git; \
-		fi
-	cp -ra $(ARCHIVE)/libdvbsi++.git $(BUILD_TMP)/libdvbsi++
-	set -e; cd $(BUILD_TMP)/libdvbsi++; \
+	$(REMOVE)/libdvbsi++-$(LIBDVBSI++_VERSION)
+	$(UNTAR)/$(LIBDVBSI++_SOURCE)
+	set -e; cd $(BUILD_TMP)/libdvbsi++-$(LIBDVBSI++_VERSION); \
 		$(call post_patch,$(LIBDVBSI++_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=$(TARGETPREFIX)/usr \
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	$(REMOVE)/libdvbsi++
+	$(REMOVE)/libdvbsi++-$(LIBDVBSI++_VERSION)
 	$(TOUCH)
 
 #
