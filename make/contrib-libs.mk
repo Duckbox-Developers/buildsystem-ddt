@@ -404,25 +404,28 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 LUA_VERSION = 5.2.4
 LUA_VERSION_SHORT = 5.2
 LUA_SOURCE = lua-$(LUA_VERSION).tar.gz
-LUAPOSIX_VERSION = 31
-LUAPOSIX_PATCH = lua-$(LUA_VERSION)-luaposix-$(LUAPOSIX_VERSION).patch
+
+LUA_POSIX_VERSION = 31
+LUA_POSIX_SOURCE = luaposix-$(LUA_POSIX_VERSION).tar.bz2
+LUA_POSIX_URL = git://github.com/luaposix/luaposix.git
+LUA_POSIX_PATCH = lua-$(LUA_VERSION)-luaposix-$(LUA_POSIX_VERSION).patch
 
 $(ARCHIVE)/$(LUA_SOURCE):
 	$(WGET) http://www.lua.org/ftp/$(LUA_SOURCE)
 
-$(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/$(LUA_SOURCE)
+$(ARCHIVE)/$(LUA_POSIX_SOURCE):
+	get-git-archive.sh $(LUA_POSIX_URL) release-v$(LUA_POSIX_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/$(LUA_POSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lua-$(LUA_VERSION)
-	set -e; if [ ! -d $(ARCHIVE)/luaposix.git ]; \
-		then cd $(ARCHIVE); git clone -b release-v$(LUAPOSIX_VERSION) git://github.com/luaposix/luaposix.git luaposix.git; \
-		fi
 	mkdir -p $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT)
 	$(UNTAR)/$(LUA_SOURCE)
 	set -e; cd $(BUILD_TMP)/lua-$(LUA_VERSION); \
-		$(call post_patch,$(LUAPOSIX_PATCH)); \
-		cp -r $(ARCHIVE)/luaposix.git .; \
-		cd luaposix.git/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
-		cd luaposix.git/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT); cd ../..; \
+		$(call post_patch,$(LUA_POSIX_PATCH)); \
+		tar xf $(ARCHIVE)/$(LUA_POSIX_SOURCE); \
+		cd luaposix-$(LUA_POSIX_VERSION)/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
+		cd luaposix-$(LUA_POSIX_VERSION)/lib; cp *.lua $(TARGETPREFIX)/usr/share/lua/$(LUA_VERSION_SHORT); cd ../..; \
 		sed -i 's/<config.h>/"config.h"/' src/posix.c; \
 		sed -i '/^#define/d' src/lua52compat.h; \
 		sed -i 's|man/man1|/.remove|' Makefile; \
