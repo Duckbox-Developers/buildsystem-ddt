@@ -2166,23 +2166,25 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 # librtmpdump
 #
+LIBRTMPDUMP_VERSION = ad70c64
+LIBRTMPDUMP_SOURCE = librtmpdump-$(LIBRTMPDUMP_VERSION).tar.bz2
+LIBRTMPDUMP_URL = git://github.com/oe-alliance/rtmpdump.git
 LIBRTMPDUMP_PATCH = rtmpdump-2.4.patch
 
-$(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl
+$(ARCHIVE)/$(LIBRTMPDUMP_SOURCE):
+	get-git-archive.sh $(LIBRTMPDUMP_URL) $(LIBRTMPDUMP_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/librtmpdump
-	set -e; if [ -d $(ARCHIVE)/rtmpdump.git ]; \
-		then cd $(ARCHIVE)/rtmpdump.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/oe-alliance/rtmpdump.git rtmpdump.git; \
-		fi
-	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/librtmpdump
-	set -e; cd $(BUILD_TMP)/librtmpdump; \
+	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VERSION)
+	$(UNTAR)/$(LIBRTMPDUMP_SOURCE)
+	set -e; cd $(BUILD_TMP)/librtmpdump-$(LIBRTMPDUMP_VERSION); \
 		$(call post_patch,$(LIBRTMPDUMP_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) CROSS_COMPILE=$(TARGET)- ; \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX) MANDIR=$(TARGETPREFIX)/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/librtmp.pc
-	$(REMOVE)/librtmpdump
+	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VERSION)
 	$(TOUCH)
 
 #
