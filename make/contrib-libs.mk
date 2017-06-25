@@ -433,20 +433,23 @@ $(D)/lua: $(D)/bootstrap $(D)/libncurses $(ARCHIVE)/$(LUA_SOURCE)
 #
 # luacurl
 #
-$(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua
+LUA_CURL_VERSION = 9ac72c7
+LUA_CURL_SOURCE = luacurl-$(LUA_CURL_VERSION).tar.bz2
+LUA_CURL_URL = git://github.com/Lua-cURL/Lua-cURLv3.git
+
+$(ARCHIVE)/$(LUA_CURL_SOURCE):
+	get-git-archive.sh $(LUA_CURL_URL) $(LUA_CURL_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUA_CURL_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luacurl
-	set -e; if [ -d $(ARCHIVE)/luacurl.git ]; \
-		then cd $(ARCHIVE)/luacurl.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/Lua-cURL/Lua-cURLv3.git luacurl.git; \
-		fi
-	cp -ra $(ARCHIVE)/luacurl.git $(BUILD_TMP)/luacurl
-	set -e; cd $(BUILD_TMP)/luacurl; \
+	$(REMOVE)/luacurl-$(LUA_CURL_VERSION)
+	$(UNTAR)/$(LUA_CURL_SOURCE)
+	set -e; cd $(BUILD_TMP)/luacurl-$(LUA_CURL_VERSION); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGETPREFIX)/usr/lib" \
 			LIBDIR=$(TARGETPREFIX)/usr/lib \
 			LUA_INC=$(TARGETPREFIX)/usr/include; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX) LUA_CMOD=/usr/lib/lua/$(LUA_VERSION_SHORT) LUA_LMOD=/usr/share/lua/$(LUA_VERSION_SHORT)
-	$(REMOVE)/luacurl
+	$(REMOVE)/luacurl-$(LUA_CURL_VERSION)
 	$(TOUCH)
 
 #
