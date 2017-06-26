@@ -1449,22 +1449,25 @@ $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/
 #
 # dvbsnoop
 #
-$(D)/dvbsnoop: $(D)/bootstrap
+DVBSNOOP_VERSION = 42f98ff
+DVBSNOOP_SOURCE = dvbsnoop-$(DVBSNOOP_VERSION).tar.bz2
+DVBSNOOP_URL = https://github.com/cotdp/dvbsnoop.git
+
+$(ARCHIVE)/$(DVBSNOOP_SOURCE):
+	get-git-archive.sh $(DVBSNOOP_URL) $(DVBSNOOP_VERSION) $(notdir $@) $(ARCHIVE)
+
+$(D)/dvbsnoop: $(D)/bootstrap $(ARCHIVE)/$(DVBSNOOP_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/dvbsnoop
-	set -e; if [ -d $(ARCHIVE)/dvbsnoop.git ]; \
-		then cd $(ARCHIVE)/dvbsnoop.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/cotdp/dvbsnoop.git dvbsnoop.git; \
-		fi
-	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop
-	set -e; cd $(BUILD_TMP)/dvbsnoop; \
+	$(REMOVE)/dvbsnoop-$(DVBSNOOP_VERSION)
+	$(UNTAR)/$(DVBSNOOP_SOURCE)
+	set -e; cd $(BUILD_TMP)/dvbsnoop-$(DVBSNOOP_VERSION); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/dvbsnoop
+	$(REMOVE)/dvbsnoop-$(DVBSNOOP_VERSION)
 	$(TOUCH)
 
 #
