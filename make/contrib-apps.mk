@@ -734,7 +734,7 @@ $(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/$(HDDTEMP_SOURCE)
 #
 # hdparm
 #
-HDPARM_VERSION = 9.50
+HDPARM_VERSION = 9.52
 HDPARM_SOURCE = hdparm-$(HDPARM_VERSION).tar.gz
 
 $(ARCHIVE)/$(HDPARM_SOURCE):
