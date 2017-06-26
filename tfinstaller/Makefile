@@ -60,7 +60,7 @@ all:
 	if [ `grep -x -c "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" $(KERNEL_DIR)/.config` == 0 ]; then \
 		echo "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set" >> $(KERNEL_DIR)/.config; \
 	fi
-	@export PATH=$(HOSTPREFIX)/bin:$(PATH) && \
+	@export PATH=$(HOST_DIR)/bin:$(PATH) && \
 	$(MAKE) -C $(BASE_DIR) tfkernel
 	rm $(KERNEL_DIR)/initramfs_list
 	rm $(KERNEL_DIR)/.config

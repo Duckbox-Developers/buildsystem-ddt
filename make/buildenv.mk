@@ -48,7 +48,7 @@ BOOT_DIR              = $(BASE_DIR)/tufsbox/cdkroot-tftpboot
 CROSS_BASE            = $(BASE_DIR)/tufsbox/cross
 CROSS_DIR             = $(CROSS_BASE)
 CONTROL_DIR           = $(BASE_DIR)/pkgs/control
-HOSTPREFIX            = $(BASE_DIR)/tufsbox/host
+HOST_DIR            = $(BASE_DIR)/tufsbox/host
 PACKAGE_DIR           = $(BASE_DIR)/pkgs/opkg
 RELEASE_DIR           = $(BASE_DIR)/tufsbox/release
 PKGPREFIX             = $(BUILD_TMP)/pkg
@@ -94,7 +94,7 @@ LD_FLAGS              = $(TARGET_LDFLAGS)
 
 VPATH                 = $(D)
 
-PATH                 := $(HOSTPREFIX)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
+PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
 
 TERM_BOLD            := $(shell tput smso 2>/dev/null)
 TERM_RESET           := $(shell tput rmso 2>/dev/null)
@@ -113,7 +113,7 @@ MAKEFLAGS            += --silent
 CONFIGURE_SILENT      = -q
 endif
 
-PKG_CONFIG            = $(HOSTPREFIX)/bin/$(TARGET)-pkg-config
+PKG_CONFIG            = $(HOST_DIR)/bin/$(TARGET)-pkg-config
 PKG_CONFIG_PATH       = $(TARGETPREFIX)/usr/lib/pkgconfig
 
 # helper-"functions":

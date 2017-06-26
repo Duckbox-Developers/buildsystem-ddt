@@ -11,7 +11,7 @@ PYTHON_BUILD = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)" \
-	$(HOSTPREFIX)/bin/python ./setup.py build --executable=/usr/bin/python
+	$(HOST_DIR)/bin/python ./setup.py build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
 	CC="$(TARGET)-gcc" \
@@ -20,7 +20,7 @@ PYTHON_INSTALL = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)" \
-	$(HOSTPREFIX)/bin/python ./setup.py install --root=$(TARGETPREFIX) --prefix=/usr
+	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGETPREFIX) --prefix=/usr
 
 #
 # host_python
@@ -53,13 +53,13 @@ $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 		\
 		$(MAKE) distclean; \
 		./configure $(CONFIGURE_SILENT) \
-			--prefix=$(HOSTPREFIX) \
-			--sysconfdir=$(HOSTPREFIX)/etc \
+			--prefix=$(HOST_DIR) \
+			--sysconfdir=$(HOST_DIR)/etc \
 			--without-cxx-main \
 			--with-threads \
 		; \
 		$(MAKE) all install; \
-		cp ./hostpgen $(HOSTPREFIX)/bin/pgen
+		cp ./hostpgen $(HOST_DIR)/bin/pgen
 	$(REMOVE)/Python-$(PYTHON_VERSION)
 	$(TOUCH)
 
@@ -108,7 +108,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			ac_cv_have_lchflags=no \
 			ac_cv_py_format_size_t=yes \
 			ac_cv_broken_sem_getvalue=no \
-			HOSTPYTHON=$(HOSTPREFIX)/bin/python$(PYTHON_VERSION_MAJOR) \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VERSION_MAJOR) \
 		; \
 		$(MAKE) $(MAKE_OPTS) \
 			PYTHON_MODULES_INCLUDE="$(TARGETPREFIX)/usr/include" \
@@ -121,8 +121,8 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			CFLAGS="$(TARGET_CFLAGS)" \
 			LDFLAGS="$(TARGET_LDFLAGS)" \
 			LD="$(TARGET)-gcc" \
-			HOSTPYTHON=$(HOSTPREFIX)/bin/python$(PYTHON_VERSION_MAJOR) \
-			HOSTPGEN=$(HOSTPREFIX)/bin/pgen \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VERSION_MAJOR) \
+			HOSTPGEN=$(HOST_DIR)/bin/pgen \
 			all install DESTDIR=$(TARGETPREFIX) \
 		; \
 		$(MAKE) install DESTDIR=$(TARGETPREFIX)
@@ -191,8 +191,8 @@ $(D)/python_lxml: $(D)/bootstrap $(D)/python $(D)/libxslt $(D)/python_setuptools
 	$(UNTAR)/$(PYTHON_LXML_SOURCE)
 	set -e; cd $(BUILD_TMP)/lxml-$(PYTHON_LXML_VERSION); \
 		$(PYTHON_BUILD) \
-			--with-xml2-config=$(HOSTPREFIX)/bin/xml2-config \
-			--with-xslt-config=$(HOSTPREFIX)/bin/xslt-config; \
+			--with-xml2-config=$(HOST_DIR)/bin/xml2-config \
+			--with-xslt-config=$(HOST_DIR)/bin/xslt-config; \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/lxml-$(PYTHON_LXML_VERSION)
 	$(TOUCH)

@@ -1,4 +1,4 @@
-DEPMOD = $(HOSTPREFIX)/bin/depmod
+DEPMOD = $(HOST_DIR)/bin/depmod
 
 #
 # Patches Kernel 24
@@ -349,7 +349,7 @@ TFINSTALLER_DIR := $(BASE_DIR)/tfinstaller
 
 tfinstaller: $(D)/bootstrap $(TFINSTALLER_DIR)/u-boot.ftfd $(D)/linux-kernel
 	$(START_BUILD)
-	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOSTPREFIX=$(HOSTPREFIX) BASE_DIR=$(BASE_DIR) KERNEL_DIR=$(KERNEL_DIR)
+	$(MAKE) $(MAKE_OPTS) -C $(TFINSTALLER_DIR) HOST_DIR=$(HOST_DIR) BASE_DIR=$(BASE_DIR) KERNEL_DIR=$(KERNEL_DIR)
 	$(TOUCH)
 
 $(TFINSTALLER_DIR)/u-boot.ftfd: $(D)/uboot $(TFINSTALLER_DIR)/tfpacker

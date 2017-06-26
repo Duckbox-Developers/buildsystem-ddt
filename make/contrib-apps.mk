@@ -40,7 +40,7 @@ $(ARCHIVE)/$(PKGCONFIG_SOURCE):
 	$(WGET) https://pkgconfig.freedesktop.org/releases/$(PKGCONFIG_SOURCE)
 
 pkg-config-preqs:
-	@PATH=$(subst $(HOSTPREFIX)/bin:,,$(PATH)); \
+	@PATH=$(subst $(HOST_DIR)/bin:,,$(PATH)); \
 	if ! pkg-config --exists glib-2.0; then \
 		echo "pkg-config and glib2-devel packages are needed for building cross-pkg-config."; false; \
 	fi
@@ -51,14 +51,14 @@ $(D)/host_pkgconfig: directories $(ARCHIVE)/$(PKGCONFIG_SOURCE) | pkg-config-pre
 	$(UNTAR)/$(PKGCONFIG_SOURCE)
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VERSION); \
 		./configure $(CONFIGURE_SILENT) \
-			--prefix=$(HOSTPREFIX) \
+			--prefix=$(HOST_DIR) \
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
 			--with-pc_path=$(PKG_CONFIG_PATH) \
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	ln -sf $(TARGET)-pkg-config $(HOSTPREFIX)/bin/pkg-config
+	ln -sf $(TARGET)-pkg-config $(HOST_DIR)/bin/pkg-config
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VERSION)
 	$(TOUCH)
 
@@ -78,8 +78,8 @@ $(D)/host_mtd_utils: directories $(ARCHIVE)/$(MTD_UTILS_SOURCE)
 	$(UNTAR)/$(MTD_UTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VERSION); \
 		$(call post_patch,$(MTD_UTILS_HOST_PATCH)); \
-		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOSTPREFIX); \
-		$(MAKE) install DESTDIR=$(HOSTPREFIX)/bin
+		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOST_DIR); \
+		$(MAKE) install DESTDIR=$(HOST_DIR)/bin
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VERSION)
 	$(TOUCH)
 
@@ -115,7 +115,7 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VERSION); \
 		./configure $(CONFIGURE_SILENT) \
 			--nfp --disable-werror \
-			--prefix=$(HOSTPREFIX) \
+			--prefix=$(HOST_DIR) \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
 			--target=$(TARGET) \
@@ -168,16 +168,16 @@ $(D)/host_opkg: directories $(D)/host_libarchive $(ARCHIVE)/$(OPKG_SOURCE)
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VERSION); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
 		./autogen.sh; \
-		CFLAGS="-I$(HOSTPREFIX)/include" \
-		LDFLAGS="-L$(HOSTPREFIX)/lib" \
+		CFLAGS="-I$(HOST_DIR)/include" \
+		LDFLAGS="-L$(HOST_DIR)/lib" \
 		./configure $(CONFIGURE_SILENT) \
-			PKG_CONFIG_PATH=$(HOSTPREFIX)/lib/pkgconfig \
+			PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig \
 			--prefix= \
 			--disable-curl \
 			--disable-gpg \
 		; \
 		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(HOSTPREFIX)
+		$(MAKE) install DESTDIR=$(HOST_DIR)
 	$(REMOVE)/opkg-$(OPKG_VERSION)
 	$(TOUCH)
 
@@ -255,8 +255,8 @@ $(D)/host_module_init_tools: $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
 		$(call post_patch,$(MODULE_INIT_TOOLS_HOST_PATCH)); \
 		autoreconf -fi; \
 		./configure $(CONFIGURE_SILENT) \
-			--prefix=$(HOSTPREFIX) \
-			--sbindir=$(HOSTPREFIX)/bin \
+			--prefix=$(HOST_DIR) \
+			--sbindir=$(HOST_DIR)/bin \
 		; \
 		$(MAKE); \
 		$(MAKE) install

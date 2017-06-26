@@ -27,13 +27,13 @@ toolcheck: $(TOOLCHECK) preqs
 	fi
 
 BOOTSTRAP  = directories crosstool $(D)/ccache
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-chksvn.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-gitdescribe.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-find-requires.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-find-provides.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/opkg-module-deps.sh
-BOOTSTRAP += $(HOSTPREFIX)/bin/get-git-archive.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg-chksvn.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg-gitdescribe.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg-find-requires.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg-find-provides.sh
+BOOTSTRAP += $(HOST_DIR)/bin/opkg-module-deps.sh
+BOOTSTRAP += $(HOST_DIR)/bin/get-git-archive.sh
 BOOTSTRAP += $(D)/host_pkgconfig $(D)/host_module_init_tools $(D)/host_mtd_utils
 
 $(D)/bootstrap: $(BOOTSTRAP)
@@ -57,10 +57,10 @@ SYSTEM_TOOLS += $(D)/driver
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	$(TOUCH)
 
-$(HOSTPREFIX)/bin/unpack%.sh \
-$(HOSTPREFIX)/bin/get%.sh \
-$(HOSTPREFIX)/bin/opkg%sh: | directories
-	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOSTPREFIX)/bin
+$(HOST_DIR)/bin/unpack%.sh \
+$(HOST_DIR)/bin/get%.sh \
+$(HOST_DIR)/bin/opkg%sh: | directories
+	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOST_DIR)/bin
 
 #
 STM_RELOCATE     = /opt/STM/STLinux-2.4
@@ -121,7 +121,7 @@ $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VERSION).sh4.rpm
 	touch $(D)/$(notdir $@)
 
 crosstool: directories driver-symlink \
-$(HOSTPREFIX)/bin/unpack-rpm.sh \
+$(HOST_DIR)/bin/unpack-rpm.sh \
 crosstool-rpminstall
 	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
 	if [ -e $(CROSS_DIR)/target/usr/lib/libstdc++.la ]; then \
@@ -153,7 +153,7 @@ crosstool-rpminstall
 #
 host_u_boot_tools: \
 $(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
-	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOSTPREFIX)/bin \
+	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOST_DIR)/bin \
 		$^
 	touch $(D)/$(notdir $@)
 
@@ -239,8 +239,8 @@ directories:
 	install -d $(TARGETPREFIX)
 	install -d $(CROSS_DIR)
 	install -d $(BOOT_DIR)
-	install -d $(HOSTPREFIX)
-	install -d $(HOSTPREFIX)/{bin,lib,share}
+	install -d $(HOST_DIR)
+	install -d $(HOST_DIR)/{bin,lib,share}
 	install -d $(TARGETPREFIX)/{bin,boot,etc,lib,sbin,usr,var}
 	install -d $(TARGETPREFIX)/etc/{init.d,mdev,network,rc.d}
 	install -d $(TARGETPREFIX)/etc/rc.d/{rc0.d,rc6.d}
@@ -259,7 +259,7 @@ directories:
 #
 # ccache
 #
-CCACHE_BINDIR = $(HOSTPREFIX)/bin
+CCACHE_BINDIR = $(HOST_DIR)/bin
 CCACHE_BIN = $(CCACHE)
 
 CCACHE_LINKS = \

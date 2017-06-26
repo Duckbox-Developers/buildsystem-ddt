@@ -105,7 +105,7 @@ $(SOURCE_DIR)/enigma2/config.status:
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/enigma2; \
 		./autogen.sh; \
-		sed -e 's|#!/usr/bin/python|#!$(HOSTPREFIX)/bin/python|' -i po/xml2po.py; \
+		sed -e 's|#!/usr/bin/python|#!$(HOST_DIR)/bin/python|' -i po/xml2po.py; \
 		$(BUILDENV) \
 		./configure \
 			--build=$(BUILD) \

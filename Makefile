@@ -29,7 +29,7 @@ printenv:
 	@echo "CROSS_DIR        : $(CROSS_DIR)"
 	@echo "CROSS_BASE       : $(CROSS_BASE)"
 	@echo "RELEASE_DIR      : $(RELEASE_DIR)"
-	@echo "HOSTPREFIX       : $(HOSTPREFIX)"
+	@echo "HOST_DIR         : $(HOST_DIR)"
 	@echo "TARGETPREFIX     : $(TARGETPREFIX)"
 	@echo "PATH             : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
 	@echo "BOXARCH          : $(BOXARCH)"
@@ -56,7 +56,7 @@ else ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
 endif
 	@echo '================================================================================'
 	@echo ""
-	@$(MAKE) --no-print-directory toolcheck
+	@make --no-print-directory toolcheck
 ifeq ($(MAINTAINER),)
 	@echo "##########################################################################"
 	@echo "# The MAINTAINER variable is not set. It defaults to your name from the  #"
