@@ -833,13 +833,13 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(JPEG_TURBO_SOURCE)
 #
 # libpng
 #
-PNG_VERSION = 1.6.25
+PNG_VERSION = 1.6.29
 PNG_VERSION_X = 16
 PNG_SOURCE = libpng-$(PNG_VERSION).tar.xz
 PNG_PATCH = libpng-$(PNG_VERSION)-disable-tools.patch
 
 $(ARCHIVE)/$(PNG_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(PNG_VERSION_X)/older-releases/$(PNG_VERSION)/$(PNG_SOURCE)
+	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(PNG_VERSION_X)/$(PNG_VERSION)/$(PNG_SOURCE)
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(PNG_SOURCE)
 	$(START_BUILD)
