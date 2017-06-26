@@ -9,8 +9,8 @@ PYTHON_BUILD = \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
-	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)" \
+	PYTHONPATH=$(TARGET_DIR)$(PYTHON_DIR)/site-packages \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)$(PYTHON_INCLUDE_DIR)" \
 	$(HOST_DIR)/bin/python ./setup.py build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
@@ -18,9 +18,9 @@ PYTHON_INSTALL = \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
-	PYTHONPATH=$(TARGETPREFIX)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGETPREFIX)$(PYTHON_INCLUDE_DIR)" \
-	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGETPREFIX) --prefix=/usr
+	PYTHONPATH=$(TARGET_DIR)$(PYTHON_DIR)/site-packages \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)$(PYTHON_INCLUDE_DIR)" \
+	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGET_DIR) --prefix=/usr
 
 #
 # host_python
@@ -111,9 +111,9 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VERSION_MAJOR) \
 		; \
 		$(MAKE) $(MAKE_OPTS) \
-			PYTHON_MODULES_INCLUDE="$(TARGETPREFIX)/usr/include" \
-			PYTHON_MODULES_LIB="$(TARGETPREFIX)/usr/lib" \
-			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(TARGETPREFIX)" \
+			PYTHON_MODULES_INCLUDE="$(TARGET_DIR)/usr/include" \
+			PYTHON_MODULES_LIB="$(TARGET_DIR)/usr/lib" \
+			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(TARGET_DIR)" \
 			CROSS_COMPILE_TARGET=yes \
 			CROSS_COMPILE=$(TARGET) \
 			MACHDEP=linux2 \
@@ -123,11 +123,11 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			LD="$(TARGET)-gcc" \
 			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VERSION_MAJOR) \
 			HOSTPGEN=$(HOST_DIR)/bin/pgen \
-			all install DESTDIR=$(TARGETPREFIX) \
+			all install DESTDIR=$(TARGET_DIR) \
 		; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGETPREFIX)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
-	ln -sf $(TARGETPREFIX)$(PYTHON_INCLUDE_DIR) $(TARGETPREFIX)/usr/include/python
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGET_DIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
+	ln -sf $(TARGET_DIR)$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
 	$(REMOVE)/Python-$(PYTHON_VERSION)
 	$(TOUCH)
@@ -169,7 +169,7 @@ $(D)/libxmlccwrap: $(D)/bootstrap $(D)/libxml2 $(D)/libxslt $(ARCHIVE)/$(LIBXMLC
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libxmlccwrap.la
 	$(REMOVE)/libxmlccwrap-$(LIBXMLCCWRAP_VERSION)
 	$(TOUCH)
@@ -232,7 +232,7 @@ $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/freetype $(D)/python $(D)/
 	set -e; cd $(BUILD_TMP)/Imaging-$(PYTHON_IMAGING_VERSION); \
 		$(call post_patch,$(PYTHON_IMAGING_PATCH)); \
 		sed -ie "s|"darwin"|"darwinNot"|g" "setup.py"; \
-		sed -ie "s|ZLIB_ROOT = None|ZLIB_ROOT = libinclude(\"${TARGETPREFIX}/usr\")|" "setup.py"; \
+		sed -ie "s|ZLIB_ROOT = None|ZLIB_ROOT = libinclude(\"${TARGET_DIR}/usr\")|" "setup.py"; \
 		$(PYTHON_INSTALL)
 	$(REMOVE)/Imaging-$(PYTHON_IMAGING_VERSION)
 	$(TOUCH)
@@ -691,8 +691,8 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 		fi
 	cp -ra $(ARCHIVE)/livestreamersrv.git $(BUILD_TMP)/livestreamersrv
 	set -e; cd $(BUILD_TMP)/livestreamersrv; \
-		cp -rd livestreamersrv $(TARGETPREFIX)/usr/sbin; \
-		cp -rd offline.mp4 $(TARGETPREFIX)/usr/share
+		cp -rd livestreamersrv $(TARGET_DIR)/usr/sbin; \
+		cp -rd offline.mp4 $(TARGET_DIR)/usr/share
 	$(REMOVE)/livestreamersrv
 	$(TOUCH)
 

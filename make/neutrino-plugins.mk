@@ -30,18 +30,18 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 			--enable-javascript \
 			--with-ssl; \
 		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	mkdir -p $(TARGETPREFIX)/var/tuxbox/plugins $(TARGETPREFIX)/var/tuxbox/config/links
-	mv $(TARGETPREFIX)/bin/links $(TARGETPREFIX)/var/tuxbox/plugins/links.so
-	echo "name=Links Web Browser"	 > $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "desc=Web Browser"		>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "type=2"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "needfb=1"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "needrc=1"			>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "needoffsets=1"		>> $(TARGETPREFIX)/var/tuxbox/plugins/links.cfg
-	echo "bookmarkcount=0"		 > $(TARGETPREFIX)/var/tuxbox/config/bookmarks
-	touch $(TARGETPREFIX)/var/tuxbox/config/links/links.his
-	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGETPREFIX)/var/tuxbox/config/links
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	mkdir -p $(TARGET_DIR)/var/tuxbox/plugins $(TARGET_DIR)/var/tuxbox/config/links
+	mv $(TARGET_DIR)/bin/links $(TARGET_DIR)/var/tuxbox/plugins/links.so
+	echo "name=Links Web Browser"	 > $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "desc=Web Browser"		>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "type=2"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "needfb=1"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "needrc=1"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "needoffsets=1"		>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
+	echo "bookmarkcount=0"		 > $(TARGET_DIR)/var/tuxbox/config/bookmarks
+	touch $(TARGET_DIR)/var/tuxbox/config/links/links.his
+	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGET_DIR)/var/tuxbox/config/links
 	$(REMOVE)/links-$(LINKS_VERSION)
 	$(TOUCH)
 
@@ -68,7 +68,7 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 			--build=$(BUILD) \
 			--prefix= \
 			--with-target=cdk \
-			--oldinclude=$(TARGETPREFIX)/include \
+			--oldinclude=$(TARGET_DIR)/include \
 			--enable-maintainer-mode \
 			--with-boxtype=$(BOXTYPE) \
 			--with-plugindir=/var/tuxbox/plugins \
@@ -88,7 +88,7 @@ $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.st
 
 $(D)/neutrino-mp-plugins: neutrino-mp-plugins.do_prepare neutrino-mp-plugins.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGETPREFIX)
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 neutrino-mp-plugins-clean:
@@ -118,12 +118,12 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/plugins-scripts-lua
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) sh4 TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG); \
-		$(MAKE) install DESTDIR=$(TARGETPREFIX)
-	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGETPREFIX)/etc/init.d/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
-	: install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGETPREFIX}/usr/share/xupnpd/plugins/
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	: install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	$(REMOVE)/xupnpd
 	$(TOUCH)
 
@@ -139,11 +139,11 @@ $(D)/plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 		fi
 	cp -ra $(ARCHIVE)/plugins-scripts-lua.git/plugins $(BUILD_TMP)/plugins-scripts-lua
 	set -e; cd $(BUILD_TMP)/plugins-scripts-lua; \
-		install -d $(TARGETPREFIX)/var/tuxbox/plugins
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/ard_mediathek/* $(TARGETPREFIX)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/favorites2bin/* $(TARGETPREFIX)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/mtv/* $(TARGETPREFIX)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/netzkino/* $(TARGETPREFIX)/var/tuxbox/plugins/
+		install -d $(TARGET_DIR)/var/tuxbox/plugins
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/ard_mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/favorites2bin/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/mtv/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-scripts-lua/netzkino/* $(TARGET_DIR)/var/tuxbox/plugins/
 	$(REMOVE)/plugins-scripts-lua
 	$(TOUCH)
 
@@ -178,7 +178,7 @@ $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
 			--with-fontdir=/usr/share/fonts \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CPPFLAGS="$(CPPFLAGS) -I$(driverdir) -I$(KERNEL_DIR)/include -I$(TARGETPREFIX)/include" \
+			CPPFLAGS="$(CPPFLAGS) -I$(driverdir) -I$(KERNEL_DIR)/include -I$(TARGET_DIR)/include" \
 			LDFLAGS="$(TARGET_LDFLAGS)"
 
 $(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
@@ -189,7 +189,7 @@ $(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.
 
 $(D)/neutrino-hd2-plugins: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGETPREFIX) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGET_DIR) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
 	$(TOUCH)
 
 neutrino-hd2-plugins-clean:

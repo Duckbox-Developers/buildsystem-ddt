@@ -309,27 +309,27 @@ $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
-		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGETPREFIX) modules_install
+		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	$(TOUCH)
 
 $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
 	$(START_BUILD)
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
-	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGETPREFIX)/boot/vmlinux-sh4-$(KERNEL_VERSION)
-	install -m 644 $(KERNEL_DIR)/System.map $(TARGETPREFIX)/boot/System.map-sh4-$(KERNEL_VERSION)
-	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGETPREFIX)/boot/
-	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/build || true
-	rm $(TARGETPREFIX)/lib/modules/$(KERNEL_VERSION)/source || true
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VERSION)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-sh4-$(KERNEL_VERSION)
+	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGET_DIR)/boot/
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/source || true
 	$(TOUCH)
 
 $(D)/kernel-headers: $(D)/linux-kernel.do_prepare
 	$(START_BUILD)
 	cd $(KERNEL_DIR); \
-		install -d $(TARGETPREFIX)/usr/include
-		cp -a include/linux $(TARGETPREFIX)/usr/include
-		cp -a include/asm-sh $(TARGETPREFIX)/usr/include/asm
-		cp -a include/asm-generic $(TARGETPREFIX)/usr/include
-		cp -a include/mtd $(TARGETPREFIX)/usr/include
+		install -d $(TARGET_DIR)/usr/include
+		cp -a include/linux $(TARGET_DIR)/usr/include
+		cp -a include/asm-sh $(TARGET_DIR)/usr/include/asm
+		cp -a include/asm-generic $(TARGET_DIR)/usr/include
+		cp -a include/mtd $(TARGET_DIR)/usr/include
 	$(TOUCH)
 
 linux-kernel-distclean:

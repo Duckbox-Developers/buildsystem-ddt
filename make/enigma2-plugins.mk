@@ -17,7 +17,7 @@ $(D)/hotplug_e2: $(D)/bootstrap
 			--prefix=/usr \
 		; \
 		$(MAKE) all; \
-		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR)
 	$(REMOVE)/hotplug-e2-helper
 	$(TOUCH)
 
@@ -52,7 +52,7 @@ $(D)/tuxtxtlib: $(D)/bootstrap
 			--with-fontdir=/usr/share/fonts \
 		; \
 		$(MAKE) all; \
-		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/tuxbox-tuxtxt.pc
 	$(REWRITE_LIBTOOL)/libtuxtxt.la
 	$(REMOVE)/tuxtxtlib
@@ -86,7 +86,7 @@ $(D)/tuxtxt32bpp: $(D)/bootstrap $(D)/tuxtxtlib
 			--with-fontdir=/usr/share/fonts \
 		; \
 		$(MAKE) all; \
-		$(MAKE) install prefix=/usr DESTDIR=$(TARGETPREFIX)
+		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libtuxtxt32bpp.la
 	$(REMOVE)/tuxtxt
 	$(TOUCH)
@@ -109,19 +109,19 @@ $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah $(D)/pyth
 	cp -ra $(ARCHIVE)/e2openplugin-OpenWebif.git $(BUILD_TMP)/e2openplugin-OpenWebif
 	set -e; cd $(BUILD_TMP)/e2openplugin-OpenWebif; \
 		$(BUILDENV) \
-		cp -a plugin $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/cs/LC_MESSAGES; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/de/LC_MESSAGES; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/el/LC_MESSAGES; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/nl/LC_MESSAGES; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/pl/LC_MESSAGES; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/uk/LC_MESSAGES; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/cs/LC_MESSAGES/OpenWebif.mo locale/cs.po; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/de/LC_MESSAGES/OpenWebif.mo locale/de.po; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/el/LC_MESSAGES/OpenWebif.mo locale/el.po; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/nl/LC_MESSAGES/OpenWebif.mo locale/nl.po; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/pl/LC_MESSAGES/OpenWebif.mo locale/pl.po; \
-		msgfmt -cv -o $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/uk/LC_MESSAGES/OpenWebif.mo locale/uk.po
+		cp -a plugin $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/cs/LC_MESSAGES; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/de/LC_MESSAGES; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/el/LC_MESSAGES; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/nl/LC_MESSAGES; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/pl/LC_MESSAGES; \
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/uk/LC_MESSAGES; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/cs/LC_MESSAGES/OpenWebif.mo locale/cs.po; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/de/LC_MESSAGES/OpenWebif.mo locale/de.po; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/el/LC_MESSAGES/OpenWebif.mo locale/el.po; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/nl/LC_MESSAGES/OpenWebif.mo locale/nl.po; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/pl/LC_MESSAGES/OpenWebif.mo locale/pl.po; \
+		msgfmt -cv -o $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/uk/LC_MESSAGES/OpenWebif.mo locale/uk.po
 	$(REMOVE)/e2openplugin-OpenWebif
 	$(TOUCH)
 
@@ -143,7 +143,7 @@ $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser/src/lib; \
 		$(BUILDENV) \
 		sh4-linux-gcc -shared -o netscan.so \
-			-I $(TARGETPREFIX)/usr/include/python$(PYTHON_VERSION_MAJOR) \
+			-I $(TARGET_DIR)/usr/include/python$(PYTHON_VERSION_MAJOR) \
 			-include Python.h \
 			errors.h \
 			list.c \
@@ -162,11 +162,11 @@ $(D)/enigma2_networkbrowser: $(D)/bootstrap $(D)/python
 			statusq.h \
 			time_compat.h
 	set -e; cd $(BUILD_TMP)/enigma2-networkbrowser; \
-		mkdir -p $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser ; \
-		cp -a po $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
-		cp -a meta $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
-		cp -a src/* $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
-		cp -a src/lib/netscan.so $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
-		rm -rf $(TARGETPREFIX)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
+		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser ; \
+		cp -a po $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
+		cp -a meta $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
+		cp -a src/* $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
+		cp -a src/lib/netscan.so $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/ ; \
+		rm -rf $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/lib
 	$(REMOVE)/enigma2-networkbrowser
 	$(TOUCH)

@@ -2,7 +2,7 @@
 # enigma2
 #
 E_CPPFLAGS    = -I$(DRIVER_DIR)/include
-E_CPPFLAGS   += -I$(TARGETPREFIX)/usr/include
+E_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools
@@ -120,7 +120,7 @@ $(SOURCE_DIR)/enigma2/config.status:
 			--with-boxtype=none \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			PY_PATH=$(TARGETPREFIX)/usr \
+			PY_PATH=$(TARGET_DIR)/usr \
 			$(PLATFORM_CPPFLAGS)
 
 $(D)/enigma2.do_compile: $(SOURCE_DIR)/enigma2/config.status
@@ -131,12 +131,12 @@ $(D)/enigma2.do_compile: $(SOURCE_DIR)/enigma2/config.status
 
 $(D)/enigma2: $(D)/enigma2.do_prepare $(D)/enigma2.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(TARGETPREFIX)
-	if [ -e $(TARGETPREFIX)/usr/bin/enigma2 ]; then \
-		$(TARGET)-strip $(TARGETPREFIX)/usr/bin/enigma2; \
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(TARGET_DIR)
+	if [ -e $(TARGET_DIR)/usr/bin/enigma2 ]; then \
+		$(TARGET)-strip $(TARGET_DIR)/usr/bin/enigma2; \
 	fi
-	if [ -e $(TARGETPREFIX)/usr/local/bin/enigma2 ]; then \
-		$(TARGET)-strip $(TARGETPREFIX)/usr/local/bin/enigma2; \
+	if [ -e $(TARGET_DIR)/usr/local/bin/enigma2 ]; then \
+		$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/enigma2; \
 	fi
 	$(TOUCH)
 

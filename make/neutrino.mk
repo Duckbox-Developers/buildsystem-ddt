@@ -1,7 +1,7 @@
 #
 # Makefile to build NEUTRINO
 #
-$(TARGETPREFIX)/var/etc/.version:
+$(TARGET_DIR)/var/etc/.version:
 	echo "imagename=Neutrino MP" > $@
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
 	echo "creator=`id -un`" >> $@
@@ -30,7 +30,7 @@ N_CFLAGS      += -fno-strict-aliasing -funsigned-char
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
 N_CPPFLAGS     = -I$(DRIVER_DIR)/bpamem
-N_CPPFLAGS    += -I$(TARGETPREFIX)/usr/include
+N_CPPFLAGS    += -I$(TARGET_DIR)/usr/include
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
 N_CPPFLAGS    += -D__STDC_CONSTANT_MACROS
 
@@ -100,12 +100,12 @@ $(D)/libstb-hal-cst-next-max.config.status: | $(NEUTRINO_DEPS)
 $(D)/libstb-hal-cst-next-max.do_compile: $(D)/libstb-hal-cst-next-max.config.status
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next-max; \
-		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGETPREFIX)
+		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 $(D)/libstb-hal-cst-next-max: $(D)/libstb-hal-cst-next-max.do_prepare $(D)/libstb-hal-cst-next-max.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGETPREFIX)
+	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 libstb-hal-cst-next-max-clean:
@@ -200,14 +200,14 @@ $(SOURCE_DIR)/neutrino-mp-cst-next-max/src/gui/version.h:
 $(D)/neutrino-mp-cst-next-max.do_compile: $(D)/neutrino-mp-cst-next-max.config.status $(SOURCE_DIR)/neutrino-mp-cst-next-max/src/gui/version.h
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
-		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGETPREFIX)
+		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 $(D)/neutrino-mp-cst-next-max: $(D)/neutrino-mp-cst-next-max.do_prepare $(D)/neutrino-mp-cst-next-max.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
-	rm -f $(TARGETPREFIX)/var/etc/.version
-	make $(TARGETPREFIX)/var/etc/.version
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
 	$(TOUCH)
 
 neutrino-mp-cst-next-max-clean:
@@ -261,12 +261,12 @@ $(D)/libstb-hal-cst-next.config.status: | $(NEUTRINO_DEPS)
 $(D)/libstb-hal-cst-next.do_compile: $(D)/libstb-hal-cst-next.config.status
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next; \
-		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGETPREFIX)
+		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 $(D)/libstb-hal-cst-next: $(D)/libstb-hal-cst-next.do_prepare $(D)/libstb-hal-cst-next.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGETPREFIX)
+	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 libstb-hal-cst-next-clean:
@@ -368,9 +368,9 @@ $(D)/neutrino-mp-cst-next.do_compile: $(D)/neutrino-mp-cst-next.config.status $(
 
 $(D)/neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
-	rm -f $(TARGETPREFIX)/var/etc/.version
-	make $(TARGETPREFIX)/var/etc/.version
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
 	$(TOUCH)
 
 neutrino-mp-cst-next-clean:
@@ -473,9 +473,9 @@ $(D)/neutrino-mp-cst-next-ni.do_compile: $(D)/neutrino-mp-cst-next-ni.config.sta
 
 $(D)/neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
-	rm -f $(TARGETPREFIX)/var/etc/.version
-	make $(TARGETPREFIX)/var/etc/.version
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
 	$(TOUCH)
 
 neutrino-mp-cst-next-ni-clean:
@@ -490,11 +490,11 @@ neutrino-mp-cst-next-ni-distclean:
 
 ################################################################################
 neutrino-cdkroot-clean:
-	[ -e $(TARGETPREFIX)/usr/local/bin ] && cd $(TARGETPREFIX)/usr/local/bin && find -name '*' -delete || true
-	[ -e $(TARGETPREFIX)/usr/local/share/iso-codes ] && cd $(TARGETPREFIX)/usr/local/share/iso-codes && find -name '*' -delete || true
-	[ -e $(TARGETPREFIX)/usr/share/tuxbox/neutrino ] && cd $(TARGETPREFIX)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
-	[ -e $(TARGETPREFIX)/usr/share/fonts ] && cd $(TARGETPREFIX)/usr/share/fonts && find -name '*' -delete || true
-	[ -e $(TARGETPREFIX)/var/tuxbox ] && cd $(TARGETPREFIX)/var/tuxbox && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/local/bin ] && cd $(TARGET_DIR)/usr/local/bin && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cd $(TARGET_DIR)/usr/local/share/iso-codes && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/share/tuxbox/neutrino ] && cd $(TARGET_DIR)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/var/tuxbox ] && cd $(TARGET_DIR)/var/tuxbox && find -name '*' -delete || true
 ################################################################################
 #
 # yaud-neutrino-hd2
@@ -561,9 +561,9 @@ $(SOURCE_DIR)/neutrino-hd2/config.status:
 
 $(D)/neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGETPREFIX); \
-	rm -f $(TARGETPREFIX)/var/etc/.version
-	make $(TARGETPREFIX)/var/etc/.version
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
 	$(TOUCH)
 
 $(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
@@ -624,12 +624,12 @@ $(D)/libstb-hal-cst-next-tangos.config.status: | $(NEUTRINO_DEPS)
 $(D)/libstb-hal-cst-next-tangos.do_compile: $(D)/libstb-hal-cst-next-tangos.config.status
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next-tangos; \
-		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGETPREFIX)
+		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 $(D)/libstb-hal-cst-next-tangos: $(D)/libstb-hal-cst-next-tangos.do_prepare $(D)/libstb-hal-cst-next-tangos.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGETPREFIX)
+	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 libstb-hal-cst-next-tangos-clean:
@@ -737,9 +737,9 @@ $(D)/neutrino-mp-tangos.do_compile: $(D)/neutrino-mp-tangos.config.status $(SOUR
 
 $(D)/neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
 	$(START_BUILD)
-	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGETPREFIX); \
-	rm -f $(TARGETPREFIX)/var/etc/.version
-	make $(TARGETPREFIX)/var/etc/.version
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
 	$(TOUCH)
 
 neutrino-mp-tangos-clean:

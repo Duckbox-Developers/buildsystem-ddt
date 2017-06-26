@@ -30,7 +30,7 @@ printenv:
 	@echo "CROSS_BASE       : $(CROSS_BASE)"
 	@echo "RELEASE_DIR      : $(RELEASE_DIR)"
 	@echo "HOST_DIR         : $(HOST_DIR)"
-	@echo "TARGETPREFIX     : $(TARGETPREFIX)"
+	@echo "TARGET_DIR       : $(TARGET_DIR)"
 	@echo "PATH             : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
 	@echo "BOXARCH          : $(BOXARCH)"
 	@echo "BUILD            : $(BUILD)"

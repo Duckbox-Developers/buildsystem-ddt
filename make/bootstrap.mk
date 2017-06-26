@@ -128,23 +128,23 @@ crosstool-rpminstall
 		sed -i "s,^libdir=.*,libdir='$(CROSS_DIR)/target/usr/lib'," $(CROSS_DIR)/target/usr/lib/lib{std,sup}c++.la; \
 	fi
 	if test -e $(CROSS_DIR)/target/usr/lib/libstdc++.so; then \
-		cp -a $(CROSS_DIR)/target/usr/lib/libstdc++.s*[!y] $(TARGETPREFIX)/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGETPREFIX)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGETPREFIX)/usr/lib; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc.so $(TARGETPREFIX)/usr/lib/libc.so; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGETPREFIX)/usr/lib/libc_nonshared.a; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libstdc++.s*[!y] $(TARGET_DIR)/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGET_DIR)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGET_DIR)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGET_DIR)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGET_DIR)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGET_DIR)/usr/lib; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGET_DIR)/usr/lib; \
+		ln -s $(CROSS_DIR)/target/usr/lib/libc.so $(TARGET_DIR)/usr/lib/libc.so; \
+		ln -s $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGET_DIR)/usr/lib/libc_nonshared.a; \
 	fi
 	if test -e $(CROSS_DIR)/target/lib; then \
-		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGETPREFIX)/lib; \
+		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGET_DIR)/lib; \
 	fi
 	if test -e $(CROSS_DIR)/target/sbin/ldconfig; then \
-		cp -a $(CROSS_DIR)/target/sbin/ldconfig $(TARGETPREFIX)/sbin; \
-		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGETPREFIX)/etc; \
-		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGETPREFIX)/etc; \
+		cp -a $(CROSS_DIR)/target/sbin/ldconfig $(TARGET_DIR)/sbin; \
+		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGET_DIR)/etc; \
+		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGET_DIR)/etc; \
 	fi
 	touch $(D)/$(notdir $@)
 
@@ -236,24 +236,24 @@ directories:
 	test -d $(STL_ARCHIVE) || mkdir $(STL_ARCHIVE)
 	test -d $(BUILD_TMP) || mkdir $(BUILD_TMP)
 	test -d $(SOURCE_DIR) || mkdir $(SOURCE_DIR)
-	install -d $(TARGETPREFIX)
+	install -d $(TARGET_DIR)
 	install -d $(CROSS_DIR)
 	install -d $(BOOT_DIR)
 	install -d $(HOST_DIR)
 	install -d $(HOST_DIR)/{bin,lib,share}
-	install -d $(TARGETPREFIX)/{bin,boot,etc,lib,sbin,usr,var}
-	install -d $(TARGETPREFIX)/etc/{init.d,mdev,network,rc.d}
-	install -d $(TARGETPREFIX)/etc/rc.d/{rc0.d,rc6.d}
-	ln -s ../init.d $(TARGETPREFIX)/etc/rc.d/init.d
-	install -d $(TARGETPREFIX)/lib/{lsb,firmware}
-	install -d $(TARGETPREFIX)/usr/{bin,lib,local,sbin,share}
-	install -d $(TARGETPREFIX)/usr/lib/pkgconfig
-	install -d $(TARGETPREFIX)/usr/include/linux
-	install -d $(TARGETPREFIX)/usr/include/linux/dvb
-	install -d $(TARGETPREFIX)/usr/local/{bin,sbin,share}
-	install -d $(TARGETPREFIX)/var/{etc,lib,run}
-	install -d $(TARGETPREFIX)/var/lib/{misc,nfs}
-	install -d $(TARGETPREFIX)/var/bin
+	install -d $(TARGET_DIR)/{bin,boot,etc,lib,sbin,usr,var}
+	install -d $(TARGET_DIR)/etc/{init.d,mdev,network,rc.d}
+	install -d $(TARGET_DIR)/etc/rc.d/{rc0.d,rc6.d}
+	ln -s ../init.d $(TARGET_DIR)/etc/rc.d/init.d
+	install -d $(TARGET_DIR)/lib/{lsb,firmware}
+	install -d $(TARGET_DIR)/usr/{bin,lib,local,sbin,share}
+	install -d $(TARGET_DIR)/usr/lib/pkgconfig
+	install -d $(TARGET_DIR)/usr/include/linux
+	install -d $(TARGET_DIR)/usr/include/linux/dvb
+	install -d $(TARGET_DIR)/usr/local/{bin,sbin,share}
+	install -d $(TARGET_DIR)/var/{etc,lib,run}
+	install -d $(TARGET_DIR)/var/lib/{misc,nfs}
+	install -d $(TARGET_DIR)/var/bin
 	touch $(D)/$(notdir $@)
 
 #

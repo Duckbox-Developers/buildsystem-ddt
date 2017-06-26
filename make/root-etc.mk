@@ -4,21 +4,21 @@
 $(D)/diverse-tools:
 	$(START_BUILD)
 	( cd root/etc && for i in $(DIVERSE_TOOLS_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; done ) ; \
 	( cd root/etc && for i in $(INITSCRIPTS_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) || true ; \
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; done ) || true ; \
 	( cd root/etc && for i in $(BASE_FILES_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; done ) ; \
 	( cd root/etc && for i in $(BASE_PASSWD_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; done ) ; \
 	( cd root/etc && for i in $(NETBASE_ADAPTED_ETC_FILES); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; done ) ; \
-	ln -sf /usr/share/zoneinfo/CET $(TARGETPREFIX)/etc/localtime
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; done ) ; \
+	ln -sf /usr/share/zoneinfo/CET $(TARGET_DIR)/etc/localtime
 	$(TOUCH)
 
 #
@@ -82,7 +82,7 @@ INITSCRIPTS_ADAPTED_ETC_FILES = \
 define adapted-etc-files
 	cd root/etc && \
 	for i in $(1); do \
-		[ -f $$i ] && install -m 644 $$i $(TARGETPREFIX)/etc/$$i || true; \
-		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGETPREFIX)/etc/$$i || true; \
+		[ -f $$i ] && install -m 644 $$i $(TARGET_DIR)/etc/$$i || true; \
+		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; \
 	done
 endef
