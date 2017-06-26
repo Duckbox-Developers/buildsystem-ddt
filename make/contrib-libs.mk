@@ -2110,7 +2110,7 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 #
 # alsa-utils
 #
-ALSA_UTILS_VERSION = $(ALSA_LIB_VERSION)
+ALSA_UTILS_VERSION = 1.1.4
 ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VERSION).tar.bz2
 
 $(ARCHIVE)/$(ALSA_UTILS_SOURCE):
