@@ -3,6 +3,7 @@
 #
 #
 cec(activemode=1 deviceName=DuckBox deviceType=3) # HDMI CEC
+mt7601Usta         # MediaTek MT7601U USB WLAN
 rt2500usb          # Ralink RT2500 USB WLAN
 rt2870sta          # Ralink RT2870 USB WLAN
 rt3070sta          # Ralink RT3070 USB WLAN
