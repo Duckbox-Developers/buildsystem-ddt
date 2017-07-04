@@ -1,12 +1,12 @@
 #
 # busybox
 #
-BUSYBOX_VERSION = 1.26.2
+BUSYBOX_VERSION = 1.27.0
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VERSION).tar.bz2
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VERSION)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-extra.patch
-BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-wget_fix_for_brain-damaged_HTTP_servers.patch
+#BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-wget_fix_for_brain-damaged_HTTP_servers.patch
 
 $(ARCHIVE)/$(BUSYBOX_SOURCE):
 	$(WGET) http://busybox.net/downloads/$(BUSYBOX_SOURCE)
