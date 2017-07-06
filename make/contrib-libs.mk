@@ -2025,7 +2025,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 	$(REMOVE)/libusb-$(LIBUSB_VERSION)
 	$(UNTAR)/$(LIBUSB_SOURCE)
 	set -e; cd $(BUILD_TMP)/libusb-$(LIBUSB_VERSION); \
-		$(call post_patch,$(USB_PATCH)); \
+		$(call post_patch,$(LIBUSB_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
