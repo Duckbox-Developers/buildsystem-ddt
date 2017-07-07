@@ -440,7 +440,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	cd $(TARGET_DIR) && rm sbin/jfs_debugfs sbin/jfs_fscklog sbin/jfs_logdump
+	rm -f $(addprefix $(TARGET_DIR)/sbin/,jfs_debugfs jfs_fscklog jfs_logdump)
 	$(REMOVE)/jfsutils-$(JFSUTILS_VERSION)
 	$(TOUCH)
 
