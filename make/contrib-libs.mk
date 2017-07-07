@@ -876,7 +876,7 @@ $(D)/png++: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(PNGPP_SOURCE)
 	$(TOUCH)
 
 #
-# libgif
+# giflib
 #
 GIFLIB_VERSION = 5.1.4
 GIFLIB_SOURCE = giflib-$(GIFLIB_VERSION).tar.bz2
@@ -884,7 +884,7 @@ GIFLIB_SOURCE = giflib-$(GIFLIB_VERSION).tar.bz2
 $(ARCHIVE)/$(GIFLIB_SOURCE):
 	$(WGET) https://sourceforge.net/projects/giflib/files/$(GIFLIB_SOURCE)
 
-$(D)/libgif: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
+$(D)/giflib: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/giflib-$(GIFLIB_VERSION)
 	$(UNTAR)/$(GIFLIB_SOURCE)
@@ -892,11 +892,11 @@ $(D)/libgif: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
 		export ac_cv_prog_have_xmlto=no; \
 		$(CONFIGURE) \
 			--prefix=/usr \
-			--bindir=/.remove \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libgif.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,gif2rgb gifbuild gifclrmp gifecho giffix gifinto giftext giftool)
 	$(REMOVE)/giflib-$(GIFLIB_VERSION)
 	$(TOUCH)
 
