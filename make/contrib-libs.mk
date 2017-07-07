@@ -968,7 +968,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/$(CURL_SOURCE)
 		rm -f $(TARGET_DIR)/usr/bin/curl-config
 	$(REWRITE_LIBTOOL)/libcurl.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcurl.pc
-	cd $(TARGET_DIR) && rm usr/bin/curl
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,curl)
 	$(REMOVE)/curl-$(CURL_VERSION)
 	$(TOUCH)
 
