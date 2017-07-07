@@ -709,6 +709,7 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 LIRC_VERSION = 0.9.0
 LIRC_SOURCE = lirc-$(LIRC_VERSION).tar.bz2
 LIRC_PATCH = lirc-$(LIRC_VERSION).patch
+LIRC = $(D)/lirc
 
 $(ARCHIVE)/$(LIRC_SOURCE):
 	$(WGET) https://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VERSION)/$(LIRC_SOURCE)
@@ -723,6 +724,7 @@ else
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE),adb_box arivalink200 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd hl101 sagemcom88 spark spark7162 ufs910 vitamin_hd5000))
 $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lirc-$(LIRC_VERSION)
@@ -735,6 +737,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
+			--sbindir=/usr/bin \
 			--mandir=/.remove \
 			--with-kerneldir=$(KERNEL_DIR) \
 			--without-x \
@@ -749,8 +752,10 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/liblirc_client.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,lircmd ircat irpty irrecord irsend irw lircrcd mode2 pronto2lirc)
 	$(REMOVE)/lirc-$(LIRC_VERSION)
 	$(TOUCH)
+endif
 
 #
 # libjpeg

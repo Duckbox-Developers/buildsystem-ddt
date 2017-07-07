@@ -8,7 +8,7 @@ E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools
 E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
 
-ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(D)/lirc $(D)/libcurl $(D)/libid3tag $(D)/libmad
+ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/libncurses $(LIRC) $(D)/libcurl $(D)/libid3tag $(D)/libmad
 ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/giflib $(D)/freetype
 ENIGMA2_DEPS += $(D)/alsa-utils $(D)/ffmpeg
 ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc_e2 $(D)/libexpat $(D)/libdvbsi++ $(D)/libusb
