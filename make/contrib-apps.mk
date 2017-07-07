@@ -877,7 +877,7 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(AUTOFS_SOURCE)
 	install -m 644 $(SKEL_ROOT)/etc/auto.master $(TARGET_DIR)/etc/
 	install -m 644 $(SKEL_ROOT)/etc/auto.misc $(TARGET_DIR)/etc/
 	install -m 644 $(SKEL_ROOT)/etc/auto.network $(TARGET_DIR)/etc/
-	ln -s /usr/sbin/automount $(TARGET_DIR)/sbin/automount
+	ln -sf ../usr/sbin/automount $(TARGET_DIR)/sbin/automount
 	$(REMOVE)/autofs-$(AUTOFS_VERSION)
 	$(TOUCH)
 
