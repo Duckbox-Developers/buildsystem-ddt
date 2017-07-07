@@ -807,7 +807,6 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(JPEG_TURBO_SOURCE)
 			--enable-shared \
 			--mandir=/.remove \
 			--docdir=/.remove \
-			--bindir=/.remove \
 			--includedir=/.remove \
 			--with-jpeg8 \
 			--disable-static \
@@ -820,12 +819,12 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(JPEG_TURBO_SOURCE)
 			--enable-shared \
 			--mandir=/.remove \
 			--docdir=/.remove \
-			--bindir=/.remove \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libjpeg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libjpeg.pc
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cjpeg djpeg jpegtran rdjpgcom wrjpgcom tjbench)
 	rm -f $(TARGET_DIR)/usr/lib/libturbojpeg* $(TARGET_DIR)/usr/include/turbojpeg.h $(PKG_CONFIG_PATH)/libturbojpeg.pc
 	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VERSION)
 	$(TOUCH)
