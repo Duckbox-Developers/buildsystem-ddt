@@ -977,6 +977,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/$(CURL_SOURCE)
 #
 FRIBIDI_VERSION = 0.19.7
 FRIBIDI_SOURCE = fribidi-$(FRIBIDI_VERSION).tar.bz2
+FRIBIDI_PATCH = fribidi-$(FRIBIDI_VERSION).patch
 
 $(ARCHIVE)/$(FRIBIDI_SOURCE):
 	$(WGET) https://fribidi.org/download/$(FRIBIDI_SOURCE)
@@ -986,6 +987,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(FRIBIDI_SOURCE)
 	$(REMOVE)/fribidi-$(FRIBIDI_VERSION)
 	$(UNTAR)/$(FRIBIDI_SOURCE)
 	set -e; cd $(BUILD_TMP)/fribidi-$(FRIBIDI_VERSION); \
+		$(call post_patch,$(FRIBIDI_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
