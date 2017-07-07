@@ -726,7 +726,6 @@ else
 LIRC_OPTS = -D__KERNEL_STRICT_NAMES
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE),adb_box arivalink200 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd hl101 sagemcom88 spark spark7162 ufs910 vitamin_hd5000))
 $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lirc-$(LIRC_VERSION)
