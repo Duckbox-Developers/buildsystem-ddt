@@ -2118,7 +2118,8 @@ $(D)/alsa-utils: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/amixer $(TARGET_DIR)/etc/init.d/amixer
 	install -m 644 $(SKEL_ROOT)/etc/amixer.conf $(TARGET_DIR)/etc/amixer.conf
 	install -m 644 $(SKEL_ROOT)/etc/asound.conf $(TARGET_DIR)/etc/asound.conf
-	cd $(TARGET_DIR) && rm -f usr/bin/aserver
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,aserver)
+	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,alsa-info.sh)
 	$(TOUCH)
 
 #
