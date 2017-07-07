@@ -12,7 +12,6 @@ release_neutrino_cube_common:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/lib/firmware/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
-	cp $(TARGET_DIR)/bin/eeprom $(RELEASE_DIR)/bin
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
@@ -85,7 +84,6 @@ release_neutrino_common_ipbox:
 	cp $(SKEL_ROOT)/firmware/as102_data1_st.hex $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/as102_data2_st.hex $(RELEASE_DIR)/lib/firmware/
 	cp -dp $(SKEL_ROOT)/release/lircd_ipbox.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
 	rm -f $(RELEASE_DIR)/lib/modules/ramzswap.ko
@@ -133,7 +131,6 @@ release_neutrino_ufs910:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx21143.fw $(RELEASE_DIR)/lib/firmware/dvb-fe-cx24116.fw
 	cp -dp $(SKEL_ROOT)/release/lircd_ufs910.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 
 #
@@ -209,7 +206,6 @@ release_neutrino_spark:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -dp $(SKEL_ROOT)/release/lircd_spark.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 
 #
 # release_spark7162
@@ -226,7 +222,6 @@ release_neutrino_spark7162:
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -dp $(SKEL_ROOT)/release/lircd_spark7162.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 
 #
 # release_fortis_hdbox
@@ -401,7 +396,6 @@ release_neutrino_hl101:
 	cp $(SKEL_ROOT)/firmware/as102_data1_st.hex $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/as102_data2_st.hex $(RELEASE_DIR)/lib/firmware/
 	cp -dp $(SKEL_ROOT)/release/lircd_hl101.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
 
 #
 # release_adb_box
@@ -423,7 +417,6 @@ release_neutrino_adb_box:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp -f $(SKEL_ROOT)/release/fstab_adb_box $(RELEASE_DIR)/etc/fstab
 	cp -dp $(SKEL_ROOT)/release/lircd_adb_box.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/lircd
 
 #
 # release_tf7700
@@ -469,12 +462,6 @@ release_neutrino_sagemcom88:
 	cp $(SKEL_ROOT)/boot/audio_7105.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/sbin/lircmd $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irrecord $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irsend $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irw $(RELEASE_DIR)/usr/bin/
 	cp -dp $(SKEL_ROOT)/release/lircd_sagemcom88.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
@@ -489,12 +476,6 @@ release_neutrino_arivalink200:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
-	cp -p $(TARGET_DIR)/usr/sbin/lircd $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/sbin/lircmd $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irrecord $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irsend $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/irw $(RELEASE_DIR)/usr/bin/
 	cp -dp $(SKEL_ROOT)/release/lircd_arivalink200.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
@@ -540,7 +521,9 @@ release_neutrino_base:
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
 	touch $(RELEASE_DIR)/var/etc/.firstboot
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
+	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 	cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
+	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
 	ln -sf /bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
 	cp -dp $(TARGET_DIR)/var/etc/.version $(RELEASE_DIR)/
 	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
@@ -556,9 +539,6 @@ release_neutrino_base:
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
-	cp -dp $(TARGET_DIR)/usr/bin/vsftpd $(RELEASE_DIR)/usr/bin/
-	cp -dp $(TARGET_DIR)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/ffmpeg $(RELEASE_DIR)/usr/bin/
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
@@ -675,16 +655,6 @@ endif
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	install -d $(RELEASE_DIR)/etc/Wireless
 	cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/
-	cp -dp $(TARGET_DIR)/usr/sbin/ifrename $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwconfig $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwevent $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwgetid $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwlist $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwpriv $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwspy $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_cli $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_passphrase $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_supplicant $(RELEASE_DIR)/usr/sbin/
 endif
 #
 # lib usr/lib
@@ -768,23 +738,6 @@ endif
 		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-		cp $(TARGET_DIR)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
-	fi
-#
-# nfs-utils
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/rpc.nfsd ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/exportfs $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.nfsd $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.mountd $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.statd $(RELEASE_DIR)/usr/sbin/; \
-	fi
-#
-# autofs
-#
-	if [ -d $(RELEASE_DIR)/usr/lib/autofs ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/automount $(RELEASE_DIR)/usr/sbin/; \
-		ln -s /usr/sbin/automount $(RELEASE_DIR)/sbin/automount; \
 	fi
 #
 # graphlcd
@@ -802,30 +755,15 @@ endif
 		cp -a $(TARGET_DIR)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
 	fi
 #
-# minidlna
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/minidlnad ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/minidlnad $(RELEASE_DIR)/usr/sbin/; \
-	fi
-#
 # openvpn
 #
 	if [ -e $(TARGET_DIR)/usr/sbin/openvpn ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/openvpn $(RELEASE_DIR)/usr/sbin; \
 		install -d $(RELEASE_DIR)/etc/openvpn; \
-	fi
-#
-# udpxy
-#
-	if [ -e $(TARGET_DIR)/usr/bin/udpxy ]; then \
-		cp -f $(TARGET_DIR)/usr/bin/udpxy $(RELEASE_DIR)/usr/bin; \
-		cp -a $(TARGET_DIR)/usr/bin/udpxrec $(RELEASE_DIR)/usr/bin; \
 	fi
 #
 # xupnpd
 #
 	if [ -e $(TARGET_DIR)/usr/bin/xupnpd ]; then \
-		cp -f $(TARGET_DIR)/usr/bin/xupnpd $(RELEASE_DIR)/usr/bin; \
 		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/usr/share; \
 		mkdir -p $(RELEASE_DIR)/usr/share/xupnpd/playlists; \
 	fi
