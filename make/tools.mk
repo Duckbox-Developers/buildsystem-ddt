@@ -18,6 +18,7 @@ ifeq ($(IMAGE), $(filter $(IMAGE), enigma2 enigma2-wlandriver))
 	-$(MAKE) -C $(APPS_DIR)/tools/libmme_host distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/libmme_image distclean
 endif
+	-$(MAKE) -C $(APPS_DIR)/tools/minimon distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/showiframe distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/spf_tool distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol distclean
@@ -148,6 +149,18 @@ $(D)/tools-libmme_image: $(D)/bootstrap
 		$(MAKE) DRIVER_TOPDIR=$(DRIVER_DIR); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR) DRIVER_TOPDIR=$(DRIVER_DIR)
 	$(TOUCH)
+
+#
+# minimon
+#
+$(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
+	set -e; cd $(APPS_DIR)/tools/minimon; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE) KERNEL_DIR=$(KERNEL_DIR) TARGET=$(TARGET) TARGET_DIR=$(TARGET_DIR); \
+		$(MAKE) install KERNEL_DIR=$(KERNEL_DIR) TARGET=$(TARGET) TARGET_DIR=$(TARGET_DIR) DESTDIR=$(TARGET_DIR)
+	touch $@
 
 #
 # showiframe
