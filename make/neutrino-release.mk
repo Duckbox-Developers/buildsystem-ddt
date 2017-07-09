@@ -524,7 +524,6 @@ release_neutrino_base:
 	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 	cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
 	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
-	ln -sf /bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
 	cp -dp $(TARGET_DIR)/var/etc/.version $(RELEASE_DIR)/
 	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
 	cp $(TARGET_DIR)/boot/uImage $(RELEASE_DIR)/boot/
@@ -538,10 +537,11 @@ release_neutrino_base:
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
-	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
+	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
+	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 fortis_hdbox octagon1008 ufs910 ufs912 ufs913 ufs922 ufc960 spark spark7162 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd adb_box tf7700 vitamin_hd5000))
 	cp $(SKEL_ROOT)/release/fw_env.config_$(BOXTYPE) $(RELEASE_DIR)/etc/fw_env.config
 endif
@@ -740,27 +740,6 @@ endif
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 	fi
 #
-# graphlcd
-#
-	if [ -e $(RELEASE_DIR)/usr/lib/libglcddrivers.so ]; then \
-		cp -f $(TARGET_DIR)/etc/graphlcd.conf $(RELEASE_DIR)/etc/; \
-		rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*; \
-	fi
-#
-# lcd4linux
-#
-	if [ -e $(TARGET_DIR)/usr/bin/lcd4linux ]; then \
-		cp -f $(TARGET_DIR)/usr/bin/lcd4linux $(RELEASE_DIR)/usr/bin/; \
-		cp -f $(TARGET_DIR)/etc/init.d/lcd4linux $(RELEASE_DIR)/etc/init.d/; \
-		cp -a $(TARGET_DIR)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
-	fi
-#
-# openvpn
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/openvpn ]; then \
-		install -d $(RELEASE_DIR)/etc/openvpn; \
-	fi
-#
 # xupnpd
 #
 	if [ -e $(TARGET_DIR)/usr/bin/xupnpd ]; then \
@@ -826,6 +805,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
 	rm -rf $(RELEASE_DIR)/usr/lib/cmake
+	rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
 	rm -f $(RELEASE_DIR)/usr/lib/libtermcap*
