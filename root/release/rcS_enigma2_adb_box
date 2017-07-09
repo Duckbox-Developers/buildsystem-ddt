@@ -79,6 +79,7 @@ if [ ! -e /var/etc/.firstboot ]; then
       insmod $MODDIR/avs.ko type=fake_avs
    else
       insmod $MODDIR/avs.ko type=stv6412
+   fi
 
    echo "init player"
    player=`cat /proc/stb/player/version`
