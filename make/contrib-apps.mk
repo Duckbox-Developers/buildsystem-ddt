@@ -459,7 +459,7 @@ $(D)/ntfs-3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 	$(REMOVE)/ntfs-3g_ntfsprogs-$(NTFS_3G_VERSION)
 	$(UNTAR)/$(NTFS_3G_SOURCE)
 	set -e; cd $(BUILD_TMP)/ntfs-3g_ntfsprogs-$(NTFS_3G_VERSION); \
-		CFLAGS="-pipe -O2 -g" ./configure \
+		CFLAGS="-pipe -Os -g" ./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -470,7 +470,6 @@ $(D)/ntfs-3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 			--disable-ldconfig \
 			--disable-ntfsprogs \
 			--disable-static \
-			--with-fuse=internal \
 			--enable-silent-rules \
 		; \
 		$(MAKE); \
