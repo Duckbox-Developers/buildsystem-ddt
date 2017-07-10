@@ -12,7 +12,6 @@ release_enigma2_cube_common:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
-	cp $(TARGET_DIR)/bin/eeprom $(RELEASE_DIR)/bin
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
@@ -83,7 +82,6 @@ release_enigma2_common_ipbox:
 	cp $(SKEL_ROOT)/boot/video_7109.elf $(RELEASE_DIR)/boot/video.elf
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp -dp $(SKEL_ROOT)/release/lircd_ipbox.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
@@ -137,7 +135,6 @@ release_enigma2_ufs910:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx21143.fw $(RELEASE_DIR)/lib/firmware/dvb-fe-cx24116.fw
 	cp -dp $(SKEL_ROOT)/release/lircd_ufs910.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_ufs910.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
@@ -219,7 +216,6 @@ release_enigma2_spark:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -dp $(SKEL_ROOT)/release/lircd_spark.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_spark.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -238,7 +234,6 @@ release_enigma2_spark7162:
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -dp $(SKEL_ROOT)/release/lircd_spark7162.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_spark.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -423,7 +418,6 @@ release_enigma2_hl101:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl2108.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 	cp -dp $(SKEL_ROOT)/release/lircd_hl101.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_hl101.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
@@ -448,7 +442,6 @@ release_enigma2_adb_box:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp -f $(SKEL_ROOT)/release/fstab_adb_box $(RELEASE_DIR)/etc/fstab
 	cp -dp $(SKEL_ROOT)/release/lircd_adb_box.conf $(RELEASE_DIR)/etc/lircd.conf
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/lircd
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_adb_box.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
@@ -466,7 +459,6 @@ release_enigma2_tf7700:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
 	cp -f $(SKEL_ROOT)/release/fstab_tf7700 $(RELEASE_DIR)/etc/fstab
-	cp -f $(TARGET_DIR)/sbin/shutdown $(RELEASE_DIR)/sbin/
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_tf7700.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 	$(MAKE) tfinstaller
@@ -501,7 +493,6 @@ release_enigma2_sagemcom88:
 	cp $(SKEL_ROOT)/boot/audio_7105.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/component_7105_pdk7105.fw $(RELEASE_DIR)/lib/firmware/component.fw
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	cp -dp $(SKEL_ROOT)/release/lircd_sagemcom88.conf $(RELEASE_DIR)/etc/lircd.conf
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_sagemcom88.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
 
@@ -517,7 +508,6 @@ release_enigma2_arivalink200:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/boot/audio.elf
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 	cp $(SKEL_ROOT)/firmware/dvb-fe-cx24116.fw $(RELEASE_DIR)/lib/firmware/
-	cp -p $(TARGET_DIR)/usr/bin/lircd $(RELEASE_DIR)/usr/bin/
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	cp -dp $(SKEL_ROOT)/release/lircd_arivalink200.conf $(RELEASE_DIR)/etc/lircd.conf
 	cp -f $(SKEL_ROOT)/root_enigma2/usr/local/share/enigma2/keymap_arivalink200.xml $(RELEASE_DIR)/usr/local/share/enigma2/keymap.xml
@@ -560,8 +550,9 @@ release_enigma2_base:
 	ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
 	touch $(RELEASE_DIR)/var/etc/.firstboot
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
+	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
 	cp -a $(TARGET_DIR)/sbin/* $(RELEASE_DIR)/sbin/
-	ln -sf /bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
+	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
 	cp $(SKEL_ROOT)/etc/image-version $(RELEASE_DIR)/etc/
 	cp $(TARGET_DIR)/boot/uImage $(RELEASE_DIR)/boot/
 	ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
@@ -574,19 +565,12 @@ release_enigma2_base:
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
-	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 	echo "576i50" > $(RELEASE_DIR)/etc/videomode
-	cp -dp $(TARGET_DIR)/usr/bin/vsftpd $(RELEASE_DIR)/usr/bin/
-	cp -dp $(TARGET_DIR)/usr/bin/irexec $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/bin/ffmpeg $(RELEASE_DIR)/sbin/
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
+	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
+	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
 	ln -sf /bin/grab $(RELEASE_DIR)/usr/bin/grab
-	cp -dp $(TARGET_DIR)/usr/bin/sdparm $(RELEASE_DIR)/sbin/
-	cp -p $(TARGET_DIR)/usr/bin/opkg-cl $(RELEASE_DIR)/usr/bin/opkg
-	cp -dp $(TARGET_DIR)/usr/bin/python* $(RELEASE_DIR)/usr/bin/
-	cp -p $(TARGET_DIR)/usr/sbin/ethtool $(RELEASE_DIR)/usr/sbin/
-	cp -p $(TARGET_DIR)/usr/sbin/livestreamersrv $(RELEASE_DIR)/usr/sbin/
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 fortis_hdbox octagon1008 ufs910 ufs912 ufs913 ufs922 ufc960 spark spark7162 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd adb_box tf7700 vitamin_hd5000))
 	cp $(SKEL_ROOT)/release/fw_env.config_$(BOXTYPE) $(RELEASE_DIR)/etc/fw_env.config
 endif
@@ -689,16 +673,6 @@ endif
 ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	install -d $(RELEASE_DIR)/etc/Wireless
 	cp -aR $(SKEL_ROOT)/firmware/Wireless/* $(RELEASE_DIR)/etc/Wireless/
-	cp -dp $(TARGET_DIR)/usr/sbin/ifrename $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwconfig $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwevent $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwgetid $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwlist $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwpriv $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/iwspy $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_cli $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_passphrase $(RELEASE_DIR)/usr/sbin/
-	cp -dp $(TARGET_DIR)/usr/sbin/wpa_supplicant $(RELEASE_DIR)/usr/sbin/
 endif
 #
 # lib usr/lib
@@ -747,12 +721,6 @@ endif
 		cp $(TARGET_DIR)$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)$(PYTHON_INCLUDE_DIR); \
 	fi
 #
-# tuxtxt
-#
-	if [ -e $(TARGET_DIR)/usr/bin/tuxtxt ]; then \
-		cp -p $(TARGET_DIR)/usr/bin/tuxtxt $(RELEASE_DIR)/usr/bin/; \
-	fi
-#
 # hotplug
 #
 	if [ -e $(TARGET_DIR)/usr/bin/hotplug_e2_helper ]; then \
@@ -772,67 +740,6 @@ endif
 		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-		cp $(TARGET_DIR)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
-	fi
-#
-# nfs-utils
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/rpc.nfsd ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/exportfs $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.nfsd $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.mountd $(RELEASE_DIR)/usr/sbin/; \
-		cp -f $(TARGET_DIR)/usr/sbin/rpc.statd $(RELEASE_DIR)/usr/sbin/; \
-	fi
-#
-# autofs
-#
-	if [ -d $(RELEASE_DIR)/usr/lib/autofs ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/automount $(RELEASE_DIR)/usr/sbin/; \
-		ln -s /usr/sbin/automount $(RELEASE_DIR)/sbin/automount; \
-	fi
-#
-# gstreamer
-#
-	if [ -d $(RELEASE_DIR)/usr/lib/gstreamer-1.0 ]; then \
-		rm -rf $(RELEASE_DIR)/usr/lib/gstreamer-1.0/*; \
-		cp -a $(TARGET_DIR)/usr/bin/gst-* $(RELEASE_DIR)/usr/bin/; \
-		sh4-linux-strip --strip-unneeded $(RELEASE_DIR)/usr/bin/gst-launch*; \
-		cp -a $(TARGET_DIR)/usr/lib/gstreamer-1.0/libgst*.so $(RELEASE_DIR)/usr/lib/gstreamer-1.0/; \
-		sh4-linux-strip --strip-unneeded $(RELEASE_DIR)/usr/lib/gstreamer-1.0/*; \
-	fi
-#
-# graphlcd
-#
-	if [ -e $(RELEASE_DIR)/usr/lib/libglcddrivers.so ]; then \
-		cp -f $(TARGET_DIR)/etc/graphlcd.conf $(RELEASE_DIR)/etc/; \
-	fi
-#
-# lcd4linux
-#
-	if [ -e $(TARGET_DIR)/usr/bin/lcd4linux ]; then \
-		cp -f $(TARGET_DIR)/usr/bin/lcd4linux $(RELEASE_DIR)/usr/bin/; \
-		cp -f $(TARGET_DIR)/etc/init.d/lcd4linux $(RELEASE_DIR)/etc/init.d/; \
-		cp -a $(TARGET_DIR)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
-	fi
-#
-# minidlna
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/minidlnad ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/minidlnad $(RELEASE_DIR)/usr/sbin/; \
-	fi
-#
-# openvpn
-#
-	if [ -e $(TARGET_DIR)/usr/sbin/openvpn ]; then \
-		cp -f $(TARGET_DIR)/usr/sbin/openvpn $(RELEASE_DIR)/usr/sbin; \
-		install -d $(RELEASE_DIR)/etc/openvpn; \
-	fi
-#
-# udpxy
-#
-	if [ -e $(TARGET_DIR)/usr/bin/udpxy ]; then \
-		cp -f $(TARGET_DIR)/usr/bin/udpxy $(RELEASE_DIR)/usr/bin; \
-		cp -a $(TARGET_DIR)/usr/bin/udpxrec $(RELEASE_DIR)/usr/bin; \
 	fi
 #
 # directfb
