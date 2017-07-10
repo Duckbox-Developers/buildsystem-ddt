@@ -1855,6 +1855,7 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(REWRITE_LIBTOOL)/libexslt.la
 	$(REWRITE_LIBTOOL)/libxslt.la
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,xsltproc xslt-config)
 	$(REMOVE)/libxslt-$(LIBXSLT_VERSION)
 	$(TOUCH)
 
