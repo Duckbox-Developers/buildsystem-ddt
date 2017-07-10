@@ -1,8 +1,5 @@
-Use max playlist quality if connection speed not set.
-Based on christophecvr idea: http://forums.openpli.org/topic/29501-gstreamer-10/page-119#entry542926
-
---- a/ext/hls/gsthlsdemux.c	2016-11-19 18:29:30.904483471 +0200
-+++ b/ext/hls/gsthlsdemux.c	2016-11-19 18:35:03.735842813 +0200
+--- a/ext/hls/gsthlsdemux.c
++++ b/ext/hls/gsthlsdemux.c
 @@ -587,6 +587,10 @@
      return FALSE;
    }

@@ -1,7 +1,7 @@
 #
 # gstreamer
 #
-GSTREAMER_VERSION = 1.10.1
+GSTREAMER_VERSION = 1.11.1
 GSTREAMER_SOURCE = gstreamer-$(GSTREAMER_VERSION).tar.xz
 GSTREAMER_PATCH  = gstreamer-$(GSTREAMER_VERSION)-fix-crash-with-gst-inspect.patch
 GSTREAMER_PATCH += gstreamer-$(GSTREAMER_VERSION)-revert-use-new-gst-adapter-get-buffer.patch
