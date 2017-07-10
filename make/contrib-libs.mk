@@ -1202,7 +1202,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(ICONV_SOURCE)
 #
 # libexpat
 #
-EXPAT_VERSION = 2.1.1
+EXPAT_VERSION = 2.2.0
 EXPAT_SOURCE = expat-$(EXPAT_VERSION).tar.bz2
 
 $(ARCHIVE)/$(EXPAT_SOURCE):
