@@ -2183,6 +2183,7 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP
 		$(MAKE) CROSS_COMPILE=$(TARGET)- ; \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR) MANDIR=$(TARGET_DIR)/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/librtmp.pc
+	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,rtmpgw rtmpsrv rtmpsuck)
 	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VERSION)
 	$(TOUCH)
 
