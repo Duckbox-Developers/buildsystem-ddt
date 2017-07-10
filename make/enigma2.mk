@@ -114,7 +114,7 @@ $(SOURCE_DIR)/enigma2/config.status:
 			--with-libsdl=no \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
-			--bindir=/usr/bin \
+			--bindir=/usr/local/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=none \
