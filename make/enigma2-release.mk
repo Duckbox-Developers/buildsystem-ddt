@@ -532,12 +532,8 @@ release_enigma2_base:
 	ln -sf /etc $(RELEASE_DIR)/usr/local/etc
 	install -d $(RELEASE_DIR)/usr/local/share/{enigma2,keymaps}
 	ln -s /usr/local/share/keymaps $(RELEASE_DIR)/usr/share/keymaps
-	install -d $(RELEASE_DIR)/usr/share/{fonts,zoneinfo,udhcpc}
+	install -d $(RELEASE_DIR)/usr/share/{fonts,udhcpc,zoneinfo}
 	install -d $(RELEASE_DIR)/var/{etc,opkg}
-	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VERSION) CONFIG_PREFIX=$(RELEASE_DIR)
-#	remove the slink to busybox
-	rm -f $(RELEASE_DIR)/sbin/halt
-	cp -f $(TARGET_DIR)/sbin/halt $(RELEASE_DIR)/sbin/
 	ln -fs halt $(RELEASE_DIR)/sbin/reboot
 	ln -fs halt $(RELEASE_DIR)/sbin/poweroff
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
@@ -570,7 +566,7 @@ release_enigma2_base:
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
 	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
-	ln -sf /bin/grab $(RELEASE_DIR)/usr/bin/grab
+	ln -sf ../../bin/grab $(RELEASE_DIR)/usr/bin/grab
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 fortis_hdbox octagon1008 ufs910 ufs912 ufs913 ufs922 ufc960 spark spark7162 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd adb_box tf7700 vitamin_hd5000))
 	cp $(SKEL_ROOT)/release/fw_env.config_$(BOXTYPE) $(RELEASE_DIR)/etc/fw_env.config
 endif
@@ -788,6 +784,11 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
 	rm -f $(RELEASE_DIR)/sbin/jfs_tune
 endif
+	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
+	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
+	rm -f $(RELEASE_DIR)/usr/bin/glib-*
+	rm -f $(RELEASE_DIR)/usr/bin/nettle-*
+	rm -f $(RELEASE_DIR)/usr/bin/pil*
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -rf $(RELEASE_DIR)/usr/lib/m4-nofpu/
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VERSION)
@@ -839,13 +840,20 @@ endif
 # Do not remove pyo files, remove pyc instead
 #
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
-#	find $(RELEASE_DIR)/usr/lib/enigma2/ -not -name 'mytest.py' -name '*.py' -exec rm -f {} \;
+ifeq ($(OPTIMIZATIONS), size)
+ifneq ($(BOXTYPE), atevio7500)
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -not -name 'mytest.py' -name '*.py' -exec rm -f {} \;
+else
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -not -name 'mytest.py' -not -name 'Language.py' -name '*.py' -exec rm -f {} \;
+endif
+endif
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
-#
 	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.pyc' -exec rm -f {} \;
-#	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.py' -exec rm -f {} \;
+ifeq ($(OPTIMIZATIONS), size)
+	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.py' -exec rm -f {} \;
+endif
 	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.c' -exec rm -f {} \;
 	find $(RELEASE_DIR)$(PYTHON_DIR)/ -name '*.pyx' -exec rm -f {} \;

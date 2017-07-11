@@ -504,12 +504,6 @@ release_neutrino_base:
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/zapit
-	export CROSS_COMPILE=$(TARGET)- && $(MAKE) install -C $(BUILD_TMP)/busybox-$(BUSYBOX_VERSION) CONFIG_PREFIX=$(RELEASE_DIR)
-#	remove the slink to busybox
-	rm -f $(RELEASE_DIR)/sbin/halt
-	cp -f $(TARGET_DIR)/sbin/halt $(RELEASE_DIR)/sbin/
-	ln -fs halt $(RELEASE_DIR)/sbin/reboot
-	ln -fs halt $(RELEASE_DIR)/sbin/poweroff
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
 	ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc0.d/S40umountfs
