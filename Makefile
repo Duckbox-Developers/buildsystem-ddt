@@ -7,6 +7,12 @@ warn:
 	@echo "You are running as root. Do not do this, it is dangerous."
 	@echo "Aborting the build. Goodbye."
 else
+LC_ALL:=C
+LANG:=C
+export TOPDIR LC_ALL LANG
+
+PARALLEL_JOBS := $(shell echo $$((1 + `getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1`)))
+override MAKE = make $(if $(findstring j,$(filter-out --%,$(MAKEFLAGS))),,-j$(PARALLEL_JOBS))
 
 include make/buildenv.mk
 
@@ -42,7 +48,7 @@ printenv:
 	@echo "PLAYER_VERSION   : $(PLAYER_VERSION)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "EXTERNAL_LCD     : $(EXTERNAL_LCD)"
-	@echo "CPU_CORES        : $(NR_CPU)"
+	@echo "CPU_CORES        : $(PARALLEL_JOBS)"
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
