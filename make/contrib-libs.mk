@@ -1585,6 +1585,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--target-os=linux \
 			--arch=sh4 \
 			--prefix=/usr \
+			--bindir=/sbin \
 			--mandir=/.remove \
 			--datadir=/.remove \
 			--docdir=/.remove \
