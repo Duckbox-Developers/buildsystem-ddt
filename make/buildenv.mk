@@ -101,9 +101,6 @@ TERM_RESET           := $(shell tput rmso 2>/dev/null)
 
 # Adjust according to the number CPU cores to use for parallel build.
 # Default: Number of processors in /proc/cpuinfo, if present, or 1.
-NR_CPU               := $(shell [ -f /proc/cpuinfo ] && grep -c '^processor\s*:' /proc/cpuinfo || echo 1)
-PARALLEL_MAKE        ?= -j $(NR_CPU)
-MAKEFLAGS            += $(PARALLEL_MAKE)
 MAKEFLAGS            += --no-print-directory
 ifndef VERBOSE
 VERBOSE               = 1
