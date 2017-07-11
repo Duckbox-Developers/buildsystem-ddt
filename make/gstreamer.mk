@@ -473,6 +473,7 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/$(LIBDCA_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdca.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdts.pc
 	$(REWRITE_LIBTOOL)/libdca.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,extract_dca extract_dts)
 	$(REMOVE)/libdca-$(LIBDCA_VERSION)
 	$(TOUCH)
 
