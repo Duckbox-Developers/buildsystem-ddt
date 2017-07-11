@@ -787,18 +787,16 @@ endif
 	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
 	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
 	rm -f $(RELEASE_DIR)/usr/bin/glib-*
-	rm -f $(RELEASE_DIR)/usr/bin/nettle-*
-	rm -f $(RELEASE_DIR)/usr/bin/pil*
+	rm -f $(addprefix $(RELEASE_DIR)/usr/bin/,dvdnav-config gio-querymodules gobject-query gtester gtester-report)
+	rm -f $(addprefix $(RELEASE_DIR)/usr/bin/,livestreamer mailmail manhole opkg-check-config opkg-cl)
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -rf $(RELEASE_DIR)/usr/lib/m4-nofpu/
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VERSION)
 	rm -rf $(RELEASE_DIR)/usr/lib/gcc
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/DemoPlugins
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/FrontprocessorUpgrade
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NFIFlash
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/FileManager
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
+#
+# delete unnecessary files python
+#
 	install -d $(RELEASE_DIR)$(PYTHON_DIR)
 	cp -a $(TARGET_DIR)$(PYTHON_DIR)/* $(RELEASE_DIR)$(PYTHON_DIR)/
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,lib-old,lib-tk,plat-linux3,test}
@@ -836,6 +834,11 @@ endif
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/twisted/words/test
 	rm -rf $(RELEASE_DIR)$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION_MAJOR).egg-info
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/DemoPlugins
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/FrontprocessorUpgrade
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NFIFlash
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/FileManager
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 #
 # Do not remove pyo files, remove pyc instead
 #
