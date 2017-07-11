@@ -5,6 +5,7 @@ WARN="logger -p user.warn -t mdev-mount"
 MOUNTBASE=/media
 MOUNTPOINT="$MOUNTBASE/$MDEV"
 ROOTDEV=$(readlink /dev/root)
+NTFSOPTS="-o big_writes,noatime"
 
 # do not add or remove root device again...
 [ "$ROOTDEV" = "$MDEV" ] && exit 0
@@ -110,7 +111,7 @@ case "$ACTION" in
 		if [ $RET1 != 0 -a -n "$NTFSMOUNT" ]; then
 			# failed,retry with ntfs-3g
 			for i in 1 2; do # retry only twice, waited already 5 seconds
-				$NTFSMOUNT /dev/$MDEV $MOUNTPOINT
+				$NTFSMOUNT $NTFSOPTS /dev/$MDEV $MOUNTPOINT
 				RET2=$?
 				[ $RET2 = 0 ] && break
 				sleep 1
