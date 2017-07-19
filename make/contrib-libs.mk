@@ -131,18 +131,20 @@ LIBGLIB2_VERSION_MINOR = 45
 LIBGLIB2_VERSION_MICRO = 4
 LIBGLIB2_VERSION = $(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR).$(LIBGLIB2_VERSION_MICRO)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VERSION).tar.xz
+LIBGLIB2_HOST_PATCH = libglib2-host-$(LIBGLIB2_VERSION)-gdate-suppress-string-format-literal-warning.patch
 LIBGLIB2_PATCH = libglib2-$(LIBGLIB2_VERSION)-disable-tests.patch
 
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
 	$(WGET) http://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR)/$(LIBGLIB2_SOURCE)
 
-$(D)/host_libglib2_genmarshal: $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
+$(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/glib-$(LIBGLIB2_VERSION)
 	$(UNTAR)/$(LIBGLIB2_SOURCE)
 	export PKG_CONFIG=/usr/bin/pkg-config; \
 	export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 	set -e; cd $(BUILD_TMP)/glib-$(LIBGLIB2_VERSION); \
+		$(call post_patch,$(LIBGLIB2_HOST_PATCH)); \
 		./configure $(CONFIGURE_SILENT) \
 			--enable-static=yes \
 			--enable-shared=no \
