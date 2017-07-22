@@ -117,6 +117,26 @@ $(D)/host_mkcramfs: directories $(ARCHIVE)/$(MKCRAMFS_SOURCE)
 	$(TOUCH)
 
 #
+# host_mksquashfs3
+#
+MKSQUASHFS3_VERSION = 3.3
+MKSQUASHFS3_SOURCE = squashfs$(MKSQUASHFS3_VERSION).tar.gz
+
+$(ARCHIVE)/$(MKSQUASHFS3_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/OldFiles/$(MKSQUASHFS3_SOURCE)
+
+$(D)/host_mksquashfs3: directories $(ARCHIVE)/$(MKSQUASHFS3_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/squashfs$(MKSQUASHFS3_VERSION)
+	$(UNTAR)/$(MKSQUASHFS3_SOURCE)
+	set -e; cd $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools; \
+		$(MAKE) CC=gcc all
+		mv $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
+		mv $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
+	$(REMOVE)/squashfs$(MKSQUASHFS3_VERSION)
+	$(TOUCH)
+
+#
 # gdb-remote
 #
 GDB_VERSION = 7.8
