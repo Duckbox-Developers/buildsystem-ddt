@@ -123,7 +123,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			LD="$(TARGET)-gcc" \
 			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VERSION_MAJOR) \
 			HOSTPGEN=$(HOST_DIR)/bin/pgen \
-			all install DESTDIR=$(TARGET_DIR) \
+			all DESTDIR=$(TARGET_DIR) \
 		; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGET_DIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
