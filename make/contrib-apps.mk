@@ -137,6 +137,38 @@ $(D)/host_mksquashfs3: directories $(ARCHIVE)/$(MKSQUASHFS3_SOURCE)
 	$(TOUCH)
 
 #
+# host_mksquashfs with LZMA support
+#
+MKSQUASHFS_VERSION = 4.2
+MKSQUASHFS_SOURCE = squashfs$(MKSQUASHFS_VERSION).tar.gz
+
+LZMA_VERSION = 4.65
+LZMA_SOURCE = lzma-$(LZMA_VERSION).tar.bz2
+
+$(ARCHIVE)/$(MKSQUASHFS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(MKSQUASHFS_VERSION)/$(MKSQUASHFS_SOURCE)
+
+$(ARCHIVE)/$(LZMA_SOURCE):
+	$(WGET) http://downloads.openwrt.org/sources/$(LZMA_SOURCE)
+
+$(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(MKSQUASHFS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/lzma-$(LZMA_VERSION)
+	$(UNTAR)/$(LZMA_SOURCE)
+	$(REMOVE)/squashfs$(MKSQUASHFS_VERSION)
+	$(UNTAR)/$(MKSQUASHFS_SOURCE)
+	set -e; cd $(BUILD_TMP)/squashfs$(MKSQUASHFS_VERSION); \
+		$(MAKE) -C squashfs-tools \
+			LZMA_SUPPORT=1 \
+			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VERSION) \
+			XATTR_SUPPORT=0 \
+			XATTR_DEFAULT=0 \
+			install INSTALL_DIR=$(HOST_DIR)/bin
+	$(REMOVE)/lzma-$(LZMA_VERSION)
+	$(REMOVE)/squashfs$(MKSQUASHFS_VERSION)
+	$(TOUCH)
+
+#
 # gdb-remote
 #
 GDB_VERSION = 7.8
