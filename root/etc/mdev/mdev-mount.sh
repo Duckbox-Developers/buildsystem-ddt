@@ -72,10 +72,10 @@ create_symlinks() {
 remove_symlinks() {
 	OLDPWD=$PWD
 	cd $MOUNTBASE
-	for i in *; do
+	for i in `ls ./`; do
 		[ -L "$i" ] || continue
 		TARGET=$(readlink "$i")
-		if [ "$TARGET" = "$MDEV" ]; then
+		if [ "$TARGET" == "$MDEV" ]; then
 			rm "$i"
 		fi
 	done
