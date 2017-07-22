@@ -1,6 +1,5 @@
-diff -ubNr squashfs-tools/compressor.c squashfs-tools_patched//compressor.c
---- squashfs-tools/compressor.c	1970-01-01 01:00:00.000000000 +0100
-+++ squashfs-tools_patched//compressor.c	2011-07-01 16:01:20.000000000 +0200
+--- a/compressor.c
++++ b/compressor.c
 @@ -0,0 +1,78 @@
 +/*
 + *
@@ -80,9 +79,8 @@ diff -ubNr squashfs-tools/compressor.c squashfs-tools_patched//compressor.c
 +				strcmp(compressor[i].name, def_comp) == 0 ?
 +				" (default)" : "");
 +}
-diff -ubNr squashfs-tools/compressor.h squashfs-tools_patched//compressor.h
---- squashfs-tools/compressor.h	1970-01-01 01:00:00.000000000 +0100
-+++ squashfs-tools_patched//compressor.h	2011-07-01 16:01:20.000000000 +0200
+--- a/compressor.h
++++ b/compressor.h
 @@ -0,0 +1,33 @@
 +/*
 + *
@@ -117,9 +115,8 @@ diff -ubNr squashfs-tools/compressor.h squashfs-tools_patched//compressor.h
 +extern struct compressor *lookup_compressor(char *);
 +extern struct compressor *lookup_compressor_id(int);
 +extern void display_compressors(char *, char *);
-diff -ubNr squashfs-tools/gzip_wrapper.c squashfs-tools_patched//gzip_wrapper.c
---- squashfs-tools/gzip_wrapper.c	1970-01-01 01:00:00.000000000 +0100
-+++ squashfs-tools_patched//gzip_wrapper.c	2011-07-01 16:01:23.000000000 +0200
+--- a/gzip_wrapper.c
++++ b/gzip_wrapper.c
 @@ -0,0 +1,80 @@
 +/*
 + * Copyright (c) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
@@ -201,9 +198,8 @@ diff -ubNr squashfs-tools/gzip_wrapper.c squashfs-tools_patched//gzip_wrapper.c
 +	*error = res;
 +	return res == Z_OK ? (int) bytes : -1;
 +}
-diff -ubNr squashfs-tools/lzma_wrapper.c squashfs-tools_patched//lzma_wrapper.c
---- squashfs-tools/lzma_wrapper.c	1970-01-01 01:00:00.000000000 +0100
-+++ squashfs-tools_patched//lzma_wrapper.c	2011-07-01 16:01:23.000000000 +0200
+--- a/lzma_wrapper.c
++++ b/lzma_wrapper.c
 @@ -0,0 +1,93 @@
 +/*
 + * Copyright (c) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
@@ -298,9 +294,8 @@ diff -ubNr squashfs-tools/lzma_wrapper.c squashfs-tools_patched//lzma_wrapper.c
 +	*error = res;
 +	return res == SZ_OK ? outlen : -1;
 +}
-diff -ubNr squashfs-tools/Makefile squashfs-tools_patched//Makefile
---- squashfs-tools/Makefile	2009-04-05 04:03:36.000000000 +0200
-+++ squashfs-tools_patched//Makefile	2011-07-01 16:01:23.000000000 +0200
+--- a/Makefile
++++ b/Makefile
 @@ -1,40 +1,76 @@
 +#
 +# Building LZMA support
@@ -394,9 +389,8 @@ diff -ubNr squashfs-tools/Makefile squashfs-tools_patched//Makefile
  install: mksquashfs unsquashfs
  	mkdir -p $(INSTALL_DIR)
  	cp mksquashfs $(INSTALL_DIR)
-diff -ubNr squashfs-tools/mksquashfs.c squashfs-tools_patched//mksquashfs.c
---- squashfs-tools/mksquashfs.c	2009-04-05 23:22:48.000000000 +0200
-+++ squashfs-tools_patched//mksquashfs.c	2011-07-01 16:03:36.000000000 +0200
+--- a/mksquashfs.c
++++ b/mksquashfs.c
 @@ -36,7 +36,6 @@
  #include <errno.h>
  #include <dirent.h>
@@ -1343,9 +1337,8 @@ diff -ubNr squashfs-tools/mksquashfs.c squashfs-tools_patched//mksquashfs.c
  	printf("\t%s data, %s metadata, %s fragments\n",
  		noD ? "uncompressed" : "compressed", noI ?  "uncompressed" :
  		"compressed", no_fragments ? "no" : noF ? "uncompressed" :
-diff -ubNr squashfs-tools/pseudo.c squashfs-tools_patched//pseudo.c
---- squashfs-tools/pseudo.c	2009-04-05 04:01:58.000000000 +0200
-+++ squashfs-tools_patched//pseudo.c	2011-07-01 16:01:24.000000000 +0200
+--- a/pseudo.c
++++ b/pseudo.c
 @@ -30,6 +30,7 @@
  #include <string.h>
  #include <stdlib.h>
@@ -1633,9 +1626,8 @@ diff -ubNr squashfs-tools/pseudo.c squashfs-tools_patched//pseudo.c
  
  	return TRUE;
  
-diff -ubNr squashfs-tools/pseudo.h squashfs-tools_patched//pseudo.h
---- squashfs-tools/pseudo.h	2009-04-04 03:44:24.000000000 +0200
-+++ squashfs-tools_patched//pseudo.h	2011-07-01 16:01:24.000000000 +0200
+--- a/pseudo.h
++++ b/pseudo.h
 @@ -27,6 +27,12 @@
  	unsigned int	gid;
  	unsigned int	major;
@@ -1655,9 +1647,8 @@ diff -ubNr squashfs-tools/pseudo.h squashfs-tools_patched//pseudo.h
  extern struct pseudo_entry *pseudo_readdir(struct pseudo *);
 +extern struct pseudo_dev *get_pseudo_file(int);
 +extern void delete_pseudo_files();
-diff -ubNr squashfs-tools/read_fs.c squashfs-tools_patched//read_fs.c
---- squashfs-tools/read_fs.c	2009-03-31 06:23:14.000000000 +0200
-+++ squashfs-tools_patched//read_fs.c	2011-07-01 16:01:24.000000000 +0200
+--- a/read_fs.c
++++ b/read_fs.c
 @@ -36,7 +36,6 @@
  #include <fcntl.h>
  #include <errno.h>
@@ -1815,9 +1806,8 @@ diff -ubNr squashfs-tools/read_fs.c squashfs-tools_patched//read_fs.c
  	}
  
  	SQUASHFS_INSWAP_LONG_LONGS(*inode_lookup_table, sBlk->inodes);
-diff -ubNr squashfs-tools/sort.c squashfs-tools_patched//sort.c
---- squashfs-tools/sort.c	2009-03-31 06:25:53.000000000 +0200
-+++ squashfs-tools_patched//sort.c	2011-07-01 16:01:24.000000000 +0200
+--- a/sort.c
++++ b/sort.c
 @@ -198,7 +198,7 @@
  	while(dir->current_count < dir->count) {
  		struct dir_ent *dir_ent = dir->list[dir->current_count++];
@@ -1843,9 +1833,8 @@ diff -ubNr squashfs-tools/sort.c squashfs-tools_patched//sort.c
  					entry->dir->inode->buf.st_size);
  		}
  }
-diff -ubNr squashfs-tools/sort.h squashfs-tools_patched//sort.h
---- squashfs-tools/sort.h	2009-02-08 13:02:53.000000000 +0100
-+++ squashfs-tools_patched//sort.h	2011-07-01 16:01:24.000000000 +0200
+--- a/sort.h
++++ b/sort.h
 @@ -42,17 +42,19 @@
  	struct inode_info	*inode;
  	struct dir_info		*dir;
@@ -1870,9 +1859,8 @@ diff -ubNr squashfs-tools/sort.h squashfs-tools_patched//sort.h
  };
  
  struct priority_entry {
-diff -ubNr squashfs-tools/squashfs_compat.h squashfs-tools_patched//squashfs_compat.h
---- squashfs-tools/squashfs_compat.h	2009-03-16 05:27:27.000000000 +0100
-+++ squashfs-tools_patched//squashfs_compat.h	2011-07-01 16:01:24.000000000 +0200
+--- a/squashfs_compat.h
++++ b/squashfs_compat.h
 @@ -777,11 +777,10 @@
  #endif
  
@@ -1889,9 +1877,8 @@ diff -ubNr squashfs-tools/squashfs_compat.h squashfs-tools_patched//squashfs_com
  	for(bits = 0; bits < (tbits + b_pos); bits += 8) \
  		*d-- = *s++;\
  	value = (val >> (SHIFT))/* & ((1 << tbits) - 1)*/;\
-diff -ubNr squashfs-tools/squashfs_fs.h squashfs-tools_patched//squashfs_fs.h
---- squashfs-tools/squashfs_fs.h	2009-03-18 03:50:20.000000000 +0100
-+++ squashfs-tools_patched//squashfs_fs.h	2011-07-01 16:01:24.000000000 +0200
+--- a/squashfs_fs.h
++++ b/squashfs_fs.h
 @@ -229,6 +229,7 @@
  typedef long long		squashfs_inode_t;
  
@@ -1900,9 +1887,8 @@ diff -ubNr squashfs-tools/squashfs_fs.h squashfs-tools_patched//squashfs_fs.h
  
  struct squashfs_super_block {
  	unsigned int		s_magic;
-diff -ubNr squashfs-tools/unsquash-3.c squashfs-tools_patched//unsquash-3.c
---- squashfs-tools/unsquash-3.c	2009-03-31 06:35:10.000000000 +0200
-+++ squashfs-tools_patched//unsquash-3.c	2011-07-01 16:01:24.000000000 +0200
+--- a/unsquash-3.c
++++ b/unsquash-3.c
 @@ -36,7 +36,7 @@
  		sBlk.fragment_table_start);
  
@@ -1912,9 +1898,8 @@ diff -ubNr squashfs-tools/unsquash-3.c squashfs-tools_patched//unsquash-3.c
  
  	if((fragment_table = malloc(sBlk.fragments *
  			sizeof(squashfs_fragment_entry_3))) == NULL)
-diff -ubNr squashfs-tools/unsquash-4.c squashfs-tools_patched//unsquash-4.c
---- squashfs-tools/unsquash-4.c	2009-03-31 06:38:31.000000000 +0200
-+++ squashfs-tools_patched//unsquash-4.c	2011-07-01 16:01:24.000000000 +0200
+--- a/unsquash-4.c
++++ b/unsquash-4.c
 @@ -38,7 +38,7 @@
  		sBlk.fragment_table_start);
  
@@ -1924,9 +1909,8 @@ diff -ubNr squashfs-tools/unsquash-4.c squashfs-tools_patched//unsquash-4.c
  
  	if((fragment_table = malloc(sBlk.fragments *
  			sizeof(squashfs_fragment_entry))) == NULL)
-diff -ubNr squashfs-tools/unsquashfs.c squashfs-tools_patched//unsquashfs.c
---- squashfs-tools/unsquashfs.c	2009-04-05 23:23:06.000000000 +0200
-+++ squashfs-tools_patched//unsquashfs.c	2011-07-01 16:05:21.000000000 +0200
+--- a/unsquashfs.c
++++ b/unsquashfs.c
 @@ -25,6 +25,9 @@
  #include "squashfs_swap.h"
  #include "squashfs_compat.h"
@@ -2150,9 +2134,8 @@ diff -ubNr squashfs-tools/unsquashfs.c squashfs-tools_patched//unsquashfs.c
  		}
  		exit(1);
  	}
-diff -ubNr squashfs-tools/unsquashfs.h squashfs-tools_patched//unsquashfs.h
---- squashfs-tools/unsquashfs.h	2009-03-29 04:29:02.000000000 +0200
-+++ squashfs-tools_patched//unsquashfs.h	2011-07-01 16:01:24.000000000 +0200
+--- a/unsquashfs.h
++++ b/unsquashfs.h
 @@ -31,7 +31,6 @@
  #include <fcntl.h>
  #include <errno.h>
