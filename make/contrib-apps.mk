@@ -97,6 +97,26 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 	$(TOUCH)
 
 #
+# host_mkcramfs
+#
+MKCRAMFS_VERSION = 1.1
+MKCRAMFS_SOURCE = cramfs-$(MKCRAMFS_VERSION).tar.gz
+
+$(ARCHIVE)/$(MKCRAMFS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/cramfs/files/cramfs/$(MKCRAMFS_VERSION)/$(MKCRAMFS_SOURCE)
+
+$(D)/host_mkcramfs: directories $(ARCHIVE)/$(MKCRAMFS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/cramfs-$(MKCRAMFS_VERSION)
+	$(UNTAR)/$(MKCRAMFS_SOURCE)
+	set -e; cd $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION); \
+		$(MAKE) all
+		cp $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION)/mkcramfs $(HOST_DIR)/bin
+		cp $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION)/cramfsck $(HOST_DIR)/bin
+	$(REMOVE)/cramfs-$(MKCRAMFS_VERSION)
+	$(TOUCH)
+
+#
 # gdb-remote
 #
 GDB_VERSION = 7.8
