@@ -791,7 +791,6 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
-	rm -f $(RELEASE_DIR)/lib/modules/lzo*.ko
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VERSION)
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
@@ -811,6 +810,9 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
 	rm -f $(RELEASE_DIR)/bin/gitVCInfo
+	rm -f $(RELEASE_DIR)/bin/evtest
+	rm -f $(RELEASE_DIR)/bin/meta
+	rm -f $(RELEASE_DIR)/bin/streamproxy
 	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
 #
