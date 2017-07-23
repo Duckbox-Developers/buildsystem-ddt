@@ -18,8 +18,8 @@ if [ -e /var/etc/.firstboot ]; then
    touch /dev/.devfsd
 fi
 
-   /etc/init.d/mountvirtfs start
-   /etc/init.d/portmap start
+/etc/init.d/mountvirtfs start
+/etc/init.d/portmap start
 
 if [ ! -e /var/etc/.firstboot ]; then
 
@@ -27,12 +27,10 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "load video firmware"
    /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
-#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
    /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
 
    echo "load audio firmware"
    /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
-#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
    /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
 
 # start automounter with umount timeout of 5 seconds
@@ -55,8 +53,8 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "init embx"
    insmod $MODDIR/embxshell.ko
-   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:137:set2 ;
-   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:137:set2
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000
    insmod $MODDIR/mme_host.ko transport0=shm
 
    if [ $boxtype == 'bsla' ]; then
@@ -72,7 +70,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
    echo "init player $player"
    insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0
    insmod $MODDIR/ksound.ko
    insmod $MODDIR/p2div64.ko
    insmod $MODDIR/stm_v4l2.ko
@@ -80,7 +78,7 @@ if [ ! -e /var/etc/.firstboot ]; then
 	insmod $MODDIR/stmvout.ko
 	insmod $MODDIR/stmvbi.ko
    fi
-  insmod $MODDIR/pseudocard.ko
+   insmod $MODDIR/pseudocard.ko
 
     if [ $boxtype == 'bska' ]; then
          echo "init frontends bialy"
@@ -89,18 +87,9 @@ if [ ! -e /var/etc/.firstboot ]; then
          echo "init frontends czarny"
 	 insmod $MODDIR/fe-core.ko tuner=czarny ;
     fi
-
-   echo "init drivers"
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stm_monitor.ko
-	insmod $MODDIR/stmsysfs.ko
-    	insmod $MODDIR/stmdvb.ko TSIS_mode=parallel
-   else
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stmdvb.ko
-	insmod $MODDIR/stm_monitor.ko
-   fi	
+   insmod $MODDIR/pti.ko
+   insmod $MODDIR/stmdvb.ko
+   insmod $MODDIR/stm_monitor.ko
    insmod $MODDIR/player2.ko
    insmod $MODDIR/sth264pp.ko
    insmod $MODDIR/stmalloc.ko
@@ -134,7 +123,7 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    until false
    do
-      echo "starting neutrino->"
+      echo "starting neutrino ->"
       /etc/init.d/networking restart
       /usr/bin/start-emu.sh
       /usr/local/bin/neutrino

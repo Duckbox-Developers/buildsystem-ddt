@@ -40,12 +40,10 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "load video firmware"
    /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
-#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
    /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
 
    echo "load audio firmware"
    /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
-#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
    /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
 
    echo "init embx"
@@ -64,8 +62,6 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/ksound.ko
    insmod $MODDIR/p2div64.ko
    insmod $MODDIR/stm_v4l2.ko
-   insmod $MODDIR/stmvout.ko
-   insmod $MODDIR/stmvbi.ko
    insmod $MODDIR/pseudocard.ko
 
    insmod $MODDIR/spark7162.ko UnionTunerType=t

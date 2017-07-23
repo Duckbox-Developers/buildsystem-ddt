@@ -62,8 +62,8 @@ echo "Load 7" > /dev/vfd
 echo "[rcS] Init embx (LOAD 6)"
 echo "Load 6" > /dev/vfd
 insmod $MODDIR/embxshell.ko
-insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
-insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
+insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0
+insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000
 insmod $MODDIR/mme_host.ko transport0=shm
 
 echo "[rcS] Init AVS (LOAD 5)"
@@ -77,8 +77,6 @@ insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
 insmod $MODDIR/ksound.ko
 insmod $MODDIR/p2div64.ko
 insmod $MODDIR/stm_v4l2.ko
-insmod $MODDIR/stmvout.ko
-insmod $MODDIR/stmvbi.ko
 insmod $MODDIR/pseudocard.ko
 insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
 insmod $MODDIR/cimax.ko

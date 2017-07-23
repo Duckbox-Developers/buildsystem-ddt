@@ -53,23 +53,21 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    echo "load video firmware"
    /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
-#   /bin/stslave -t st231.0 -R /lib/firmware/video.elf
    /bin/ustslave /dev/st231-0 /lib/firmware/video.elf
 
    echo "load audio firmware"
    /bin/dd if=/dev/zero of=/dev/st231-1 bs=1024 count=4096
-#   /bin/stslave -t st231.1 -R /lib/firmware/audio.elf
    /bin/ustslave /dev/st231-1 /lib/firmware/audio.elf
 
    echo "init embx"
    insmod $MODDIR/embxshell.ko
-   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
-   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000 ;
+   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0
+   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:512:0xa4000000:0x10000000
    insmod $MODDIR/mme_host.ko transport0=shm
 
    echo "init player"
    insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1;
+   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER1
    insmod $MODDIR/ksound.ko
    insmod $MODDIR/p2div64.ko
    insmod $MODDIR/stm_v4l2.ko

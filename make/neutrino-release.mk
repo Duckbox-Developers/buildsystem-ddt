@@ -544,8 +544,6 @@ endif
 # player
 #
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stm_v4l2.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stm_v4l2.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmvbi.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmvbi.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmvout.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmvout.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmfb.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmfb.ko $(RELEASE_DIR)/lib/modules/ || true
 	cd $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra && \
 	for mod in \
