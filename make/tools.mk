@@ -9,6 +9,7 @@ tools-clean:
 	-$(MAKE) -C $(APPS_DIR)/tools/fp_control distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-fup distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-mup distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-pad distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/hotplug distclean
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 	-$(MAKE) -C $(APPS_DIR)/tools/ipbox_eeprom distclean
@@ -105,6 +106,20 @@ $(D)/tools-flashtool-fup: directories
 $(D)/tools-flashtool-mup: directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-mup; \
+		./autogen.sh; \
+		./configure \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(HOST_DIR)
+	$(TOUCH)
+
+#
+# flashtool-pad
+#
+$(D)/tools-flashtool-pad: directories
+	$(START_BUILD)
+	set -e; cd $(APPS_DIR)/tools/flashtool-pad; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -320,6 +335,7 @@ TOOLS += $(D)/tools-evremote2
 TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-flashtool-fup
 TOOLS += $(D)/tools-flashtool-mup
+TOOLS += $(D)/tools-flashtool-pad
 TOOLS += $(D)/tools-hotplug
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 TOOLS += $(D)/tools-ipbox_eeprom
