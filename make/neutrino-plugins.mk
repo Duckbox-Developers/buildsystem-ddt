@@ -51,11 +51,11 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 $(D)/neutrino-mp-plugins.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
-	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins-max.git ]; \
-		then cd $(ARCHIVE)/neutrino-mp-plugins-max.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/MaxWiesel/neutrino-mp-plugins-max.git neutrino-mp-plugins-max.git; \
+	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins.git ]; \
+		then cd $(ARCHIVE)/neutrino-mp-plugins.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-mp-plugins.git; \
 		fi
-	cp -ra $(ARCHIVE)/neutrino-mp-plugins-max.git $(SOURCE_DIR)/neutrino-mp-plugins
+	cp -ra $(ARCHIVE)/neutrino-mp-plugins.git $(SOURCE_DIR)/neutrino-mp-plugins
 	$(TOUCH)
 
 $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
