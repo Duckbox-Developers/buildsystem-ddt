@@ -53,7 +53,7 @@ $(D)/neutrino-mp-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
 	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins.git ]; \
 		then cd $(ARCHIVE)/neutrino-mp-plugins.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-mp-plugins.git; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-mp-plugins.git neutrino-mp-plugins.git; \
 		fi
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins.git $(SOURCE_DIR)/neutrino-mp-plugins
 	$(TOUCH)
