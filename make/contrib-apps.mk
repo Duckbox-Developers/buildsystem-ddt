@@ -1294,10 +1294,18 @@ $(D)/libevent: $(D)/bootstrap $(ARCHIVE)/$(LIBEVENT_SOURCE)
 	$(UNTAR)/$(LIBEVENT_SOURCE)
 	$(SET) -e; cd $(BUILD_TMP)/libevent-$(LIBEVENT_VERSION);\
 		$(CONFIGURE) \
-			--prefix=$(TARGET_DIR)/usr \
+			--prefix=/usr \
 		; \
 		$(MAKE); \
-		$(MAKE) install
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent_openssl.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent_pthreads.pc
+	$(REWRITE_LIBTOOL)/libevent_core.la
+	$(REWRITE_LIBTOOL)/libevent_extra.la
+	$(REWRITE_LIBTOOL)/libevent.la
+	$(REWRITE_LIBTOOL)/libevent_openssl.la
+	$(REWRITE_LIBTOOL)/libevent_pthreads.la
 	$(REMOVE)/libevent-$(LIBEVENT_VERSION)
 	$(TOUCH)
 
