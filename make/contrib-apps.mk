@@ -311,13 +311,13 @@ endif
 #
 # host_module_init_tools
 #
-MODULE_INIT_TOOLS_VERSION = 3.15
-MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).tar.xz
+MODULE_INIT_TOOLS_VERSION = 3.16
+MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).tar.bz2
 MODULE_INIT_TOOLS_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
 MODULE_INIT_TOOLS_HOST_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
 
 $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE):
-	$(WGET) https://www.kernel.org/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
+	$(WGET) http://ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
 
 $(D)/host_module_init_tools: $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
 	$(START_BUILD)
