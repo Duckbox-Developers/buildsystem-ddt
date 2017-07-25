@@ -269,7 +269,7 @@ $(D)/linux-kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) \
 	(echo "Applying patch level P$(KERNEL_LABEL)"; cd $(KERNEL_DIR); git checkout -q $(HOST_KERNEL_REVISION))
 	set -e; cd $(KERNEL_DIR); \
 		for i in $(HOST_KERNEL_PATCHES); do \
-			echo -e "==> \033[31mApplying Patch:\033[0m $$i"; \
+			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; \
 			$(PATCH)/$(BUILD_CONFIG)/$$i; \
 		done
 	install -m 644 $(PATCHES)/$(BUILD_CONFIG)/$(HOST_KERNEL_CONFIG) $(KERNEL_DIR)/.config

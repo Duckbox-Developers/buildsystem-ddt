@@ -97,6 +97,9 @@ PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin
 
 TERM_BOLD            := $(shell tput smso 2>/dev/null)
 TERM_RESET           := $(shell tput rmso 2>/dev/null)
+TERM_GREEN_BOLD      := \033[01;32m
+TERM_RED             := \033[31m
+TERM_NORMAL          := \033[0m
 
 MAKEFLAGS            += --no-print-directory
 ifndef VERBOSE
@@ -133,20 +136,20 @@ define post_patch
 		if [ -d $$i ] ; then \
 			for p in $$i/*; do \
 				if [ $${p:0:1} == "/" ]; then \
-					echo -e "==> \033[31mApplying Patch:\033[0m $$p"; $(APATCH) $$p; \
+					echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \
 				else \
-					echo -e "==> \033[31mApplying Patch:\033[0m $$p"; $(PATCH)/$$p; \
+					echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH)/$$p; \
 				fi; \
 			done; \
 		else \
 			if [ $${i:0:1} == "/" ]; then \
-				echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(APATCH) $$i; \
+				echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH) $$i; \
 			else \
-				echo -e "==> \033[31mApplying Patch:\033[0m $$i"; $(PATCH)/$$i; \
+				echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH)/$$i; \
 			fi; \
 		fi; \
 	done; \
-	echo -e "Patch of \033[01;32m$(subst $(BASE_DIR)/.deps/,,$@)\033[0m completed."; \
+	echo -e "Patching $(TERM_GREEN_BOLD)$(subst $(BASE_DIR)/.deps/,,$@)$(TERM_NORMAL) completed."; \
 	echo
 endef
 
@@ -519,8 +522,3 @@ endif
 
 #
 PLATFORM_CPPFLAGS := CPPFLAGS="$(PLATFORM_CPPFLAGS)"
-#
-
-#V ?= 0
-#export V
-
