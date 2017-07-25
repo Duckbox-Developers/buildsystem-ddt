@@ -272,11 +272,11 @@ echo "Your next step could be:"
 case "$IMAGE" in
 		neutrino*)
 		echo "  make yaud-neutrino-mp-cst-next"
-		echo "  make yaud-neutrino-mp-cst-next-plugin"
+		echo "  make yaud-neutrino-mp-cst-next-plugins"
 		echo "  make yaud-neutrino-mp-cst-next-ni"
 		echo "  make yaud-neutrino-mp-cst-next-ni-plugins"
 		echo "  make yaud-neutrino-hd2"
-		echo "  make yaud-neutrino-hd2-plugin";;
+		echo "  make yaud-neutrino-hd2-plugins";;
 		enigma2*)
 		echo "  make yaud-enigma2";;
 		*)
