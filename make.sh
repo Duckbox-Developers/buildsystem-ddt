@@ -240,6 +240,7 @@ case "$REPLY" in
 	*) EXTERNAL_LCD="none";;
 esac
 echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
+
 ##############################################
 
 case $7 in

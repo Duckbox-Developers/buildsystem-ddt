@@ -26,7 +26,6 @@ SOURCE_DIR            = $(BASE_DIR)/source
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
 
-
 GIT_PROTOCOL         ?= http
 ifneq ($(GIT_PROTOCOL), http)
 GITHUB               ?= git://github.com
@@ -99,8 +98,6 @@ PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin
 TERM_BOLD            := $(shell tput smso 2>/dev/null)
 TERM_RESET           := $(shell tput rmso 2>/dev/null)
 
-# Adjust according to the number CPU cores to use for parallel build.
-# Default: Number of processors in /proc/cpuinfo, if present, or 1.
 MAKEFLAGS            += --no-print-directory
 ifndef VERBOSE
 VERBOSE               = 1
@@ -243,7 +240,7 @@ KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VERSION)))
 KERNEL_STM        :=$(word 2,$(call split_version,$(KERNEL_VERSION)))
 KERNEL_LABEL      :=$(word 3,$(call split_version,$(KERNEL_VERSION)))
 KERNEL_RELEASE    :=$(subst ^0,,^$(KERNEL_LABEL))
-KERNEL_STM_LABEL  := _$(KERNEL_STM)_$(KERNEL_LABEL)
+KERNEL_STM_LABEL  :=_$(KERNEL_STM)_$(KERNEL_LABEL)
 KERNEL_DIR         =$(BUILD_TMP)/linux-sh4-$(KERNEL_VERSION)
 
 #
