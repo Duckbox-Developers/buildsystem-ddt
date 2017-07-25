@@ -1325,10 +1325,12 @@ $(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBNFSIDMAP_SOURCE)
 	$(SET) -e; cd $(BUILD_TMP)/libnfsidmap-$(LIBNFSIDMAP_VERSION);\
 		$(CONFIGURE) \
 		ac_cv_func_malloc_0_nonnull=yes \
-			--prefix=$(TARGET_DIR)/usr \
+			--prefix=/usr \
 		; \
 		$(MAKE); \
-		$(MAKE) install
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnfsidmap.pc
+	$(REWRITE_LIBTOOL)/libnfsidmap.la
 	$(REMOVE)/libnfsidmap-$(LIBNFSIDMAP_VERSION)
 	$(TOUCH)
 
