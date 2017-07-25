@@ -18,7 +18,7 @@
        if (dec->priv->pending_events)
 --- a/gst-libs/gst/video/gstvideodecoder.c
 +++ b/gst-libs/gst/video/gstvideodecoder.c
-@@ -1182,6 +1182,14 @@
+@@ -1188,6 +1188,14 @@
         * parent class' ::sink_event() until a later time.
         */
        forward_immediate = TRUE;

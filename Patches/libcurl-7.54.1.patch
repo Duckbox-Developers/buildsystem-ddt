@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -264,7 +264,7 @@
+@@ -265,7 +265,7 @@
  
  CURL_CHECK_COMPILER
  CURL_SET_COMPILER_BASIC_OPTS
@@ -30,7 +30,7 @@
  pkgconfig_DATA = libcurl.pc
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -616,7 +616,7 @@
+@@ -623,7 +623,7 @@
  
  bin_SCRIPTS = curl-config
  SUBDIRS = lib docs src include

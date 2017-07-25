@@ -1,6 +1,6 @@
 --- a/sys/dvb/gstdvbsrc.c
 +++ b/sys/dvb/gstdvbsrc.c
-@@ -300,7 +305,9 @@
+@@ -305,7 +305,9 @@
      {APSK_16, "16APSK", "16apsk"},
      {APSK_32, "32APSK", "32apsk"},
      {DQPSK, "DQPSK", "dqpsk"},

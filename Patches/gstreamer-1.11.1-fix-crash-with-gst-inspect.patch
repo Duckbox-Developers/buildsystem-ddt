@@ -1,6 +1,6 @@
 --- a/tools/gst-inspect.c
 +++ b/tools/gst-inspect.c
-@@ -1510,7 +1511,7 @@
+@@ -1548,7 +1548,7 @@
    g_option_context_add_main_entries (ctx, options, GETTEXT_PACKAGE);
    g_option_context_add_group (ctx, gst_init_get_option_group ());
    if (!g_option_context_parse (ctx, &argc, &argv, &err)) {

@@ -47,7 +47,7 @@
  	@$(PERL) $(TOP)/util/mkdir-p.pl $(INSTALL_PREFIX)$(INSTALLTOP)/bin \
 --- a/Makefile.org
 +++ b/Makefile.org
-@@ -532,7 +532,7 @@ dist:
+@@ -532,7 +532,7 @@
  	@$(MAKE) SDIRS='$(SDIRS)' clean
  	@$(MAKE) TAR='$(TAR)' TARFLAGS='$(TARFLAGS)' $(DISTTARVARS) tar
  
