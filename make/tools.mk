@@ -39,7 +39,7 @@ endif
 #
 $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/aio-grab; \
+	$(SET) -e; cd $(APPS_DIR)/tools/aio-grab; \
 		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
 			--prefix= \
 		; \
@@ -52,7 +52,7 @@ $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 #
 $(D)/tools-devinit: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/devinit; \
+	$(SET) -e; cd $(APPS_DIR)/tools/devinit; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -64,8 +64,8 @@ $(D)/tools-devinit: $(D)/bootstrap
 # evremote2
 #
 $(D)/tools-evremote2: $(D)/bootstrap
-	@$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/evremote2; \
+	$(START_BUILD)
+	$(SET) -e; cd $(APPS_DIR)/tools/evremote2; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -78,7 +78,7 @@ $(D)/tools-evremote2: $(D)/bootstrap
 #
 $(D)/tools-fp_control: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/fp_control; \
+	$(SET) -e; cd $(APPS_DIR)/tools/fp_control; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -91,7 +91,7 @@ $(D)/tools-fp_control: $(D)/bootstrap
 #
 $(D)/tools-flashtool-fup: directories
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/flashtool-fup; \
+	$(SET) -e; cd $(APPS_DIR)/tools/flashtool-fup; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -105,7 +105,7 @@ $(D)/tools-flashtool-fup: directories
 #
 $(D)/tools-flashtool-mup: directories
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/flashtool-mup; \
+	$(SET) -e; cd $(APPS_DIR)/tools/flashtool-mup; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -119,7 +119,7 @@ $(D)/tools-flashtool-mup: directories
 #
 $(D)/tools-flashtool-pad: directories
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/flashtool-pad; \
+	$(SET) -e; cd $(APPS_DIR)/tools/flashtool-pad; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -133,7 +133,7 @@ $(D)/tools-flashtool-pad: directories
 #
 $(D)/tools-hotplug: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/hotplug; \
+	$(SET) -e; cd $(APPS_DIR)/tools/hotplug; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -146,7 +146,7 @@ $(D)/tools-hotplug: $(D)/bootstrap
 #
 $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/ipbox_eeprom; \
+	$(SET) -e; cd $(APPS_DIR)/tools/ipbox_eeprom; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -159,7 +159,7 @@ $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 #
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/libeplayer3; \
+	$(SET) -e; cd $(APPS_DIR)/tools/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -172,7 +172,7 @@ $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 #
 $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/libmme_host; \
+	$(SET) -e; cd $(APPS_DIR)/tools/libmme_host; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 			$(if $(MULTICOM324), --enable-multicom324) \
@@ -187,7 +187,7 @@ $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 #
 $(D)/tools-libmme_image: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/libmme_image; \
+	$(SET) -e; cd $(APPS_DIR)/tools/libmme_image; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -199,20 +199,21 @@ $(D)/tools-libmme_image: $(D)/bootstrap
 # minimon
 #
 $(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
-	set -e; cd $(APPS_DIR)/tools/minimon; \
+	$(START_BUILD)
+	$(SET) -e; cd $(APPS_DIR)/tools/minimon; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE) KERNEL_DIR=$(KERNEL_DIR) TARGET=$(TARGET) TARGET_DIR=$(TARGET_DIR); \
 		$(MAKE) install KERNEL_DIR=$(KERNEL_DIR) TARGET=$(TARGET) TARGET_DIR=$(TARGET_DIR) DESTDIR=$(TARGET_DIR)
-	touch $@
+	$(TOUCH)
 
 #
 # showiframe
 #
 $(D)/tools-showiframe: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/showiframe; \
+	$(SET) -e; cd $(APPS_DIR)/tools/showiframe; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -225,7 +226,7 @@ $(D)/tools-showiframe: $(D)/bootstrap
 #
 $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/spf_tool; \
+	$(SET) -e; cd $(APPS_DIR)/tools/spf_tool; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -238,7 +239,7 @@ $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 #
 $(D)/tools-stfbcontrol: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/stfbcontrol; \
+	$(SET) -e; cd $(APPS_DIR)/tools/stfbcontrol; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -251,7 +252,7 @@ $(D)/tools-stfbcontrol: $(D)/bootstrap
 #
 $(D)/tools-streamproxy: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/streamproxy; \
+	$(SET) -e; cd $(APPS_DIR)/tools/streamproxy; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -264,7 +265,7 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 #
 $(D)/tools-tfd2mtd: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/tfd2mtd; \
+	$(SET) -e; cd $(APPS_DIR)/tools/tfd2mtd; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -277,7 +278,7 @@ $(D)/tools-tfd2mtd: $(D)/bootstrap
 #
 $(D)/tools-tffpctl: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/tffpctl; \
+	$(SET) -e; cd $(APPS_DIR)/tools/tffpctl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -290,7 +291,7 @@ $(D)/tools-tffpctl: $(D)/bootstrap
 #
 $(D)/tools-ustslave: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/ustslave; \
+	$(SET) -e; cd $(APPS_DIR)/tools/ustslave; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -307,7 +308,7 @@ endif
 
 $(D)/tools-vfdctl: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/vfdctl; \
+	$(SET) -e; cd $(APPS_DIR)/tools/vfdctl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -320,14 +321,13 @@ $(D)/tools-vfdctl: $(D)/bootstrap
 #
 $(D)/tools-wait4button: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/wait4button; \
+	$(SET) -e; cd $(APPS_DIR)/tools/wait4button; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
-
 
 TOOLS  = $(D)/tools-aio-grab
 TOOLS += $(D)/tools-devinit

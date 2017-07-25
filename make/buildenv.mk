@@ -125,6 +125,7 @@ export RM=$(shell which rm) -f
 
 # unpack tarballs, clean up
 UNTAR                 = $(SILENT)tar -C $(BUILD_TMP) -xf $(ARCHIVE)
+SET                   = $(SILENT)set
 REMOVE                = $(SILENT)rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)

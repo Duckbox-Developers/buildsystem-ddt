@@ -13,7 +13,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib-networking $
 	$(START_BUILD)
 	$(REMOVE)/gstreamer-$(GSTREAMER_VERSION)
 	$(UNTAR)/$(GSTREAMER_SOURCE)
-	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VERSION); \
 		$(call post_patch,$(GSTREAMER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -67,7 +67,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-base-$(GSTREAMER_BASE_VERSION)
 	$(UNTAR)/$(GSTREAMER_BASE_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GSTREAMER_BASE_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-base-$(GSTREAMER_BASE_VERSION); \
 		$(call post_patch,$(GSTREAMER_BASE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -136,7 +136,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-good-$(GSTREAMER_GOOD_VERSION)
 	$(UNTAR)/$(GSTREAMER_GOOD_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GSTREAMER_GOOD_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-good-$(GSTREAMER_GOOD_VERSION); \
 		$(call post_patch,$(GSTREAMER_GOOD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -174,7 +174,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-bad-$(GSTREAMER_BAD_VERSION)
 	$(UNTAR)/$(GSTREAMER_BAD_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GSTREAMER_BAD_VERSION); \
 		$(call post_patch,$(GSTREAMER_BAD_PATCH)); \
 		$(BUILDENV) \
 		autoreconf --force --install; \
@@ -286,7 +286,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-ugly-$(GSTREAMER_UGLY_VERSION)
 	$(UNTAR)/$(GSTREAMER_UGLY_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GSTREAMER_UGLY_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GSTREAMER_UGLY_VERSION); \
 		$(call post_patch,$(GSTREAMER_UGLY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -324,7 +324,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 	$(START_BUILD)
 	$(REMOVE)/gst-libav-$(GSTREAMER_LIBAV_VERSION)
 	$(UNTAR)/$(GSTREAMER_LIBAV_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-libav-$(GSTREAMER_LIBAV_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-libav-$(GSTREAMER_LIBAV_VERSION); \
 		$(call post_patch,$(GSTREAMER_LIBAV_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -383,7 +383,7 @@ $(D)/gst_plugins_fluendo_mpegdemux: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugi
 	$(START_BUILD)
 	$(REMOVE)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VERSION)
 	$(UNTAR)/$(GSTREAMER_FLUENDO_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GSTREAMER_FLUENDO_VERSION); \
 		$(call post_patch,$(GSTREAMER_FLUENDO_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -408,7 +408,7 @@ $(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp
 	$(START_BUILD)
 	$(REMOVE)/gmediarender-$(GSTREAMER_GMEDIARENDER_VERSION)
 	$(UNTAR)/$(GSTREAMER_GMEDIARENDER_SOURCE)
-	set -e; cd $(BUILD_TMP)/gmediarender-$(GSTREAMER_GMEDIARENDER_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/gmediarender-$(GSTREAMER_GMEDIARENDER_VERSION); \
 		$(call post_patch,$(GSTREAMER_GMEDIARENDER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -433,7 +433,7 @@ $(D)/orc: $(D)/bootstrap $(ARCHIVE)/$(ORC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/orc-$(ORC_VERSION)
 	$(UNTAR)/$(ORC_SOURCE)
-	set -e; cd $(BUILD_TMP)/orc-$(ORC_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/orc-$(ORC_VERSION); \
 		$(call post_patch,$(ORC_PATCH)); \
 		$(CONFIGURE) \
 			--datarootdir=/.remove \
@@ -463,7 +463,7 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/$(LIBDCA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdca-$(LIBDCA_VERSION)
 	$(UNTAR)/$(LIBDCA_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VERSION); \
+	$(SET) -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VERSION); \
 		$(call post_patch,$(LIBDCA_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -486,12 +486,12 @@ GSTREAMER_SUBSINK_PATCH =
 $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(START_BUILD)
 	$(REMOVE)/gstreamer1.0-plugin-subsink
-	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-subsink.git ]; \
+	$(SET) -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-subsink.git ]; \
 		then cd $(ARCHIVE)/gstreamer1.0-plugin-subsink.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/christophecvr/gstreamer1.0-plugin-subsink.git gstreamer1.0-plugin-subsink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-subsink.git $(BUILD_TMP)/gstreamer1.0-plugin-subsink
-	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
+	$(SET) -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-subsink; \
 		$(call post_patch,$(GSTREAMER_SUBSINK_PATCH)); \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
@@ -517,12 +517,12 @@ GSTREAMER_DVBMEDIASINK_PATCH =
 $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
 	$(START_BUILD)
 	$(REMOVE)/gstreamer1.0-plugin-multibox-dvbmediasink
-	set -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git ]; \
+	$(SET) -e; if [ -d $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git ]; \
 		then cd $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git; git pull; \
 		else cd $(ARCHIVE); git clone -b experimental git://github.com/christophecvr/gstreamer1.0-plugin-multibox-dvbmediasink.git gstreamer1.0-plugin-multibox-dvbmediasink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer1.0-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink
-	set -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
+	$(SET) -e; cd $(BUILD_TMP)/gstreamer1.0-plugin-multibox-dvbmediasink; \
 		$(call post_patch,$(GSTREAMER_DVBMEDIASINK_PATCH)); \
 		aclocal --force -I m4; \
 		libtoolize --copy --force; \

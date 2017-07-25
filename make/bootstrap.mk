@@ -123,7 +123,7 @@ $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VERSION).sh4.rpm
 crosstool: directories driver-symlink \
 $(HOST_DIR)/bin/unpack-rpm.sh \
 crosstool-rpminstall
-	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
+	$(SET) -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
 	if [ -e $(CROSS_DIR)/target/usr/lib/libstdc++.la ]; then \
 		sed -i "s,^libdir=.*,libdir='$(CROSS_DIR)/target/usr/lib'," $(CROSS_DIR)/target/usr/lib/lib{std,sup}c++.la; \
 	fi
@@ -172,7 +172,7 @@ crosstool-ng: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	fi;
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
-	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+	$(SET) -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
 		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION)-$(BOXARCH).config .config; \
 		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
 		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
@@ -190,7 +190,7 @@ crossmenuconfig: $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	make $(BUILD_TMP)
 	$(REMOVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION)
 	$(UNTAR)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
-	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+	$(SET) -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
 		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \
