@@ -330,6 +330,7 @@ OPENSSL_SOURCE = openssl-$(OPENSSL_VERSION).tar.gz
 OPENSSL_PATCH  = openssl-$(OPENSSL_VERSION)-optimize-for-size.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-makefile-dirs.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-disable_doc_tests.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-fix-parallel-building.patch
 
 $(ARCHIVE)/$(OPENSSL_SOURCE):
 	$(WGET) http://www.openssl.org/source/$(OPENSSL_SOURCE)
