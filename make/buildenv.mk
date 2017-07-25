@@ -103,9 +103,10 @@ TERM_NORMAL          := \033[0m
 
 MAKEFLAGS            += --no-print-directory
 ifndef VERBOSE
-VERBOSE               = 1
+VERBOSE               = 0
 endif
-ifeq ($(VERBOSE), 1)
+ifneq ($(VERBOSE), 1)
+SILENT                = @
 MAKEFLAGS            += --silent
 CONFIGURE_SILENT      = -q
 endif
@@ -123,8 +124,8 @@ REWRITE_PKGCONF_OPT   = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/opt/pkg',"
 export RM=$(shell which rm) -f
 
 # unpack tarballs, clean up
-UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
-REMOVE                = rm -rf $(BUILD_TMP)
+UNTAR                 = $(SILENT)tar -C $(BUILD_TMP) -xf $(ARCHIVE)
+REMOVE                = $(SILENT)rm -rf $(BUILD_TMP)
 RM_PKGPREFIX          = rm -rf $(PKGPREFIX)
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
