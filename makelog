@@ -2,14 +2,9 @@
 
 mkdir -p BUILDLOG
 
-jobs=`grep processor /proc/cpuinfo |wc -l`
-jobs=$((jobs))
-echo "jobs=$jobs"
-
 if [ ! -z $1 ] ; then
-#	time make -j$jobs $1 2>&1 | tee BUILDLOG/make_$(date +%d.%m.%Y_%H%M).log
-	time make -j$jobs $1 2>&1 | tee BUILDLOG/make.log
-#	time make $1 2>&1 | tee BUILDLOG/make.log
+#	time make $1 2>&1 | tee BUILDLOG/make_$(date +%d.%m.%Y_%H%M).log
+	time make $1 2>&1 | tee BUILDLOG/make.log
 else
 	echo "Usage: makelog some_commands"
 fi
