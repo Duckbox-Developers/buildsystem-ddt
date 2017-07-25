@@ -203,25 +203,25 @@ PREQS += $(FLASH_DIR)
 preqs: $(PREQS)
 
 $(DRIVER_DIR):
-	@echo '=============================================================='
-	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repo              '
-	@echo '=============================================================='
+	@echo '===================================================================='
+	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repository'
+	@echo '===================================================================='
 	if [ ! -e $(DRIVER_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
 	fi
 
 $(APPS_DIR):
-	@echo '=============================================================='
-	@echo '      Cloning $(GIT_NAME_APPS)-apps git repo                  '
-	@echo '=============================================================='
+	@echo '===================================================================='
+	@echo '      Cloning $(GIT_NAME_APPS)-apps git repository'
+	@echo '===================================================================='
 	if [ ! -e $(APPS_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_APPS)/apps.git apps; \
 	fi
 
 $(FLASH_DIR):
-	@echo '=============================================================='
-	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repo                '
-	@echo '=============================================================='
+	@echo '===================================================================='
+	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repository'
+	@echo '===================================================================='
 	if [ ! -e $(FLASH_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash-bs.git flash; \
 	fi

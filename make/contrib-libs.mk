@@ -2209,10 +2209,12 @@ $(D)/libdvbsi++: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI++_SOURCE)
 	$(SET) -e; cd $(BUILD_TMP)/libdvbsi++-$(LIBDVBSI++_VERSION); \
 		$(call post_patch,$(LIBDVBSI++_PATCH)); \
 		$(CONFIGURE) \
-			--prefix=$(TARGET_DIR)/usr \
+			--prefix=/usr \
 		; \
 		$(MAKE); \
-		$(MAKE) install
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdvbsi++.pc
+	$(REWRITE_LIBTOOL)/libdvbsi++.la
 	$(REMOVE)/libdvbsi++-$(LIBDVBSI++_VERSION)
 	$(TOUCH)
 
