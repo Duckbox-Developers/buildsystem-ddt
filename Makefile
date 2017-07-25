@@ -5,7 +5,7 @@ UID := $(shell id -u)
 ifeq ($(UID), 0)
 warn:
 	@echo "You are running as root. Do not do this, it is dangerous."
-	@echo "Aborting the build. Goodbye."
+	@echo "Aborting the build. Log in as a regular user and retry."
 else
 LC_ALL:=C
 LANG:=C
@@ -48,7 +48,7 @@ printenv:
 	@echo "PLAYER_VERSION   : $(PLAYER_VERSION)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "EXTERNAL_LCD     : $(EXTERNAL_LCD)"
-	@echo "CPU_CORES        : $(PARALLEL_JOBS)"
+	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
@@ -113,36 +113,36 @@ update-self:
 	git pull
 
 update:
-	make distclean
+	$(MAKE) distclean
 	@if test -d $(BASE_DIR); then \
 		cd $(BASE_DIR)/; \
-		echo '=============================================================='; \
-		echo '      updating $(GIT_NAME)-cdk git repo                       '; \
-		echo '=============================================================='; \
+		echo '===================================================================='; \
+		echo '      updating $(GIT_NAME)-buildsystem git repository'; \
+		echo '===================================================================='; \
 		echo; \
 		$(GIT_PULL); fi
 		@echo;
 	@if test -d $(DRIVER_DIR); then \
 		cd $(DRIVER_DIR)/; \
-		echo '=============================================================='; \
-		echo '      updating $(GIT_NAME_DRIVER)-driver git repo             '; \
-		echo '=============================================================='; \
+		echo '==================================================================='; \
+		echo '      updating $(GIT_NAME_DRIVER)-driver git repository'; \
+		echo '==================================================================='; \
 		echo; \
 		$(GIT_PULL); fi
 		@echo;
 	@if test -d $(APPS_DIR); then \
 		cd $(APPS_DIR)/; \
-		echo '=============================================================='; \
-		echo '      updating $(GIT_NAME_APPS)-apps git repo                 '; \
-		echo '=============================================================='; \
+		echo '==================================================================='; \
+		echo '      updating $(GIT_NAME_APPS)-apps git repository'; \
+		echo '==================================================================='; \
 		echo; \
 		$(GIT_PULL); fi
 		@echo;
 	@if test -d $(FLASH_DIR); then \
 		cd $(FLASH_DIR)/; \
-		echo '=============================================================='; \
-		echo '      updating $(GIT_NAME_FLASH)-flash git repo               '; \
-		echo '=============================================================='; \
+		echo '==================================================================='; \
+		echo '      updating $(GIT_NAME_FLASH)-flash git repository'; \
+		echo '==================================================================='; \
 		echo; \
 		$(GIT_PULL); fi
 		@echo;

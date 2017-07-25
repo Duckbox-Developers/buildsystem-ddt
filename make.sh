@@ -168,7 +168,7 @@ case $3 in
 		echo "   1)  optimization for size"
 		echo "   2)  optimization normal"
 		echo "   3)  Kernel debug"
-		echo "   4)  debug / Kernel debug"
+		echo "   4)  debug (includes Kernel debug)"
 		read -p "Select optimization (1-4)? ";;
 esac
 
@@ -272,8 +272,11 @@ echo "Your next step could be:"
 case "$IMAGE" in
 		neutrino*)
 		echo "  make yaud-neutrino-mp-cst-next"
+		echo "  make yaud-neutrino-mp-cst-next-plugin"
 		echo "  make yaud-neutrino-mp-cst-next-ni"
-		echo "  make yaud-neutrino-hd2";;
+		echo "  make yaud-neutrino-mp-cst-next-ni-plugins"
+		echo "  make yaud-neutrino-hd2"
+		echo "  make yaud-neutrino-hd2-plugin";;
 		enigma2*)
 		echo "  make yaud-enigma2";;
 		*)
