@@ -861,12 +861,17 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(PNG_SOURCE)
 	$(SET) -e; cd $(BUILD_TMP)/libpng-$(PNG_VERSION); \
 		$(call post_patch,$(PNG_PATCH)); \
 		$(CONFIGURE) \
-			--prefix=$(TARGET_DIR)/usr \
-			--mandir=$(TARGET_DIR)/.remove \
-			--bindir=$(HOST_DIR)/bin \
+			--prefix=/usr \
+			--disable-mips-msa \
+			--disable-powerpc-vsx \
+			--mandir=/.remove \
 		; \
-		ECHO=echo $(MAKE) all; \
-		$(MAKE) install
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' -i $(TARGET_DIR)/usr/bin/libpng$(PNG_VERSION_X)-config; \
+		mv $(TARGET_DIR)/usr/bin/libpng*-config $(HOST_DIR)/bin/
+	$(REWRITE_LIBTOOL)/libpng16.la
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(PNG_VERSION_X).pc
 	$(REMOVE)/libpng-$(PNG_VERSION)
 	$(TOUCH)
 
