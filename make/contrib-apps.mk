@@ -664,7 +664,7 @@ $(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 		./configure $(CONFIGURE_SILENT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			--prefix=$(DEFAULT_PREFIX) \
+			--prefix=/usr \
 			--mandir=/.remove \
 			--without-gpm-mouse \
 			--disable-doxygen-doc \
