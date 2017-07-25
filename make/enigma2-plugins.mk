@@ -104,7 +104,7 @@ $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah $(D)/pyth
 	$(REMOVE)/e2openplugin-OpenWebif
 	set -e; if [ -d $(ARCHIVE)/e2openplugin-OpenWebif.git ]; \
 		then cd $(ARCHIVE)/e2openplugin-OpenWebif.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/HDMU/e2openplugin-OpenWebif.git e2openplugin-OpenWebif.git; \
+		else cd $(ARCHIVE); git clone https://github.com/E2OpenPlugins/e2openplugin-OpenWebif.git e2openplugin-OpenWebif.git; \
 		fi
 	cp -ra $(ARCHIVE)/e2openplugin-OpenWebif.git $(BUILD_TMP)/e2openplugin-OpenWebif
 	set -e; cd $(BUILD_TMP)/e2openplugin-OpenWebif; \
