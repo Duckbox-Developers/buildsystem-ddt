@@ -127,7 +127,7 @@ export RM=$(shell which rm) -f
 UNTAR                 = $(SILENT)tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 SET                   = $(SILENT)set
 REMOVE                = $(SILENT)rm -rf $(BUILD_TMP)
-RM_PKG_DIR            = rm -rf $(PKGPREFIX)
+RM_PKG_DIR            = rm -rf $(PKG_DIR)
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
 START_BUILD           = @echo "=============================================================="; echo; echo -e " $(TERM_BOLD) Start build of $(subst $(BASE_DIR)/.deps/,,$@). $(TERM_RESET)"
