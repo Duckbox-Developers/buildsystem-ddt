@@ -1998,6 +1998,9 @@ do
 	stpio)
 		makedev stpio c 60 0 $readable
 		;;
+	fuse)
+		makedev fuse c 10 229 $system
+		;;
 	comedi)
 		major=98
 		for minor in 0 1 2 3
