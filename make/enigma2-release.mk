@@ -85,7 +85,6 @@ release_enigma2_common_ipbox:
 	mkdir -p $(RELEASE_DIR)/var/run/lirc
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
-	rm -f $(RELEASE_DIR)/lib/modules/lzo*.ko
 	rm -f $(RELEASE_DIR)/lib/modules/ramzswap.ko
 	rm -f $(RELEASE_DIR)/lib/modules/stmvbi.ko
 	rm -f $(RELEASE_DIR)/lib/modules/stmvout.ko

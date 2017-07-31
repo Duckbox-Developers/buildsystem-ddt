@@ -86,9 +86,6 @@ release_neutrino_common_ipbox:
 	cp -dp $(SKEL_ROOT)/release/lircd_ipbox.conf $(RELEASE_DIR)/etc/lircd.conf
 	rm -f $(RELEASE_DIR)/lib/firmware/*
 	rm -f $(RELEASE_DIR)/lib/modules/boxtype.ko
-	rm -f $(RELEASE_DIR)/lib/modules/ramzswap.ko
-	rm -f $(RELEASE_DIR)/lib/modules/stmvbi.ko
-	rm -f $(RELEASE_DIR)/lib/modules/stmvout.ko
 	rm -f $(RELEASE_DIR)/etc/network/interfaces
 
 #

@@ -15,7 +15,7 @@ ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc_e2 $(D)/libexpat $(D)/libdvbsi++ $(
 ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
 ENIGMA2_DEPS += $(D)/avahi
 ENIGMA2_DEPS += python-all
-ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/tuxtxt32bpp $(D)/hotplug_e2
+ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/enigma2_tuxtxt32bpp $(D)/enigma2_hotplug_e2_helper
 ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
 
 ifeq ($(IMAGE), enigma2-wlandriver)
