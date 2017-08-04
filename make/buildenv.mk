@@ -102,10 +102,25 @@ TERM_RED             := \033[31m
 TERM_NORMAL          := \033[0m
 
 MAKEFLAGS            += --no-print-directory
-ifndef VERBOSE
-VERBOSE               = 0
+# To put more focus on warnings, be less verbose as default
+# Use 'make V=1' to see the full commands
+ifeq ("$(origin V)", "command line")
+KBUILD_VERBOSE        = $(V)
 endif
-ifneq ($(VERBOSE), 1)
+ifndef KBUILD_VERBOSE
+KBUILD_VERBOSE        = 0
+endif
+
+# If KBUILD_VERBOSE equals 0 then the above command will be hidden.
+# If KBUILD_VERBOSE equals 1 then the above command is displayed.
+ifeq ($(KBUILD_VERBOSE),1)
+CONFIGURE_SILENT      =
+SILENT                =
+ifndef VERBOSE
+VERBOSE               = 1
+endif
+export VERBOSE
+else
 SILENT                = @
 MAKEFLAGS            += --silent
 CONFIGURE_SILENT      = -q
