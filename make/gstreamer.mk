@@ -26,7 +26,6 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib-networking $
 			--disable-benchmarks \
 			--disable-tests \
 			--disable-debug \
-			--disable-docbook \
 			--disable-gtk-doc \
 			--disable-gtk-doc-html \
 			--disable-gtk-doc-pdf \
