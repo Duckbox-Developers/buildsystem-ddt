@@ -228,7 +228,7 @@ $(FLASH_DIR):
 	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repository'
 	@echo '===================================================================='
 	if [ ! -e $(FLASH_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash-bs.git flash; \
+		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash; \
 	fi
 	@echo ''
 
