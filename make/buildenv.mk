@@ -116,10 +116,6 @@ endif
 ifeq ($(KBUILD_VERBOSE),1)
 CONFIGURE_SILENT      =
 SILENT                =
-ifndef VERBOSE
-VERBOSE               = 1
-endif
-export VERBOSE
 else
 SILENT                = @
 MAKEFLAGS            += --silent
