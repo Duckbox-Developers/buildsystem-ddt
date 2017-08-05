@@ -1,10 +1,10 @@
 #!/bin/bash
 
-mkdir -p BUILDLOG
+mkdir -p build_logfile
 
 if [ ! -z $1 ] ; then
-#	time make $1 2>&1 | tee BUILDLOG/make_$(date +%d.%m.%Y_%H%M).log
-	time make $1 2>&1 | tee BUILDLOG/make.log
+#	time make V=1 $1 2>&1 | tee build_logfile/make_$(date +%d.%m.%Y_%H%M).log
+	time make V=1 $1 2>&1 | tee build_logfile/make.log
 else
 	echo "Usage: makelog some_commands"
 fi
