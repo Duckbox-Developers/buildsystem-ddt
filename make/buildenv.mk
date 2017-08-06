@@ -48,6 +48,7 @@ CROSS_BASE            = $(BASE_DIR)/tufsbox/cross
 CROSS_DIR             = $(CROSS_BASE)
 CONTROL_DIR           = $(BASE_DIR)/pkgs/control
 HOST_DIR              = $(BASE_DIR)/tufsbox/host
+IMAGE_DIR             = $(BASE_DIR)/tufsbox/cdkroot-flash
 PACKAGE_DIR           = $(BASE_DIR)/pkgs/opkg
 RELEASE_DIR           = $(BASE_DIR)/tufsbox/release
 PKG_DIR               = $(BUILD_TMP)/pkg
