@@ -26,49 +26,41 @@ release_neutrino_cube_common_tuner:
 # release_cuberevo_9500hd
 #
 release_neutrino_cuberevo_9500hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-9500hd" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_2000hd
 #
 release_neutrino_cuberevo_2000hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-2000hd" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_250hd
 #
 release_neutrino_cuberevo_250hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-250hd" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_mini_fta
 #
 release_neutrino_cuberevo_mini_fta: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-mini-fta" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_mini2
 #
 release_neutrino_cuberevo_mini2: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-mini2" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_mini
 #
 release_neutrino_cuberevo_mini: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-mini" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo
 #
 release_neutrino_cuberevo: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_cuberevo_3000hd
 #
 release_neutrino_cuberevo_3000hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
-	echo "cuberevo-3000hd" > $(RELEASE_DIR)/etc/hostname
 
 #
 # release_common_ipbox
@@ -92,7 +84,6 @@ release_neutrino_common_ipbox:
 # release_ipbox9900
 #
 release_neutrino_ipbox9900: release_neutrino_common_ipbox
-	echo "ipbox9900" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/rmu/rmu.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
@@ -102,7 +93,6 @@ release_neutrino_ipbox9900: release_neutrino_common_ipbox
 # release_ipbox99
 #
 release_neutrino_ipbox99: release_neutrino_common_ipbox
-	echo "ipbox99" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
@@ -111,7 +101,6 @@ release_neutrino_ipbox99: release_neutrino_common_ipbox
 # release_ipbox55
 #
 release_neutrino_ipbox55: release_neutrino_common_ipbox
-	echo "ipbox55" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox55/front.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox55 $(RELEASE_DIR)/usr/bin/tvmode
 
@@ -119,7 +108,6 @@ release_neutrino_ipbox55: release_neutrino_common_ipbox
 # release_ufs910
 #
 release_neutrino_ufs910:
-	echo "ufs910" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -134,7 +122,6 @@ release_neutrino_ufs910:
 # release_ufs912
 #
 release_neutrino_ufs912:
-	echo "ufs912" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -147,7 +134,6 @@ release_neutrino_ufs912:
 # release_ufs913
 #
 release_neutrino_ufs913:
-	echo "ufs913" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -161,7 +147,6 @@ release_neutrino_ufs913:
 # release_ufs922
 #
 release_neutrino_ufs922:
-	echo "ufs922" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -178,7 +163,6 @@ release_neutrino_ufs922:
 # release_ufc960
 #
 release_neutrino_ufc960:
-	echo "ufc960" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -192,7 +176,6 @@ release_neutrino_ufc960:
 # release_spark
 #
 release_neutrino_spark:
-	echo "spark" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -208,7 +191,6 @@ release_neutrino_spark:
 # release_spark7162
 #
 release_neutrino_spark7162:
-	echo "spark7162" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark7162 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
@@ -224,7 +206,6 @@ release_neutrino_spark7162:
 # release_fortis_hdbox
 #
 release_neutrino_fortis_hdbox:
-	echo "fortis" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -236,7 +217,6 @@ release_neutrino_fortis_hdbox:
 # release_atevio7500
 #
 release_neutrino_atevio7500:
-	echo "atevio7500" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -253,7 +233,6 @@ release_neutrino_atevio7500:
 # release_octagon1008
 #
 release_neutrino_octagon1008:
-	echo "octagon1008" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_octagon1008 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -267,7 +246,6 @@ release_neutrino_octagon1008:
 # release_hs7110
 #
 release_neutrino_hs7110:
-	echo "hs7110" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7110 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -281,7 +259,6 @@ release_neutrino_hs7110:
 # release_hs7420
 #
 release_neutrino_hs7420:
-	echo "hs7420" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -296,7 +273,6 @@ release_neutrino_hs7420:
 # release_hs7429
 #
 release_neutrino_hs7429:
-	echo "hs7429" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -311,7 +287,6 @@ release_neutrino_hs7429:
 # release_hs7810a
 #
 release_neutrino_hs7810a:
-	echo "hs7810a" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7810a $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -325,7 +300,6 @@ release_neutrino_hs7810a:
 # release_hs7119
 #
 release_neutrino_hs7119:
-	echo "hs7119" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7119 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -339,7 +313,6 @@ release_neutrino_hs7119:
 # release_hs7819
 #
 release_neutrino_hs7819:
-	echo "hs7819" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7819 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -353,7 +326,6 @@ release_neutrino_hs7819:
 # release_atemio520
 #
 release_neutrino_atemio520:
-	echo "atemio520" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio520 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -367,7 +339,6 @@ release_neutrino_atemio520:
 # release_atemio530
 #
 release_neutrino_atemio530:
-	echo "atemio530" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio530 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -381,7 +352,6 @@ release_neutrino_atemio530:
 # release_hl101
 #
 release_neutrino_hl101:
-	echo "hl101" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_hl101 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/proton/proton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -398,7 +368,6 @@ release_neutrino_hl101:
 # release_adb_box
 #
 release_neutrino_adb_box:
-	echo "Adb_Box" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_adb_box $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/adb_box_vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -419,7 +388,6 @@ release_neutrino_adb_box:
 # release_tf7700
 #
 release_neutrino_tf7700:
-	echo "tf7700" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_tf7700 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/tffp/tffp.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -434,7 +402,6 @@ release_neutrino_tf7700:
 # release_vitamin_hd5000
 #
 release_neutrino_vitamin_hd5000:
-	echo "vitamin_hd5000" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/vitamin_hd5000/micom.ko $(RELEASE_DIR)/lib/modules/
@@ -448,7 +415,6 @@ release_neutrino_vitamin_hd5000:
 # release_sagemcom88
 #
 release_neutrino_sagemcom88:
-	echo "sagemcom88" > $(RELEASE_DIR)/etc/hostname
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_led/front_led.ko $(RELEASE_DIR)/lib/modules/
@@ -465,7 +431,6 @@ release_neutrino_sagemcom88:
 # release_arivalink200
 #
 release_neutrino_arivalink200:
-	echo "Ariva@Link200" > $(RELEASE_DIR)/etc/hostname
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_ArivaLink200/vfd.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_ArivaLink200/vfd.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -532,6 +497,7 @@ release_neutrino_base:
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
+	echo "$(BOXTYPE)" > $(RELEASE_DIR)/etc/hostname
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
 	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
