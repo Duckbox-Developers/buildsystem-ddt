@@ -37,12 +37,6 @@ GIT_NAME_DRIVER      ?= Duckbox-Developers
 GIT_NAME_APPS        ?= Duckbox-Developers
 GIT_NAME_FLASH       ?= Duckbox-Developers
 
-ifneq ($(GIT_STASH_PULL), stashpull)
-GIT_PULL              = git pull
-else
-GIT_PULL              = git stash && git stash show -p stash@{0} > ./pull-stash.patch || true && git pull && git stash pop || true
-endif
-
 BOOT_DIR              = $(BASE_DIR)/tufsbox/cdkroot-tftpboot
 CROSS_BASE            = $(BASE_DIR)/tufsbox/cross
 CROSS_DIR             = $(CROSS_BASE)

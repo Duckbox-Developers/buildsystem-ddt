@@ -121,32 +121,52 @@ update:
 		echo '      updating $(GIT_NAME)-buildsystem git repository'; \
 		echo '===================================================================='; \
 		echo; \
-		$(GIT_PULL); fi
-		@echo;
+		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
+			git stash && git stash show -p stash@{0} > ./pull-stash-cdk.patch || true && git pull && git stash pop || true; \
+		else \
+			git pull; \
+		fi; \
+	fi
+	@echo;
 	@if test -d $(DRIVER_DIR); then \
 		cd $(DRIVER_DIR)/; \
 		echo '==================================================================='; \
 		echo '      updating $(GIT_NAME_DRIVER)-driver git repository'; \
 		echo '==================================================================='; \
 		echo; \
-		$(GIT_PULL); fi
-		@echo;
+		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
+			git stash && git stash show -p stash@{0} > ./pull-stash-driver.patch || true && git pull && git stash pop || true; \
+		else \
+			git pull; \
+		fi; \
+	fi
+	@echo;
 	@if test -d $(APPS_DIR); then \
 		cd $(APPS_DIR)/; \
 		echo '==================================================================='; \
 		echo '      updating $(GIT_NAME_APPS)-apps git repository'; \
 		echo '==================================================================='; \
 		echo; \
-		$(GIT_PULL); fi
-		@echo;
+		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
+			git stash && git stash show -p stash@{0} > ./pull-stash-apps.patch || true && git pull && git stash pop || true; \
+		else \
+			git pull; \
+		fi; \
+	fi
+	@echo;
 	@if test -d $(FLASH_DIR); then \
 		cd $(FLASH_DIR)/; \
 		echo '==================================================================='; \
 		echo '      updating $(GIT_NAME_FLASH)-flash git repository'; \
 		echo '==================================================================='; \
 		echo; \
-		$(GIT_PULL); fi
-		@echo;
+		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
+			git stash && git stash show -p stash@{0} > ./pull-stash-flash.patch || true && git pull && git stash pop || true; \
+		else \
+			git pull; \
+		fi; \
+	fi
+	@echo;
 
 all:
 	@echo "'make all' is not a valid target. Please read the documentation."
