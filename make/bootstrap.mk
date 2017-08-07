@@ -57,6 +57,8 @@ SYSTEM_TOOLS += $(D)/portmap
 SYSTEM_TOOLS += $(D)/nfs_utils
 SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
+SYSTEM_TOOLS += $(D)/udpxy
+SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
