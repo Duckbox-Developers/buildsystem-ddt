@@ -4,9 +4,8 @@ driver/
 flash/
 source/
 tufsbox/
-BUILDLOG/
-custom/yaud-*
-custom/release_*
+build_logfile/
+custom/*-local.sh
 own_build/
 Patches/patch-neutrino/
 root/boot/*
