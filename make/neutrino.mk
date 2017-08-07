@@ -18,6 +18,14 @@ NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
+NEUTRINO_DEPS += $(D)/ntfs-3g
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+NEUTRINO_DEPS += $(D)/mtd_utils
+endif
+#NEUTRINO_DEPS +=  $(D)/minidlna
+endif
+
 ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
@@ -25,7 +33,7 @@ endif
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/libflac
 
 N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
-N_CFLAGS      += -fno-strict-aliasing -funsigned-char
+N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
 #N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
@@ -33,6 +41,7 @@ N_CPPFLAGS     = -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(TARGET_DIR)/usr/include
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
 N_CPPFLAGS    += -D__STDC_CONSTANT_MACROS
+N_CPPFLAGS    += -ffunction-sections -fdata-sections
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
 N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
