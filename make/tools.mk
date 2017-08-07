@@ -9,6 +9,7 @@ tools-clean:
 	-$(MAKE) -C $(APPS_DIR)/tools/fp_control distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-fup distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-mup distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/flashtool_mup distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/flashtool-pad distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/hotplug distclean
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
@@ -33,6 +34,9 @@ endif
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
+ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
+	-$(MAKE) -C $(APPS_DIR)/tools/own-tools distclean
+endif
 
 #
 # aio-grab
@@ -112,6 +116,19 @@ $(D)/tools-flashtool-mup: directories
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(HOST_DIR)
+	$(TOUCH)
+
+#
+# flashtool_mup-box
+#
+$(D)/tools_flashtool_mup:
+	$(START_BUILD)
+	$(SET) -e; cd $(APPS_DIR)/tools/flashtool_mup; \
+		$(CONFIGURE_TOOLS) \
+			--prefix=/usr \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 #
@@ -329,11 +346,27 @@ $(D)/tools-wait4button: $(D)/bootstrap
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
+#
+# own-tools
+#
+$(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
+	$(START_BUILD)
+	$(SET) -e; cd $(APPS_DIR)/tools/own-tools; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
 TOOLS  = $(D)/tools-aio-grab
 TOOLS += $(D)/tools-devinit
 TOOLS += $(D)/tools-evremote2
 TOOLS += $(D)/tools-fp_control
 TOOLS += $(D)/tools-flashtool-fup
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
+TOOLS += $(D)/tools_flashtool_mup
+endif
 TOOLS += $(D)/tools-flashtool-mup
 TOOLS += $(D)/tools-flashtool-pad
 TOOLS += $(D)/tools-hotplug
@@ -356,6 +389,9 @@ TOOLS += $(D)/tools-libmme_image
 endif
 ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
 TOOLS += $(D)/tools-libeplayer3
+endif
+ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
+TOOLS += $(D)/tools-own-tools
 endif
 
 $(D)/tools: $(TOOLS)
