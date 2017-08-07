@@ -25,6 +25,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	cd $(BASE_DIR)/flash/$(BOXTYPE) && echo "$(SUDOPASSWD)" | sudo -S ./$(BOXTYPE).sh
 endif
+	$(TUXBOX_CUSTOMIZE)
 
 endif
 
