@@ -1202,8 +1202,8 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(ICONV_SOURCE)
 			--prefix=/usr \
 			--bindir=/.remove \
 			--datarootdir=/.remove \
-			--enable-static \
-			--disable-shared \
+			--disable-static \
+			--enable-shared \
 		; \
 		$(MAKE); \
 		cp ./srcm4/* $(HOST_DIR)/share/aclocal/ ; \
@@ -1493,6 +1493,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			\
 			--disable-decoders \
 			--enable-decoder=aac \
+			--enable-decoder=aac_latm \
 			--enable-decoder=dca \
 			--enable-decoder=dvbsub \
 			--enable-decoder=dvdsub \
