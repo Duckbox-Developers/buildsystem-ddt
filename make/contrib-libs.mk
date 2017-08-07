@@ -2086,7 +2086,7 @@ $(D)/alsa-lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 	$(UNTAR)/$(ALSA_LIB_SOURCE)
 	$(SET) -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_LIB_VERSION); \
 		$(call post_patch,$(ALSA_LIB_PATCH)); \
-		$(CONFIGURE) \
+		$(CONFIGURE_ALSA) \
 			--prefix=/usr \
 			--with-alsa-devdir=/dev/snd/ \
 			--with-plugindir=/usr/lib/alsa \

@@ -74,7 +74,7 @@ BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /
 OPTIMIZATIONS        ?= size
 TARGET_CFLAGS         = -pipe
 ifeq ($(OPTIMIZATIONS), size)
-TARGET_CFLAGS        += -Os
+TARGET_CFLAGS        += -Os -ffunction-sections -fdata-sections
 endif
 ifeq ($(OPTIMIZATIONS), normal)
 TARGET_CFLAGS        += -O2
@@ -89,7 +89,7 @@ endif
 TARGET_CFLAGS        += -I$(TARGET_DIR)/usr/include
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
 TARGET_CXXFLAGS       = $(TARGET_CFLAGS)
-TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib
+TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib -Wl,--gc-sections
 LD_FLAGS              = $(TARGET_LDFLAGS)
 
 VPATH                 = $(D)
@@ -218,6 +218,29 @@ CONFIGURE = \
 CONFIGURE_TOOLS = \
 	./autogen.sh && \
 	$(BUILDENV) \
+	./configure $(CONFIGURE_OPTS)
+
+BUILDENV_ALSA = \
+	CC=$(TARGET)-gcc \
+	CXX=$(TARGET)-g++ \
+	LD=$(TARGET)-ld \
+	NM=$(TARGET)-nm \
+	AR=$(TARGET)-ar \
+	AS=$(TARGET)-as \
+	RANLIB=$(TARGET)-ranlib \
+	STRIP=$(TARGET)-strip \
+	OBJCOPY=$(TARGET)-objcopy \
+	OBJDUMP=$(TARGET)-objdump \
+	LN_S="ln -s" \
+	CFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
+	CPPFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
+	CXXFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
+	LDFLAGS="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib" \
+	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
+
+CONFIGURE_ALSA = \
+	test -f ./configure || ./autogen.sh && \
+	$(BUILDENV_ALSA) \
 	./configure $(CONFIGURE_OPTS)
 
 MAKE_OPTS := \
