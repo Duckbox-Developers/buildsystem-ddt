@@ -58,7 +58,7 @@ $(D)/neutrino-mp-plugins.do_prepare:
 	cp -ra $(ARCHIVE)/neutrino-mp-plugins.git $(SOURCE_DIR)/neutrino-mp-plugins
 	$(TOUCH)
 
-$(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
+$(D)/neutrino-mp-plugins.config.status: $(D)/bootstrap $(D)/xupnpd
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		./autogen.sh && automake --add-missing; \
@@ -79,14 +79,15 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap $(D)/xupnpd
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS) -DMARTII -DNEW_LIBCURL" \
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(SOURCE_DIR)/neutrino-mp-plugins/fx2/lib/.libs"
+	$(TOUCH)
 
-$(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.status
+$(D)/neutrino-mp-plugins.do_compile: $(D)/neutrino-mp-plugins.config.status
 	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
 		$(MAKE)
 	$(TOUCH)
 
-$(D)/neutrino-mp-plugins: neutrino-mp-plugins.do_prepare neutrino-mp-plugins.do_compile
+$(D)/neutrino-mp-plugins: $(D)/neutrino-mp-plugins.do_prepare neutrino-mp-plugins.do_compile
 	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
@@ -99,6 +100,7 @@ neutrino-mp-plugins-clean:
 neutrino-mp-plugins-distclean:
 	rm -f $(D)/neutrino-mp-plugins.do_prepare
 	rm -f $(D)/neutrino-mp-plugins.do_compile
+	rm -f $(D)/neutrino-mp-plugins.config.status
 
 #
 # xupnpd
