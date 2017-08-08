@@ -1,20 +1,13 @@
 --- a/include/dvbsi++/byte_stream.h
 +++ b/include/dvbsi++/byte_stream.h
-@@ -23,8 +23,21 @@
+@@ -23,8 +23,14 @@
  #define w32(p,v)	do { *(uint32_t * const)(p) = ((const uint32_t)v) } while (0)
  #define w64(p,v)	do { *(uint64_t * const)(p) = ((const uint64_t)v) } while (0)
  #else
 +#ifdef __sh__
-+/* Dagobert / Phantomias: sh4 cant access u16/u32 on unaligned address */
-+#define r8(p)           (*(const __uint8_t * const)(p))
-+
-+#define r16(p)          (r8((const __uint8_t * const) p + 0) << 8 | \
-+                        r8((const __uint8_t * const) p + 1))
-+
-+#define r32(p)          (r8((const __uint8_t * const) p + 0) << 24 | \
-+                        r8((const __uint8_t * const) p + 1) << 16 | \
-+                        r8((const __uint8_t * const) p + 2) << 8 | \
-+                        r8((const __uint8_t * const) p + 3))
++/* SuperH does not like unaligned accesses, so work around that */
++#define r16(p)		((((uint8_t *)p)[0]) <<  8 | (((uint8_t *)p)[1]))
++#define r32(p)		((((uint8_t *)p)[0]) << 24 | (((uint8_t *)p)[1]) << 16 | (((uint8_t *)p)[2]) << 8 | ((uint8_t *)p)[3])
 +#else
  #define r16(p)		bswap_16(*(const uint16_t * const)p)
  #define r32(p)		bswap_32(*(const uint32_t * const)p)
