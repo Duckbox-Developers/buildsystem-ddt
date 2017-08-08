@@ -156,8 +156,6 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
-	cd $(SOURCE_DIR)/neutrino-hd2-plugins && find ./ -name "Makefile.am" -exec sed -i -e "s/\/..\/nhd2-exp//g" {} \;
-	cd $(SOURCE_DIR)/neutrino-hd2.git && git add --all
 	set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 		$(call post_patch,$(NEUTRINO_HD2_PLUGINS_PATCHES))
 	$(TOUCH)
