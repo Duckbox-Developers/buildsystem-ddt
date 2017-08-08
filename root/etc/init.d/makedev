@@ -45,7 +45,7 @@ start()
 
 	# Decide if we support HDMI CEC
 	HDMI_CEC="No"
-	for TARGET in ufs912 ufs913 atevio7500 hs7110 hs7810a hs7119 hs7819 spark spark7162; do
+	for BOXLIST in ufs912 ufs913 atevio7500 hs7110 hs7810a hs7119 hs7819 spark spark7162; do
 		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			HDMI_CEC="Yes"
 			break
@@ -115,15 +115,15 @@ start()
 	${MAKEDEV} ttyusb
 	${MAKEDEV} rfkill
 
-	if [ "${HOST}" == "fortis_hdbox" ]; then
+	if [ "${BOXTYPE}" == "fortis_hdbox" ]; then
 		${MAKEDEV} sci_fortis
 	else
 		${MAKEDEV} sci
 	fi
 
 	# Additional box specific stuff
-	for TARGET in spark spark7162; do
-		if [ "${HOST}" == "${TARGET}" ]; then
+	for BOXLIST in spark spark7162; do
+		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			${MAKEDEV} uinput
 		break
 		fi
