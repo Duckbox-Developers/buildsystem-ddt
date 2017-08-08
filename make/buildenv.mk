@@ -57,6 +57,8 @@ D                     = $(BASE_DIR)/.deps
 # backwards compatibility
 DEPDIR                = $(D)
 
+SUDOCMD               = echo $(SUDOPASSWD) | sudo -S
+
 WHOAMI               := $(shell id -un)
 #MAINTAINER           ?= $(shell getent passwd $(WHOAMI)|awk -F: '{print $$5}')
 MAINTAINER           ?= $(shell whoami)
