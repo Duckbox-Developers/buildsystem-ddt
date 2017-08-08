@@ -12,7 +12,7 @@ case "$1" in
   start)
     echo -n "Starting DHCP client: udhcpc"
     start-stop-daemon --start --quiet --exec $DAEMON \
-      -- --script=/usr/share/udhcpc/default.script -t 10 -q -n -i eth0 || echo -n " already running"
+      -- --script=/usr/share/udhcpc/default.script -t 2 -q -n -i eth0 || echo -n " already running"
     echo "."
   ;;
 
