@@ -465,9 +465,9 @@ release_neutrino_base:
 	ln -sf /usr/share $(RELEASE_DIR)/share
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,net,tuxbox,update}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-	install -d $(RELEASE_DIR)/var/net/epg}
+	install -d $(RELEASE_DIR)/var/net/epg
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
-	install -d $(RELEASE_DIR)/var/tuxbox/plugins/{webtv,}
+	install -d $(RELEASE_DIR)/var/tuxbox/plugins/webtv
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
