@@ -1,16 +1,16 @@
 #
 # python helpers
 #
-PYTHON_DIR         = /usr/lib/python$(PYTHON_VERSION_MAJOR)
-PYTHON_INCLUDE_DIR = /usr/include/python$(PYTHON_VERSION_MAJOR)
+PYTHON_DIR         = usr/lib/python$(PYTHON_VERSION_MAJOR)
+PYTHON_INCLUDE_DIR = usr/include/python$(PYTHON_VERSION_MAJOR)
 
 PYTHON_BUILD = \
 	CC="$(TARGET)-gcc" \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
-	PYTHONPATH=$(TARGET_DIR)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)$(PYTHON_INCLUDE_DIR)" \
+	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
 	$(HOST_DIR)/bin/python ./setup.py build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
@@ -18,8 +18,8 @@ PYTHON_INSTALL = \
 	CFLAGS="$(TARGET_CFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
 	LDSHARED="$(TARGET)-gcc -shared" \
-	PYTHONPATH=$(TARGET_DIR)$(PYTHON_DIR)/site-packages \
-	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)$(PYTHON_INCLUDE_DIR)" \
+	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
+	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
 	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGET_DIR) --prefix=/usr
 
 #
@@ -126,8 +126,8 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/libncurses $(D)/zlib $(D)/open
 			all DESTDIR=$(TARGET_DIR) \
 		; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGET_DIR)$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
-	ln -sf $(TARGET_DIR)$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
+	ln -sf ../../libpython$(PYTHON_VERSION_MAJOR).so.1.0 $(TARGET_DIR)/$(PYTHON_DIR)/config/libpython$(PYTHON_VERSION_MAJOR).so; \
+	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
 	$(REMOVE)/Python-$(PYTHON_VERSION)
 	$(TOUCH)
