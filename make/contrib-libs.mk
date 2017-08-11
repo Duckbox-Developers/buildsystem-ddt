@@ -135,7 +135,7 @@ LIBGLIB2_HOST_PATCH = libglib2-host-$(LIBGLIB2_VERSION)-gdate-suppress-string-fo
 LIBGLIB2_PATCH = libglib2-$(LIBGLIB2_VERSION)-disable-tests.patch
 
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
-	$(WGET) http://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR)/$(LIBGLIB2_SOURCE)
+	$(WGET) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VERSION_MAJOR).$(LIBGLIB2_VERSION_MINOR)/$(LIBGLIB2_SOURCE)
 
 $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
 	$(START_BUILD)
@@ -245,7 +245,7 @@ LIBARCHIVE_VERSION = 3.1.2
 LIBARCHIVE_SOURCE = libarchive-$(LIBARCHIVE_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBARCHIVE_SOURCE):
-	$(WGET) http://www.libarchive.org/downloads/$(LIBARCHIVE_SOURCE)
+	$(WGET) https://www.libarchive.org/downloads/$(LIBARCHIVE_SOURCE)
 
 $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(START_BUILD)
@@ -298,7 +298,7 @@ READLINE_VERSION = 6.2
 READLINE_SOURCE = readline-$(READLINE_VERSION).tar.gz
 
 $(ARCHIVE)/$(READLINE_SOURCE):
-	$(WGET) http://ftp.gnu.org/gnu/readline/$(READLINE_SOURCE)
+	$(WGET) https://ftp.gnu.org/gnu/readline/$(READLINE_SOURCE)
 
 $(D)/libreadline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 	$(START_BUILD)
@@ -333,7 +333,7 @@ OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-disable_doc_tests.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VERSION)-fix-parallel-building.patch
 
 $(ARCHIVE)/$(OPENSSL_SOURCE):
-	$(WGET) http://www.openssl.org/source/$(OPENSSL_SOURCE)
+	$(WGET) https://www.openssl.org/source/$(OPENSSL_SOURCE)
 
 $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	$(START_BUILD)
@@ -372,7 +372,7 @@ LIBBLURAY_SOURCE = libbluray-$(LIBBLURAY_VERSION).tar.bz2
 LIBBLURAY_PATCH = libbluray-$(LIBBLURAY_VERSION).patch
 
 $(ARCHIVE)/$(LIBBLURAY_SOURCE):
-	$(WGET) http://ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VERSION)/$(LIBBLURAY_SOURCE)
+	$(WGET) ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VERSION)/$(LIBBLURAY_SOURCE)
 
 $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 	$(START_BUILD)
@@ -414,7 +414,7 @@ LUA_POSIX_URL = git://github.com/luaposix/luaposix.git
 LUA_POSIX_PATCH = lua-$(LUA_VERSION)-luaposix-$(LUA_POSIX_VERSION).patch
 
 $(ARCHIVE)/$(LUA_SOURCE):
-	$(WGET) http://www.lua.org/ftp/$(LUA_SOURCE)
+	$(WGET) https://www.lua.org/ftp/$(LUA_SOURCE)
 
 $(ARCHIVE)/$(LUA_POSIX_SOURCE):
 	get-git-archive.sh $(LUA_POSIX_URL) release-v$(LUA_POSIX_VERSION) $(notdir $@) $(ARCHIVE)
@@ -468,7 +468,7 @@ LUA_EXPAT_SOURCE = luaexpat-$(LUA_EXPAT_VERSION).tar.gz
 LUA_EXPAT_PATCH = luaexpat-$(LUA_EXPAT_VERSION).patch
 
 $(ARCHIVE)/$(LUA_EXPAT_SOURCE):
-	$(WGET) http://matthewwild.co.uk/projects/luaexpat/$(LUA_EXPAT_SOURCE)
+	$(WGET) https://matthewwild.co.uk/projects/luaexpat/$(LUA_EXPAT_SOURCE)
 
 $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/libexpat $(ARCHIVE)/$(LUA_EXPAT_SOURCE)
 	$(START_BUILD)
@@ -546,7 +546,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(
 # luajson
 #
 $(ARCHIVE)/json.lua:
-	$(WGET) http://github.com/swiboe/swiboe/raw/master/term_gui/json.lua
+	$(WGET) https://github.com/swiboe/swiboe/raw/master/term_gui/json.lua
 
 $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 	$(START_BUILD)
@@ -852,7 +852,7 @@ PNG_SOURCE = libpng-$(PNG_VERSION).tar.xz
 PNG_PATCH = libpng-$(PNG_VERSION)-disable-tools.patch
 
 $(ARCHIVE)/$(PNG_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(PNG_VERSION_X)/$(PNG_VERSION)/$(PNG_SOURCE)
+	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(PNG_VERSION_X)/older-releases/$(PNG_VERSION)/$(PNG_SOURCE)
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(PNG_SOURCE)
 	$(START_BUILD)
@@ -882,7 +882,7 @@ PNGPP_VERSION = 0.2.9
 PNGPP_SOURCE = png++-$(PNGPP_VERSION).tar.gz
 
 $(ARCHIVE)/$(PNGPP_SOURCE):
-	$(WGET) http://download.savannah.gnu.org/releases/pngpp/$(PNGPP_SOURCE)
+	$(WGET) https://download.savannah.gnu.org/releases/pngpp/$(PNGPP_SOURCE)
 
 $(D)/png++: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(PNGPP_SOURCE)
 	$(START_BUILD)
@@ -1009,7 +1009,7 @@ LIBSIGC_E2_VERSION = $(LIBSIGC_E2_VERSION_MAJOR).$(LIBSIGC_E2_VERSION_MINOR).$(L
 LIBSIGC_E2_SOURCE = libsigc++-$(LIBSIGC_E2_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBSIGC_E2_SOURCE):
-	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_E2_VERSION_MAJOR).$(LIBSIGC_E2_VERSION_MINOR)/$(LIBSIGC_E2_SOURCE)
+	$(WGET) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_E2_VERSION_MAJOR).$(LIBSIGC_E2_VERSION_MINOR)/$(LIBSIGC_E2_SOURCE)
 
 $(D)/libsigc_e2: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_E2_SOURCE)
 	$(START_BUILD)
@@ -1037,7 +1037,7 @@ LIBSIGC_VERSION = $(LIBSIGC_VERSION_MAJOR).$(LIBSIGC_VERSION_MINOR).$(LIBSIGC_VE
 LIBSIGC_SOURCE = libsigc++-$(LIBSIGC_VERSION).tar.xz
 
 $(ARCHIVE)/$(LIBSIGC_SOURCE):
-	$(WGET) http://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_VERSION_MAJOR).$(LIBSIGC_VERSION_MINOR)/$(LIBSIGC_SOURCE)
+	$(WGET) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_VERSION_MAJOR).$(LIBSIGC_VERSION_MINOR)/$(LIBSIGC_SOURCE)
 
 $(D)/libsigc: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_SOURCE)
 	$(START_BUILD)
@@ -1129,7 +1129,7 @@ VORBIS_VERSION = 1.3.5
 VORBIS_SOURCE = libvorbis-$(VORBIS_VERSION).tar.xz
 
 $(ARCHIVE)/$(VORBIS_SOURCE):
-	$(WGET) http://downloads.xiph.org/releases/vorbis/$(VORBIS_SOURCE)
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/vorbis/$(VORBIS_SOURCE)
 
 $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(VORBIS_SOURCE)
 	$(START_BUILD)
@@ -1166,7 +1166,7 @@ VORBISIDEC_SOURCE = libvorbisidec_$(VORBISIDEC_VERSION)$(VORBISIDEC_VERSION_APPE
 VORBISIDEC_PATCH = libvorbisidec-$(VORBISIDEC_VERSION).patch
 
 $(ARCHIVE)/$(VORBISIDEC_SOURCE):
-	$(WGET) http://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/$(VORBISIDEC_SOURCE)
+	$(WGET) https://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/$(VORBISIDEC_SOURCE)
 
 $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(VORBISIDEC_SOURCE)
 	$(START_BUILD)
@@ -1274,7 +1274,7 @@ LIBDVDCSS_VERSION = 1.2.13
 LIBDVDCSS_SOURCE = libdvdcss-$(LIBDVDCSS_VERSION).tar.bz2
 
 $(ARCHIVE)/$(LIBDVDCSS_SOURCE):
-	$(WGET) http://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VERSION)/$(LIBDVDCSS_SOURCE)
+	$(WGET) https://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VERSION)/$(LIBDVDCSS_SOURCE)
 
 $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDCSS_SOURCE)
 	$(START_BUILD)
@@ -1682,7 +1682,7 @@ LIBSOUP_VERSION = $(LIBSOUP_VERSION_MAJOR).$(LIBSOUP_VERSION_MINOR)
 LIBSOUP_SOURCE = libsoup-$(LIBSOUP_VERSION).tar.xz
 
 $(ARCHIVE)/$(LIBSOUP_SOURCE):
-	$(WGET) http://download.gnome.org/sources/libsoup/$(LIBSOUP_VERSION_MAJOR)/$(LIBSOUP_SOURCE)
+	$(WGET) https://download.gnome.org/sources/libsoup/$(LIBSOUP_VERSION_MAJOR)/$(LIBSOUP_SOURCE)
 
 $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$(LIBSOUP_SOURCE)
 	$(START_BUILD)
@@ -1712,7 +1712,7 @@ OGG_VERSION = 1.3.2
 OGG_SOURCE = libogg-$(OGG_VERSION).tar.gz
 
 $(ARCHIVE)/$(OGG_SOURCE):
-	$(WGET) http://downloads.xiph.org/releases/ogg/$(OGG_SOURCE)
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ogg/$(OGG_SOURCE)
 
 $(D)/libogg: $(D)/bootstrap $(ARCHIVE)/$(OGG_SOURCE)
 	$(START_BUILD)
@@ -1740,7 +1740,7 @@ FLAC_SOURCE = flac-$(FLAC_VERSION).tar.xz
 FLAC_PATCH = libflac-$(FLAC_VERSION).patch
 
 $(ARCHIVE)/$(FLAC_SOURCE):
-	$(WGET) http://downloads.xiph.org/releases/flac/$(FLAC_SOURCE)
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/flac/$(FLAC_SOURCE)
 
 $(D)/libflac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 	$(START_BUILD)
@@ -2261,7 +2261,7 @@ LZO_VERSION = 2.10
 LZO_SOURCE = lzo-$(LZO_VERSION).tar.gz
 
 $(ARCHIVE)/$(LZO_SOURCE):
-	$(WGET) http://www.oberhumer.com/opensource/lzo/download/$(LZO_SOURCE)
+	$(WGET) https://www.oberhumer.com/opensource/lzo/download/$(LZO_SOURCE)
 
 $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 	$(START_BUILD)
@@ -2514,7 +2514,7 @@ LIBAO_VERSION = 1.1.0
 LIBAO_SOURCE = ibao-$(LIBAO_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBAO_SOURCE):
-	$(WGET) http://downloads.xiph.org/releases/ao/$(LIBAO_SOURCE)
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ao/$(LIBAO_SOURCE)
 
 $(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/$(LIBAO_SOURCE)
 	$(START_BUILD)
@@ -2543,7 +2543,7 @@ NETTLE_SOURCE = nettle-$(NETTLE_VERSION).tar.gz
 NETTLE_PATCH = nettle-$(NETTLE_VERSION).patch
 
 $(ARCHIVE)/$(NETTLE_SOURCE):
-	$(WGET) http://www.lysator.liu.se/~nisse/archive/$(NETTLE_SOURCE)
+	$(WGET) https://ftp.gnu.org/gnu/nettle/$(NETTLE_SOURCE)
 
 $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/$(NETTLE_SOURCE)
 	$(START_BUILD)
@@ -2611,7 +2611,7 @@ GLIB_NETWORKING_VERSION = $(GLIB_NETWORKING_VERSION_MAJOR).$(GLIB_NETWORKING_VER
 GLIB_NETWORKING_SOURCE = glib-networking-$(GLIB_NETWORKING_VERSION).tar.xz
 
 $(ARCHIVE)/$(GLIB_NETWORKING_SOURCE):
-	$(WGET) http://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIB_NETWORKING_VERSION_MAJOR)/$(GLIB_NETWORKING_SOURCE)
+	$(WGET) https://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIB_NETWORKING_VERSION_MAJOR)/$(GLIB_NETWORKING_SOURCE)
 
 $(D)/glib-networking: $(D)/bootstrap $(D)/gnutls $(D)/libglib2 $(ARCHIVE)/$(GLIB_NETWORKING_SOURCE)
 	$(START_BUILD)

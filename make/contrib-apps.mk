@@ -8,7 +8,7 @@ BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-extra.patch
 
 $(ARCHIVE)/$(BUSYBOX_SOURCE):
-	$(WGET) http://busybox.net/downloads/$(BUSYBOX_SOURCE)
+	$(WGET) https://busybox.net/downloads/$(BUSYBOX_SOURCE)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VERSION).config_nandwrite
@@ -319,7 +319,7 @@ MODULE_INIT_TOOLS_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
 MODULE_INIT_TOOLS_HOST_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
 
 $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE):
-	$(WGET) http://ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
+	$(WGET) ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
 
 $(D)/host_module_init_tools: $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
 	$(START_BUILD)
@@ -370,7 +370,7 @@ LSB_VERSION = $(LSB_MAJOR)-$(LSB_MINOR)
 LSB_SOURCE = lsb_$(LSB_VERSION).tar.gz
 
 $(ARCHIVE)/$(LSB_SOURCE):
-	$(WGET) http://debian.sdinet.de/etch/sdinet/lsb/$(LSB_SOURCE)
+	$(WGET) https://debian.sdinet.de/etch/sdinet/lsb/$(LSB_SOURCE)
 
 $(D)/lsb: $(D)/bootstrap $(ARCHIVE)/$(LSB_SOURCE)
 	$(START_BUILD)
@@ -526,7 +526,7 @@ NTFS_3G_VERSION = 2017.3.23
 NTFS_3G_SOURCE = ntfs-3g_ntfsprogs-$(NTFS_3G_VERSION).tgz
 
 $(ARCHIVE)/$(NTFS_3G_SOURCE):
-	$(WGET) http://tuxera.com/opensource/$(NTFS_3G_SOURCE)
+	$(WGET) https://tuxera.com/opensource/$(NTFS_3G_SOURCE)
 
 $(D)/ntfs-3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 	$(START_BUILD)
@@ -654,7 +654,7 @@ MC_VERSION = 4.8.14
 MC_SOURCE = mc-$(MC_VERSION).tar.xz
 
 $(ARCHIVE)/$(MC_SOURCE):
-	$(WGET) http://ftp.midnight-commander.org/$(MC_SOURCE)
+	$(WGET) ftp.midnight-commander.org/$(MC_SOURCE)
 
 $(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	$(START_BUILD)
@@ -689,7 +689,7 @@ NANO_VERSION = 2.2.6
 NANO_SOURCE = nano-$(NANO_VERSION).tar.gz
 
 $(ARCHIVE)/$(NANO_SOURCE):
-	$(WGET) http://www.nano-editor.org/dist/v2.2/$(NANO_SOURCE)
+	$(WGET) https://www.nano-editor.org/dist/v2.2/$(NANO_SOURCE)
 
 $(D)/nano: $(D)/bootstrap $(ARCHIVE)/$(NANO_SOURCE)
 	$(START_BUILD)
@@ -891,7 +891,7 @@ FBSHOT_SOURCE = fbshot-$(FBSHOT_VERSION).tar.gz
 FBSHOT_PATCH = fbshot-$(FBSHOT_VERSION).patch
 
 $(ARCHIVE)/$(FBSHOT_SOURCE):
-	$(WGET) http://www.sourcefiles.org/Graphics/Tools/Capture/$(FBSHOT_SOURCE)
+	$(WGET) http://distro.ibiblio.org/amigolinux/download/Utils/fbshot/$(FBSHOT_SOURCE)
 
 $(D)/fbshot: $(TARGET_DIR)/bin/fbshot
 	$(TOUCH)
@@ -914,7 +914,7 @@ PARTED_SOURCE = parted-$(PARTED_VERSION).tar.xz
 PARTED_PATCH = parted-$(PARTED_VERSION)-device-mapper.patch
 
 $(ARCHIVE)/$(PARTED_SOURCE):
-	$(WGET) http://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
+	$(WGET) https://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
 
 $(D)/parted: $(D)/bootstrap $(D)/libncurses $(D)/libreadline $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 	$(START_BUILD)
@@ -969,7 +969,7 @@ AUTOFS_SOURCE = autofs-$(AUTOFS_VERSION).tar.gz
 AUTOFS_PATCH = autofs-$(AUTOFS_VERSION).patch
 
 $(ARCHIVE)/$(AUTOFS_SOURCE):
-	$(WGET) http://www.kernel.org/pub/linux/daemons/autofs/v4/$(AUTOFS_SOURCE)
+	$(WGET) https://www.kernel.org/pub/linux/daemons/autofs/v4/$(AUTOFS_SOURCE)
 
 $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(AUTOFS_SOURCE)
 	$(START_BUILD)
@@ -1071,7 +1071,7 @@ DBUS_VERSION = 1.8.0
 DBUS_SOURCE = dbus-$(DBUS_VERSION).tar.gz
 
 $(ARCHIVE)/$(DBUS_SOURCE):
-	$(WGET) http://dbus.freedesktop.org/releases/dbus/$(DBUS_SOURCE)
+	$(WGET) https://dbus.freedesktop.org/releases/dbus/$(DBUS_SOURCE)
 
 $(D)/dbus: $(D)/bootstrap $(D)/libexpat $(ARCHIVE)/$(DBUS_SOURCE)
 	$(START_BUILD)
@@ -1171,7 +1171,7 @@ WGET_VERSION = 1.19.1
 WGET_SOURCE = wget-$(WGET_VERSION).tar.xz
 
 $(ARCHIVE)/$(WGET_SOURCE):
-	$(WGET) http://ftp.gnu.org/gnu/wget/$(WGET_SOURCE)
+	$(WGET) https://ftp.gnu.org/gnu/wget/$(WGET_SOURCE)
 
 $(D)/wget: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(WGET_SOURCE)
 	$(START_BUILD)
@@ -1204,7 +1204,7 @@ COREUTILS_SOURCE = coreutils-$(COREUTILS_VERSION).tar.xz
 COREUTILS_PATCH = coreutils-$(COREUTILS_VERSION).patch
 
 $(ARCHIVE)/$(COREUTILS_SOURCE):
-	$(WGET) http://ftp.gnu.org/gnu/coreutils/$(COREUTILS_SOURCE)
+	$(WGET) https://ftp.gnu.org/gnu/coreutils/$(COREUTILS_SOURCE)
 
 $(D)/coreutils: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(COREUTILS_SOURCE)
 	$(START_BUILD)
@@ -1367,7 +1367,7 @@ ETHTOOL_VERSION = 6
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VERSION).tar.gz
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
-	$(WGET) http://downloads.openwrt.org/sources/$(ETHTOOL_SOURCE)
+	$(WGET) https://downloads.openwrt.org/sources/$(ETHTOOL_SOURCE)
 
 $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 	$(START_BUILD)
@@ -1500,7 +1500,7 @@ WIRELESS_TOOLS_SOURCE = wireless_tools.$(WIRELESS_TOOLS_VERSION).tar.gz
 WIRELESS_TOOLS_PATCH = wireless-tools.$(WIRELESS_TOOLS_VERSION).patch
 
 $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE):
-	$(WGET) http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$(WIRELESS_TOOLS_SOURCE)
+	$(WGET) https://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$(WIRELESS_TOOLS_SOURCE)
 
 $(D)/wireless_tools: $(D)/bootstrap $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE)
 	$(START_BUILD)
@@ -1520,7 +1520,7 @@ LIBNL_VERSION = 2.0
 LIBNL_SOURCE = libnl-$(LIBNL_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBNL_SOURCE):
-	$(WGET) http://www.carisma.slowglass.com/~tgr/libnl/files/$(LIBNL_SOURCE)
+	$(WGET) https://www.infradead.org/~tgr/libnl/files/$(LIBNL_SOURCE)
 
 $(D)/libnl: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(LIBNL_SOURCE)
 	$(START_BUILD)
@@ -1660,7 +1660,7 @@ OPENSSH_VERSION = 7.5p1
 OPENSSH_SOURCE = openssh-$(OPENSSH_VERSION).tar.gz
 
 $(ARCHIVE)/$(OPENSSH_SOURCE):
-	$(WGET) http://artfiles.org/openbsd/OpenSSH/portable/$(OPENSSH_SOURCE)
+	$(WGET) https://artfiles.org/openbsd/OpenSSH/portable/$(OPENSSH_SOURCE)
 
 $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(START_BUILD)
