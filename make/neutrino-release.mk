@@ -18,54 +18,54 @@ release_neutrino_cube_common:
 #
 # release_cube_common_tuner
 #
-release_neutrino_cube_common_tuner:
+neutrino_release_cube_common_tuner:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/kernel/drivers/media/dvb/frontends/dvb-pll.ko $(RELEASE_DIR)/lib/modules/
 
 #
-# release_cuberevo_9500hd
+# cuberevo_9500hd
 #
-release_neutrino_cuberevo_9500hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_9500hd: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_2000hd
+# cuberevo_2000hd
 #
-release_neutrino_cuberevo_2000hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_2000hd: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_250hd
+# cuberevo_250hd
 #
-release_neutrino_cuberevo_250hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_250hd: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_mini_fta
+# cuberevo_mini_fta
 #
-release_neutrino_cuberevo_mini_fta: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_mini_fta: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_mini2
+# cuberevo_mini2
 #
-release_neutrino_cuberevo_mini2: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_mini2: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_mini
+# cuberevo_mini
 #
-release_neutrino_cuberevo_mini: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_mini: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo
+# cuberevo
 #
-release_neutrino_cuberevo: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_cuberevo_3000hd
+# cuberevo_3000hd
 #
-release_neutrino_cuberevo_3000hd: release_neutrino_cube_common release_neutrino_cube_common_tuner
+neutrino_release_cuberevo_3000hd: neutrino_release_cube_common neutrino_release_cube_common_tuner
 
 #
-# release_common_ipbox
+# common_ipbox
 #
-release_neutrino_common_ipbox:
+neutrino_release_common_ipbox:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ipbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
@@ -81,33 +81,33 @@ release_neutrino_common_ipbox:
 	rm -f $(RELEASE_DIR)/etc/network/interfaces
 
 #
-# release_ipbox9900
+# ipbox9900
 #
-release_neutrino_ipbox9900: release_neutrino_common_ipbox
+neutrino_release_ipbox9900: neutrino_release_common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/rmu/rmu.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 
 #
-# release_ipbox99
+# ipbox99
 #
-release_neutrino_ipbox99: release_neutrino_common_ipbox
+neutrino_release_ipbox99: neutrino_release_common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
 
 #
-# release_ipbox55
+# ipbox55
 #
-release_neutrino_ipbox55: release_neutrino_common_ipbox
+neutrino_release_ipbox55: neutrino_release_common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/ipbox55/front.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox55 $(RELEASE_DIR)/usr/bin/tvmode
 
 #
-# release_ufs910
+# ufs910
 #
-release_neutrino_ufs910:
+neutrino_release_ufs910:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -119,9 +119,9 @@ release_neutrino_ufs910:
 	rm -f $(RELEASE_DIR)/bin/vdstandby
 
 #
-# release_ufs912
+# ufs912
 #
-release_neutrino_ufs912:
+neutrino_release_ufs912:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -131,9 +131,9 @@ release_neutrino_ufs912:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_ufs913
+# ufs913
 #
-release_neutrino_ufs913:
+neutrino_release_ufs913:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -144,9 +144,9 @@ release_neutrino_ufs913:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-avl6222.fw $(RELEASE_DIR)/lib/firmware/
 
 #
-# release_ufs922
+# ufs922
 #
-release_neutrino_ufs922:
+neutrino_release_ufs922:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -160,9 +160,9 @@ release_neutrino_ufs922:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
 #
-# release_ufc960
+# ufc960
 #
-release_neutrino_ufc960:
+neutrino_release_ufc960:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -173,9 +173,9 @@ release_neutrino_ufc960:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
 #
-# release_spark
+# spark
 #
-release_neutrino_spark:
+neutrino_release_spark:
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -188,9 +188,9 @@ release_neutrino_spark:
 	cp -dp $(SKEL_ROOT)/release/lircd_spark.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_spark7162
+# spark7162
 #
-release_neutrino_spark7162:
+neutrino_release_spark7162:
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark7162 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
@@ -203,9 +203,9 @@ release_neutrino_spark7162:
 	cp -dp $(SKEL_ROOT)/release/lircd_spark7162.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_fortis_hdbox
+# fortis_hdbox
 #
-release_neutrino_fortis_hdbox:
+neutrino_release_fortis_hdbox:
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -214,9 +214,9 @@ release_neutrino_fortis_hdbox:
 	cp $(SKEL_ROOT)/boot/audio_7100.elf $(RELEASE_DIR)/lib/firmware/audio.elf
 
 #
-# release_atevio7500
+# atevio7500
 #
-release_neutrino_atevio7500:
+neutrino_release_atevio7500:
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -230,9 +230,9 @@ release_neutrino_atevio7500:
 	rm -f $(RELEASE_DIR)/lib/modules/mpeg2hw.ko
 
 #
-# release_octagon1008
+# octagon1008
 #
-release_neutrino_octagon1008:
+neutrino_release_octagon1008:
 	install -m 0755 $(SKEL_ROOT)/release/halt_octagon1008 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -243,9 +243,9 @@ release_neutrino_octagon1008:
 	cp $(SKEL_ROOT)/firmware/dvb-fe-stv6306.fw $(RELEASE_DIR)/lib/firmware/
 
 #
-# release_hs7110
+# hs7110
 #
-release_neutrino_hs7110:
+neutrino_release_hs7110:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7110 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -256,9 +256,9 @@ release_neutrino_hs7110:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_hs7420
+# hs7420
 #
-release_neutrino_hs7420:
+neutrino_release_hs7420:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -270,9 +270,9 @@ release_neutrino_hs7420:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_hs7429
+# hs7429
 #
-release_neutrino_hs7429:
+neutrino_release_hs7429:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -284,9 +284,9 @@ release_neutrino_hs7429:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_hs7810a
+# hs7810a
 #
-release_neutrino_hs7810a:
+neutrino_release_hs7810a:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7810a $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -297,9 +297,9 @@ release_neutrino_hs7810a:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fww
 
 #
-# release_hs7119
+# hs7119
 #
-release_neutrino_hs7119:
+neutrino_release_hs7119:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7119 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -310,9 +310,9 @@ release_neutrino_hs7119:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_hs7819
+# hs7819
 #
-release_neutrino_hs7819:
+neutrino_release_hs7819:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7819 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -323,9 +323,9 @@ release_neutrino_hs7819:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_atemio520
+# atemio520
 #
-release_neutrino_atemio520:
+neutrino_release_atemio520:
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio520 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -336,9 +336,9 @@ release_neutrino_atemio520:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_atemio530
+# atemio530
 #
-release_neutrino_atemio530:
+neutrino_release_atemio530:
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio530 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -349,9 +349,9 @@ release_neutrino_atemio530:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_hl101
+# hl101
 #
-release_neutrino_hl101:
+neutrino_release_hl101:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hl101 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/proton/proton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -365,9 +365,9 @@ release_neutrino_hl101:
 	cp -dp $(SKEL_ROOT)/release/lircd_hl101.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_adb_box
+# adb_box
 #
-release_neutrino_adb_box:
+neutrino_release_adb_box:
 	install -m 0755 $(SKEL_ROOT)/release/halt_adb_box $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/adb_box_vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -385,9 +385,9 @@ release_neutrino_adb_box:
 	cp -dp $(SKEL_ROOT)/release/lircd_adb_box.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_tf7700
+# tf7700
 #
-release_neutrino_tf7700:
+neutrino_release_tf7700:
 	install -m 0755 $(SKEL_ROOT)/release/halt_tf7700 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/tffp/tffp.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -399,9 +399,9 @@ release_neutrino_tf7700:
 	$(MAKE) tfinstaller
 
 #
-# release_vitamin_hd5000
+# vitamin_hd5000
 #
-release_neutrino_vitamin_hd5000:
+neutrino_release_vitamin_hd5000:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/vitamin_hd5000/micom.ko $(RELEASE_DIR)/lib/modules/
@@ -412,9 +412,9 @@ release_neutrino_vitamin_hd5000:
 	cp $(SKEL_ROOT)/firmware/component_7111_mb618.fw $(RELEASE_DIR)/lib/firmware/component.fw
 
 #
-# release_sagemcom88
+# sagemcom88
 #
-release_neutrino_sagemcom88:
+neutrino_release_sagemcom88:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_led/front_led.ko $(RELEASE_DIR)/lib/modules/
@@ -428,9 +428,9 @@ release_neutrino_sagemcom88:
 	cp -dp $(SKEL_ROOT)/release/lircd_sagemcom88.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_arivalink200
+# arivalink200
 #
-release_neutrino_arivalink200:
+neutrino_release_arivalink200:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_ArivaLink200/vfd.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/extra/frontcontroller/front_ArivaLink200/vfd.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -441,10 +441,10 @@ release_neutrino_arivalink200:
 	cp -dp $(SKEL_ROOT)/release/lircd_arivalink200.conf $(RELEASE_DIR)/etc/lircd.conf
 
 #
-# release_base
+# neutrino_release_base
 #
 # the following target creates the common file base
-release_neutrino_base:
+neutrino_release_base:
 	$(START_BUILD)
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
@@ -773,6 +773,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdnav*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdread*
 	rm -f $(RELEASE_DIR)/usr/lib/libncurses*
+	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
 	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
@@ -786,8 +787,8 @@ endif
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(D)/release_neutrino: \
-$(D)/%release_neutrino: release_neutrino_base release_neutrino_$(BOXTYPE)
+$(D)/neutrino_release: \
+$(D)/%neutrino_release: neutrino_release_base neutrino_release_$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
 	@touch $@
 #
@@ -847,4 +848,4 @@ endif
 # release-clean
 #
 release-neutrino-clean:
-	rm -f $(D)/release_neutrino
+	rm -f $(D)/neutrino_release

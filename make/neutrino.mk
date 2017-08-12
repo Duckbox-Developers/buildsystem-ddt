@@ -134,11 +134,11 @@ libstb-hal-cst-next-max-distclean:
 NEUTRINO_MP_CST_NEXT_MAX_PATCHES =
 
 yaud-neutrino-mp-cst-next-max: yaud-none \
-		$(D)/neutrino-mp-cst-next-max $(D)/release_neutrino
+		$(D)/neutrino-mp-cst-next-max $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-cst-next-max-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next-max $(D)/neutrino-mp-plugins $(D)/release_neutrino
+		$(D)/neutrino-mp-cst-next-max $(D)/neutrino-mp-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 $(D)/neutrino-mp-cst-next-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-max
@@ -296,12 +296,12 @@ libstb-hal-cst-next-distclean:
 # neutrino-mp-cst-next
 #
 yaud-neutrino-mp-cst-next: yaud-none \
-		neutrino-mp-cst-next $(D)/release_neutrino
+		neutrino-mp-cst-next $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 mp \
 yaud-neutrino-mp-cst-next-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next $(D)/neutrino-mp-plugins $(D)/release_neutrino
+		$(D)/neutrino-mp-cst-next $(D)/neutrino-mp-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 NEUTRINO_MP_CST_NEXT_PATCHES =
@@ -406,11 +406,11 @@ neutrino-mp-cst-next-distclean: neutrino-cdkroot-clean
 # neutrino-mp-cst-next-ni
 #
 yaud-neutrino-mp-cst-next-ni: yaud-none \
-		neutrino-mp-cst-next-ni $(D)/release_neutrino
+		neutrino-mp-cst-next-ni $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-cst-next-ni-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-mp-plugins $(D)/release_neutrino
+		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-mp-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 NEUTRINO_MP_CST_NEXT_NI_PATCHES =
@@ -534,12 +534,12 @@ dual-distclean:
 # yaud-neutrino-hd2
 #
 yaud-neutrino-hd2: yaud-none \
-		$(D)/neutrino-hd2 $(D)/release_neutrino
+		$(D)/neutrino-hd2 $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 nhd2 \
 yaud-neutrino-hd2-plugins: yaud-none \
-		$(D)/neutrino-hd2 $(D)/neutrino-hd2-plugins $(D)/release_neutrino
+		$(D)/neutrino-hd2 $(D)/neutrino-hd2-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 ifeq ($(BOXTYPE), spark)
@@ -684,15 +684,15 @@ libstb-hal-cst-next-tangos-distclean:
 # yaud-neutrino-mp-tangos
 #
 yaud-neutrino-mp-tangos: yaud-none \
-		$(D)/neutrino-mp-tangos $(D)/release_neutrino
+		$(D)/neutrino-mp-tangos $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-tangos-plugins: yaud-none \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins $(D)/release_neutrino
+		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-tangos-all: yaud-none \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins shairport $(D)/release_neutrino
+		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins shairport $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #
