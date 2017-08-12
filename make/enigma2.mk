@@ -52,7 +52,7 @@ E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
 #
 # yaud-enigma2
 #
-yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/release_enigma2
+yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/enigma2_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #
