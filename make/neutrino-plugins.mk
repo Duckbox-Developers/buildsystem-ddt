@@ -130,7 +130,7 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-plugins-scripts-
 	$(TOUCH)
 
 #
-# plugins-scripts-lua
+# neutrino-plugins-scripts-lua
 #
 $(D)/neutrino-plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 	$(START_BUILD)
@@ -142,10 +142,10 @@ $(D)/neutrino-plugins-scripts-lua: $(D)/bootstrap $(D)/xupnpd
 	cp -ra $(ARCHIVE)/plugins-scripts-lua.git/plugins $(BUILD_TMP)/neutrino-plugins-scripts-lua
 	set -e; cd $(BUILD_TMP)/neutrino-plugins-scripts-lua; \
 		install -d $(TARGET_DIR)/var/tuxbox/plugins
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/ard_mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/favorites2bin/* $(TARGET_DIR)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/mtv/* $(TARGET_DIR)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/plugins-scripts-lua/netzkino/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-plugins-scripts-lua/ard_mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-plugins-scripts-lua/favorites2bin/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-plugins-scripts-lua/mtv/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-plugins-scripts-lua/netzkino/* $(TARGET_DIR)/var/tuxbox/plugins/
 	$(REMOVE)/neutrino-plugins-scripts-lua
 	$(TOUCH)
 
