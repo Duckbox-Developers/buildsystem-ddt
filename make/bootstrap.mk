@@ -54,7 +54,9 @@ SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/hd-idle
 SYSTEM_TOOLS += $(D)/fbshot
 SYSTEM_TOOLS += $(D)/portmap
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs922))
 SYSTEM_TOOLS += $(D)/nfs_utils
+endif
 SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/udpxy
