@@ -351,7 +351,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 			--openssldir=/etc/ssl \
 		; \
 		sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile; \
-		make depend; \
+		$(MAKE) depend; \
 		$(MAKE) all; \
 		$(MAKE) install_sw INSTALL_PREFIX=$(TARGET_DIR)
 	chmod 0755 $(TARGET_DIR)/usr/lib/lib{crypto,ssl}.so.*
