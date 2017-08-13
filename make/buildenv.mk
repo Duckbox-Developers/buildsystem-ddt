@@ -19,7 +19,7 @@ SOURCE_DIR            = $(BASE_DIR)/source
 
 -include $(BASE_DIR)/config
 
-# for local extensions, e.g. LOCAL_NEUTRINO_DEPS
+# for local extensions
 -include $(BASE_DIR)/config.local
 
 # default platform...
@@ -37,16 +37,18 @@ GIT_NAME_DRIVER      ?= Duckbox-Developers
 GIT_NAME_APPS        ?= Duckbox-Developers
 GIT_NAME_FLASH       ?= Duckbox-Developers
 
-BOOT_DIR              = $(BASE_DIR)/tufsbox/cdkroot-tftpboot
-CROSS_BASE            = $(BASE_DIR)/tufsbox/cross
+TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
+TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
+IMAGE_DIR             = $(TUFSBOX_DIR)/cdkroot-flash
+BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
+CROSS_BASE            = $(TUFSBOX_DIR)/cross
 CROSS_DIR             = $(CROSS_BASE)
+HOST_DIR              = $(TUFSBOX_DIR)/host
+RELEASE_DIR           = $(TUFSBOX_DIR)/release
+
 CONTROL_DIR           = $(BASE_DIR)/pkgs/control
-HOST_DIR              = $(BASE_DIR)/tufsbox/host
-IMAGE_DIR             = $(BASE_DIR)/tufsbox/cdkroot-flash
 PACKAGE_DIR           = $(BASE_DIR)/pkgs/opkg
-RELEASE_DIR           = $(BASE_DIR)/tufsbox/release
 PKG_DIR               = $(BUILD_TMP)/pkg
-TARGET_DIR            = $(BASE_DIR)/tufsbox/cdkroot
 
 CUSTOM_DIR            = $(BASE_DIR)/custom
 OWN_BUILD             = $(BASE_DIR)/own_build
