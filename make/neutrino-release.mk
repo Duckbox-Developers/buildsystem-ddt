@@ -445,7 +445,6 @@ neutrino_release_arivalink200:
 #
 # the following target creates the common file base
 neutrino_release_base:
-	$(START_BUILD)
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{autofs,bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
