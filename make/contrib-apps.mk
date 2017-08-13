@@ -941,7 +941,7 @@ $(D)/parted: $(D)/bootstrap $(D)/libncurses $(D)/libreadline $(D)/e2fsprogs $(AR
 #
 # sysstat
 #
-SYSSTAT_VERSION = 11.3.5
+SYSSTAT_VERSION = 11.5.7
 SYSSTAT_SOURCE = sysstat-$(SYSSTAT_VERSION).tar.bz2
 
 $(ARCHIVE)/$(SYSSTAT_SOURCE):
