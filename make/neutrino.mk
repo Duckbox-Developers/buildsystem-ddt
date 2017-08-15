@@ -10,16 +10,16 @@ $(TARGET_DIR)/var/etc/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
-NEUTRINO_DEPS  = $(D)/bootstrap $(D)/libncurses $(LIRC) $(D)/libcurl
+NEUTRINO_DEPS  = $(D)/bootstrap $(D)/ncurses $(LIRC) $(D)/libcurl
 NEUTRINO_DEPS += $(D)/libpng $(D)/libjpeg $(D)/giflib $(D)/freetype
-NEUTRINO_DEPS += $(D)/alsa-utils $(D)/ffmpeg
-NEUTRINO_DEPS += $(D)/libfribidi $(D)/libsigc $(D)/libdvbsi++ $(D)/libusb
+NEUTRINO_DEPS += $(D)/alsa_utils $(D)/ffmpeg
+NEUTRINO_DEPS += $(D)/libfribidi $(D)/libsigc $(D)/libdvbsi $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
-NEUTRINO_DEPS += $(D)/ntfs-3g
+NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
 endif
@@ -30,7 +30,7 @@ ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/libflac
+NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/flac
 
 N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
 N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
@@ -87,10 +87,9 @@ $(D)/libstb-hal-cst-next-max.do_prepare:
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-max $(SOURCE_DIR)/libstb-hal-cst-next-max.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-max; \
 		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_MAX_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next-max.config.status: | $(NEUTRINO_DEPS)
-	$(START_BUILD)
 	rm -rf $(LH_OBJDIR)
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
@@ -108,13 +107,11 @@ $(D)/libstb-hal-cst-next-max.config.status: | $(NEUTRINO_DEPS)
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 
 $(D)/libstb-hal-cst-next-max.do_compile: $(D)/libstb-hal-cst-next-max.config.status
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next-max; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next-max: $(D)/libstb-hal-cst-next-max.do_prepare $(D)/libstb-hal-cst-next-max.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
@@ -138,7 +135,7 @@ yaud-neutrino-mp-cst-next-max: yaud-none \
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-cst-next-max-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next-max $(D)/neutrino-mp-plugins $(D)/neutrino_release
+		$(D)/neutrino-mp-cst-next-max $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 $(D)/neutrino-mp-cst-next-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-max
@@ -154,10 +151,9 @@ $(D)/neutrino-mp-cst-next-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next-max $(SOURCE_DIR)/neutrino-mp-cst-next-max.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_MAX_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next-max.config.status:
-	$(START_BUILD)
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
@@ -208,13 +204,11 @@ $(SOURCE_DIR)/neutrino-mp-cst-next-max/src/gui/version.h:
 	fi
 
 $(D)/neutrino-mp-cst-next-max.do_compile: $(D)/neutrino-mp-cst-next-max.config.status $(SOURCE_DIR)/neutrino-mp-cst-next-max/src/gui/version.h
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-cst-next-max; \
 		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGET_DIR)
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next-max: $(D)/neutrino-mp-cst-next-max.do_prepare $(D)/neutrino-mp-cst-next-max.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
@@ -249,10 +243,9 @@ $(D)/libstb-hal-cst-next.do_prepare:
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next $(SOURCE_DIR)/libstb-hal-cst-next.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next; \
 		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next.config.status: | $(NEUTRINO_DEPS)
-	$(START_BUILD)
 	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
@@ -268,16 +261,14 @@ $(D)/libstb-hal-cst-next.config.status: | $(NEUTRINO_DEPS)
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next.do_compile: $(D)/libstb-hal-cst-next.config.status
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next: $(D)/libstb-hal-cst-next.do_prepare $(D)/libstb-hal-cst-next.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
@@ -301,7 +292,7 @@ yaud-neutrino-mp-cst-next: yaud-none \
 
 mp \
 yaud-neutrino-mp-cst-next-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next $(D)/neutrino-mp-plugins $(D)/neutrino_release
+		$(D)/neutrino-mp-cst-next $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 NEUTRINO_MP_CST_NEXT_PATCHES =
@@ -319,10 +310,9 @@ $(D)/neutrino-mp-cst-next.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-nex
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next $(SOURCE_DIR)/neutrino-mp-cst-next.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next.config.status:
-	$(START_BUILD)
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
@@ -357,7 +347,7 @@ $(D)/neutrino-mp-cst-next.config.status:
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
-	$(TOUCH)
+	@touch $@
 
 $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h:
 	@rm -f $@; \
@@ -376,13 +366,11 @@ $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h:
 	fi
 
 $(D)/neutrino-mp-cst-next.do_compile: $(D)/neutrino-mp-cst-next.config.status $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
 		$(MAKE) -C $(N_OBJDIR) all
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
@@ -410,7 +398,7 @@ yaud-neutrino-mp-cst-next-ni: yaud-none \
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-cst-next-ni-plugins: yaud-none \
-		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-mp-plugins $(D)/neutrino_release
+		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 NEUTRINO_MP_CST_NEXT_NI_PATCHES =
@@ -428,10 +416,9 @@ $(D)/neutrino-mp-cst-next-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-
 	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next-ni $(SOURCE_DIR)/neutrino-mp-cst-next-ni.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
 		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_NI_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next-ni.config.status:
-	$(START_BUILD)
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
@@ -466,7 +453,7 @@ $(D)/neutrino-mp-cst-next-ni.config.status:
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
-	$(TOUCH)
+	@touch $@
 
 $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h:
 	@rm -f $@; \
@@ -485,13 +472,11 @@ $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h:
 	fi
 
 $(D)/neutrino-mp-cst-next-ni.do_compile: $(D)/neutrino-mp-cst-next-ni.config.status $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
 		$(MAKE) -C $(N_OBJDIR) all
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
@@ -569,10 +554,9 @@ $(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
 	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
 	set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
 		$(call post_patch,$(NEUTRINO_HD2_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(SOURCE_DIR)/neutrino-hd2/config.status:
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-hd2; \
 		./autogen.sh; \
 		$(BUILDENV) \
@@ -593,19 +577,17 @@ $(SOURCE_DIR)/neutrino-hd2/config.status:
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
-	$(TOUCH)
+	@touch $@
+
+$(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
+	cd $(SOURCE_DIR)/neutrino-hd2; \
+		$(MAKE) all
+	@touch $@
 
 $(D)/neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
 	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
-
-$(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
-	$(START_BUILD)
-	cd $(SOURCE_DIR)/neutrino-hd2; \
-		$(MAKE) all
 	$(TOUCH)
 
 nhd2-clean \
@@ -640,10 +622,9 @@ $(D)/libstb-hal-cst-next-tangos.do_prepare:
 	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-tangos $(SOURCE_DIR)/libstb-hal-cst-next-tangos.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-tangos; \
 		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next-tangos.config.status: | $(NEUTRINO_DEPS)
-	$(START_BUILD)
 	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
@@ -660,13 +641,11 @@ $(D)/libstb-hal-cst-next-tangos.config.status: | $(NEUTRINO_DEPS)
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 
 $(D)/libstb-hal-cst-next-tangos.do_compile: $(D)/libstb-hal-cst-next-tangos.config.status
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/libstb-hal-cst-next-tangos; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
-	$(TOUCH)
+	@touch $@
 
 $(D)/libstb-hal-cst-next-tangos: $(D)/libstb-hal-cst-next-tangos.do_prepare $(D)/libstb-hal-cst-next-tangos.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
@@ -688,11 +667,11 @@ yaud-neutrino-mp-tangos: yaud-none \
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-tangos-plugins: yaud-none \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins $(D)/neutrino_release
+		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 yaud-neutrino-mp-tangos-all: yaud-none \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-mp-plugins shairport $(D)/neutrino_release
+		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/shairport $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #
@@ -713,10 +692,9 @@ $(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-
 	cp -ra $(SOURCE_DIR)/neutrino-mp-tangos $(SOURCE_DIR)/neutrino-mp-tangos.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-tangos; \
 		$(call post_patch,$(NEUTRINO_MP_TANGOS_PATCHES))
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-tangos.config.status:
-	$(START_BUILD)
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
@@ -768,13 +746,11 @@ $(SOURCE_DIR)/neutrino-mp-tangos/src/gui/version.h:
 
 
 $(D)/neutrino-mp-tangos.do_compile: $(D)/neutrino-mp-tangos.config.status $(SOURCE_DIR)/neutrino-mp-tangos/src/gui/version.h
-	$(START_BUILD)
 	cd $(SOURCE_DIR)/neutrino-mp-tangos; \
 		$(MAKE) -C $(N_OBJDIR) all
-	$(TOUCH)
+	@touch $@
 
 $(D)/neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
-	$(START_BUILD)
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version

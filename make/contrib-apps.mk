@@ -203,7 +203,7 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 #
 
 # gdb built for target or local-PC
-$(D)/gdb: $(D)/bootstrap $(D)/libncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
+$(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/gdb-$(GDB_VERSION)
 	$(UNTAR)/$(GDB_SOURCE)
@@ -421,7 +421,7 @@ E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VERSION).patch
 $(ARCHIVE)/$(E2FSPROGS_SOURCE):
 	$(WGET) https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v$(E2FSPROGS_VERSION)/$(E2FSPROGS_SOURCE)
 
-$(D)/e2fsprogs: $(D)/bootstrap $(D)/util-linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
+$(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/e2fsprogs-$(E2FSPROGS_VERSION)
 	$(UNTAR)/$(E2FSPROGS_SOURCE)
@@ -528,7 +528,7 @@ NTFS_3G_SOURCE = ntfs-3g_ntfsprogs-$(NTFS_3G_VERSION).tgz
 $(ARCHIVE)/$(NTFS_3G_SOURCE):
 	$(WGET) https://tuxera.com/opensource/$(NTFS_3G_SOURCE)
 
-$(D)/ntfs-3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
+$(D)/ntfs_3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ntfs-3g_ntfsprogs-$(NTFS_3G_VERSION)
 	$(UNTAR)/$(NTFS_3G_SOURCE)
@@ -556,7 +556,7 @@ $(D)/ntfs-3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 	$(TOUCH)
 
 #
-# util-linux
+# util_linux
 #
 UTIL_LINUX_MAJOR = 2.25
 UTIL_LINUX_MINOR = 2
@@ -566,7 +566,7 @@ UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VERSION).tar.xz
 $(ARCHIVE)/$(UTIL_LINUX_SOURCE):
 	$(WGET) https://www.kernel.org/pub/linux/utils/util-linux/v$(UTIL_LINUX_MAJOR)/$(UTIL_LINUX_SOURCE)
 
-$(D)/util-linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
+$(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/util-linux-$(UTIL_LINUX_VERSION)
 	$(UNTAR)/$(UTIL_LINUX_SOURCE)
@@ -656,7 +656,7 @@ MC_SOURCE = mc-$(MC_VERSION).tar.xz
 $(ARCHIVE)/$(MC_SOURCE):
 	$(WGET) ftp.midnight-commander.org/$(MC_SOURCE)
 
-$(D)/mc: $(D)/bootstrap $(D)/libncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
+$(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/mc-$(MC_VERSION)
 	$(UNTAR)/$(MC_SOURCE)
@@ -863,7 +863,7 @@ $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/$(HDPARM_SOURCE)
 	$(TOUCH)
 
 #
-# hd-idle
+# hdidle
 #
 HDIDLE_VERSION = 1.05
 HDIDLE_SOURCE = hd-idle-$(HDIDLE_VERSION).tgz
@@ -871,7 +871,7 @@ HDIDLE_SOURCE = hd-idle-$(HDIDLE_VERSION).tgz
 $(ARCHIVE)/$(HDIDLE_SOURCE):
 	$(WGET) https://sourceforge.net/projects/hd-idle/files/$(HDIDLE_SOURCE)
 
-$(D)/hd-idle: $(D)/bootstrap $(ARCHIVE)/$(HDIDLE_SOURCE)
+$(D)/hdidle: $(D)/bootstrap $(ARCHIVE)/$(HDIDLE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/hd-idle
 	$(UNTAR)/$(HDIDLE_SOURCE)
@@ -916,7 +916,7 @@ PARTED_PATCH = parted-$(PARTED_VERSION)-device-mapper.patch
 $(ARCHIVE)/$(PARTED_SOURCE):
 	$(WGET) https://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
 
-$(D)/parted: $(D)/bootstrap $(D)/libncurses $(D)/libreadline $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
+$(D)/parted: $(D)/bootstrap $(D)/ncurses $(D)/readline $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/parted-$(PARTED_VERSION)
 	$(UNTAR)/$(PARTED_SOURCE)
@@ -1073,7 +1073,7 @@ DBUS_SOURCE = dbus-$(DBUS_VERSION).tar.gz
 $(ARCHIVE)/$(DBUS_SOURCE):
 	$(WGET) https://dbus.freedesktop.org/releases/dbus/$(DBUS_SOURCE)
 
-$(D)/dbus: $(D)/bootstrap $(D)/libexpat $(ARCHIVE)/$(DBUS_SOURCE)
+$(D)/dbus: $(D)/bootstrap $(D)/expat $(ARCHIVE)/$(DBUS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/dbus-$(DBUS_VERSION)
 	$(UNTAR)/$(DBUS_SOURCE)
@@ -1107,7 +1107,7 @@ AVAHI_SOURCE = avahi-$(AVAHI_VERSION).tar.gz
 $(ARCHIVE)/$(AVAHI_SOURCE):
 	$(WGET) https://github.com/lathiat/avahi/releases/download/v$(AVAHI_VERSION)/$(AVAHI_SOURCE)
 
-$(D)/avahi: $(D)/bootstrap $(D)/libexpat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/$(AVAHI_SOURCE)
+$(D)/avahi: $(D)/bootstrap $(D)/expat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/$(AVAHI_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/avahi-$(AVAHI_VERSION)
 	$(UNTAR)/$(AVAHI_SOURCE)
@@ -1247,19 +1247,19 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE)
 #
 # nfs_utils
 #
-NFSUTILS_VERSION = 1.3.3
-NFSUTILS_SOURCE = nfs-utils-$(NFSUTILS_VERSION).tar.bz2
-NFSUTILS_PATCH = nfs-utils-$(NFSUTILS_VERSION).patch
+NFS_UTILS_VERSION = 1.3.3
+NFS_UTILS_SOURCE = nfs-utils-$(NFS_UTILS_VERSION).tar.bz2
+NFS_UTILS_PATCH = nfs-utils-$(NFS_UTILS_VERSION).patch
 
-$(ARCHIVE)/$(NFSUTILS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/nfs/files/nfs-utils/$(NFSUTILS_VERSION)/$(NFSUTILS_SOURCE)
+$(ARCHIVE)/$(NFS_UTILS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/nfs/files/nfs-utils/$(NFS_UTILS_VERSION)/$(NFS_UTILS_SOURCE)
 
-$(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFSUTILS_SOURCE)
+$(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFS_UTILS_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/nfs-utils-$(NFSUTILS_VERSION)
-	$(UNTAR)/$(NFSUTILS_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/nfs-utils-$(NFSUTILS_VERSION); \
-		$(call post_patch,$(NFSUTILS_PATCH)); \
+	$(REMOVE)/nfs-utils-$(NFS_UTILS_VERSION)
+	$(UNTAR)/$(NFS_UTILS_SOURCE)
+	$(SET) -e; cd $(BUILD_TMP)/nfs-utils-$(NFS_UTILS_VERSION); \
+		$(call post_patch,$(NFS_UTILS_PATCH)); \
 		$(CONFIGURE) \
 			CC_FOR_BUILD=$(TARGET)-gcc \
 			--prefix=/usr \
@@ -1278,7 +1278,7 @@ $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFSUTILS_SOURCE)
 	install -m 644 $(SKEL_ROOT)/etc/exports $(TARGET_DIR)/etc/
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,mount.nfs mount.nfs4 umount.nfs umount.nfs4 osd_login)
 	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,mountstats nfsiostat sm-notify start-statd)
-	$(REMOVE)/nfs-utils-$(NFSUTILS_VERSION)
+	$(REMOVE)/nfs-utils-$(NFS_UTILS_VERSION)
 	$(TOUCH)
 
 #

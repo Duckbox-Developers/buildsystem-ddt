@@ -300,20 +300,18 @@ ifeq ($(IMAGE), $(filter $(IMAGE), enigma2-wlandriver neutrino-wlandriver))
 	@echo "# CONFIG_USB_ZD1201 is not set" >> $(KERNEL_DIR)/.config
 	@echo "# CONFIG_HOSTAP is not set" >> $(KERNEL_DIR)/.config
 endif
-	$(TOUCH)
+	@touch $@
 
 $(D)/linux-kernel.do_compile: $(D)/linux-kernel.do_prepare
-	$(START_BUILD)
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/asm
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh include/linux/version.h
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- uImage modules
 		$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
-	$(TOUCH)
+	@touch $@
 
 $(D)/linux-kernel: $(D)/bootstrap host_u_boot_tools $(D)/linux-kernel.do_compile
-	$(START_BUILD)
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VERSION)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-sh4-$(KERNEL_VERSION)
@@ -373,24 +371,24 @@ $(D)/tfkernel:
 #
 # u-boot
 #
-U_BOOT_VERSION = 1.3.1
-U_BOOT_PATCH  =  u-boot-$(U_BOOT_VERSION).patch
+UBOOT_VERSION = 1.3.1
+UBOOT_PATCH  =  u-boot-$(UBOOT_VERSION).patch
 ifeq ($(BOXTYPE), tf7700)
-U_BOOT_PATCH += u-boot-$(U_BOOT_VERSION)-tf7700.patch
+UBOOT_PATCH += u-boot-$(UBOOT_VERSION)-tf7700.patch
 endif
 
-$(ARCHIVE)/u-boot-$(U_BOOT_VERSION).tar.bz2:
+$(ARCHIVE)/u-boot-$(UBOOT_VERSION).tar.bz2:
 	$(WGET) ftp://ftp.denx.de/pub/u-boot/u-boot-$(U_BOOT_VERSION).tar.bz2
 
-$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(U_BOOT_VERSION).tar.bz2
+$(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(UBOOT_VERSION).tar.bz2
 	$(START_BUILD)
-	$(REMOVE)/u-boot-$(U_BOOT_VERSION)
-	$(UNTAR)/u-boot-$(U_BOOT_VERSION).tar.bz2
-	set -e; cd $(BUILD_TMP)/u-boot-$(U_BOOT_VERSION); \
-		$(call post_patch,$(U_BOOT_PATCH)); \
+	$(REMOVE)/u-boot-$(UBOOT_VERSION)
+	$(UNTAR)/u-boot-$(UBOOT_VERSION).tar.bz2
+	set -e; cd $(BUILD_TMP)/u-boot-$(UBOOT_VERSION); \
+		$(call post_patch,$(UBOOT_PATCH)); \
 		$(MAKE) $(BOXTYPE)_config; \
 		$(MAKE)
-#	$(REMOVE)/u-boot-$(U_BOOT_VERSION)
+#	$(REMOVE)/u-boot-$(UBOOT_VERSION)
 	$(TOUCH)
 
 #

@@ -89,6 +89,8 @@ TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
 TARGET_CXXFLAGS       = $(TARGET_CFLAGS)
 TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib -Wl,--gc-sections
 LD_FLAGS              = $(TARGET_LDFLAGS)
+PKG_CONFIG            = $(HOST_DIR)/bin/$(TARGET)-pkg-config
+PKG_CONFIG_PATH       = $(TARGET_DIR)/usr/lib/pkgconfig
 
 VPATH                 = $(D)
 
@@ -113,16 +115,17 @@ endif
 # If KBUILD_VERBOSE equals 0 then the above command will be hidden.
 # If KBUILD_VERBOSE equals 1 then the above command is displayed.
 ifeq ($(KBUILD_VERBOSE),1)
+SILENT_PATCH          =
 CONFIGURE_SILENT      =
 SILENT                =
+WGET_SILENT_OPT       =
 else
-SILENT                = @
-MAKEFLAGS            += --silent
+SILENT_PATCH          = -s
 CONFIGURE_SILENT      = -q
+SILENT                = @
+WGET_SILENT_OPT       = -o /dev/null
+MAKEFLAGS            += --silent
 endif
-
-PKG_CONFIG            = $(HOST_DIR)/bin/$(TARGET)-pkg-config
-PKG_CONFIG_PATH       = $(TARGET_DIR)/usr/lib/pkgconfig
 
 # helper-"functions":
 REWRITE_LIBTOOL       = sed -i "s,^libdir=.*,libdir='$(TARGET_DIR)/usr/lib'," $(TARGET_DIR)/usr/lib
@@ -137,12 +140,20 @@ export RM=$(shell which rm) -f
 UNTAR                 = $(SILENT)tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 SET                   = $(SILENT)set
 REMOVE                = $(SILENT)rm -rf $(BUILD_TMP)
-RM_PKG_DIR            = rm -rf $(PKG_DIR)
-PATCH                 = patch -p1 -i $(PATCHES)
-APATCH                = patch -p1 -i
-START_BUILD           = @echo "=============================================================="; echo; echo -e " $(TERM_BOLD) Start build of $(subst $(BASE_DIR)/.deps/,,$@). $(TERM_RESET)"
-TOUCH                 = @touch $@; echo -e " $(TERM_BOLD) Build of $(subst $(BASE_DIR)/.deps/,,$@) completed. $(TERM_RESET)"; echo
+RM_PKG_DIR            = $(SILENT)rm -rf $(PKG_DIR)
 
+#
+split_deps_dir=$(subst ., ,$(1))
+DEPS_DIR  =$(subst $(D)/,,$@)
+BUILD_INFO =$(word 1,$(call split_deps_dir,$(DEPS_DIR)))
+BUILD_INFO2 = $(shell echo $(BUILD_INFO) | sed 's/.*/\U&/')
+BUILD_INFO3 = $($(BUILD_INFO2)_VERSION)
+START_BUILD           = @echo "=============================================================="; echo; echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL)."
+TOUCH                 = @touch $@; echo "--------------------------------------------------------------"; echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL) completed."; echo
+
+#
+PATCH                 = patch -p1 $(SILENT_PATCH) -i $(PATCHES)
+APATCH                = patch -p1 $(SILENT_PATCH) -i
 define post_patch
 	for i in $(1); do \
 		if [ -d $$i ] ; then \
@@ -161,7 +172,7 @@ define post_patch
 			fi; \
 		fi; \
 	done; \
-	echo -e "Patching $(TERM_GREEN_BOLD)$(subst $(BASE_DIR)/.deps/,,$@)$(TERM_NORMAL) completed."; \
+	echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO2)$(TERM_NORMAL) completed."; \
 	echo
 endef
 
@@ -177,7 +188,7 @@ OPKG_SH_ENV += BUILD_TMP=$(BUILD_TMP)
 OPKG_SH = $(OPKG_SH_ENV) opkg.sh
 
 # wget tarballs into archive directory
-WGET = wget --progress=bar:force --no-check-certificate -t6 -T20 -c -P $(ARCHIVE)
+WGET = wget --progress=bar:force --no-check-certificate $(WGET_SILENT_OPT) -t6 -T20 -c -P $(ARCHIVE)
 
 TUXBOX_YAUD_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGET_DIR) $(BASE_DIR) $(SOURCE_DIR) $(FLASH_DIR) $(BOXTYPE) || true
 TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VERSION=$(KERNEL_VERSION) && BOXTYPE=$(BOXTYPE) && $(CUSTOM_DIR)/$(notdir $@)-local.sh $(RELEASE_DIR) $(TARGET_DIR) $(BASE_DIR) $(FLASH_DIR) $(BOXTYPE) || true

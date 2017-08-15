@@ -42,7 +42,7 @@ BOOTSTRAP += $(D)/host_mksquashfs
 
 bootstrap: $(D)/bootstrap
 $(D)/bootstrap: $(BOOTSTRAP)
-	touch $@
+	@touch $@
 
 SYSTEM_TOOLS  = $(D)/module_init_tools
 SYSTEM_TOOLS += $(D)/busybox
@@ -51,7 +51,7 @@ SYSTEM_TOOLS += $(D)/sysvinit
 SYSTEM_TOOLS += $(D)/diverse-tools
 SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/jfsutils
-SYSTEM_TOOLS += $(D)/hd-idle
+SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/fbshot
 SYSTEM_TOOLS += $(D)/portmap
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs922))
@@ -64,7 +64,7 @@ SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
-	$(TOUCH)
+	@touch $@
 
 $(HOST_DIR)/bin/unpack%.sh \
 $(HOST_DIR)/bin/get%.sh \
@@ -155,7 +155,7 @@ crosstool-rpminstall
 		cp -a $(CROSS_DIR)/target/etc/ld.so.conf $(TARGET_DIR)/etc; \
 		cp -a $(CROSS_DIR)/target/etc/host.conf $(TARGET_DIR)/etc; \
 	fi
-	touch $(D)/$(notdir $@)
+	@touch $(D)/$(notdir $@)
 
 #
 # host_u_boot_tools
