@@ -13,7 +13,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $
 	$(START_BUILD)
 	$(REMOVE)/gstreamer-$(GSTREAMER_VERSION)
 	$(UNTAR)/$(GSTREAMER_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VERSION); \
+	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VERSION); \
 		$(call post_patch,$(GSTREAMER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -66,7 +66,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VERSION)
 	$(UNTAR)/$(GST_PLUGINS_BASE_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-base-$(GST_PLUGINS_BASE_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GST_PLUGINS_BASE_VERSION); \
 		$(call post_patch,$(GST_PLUGINS_BASE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -135,7 +135,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VERSION)
 	$(UNTAR)/$(GST_PLUGINS_GOOD_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-good-$(GST_PLUGINS_GOOD_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GST_PLUGINS_GOOD_VERSION); \
 		$(call post_patch,$(GST_PLUGINS_GOOD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -173,7 +173,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VERSION)
 	$(UNTAR)/$(GST_PLUGINS_BAD_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GST_PLUGINS_BAD_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GST_PLUGINS_BAD_VERSION); \
 		$(call post_patch,$(GST_PLUGINS_BAD_PATCH)); \
 		$(BUILDENV) \
 		autoreconf --force --install; \
@@ -275,7 +275,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(START_BUILD)
 	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VERSION)
 	$(UNTAR)/$(GST_PLUGINS_UGLY_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VERSION); \
 		$(call post_patch,$(GST_PLUGINS_UGLY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -313,7 +313,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 	$(START_BUILD)
 	$(REMOVE)/gst-libav-$(GST_LIBAV_VERSION)
 	$(UNTAR)/$(GST_LIBAV_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-libav-$(GST_LIBAV_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-libav-$(GST_LIBAV_VERSION); \
 		$(call post_patch,$(GST_LIBAV_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -372,7 +372,7 @@ $(D)/gst_plugins_fluendo: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(
 	$(START_BUILD)
 	$(REMOVE)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VERSION)
 	$(UNTAR)/$(GST_PLUGINS_FLUENDO_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VERSION); \
+	set -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VERSION); \
 		$(call post_patch,$(GST_PLUGINS_FLUENDO_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -397,7 +397,7 @@ $(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp
 	$(START_BUILD)
 	$(REMOVE)/gmediarender-$(GST_GMEDIARENDER_VERSION)
 	$(UNTAR)/$(GST_GMEDIARENDER_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/gmediarender-$(GST_GMEDIARENDER_VERSION); \
+	set -e; cd $(BUILD_TMP)/gmediarender-$(GST_GMEDIARENDER_VERSION); \
 		$(call post_patch,$(GST_GMEDIARENDER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -422,7 +422,7 @@ $(D)/orc: $(D)/bootstrap $(ARCHIVE)/$(ORC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/orc-$(ORC_VERSION)
 	$(UNTAR)/$(ORC_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/orc-$(ORC_VERSION); \
+	set -e; cd $(BUILD_TMP)/orc-$(ORC_VERSION); \
 		$(call post_patch,$(ORC_PATCH)); \
 		$(CONFIGURE) \
 			--datarootdir=/.remove \
@@ -452,7 +452,7 @@ $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/$(LIBDCA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdca-$(LIBDCA_VERSION)
 	$(UNTAR)/$(LIBDCA_SOURCE)
-	$(SET) -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VERSION); \
+	set -e; cd $(BUILD_TMP)/libdca-$(LIBDCA_VERSION); \
 		$(call post_patch,$(LIBDCA_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -475,12 +475,12 @@ GST_PLUGIN_SUBSINK_PATCH =
 $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(START_BUILD)
 	$(REMOVE)/gstreamer-$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink
-	$(SET) -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git ]; \
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git ]; \
 		then cd $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git; git pull; \
 		else cd $(ARCHIVE); git clone git://github.com/christophecvr/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink
-	$(SET) -e; cd $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink; \
+	set -e; cd $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VERSION)-plugin-subsink; \
 		$(call post_patch,$(GST_PLUGIN_SUBSINK_PATCH)); \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
@@ -506,12 +506,12 @@ GST_PLUGINS_DVBMEDIASINK_PATCH =
 $(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
 	$(START_BUILD)
 	$(REMOVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink
-	$(SET) -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git ]; \
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git ]; \
 		then cd $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git; git pull; \
 		else cd $(ARCHIVE); git clone -b experimental git://github.com/christophecvr/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git; \
 		fi
 	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink.git $(BUILD_TMP)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink
-	$(SET) -e; cd $(BUILD_TMP)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink; \
+	set -e; cd $(BUILD_TMP)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VERSION)-plugin-multibox-dvbmediasink; \
 		$(call post_patch,$(GST_PLUGINS_DVBMEDIASINK_PATCH)); \
 		aclocal --force -I m4; \
 		libtoolize --copy --force; \

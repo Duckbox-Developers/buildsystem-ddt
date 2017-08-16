@@ -58,6 +58,8 @@ yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/enigma2_release
 #
 # enigma2
 #
+ENIGMA2_PATCH  = enigma2-pli-nightly.$$DIFF.diff
+
 REPO_REPLY_1=$(E2_GIT_REPO)
 
 $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
@@ -93,7 +95,8 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 		cp -ra $(ARCHIVE)/enigma2-pli-nightly.git $(SOURCE_DIR)/enigma2; \
 		[ "$$REVISION" == "" ] || (cd $(SOURCE_DIR)/enigma2; git checkout "$$REVISION"; cd "$(BUILD_TMP)";); \
 		cp -ra $(SOURCE_DIR)/enigma2 $(SOURCE_DIR)/enigma2.org; \
-		set -e; cd $(SOURCE_DIR)/enigma2 && patch -p1 < "$(PATCHES)/enigma2-pli-nightly.$$DIFF.diff"; \
+		set -e; cd $(SOURCE_DIR)/enigma2; \
+			$(call post_patch,$(ENIGMA2_PATCH)); \
 	else \
 		[ -d "$(SOURCE_DIR)/enigma2" ] ; \
 		git clone -b $$HEAD $$REPO $(SOURCE_DIR)/enigma2; \

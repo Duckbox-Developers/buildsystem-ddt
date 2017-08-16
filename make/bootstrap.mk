@@ -132,7 +132,7 @@ $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VERSION).sh4.rpm
 crosstool: directories driver-symlink \
 $(HOST_DIR)/bin/unpack-rpm.sh \
 crosstool-rpminstall
-	$(SET) -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
+	set -e; cd $(CROSS_BASE); rm -f sh4-linux/sys-root; ln -s ../target sh4-linux/sys-root; \
 	if [ -e $(CROSS_DIR)/target/usr/lib/libstdc++.la ]; then \
 		sed -i "s,^libdir=.*,libdir='$(CROSS_DIR)/target/usr/lib'," $(CROSS_DIR)/target/usr/lib/lib{std,sup}c++.la; \
 	fi
@@ -162,9 +162,11 @@ crosstool-rpminstall
 #
 host_u_boot_tools: \
 $(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
+	$(START_BUILD)
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOST_DIR)/bin \
 		$^
-	touch $(D)/$(notdir $@)
+	@touch $(D)/$(notdir $@)
+	@echo -e "Build of $(TERM_GREEN_BOLD)$@$(TERM_NORMAL)completed."; echo
 
 #
 # crosstool-ng
@@ -178,7 +180,7 @@ $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz:
 crosstool-ng: directories $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
-	$(SET) -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
 		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION)-$(BOXARCH).config .config; \
 		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
 		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
@@ -194,7 +196,7 @@ crosstool-ng: directories $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 crossmenuconfig: directories $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
-	$(SET) -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
+	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
 		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION)-$(BOXARCH).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; MAKELEVEL=0 make; chmod 0755 ct-ng; \

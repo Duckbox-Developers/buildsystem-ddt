@@ -6,7 +6,7 @@ driver-clean:
 	rm -f $(D)/driver
 
 driver-symlink:
-	$(SET) -e; cd $(DRIVER_DIR); \
+	set -e; cd $(DRIVER_DIR); \
 		rm -f player2 multicom; \
 		ln -s $(PLAYER2_LINK) player2; \
 		ln -s $(MULTICOM_LINK) multicom; \

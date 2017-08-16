@@ -119,11 +119,13 @@ SILENT_PATCH          =
 CONFIGURE_SILENT      =
 SILENT                =
 WGET_SILENT_OPT       =
+MAKE_TRACE           :=
 else
 SILENT_PATCH          = -s
-CONFIGURE_SILENT      = -q
+SILENT_OPT            = -q
 SILENT                = @
 WGET_SILENT_OPT       = -o /dev/null
+MAKE_TRACE           := >/dev/null 2>&1
 MAKEFLAGS            += --silent
 endif
 
@@ -138,7 +140,6 @@ export RM=$(shell which rm) -f
 
 # unpack tarballs, clean up
 UNTAR                 = $(SILENT)tar -C $(BUILD_TMP) -xf $(ARCHIVE)
-SET                   = $(SILENT)set
 REMOVE                = $(SILENT)rm -rf $(BUILD_TMP)
 RM_PKG_DIR            = $(SILENT)rm -rf $(PKG_DIR)
 
@@ -148,8 +149,12 @@ DEPS_DIR  =$(subst $(D)/,,$@)
 BUILD_INFO =$(word 1,$(call split_deps_dir,$(DEPS_DIR)))
 BUILD_INFO2 = $(shell echo $(BUILD_INFO) | sed 's/.*/\U&/')
 BUILD_INFO3 = $($(BUILD_INFO2)_VERSION)
-START_BUILD           = @echo "=============================================================="; echo; echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL)."
-TOUCH                 = @touch $@; echo "--------------------------------------------------------------"; echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL) completed."; echo
+START_BUILD           = @echo "=============================================================="; \
+                        echo; \
+                        echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL)."
+TOUCH                 = @touch $@; \
+                        echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL) completed."; \
+                        echo
 
 #
 PATCH                 = patch -p1 $(SILENT_PATCH) -i $(PATCHES)
@@ -220,14 +225,14 @@ BUILDENV = \
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)
 
 CONFIGURE = \
-	test -f ./configure || ./autogen.sh && \
+	test -f ./configure || ./autogen.sh $(MAKE_TRACE) && \
 	$(BUILDENV) \
-	./configure $(CONFIGURE_OPTS)
+	./configure $(MAKE_TRACE) $(CONFIGURE_OPTS)
 
 CONFIGURE_TOOLS = \
-	./autogen.sh && \
+	./autogen.sh $(MAKE_TRACE) && \
 	$(BUILDENV) \
-	./configure $(CONFIGURE_OPTS)
+	./configure $(MAKE_TRACE) $(CONFIGURE_OPTS)
 
 BUILDENV_ALSA = \
 	CC=$(TARGET)-gcc \
@@ -248,9 +253,9 @@ BUILDENV_ALSA = \
 	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
 
 CONFIGURE_ALSA = \
-	test -f ./configure || ./autogen.sh && \
+	test -f ./configure || ./autogen.sh $(MAKE_TRACE) && \
 	$(BUILDENV_ALSA) \
-	./configure $(CONFIGURE_OPTS)
+	./configure  $(MAKE_TRACE) $(CONFIGURE_OPTS)
 
 MAKE_OPTS := \
 	CC=$(TARGET)-gcc \
