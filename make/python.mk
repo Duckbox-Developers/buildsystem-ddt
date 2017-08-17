@@ -43,7 +43,7 @@ $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 		autoconf; \
 		CONFIG_SITE= \
 		OPT="$(HOST_CFLAGS)" \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--without-cxx-main \
 			--with-threads \
 		; \
@@ -52,7 +52,7 @@ $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 		mv Parser/pgen ./hostpgen; \
 		\
 		$(MAKE) distclean; \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--prefix=$(HOST_DIR) \
 			--sysconfdir=$(HOST_DIR)/etc \
 			--without-cxx-main \
@@ -81,7 +81,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl
 		$(BUILDENV) \
 		autoreconf --verbose --install --force Modules/_ctypes/libffi; \
 		autoconf; \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--target=$(TARGET) \

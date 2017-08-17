@@ -90,7 +90,7 @@ $(D)/host_libffi: $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(REMOVE)/libffi-$(LIBFFI_VERSION)
 	$(UNTAR)/$(LIBFFI_SOURCE)
 	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VERSION); \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--prefix=$(HOST_DIR) \
 			--disable-static \
 		; \
@@ -145,7 +145,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 		export PKG_CONFIG=/usr/bin/pkg-config; \
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 		$(call post_patch,$(LIBGLIB2_HOST_PATCH)); \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--enable-static=yes \
 			--enable-shared=no \
 			--disable-fam \
@@ -253,7 +253,7 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VERSION)
 	$(UNTAR)/$(LIBARCHIVE_SOURCE)
 	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VERSION); \
-		./configure \
+		./configure $(MAKE_TRACE) \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
 			--prefix= \
@@ -343,7 +343,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VERSION); \
 		$(call post_patch,$(OPENSSL_PATCH)); \
 		$(BUILDENV) \
-		./Configure \
+		./Configure $(MAKE_TRACE) \
 			-DL_ENDIAN \
 			shared \
 			no-hw \
@@ -596,7 +596,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VERSION); \
 		$(call post_patch,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS)" \
-		./configure \
+		./configure $(MAKE_TRACE) \
 			--prefix=/usr \
 			--shared \
 			--uname=Linux \
@@ -1372,7 +1372,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force --quiet; \
 		autoreconf --verbose --force --install; \
-		./configure $(SILENT_OPT) \
+		./configure $(MAKE_TRACE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1412,7 +1412,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VERSION); \
 		$(call post_patch,$(FFMPEG_PATCH)); \
-		./configure \
+		./configure $(MAKE_TRACE) \
 			--disable-ffserver \
 			--disable-ffplay \
 			--disable-ffprobe \
@@ -1969,7 +1969,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb
 	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	set -e; cd $(BUILD_TMP)/lcd4linux; \
 		$(BUILDENV) ./bootstrap; \
-		$(BUILDENV) ./configure $(SILENT_OPT) $(CONFIGURE_OPTS) \
+		$(BUILDENV) ./configure $(MAKE_TRACE) $(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--with-drivers='DPF,SamsungSPF' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
@@ -2122,7 +2122,7 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(UNTAR)/$(ALSA_UTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_UTILS_VERSION); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
-		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal; \
+		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal $(MAKE_TRACE); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
