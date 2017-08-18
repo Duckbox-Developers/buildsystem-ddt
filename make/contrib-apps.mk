@@ -1015,6 +1015,35 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 	$(TOUCH)
 
 #
+# shairplay
+#
+$(D)/shairplay: $(D)/bootstrap $(D)/libao
+	$(START_BUILD)
+	$(REMOVE)/shairplay
+	set -e; if [ -d $(ARCHIVE)/shairplay.git ]; \
+		then cd $(ARCHIVE)/shairplay.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/TangoCash/shairplay.git shairplay.git; \
+		fi
+	cp -ra $(ARCHIVE)/shairplay.git $(BUILD_TMP)/shairplay
+	set -e; cd $(BUILD_TMP)/shairplay; \
+		for A in src/test/example.c src/test/main.c src/shairplay.c ; do sed -i "s#airport.key#/share/shairplay/airport.key#" $$A ; done; \
+		PKG_CONFIG=$(PKG_CONFIG) \
+		$(BUILDENV) \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--enable-shared \
+			--disable-static \
+		; \
+		$(MAKE); \
+		mkdir -p $(TARGET_DIR)/usr/share/shairplay ; \
+		install -m 644 airport.key $(TARGET_DIR)/usr/share/shairplay/airport.key ; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		$(REWRITE_LIBTOOL)/libshairplay.la
+		rm -f $(addprefix $(TARGET_DIR)/usr/bin/,shairplay)
+	$(REMOVE)/shairplay
+	$(TOUCH)
+
+#
 # dbus
 #
 DBUS_VERSION = 1.8.0
