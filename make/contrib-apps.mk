@@ -997,7 +997,7 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(AUTOFS_SOURCE)
 #
 # shairport
 #
-$(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa-lib
+$(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 	$(START_BUILD)
 	$(REMOVE)/shairport
 	set -e; if [ -d $(ARCHIVE)/shairport.git ]; \
