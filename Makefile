@@ -11,10 +11,11 @@ LC_ALL:=C
 LANG:=C
 export TOPDIR LC_ALL LANG
 
-PARALLEL_JOBS := $(shell echo $$((1 + `getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1`)))
-override MAKE = make $(if $(findstring j,$(filter-out --%,$(MAKEFLAGS))),,-j$(PARALLEL_JOBS))
-
 include make/buildenv.mk
+
+PARALLEL_JOBS := $(shell echo $$((1 + `getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1`)))
+override MAKE = make $(if $(findstring j,$(filter-out --%,$(MAKEFLAGS))),,-j$(PARALLEL_JOBS)) $(SILENT_OPT)
+
 
 ############################################################################
 #  A print out of environment variables
@@ -172,8 +173,7 @@ all:
 	@echo "'make all' is not a valid target. Please read the documentation."
 
 # target for testing only. not useful otherwise
-everything:
-	$(shell sed -n 's/^\$$.D.\/\(.*\):.*/\1/p' make/*.mk)
+everything: $(shell sed -n 's/^\$$.D.\/\(.*\):.*/\1/p' make/*.mk)
 
 # print all present targets...
 print-targets:
@@ -200,4 +200,5 @@ PHONY += update update-self
 # downloads in parallel...), but the sub-targets are still built in
 # parallel, which is useful on multi-processor / multi-core machines
 .NOTPARALLEL:
+
 endif

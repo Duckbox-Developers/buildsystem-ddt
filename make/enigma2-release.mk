@@ -836,7 +836,7 @@ $(D)/%enigma2_release: enigma2_release_base enigma2_release_$(BOXTYPE)
 #
 # FOR YOUR OWN CHANGES use these folder in cdk/own_build/enigma2
 #
-#	default for all receiver
+#	default for all receivers
 	find $(OWN_BUILD)/enigma2/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} +
 #	receiver specific (only if directory exist)
 	[ -d "$(OWN_BUILD)/enigma2.$(BOXTYPE)" ] && find $(OWN_BUILD)/enigma2.$(BOXTYPE)/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} + || true

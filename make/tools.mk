@@ -96,8 +96,8 @@ $(D)/tools-fp_control: $(D)/bootstrap
 $(D)/tools-flashtool-fup: directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-fup; \
-		./autogen.sh $(MAKE_TRACE); \
-		./configure $(MAKE_TRACE) \
+		./autogen.sh $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -110,8 +110,8 @@ $(D)/tools-flashtool-fup: directories
 $(D)/tools-flashtool-mup: directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-mup; \
-		./autogen.sh $(MAKE_TRACE); \
-		./configure $(MAKE_TRACE) \
+		./autogen.sh $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -137,8 +137,8 @@ $(D)/tools_flashtool_mup:
 $(D)/tools-flashtool-pad: directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-pad; \
-		./autogen.sh $(MAKE_TRACE); \
-		./configure $(MAKE_TRACE) \
+		./autogen.sh $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
 			--prefix= \
 		; \
 		$(MAKE); \

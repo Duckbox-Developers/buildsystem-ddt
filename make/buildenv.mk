@@ -116,16 +116,14 @@ endif
 # If KBUILD_VERBOSE equals 1 then the above command is displayed.
 ifeq ($(KBUILD_VERBOSE),1)
 SILENT_PATCH          =
-CONFIGURE_SILENT      =
+SILENT_OPT            =
 SILENT                =
 WGET_SILENT_OPT       =
-MAKE_TRACE           :=
 else
 SILENT_PATCH          = -s
-SILENT_OPT            = -q
+SILENT_OPT            := >/dev/null 2>&1
 SILENT                = @
 WGET_SILENT_OPT       = -o /dev/null
-MAKE_TRACE           := >/dev/null 2>&1
 MAKEFLAGS            += --silent
 endif
 
@@ -145,15 +143,15 @@ RM_PKG_DIR            = $(SILENT)rm -rf $(PKG_DIR)
 
 #
 split_deps_dir=$(subst ., ,$(1))
-DEPS_DIR  =$(subst $(D)/,,$@)
-BUILD_INFO =$(word 1,$(call split_deps_dir,$(DEPS_DIR)))
-BUILD_INFO2 = $(shell echo $(BUILD_INFO) | sed 's/.*/\U&/')
-BUILD_INFO3 = $($(BUILD_INFO2)_VERSION)
+DEPS_DIR              = $(subst $(D)/,,$@)
+BUILD_INFO            = $(word 1,$(call split_deps_dir,$(DEPS_DIR)))
+BUILD_INFO2           = $(shell echo $(BUILD_INFO) | sed 's/.*/\U&/')
+BUILD_INFO3           = " "$($(BUILD_INFO2)_VERSION)
 START_BUILD           = @echo "=============================================================="; \
                         echo; \
-                        echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL)."
+                        echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO)$(BUILD_INFO3)$(TERM_NORMAL)";
 TOUCH                 = @touch $@; \
-                        echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO2) $(BUILD_INFO3)$(TERM_NORMAL) completed."; \
+                        echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO)$(BUILD_INFO3)$(TERM_NORMAL) completed."; \
                         echo
 
 #
@@ -177,7 +175,7 @@ define post_patch
 			fi; \
 		fi; \
 	done; \
-	echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO2)$(TERM_NORMAL) completed."; \
+	echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO)$(TERM_NORMAL) completed."; \
 	echo
 endef
 
@@ -204,7 +202,6 @@ TUXBOX_CUSTOMIZE      = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && KERNEL_VER
 CONFIGURE_OPTS = \
 	--build=$(BUILD) \
 	--host=$(TARGET) \
-	$(CONFIGURE_SILENT)
 
 BUILDENV = \
 	CC=$(TARGET)-gcc \
@@ -225,14 +222,14 @@ BUILDENV = \
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)
 
 CONFIGURE = \
-	test -f ./configure || ./autogen.sh $(MAKE_TRACE) && \
+	test -f ./configure || ./autogen.sh $(SILENT_OPT) && \
 	$(BUILDENV) \
-	./configure $(MAKE_TRACE) $(CONFIGURE_OPTS)
+	./configure $(SILENT_OPT) $(CONFIGURE_OPTS)
 
 CONFIGURE_TOOLS = \
-	./autogen.sh $(MAKE_TRACE) && \
+	./autogen.sh $(SILENT_OPT) && \
 	$(BUILDENV) \
-	./configure $(MAKE_TRACE) $(CONFIGURE_OPTS)
+	./configure $(SILENT_OPT) $(CONFIGURE_OPTS)
 
 BUILDENV_ALSA = \
 	CC=$(TARGET)-gcc \
@@ -253,9 +250,9 @@ BUILDENV_ALSA = \
 	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
 
 CONFIGURE_ALSA = \
-	test -f ./configure || ./autogen.sh $(MAKE_TRACE) && \
+	test -f ./configure || ./autogen.sh $(SILENT_OPT) && \
 	$(BUILDENV_ALSA) \
-	./configure  $(MAKE_TRACE) $(CONFIGURE_OPTS)
+	./configure $(SILENT_OPT) $(CONFIGURE_OPTS)
 
 MAKE_OPTS := \
 	CC=$(TARGET)-gcc \

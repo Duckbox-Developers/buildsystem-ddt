@@ -40,7 +40,6 @@ BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
 BOOTSTRAP += $(D)/host_mksquashfs
 
-bootstrap: $(D)/bootstrap
 $(D)/bootstrap: $(BOOTSTRAP)
 	@touch $@
 
@@ -144,8 +143,8 @@ crosstool-rpminstall
 		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGET_DIR)/usr/lib; \
 		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGET_DIR)/usr/lib; \
 		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGET_DIR)/usr/lib; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc.so $(TARGET_DIR)/usr/lib/libc.so; \
-		ln -s $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGET_DIR)/usr/lib/libc_nonshared.a; \
+		ln -sf $(CROSS_DIR)/target/usr/lib/libc.so $(TARGET_DIR)/usr/lib/libc.so; \
+		ln -sf $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGET_DIR)/usr/lib/libc_nonshared.a; \
 	fi
 	if test -e $(CROSS_DIR)/target/lib; then \
 		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGET_DIR)/lib; \
@@ -284,7 +283,7 @@ $(D)/ccache:
 	touch $@
 
 # hack to make sure they are always copied
-PHONY += ccache bootstrap
+PHONY += ccache
 
 #
 # YAUD NONE

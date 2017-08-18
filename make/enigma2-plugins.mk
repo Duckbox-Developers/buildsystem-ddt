@@ -42,7 +42,7 @@ $(D)/enigma2_tuxtxtlib: $(D)/bootstrap
 		libtoolize --force; \
 		automake --foreign --add-missing; \
 		$(BUILDENV) \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -75,7 +75,7 @@ $(D)/enigma2_tuxtxt32bpp: $(D)/bootstrap $(D)/enigma2_tuxtxtlib
 		libtoolize --force; \
 		automake --foreign --add-missing; \
 		$(BUILDENV) \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \

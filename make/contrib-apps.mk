@@ -49,7 +49,7 @@ $(D)/host_pkgconfig: directories $(ARCHIVE)/$(PKGCONFIG_SOURCE) | pkg-config-pre
 	$(REMOVE)/pkg-config-$(PKGCONFIG_VERSION)
 	$(UNTAR)/$(PKGCONFIG_SOURCE)
 	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VERSION); \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
@@ -186,7 +186,7 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 	$(REMOVE)/gdb-$(GDB_VERSION)
 	$(UNTAR)/$(GDB_SOURCE)
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VERSION); \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--nfp --disable-werror \
 			--prefix=$(HOST_DIR) \
 			--build=$(BUILD) \
@@ -209,7 +209,7 @@ $(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 	$(UNTAR)/$(GDB_SOURCE)
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VERSION); \
 		$(call post_patch,$(GDB_PATCH)); \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--host=$(BUILD) \
 			--build=$(BUILD) \
 			--target=$(TARGET) \
@@ -240,10 +240,10 @@ $(D)/host_opkg: directories $(D)/host_libarchive $(ARCHIVE)/$(OPKG_SOURCE)
 	$(UNTAR)/$(OPKG_SOURCE)
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VERSION); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
-		./autogen.sh; \
+		./autogen.sh $(SILENT_OPT); \
 		CFLAGS="-I$(HOST_DIR)/include" \
 		LDFLAGS="-L$(HOST_DIR)/lib" \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig \
 			--prefix= \
 			--disable-curl \
@@ -327,8 +327,8 @@ $(D)/host_module_init_tools: $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
 	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION); \
 		$(call post_patch,$(MODULE_INIT_TOOLS_HOST_PATCH)); \
-		autoreconf -fi $(MAKE_TRACE); \
-		./configure $(MAKE_TRACE) \
+		autoreconf -fi $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--sbindir=$(HOST_DIR)/bin \
 		; \
@@ -346,7 +346,7 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(MODULE_INIT_TOOLS_S
 	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION); \
 		$(call post_patch,$(MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi $(MAKE_TRACE); \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix= \
@@ -507,7 +507,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/jfsutils-$(JFSUTILS_VERSION); \
 		$(call post_patch,$(JFSUTILS_PATCH)); \
 		sed "s@<unistd.h>@&\n#include <sys/types.h>@g" -i fscklog/extract.c; \
-		autoreconf -fi $(MAKE_TRACE); \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix= \
 			--target=$(TARGET) \
@@ -664,7 +664,7 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	set -e; cd $(BUILD_TMP)/mc-$(MC_VERSION); \
 		autoreconf -fi; \
 		$(BUILDENV) \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1355,7 +1355,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 		$(BUILDENV) \
 		libreplace_cv_HAVE_GETADDRINFO=no \
 		libreplace_cv_READDIR_NEEDED=no \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix= \
@@ -1450,7 +1450,7 @@ WIRELESS_TOOLS_SOURCE = wireless_tools.$(WIRELESS_TOOLS_VERSION).tar.gz
 WIRELESS_TOOLS_PATCH = wireless-tools.$(WIRELESS_TOOLS_VERSION).patch
 
 $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE):
-	$(WGET) https://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$(WIRELESS_TOOLS_SOURCE)
+	$(WGET) http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$(WIRELESS_TOOLS_SOURCE)
 
 $(D)/wireless_tools: $(D)/bootstrap $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE)
 	$(START_BUILD)
@@ -1624,7 +1624,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(UNTAR)/$(OPENSSH_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssh-$(OPENSSH_VERSION); \
 		CC=$(TARGET)-gcc; \
-		./configure $(MAKE_TRACE) \
+		./configure $(SILENT_OPT) \
 			$(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--mandir=/.remove \
