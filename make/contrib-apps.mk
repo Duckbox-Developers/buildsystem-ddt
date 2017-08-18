@@ -1534,8 +1534,14 @@ $(D)/libnl: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(LIBNL_SOURCE)
 			--bindir=/.remove \
 			--mandir=/.remove \
 			--infodir=/.remove \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		make $(SILENT_OPT); \
+		make install $(SILENT_OPT) DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-$(LIBNL_VERSION).pc
+	$(REWRITE_LIBTOOL)/libnl.la
+	$(REWRITE_LIBTOOL)/libnl-cli.la
+	$(REWRITE_LIBTOOL)/libnl-genl.la
+	$(REWRITE_LIBTOOL)/libnl-nf.la
+	$(REWRITE_LIBTOOL)/libnl-route.la
 	$(REMOVE)/libnl-$(LIBNL_VERSION)
 	$(TOUCH)
 
