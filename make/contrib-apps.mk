@@ -995,57 +995,6 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(AUTOFS_SOURCE)
 	$(TOUCH)
 
 #
-# imagemagick
-#
-IMAGEMAGICK_VERSION = 6.7.7-7
-IMAGEMAGICK_SOURCE = ImageMagick-$(IMAGEMAGICK_VERSION).tar.gz
-
-$(ARCHIVE)/$(IMAGEMAGICK_SOURCE):
-	$(WGET) ftp://ftp.fifi.org/pub/ImageMagick/$(IMAGEMAGICK_SOURCE)
-
-$(D)/imagemagick: $(D)/bootstrap $(ARCHIVE)/$(IMAGEMAGICK_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/ImageMagick-$(IMAGEMAGICK_VERSION)
-	$(UNTAR)/$(IMAGEMAGICK_SOURCE)
-	set -e; cd $(BUILD_TMP)/ImageMagick-$(IMAGEMAGICK_VERSION); \
-		$(BUILDENV) \
-		CFLAGS="-O1" \
-		PKG_CONFIG=$(PKG_CONFIG) \
-		./configure $(MAKE_TRACE) \
-			--build=$(BUILD) \
-			--host=$(TARGET) \
-			--prefix=/usr \
-			--without-dps \
-			--without-fpx \
-			--without-gslib \
-			--without-jbig \
-			--without-jp2 \
-			--without-lcms \
-			--without-tiff \
-			--without-xml \
-			--without-perl \
-			--disable-openmp \
-			--disable-opencl \
-			--without-zlib \
-			--enable-shared \
-			--enable-static \
-			--without-x \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ImageMagick.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/MagickCore.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/MagickWand.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/Wand.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ImageMagick++.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/Magick++.pc
-	$(REWRITE_LIBTOOL)/libMagickCore.la
-	$(REWRITE_LIBTOOL)/libMagickWand.la
-	$(REWRITE_LIBTOOL)/libMagick++.la
-	$(REMOVE)/ImageMagick-$(IMAGEMAGICK_VERSION)
-	$(TOUCH)
-
-#
 # shairport
 #
 $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa-lib
