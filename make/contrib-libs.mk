@@ -457,7 +457,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" \
 			LIBDIR=$(TARGET_DIR)/usr/lib \
 			LUA_INC=$(TARGET_DIR)/usr/include; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR) LUA_CMOD=/usr/lib/lua/$(LUA_VERSION_SHORT) LUA_LMOD=/usr/share/lua/$(LUAVERSION_SHORT)
+		$(MAKE) install DESTDIR=$(TARGET_DIR) LUA_CMOD=/usr/lib/lua/$(LUA_VERSION_SHORT) LUA_LMOD=/usr/share/lua/$(LUA_VERSION_SHORT)
 	$(REMOVE)/luacurl-$(LUACURL_VERSION)
 	$(TOUCH)
 
@@ -551,7 +551,7 @@ $(ARCHIVE)/json.lua:
 
 $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 	$(START_BUILD)
-	cp $(ARCHIVE)/json.lua $(TARGET_DIR)/usr/share/lua/$(LUAVERSION_SHORT)/json.lua
+	cp $(ARCHIVE)/json.lua $(TARGET_DIR)/usr/share/lua/$(LUA_VERSION_SHORT)/json.lua
 	$(TOUCH)
 
 #
