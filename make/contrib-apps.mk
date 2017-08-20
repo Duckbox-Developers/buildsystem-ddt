@@ -6,6 +6,7 @@ BUSYBOX_SOURCE = busybox-$(BUSYBOX_VERSION).tar.bz2
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VERSION)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-extra.patch
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VERSION)-flashcp-small-output.patch
 
 $(ARCHIVE)/$(BUSYBOX_SOURCE):
 	$(WGET) https://busybox.net/downloads/$(BUSYBOX_SOURCE)
