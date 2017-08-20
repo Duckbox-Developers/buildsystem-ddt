@@ -18,6 +18,7 @@ COMMON_PATCHES_24 = \
 		linux-ftdi_sio.c_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lzma-fix_stm24_$(KERNEL_LABEL).patch \
 		linux-tune_stm24.patch \
+		linux-net_stm24.patch \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
