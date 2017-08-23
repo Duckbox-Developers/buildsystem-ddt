@@ -581,7 +581,7 @@
 +#		LIBS += -lfreetype
 +#	endif
 +	INCLUDES += -I$(DESTDIR)/usr/include/freetype
-+	LIBS += -L$(DESTDIR)/usr/lib -lfreetype
++	LIBS += -L$(DESTDIR)/usr/lib -lfreetype -liconv
  	DEFINES += -DHAVE_FREETYPE2
  endif
  
