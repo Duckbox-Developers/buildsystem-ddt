@@ -802,7 +802,7 @@ JPEG_TURBO_SOURCE = libjpeg-turbo-$(JPEG_TURBO_VERSION).tar.gz
 $(ARCHIVE)/$(JPEG_TURBO_SOURCE):
 	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VERSION)/$(JPEG_TURBO_SOURCE)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE),  fortis_hdbox octagon1008 ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 $(D)/libjpeg: $(D)/jpeg
 	@touch $@
 else
@@ -1194,7 +1194,7 @@ $(ARCHIVE)/$(LIBICONV_SOURCE):
 
 $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/libiconv-$(LIBICONV_ER)
+	$(REMOVE)/libiconv-$(LIBICONV_VERSION)
 	$(UNTAR)/$(LIBICONV_SOURCE)
 	set -e; cd $(BUILD_TMP)/libiconv-$(LIBICONV_VERSION); \
 		$(CONFIGURE) \
@@ -2070,7 +2070,7 @@ $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE
 	$(TOUCH)
 
 #
-# alsa-lib
+# alsa_lib
 #
 ALSA_LIB_VERSION = 1.1.4.1
 ALSA_LIB_SOURCE = alsa-lib-$(ALSA_LIB_VERSION).tar.bz2
@@ -2511,12 +2511,12 @@ $(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBPLIST_SOURCE)
 # libao
 #
 LIBAO_VERSION = 1.1.0
-LIBAO_SOURCE = ibao-$(LIBAO_VERSION).tar.gz
+LIBAO_SOURCE = libao-$(LIBAO_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBAO_SOURCE):
 	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ao/$(LIBAO_SOURCE)
 
-$(D)/libao: $(D)/bootstrap $(D)/alsa-lib $(ARCHIVE)/$(LIBAO_SOURCE)
+$(D)/libao: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(LIBAO_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libao-$(LIBAO_VERSION)
 	$(UNTAR)/$(LIBAO_SOURCE)

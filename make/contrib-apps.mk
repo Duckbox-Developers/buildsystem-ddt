@@ -195,7 +195,7 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 			--target=$(TARGET) \
 		; \
 		$(MAKE) all-gdb; \
-		$(MAKE) install-gdb; \
+		$(MAKE) install-gdb
 	$(REMOVE)/gdb-$(GDB_VERSION)
 	$(TOUCH)
 
