@@ -1672,7 +1672,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(TOUCH)
 
 #
-# usb-modeswitch-data
+# usb_modeswitch_data
 #
 USB_MODESWITCH_DATA_VERSION = 20160112
 USB_MODESWITCH_DATA_SOURCE = usb-modeswitch-data-$(USB_MODESWITCH_DATA_VERSION).tar.bz2
@@ -1681,7 +1681,7 @@ USB_MODESWITCH_DATA_PATCH = usb-modeswitch-data-$(USB_MODESWITCH_DATA_VERSION).p
 $(ARCHIVE)/$(USB_MODESWITCH_DATA_SOURCE):
 	$(WGET) http://www.draisberghof.de/usb_modeswitch/$(USB_MODESWITCH_DATA_SOURCE)
 
-$(D)/usb-modeswitch-data: $(D)/bootstrap $(ARCHIVE)/$(USB_MODESWITCH_DATA_SOURCE)
+$(D)/usb_modeswitch_data: $(D)/bootstrap $(ARCHIVE)/$(USB_MODESWITCH_DATA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/usb-modeswitch-data-$(USB_MODESWITCH_DATA_VERSION)
 	$(UNTAR)/$(USB_MODESWITCH_DATA_SOURCE)
@@ -1693,7 +1693,7 @@ $(D)/usb-modeswitch-data: $(D)/bootstrap $(ARCHIVE)/$(USB_MODESWITCH_DATA_SOURCE
 	$(TOUCH)
 
 #
-# usb-modeswitch
+# usb_modeswitch
 #
 USB_MODESWITCH_VERSION = 2.3.0
 USB_MODESWITCH_SOURCE = usb-modeswitch-$(USB_MODESWITCH_VERSION).tar.bz2
@@ -1702,7 +1702,7 @@ USB_MODESWITCH_PATCH = usb-modeswitch-$(USB_MODESWITCH_VERSION).patch
 $(ARCHIVE)/$(USB_MODESWITCH_SOURCE):
 	$(WGET) http://www.draisberghof.de/usb_modeswitch/$(USB_MODESWITCH_SOURCE)
 
-$(D)/usb-modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb-modeswitch-data $(ARCHIVE)/$(USB_MODESWITCH_SOURCE)
+$(D)/usb_modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb_modeswitch_data $(ARCHIVE)/$(USB_MODESWITCH_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/usb-modeswitch-$(USB_MODESWITCH_VERSION)
 	$(UNTAR)/$(USB_MODESWITCH_SOURCE)

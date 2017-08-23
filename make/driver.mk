@@ -27,7 +27,7 @@ driver-symlink:
 	touch $(D)/$(notdir $@)
 
 driver: $(D)/driver
-$(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/linux-kernel
+$(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
 		CONFIG_MODULES_PATH=$(CROSS_DIR)/target \

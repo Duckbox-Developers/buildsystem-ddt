@@ -144,14 +144,14 @@ RM_PKG_DIR            = $(SILENT)rm -rf $(PKG_DIR)
 #
 split_deps_dir=$(subst ., ,$(1))
 DEPS_DIR              = $(subst $(D)/,,$@)
-BUILD_INFO            = $(word 1,$(call split_deps_dir,$(DEPS_DIR)))
-BUILD_INFO2           = $(shell echo $(BUILD_INFO) | sed 's/.*/\U&/')
-BUILD_INFO3           = " "$($(BUILD_INFO2)_VERSION)
+PKG_NAME              = $(word 1,$(call split_deps_dir,$(DEPS_DIR)))
+PKG_NAME_HELPER       = $(shell echo $(PKG_NAME) | sed 's/.*/\U&/')
+PKG_VER               = " "$($(PKG_NAME_HELPER)_VERSION)
 START_BUILD           = @echo "=============================================================="; \
                         echo; \
-                        echo -e "Start build of $(TERM_GREEN_BOLD)$(BUILD_INFO)$(BUILD_INFO3)$(TERM_NORMAL)";
+                        echo -e "Start build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(PKG_VER)$(TERM_NORMAL)";
 TOUCH                 = @touch $@; \
-                        echo -e "Build of $(TERM_GREEN_BOLD)$(BUILD_INFO)$(BUILD_INFO3)$(TERM_NORMAL) completed."; \
+                        echo -e "Build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(PKG_VER)$(TERM_NORMAL) completed."; \
                         echo
 
 #
@@ -274,15 +274,15 @@ MAKE_OPTS := \
 #
 ifeq ($(KERNEL), p0209)
 KERNEL_VERSION             = 2.6.32.46_stm24_0209
+KERNEL_REVISION            = 8c676f1a85935a94de1fb103c0de1dd25ff69014
 STM_KERNEL_HEADERS_VERSION = 2.6.32.46-47
-HOST_KERNEL_REVISION       = 8c676f1a85935a94de1fb103c0de1dd25ff69014
 P0209                      = p0209
 endif
 
 ifeq ($(KERNEL), p0217)
 KERNEL_VERSION             = 2.6.32.71_stm24_0217
+KERNEL_REVISION            = 3ec500f4212f9e4b4d2537c8be5ea32ebf68c43b
 STM_KERNEL_HEADERS_VERSION = 2.6.32.46-48
-HOST_KERNEL_REVISION       = 3ec500f4212f9e4b4d2537c8be5ea32ebf68c43b
 P0217                      = p0217
 endif
 

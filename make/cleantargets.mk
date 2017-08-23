@@ -6,8 +6,8 @@ clean: depsclean
 	-$(MAKE) tools-clean
 	-$(MAKE) driver-clean
 	-rm -rf $(BASE_DIR)/tufsbox
-	-rm -rf $(D)/linux-kernel
-	-rm -rf $(D)/linux-kernel.do_compile
+	-rm -rf $(D)/kernel
+	-rm -rf $(D)/kernel.do_compile
 
 distclean:
 	-$(MAKE) tools-clean

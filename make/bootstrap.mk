@@ -290,6 +290,6 @@ PHONY += ccache
 #
 yaud-none: \
 	$(D)/bootstrap \
-	$(D)/linux-kernel \
+	$(D)/kernel \
 	$(D)/system-tools
 	@touch $(D)/$(notdir $@)
