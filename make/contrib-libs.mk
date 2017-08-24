@@ -1186,7 +1186,7 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE
 #
 # libiconv
 #
-LIBICONV_VERSION = 1.14
+LIBICONV_VERSION = 1.15
 LIBICONV_SOURCE = libiconv-$(LIBICONV_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBICONV_SOURCE):
@@ -1208,7 +1208,9 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 		$(MAKE); \
 		cp ./srcm4/* $(HOST_DIR)/share/aclocal/ ; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_LIBTOOL)/libcharset.la
 	$(REWRITE_LIBTOOL)/libiconv.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/lib/,preloadable_libiconv.so)
 	$(REMOVE)/libiconv-$(LIBICONV_VERSION)
 	$(TOUCH)
 
