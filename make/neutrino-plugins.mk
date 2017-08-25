@@ -88,7 +88,6 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS) -DMARTII -DNEW_LIBCURL" \
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(SOURCE_DIR)/neutrino-mp-plugins/fx2/lib/.libs"
-	@touch $@
 
 $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.status
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
