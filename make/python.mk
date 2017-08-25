@@ -155,7 +155,7 @@ $(D)/python_setuptools: $(D)/bootstrap $(D)/python $(ARCHIVE)/$(PYTHON_SETUPTOOL
 # libxmlccwrap
 #
 LIBXMLCCWRAP_VERSION = 0.0.12
-LIBXMLCCWRAP_SOURCE = libxmlccwrap-$(PYTHON_IMAGING_VERSION).tar.gz
+LIBXMLCCWRAP_SOURCE = libxmlccwrap-$(LIBXMLCCWRAP_VERSION).tar.gz
 
 $(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE):
 	$(WGET) http://www.ant.uni-bremen.de/whomes/rinas/libxmlccwrap/download/$(LIBXMLCCWRAP_SOURCE)
@@ -421,7 +421,7 @@ $(D)/python_pycparser: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/py
 # python_cryptography
 #
 PYTHON_CRYPTOGRAPHY_VERSION = 0.8.1
-PYTHON_CRYPTOGRAPHY_SOURCE = cryptography-$(PYTHON_PYOPENSSL_VERSION).tar.gz
+PYTHON_CRYPTOGRAPHY_SOURCE = cryptography-$(PYTHON_CRYPTOGRAPHY_VERSION).tar.gz
 
 $(ARCHIVE)/$(PYTHON_CRYPTOGRAPHY_SOURCE):
 	$(WGET) https://pypi.python.org/packages/source/c/cryptography/$(PYTHON_CRYPTOGRAPHY_SOURCE)
