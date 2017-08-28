@@ -723,10 +723,26 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(REMOVE)/livestreamersrv
 	$(TOUCH)
 
-PYTHON_DEPS  = $(D)/host_python $(D)/python $(D)/python_elementtree $(D)/python_lxml $(D)/python_zope_interface $(D)/python_pyopenssl $(D)/python_twisted
-PYTHON_DEPS += $(D)/python_wifi $(D)/python_imaging $(D)/python_pyusb $(D)/python_pycrypto $(D)/python_pyasn1 $(D)/python_mechanize
-PYTHON_DEPS += $(D)/python_six $(D)/python_requests $(D)/python_futures $(D)/python_singledispatch $(D)/python_ipaddress
-PYTHON_DEPS += $(D)/python_livestreamer $(D)/python_livestreamersrv
+PYTHON_DEPS  = $(D)/host_python
+PYTHON_DEPS += $(D)/python
+PYTHON_DEPS += $(D)/python_elementtree
+PYTHON_DEPS += $(D)/python_lxml
+PYTHON_DEPS += $(D)/python_zope_interface
+PYTHON_DEPS += $(D)/python_pyopenssl
+PYTHON_DEPS += $(D)/python_twisted
+PYTHON_DEPS += $(D)/python_wifi
+PYTHON_DEPS += $(D)/python_imaging
+PYTHON_DEPS += $(D)/python_pyusb
+PYTHON_DEPS += $(D)/python_pycrypto
+PYTHON_DEPS += $(D)/python_pyasn1
+PYTHON_DEPS += $(D)/python_mechanize
+PYTHON_DEPS += $(D)/python_six
+PYTHON_DEPS += $(D)/python_requests
+PYTHON_DEPS += $(D)/python_futures
+PYTHON_DEPS += $(D)/python_singledispatch
+PYTHON_DEPS += $(D)/python_ipaddress
+PYTHON_DEPS += $(D)/python_livestreamer
+PYTHON_DEPS += $(D)/python_livestreamersrv
 
 python-all: $(PYTHON_DEPS)
 
