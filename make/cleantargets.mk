@@ -2,7 +2,7 @@ depsclean:
 	( cd $(D) && find . ! -name "*\.*" -delete )
 
 clean: depsclean
-	-$(MAKE) linux-kernel-clean
+	-$(MAKE) kernel-clean
 	-$(MAKE) tools-clean
 	-$(MAKE) driver-clean
 	-rm -rf $(BASE_DIR)/tufsbox
