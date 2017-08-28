@@ -1907,8 +1907,9 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 #
 # pugixml
 #
-PUGIXML_VERSION = 1.7
+PUGIXML_VERSION = 1.8
 PUGIXML_SOURCE = pugixml-$(PUGIXML_VERSION).tar.gz
+PUGIXML_PATCH = pugixml-1.8-config.patch
 
 $(ARCHIVE)/$(PUGIXML_SOURCE):
 	$(WGET) https://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VERSION)/$(PUGIXML_SOURCE)
@@ -1918,6 +1919,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(REMOVE)/pugixml-$(PUGIXML_VERSION)
 	$(UNTAR)/$(PUGIXML_SOURCE)
 	set -e; cd $(BUILD_TMP)/pugixml-$(PUGIXML_VERSION); \
+		$(call post_patch,$(PUGIXML_PATCH)); \
 		cmake \
 		--no-warn-unused-cli \
 		-DCMAKE_INSTALL_PREFIX=/usr \
@@ -1927,7 +1929,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 		-DCMAKE_CXX_COMPILER=$(TARGET)-g++ \
 		-DCMAKE_C_FLAGS="-pipe -Os" \
 		-DCMAKE_CXX_FLAGS="-pipe -Os" \
-		scripts; \
+		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REMOVE)/pugixml-$(PUGIXML_VERSION)
