@@ -26,7 +26,9 @@ toolcheck: $(TOOLCHECK) preqs
 		echo; \
 	fi
 
-BOOTSTRAP  = directories crosstool $(D)/ccache
+BOOTSTRAP  = directories
+BOOTSTRAP += crosstool
+BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(HOST_DIR)/bin/opkg.sh
 BOOTSTRAP += $(HOST_DIR)/bin/opkg-chksvn.sh
 BOOTSTRAP += $(HOST_DIR)/bin/opkg-gitdescribe.sh
@@ -64,6 +66,16 @@ SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	@touch $@
+
+#
+# YAUD NONE
+#
+YAUD_NONE     = $(D)/bootstrap
+YAUD_NONE    += $(D)/kernel
+YAUD_NONE    += $(D)/system-tools
+
+yaud-none: $(YAUD_NONE)
+	@touch $(D)/$(notdir $@)
 
 $(HOST_DIR)/bin/unpack%.sh \
 $(HOST_DIR)/bin/get%.sh \
@@ -285,11 +297,3 @@ $(D)/ccache:
 # hack to make sure they are always copied
 PHONY += ccache
 
-#
-# YAUD NONE
-#
-yaud-none: \
-	$(D)/bootstrap \
-	$(D)/kernel \
-	$(D)/system-tools
-	@touch $(D)/$(notdir $@)
