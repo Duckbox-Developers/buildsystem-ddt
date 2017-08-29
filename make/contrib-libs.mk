@@ -2158,7 +2158,7 @@ LIBOPENTHREADS_SOURCE = OpenThreads-$(LIBOPENTHREADS_VERSION).zip
 LIBOPENTHREADS_PATCH = libopenthreads-$(LIBOPENTHREADS_VERSION).patch
 
 $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE):
-	$(WGET) http://trac.openscenegraph.org/downloads/developer_releases/$(LIBOPENTHREADS_SOURCE)
+	$(WGET) https://trac.openscenegraph.org/downloads/developer_releases/$(LIBOPENTHREADS_SOURCE)
 
 $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 	$(START_BUILD)
