@@ -2090,12 +2090,14 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 	$(UNTAR)/$(ALSA_LIB_SOURCE)
 	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_LIB_VERSION); \
 		$(call post_patch,$(ALSA_LIB_PATCH)); \
-		$(CONFIGURE_ALSA) \
+		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-alsa-devdir=/dev/snd/ \
 			--with-plugindir=/usr/lib/alsa \
 			--without-debug \
 			--with-debug=no \
+			--with-versioned=no \
+			--enable-symbolic-functions \
 			--disable-aload \
 			--disable-rawmidi \
 			--disable-resmgr \

@@ -72,25 +72,37 @@ BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /
 OPTIMIZATIONS        ?= size
 TARGET_CFLAGS         = -pipe
 ifeq ($(OPTIMIZATIONS), size)
-TARGET_CFLAGS        += -Os -ffunction-sections -fdata-sections
+TARGET_CFLAGS        += -Os
+TARGET_EXTRA_CFLAGS   = -ffunction-sections -fdata-sections
+TARGET_EXTRA_LDFLAGS  = -Wl,--gc-sections
 endif
 ifeq ($(OPTIMIZATIONS), normal)
 TARGET_CFLAGS        += -O2
+TARGET_EXTRA_CFLAGS   =
+TARGET_EXTRA_LDFLAGS  =
 endif
 ifeq ($(OPTIMIZATIONS), kerneldebug)
 TARGET_CFLAGS        += -O2
+TARGET_EXTRA_CFLAGS   =
+TARGET_EXTRA_LDFLAGS  =
 endif
 ifeq ($(OPTIMIZATIONS), debug)
 TARGET_CFLAGS        += -O0 -g
+TARGET_EXTRA_CFLAGS   =
+TARGET_EXTRA_LDFLAGS  =
 endif
 
-TARGET_CFLAGS        += -I$(TARGET_DIR)/usr/include
+
+TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
+TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
+
+TARGET_CFLAGS        += $(TARGET_EXTRA_CFLAGS) -I$(TARGET_INCLUDE_DIR)
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
 TARGET_CXXFLAGS       = $(TARGET_CFLAGS)
-TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib -Wl,--gc-sections
+TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_LIB_DIR) -L$(TARGET_LIB_DIR) -L$(TARGET_DIR)/lib $(TARGET_EXTRA_LDFLAGS)
 LD_FLAGS              = $(TARGET_LDFLAGS)
 PKG_CONFIG            = $(HOST_DIR)/bin/$(TARGET)-pkg-config
-PKG_CONFIG_PATH       = $(TARGET_DIR)/usr/lib/pkgconfig
+PKG_CONFIG_PATH       = $(TARGET_LIB_DIR)/pkgconfig
 
 VPATH                 = $(D)
 
@@ -219,7 +231,7 @@ BUILDENV = \
 	CPPFLAGS="$(TARGET_CPPFLAGS)" \
 	CXXFLAGS="$(TARGET_CXXFLAGS)" \
 	LDFLAGS="$(TARGET_LDFLAGS)" \
-	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH)
+	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
 
 CONFIGURE = \
 	test -f ./configure || ./autogen.sh $(SILENT_OPT) && \
@@ -229,29 +241,6 @@ CONFIGURE = \
 CONFIGURE_TOOLS = \
 	./autogen.sh $(SILENT_OPT) && \
 	$(BUILDENV) \
-	./configure $(SILENT_OPT) $(CONFIGURE_OPTS)
-
-BUILDENV_ALSA = \
-	CC=$(TARGET)-gcc \
-	CXX=$(TARGET)-g++ \
-	LD=$(TARGET)-ld \
-	NM=$(TARGET)-nm \
-	AR=$(TARGET)-ar \
-	AS=$(TARGET)-as \
-	RANLIB=$(TARGET)-ranlib \
-	STRIP=$(TARGET)-strip \
-	OBJCOPY=$(TARGET)-objcopy \
-	OBJDUMP=$(TARGET)-objdump \
-	LN_S="ln -s" \
-	CFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
-	CPPFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
-	CXXFLAGS="-pipe -Os -I$(TARGET_DIR)/usr/include" \
-	LDFLAGS="-Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/usr/lib -L$(TARGET_DIR)/lib" \
-	PKG_CONFIG_PATH="$(PKG_CONFIG_PATH)"
-
-CONFIGURE_ALSA = \
-	test -f ./configure || ./autogen.sh $(SILENT_OPT) && \
-	$(BUILDENV_ALSA) \
 	./configure $(SILENT_OPT) $(CONFIGURE_OPTS)
 
 MAKE_OPTS := \
