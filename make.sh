@@ -86,45 +86,45 @@ case $1 in
 esac
 
 case "$REPLY" in
-	 1) PLATFORM="sh4";BOXTYPE="ufs910";;
-	 2) PLATFORM="sh4";BOXTYPE="ufs912";;
-	 3) PLATFORM="sh4";BOXTYPE="ufs913";;
-	 4) PLATFORM="sh4";BOXTYPE="ufs922";;
-	 5) PLATFORM="sh4";BOXTYPE="ufc960";;
-	 6) PLATFORM="sh4";BOXTYPE="tf7700";;
-	 7) PLATFORM="sh4";BOXTYPE="fortis_hdbox";;
-	 8) PLATFORM="sh4";BOXTYPE="octagon1008";;
-	 9) PLATFORM="sh4";BOXTYPE="atevio7500";;
-	10) PLATFORM="sh4";BOXTYPE="hs7110";;
-	11) PLATFORM="sh4";BOXTYPE="hs7119";;
-	12) PLATFORM="sh4";BOXTYPE="hs7420";;
-	13) PLATFORM="sh4";BOXTYPE="hs7429";;
-	14) PLATFORM="sh4";BOXTYPE="hs7810a";;
-	15) PLATFORM="sh4";BOXTYPE="hs7819";;
-	16) PLATFORM="sh4";BOXTYPE="ipbox55";;
-	17) PLATFORM="sh4";BOXTYPE="ipbox99";;
-	18) PLATFORM="sh4";BOXTYPE="ipbox9900";;
-	19) PLATFORM="sh4";BOXTYPE="cuberevo";;
-	20) PLATFORM="sh4";BOXTYPE="cuberevo_mini";;
-	21) PLATFORM="sh4";BOXTYPE="cuberevo_mini2";;
-	22) PLATFORM="sh4";BOXTYPE="cuberevo_250hd";;
-	23) PLATFORM="sh4";BOXTYPE="cuberevo_9500hd";;
-	24) PLATFORM="sh4";BOXTYPE="cuberevo_2000hd";;
-	25) PLATFORM="sh4";BOXTYPE="cuberevo_mini_fta";;
-	26) PLATFORM="sh4";BOXTYPE="cuberevo_3000hd";;
-	27) PLATFORM="sh4";BOXTYPE="spark";;
-	28) PLATFORM="sh4";BOXTYPE="spark7162";;
-	29) PLATFORM="sh4";BOXTYPE="atemio520";;
-	30) PLATFORM="sh4";BOXTYPE="atemio530";;
-	31) PLATFORM="sh4";BOXTYPE="hl101";;
-	32) PLATFORM="sh4";BOXTYPE="hl101";;
-	33) PLATFORM="sh4";BOXTYPE="adb_box";;
-	34) PLATFORM="sh4";BOXTYPE="vitamin_hd5000";;
-	35) PLATFORM="sh4";BOXTYPE="sagemcom88";;
-	36) PLATFORM="sh4";BOXTYPE="arivalink200";;
-	 *) PLATFORM="sh4";BOXTYPE="atevio7500";;
+	 1) BOXARCH="sh4";BOXTYPE="ufs910";;
+	 2) BOXARCH="sh4";BOXTYPE="ufs912";;
+	 3) BOXARCH="sh4";BOXTYPE="ufs913";;
+	 4) BOXARCH="sh4";BOXTYPE="ufs922";;
+	 5) BOXARCH="sh4";BOXTYPE="ufc960";;
+	 6) BOXARCH="sh4";BOXTYPE="tf7700";;
+	 7) BOXARCH="sh4";BOXTYPE="fortis_hdbox";;
+	 8) BOXARCH="sh4";BOXTYPE="octagon1008";;
+	 9) BOXARCH="sh4";BOXTYPE="atevio7500";;
+	10) BOXARCH="sh4";BOXTYPE="hs7110";;
+	11) BOXARCH="sh4";BOXTYPE="hs7119";;
+	12) BOXARCH="sh4";BOXTYPE="hs7420";;
+	13) BOXARCH="sh4";BOXTYPE="hs7429";;
+	14) BOXARCH="sh4";BOXTYPE="hs7810a";;
+	15) BOXARCH="sh4";BOXTYPE="hs7819";;
+	16) BOXARCH="sh4";BOXTYPE="ipbox55";;
+	17) BOXARCH="sh4";BOXTYPE="ipbox99";;
+	18) BOXARCH="sh4";BOXTYPE="ipbox9900";;
+	19) BOXARCH="sh4";BOXTYPE="cuberevo";;
+	20) BOXARCH="sh4";BOXTYPE="cuberevo_mini";;
+	21) BOXARCH="sh4";BOXTYPE="cuberevo_mini2";;
+	22) BOXARCH="sh4";BOXTYPE="cuberevo_250hd";;
+	23) BOXARCH="sh4";BOXTYPE="cuberevo_9500hd";;
+	24) BOXARCH="sh4";BOXTYPE="cuberevo_2000hd";;
+	25) BOXARCH="sh4";BOXTYPE="cuberevo_mini_fta";;
+	26) BOXARCH="sh4";BOXTYPE="cuberevo_3000hd";;
+	27) BOXARCH="sh4";BOXTYPE="spark";;
+	28) BOXARCH="sh4";BOXTYPE="spark7162";;
+	29) BOXARCH="sh4";BOXTYPE="atemio520";;
+	30) BOXARCH="sh4";BOXTYPE="atemio530";;
+	31) BOXARCH="sh4";BOXTYPE="hl101";;
+	32) BOXARCH="sh4";BOXTYPE="hl101";;
+	33) BOXARCH="sh4";BOXTYPE="adb_box";;
+	34) BOXARCH="sh4";BOXTYPE="vitamin_hd5000";;
+	35) BOXARCH="sh4";BOXTYPE="sagemcom88";;
+	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
+	 *) BOXARCH="sh4";BOXTYPE="atevio7500";;
 esac
-echo "PLATFORM=$PLATFORM" > config
+echo "BOXARCH=$BOXARCH" > config
 echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
