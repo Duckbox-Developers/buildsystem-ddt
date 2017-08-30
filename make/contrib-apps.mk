@@ -31,61 +31,14 @@ $(D)/busybox: $(D)/bootstrap $(D)/module_init_tools $(ARCHIVE)/$(BUSYBOX_SOURCE)
 	$(TOUCH)
 
 #
-# host_pkgconfig
+# mtd_utils
 #
-PKGCONFIG_VERSION = 0.29.1
-PKGCONFIG_SOURCE = pkg-config-$(PKGCONFIG_VERSION).tar.gz
-
-$(ARCHIVE)/$(PKGCONFIG_SOURCE):
-	$(WGET) https://pkgconfig.freedesktop.org/releases/$(PKGCONFIG_SOURCE)
-
-pkg-config-preqs:
-	@PATH=$(subst $(HOST_DIR)/bin:,,$(PATH)); \
-	if ! pkg-config --exists glib-2.0; then \
-		echo "pkg-config and glib2-devel packages are needed for building cross-pkg-config."; false; \
-	fi
-
-$(D)/host_pkgconfig: directories $(ARCHIVE)/$(PKGCONFIG_SOURCE) | pkg-config-preqs
-	$(START_BUILD)
-	$(REMOVE)/pkg-config-$(PKGCONFIG_VERSION)
-	$(UNTAR)/$(PKGCONFIG_SOURCE)
-	set -e; cd $(BUILD_TMP)/pkg-config-$(PKGCONFIG_VERSION); \
-		./configure $(SILENT_OPT) \
-			--prefix=$(HOST_DIR) \
-			--program-prefix=$(TARGET)- \
-			--disable-host-tool \
-			--with-pc_path=$(PKG_CONFIG_PATH) \
-		; \
-		$(MAKE); \
-		$(MAKE) install
-	ln -sf $(TARGET)-pkg-config $(HOST_DIR)/bin/pkg-config
-	$(REMOVE)/pkg-config-$(PKGCONFIG_VERSION)
-	$(TOUCH)
-
-#
-# host_mtd_utils
-#
-MTD_UTILS_VERSION = 1.5.2
+MTD_UTILS_VERSION = $(HOST_MTD_UTILS_VERSION)
 MTD_UTILS_SOURCE = mtd-utils-$(MTD_UTILS_VERSION).tar.bz2
-MTD_UTILS_HOST_PATCH = host-mtd-utils-$(MTD_UTILS_VERSION).patch
 
 $(ARCHIVE)/$(MTD_UTILS_SOURCE):
 	$(WGET) ftp://ftp.infradead.org/pub/mtd-utils/$(MTD_UTILS_SOURCE)
 
-$(D)/host_mtd_utils: directories $(ARCHIVE)/$(MTD_UTILS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/mtd-utils-$(MTD_UTILS_VERSION)
-	$(UNTAR)/$(MTD_UTILS_SOURCE)
-	set -e; cd $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VERSION); \
-		$(call post_patch,$(MTD_UTILS_HOST_PATCH)); \
-		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOST_DIR); \
-		$(MAKE) install DESTDIR=$(HOST_DIR)/bin
-	$(REMOVE)/mtd-utils-$(MTD_UTILS_VERSION)
-	$(TOUCH)
-
-#
-# mtd_utils
-#
 $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MTD_UTILS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VERSION)
@@ -100,75 +53,63 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 	$(TOUCH)
 
 #
-# host_mkcramfs
+# module_init_tools
 #
-MKCRAMFS_VERSION = 1.1
-MKCRAMFS_SOURCE = cramfs-$(MKCRAMFS_VERSION).tar.gz
+MODULE_INIT_TOOLS_VERSION = $(HOST_MODULE_INIT_TOOLS_VERSION)
+MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).tar.bz2
+MODULE_INIT_TOOLS_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
 
-$(ARCHIVE)/$(MKCRAMFS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/cramfs/files/cramfs/$(MKCRAMFS_VERSION)/$(MKCRAMFS_SOURCE)
+$(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE):
+	$(WGET) ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
 
-$(D)/host_mkcramfs: directories $(ARCHIVE)/$(MKCRAMFS_SOURCE)
+$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/cramfs-$(MKCRAMFS_VERSION)
-	$(UNTAR)/$(MKCRAMFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION); \
-		$(MAKE) all
-		cp $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION)/mkcramfs $(HOST_DIR)/bin
-		cp $(BUILD_TMP)/cramfs-$(MKCRAMFS_VERSION)/cramfsck $(HOST_DIR)/bin
-	$(REMOVE)/cramfs-$(MKCRAMFS_VERSION)
+	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
+	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
+	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION); \
+		$(call post_patch,$(MODULE_INIT_TOOLS_PATCH)); \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--target=$(TARGET) \
+			--prefix= \
+			--program-suffix="" \
+			--mandir=/.remove \
+			--docdir=/.remove \
+			--disable-builddir \
+		; \
+		$(MAKE); \
+		$(MAKE) install sbin_PROGRAMS="depmod modinfo" bin_PROGRAMS= DESTDIR=$(TARGET_DIR)
+	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
+	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
 	$(TOUCH)
 
 #
-# host_mksquashfs3
+# sysvinit
 #
-MKSQUASHFS3_VERSION = 3.3
-MKSQUASHFS3_SOURCE = squashfs$(MKSQUASHFS3_VERSION).tar.gz
+SYSVINIT_VERSION = 2.88dsf
+SYSVINIT_SOURCE = sysvinit_$(SYSVINIT_VERSION).orig.tar.gz
 
-$(ARCHIVE)/$(MKSQUASHFS3_SOURCE):
-	$(WGET) https://sourceforge.net/projects/squashfs/files/OldFiles/$(MKSQUASHFS3_SOURCE)
+$(ARCHIVE)/$(SYSVINIT_SOURCE):
+	$(WGET) ftp://ftp.debian.org/debian/pool/main/s/sysvinit/$(SYSVINIT_SOURCE)
 
-$(D)/host_mksquashfs3: directories $(ARCHIVE)/$(MKSQUASHFS3_SOURCE)
+$(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/squashfs$(MKSQUASHFS3_VERSION)
-	$(UNTAR)/$(MKSQUASHFS3_SOURCE)
-	set -e; cd $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools; \
-		$(MAKE) CC=gcc all
-		mv $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
-		mv $(BUILD_TMP)/squashfs$(MKSQUASHFS3_VERSION)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
-	$(REMOVE)/squashfs$(MKSQUASHFS3_VERSION)
-	$(TOUCH)
-
-#
-# host_mksquashfs with LZMA support
-#
-MKSQUASHFS_VERSION = 4.2
-MKSQUASHFS_SOURCE = squashfs$(MKSQUASHFS_VERSION).tar.gz
-
-LZMA_VERSION = 4.65
-LZMA_SOURCE = lzma-$(LZMA_VERSION).tar.bz2
-
-$(ARCHIVE)/$(MKSQUASHFS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(MKSQUASHFS_VERSION)/$(MKSQUASHFS_SOURCE)
-
-$(ARCHIVE)/$(LZMA_SOURCE):
-	$(WGET) http://downloads.openwrt.org/sources/$(LZMA_SOURCE)
-
-$(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(MKSQUASHFS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/lzma-$(LZMA_VERSION)
-	$(UNTAR)/$(LZMA_SOURCE)
-	$(REMOVE)/squashfs$(MKSQUASHFS_VERSION)
-	$(UNTAR)/$(MKSQUASHFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/squashfs$(MKSQUASHFS_VERSION); \
-		$(MAKE) -C squashfs-tools \
-			LZMA_SUPPORT=1 \
-			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VERSION) \
-			XATTR_SUPPORT=0 \
-			XATTR_DEFAULT=0 \
-			install INSTALL_DIR=$(HOST_DIR)/bin
-	$(REMOVE)/lzma-$(LZMA_VERSION)
-	$(REMOVE)/squashfs$(MKSQUASHFS_VERSION)
+	$(REMOVE)/sysvinit-$(SYSVINIT_VERSION)
+	$(UNTAR)/$(SYSVINIT_SOURCE)
+	set -e; cd $(BUILD_TMP)/sysvinit-$(SYSVINIT_VERSION); \
+		sed -i -e 's/\ sulogin[^ ]*//' -e 's/pidof\.8//' -e '/ln .*pidof/d' \
+		-e '/bootlogd/d' -e '/utmpdump/d' -e '/mountpoint/d' -e '/mesg/d' src/Makefile; \
+		$(BUILDENV) \
+		$(MAKE) -C src SULOGINLIBS=-lcrypt; \
+		$(MAKE) install ROOT=$(TARGET_DIR) MANDIR=/.remove
+	rm -f $(addprefix $(TARGET_DIR)/sbin/,fstab-decode runlevel telinit)
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,lastb)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 cuberevo cuberevo_mini2 cuberevo_2000hd))
+	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyAS1 $(TARGET_DIR)/etc/inittab
+else
+	install -m 644 $(SKEL_ROOT)/etc/inittab $(TARGET_DIR)/etc/inittab
+endif
+	$(REMOVE)/sysvinit-$(SYSVINIT_VERSION)
 	$(TOUCH)
 
 #
@@ -202,7 +143,6 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 #
 # gdb
 #
-
 # gdb built for target or local-PC
 $(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 	$(START_BUILD)
@@ -280,86 +220,6 @@ $(D)/opkg: $(D)/bootstrap $(D)/host_opkg $(D)/libarchive $(ARCHIVE)/$(OPKG_SOURC
 	$(REWRITE_LIBTOOL)/libopkg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libopkg.pc
 	$(REMOVE)/opkg-$(OPKG_VERSION)
-	$(TOUCH)
-
-#
-# sysvinit
-#
-SYSVINIT_VERSION = 2.88dsf
-SYSVINIT_SOURCE = sysvinit_$(SYSVINIT_VERSION).orig.tar.gz
-
-$(ARCHIVE)/$(SYSVINIT_SOURCE):
-	$(WGET) ftp://ftp.debian.org/debian/pool/main/s/sysvinit/$(SYSVINIT_SOURCE)
-
-$(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/sysvinit-$(SYSVINIT_VERSION)
-	$(UNTAR)/$(SYSVINIT_SOURCE)
-	set -e; cd $(BUILD_TMP)/sysvinit-$(SYSVINIT_VERSION); \
-		sed -i -e 's/\ sulogin[^ ]*//' -e 's/pidof\.8//' -e '/ln .*pidof/d' \
-		-e '/bootlogd/d' -e '/utmpdump/d' -e '/mountpoint/d' -e '/mesg/d' src/Makefile; \
-		$(BUILDENV) \
-		$(MAKE) -C src SULOGINLIBS=-lcrypt; \
-		$(MAKE) install ROOT=$(TARGET_DIR) MANDIR=/.remove
-	rm -f $(addprefix $(TARGET_DIR)/sbin/,fstab-decode runlevel telinit)
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,lastb)
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 cuberevo cuberevo_mini2 cuberevo_2000hd))
-	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyAS1 $(TARGET_DIR)/etc/inittab
-else
-	install -m 644 $(SKEL_ROOT)/etc/inittab $(TARGET_DIR)/etc/inittab
-endif
-	$(REMOVE)/sysvinit-$(SYSVINIT_VERSION)
-	$(TOUCH)
-
-#
-# host_module_init_tools
-#
-MODULE_INIT_TOOLS_VERSION = 3.16
-MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).tar.bz2
-MODULE_INIT_TOOLS_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
-MODULE_INIT_TOOLS_HOST_PATCH = module-init-tools-$(MODULE_INIT_TOOLS_VERSION).patch
-
-$(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE):
-	$(WGET) ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(MODULE_INIT_TOOLS_SOURCE)
-
-$(D)/host_module_init_tools: $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
-	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
-	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION); \
-		$(call post_patch,$(MODULE_INIT_TOOLS_HOST_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
-		./configure $(SILENT_OPT) \
-			--prefix=$(HOST_DIR) \
-			--sbindir=$(HOST_DIR)/bin \
-		; \
-		$(MAKE); \
-		$(MAKE) install
-	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
-	$(TOUCH)
-
-#
-# module_init_tools
-#
-$(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(MODULE_INIT_TOOLS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
-	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
-	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION); \
-		$(call post_patch,$(MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
-		$(CONFIGURE) \
-			--target=$(TARGET) \
-			--prefix= \
-			--program-suffix="" \
-			--mandir=/.remove \
-			--docdir=/.remove \
-			--disable-builddir \
-		; \
-		$(MAKE); \
-		$(MAKE) install sbin_PROGRAMS="depmod modinfo" bin_PROGRAMS= DESTDIR=$(TARGET_DIR)
-	$(call adapted-etc-files,$(MODULE_INIT_TOOLS_ADAPTED_ETC_FILES))
-	$(REMOVE)/module-init-tools-$(MODULE_INIT_TOOLS_VERSION)
 	$(TOUCH)
 
 #

@@ -26,6 +26,174 @@ toolcheck: $(TOOLCHECK) preqs
 		echo; \
 	fi
 
+#
+# host_pkgconfig
+#
+HOST_PKGCONFIG_VERSION = 0.29.1
+HOST_PKGCONFIG_SOURCE = pkg-config-$(HOST_PKGCONFIG_VERSION).tar.gz
+
+$(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE):
+	$(WGET) https://pkgconfig.freedesktop.org/releases/$(HOST_PKGCONFIG_SOURCE)
+
+$(D)/host_pkgconfig: directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/pkg-config-$(HOST_PKGCONFIG_VERSION)
+	$(UNTAR)/$(HOST_PKGCONFIG_SOURCE)
+	set -e; cd $(BUILD_TMP)/pkg-config-$(HOST_PKGCONFIG_VERSION); \
+		./configure $(SILENT_OPT) \
+			--prefix=$(HOST_DIR) \
+			--program-prefix=$(TARGET)- \
+			--disable-host-tool \
+			--with-pc_path=$(PKG_CONFIG_PATH) \
+		; \
+		$(MAKE); \
+		$(MAKE) install
+	ln -sf $(TARGET)-pkg-config $(HOST_DIR)/bin/pkg-config
+	$(REMOVE)/pkg-config-$(HOST_PKGCONFIG_VERSION)
+	$(TOUCH)
+
+#
+# host_module_init_tools
+#
+HOST_MODULE_INIT_TOOLS_VERSION = 3.16
+HOST_MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION).tar.bz2
+HOST_MODULE_INIT_TOOLS_PATCH = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION).patch
+HOST_MODULE_INIT_TOOLS_HOST_PATCH = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION).patch
+
+$(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE):
+	$(WGET) ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(HOST_MODULE_INIT_TOOLS_SOURCE)
+
+$(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION)
+	$(UNTAR)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
+	set -e; cd $(BUILD_TMP)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION); \
+		$(call post_patch,$(HOST_MODULE_INIT_TOOLS_PATCH)); \
+		autoreconf -fi $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
+			--prefix=$(HOST_DIR) \
+			--sbindir=$(HOST_DIR)/bin \
+		; \
+		$(MAKE); \
+		$(MAKE) install
+	$(REMOVE)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VERSION)
+	$(TOUCH)
+
+#
+# host_mtd_utils
+#
+HOST_MTD_UTILS_VERSION = 1.5.2
+HOST_MTD_UTILS_SOURCE = mtd-utils-$(HOST_MTD_UTILS_VERSION).tar.bz2
+HOST_MTD_UTILS_PATCH = host-mtd-utils-$(HOST_MTD_UTILS_VERSION).patch
+
+$(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE):
+	$(WGET) ftp://ftp.infradead.org/pub/mtd-utils/$(HOST_MTD_UTILS_SOURCE)
+
+$(D)/host_mtd_utils: directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/mtd-utils-$(HOST_MTD_UTILS_VERSION)
+	$(UNTAR)/$(HOST_MTD_UTILS_SOURCE)
+	set -e; cd $(BUILD_TMP)/mtd-utils-$(HOST_MTD_UTILS_VERSION); \
+		$(call post_patch,$(HOST_MTD_UTILS_PATCH)); \
+		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOST_DIR); \
+		$(MAKE) install DESTDIR=$(HOST_DIR)/bin
+	$(REMOVE)/mtd-utils-$(HOST_MTD_UTILS_VERSION)
+	$(TOUCH)
+
+#
+# host_mkcramfs
+#
+HOST_MKCRAMFS_VERSION = 1.1
+HOST_MKCRAMFS_SOURCE = cramfs-$(HOST_MKCRAMFS_VERSION).tar.gz
+
+$(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/cramfs/files/cramfs/$(HOST_MKCRAMFS_VERSION)/$(HOST_MKCRAMFS_SOURCE)
+
+$(D)/host_mkcramfs: directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/cramfs-$(HOST_MKCRAMFS_VERSION)
+	$(UNTAR)/$(HOST_MKCRAMFS_SOURCE)
+	set -e; cd $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VERSION); \
+		$(MAKE) all
+		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VERSION)/mkcramfs $(HOST_DIR)/bin
+		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VERSION)/cramfsck $(HOST_DIR)/bin
+	$(REMOVE)/cramfs-$(HOST_MKCRAMFS_VERSION)
+	$(TOUCH)
+
+#
+# host_mksquashfs3
+#
+HOST_MKSQUASHFS3_VERSION = 3.3
+HOST_MKSQUASHFS3_SOURCE = squashfs$(HOST_MKSQUASHFS3_VERSION).tar.gz
+
+$(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/OldFiles/$(HOST_MKSQUASHFS3_SOURCE)
+
+$(D)/host_mksquashfs3: directories $(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS3_VERSION)
+	$(UNTAR)/$(HOST_MKSQUASHFS3_SOURCE)
+	set -e; cd $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VERSION)/squashfs-tools; \
+		$(MAKE) CC=gcc all
+		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VERSION)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
+		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VERSION)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS3_VERSION)
+	$(TOUCH)
+
+#
+# host_mksquashfs with LZMA support
+#
+HOST_MKSQUASHFS_VERSION = 4.2
+HOST_MKSQUASHFS_SOURCE = squashfs$(HOST_MKSQUASHFS_VERSION).tar.gz
+
+LZMA_VERSION = 4.65
+LZMA_SOURCE = lzma-$(LZMA_VERSION).tar.bz2
+
+$(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(HOST_MKSQUASHFS_VERSION)/$(HOST_MKSQUASHFS_SOURCE)
+
+$(ARCHIVE)/$(LZMA_SOURCE):
+	$(WGET) http://downloads.openwrt.org/sources/$(LZMA_SOURCE)
+
+$(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/lzma-$(LZMA_VERSION)
+	$(UNTAR)/$(LZMA_SOURCE)
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VERSION)
+	$(UNTAR)/$(HOST_MKSQUASHFS_SOURCE)
+	set -e; cd $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS_VERSION); \
+		$(MAKE) -C squashfs-tools \
+			LZMA_SUPPORT=1 \
+			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VERSION) \
+			XATTR_SUPPORT=0 \
+			XATTR_DEFAULT=0 \
+			install INSTALL_DIR=$(HOST_DIR)/bin
+	$(REMOVE)/lzma-$(LZMA_VERSION)
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VERSION)
+	$(TOUCH)
+
+#
+# host_u_boot_tools
+#
+host_u_boot_tools: \
+$(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
+	$(START_BUILD)
+	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOST_DIR)/bin \
+		$^
+	@touch $(D)/$(notdir $@)
+	@echo -e "Build of $(TERM_GREEN_BOLD)$@$(TERM_NORMAL)completed."; echo
+
+#
+#
+#
+$(HOST_DIR)/bin/unpack%.sh \
+$(HOST_DIR)/bin/get%.sh \
+$(HOST_DIR)/bin/opkg%sh: | directories
+	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOST_DIR)/bin
+
+#
+#
+#
 BOOTSTRAP  = directories
 BOOTSTRAP += crosstool
 BOOTSTRAP += $(D)/ccache
@@ -45,6 +213,9 @@ BOOTSTRAP += $(D)/host_mksquashfs
 $(D)/bootstrap: $(BOOTSTRAP)
 	@touch $@
 
+#
+#
+#
 SYSTEM_TOOLS  = $(D)/module_init_tools
 SYSTEM_TOOLS += $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
@@ -76,11 +247,6 @@ YAUD_NONE    += $(D)/system-tools
 
 yaud-none: $(YAUD_NONE)
 	@touch $(D)/$(notdir $@)
-
-$(HOST_DIR)/bin/unpack%.sh \
-$(HOST_DIR)/bin/get%.sh \
-$(HOST_DIR)/bin/opkg%sh: | directories
-	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOST_DIR)/bin
 
 #
 #
