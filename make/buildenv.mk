@@ -5,6 +5,9 @@
 CONFIG_SITE =
 export CONFIG_SITE
 
+LD_LIBRARY_PATH =
+export LD_LIBRARY_PATH
+
 CCACHE_DIR            = $(HOME)/.ccache-ddt
 export CCACHE_DIR
 
@@ -41,8 +44,8 @@ TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
 IMAGE_DIR             = $(TUFSBOX_DIR)/cdkroot-flash
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
-CROSS_BASE            = $(TUFSBOX_DIR)/cross
-CROSS_DIR             = $(CROSS_BASE)
+CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)
+CROSS_DIR             = $(TUFSBOX_DIR)/cross
 HOST_DIR              = $(TUFSBOX_DIR)/host
 RELEASE_DIR           = $(TUFSBOX_DIR)/release
 
@@ -170,25 +173,25 @@ TOUCH                 = @touch $@; \
 PATCH                 = patch -p1 $(SILENT_PATCH) -i $(PATCHES)
 APATCH                = patch -p1 $(SILENT_PATCH) -i
 define post_patch
-	for i in $(1); do \
-		if [ -d $$i ] ; then \
-			for p in $$i/*; do \
-				if [ $${p:0:1} == "/" ]; then \
-					echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \
-				else \
-					echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH)/$$p; \
-				fi; \
-			done; \
-		else \
-			if [ $${i:0:1} == "/" ]; then \
-				echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH) $$i; \
-			else \
-				echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH)/$$i; \
-			fi; \
-		fi; \
-	done; \
-	echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO)$(TERM_NORMAL) completed."; \
-	echo
+    for i in $(1); do \
+        if [ -d $$i ] ; then \
+            for p in $$i/*; do \
+                if [ $${p:0:1} == "/" ]; then \
+                    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \
+                else \
+                    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH)/$$p; \
+                fi; \
+            done; \
+        else \
+            if [ $${i:0:1} == "/" ]; then \
+                echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH) $$i; \
+            else \
+                echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH)/$$i; \
+            fi; \
+        fi; \
+    done; \
+    echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO)$(TERM_NORMAL) completed."; \
+    echo
 endef
 
 #

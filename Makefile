@@ -109,6 +109,7 @@ include make/neutrino-release.mk
 include make/flashimage.mk
 include make/cleantargets.mk
 include make/patches.mk
+include make/crosstool-sh4.mk
 include make/bootstrap.mk
 
 update-self:
