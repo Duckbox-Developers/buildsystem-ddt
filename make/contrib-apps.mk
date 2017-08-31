@@ -1391,7 +1391,7 @@ WPA_SUPPLICANT_VERSION = 0.7.3
 WPA_SUPPLICANT_SOURCE = wpa_supplicant-$(WPA_SUPPLICANT_VERSION).tar.gz
 
 $(ARCHIVE)/$(WPA_SUPPLICANT_SOURCE):
-	$(WGET) http://hostap.epitest.fi/releases/$(WPA_SUPPLICANT_SOURCE)
+	$(WGET) https://w1.fi/releases/$(WPA_SUPPLICANT_SOURCE)
 
 $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/$(WPA_SUPPLICANT_SOURCE)
 	$(START_BUILD)
