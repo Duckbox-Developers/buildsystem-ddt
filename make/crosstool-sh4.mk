@@ -95,8 +95,8 @@ $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 
 crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	make $(BUILD_TMP)
-	if [ ! -e $(CROSS_DIR)) ]; then \
-		mkdir -p $(CROSS_DIR); \
+	if [ ! -e $(CROSS_BASE) ]; then \
+		mkdir -p $(CROSS_BASE); \
 	fi;
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
@@ -108,17 +108,16 @@ crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
 		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
 		export NG_ARCHIVE=$(ARCHIVE); \
-		export NG_BASE_DIR=$(BASE_DIR); \
+		export NG_BASE_DIR=$(CROSS_BASE); \
 		export LD_LIBRARY_PATH= ; \
 		test -f ./configure || ./bootstrap; \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
 		./ct-ng oldconfig; \
 		./ct-ng build
-	chmod -R +w $(CROSS_DIR)
-	test -e $(CROSS_DIR)/$(TARGET)/lib && mv $(CROSS_DIR)/$(TARGET)/lib $(CROSS_DIR)/$(TARGET)/lib.x
-	test -e $(CROSS_DIR)/$(TARGET)/lib || ln -sf sys-root/lib $(CROSS_DIR)/$(TARGET)/
-	rm -f $(CROSS_DIR)/$(TARGET)/sys-root/lib/libstdc++.so.6.0.20-gdb.py
+	chmod -R +w $(CROSS_BASE)
+	test -e $(CROSS_BASE)/sh4-unknown-linux-gnu/lib || ln -sf sys-root/lib $(CROSS_BASE)/sh4-unknown-linux-gnu/
+	rm -f $(CROSS_BASE)/sh4-unknown-linux-gnu/sys-root/lib/libstdc++.so.6.0.20-gdb.py
 	$(REMOVE)/crosstool-ng
 
 crossmenuconfig: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
