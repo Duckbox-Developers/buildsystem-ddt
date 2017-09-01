@@ -640,7 +640,7 @@ endif
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
 	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-	rm -rf $(RELEASE_DIR)/usr/lib/{engines,enigma2,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VERSION),sigc++-1.2,sigc++-2.0}
+	rm -rf $(RELEASE_DIR)/usr/lib/{engines,enigma2,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VER),sigc++-1.2,sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
 #
@@ -674,7 +674,7 @@ endif
 #
 # python2.7
 #
-	if [ $(PYTHON_VERSION_MAJOR) == 2.7 ]; then \
+	if [ $(PYTHON_VER_MAJOR) == 2.7 ]; then \
 		install -d $(RELEASE_DIR)/usr/include; \
 		install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
 		cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
@@ -796,7 +796,7 @@ endif
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/trial/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/words/test
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION_MAJOR).egg-info
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VER_MAJOR).egg-info
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/DemoPlugins
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/FrontprocessorUpgrade
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/NFIFlash

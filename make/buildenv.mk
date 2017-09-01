@@ -24,7 +24,7 @@ SOURCE_DIR            = $(BASE_DIR)/source
 
 # for local extensions
 -include $(BASE_DIR)/config.local
-
+-include $(BASE_DIR)/root/release/fw_env.config
 # default platform...
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
@@ -161,7 +161,7 @@ split_deps_dir=$(subst ., ,$(1))
 DEPS_DIR              = $(subst $(D)/,,$@)
 PKG_NAME              = $(word 1,$(call split_deps_dir,$(DEPS_DIR)))
 PKG_NAME_HELPER       = $(shell echo $(PKG_NAME) | sed 's/.*/\U&/')
-PKG_VER               = " "$($(PKG_NAME_HELPER)_VERSION)
+PKG_VER               = " "$($(PKG_NAME_HELPER)_VER)
 START_BUILD           = @echo "=============================================================="; \
                         echo; \
                         echo -e "Start build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(PKG_VER)$(TERM_NORMAL)";
@@ -174,7 +174,7 @@ PATCH                 = patch -p1 $(SILENT_PATCH) -i $(PATCHES)
 APATCH                = patch -p1 $(SILENT_PATCH) -i
 define post_patch
     for i in $(1); do \
-        if [ -d $$i ] ; then \
+        if [ -d $$i ]; then \
             for p in $$i/*; do \
                 if [ $${p:0:1} == "/" ]; then \
                     echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \

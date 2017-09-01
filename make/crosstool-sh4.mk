@@ -29,29 +29,29 @@ $(STL_ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
 #
 
 # 4.6.3
-#BINUTILS_VERSION = 2.22-64
-#GCC_VERSION      = 4.6.3-111
-#LIBGCC_VERSION   = 4.6.3-111
-#GLIBC_VERSION    = 2.10.2-42
+#BINUTILS_VER = 2.22-64
+#GCC_VER      = 4.6.3-111
+#LIBGCC_VER   = 4.6.3-111
+#GLIBC_VER    = 2.10.2-42
 
 # 4.8.4
-BINUTILS_VERSION = 2.24.51.0.3-76
-GCC_VERSION      = 4.8.4-139
-LIBGCC_VERSION   = 4.8.4-148
-GLIBC_VERSION    = 2.14.1-59
+BINUTILS_VER = 2.24.51.0.3-76
+GCC_VER      = 4.8.4-139
+LIBGCC_VER   = 4.8.4-148
+GLIBC_VER    = 2.14.1-59
 
 crosstool-rpminstall: \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VERSION).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VERSION).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VERSION).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VERSION).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VERSION).i386.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VERSION).noarch.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VERSION).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VERSION).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VERSION).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VERSION).sh4.rpm \
-$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VERSION).sh4.rpm
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-$(BINUTILS_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-binutils-dev-$(BINUTILS_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-cpp-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-gcc-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-cross-sh4-g++-$(GCC_VER).i386.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-linux-kernel-headers-$(STM_KERNEL_HEADERS_VER).noarch.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-$(GLIBC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
+$(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
 		$^
 	touch $(D)/$(notdir $@)
@@ -87,8 +87,8 @@ crosstool-rpminstall
 #
 # crosstool-ng
 #
-CROSSTOOL_NG_VERSION = 1.22.0
-CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VERSION).tar.xz
+CROSSTOOL_NG_VER = 1.22.0
+CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(WGET) http://crosstool-ng.org/download/crosstool-ng/$(CROSSTOOL_NG_SOURCE)
@@ -101,7 +101,7 @@ crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
-		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION)-$(BOXARCH).config .config; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER)-$(BOXARCH).config .config; \
 		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
 		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
 		test $$NUM_CPUS -gt $$MEM_512M && NUM_CPUS=$$MEM_512M; \
@@ -124,7 +124,7 @@ crossmenuconfig: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
-		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VERSION)-$(BOXARCH).config .config; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER)-$(BOXARCH).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
