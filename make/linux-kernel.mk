@@ -255,7 +255,7 @@ ARIVALINK200_PATCHES_24 = $(COMMON_PATCHES_24) \
 # KERNEL
 #
 KERNEL_PATCHES = $(KERNEL_PATCHES_24)
-KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VERSION))_$(BOXTYPE).config
+KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VER))_$(BOXTYPE).config
 
 $(D)/kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(KERNEL_CONFIG) \
 	$(if $(KERNEL_PATCHES),$(KERNEL_PATCHES:%=$(PATCHES)/$(BUILD_CONFIG)/%))
@@ -314,11 +314,11 @@ $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 
 $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/uImage $(BOOT_DIR)/vmlinux.ub
-	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VERSION)
-	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-sh4-$(KERNEL_VERSION)
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VER)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-sh4-$(KERNEL_VER)
 	cp $(KERNEL_DIR)/arch/sh/boot/uImage $(TARGET_DIR)/boot/
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/build || true
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VERSION)/source || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 
 $(D)/kernel-headers: $(D)/kernel.do_prepare

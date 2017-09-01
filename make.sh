@@ -176,11 +176,11 @@ case $4 in
 esac
 
 case "$REPLY" in
-	1)	echo "PLAYER_VERSION=191_test" >> config
-		echo "MULTICOM_VERSION=324" >> config
+	1)	echo "PLAYER_VER=191_test" >> config
+		echo "MULTICOM_VER=324" >> config
 		;;
-	2)	echo "PLAYER_VERSION=191" >> config
-		echo "MULTICOM_VERSION=324" >> config
+	2)	echo "PLAYER_VER=191" >> config
+		echo "MULTICOM_VER=324" >> config
 		;;
 	*) ;;
 esac

@@ -8372,7 +8372,7 @@ diff -Nur '--exclude-from=/home/max/Duckbox-Developers/cdk/scripts/diff-exclude'
  			print (distutils.sysconfig.get_python_inc ());"`
  		if test -n "${python_path}"; then
 -			python_path="-I$python_path"
-+			python_path="-I$PY_PATH/include/python$PYTHON_VERSION_MAJOR"
++			python_path="-I$PY_PATH/include/python$PYTHON_VER_MAJOR"
  		fi
  		PYTHON_CPPFLAGS=$python_path
  	fi
@@ -8381,7 +8381,7 @@ diff -Nur '--exclude-from=/home/max/Duckbox-Developers/cdk/scripts/diff-exclude'
  			  import os; \
  			  print (os.path.join(f(plat_specific=1, standard_lib=1), 'config'));"`
 -			PYTHON_LDFLAGS="-L$ac_python_libdir -lpython$ac_python_version"
-+			PYTHON_LDFLAGS="-L$PY_PATH/lib/python$PYTHON_VERSION_MAJOR -lpython$ac_python_version"
++			PYTHON_LDFLAGS="-L$PY_PATH/lib/python$PYTHON_VER_MAJOR -lpython$ac_python_version"
 +#			PYTHON_LDFLAGS="-L$ac_python_libdir -lpython$ac_python_version"
  		fi
  
@@ -8392,7 +8392,7 @@ diff -Nur '--exclude-from=/home/max/Duckbox-Developers/cdk/scripts/diff-exclude'
  	if test -z "$PYTHON_SITE_PKG"; then
 -		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
 -			print (distutils.sysconfig.get_python_lib(0,0));"`
-+		PYTHON_SITE_PKG="$PY_PATH/lib/python$PYTHON_VERSION_MAJOR/site-packages"
++		PYTHON_SITE_PKG="$PY_PATH/lib/python$PYTHON_VER_MAJOR/site-packages"
 +#		PYTHON_SITE_PKG=`$PYTHON -c "import distutils.sysconfig; \
 +#			print (distutils.sysconfig.get_python_lib(0,0));"`
  	fi

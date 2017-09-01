@@ -10,7 +10,7 @@ driver-symlink:
 		rm -f player2 multicom; \
 		ln -s $(PLAYER2_LINK) player2; \
 		ln -s $(MULTICOM_LINK) multicom; \
-		rm -f .config; printf "export CONFIG_PLAYER_$(PLAYER_VERSION_DRIVER)=y\nexport CONFIG_MULTICOM$(MULTICOM_VERSION)=y\n" > .config; \
+		rm -f .config; printf "export CONFIG_PLAYER_$(PLAYER_VER_DRIVER)=y\nexport CONFIG_MULTICOM$(MULTICOM_VER)=y\n" > .config; \
 		cd include; \
 		rm -f stmfb player2 multicom; \
 		ln -s stmfb-3.1_stm24_0104 stmfb; \
@@ -47,5 +47,5 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 		BIN_DEST=$(TARGET_DIR)/bin \
 		INSTALL_MOD_PATH=$(TARGET_DIR) \
 		modules_install
-	$(DEPMOD) -ae -b $(TARGET_DIR) -F $(KERNEL_DIR)/System.map -r $(KERNEL_VERSION)
+	$(DEPMOD) -ae -b $(TARGET_DIR) -F $(KERNEL_DIR)/System.map -r $(KERNEL_VER)
 	$(TOUCH)

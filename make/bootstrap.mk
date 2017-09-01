@@ -173,17 +173,6 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(TOUCH)
 
 #
-# host_u_boot_tools
-#
-host_u_boot_tools: \
-$(STL_ARCHIVE)/stlinux24-host-u-boot-tools-1.3.1_stm24-9.i386.rpm
-	$(START_BUILD)
-	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/host/bin $(HOST_DIR)/bin \
-		$^
-	@touch $(D)/$(notdir $@)
-	@echo -e "Build of $(TERM_GREEN_BOLD)$@$(TERM_NORMAL)completed."; echo
-
-#
 #
 #
 $(HOST_DIR)/bin/unpack%.sh \
