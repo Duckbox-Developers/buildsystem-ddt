@@ -876,32 +876,32 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 	$(TOUCH)
 
 #
-# shairplay
+# shairport-sync
 #
-$(D)/shairplay: $(D)/bootstrap $(D)/libao
+$(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/openssl $(D)/alsa_lib
 	$(START_BUILD)
-	$(REMOVE)/shairplay
-	set -e; if [ -d $(ARCHIVE)/shairplay.git ]; \
-		then cd $(ARCHIVE)/shairplay.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/TangoCash/shairplay.git shairplay.git; \
+	$(REMOVE)/shairport-sync
+	set -e; if [ -d $(ARCHIVE)/shairport-sync.git ]; \
+		then cd $(ARCHIVE)/shairport-sync.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/TangoCash/shairport-sync.git shairport-sync.git; \
 		fi
-	cp -ra $(ARCHIVE)/shairplay.git $(BUILD_TMP)/shairplay
-	set -e; cd $(BUILD_TMP)/shairplay; \
-		for A in src/test/example.c src/test/main.c src/shairplay.c ; do sed -i "s#airport.key#/share/shairplay/airport.key#" $$A ; done; \
+	cp -ra $(ARCHIVE)/shairport-sync.git $(BUILD_TMP)/shairport-sync
+	set -e; cd $(BUILD_TMP)/shairport-sync; \
+		autoreconf -fi; \
 		PKG_CONFIG=$(PKG_CONFIG) \
 		$(BUILDENV) \
 		$(CONFIGURE) \
 			--prefix=/usr \
-			--enable-shared \
-			--disable-static \
+			--with-alsa \
+			--with-ssl=openssl \
+			--with-metadata \
+			--with-tinysvcmdns \
+			--with-pipe \
+			--with-stdout \
 		; \
 		$(MAKE); \
-		mkdir -p $(TARGET_DIR)/usr/share/shairplay ; \
-		install -m 644 airport.key $(TARGET_DIR)/usr/share/shairplay/airport.key ; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		$(REWRITE_LIBTOOL)/libshairplay.la
-		rm -f $(addprefix $(TARGET_DIR)/usr/bin/,shairplay)
-	$(REMOVE)/shairplay
+	$(REMOVE)/shairport-sync
 	$(TOUCH)
 
 #
