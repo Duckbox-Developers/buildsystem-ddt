@@ -24,7 +24,7 @@ SOURCE_DIR            = $(BASE_DIR)/source
 
 # for local extensions
 -include $(BASE_DIR)/config.local
--include $(BASE_DIR)/root/release/fw_env.config
+
 # default platform...
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
