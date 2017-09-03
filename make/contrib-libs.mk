@@ -919,6 +919,31 @@ $(D)/giflib: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
 	$(TOUCH)
 
 #
+# libconfig
+#
+LIBCONFIG_VER = 1.4.10
+LIBCONFIG_SOURCE = libconfig-$(LIBCONFIG_VER).tar.gz
+
+$(ARCHIVE)/$(LIBCONFIG_SOURCE):
+	$(WGET) http://www.hyperrealm.com/packages/$(LIBCONFIG_SOURCE)
+
+$(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libconfig-$(LIBCONFIG_VER)
+	$(UNTAR)/$(LIBCONFIG_SOURCE)
+	set -e; cd $(BUILD_TMP)/libconfig-$(LIBCONFIG_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-static \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libconfig.pc
+	$(REWRITE_LIBTOOL)/libconfig.la
+	$(REMOVE)/libconfig-$(LIBCONFIG_VER)
+	$(TOUCH)
+
+#
 # libcurl
 #
 LIBCURL_VER = 7.54.1
@@ -1460,6 +1485,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-muxer=h261 \
 			--enable-muxer=h263 \
 			--enable-muxer=h264 \
+			--enable-muxer=hevc \
 			--enable-muxer=image2 \
 			--enable-muxer=mpeg1video \
 			--enable-muxer=mpeg2video \
@@ -1475,6 +1501,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-parser=dvdsub \
 			--enable-parser=flac \
 			--enable-parser=h264 \
+			--enable-parser=hevc \
 			--enable-parser=mjpeg \
 			--enable-parser=mpeg4video \
 			--enable-parser=mpegvideo \
@@ -1504,6 +1531,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-decoder=h263 \
 			--enable-decoder=h263i \
 			--enable-decoder=h264 \
+			--enable-decoder=hevc \
 			--enable-decoder=mjpeg \
 			--enable-decoder=mp3 \
 			--enable-decoder=movtext \
@@ -1875,6 +1903,31 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,xsltproc xslt-config)
 	$(REMOVE)/libxslt-$(LIBXSLT_VER)
+	$(TOUCH)
+
+#
+#libpopt
+#
+LIBPOPT_VER = 1.16
+LIBPOPT_SOURCE = popt-$(LIBPOPT_VER).tar.gz
+
+$(ARCHIVE)/$(LIBPOPT_SOURCE):
+	$(WGET) ftp://anduin.linuxfromscratch.org/BLFS/popt/$(LIBPOPT_SOURCE)
+
+$(D)/libpopt: $(D)/bootstrap $(ARCHIVE)/$(LIBPOPT_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/popt-$(LIBPOPT_VER)
+	$(UNTAR)/$(LIBPOPT_SOURCE)
+	set -e; cd $(BUILD_TMP)/popt-$(LIBPOPT_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-static \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/popt.pc
+	$(REWRITE_LIBTOOL)/libpopt.la
+	$(REMOVE)/popt-$(LIBPOPT_VER)
 	$(TOUCH)
 
 #

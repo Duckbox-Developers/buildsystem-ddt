@@ -872,12 +872,12 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 #
 # shairport-sync
 #
-$(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/openssl $(D)/alsa_lib
+$(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $(D)/openssl $(D)/alsa_lib
 	$(START_BUILD)
 	$(REMOVE)/shairport-sync
 	set -e; if [ -d $(ARCHIVE)/shairport-sync.git ]; \
 		then cd $(ARCHIVE)/shairport-sync.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/TangoCash/shairport-sync.git shairport-sync.git; \
+		else cd $(ARCHIVE); git clone https://github.com/mikebrady/shairport-sync.git shairport-sync.git; \
 		fi
 	cp -ra $(ARCHIVE)/shairport-sync.git $(BUILD_TMP)/shairport-sync
 	set -e; cd $(BUILD_TMP)/shairport-sync; \
