@@ -112,10 +112,12 @@ VPATH                 = $(D)
 
 PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
 
-TERM_BOLD            := $(shell tput smso 2>/dev/null)
-TERM_RESET           := $(shell tput rmso 2>/dev/null)
+TERM_RED             := \033[00;31m
+TERM_RED_BOLD        := \033[01;31m
+TERM_GREEN           := \033[00;32m
 TERM_GREEN_BOLD      := \033[01;32m
-TERM_RED             := \033[31m
+TERM_YELLOW          := \033[00;33m
+TERM_YELLOW_BOLD     := \033[01;33m
 TERM_NORMAL          := \033[0m
 
 MAKEFLAGS            += --no-print-directory
