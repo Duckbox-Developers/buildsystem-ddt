@@ -96,11 +96,15 @@ help:
 # define package versions first...
 include make/contrib-libs.mk
 include make/contrib-apps.mk
+ifeq ($(BOXARCH), sh4)
 include make/linux-kernel.mk
 include make/crosstool-sh4.mk
 include make/driver.mk
 include make/tools.mk
 include make/root-etc.mk
+else
+include make/crosstool-arm.mk
+endif
 include make/python.mk
 include make/gstreamer.mk
 include make/enigma2.mk
@@ -181,7 +185,7 @@ everything: $(shell sed -n 's/^\$$.D.\/\(.*\):.*/\1/p' make/*.mk)
 # print all present targets...
 print-targets:
 	@sed -n 's/^\$$.D.\/\(.*\):.*/\1/p; s/^\([a-z].*\):\( \|$$\).*/\1/p;' \
-		`ls -1 make/*.mk|grep -v make/unmaintained.mk` Makefile | \
+		`ls -1 make/*.mk|grep -v make/buildenv.mk|grep -v make/neutrino-release.mk|grep -v make/enigma2-release.mk` | \
 		sort -u | fold -s -w 65
 
 # for local extensions, e.g. special plugins or similar...
