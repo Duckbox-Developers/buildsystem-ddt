@@ -184,7 +184,7 @@ $(HOST_DIR)/bin/opkg%sh: | directories
 #
 #
 BOOTSTRAP  = directories
-BOOTSTRAP += crosstool
+BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(HOST_DIR)/bin/opkg.sh
 BOOTSTRAP += $(HOST_DIR)/bin/opkg-chksvn.sh
@@ -209,11 +209,12 @@ SYSTEM_TOOLS  = $(D)/module_init_tools
 SYSTEM_TOOLS += $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
+ifeq ($(BOXARCH), sh4)
 SYSTEM_TOOLS += $(D)/diverse-tools
+endif
 SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/hdidle
-SYSTEM_TOOLS += $(D)/fbshot
 SYSTEM_TOOLS += $(D)/portmap
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs922))
 SYSTEM_TOOLS += $(D)/nfs_utils
@@ -222,7 +223,10 @@ SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/udpxy
 SYSTEM_TOOLS += $(D)/dvbsnoop
+ifeq ($(BOXARCH), sh4)
+SYSTEM_TOOLS += $(D)/fbshot
 SYSTEM_TOOLS += $(D)/driver
+endif
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	@touch $@

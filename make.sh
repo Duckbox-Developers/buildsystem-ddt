@@ -45,7 +45,7 @@ echo
 ##############################################
 
 case $1 in
-	[1-9] | 1[0-9] | 2[0-9] | 3[0-6]) REPLY=$1;;
+	[1-9] | 1[0-9] | 2[0-9] | 3[0-7]) REPLY=$1;;
 	*)
 		echo "Target receivers:"
 		echo
@@ -82,7 +82,9 @@ case $1 in
 		echo "   35)  SagemCom 88 series"
 		echo "   36)  Ferguson Ariva @Link 200"
 		echo
-		read -p "Select target (1-36)? ";;
+		echo "   37)  armbox for internal testing"
+		echo
+		read -p "Select target (1-37)? ";;
 esac
 
 case "$REPLY" in
@@ -122,6 +124,7 @@ case "$REPLY" in
 	34) BOXARCH="sh4";BOXTYPE="vitamin_hd5000";;
 	35) BOXARCH="sh4";BOXTYPE="sagemcom88";;
 	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
+	37) BOXARCH="arm";BOXTYPE="armbox";;
 	 *) BOXARCH="sh4";BOXTYPE="atevio7500";;
 esac
 echo "BOXARCH=$BOXARCH" > config

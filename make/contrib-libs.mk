@@ -333,6 +333,12 @@ OPENSSL_PATCH += openssl-$(OPENSSL_VER)-makefile-dirs.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-disable_doc_tests.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-fix-parallel-building.patch
 
+ifeq ($(BOXARCH), sh4)
+OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile
+else
+OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_BASE)/bin/$$(CC) -M|' Makefile
+endif
+
 $(ARCHIVE)/$(OPENSSL_SOURCE):
 	$(WGET) https://www.openssl.org/source/$(OPENSSL_SOURCE)
 
@@ -351,7 +357,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
 		; \
-		sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile; \
+		$(OPENSSL_SED_PATCH); \
 		$(MAKE) depend; \
 		$(MAKE) all; \
 		$(MAKE) install_sw INSTALL_PREFIX=$(TARGET_DIR)
@@ -1433,6 +1439,10 @@ ifeq ($(IMAGE), neutrino)
 FFMPEG_CONF_OPTS = --disable-iconv
 endif
 
+ifeq ($(BOXARCH), sh4)
+FFMPEG_CONF_OPTS += --disable-armv5te --disable-armv6 --disable-armv6t2
+endif
+
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
@@ -1463,9 +1473,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--disable-sse42 \
 			--disable-avx \
 			--disable-fma4 \
-			--disable-armv5te \
-			--disable-armv6 \
-			--disable-armv6t2 \
 			--disable-vfp \
 			--disable-neon \
 			--disable-inline-asm \
@@ -1624,7 +1631,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--extra-cflags="-I$(TARGET_DIR)/usr/include -ffunction-sections -fdata-sections" \
 			--extra-ldflags="-L$(TARGET_DIR)/usr/lib -Wl,--gc-sections,-lrt" \
 			--target-os=linux \
-			--arch=sh4 \
+			--arch=$(BOXARCH) \
 			--prefix=/usr \
 			--bindir=/sbin \
 			--mandir=/.remove \

@@ -6,7 +6,7 @@
  #include <png.h>
 +#include <zlib.h>
  #include <linux/fb.h> 
-+#include <linux/stmfb.h> 
++#include <linux/stmfb.h>
  
  #define DEFAULT_FB      "/dev/fb0"
  #define PACKAGE 	"fbshot"

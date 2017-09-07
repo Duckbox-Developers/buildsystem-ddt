@@ -26,8 +26,13 @@ SOURCE_DIR            = $(BASE_DIR)/source
 -include $(BASE_DIR)/config.local
 
 # default platform...
+ifeq ($(BOXARCH), sh4)
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
+else
+TARGET               ?= arm-cortex-linux-gnueabihf
+BOXARCH              ?= arm
+endif
 
 GIT_PROTOCOL         ?= http
 ifneq ($(GIT_PROTOCOL), http)
@@ -110,7 +115,7 @@ PKG_CONFIG_PATH       = $(TARGET_LIB_DIR)/pkgconfig
 
 VPATH                 = $(D)
 
-PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
+PATH                 := $(HOST_DIR)/bin:$(CROSS_DIR)/bin:$(CROSS_BASE)/bin:$(PATH):/sbin:/usr/sbin:/usr/local/sbin
 
 TERM_RED             := \033[00;31m
 TERM_RED_BOLD        := \033[01;31m

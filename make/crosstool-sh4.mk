@@ -56,6 +56,7 @@ $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 		$^
 	touch $(D)/$(notdir $@)
 
+CROSSTOOL = crosstool
 crosstool: directories driver-symlink \
 $(HOST_DIR)/bin/unpack-rpm.sh \
 crosstool-rpminstall
@@ -120,8 +121,8 @@ crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 		test $$NUM_CPUS -gt $$MEM_512M && NUM_CPUS=$$MEM_512M; \
 		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
 		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
-		export NG_ARCHIVE=$(ARCHIVE); \
-		export NG_BASE_DIR=$(CROSS_BASE); \
+		export CT_ARCHIVE=$(ARCHIVE); \
+		export CT_BASE_DIR=$(CROSS_BASE); \
 		export LD_LIBRARY_PATH= ; \
 		test -f ./configure || ./bootstrap; \
 		./configure --enable-local; \
