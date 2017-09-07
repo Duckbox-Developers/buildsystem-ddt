@@ -772,7 +772,7 @@ PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
 $(ARCHIVE)/$(PARTED_SOURCE):
 	$(WGET) https://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
 
-$(D)/parted: $(D)/bootstrap $(D)/ncurses $(D)/readline $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
+$(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/parted-$(PARTED_VER)
 	$(UNTAR)/$(PARTED_SOURCE)
@@ -783,6 +783,7 @@ $(D)/parted: $(D)/bootstrap $(D)/ncurses $(D)/readline $(D)/e2fsprogs $(ARCHIVE)
 			--prefix=/usr \
 			--mandir=/.remove \
 			--infodir=/.remove \
+			--without-readline \ 
 			--disable-device-mapper \
 			--disable-nls \
 		; \
