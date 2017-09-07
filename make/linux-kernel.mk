@@ -1,14 +1,14 @@
 #
 # kernel
 #
-ifeq ($(KERNEL), p0209)
+ifeq ($(KERNEL_STM), p0209)
 KERNEL_VER             = 2.6.32.46_stm24_0209
 KERNEL_REVISION        = 8c676f1a85935a94de1fb103c0de1dd25ff69014
 STM_KERNEL_HEADERS_VER = 2.6.32.46-47
 P0209                  = p0209
 endif
 
-ifeq ($(KERNEL), p0217)
+ifeq ($(KERNEL_STM), p0217)
 KERNEL_VER             = 2.6.32.71_stm24_0217
 KERNEL_REVISION        = 3ec500f4212f9e4b4d2537c8be5ea32ebf68c43b
 STM_KERNEL_HEADERS_VER = 2.6.32.46-48
@@ -421,7 +421,7 @@ $(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2
 # Helper
 #
 kernel.menuconfig kernel.xconfig: \
-kernel.%:
+kernel.%: $(D)/kernel
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CROSS_COMPILE=$(TARGET)- $*
 	@echo ""
 	@echo "You have to edit $(PATCHES)/$(BUILD_CONFIG)/$(KERNEL_CONFIG) m a n u a l l y to make changes permanent !!!"

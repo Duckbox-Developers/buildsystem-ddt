@@ -138,11 +138,11 @@ case $2 in
 esac
 
 case "$REPLY" in
-	1)  KERNEL="p0209";;
-	2)  KERNEL="p0217";;
-	*)  KERNEL="p0217";;
+	1)  KERNEL_STM="p0209";;
+	2)  KERNEL_STM="p0217";;
+	*)  KERNEL_STM="p0217";;
 esac
-echo "KERNEL=$KERNEL" >> config
+echo "KERNEL_STM=$KERNEL_STM" >> config
 
 ##############################################
 

@@ -231,7 +231,7 @@ $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 # YAUD NONE
 #
 YAUD_NONE     = $(D)/bootstrap
-YAUD_NONE    += $(D)/kernel
+YAUD_NONE    += $(KERNEL)
 YAUD_NONE    += $(D)/system-tools
 
 yaud-none: $(YAUD_NONE)
