@@ -783,7 +783,7 @@ $(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 			--prefix=/usr \
 			--mandir=/.remove \
 			--infodir=/.remove \
-			--without-readline \ 
+			--without-readline \
 			--disable-device-mapper \
 			--disable-nls \
 		; \
