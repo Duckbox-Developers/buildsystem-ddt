@@ -1,18 +1,17 @@
 #master makefile
 
-include make/buildenv.mk
-
 SHELL = /bin/bash
 UID := $(shell id -u)
 ifeq ($(UID), 0)
 warn:
 	@echo "You are running as root. Do not do this, it is dangerous."
 	@echo "Aborting the build. Log in as a regular user and retry."
-else ifeq ($(WHOAMI), $(ID))
 else
 LC_ALL:=C
 LANG:=C
 export TOPDIR LC_ALL LANG
+
+include make/buildenv.mk
 
 
 PARALLEL_JOBS := $(shell echo $$((1 + `getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1`)))
