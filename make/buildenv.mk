@@ -8,9 +8,6 @@ export CONFIG_SITE
 LD_LIBRARY_PATH =
 export LD_LIBRARY_PATH
 
-CCACHE_DIR            = $(HOME)/.ccache-ddt
-export CCACHE_DIR
-
 BASE_DIR             := $(shell pwd)
 
 ARCHIVE               = $(HOME)/Archive
@@ -27,9 +24,13 @@ SOURCE_DIR            = $(BASE_DIR)/source
 
 # default platform...
 ifeq ($(BOXARCH), sh4)
+CCACHE_DIR            = $(HOME)/.ccache-bs-sh4
+export CCACHE_DIR
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
 else
+CCACHE_DIR            = $(HOME)/.ccache-bs-arm
+export CCACHE_DIR
 TARGET               ?= arm-cortex-linux-gnueabihf
 BOXARCH              ?= arm
 endif
