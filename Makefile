@@ -24,7 +24,6 @@ override MAKE = make $(if $(findstring j,$(filter-out --%,$(MAKEFLAGS))),,-j$(PA
 # maybe a help about all supported targets would be nice here, too...
 #
 printenv:
-	clear
 	@echo '================================================================================'
 	@echo "Build Environment Variables:"
 	@echo "MAINTAINER       : $(MAINTAINER)"
@@ -51,6 +50,11 @@ printenv:
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "EXTERNAL_LCD     : $(EXTERNAL_LCD)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
+ifeq ($(KBUILD_VERBOSE), 0)
+	@echo "VERBOSE_BUILD    : yes"
+else
+	@echo "VERBOSE_BUILD    : no"
+endif
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
