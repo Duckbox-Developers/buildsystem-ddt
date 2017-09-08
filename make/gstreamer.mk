@@ -332,7 +332,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 			--enable-optimizations \
 			--enable-cross-compile \
 			--target-os=linux \
-			--arch=sh4 \
+			--arch=$(BOXARCH) \
 			--cross-prefix=$(TARGET)- \
 			\
 			--disable-muxers \
