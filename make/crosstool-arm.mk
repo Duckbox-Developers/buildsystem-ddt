@@ -1,14 +1,13 @@
 #
 # crosstool-ng
 #
+CROSSTOOL_NG_VER = 1dbb06f2
+CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.bz2
+CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 
 ifeq ($(wildcard $(CROSS_BASE)),)
 CROSSTOOL = crosstool
 crosstool: crosstool-ng
-
-CROSSTOOL_NG_VER = 1dbb06f2
-CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.bz2
-CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
