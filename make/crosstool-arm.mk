@@ -1,3 +1,10 @@
+# makefile to build crosstools
+crosstool-renew:
+	ccache -cCz
+	make distclean
+	rm -rf $(CROSS_BASE)
+	make crosstool
+
 #
 # crosstool-ng
 #
