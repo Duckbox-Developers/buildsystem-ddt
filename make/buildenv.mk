@@ -167,12 +167,24 @@ split_deps_dir=$(subst ., ,$(1))
 DEPS_DIR              = $(subst $(D)/,,$@)
 PKG_NAME              = $(word 1,$(call split_deps_dir,$(DEPS_DIR)))
 PKG_NAME_HELPER       = $(shell echo $(PKG_NAME) | sed 's/.*/\U&/')
-PKG_VER               = " "$($(PKG_NAME_HELPER)_VER)
+PKG_VER_HELPER        = A$($(PKG_NAME_HELPER)_VER)A
+PKG_VER               = $($(PKG_NAME_HELPER)_VER)
+
 START_BUILD           = @echo "=============================================================="; \
                         echo; \
-                        echo -e "Start build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(PKG_VER)$(TERM_NORMAL)";
+                        if [ $(PKG_VER_HELPER) == "AA" ]; then \
+                            echo -e "Start build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(TERM_NORMAL)"; \
+                        else \
+                            echo -e "Start build of $(TERM_GREEN_BOLD)$(PKG_NAME) $(PKG_VER)$(TERM_NORMAL)"; \
+                        fi
+
 TOUCH                 = @touch $@; \
-                        echo -e "Build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(PKG_VER)$(TERM_NORMAL) completed."; \
+                        echo "--------------------------------------------------------------"; \
+                        if [ $(PKG_VER_HELPER) == "AA" ]; then \
+                            echo -e "Build of $(TERM_GREEN_BOLD)$(PKG_NAME)$(TERM_NORMAL) completed"; \
+                        else \
+                            echo -e "Build of $(TERM_GREEN_BOLD)$(PKG_NAME) $(PKG_VER)$(TERM_NORMAL) completed"; \
+                        fi; \
                         echo
 
 #
@@ -196,7 +208,11 @@ define post_patch
             fi; \
         fi; \
     done; \
-    echo -e "Patching $(TERM_GREEN_BOLD)$(BUILD_INFO)$(TERM_NORMAL) completed."; \
+    if [ $(PKG_VER_HELPER) == "AA" ]; then \
+        echo -e "Patching $(TERM_GREEN_BOLD)$(PKG_NAME)$(TERM_NORMAL) completed"; \
+    else \
+        echo -e "Patching $(TERM_GREEN_BOLD)$(PKG_NAME) $(PKG_VER)$(TERM_NORMAL) completed"; \
+    fi; \
     echo
 endef
 
