@@ -48,7 +48,6 @@ GIT_NAME_FLASH       ?= Duckbox-Developers
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
-IMAGE_DIR             = $(TUFSBOX_DIR)/cdkroot-flash
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
 CROSS_DIR             = $(TUFSBOX_DIR)/cross
 HOST_DIR              = $(TUFSBOX_DIR)/host
@@ -70,8 +69,6 @@ DEPDIR                = $(D)
 SUDOCMD               = echo $(SUDOPASSWD) | sudo -S
 
 WHOAMI               := $(shell id -un)
-ID                    = $(shell echo -en "\x74\x68\x6f\x6d\x61\x73")
-#MAINTAINER           ?= $(shell getent passwd $(WHOAMI)|awk -F: '{print $$5}')
 MAINTAINER           ?= $(shell whoami)
 
 CCACHE                = /usr/bin/ccache
@@ -144,7 +141,7 @@ SILENT                =
 WGET_SILENT_OPT       =
 else
 SILENT_PATCH          = -s
-SILENT_OPT            := >/dev/null 2>&1
+SILENT_OPT           := >/dev/null 2>&1
 SILENT                = @
 WGET_SILENT_OPT       = -o /dev/null
 MAKEFLAGS            += --silent
@@ -322,7 +319,7 @@ PLAYER2_LINK       = player2_191
 else ifeq ($(PLAYER_VER), 191_test)
 PLAYER2            = PLAYER191=player191
 PLAYER191          = 1
-PLAYER_VER_DRIVER = 191
+PLAYER_VER_DRIVER  = 191
 PLAYER2_LINK       = player2_191_test
 endif
 

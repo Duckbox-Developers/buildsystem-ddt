@@ -287,7 +287,6 @@ directories:
 	install -d $(TARGET_DIR)
 	install -d $(CROSS_DIR)
 	install -d $(BOOT_DIR)
-	install -d $(IMAGE_DIR)
 	install -d $(HOST_DIR)
 	install -d $(HOST_DIR)/{bin,lib,share}
 	install -d $(TARGET_DIR)/{bin,boot,etc,lib,sbin,usr,var}
