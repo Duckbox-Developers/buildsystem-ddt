@@ -106,7 +106,9 @@ include make/driver.mk
 include make/tools.mk
 include make/root-etc.mk
 else
+include make/linux-kernel-arm.mk
 include make/crosstool-arm.mk
+include make/driver-arm.mk
 endif
 include make/python.mk
 include make/gstreamer.mk
