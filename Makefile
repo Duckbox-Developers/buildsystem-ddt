@@ -100,7 +100,7 @@ help:
 include make/contrib-libs.mk
 include make/contrib-apps.mk
 ifeq ($(BOXARCH), sh4)
-include make/linux-kernel.mk
+include make/linux-kernel-sh4.mk
 include make/crosstool-sh4.mk
 include make/driver.mk
 include make/tools.mk
