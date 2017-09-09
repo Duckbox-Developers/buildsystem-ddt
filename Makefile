@@ -24,6 +24,7 @@ override MAKE = make $(if $(findstring j,$(filter-out --%,$(MAKEFLAGS))),,-j$(PA
 # maybe a help about all supported targets would be nice here, too...
 #
 printenv:
+	@echo
 	@echo '================================================================================'
 	@echo "Build Environment Variables:"
 	@echo "MAINTAINER       : $(MAINTAINER)"
@@ -38,6 +39,7 @@ printenv:
 	@echo "RELEASE_DIR      : $(RELEASE_DIR)"
 	@echo "HOST_DIR         : $(HOST_DIR)"
 	@echo "TARGET_DIR       : $(TARGET_DIR)"
+	@echo "KERNEL_DIR       : $(KERNEL_DIR)"
 	@echo "PATH             : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
 	@echo "BOXARCH          : $(BOXARCH)"
 	@echo "BUILD            : $(BUILD)"
@@ -50,7 +52,7 @@ printenv:
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "EXTERNAL_LCD     : $(EXTERNAL_LCD)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
-ifeq ($(KBUILD_VERBOSE), 0)
+ifeq ($(KBUILD_VERBOSE), 1)
 	@echo "VERBOSE_BUILD    : yes"
 else
 	@echo "VERBOSE_BUILD    : no"
