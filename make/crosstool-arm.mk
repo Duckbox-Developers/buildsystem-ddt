@@ -5,6 +5,13 @@ crosstool-renew:
 	rm -rf $(CROSS_BASE)
 	make crosstool
 
+$(TARGET_DIR)/lib/libc.so.6:
+	if test -e $(CROSS_BASE)/$(TARGET)/sys-root/lib; then \
+		cp -a $(CROSS_BASE)/$(TARGET)/sys-root/lib/*so* $(TARGET_DIR)/lib; \
+	else \
+		cp -a $(CROSS_BASE)/$(TARGET)/lib/*so* $(TARGET_DIR)/lib; \
+	fi
+
 #
 # crosstool-ng
 #

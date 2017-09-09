@@ -193,6 +193,7 @@ BOOTSTRAP += $(HOST_DIR)/bin/opkg-find-provides.sh
 BOOTSTRAP += $(HOST_DIR)/bin/opkg-module-deps.sh
 BOOTSTRAP += $(HOST_DIR)/bin/get-git-archive.sh
 BOOTSTRAP += $(CROSSTOOL)
+BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
 BOOTSTRAP += $(D)/host_module_init_tools
 BOOTSTRAP += $(D)/host_mtd_utils
