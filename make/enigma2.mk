@@ -1,13 +1,6 @@
 #
 # enigma2
 #
-E_CPPFLAGS    = -I$(DRIVER_DIR)/include
-E_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
-E_CPPFLAGS   += -I$(KERNEL_DIR)/include
-E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
-E_CPPFLAGS   += -I$(APPS_DIR)/tools
-E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
-
 ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/ncurses $(LIRC) $(D)/libcurl $(D)/libid3tag $(D)/libmad
 ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/giflib $(D)/freetype
 ENIGMA2_DEPS += $(D)/alsa_utils $(D)/ffmpeg
@@ -48,6 +41,14 @@ E_CONFIG_OPTS += --with-gstversion=1.0 --enable-libeplayer3 --enable-mediafwgstr
 endif
 
 E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
+
+E_CPPFLAGS    = -I$(DRIVER_DIR)/include
+E_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
+E_CPPFLAGS   += -I$(KERNEL_DIR)/include
+E_CPPFLAGS   += -I$(APPS_DIR)/tools/libeplayer3/include
+E_CPPFLAGS   += -I$(APPS_DIR)/tools
+E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
+E_CPPFLAGS   += $(PLATFORM_CPPFLAGS)
 
 #
 # yaud-enigma2
@@ -123,7 +124,7 @@ $(SOURCE_DIR)/enigma2/config.status:
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGET_DIR)/usr \
-			$(PLATFORM_CPPFLAGS)
+			CPPFLAGS="$(E_CPPFLAGS)"
 
 $(D)/enigma2.do_compile: $(SOURCE_DIR)/enigma2/config.status
 	cd $(SOURCE_DIR)/enigma2; \

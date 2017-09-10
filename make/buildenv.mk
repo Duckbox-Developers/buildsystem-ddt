@@ -341,10 +341,8 @@ PLAYER2_LINK       = player2_191_test
 endif
 
 #
-#
-#
 DRIVER_PLATFORM   := $(PLAYER2) $(WLANDRIVER)
-PLATFORM_CPPFLAGS := $(TARGET_CPPFLAGS) -I$(DRIVER_DIR)/include -I$(KERNEL_DIR)/include -I$(APPS_DIR)/tools
+
 #
 ifeq ($(BOXTYPE), ufs910)
 KERNEL_PATCHES_24  = $(UFS910_PATCHES_24)
