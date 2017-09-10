@@ -1,5 +1,5 @@
-*** a/arch/sh/kernel/setup.c	2011-01-05 10:45:31.000000000 +0100
---- b/setup.c	2011-01-22 12:22:31.340928000 +0100
+*** a/setup.c
+--- b/setup.c
 ***************
 *** 389,394 ****
 --- 389,422 ----
@@ -37,8 +37,8 @@
   	/* Save unparsed command line copy for /proc/cmdline */
   	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
   	*cmdline_p = command_line;
---- linux-sh4/arch/sh/boards/mach-sat7111/setup.c.org	2012-03-08 08:58:51.000000000 -0800
-+++ linux-sh4/arch/sh/boards/mach-sat7111/setup.c	2012-03-28 01:30:08.000000000 -0700
+--- linux-sh4/arch/sh/boards/mach-sat7111/setup.c
++++ linux-sh4/arch/sh/boards/mach-sat7111/setup.c
 @@ -33,126 +33,102 @@
  #include <asm/irq-ilc.h>
  #include <asm/irl.h>
@@ -198,7 +198,7 @@
  	.csn		= 1,
  	.options	= NAND_NO_AUTOINCR | NAND_USE_FLASH_BBT,
 -	.nr_partitions	= 2,
-+	.nr_partitions	= 4,
++	.nr_partitions	= 5,
  	.partitions	= (struct mtd_partition []) {
 -		{
 -			.name	= "NAND Flash 1",
@@ -209,27 +209,31 @@
 -			.offset = MTDPART_OFS_NXTBLK,
 -			.size	= MTDPART_SIZ_FULL
 -		},
-+	     {
++		{
 +		 .name = "Spark Kernel",
-+		 .size = 0x0800000,
-+		 .offset = 0
-+	     }, {
-+		 .name = "Spark Rootfs",
-+		 .size = 0x17800000,
-+		 .offset = 0x800000
-+	     }, {
-+		 .name = "E2 Kernel",
-+		 .size = 0x800000,
-+		 .offset = 0x18000000
-+	     }, {
-+		 .name = "E2 RootFs",
-+		 .size = 0x5000000,
-+		 .offset = 0x18800000
-+	     },
++		 .offset = 0,
++		 .size = 0x0800000 //8M
++		}, {
++		 .name	= "Spark Userfs",
++		 .offset = 0x800000,
++		 .size = 0x17800000 //376M
++		}, {
++		 .name	= "E2 kernel",
++		 .offset	= 0x18000000,
++		 .size	= 0x00800000 //8M
++		}, {
++		 .name	= "E2 Userfs",
++		 .offset = 0x18800000,
++		 .size = 0x02800000 //40M
++		}, {
++		 .name = "NAND DATA",
++		 .offset	= 0x1B000000,
++		 .size	= 0x02800000 //40M
++		},
  	},
  	.timing_data	= &(struct stm_nand_timing_data) {
  		.sig_setup	= 50,		/* times in ns */
-@@ -167,28 +143,12 @@
+@@ -167,28 +147,12 @@
  	},
  };
  
@@ -264,7 +268,7 @@
  	},
  };
  
-@@ -209,22 +169,15 @@
+@@ -209,22 +173,15 @@
  };
  
  static struct platform_device *sat7111_devices[] __initdata = {
@@ -291,7 +295,7 @@
  	stx7111_configure_ssc_i2c(3, NULL);
  
  	stx7111_configure_usb(&(struct stx7111_usb_config) {
-@@ -252,8 +205,6 @@
+@@ -252,8 +209,6 @@
  			.banks = &sat7111_nand_flash,
  			.rbn.flex_connected = 1,});
  
@@ -300,8 +304,8 @@
  	return platform_add_devices(sat7111_devices,
  				    ARRAY_SIZE(sat7111_devices));
  }
-*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 22:22:25.000000000 +0200
---- linux-sh4/drivers/net/stmmac/stmmac_mdio.c	2011-11-24 23:33:55.732873713 +0200
+*** linux-sh4/drivers/net/stmmac/stmmac_mdio.c
+--- linux-sh4/drivers/net/stmmac/stmmac_mdio.c
 ***************
 *** 170,175 ****
 --- 170,176 ----
@@ -350,8 +354,8 @@
   			switch (phydev->irq) {
   			case PHY_POLL:
   				irq_str = "POLL";
-*** linux-sh4-2.6.32.46_stm24_0209.orig/drivers/net/stmmac/dwmac_lib.c	2011-11-24 22:22:25.000000000 +0200
---- linux-sh4/drivers/net/stmmac/dwmac_lib.c	2011-11-24 23:33:55.732873713 +0200
+*** linux-sh4/drivers/net/stmmac/dwmac_lib.c
+--- linux-sh4/drivers/net/stmmac/dwmac_lib.c
 @@ -210,7 +210,7 @@
  	}
  	/* Optional hardware blocks, interrupts should be disabled */
@@ -361,7 +365,7 @@
  		pr_info("%s: unexpected status %08x\n", __func__, intr_status);
  	/* Clear the interrupt by writing a logic 1 to the CSR5[15-0] */
  	writel((intr_status & 0x1ffff), ioaddr + DMA_STATUS);
-*** linux-sh4/drivers/mtd/nand/nand_ecc.c_org
+*** linux-sh4/drivers/mtd/nand/nand_ecc.c
 --- linux-sh4/drivers/mtd/nand/nand_ecc.c
 ***************
 *** 492,503 ****
@@ -390,7 +394,7 @@
   	return -1;
   }
   EXPORT_SYMBOL(__nand_correct_data);
-*** linux-sh4/drivers/mtd/nand/nand_base.c_org
+*** linux-sh4/drivers/mtd/nand/nand_base.c
 --- linux-sh4/drivers/mtd/nand/nand_base.c
 @@ -1386,20 +1386,15 @@
  
