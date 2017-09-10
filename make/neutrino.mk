@@ -21,7 +21,7 @@ NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
-NEUTRINO_DEPS += $(D)/mtd_utils
+NEUTRINO_DEPS += $(D)/mtd_utils $(D)/parted
 endif
 #NEUTRINO_DEPS +=  $(D)/minidlna
 endif
