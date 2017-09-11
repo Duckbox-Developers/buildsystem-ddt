@@ -224,11 +224,11 @@
 +		}, {
 +		 .name	= "E2 Userfs",
 +		 .offset = 0x18800000,
-+		 .size = 0x02800000 //40M
++		 .size = 0x05000000 //80M
 +		}, {
 +		 .name = "NAND DATA",
-+		 .offset	= 0x1B000000,
-+		 .size	= 0x02800000 //40M
++		 .offset = 0x1D800000,
++		 .size	= 0x02700000 //39M
 +		},
  	},
  	.timing_data	= &(struct stm_nand_timing_data) {
