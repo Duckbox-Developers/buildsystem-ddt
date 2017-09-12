@@ -26,9 +26,9 @@ endif
 #NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
-NEUTRINO_DEPS += $(D)/libstb-hal-cst-next-tangos.do_rebuild $(D)/gst_plugins_dvbmediasink
-endif
+#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
+#NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
+#endif
 
 ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
@@ -621,10 +621,6 @@ neutrino-hd2-distclean: neutrino-cdkroot-clean
 # libstb-hal-cst-next-tangos
 #
 NEUTRINO_MP_LIBSTB_CST_NEXT_TANGOS_PATCHES =
-
-$(D)/libstb-hal-cst-next-tangos.do_rebuild:
-	[ -d "$(D)/libxml2" ] || rm -rf $(D)/libxml2; \
-	$(MAKE) IMAGE=enigma2 libxml2
 
 $(D)/libstb-hal-cst-next-tangos.do_prepare:
 	$(START_BUILD)
