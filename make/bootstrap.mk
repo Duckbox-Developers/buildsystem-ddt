@@ -206,8 +206,7 @@ $(D)/bootstrap: $(BOOTSTRAP)
 #
 #
 #
-SYSTEM_TOOLS  = $(D)/module_init_tools
-SYSTEM_TOOLS += $(D)/busybox
+SYSTEM_TOOLS  = $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
 ifeq ($(BOXARCH), sh4)
