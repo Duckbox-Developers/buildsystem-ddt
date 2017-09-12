@@ -26,6 +26,10 @@ endif
 #NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
+NEUTRINO_DEPS += $(D)/libstb-hal-cst-next-tangos.do_rebuild $(D)/gst_plugins_dvbmediasink
+endif
+
 ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
@@ -37,9 +41,18 @@ N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata
 #N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
-N_CPPFLAGS     = -I$(DRIVER_DIR)/bpamem
-N_CPPFLAGS    += -I$(TARGET_DIR)/usr/include
+N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
+N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+N_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
+endif
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
+N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
+endif
 N_CPPFLAGS    += -D__STDC_CONSTANT_MACROS
 N_CPPFLAGS    += -ffunction-sections -fdata-sections
 
@@ -608,6 +621,10 @@ neutrino-hd2-distclean: neutrino-cdkroot-clean
 # libstb-hal-cst-next-tangos
 #
 NEUTRINO_MP_LIBSTB_CST_NEXT_TANGOS_PATCHES =
+
+$(D)/libstb-hal-cst-next-tangos.do_rebuild:
+	[ -d "$(D)/libxml2" ] || rm -rf $(D)/libxml2; \
+	$(MAKE) IMAGE=enigma2 libxml2
 
 $(D)/libstb-hal-cst-next-tangos.do_prepare:
 	$(START_BUILD)
