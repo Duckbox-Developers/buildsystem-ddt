@@ -26,9 +26,9 @@ endif
 #NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
-#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
-#NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
-#endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
+NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
+endif
 
 ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
