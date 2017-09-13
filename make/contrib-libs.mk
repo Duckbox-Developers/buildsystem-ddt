@@ -878,6 +878,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 		mv $(TARGET_DIR)/usr/bin/libpng*-config $(HOST_DIR)/bin/
 	$(REWRITE_LIBTOOL)/libpng16.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(LIBPNG_VER_X).pc
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin,pngfix png-fix-itxt)
 	$(REMOVE)/libpng-$(LIBPNG_VER)
 	$(TOUCH)
 
