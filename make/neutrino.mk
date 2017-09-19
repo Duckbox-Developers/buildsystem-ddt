@@ -37,6 +37,9 @@ endif
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/flac
 
 N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
+N_CFLAGS      += -D__KERNEL_STRICT_NAMES
+N_CFLAGS      += -D__STDC_FORMAT_MACROS
+N_CFLAGS      += -D__STDC_CONSTANT_MACROS
 N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
 #N_CFLAGS      += -DCPU_FREQ
 N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
@@ -53,7 +56,6 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), armbox))
 N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
 endif
-N_CPPFLAGS    += -D__STDC_CONSTANT_MACROS
 N_CPPFLAGS    += -ffunction-sections -fdata-sections
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
