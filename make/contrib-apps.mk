@@ -249,7 +249,7 @@ $(ARCHIVE)/$(PORTMAP_SOURCE):
 $(ARCHIVE)/portmap_$(PORTMAP_VER)-2.diff.gz:
 	$(WGET) https://merges.ubuntu.com/p/portmap/portmap_$(PORTMAP_VER)-2.diff.gz
 
-$(D)/portmap: $(D)/bootstrap $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/portmap_$(PORTMAP_VER)-2.diff.gz
+$(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/portmap_$(PORTMAP_VER)-2.diff.gz
 	$(START_BUILD)
 	$(REMOVE)/portmap-$(PORTMAP_VER)
 	$(UNTAR)/$(PORTMAP_SOURCE)
