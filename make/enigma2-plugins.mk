@@ -42,7 +42,7 @@ $(D)/enigma2_tuxtxtlib: $(D)/bootstrap
 		libtoolize --force; \
 		automake --foreign --add-missing; \
 		$(BUILDENV) \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -75,7 +75,7 @@ $(D)/enigma2_tuxtxt32bpp: $(D)/bootstrap $(D)/enigma2_tuxtxtlib
 		libtoolize --force; \
 		automake --foreign --add-missing; \
 		$(BUILDENV) \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -110,7 +110,7 @@ $(D)/enigma2_openwebif: $(D)/bootstrap $(D)/python $(D)/python_cheetah $(D)/pyth
 	set -e; cd $(BUILD_TMP)/e2openplugin-OpenWebif; \
 		$(BUILDENV) \
 		cp -a plugin $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
-		python -O -m compileall $(SILENT_OPT) $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
+		python -O -m compileall $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif; \
 		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/cs/LC_MESSAGES; \
 		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/de/LC_MESSAGES; \
 		mkdir -p $(TARGET_DIR)/usr/lib/enigma2/python/Plugins/Extensions/OpenWebif/locale/el/LC_MESSAGES; \

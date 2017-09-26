@@ -62,7 +62,7 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(HOST_MODULE_INIT_TO
 	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
 		$(call post_patch,$(MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix= \
@@ -122,7 +122,7 @@ $(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
 	$(REMOVE)/gdb-$(GDB_VER)
 	$(UNTAR)/$(GDB_SOURCE)
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--nfp --disable-werror \
 			--prefix=$(HOST_DIR) \
 			--build=$(BUILD) \
@@ -144,7 +144,7 @@ $(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 	$(UNTAR)/$(GDB_SOURCE)
 	set -e; cd $(BUILD_TMP)/gdb-$(GDB_VER); \
 		$(call post_patch,$(GDB_PATCH)); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--host=$(BUILD) \
 			--build=$(BUILD) \
 			--target=$(TARGET) \
@@ -175,10 +175,10 @@ $(D)/host_opkg: directories $(D)/host_libarchive $(ARCHIVE)/$(OPKG_SOURCE)
 	$(UNTAR)/$(OPKG_SOURCE)
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call post_patch,$(OPKG_HOST_PATCH)); \
-		./autogen.sh $(SILENT_OPT); \
+		./autogen.sh; \
 		CFLAGS="-I$(HOST_DIR)/include" \
 		LDFLAGS="-L$(HOST_DIR)/lib" \
-		./configure $(SILENT_OPT) \
+		./configure \
 			PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig \
 			--prefix= \
 			--disable-curl \
@@ -362,7 +362,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/jfsutils-$(JFSUTILS_VER); \
 		$(call post_patch,$(JFSUTILS_PATCH)); \
 		sed "s@<unistd.h>@&\n#include <sys/types.h>@g" -i fscklog/extract.c; \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix= \
 			--target=$(TARGET) \
@@ -519,7 +519,7 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	set -e; cd $(BUILD_TMP)/mc-$(MC_VER); \
 		autoreconf -fi; \
 		$(BUILDENV) \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1243,7 +1243,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 		$(BUILDENV) \
 		libreplace_cv_HAVE_GETADDRINFO=no \
 		libreplace_cv_READDIR_NEEDED=no \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix= \
@@ -1371,8 +1371,8 @@ $(D)/libnl: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(LIBNL_SOURCE)
 			--bindir=/.remove \
 			--mandir=/.remove \
 			--infodir=/.remove \
-		make $(SILENT_OPT); \
-		make install $(SILENT_OPT) DESTDIR=$(TARGET_DIR)
+		make; \
+		make install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-$(LIBNL_VER).pc
 	$(REWRITE_LIBTOOL)/libnl.la
 	$(REWRITE_LIBTOOL)/libnl-cli.la
@@ -1512,7 +1512,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(UNTAR)/$(OPENSSH_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssh-$(OPENSSH_VER); \
 		CC=$(TARGET)-gcc; \
-		./configure $(SILENT_OPT) \
+		./configure \
 			$(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--mandir=/.remove \

@@ -42,7 +42,7 @@ $(D)/host_pkgconfig: directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
 	$(REMOVE)/pkg-config-$(HOST_PKGCONFIG_VER)
 	$(UNTAR)/$(HOST_PKGCONFIG_SOURCE)
 	set -e; cd $(BUILD_TMP)/pkg-config-$(HOST_PKGCONFIG_VER); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--prefix=$(HOST_DIR) \
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
@@ -71,8 +71,8 @@ $(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	$(UNTAR)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER); \
 		$(call post_patch,$(HOST_MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
-		./configure $(SILENT_OPT) \
+		autoreconf -fi; \
+		./configure \
 			--prefix=$(HOST_DIR) \
 			--sbindir=$(HOST_DIR)/bin \
 		; \

@@ -11,7 +11,7 @@ PYTHON_BUILD = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
-	$(HOST_DIR)/bin/python ./setup.py $(SILENT_OPT) build --executable=/usr/bin/python
+	$(HOST_DIR)/bin/python ./setup.py build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
 	CC="$(TARGET)-gcc" \
@@ -20,7 +20,7 @@ PYTHON_INSTALL = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
-	$(HOST_DIR)/bin/python ./setup.py $(SILENT_OPT) install --root=$(TARGET_DIR) --prefix=/usr
+	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGET_DIR) --prefix=/usr
 
 #
 # host_python
@@ -43,7 +43,7 @@ $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 		autoconf; \
 		CONFIG_SITE= \
 		OPT="$(HOST_CFLAGS)" \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--without-cxx-main \
 			--with-threads \
 		; \
@@ -52,7 +52,7 @@ $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 		mv Parser/pgen ./hostpgen; \
 		\
 		$(MAKE) distclean; \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--prefix=$(HOST_DIR) \
 			--sysconfdir=$(HOST_DIR)/etc \
 			--without-cxx-main \
@@ -80,8 +80,8 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl
 		CONFIG_SITE= \
 		$(BUILDENV) \
 		autoreconf --verbose --install --force Modules/_ctypes/libffi; \
-		autoconf $(SILENT_OPT); \
-		./configure $(SILENT_OPT) \
+		autoconf; \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--target=$(TARGET) \

@@ -90,7 +90,7 @@ $(D)/host_libffi: $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/$(LIBFFI_SOURCE)
 	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--prefix=$(HOST_DIR) \
 			--disable-static \
 		; \
@@ -145,7 +145,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 		export PKG_CONFIG=/usr/bin/pkg-config; \
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 		$(call post_patch,$(LIBGLIB2_HOST_PATCH)); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--enable-static=yes \
 			--enable-shared=no \
 			--disable-fam \
@@ -253,7 +253,7 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
 	$(UNTAR)/$(LIBARCHIVE_SOURCE)
 	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
 			--prefix= \
@@ -349,7 +349,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER); \
 		$(call post_patch,$(OPENSSL_PATCH)); \
 		$(BUILDENV) \
-		./Configure $(SILENT_OPT) \
+		./Configure \
 			-DL_ENDIAN \
 			shared \
 			no-hw \
@@ -602,7 +602,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
 		$(call post_patch,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS)" \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--prefix=/usr \
 			--shared \
 			--uname=Linux \
@@ -1110,7 +1110,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(LIBMAD_SOURCE)
 	set -e; cd $(BUILD_TMP)/libmad-$(LIBMAD_VER); \
 		$(call post_patch,$(LIBMAD_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-debugging \
@@ -1142,7 +1142,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	set -e; cd $(BUILD_TMP)/libid3tag-$(LIBID3TAG_VER); \
 		$(call post_patch,$(LIBID3TAG_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared=yes \
@@ -1407,7 +1407,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force --quiet; \
 		autoreconf --verbose --force --install; \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \
@@ -1451,7 +1451,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
 		$(call post_patch,$(FFMPEG_PATCH)); \
-		./configure $(SILENT_OPT) \
+		./configure \
 			--disable-ffserver \
 			--disable-ffplay \
 			--disable-ffprobe \
@@ -1785,7 +1785,7 @@ $(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
 		$(call post_patch,$(FLAC_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2034,7 +2034,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb
 	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
 	set -e; cd $(BUILD_TMP)/lcd4linux; \
 		$(BUILDENV) ./bootstrap; \
-		$(BUILDENV) ./configure $(SILENT_OPT) $(CONFIGURE_OPTS) \
+		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--with-drivers='DPF,SamsungSPF' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
@@ -2189,7 +2189,7 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(UNTAR)/$(ALSA_UTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_UTILS_VER); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
-		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal $(SILENT_OPT); \
+		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2361,7 +2361,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 	$(UNTAR)/$(MINIDLNA_SOURCE)
 	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
 		$(call post_patch,$(MINIDLNA_PATCH)); \
-		autoreconf -fi $(SILENT_OPT); \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
