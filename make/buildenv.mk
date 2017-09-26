@@ -69,7 +69,6 @@ DEPDIR                = $(D)
 
 SUDOCMD               = echo $(SUDOPASSWD) | sudo -S
 
-WHOAMI               := $(shell id -un)
 MAINTAINER           ?= $(shell whoami)
 
 CCACHE                = /usr/bin/ccache

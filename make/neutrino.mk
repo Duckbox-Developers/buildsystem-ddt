@@ -4,7 +4,7 @@
 $(TARGET_DIR)/var/etc/.version:
 	echo "imagename=Neutrino MP" > $@
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
-	echo "creator=`id -un`" >> $@
+	echo "creator=$(MAINTAINER)" >> $@
 	echo "docs=https://github.com/Duckbox-Developers" >> $@
 	echo "forum=https://github.com/Duckbox-Developers/neutrino-mp-cst-next" >> $@
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
