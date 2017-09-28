@@ -1735,7 +1735,7 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$
 			--disable-gtk-doc-pdf \
 		; \
 		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR) itlocaledir=$(TARGET_DIR)/.remove
+		$(MAKE) install DESTDIR=$(TARGET_DIR) itlocaledir=$$(TARGET_DIR)/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libsoup-2.4.pc
 	$(REWRITE_LIBTOOL)/libsoup-2.4.la
 	$(REMOVE)/libsoup-$(LIBSOUP_VER)
