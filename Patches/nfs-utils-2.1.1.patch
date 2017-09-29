@@ -1,0 +1,55 @@
+--- a/configure
++++ b/configure
+@@ -18774,6 +18774,7 @@
+ if test "x$ac_cv_func_gethostbyname" = xyes; then :
+ 
+ else
++if false; then
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gethostbyname in -lnsl" >&5
+ $as_echo_n "checking for gethostbyname in -lnsl... " >&6; }
+ if ${ac_cv_lib_nsl_gethostbyname+:} false; then :
+@@ -18813,6 +18814,7 @@
+ if test "x$ac_cv_lib_nsl_gethostbyname" = xyes; then :
+   LIBNSL="-lnsl"
+ fi
++fi
+ 
+ fi
+ 
+@@ -20633,7 +20635,7 @@
+ 
+ 
+ 
+-for ac_header in arpa/inet.h fcntl.h libintl.h limits.h \
++for ac_header in arpa/inet.h fcntl.h limits.h \
+                  malloc.h memory.h netdb.h netinet/in.h paths.h \
+                  stdlib.h string.h sys/file.h sys/ioctl.h sys/mount.h \
+                  sys/param.h sys/socket.h sys/time.h sys/vfs.h \
+--- a/utils/mount/network.c
++++ b/utils/mount/network.c
+@@ -38,7 +38,9 @@
+ #include <sys/socket.h>
+ #include <sys/wait.h>
+ #include <sys/stat.h>
++#ifdef IPV6_SUPPORTED
+ #include <linux/in6.h>
++#endif
+ #include <netinet/in.h>
+ #include <rpc/rpc.h>
+ #include <rpc/pmap_prot.h>
+@@ -1125,6 +1127,7 @@
+ 		if (bind(sock, SAFE_SOCKADDR(&sin), sizeof(sin)) < 0)
+ 			goto out;
+ 		break;
++#ifdef IPV6_SUPPORTED
+ 	case AF_INET6:
+ 		/* Make sure the call-back address is public/permanent */
+ 		val = IPV6_PREFER_SRC_PUBLIC;
+@@ -1132,6 +1135,7 @@
+ 		if (bind(sock, SAFE_SOCKADDR(&sin6), sizeof(sin6)) < 0)
+ 			goto out;
+ 		break;
++#endif
+ 	default:
+ 		errno = EAFNOSUPPORT;
+ 		goto out;
