@@ -1016,7 +1016,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
-			--disable-shared \
+			--enable-shared \
 			--enable-static \
 			--disable-debug \
 			--disable-deprecated \
