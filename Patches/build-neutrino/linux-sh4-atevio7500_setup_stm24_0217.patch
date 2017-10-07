@@ -35,9 +35,9 @@
  	/* Save unparsed command line copy for /proc/cmdline */
  	memcpy(boot_command_line, command_line, COMMAND_LINE_SIZE);
  	*cmdline_p = command_line;
---- linux-sh4/arch/sh/boards/mach-mb680/setup.c.orig	2012-03-12 06:26:12.000000000 -0700
-+++ linux-sh4/arch/sh/boards/mach-mb680/setup.c	2012-03-24 01:32:14.571136001 -0700
-@@ -26,11 +26,12 @@
+--- a/arch/sh/boards/mach-mb680/setup.c
++++ b/arch/sh/boards/mach-mb680/setup.c
+@@ -26,10 +26,12 @@
  #include <linux/mtd/mtd.h>
  #include <linux/mtd/physmap.h>
  #include <linux/mtd/partitions.h>
@@ -46,12 +46,11 @@
  #include <asm/irq-ilc.h>
  #include <mach/common.h>
  #include "../mach-st/mb705-epld.h"
--
 +#include <linux/stm/pio.h>
  
  
- #define MB680_PIO_PHY_RESET stm_gpio(5, 5)
-@@ -38,6 +38,32 @@
+ 
+@@ -38,6 +40,32 @@
  #define MB680_PIO_PCI_RESET stm_gpio(15, 6)
  #define MB680_PIO_MII_BUS_SWITCH stm_gpio(11, 2)
  
@@ -84,7 +83,7 @@
  
  
  static void __init mb680_setup(char** cmdline_p)
-@@ -48,70 +74,17 @@
+@@ -48,70 +76,17 @@
  
  	stx7105_configure_asc(2, &(struct stx7105_asc_config) {
  			.routing.asc2 = stx7105_asc2_pio4,
@@ -96,8 +95,7 @@
 -			.is_console = 0, });
 -}
 -
-+	bpa2_init(bpa2_parts_table, ARRAY_SIZE(bpa2_parts_table));
- 
+-
 -
 -static struct platform_device mb680_leds = {
 -	.name = "leds-gpio",
@@ -138,34 +136,35 @@
 -static void ll_phy_reset(void)
 -{
 -	mb705_reset(EPLD_EMI_RESET_SW0, 150);
- }
+-}
 -#else
 -static void ll_phy_reset(void)
--{
--	gpio_set_value(MB680_PIO_PHY_RESET, 0);
++	bpa2_init(bpa2_parts_table, ARRAY_SIZE(bpa2_parts_table));
++
++}
++
++static int mb680_phy_reset(void *bus)
+ {
+ 	gpio_set_value(MB680_PIO_PHY_RESET, 0);
 -	udelay(150);
--	gpio_set_value(MB680_PIO_PHY_RESET, 1);
++	udelay(100);
+ 	gpio_set_value(MB680_PIO_PHY_RESET, 1);
 -}
 -#endif
- 
- static int mb680_phy_reset(void *bus)
- {
+-
+-static int mb680_phy_reset(void *bus)
+-{
 -	gpio_set_value(MB680_PIO_MII_BUS_SWITCH, 1);
 -	ll_phy_reset();
 -	gpio_set_value(MB680_PIO_MII_BUS_SWITCH, 0);
 -	mdelay(20);
-+	gpio_set_value(MB680_PIO_PHY_RESET, 0);
-+	udelay(100);
-+	gpio_set_value(MB680_PIO_PHY_RESET, 1);
  
  	return 0;
  }
-@@ -122,127 +95,83 @@
+@@ -122,127 +97,88 @@
  	.phy_mask = 0,
  };
  
--static struct platform_device *mb680_devices[] __initdata = {
--	&mb680_leds,
 +static struct mtd_partition mb680_physmap_flash_partitions[] = {
 +	{
 +		.name   = "U-BOOT",
@@ -173,9 +172,24 @@
 +		.offset = 0x00000000
 +	},
 +	{
++		.name   = "U-BOOT ENV",
++		.size   = 0x00020000,
++		.offset = 0x00040000
++	},
++	{
++		.name   = "MINI",
++		.size   = 0x000A0000,
++		.offset = 0x00060000
++	},
++	{
 +		.name   = "Kernel",
 +		.size   = 0x00300000,
 +		.offset = 0x00100000
++	},
++	{
++		.name   = "SWAP (VOLATILE)",
++		.size   = 0x006E0000,
++		.offset = 0x00420000
 +	},
 +	{
 +		.name   = "FW",
@@ -193,22 +207,39 @@
 +		.offset = 0x02200000
 +	},
 +	{
-+		.name   = "SWAP (VOLATILE)",
-+		.size   = 0x006E0000,
-+		.offset = 0x00420000
-+	},
-+	{
-+		.name   = "U-BOOT ENV",
-+		.size   = 0x00020000,
-+		.offset = 0x00040000
-+	},
-+	{
 +		.name   = "Full",
 +		.size   = MTDPART_SIZ_FULL,
 +		.offset = 0x00100000
 +	}
- };
- 
++};
++
++static struct physmap_flash_data mb680_physmap_flash_data = {
++	.width		= 2,
++	.set_vpp	= NULL,
++	.nr_parts	= ARRAY_SIZE(mb680_physmap_flash_partitions),
++	.parts		= mb680_physmap_flash_partitions
++};
++
++static struct platform_device mb680_physmap_flash = {
++	.name		= "physmap-flash",
++	.id		= -1,
++	.num_resources	= 1,
++	.resource	= (struct resource[]) {
++		{
++			.start	= 0x00000000,
++			.end	= 64*1024*1024 - 1, //64MB
++			.flags	= IORESOURCE_MEM,
++		}
++	},
++	.dev = {
++		.platform_data = &mb680_physmap_flash_data,
++	},
++};
++
+ static struct platform_device *mb680_devices[] __initdata = {
+-	&mb680_leds,
+-};
+-
 -/* PCI configuration */
 -
 -#ifdef CONFIG_SH_ST_MB705
@@ -220,13 +251,7 @@
 -	mdelay(10);
 -}
 -#endif
-+static struct physmap_flash_data mb680_physmap_flash_data = {
-+	.width		= 2,
-+	.set_vpp	= NULL,
-+	.nr_parts	= ARRAY_SIZE(mb680_physmap_flash_partitions),
-+	.parts		= mb680_physmap_flash_partitions
-+};
- 
+-
 -/*
 - * J22-A must be removed, J22-B must be 2-3.
 - */
@@ -236,17 +261,7 @@
 -		[1] = PCI_PIN_DEFAULT,
 -		[2] = PCI_PIN_DEFAULT,
 -		[3] = PCI_PIN_UNUSED
-+static struct platform_device mb680_physmap_flash = {
-+	.name		= "physmap-flash",
-+	.id		= -1,
-+	.num_resources	= 1,
-+	.resource	= (struct resource[]) {
-+		{
-+			.start		= 0x00000000,
-+			.end		= 64*1024*1024 - 1, //64MB
-+			.flags		= IORESOURCE_MEM,
-+		}
- 	},
+-	},
 -	.serr_irq = PCI_PIN_UNUSED, /* Modified in mb680_device_init() below */
 -	.idsel_lo = 30,
 -	.idsel_hi = 30,
@@ -255,9 +270,7 @@
 -		[1] = PCI_PIN_UNUSED,
 -		[2] = PCI_PIN_UNUSED,
 -		[3] = PCI_PIN_UNUSED
-+	.dev = {
-+		.platform_data = &mb680_physmap_flash_data,
- 	},
+-	},
 -	.pci_clk = 33333333,
 -	/* When connected to the mb705, PCI reset is controlled by an EPLD
 -	 * register on the mb705. When used standalone a PIO pin is used,
@@ -267,8 +280,8 @@
 -#else
 -	.pci_reset_gpio = MB680_PIO_PCI_RESET,
 -#endif
- };
- 
+-};
+-
 -int pcibios_map_platform_irq(struct pci_dev *dev, u8 slot, u8 pin)
 -{
 -       /* We can use the standard function on this board */
@@ -304,10 +317,8 @@
 -		.miso = stm_gpio(15, 3),
 -		.num_chipselect = 1,
 -	},
-+static struct platform_device *mb680_devices[] __initdata = {
-+	&mb680_physmap_flash,
- };
- 
+-};
+-
 -void __init mbxxx_configure_serial_flash(struct spi_board_info *serial_flash)
 -{
 -	/* Specify CSn and SPI bus */
@@ -319,7 +330,9 @@
 -	spi_register_board_info(serial_flash, 1);
 -}
 -#endif
--
++	&mb680_physmap_flash,
++};
+ 
  static int __init mb680_devices_init(void)
  {
 -	/* Setup the PCI_SERR# PIO
@@ -352,7 +365,7 @@
  	/* NIM AB/STRecord I2C bus*/
  	stx7105_configure_ssc_i2c(2, &(struct stx7105_ssc_config) {
  			.routing.ssc2.sclk = stx7105_ssc2_sclk_pio3_4,
-@@ -264,7 +193,7 @@
+@@ -264,7 +200,7 @@
  	 * alt	| 12[6]	J5B:1-2  J6G:open	14[7]	J10B:1-2  J11H:open
  	 */
  	stx7105_configure_usb(0, &(struct stx7105_usb_config) {
@@ -361,7 +374,7 @@
  			.pwr_enabled = 1,
  			.routing.usb0.ovrcur = stx7105_usb0_ovrcur_pio4_4,
  			.routing.usb0.pwr = stx7105_usb0_pwr_pio4_5, });
-@@ -276,8 +205,6 @@
+@@ -276,8 +212,6 @@
  
  	gpio_request(MB680_PIO_PHY_RESET, "notPioResetMII");
  	gpio_direction_output(MB680_PIO_PHY_RESET, 1);
@@ -370,7 +383,7 @@
  
  	stx7105_configure_ethernet(0, &(struct stx7105_ethernet_config) {
  			.mode = stx7105_ethernet_mode_mii,
-@@ -287,22 +214,8 @@
+@@ -287,22 +221,8 @@
  			.mdio_bus_data = &stmmac_mdio_bus,
  		});
  
