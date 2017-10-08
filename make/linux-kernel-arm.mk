@@ -11,6 +11,18 @@ KERNEL_CONFIG          = hd51_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 endif
+
+ifeq ($(BOXTYPE), vusolo4k)
+KERNEL_VER             = 3.14.28-1.8
+KERNEL_TYPE            = vusolo4k
+KERNEL_SRC_VER         = 3.14-1.8
+KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
+KERNEL_URL             = http://archive.vuplus.com/download/kernel
+KERNEL_CONFIG          = vusolo4k_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux
+KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
+endif
+
 #
 # Todo: findkerneldevice.py
 
@@ -31,6 +43,19 @@ HD51_PATCHES = \
 		armbox/hd51_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/hd51_reserve_dvb_adapter_0.patch \
 		armbox/hd51_blacklist_mmc0.patch
+
+VUSOLO4K_PATCHES = \
+		armbox/vusolo4k_bcm_genet_disable_warn.patch \
+		armbox/vusolo4k_linux_dvb-core.patch \
+		armbox/vusolo4k_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+		armbox/vusolo4k_usb_core_hub_msleep.patch \
+		armbox/vusolo4k_rtl8712_fix_build_error.patch \
+		armbox/vusolo4k_0001-Support-TBS-USB-drivers.patch \
+		armbox/vusolo4k_0001-STV-Add-PLS-support.patch \
+		armbox/vusolo4k_0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/vusolo4k_0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/vusolo4k_linux_dvb_adapter.patch \
+		armbox/vusolo4k_kernel-gcc6.patch
 
 #
 # KERNEL
