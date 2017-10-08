@@ -68,7 +68,11 @@ N_CONFIG_OPTS += --enable-lua
 N_CONFIG_OPTS += --enable-giflib
 N_CONFIG_OPTS += --enable-ffmpegdec
 #N_CONFIG_OPTS += --enable-pip
+#N_CONFIG_OPTS += --disable-webif
 N_CONFIG_OPTS += --enable-pugixml
+ifeq ($(BOXARCH), arm)
+N_CONFIG_OPTS += --enable-reschange
+endif
 
 ifeq ($(EXTERNAL_LCD), externallcd)
 N_CONFIG_OPTS += --enable-graphlcd
@@ -741,7 +745,7 @@ $(D)/neutrino-mp-tangos.config.status:
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CPPFLAGS="$(N_CPPFLAGS)"
+			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 
 $(SOURCE_DIR)/neutrino-mp-tangos/src/gui/version.h:
 	@rm -f $@; \
