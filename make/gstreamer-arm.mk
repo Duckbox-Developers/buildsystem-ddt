@@ -127,7 +127,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)
 #
 GST_PLUGINS_GOOD_VER = $(GSTREAMER_VER)
 GST_PLUGINS_GOOD_SOURCE = gst-plugins-good-$(GST_PLUGINS_GOOD_VER).tar.xz
-GST_PLUGINS_GOOD_PATCH =
+GST_PLUGINS_GOOD_PATCH = gst-plugins-good-$(GST_PLUGINS_GOOD_VER)-gstrtpmp4gpay-set-dafault-value-for-MPEG4-without-co.patch
 
 $(ARCHIVE)/$(GST_PLUGINS_GOOD_SOURCE):
 	$(WGET) https://gstreamer.freedesktop.org/src/gst-plugins-good/$(GST_PLUGINS_GOOD_SOURCE)
@@ -162,11 +162,11 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/
 #
 GST_PLUGINS_BAD_VER = $(GSTREAMER_VER)
 GST_PLUGINS_BAD_SOURCE = gst-plugins-bad-$(GST_PLUGINS_BAD_VER).tar.xz
-GST_PLUGINS_BAD_PATCH  = gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-hls-main-thread-block.patch
-GST_PLUGINS_BAD_PATCH += gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-rtmp-fix-seeking-and-potential-segfault.patch
+GST_PLUGINS_BAD_PATCH  = gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-rtmp-fix-seeking-and-potential-segfault.patch
 GST_PLUGINS_BAD_PATCH += gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-rtmp-hls-tsdemux-fix.patch
 GST_PLUGINS_BAD_PATCH += gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-dvbapi5-fix-old-kernel.patch
 GST_PLUGINS_BAD_PATCH += gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-fix-maybe-uninitialized-warnings-when-compiling-with-Os.patch
+GST_PLUGINS_BAD_PATCH += gst-plugins-bad-$(GST_PLUGINS_BAD_VER)-hls-main-thread-block.patch
 
 $(ARCHIVE)/$(GST_PLUGINS_BAD_SOURCE):
 	$(WGET) https://gstreamer.freedesktop.org/src/gst-plugins-bad/$(GST_PLUGINS_BAD_SOURCE)
