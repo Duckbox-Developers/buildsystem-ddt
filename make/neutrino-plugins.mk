@@ -52,6 +52,10 @@ NEUTRINO_PLUGINS  = $(D)/neutrino-mp-plugins
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugins-scripts-lua
 NEUTRINO_PLUGINS += $(D)/xupnpd
 
+ifeq ($(BOXARCH), sh4)
+EXTRA_CPPFLAGS_MP_PLUGINS = -DMARTII
+endif
+
 $(D)/neutrino-plugins: $(NEUTRINO_PLUGINS)
 	@touch $@
 
@@ -86,7 +90,7 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
 			--with-fontdir=/usr/share/fonts \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CPPFLAGS="$(N_CPPFLAGS) -DMARTII -DNEW_LIBCURL" \
+			CPPFLAGS="$(N_CPPFLAGS) $(EXTRA_CPPFLAGS_MP_PLUGINS) -DNEW_LIBCURL" \
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(SOURCE_DIR)/neutrino-mp-plugins/fx2/lib/.libs"
 
 $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.status
