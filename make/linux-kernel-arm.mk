@@ -1,12 +1,16 @@
 #
 # KERNEL
 #
+ifeq ($(BOXTYPE), hd51)
 KERNEL_VER             = 4.10.12
 KERNEL_DATE            = 20170524
 KERNEL_TYPE            = hd51
 KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
-KERNEL_CONFIG          = defconfig
+KERNEL_URL             = http://source.mynonpublic.com/gfutures
+KERNEL_CONFIG          = hd51_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
+KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
+endif
 #
 # Todo: findkerneldevice.py
 
@@ -15,22 +19,26 @@ DEPMOD = $(HOST_DIR)/bin/depmod
 #
 # Patches Kernel
 #
-KERNEL_PATCHES = \
-		armbox/TBS-fixes-for-4.10-kernel.patch \
-		armbox/0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
-		armbox/0001-TBS-fixes-for-4.6-kernel.patch \
-		armbox/0001-STV-Add-PLS-support.patch \
-		armbox/0001-STV-Add-SNR-Signal-report-parameters.patch \
-		armbox/blindscan2.patch \
-		armbox/0001-stv090x-optimized-TS-sync-control.patch \
-		armbox/reserve_dvb_adapter_0.patch \
-		armbox/blacklist_mmc0.patch
+COMMON_PATCHES_ARM = \
+
+HD51_PATCHES = \
+		armbox/hd51_TBS-fixes-for-4.10-kernel.patch \
+		armbox/hd51_0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
+		armbox/hd51_0001-TBS-fixes-for-4.6-kernel.patch \
+		armbox/hd51_0001-STV-Add-PLS-support.patch \
+		armbox/hd51_0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/hd51_blindscan2.patch \
+		armbox/hd51_0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/hd51_reserve_dvb_adapter_0.patch \
+		armbox/hd51_blacklist_mmc0.patch
 
 #
 # KERNEL
 #
+KERNEL_PATCHES = $(KERNEL_PATCHES_ARM)
+
 $(ARCHIVE)/$(KERNEL_SRC):
-	$(WGET) http://source.mynonpublic.com/gfutures/$(KERNEL_SRC)
+	$(WGET) $(KERNEL_URL)/$(KERNEL_SRC)
 
 $(D)/kernel.do_prepare: $(ARCHIVE)/$(KERNEL_SRC) $(PATCHES)/armbox/$(KERNEL_CONFIG)
 	$(START_BUILD)
