@@ -221,8 +221,8 @@ SYSTEM_TOOLS += $(D)/udpxy
 SYSTEM_TOOLS += $(D)/dvbsnoop
 ifeq ($(BOXARCH), sh4)
 SYSTEM_TOOLS += $(D)/fbshot
-SYSTEM_TOOLS += $(D)/driver
 endif
+SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	@touch $@

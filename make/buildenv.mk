@@ -28,11 +28,13 @@ CCACHE_DIR            = $(HOME)/.ccache-bs-sh4
 export CCACHE_DIR
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
+KERNELNAME            = uImage
 else
 CCACHE_DIR            = $(HOME)/.ccache-bs-arm
 export CCACHE_DIR
 TARGET               ?= arm-cortex-linux-gnueabihf
 BOXARCH              ?= arm
+KERNELNAME            = zImage
 endif
 
 GIT_PROTOCOL         ?= http

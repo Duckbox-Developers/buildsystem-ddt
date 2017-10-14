@@ -69,6 +69,7 @@ N_CONFIG_OPTS += --enable-giflib
 N_CONFIG_OPTS += --enable-ffmpegdec
 #N_CONFIG_OPTS += --enable-pip
 #N_CONFIG_OPTS += --disable-webif
+#N_CONFIG_OPTS += --disable-tangos
 N_CONFIG_OPTS += --enable-pugixml
 ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
