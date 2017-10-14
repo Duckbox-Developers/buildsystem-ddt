@@ -174,6 +174,32 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
 	$(TOUCH)
 
+HOST_E2FSPROGS_VER = 1.43.5
+HOST_E2FSPROGS_SOURCE = e2fsprogs-$(HOST_E2FSPROGS_VER).tar.gz
+
+$(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE):
+	$(WGET) http://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v$(HOST_E2FSPROGS_VER)/$(HOST_E2FSPROGS_SOURCE)
+
+$(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
+	$(START_BUILD)
+	$(UNTAR)/$(HOST_E2FSPROGS_SOURCE)
+	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER) && \
+		./configure; \
+		$(MAKE)
+	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/resize/resize2fs $(HOST_DIR)/bin/
+	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/misc/mke2fs $(HOST_DIR)/bin/
+	ln -sf mke2fs $(HOST_DIR)/bin/mkfs.ext2
+	ln -sf mke2fs $(HOST_DIR)/bin/mkfs.ext3
+	ln -sf mke2fs $(HOST_DIR)/bin/mkfs.ext4
+	ln -sf mke2fs $(HOST_DIR)/bin/mkfs.ext4dev
+	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/e2fsck/e2fsck $(HOST_DIR)/bin/
+	ln -sf e2fsck $(HOST_DIR)/bin/fsck.ext2
+	ln -sf e2fsck $(HOST_DIR)/bin/fsck.ext3
+	ln -sf e2fsck $(HOST_DIR)/bin/fsck.ext4
+	ln -sf e2fsck $(HOST_DIR)/bin/fsck.ext4dev
+	$(REMOVE)/e2fsprogs-$(HOST_E2FSPROGS_VER)
+	$(TOUCH)
+
 #
 #
 #
@@ -195,6 +221,9 @@ BOOTSTRAP += $(D)/host_module_init_tools
 BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
 BOOTSTRAP += $(D)/host_mksquashfs
+ifeq ($(BOXARCH), arm)
+BOOTSTRAP += $(D)/host_resize2fs
+endif
 
 $(D)/bootstrap: $(BOOTSTRAP)
 	@touch $@
@@ -221,6 +250,8 @@ SYSTEM_TOOLS += $(D)/udpxy
 SYSTEM_TOOLS += $(D)/dvbsnoop
 ifeq ($(BOXARCH), sh4)
 SYSTEM_TOOLS += $(D)/fbshot
+else
+SYSTEM_TOOLS += $(D)/ofgwrite
 endif
 SYSTEM_TOOLS += $(D)/driver
 
