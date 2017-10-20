@@ -1,15 +1,22 @@
 #!/bin/sh
 
+echo "[rcS] start"
+echo "SpiderBox HL-101 Enigma2"
+
 MODDIR=/lib/modules
-echo "init frontpanel"
+
+echo "[rcS] Init frontpanel"
 insmod $MODDIR/proton.ko
 insmod $MODDIR/simu_button.ko
 
 if [ -e /var/etc/.firstboot ]; then
-   echo "WAIT 3 min" > /dev/vfd
-   echo "WAIT 3 min"
-   rm /var/etc/.firstboot
-   touch /dev/.devfsd
+	echo "WAIT 1 MINUTE" > /dev/vfd
+	echo "[rcS] WAIT 1 minute"
+	rm /var/etc/.firstboot
+	sleep 1
+	touch /dev/.devfsd
+	else
+	echo "LOAD 10" > /dev/vfd
 fi
 
 /etc/init.d/mountvirtfs start
@@ -17,150 +24,157 @@ fi
 
 insmod $MODDIR/e2_proc.ko
 
+# Start automounter with umount timeout of 5 seconds
+insmod $MODDIR/autofs4.ko
+
 /etc/init.d/autofs start
 
-if [ ! -e /var/etc/.firstboot ]; then
+echo "Starting DEBUG Interface"
+/etc/init.d/mountall start
+/etc/init.d/hostname start
 
-   echo "Starting DEBUG Interface"
-   /etc/init.d/mountall start
-   /etc/init.d/hostname start
-
-   echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
-
-   echo "init stmfb"
-   insmod $MODDIR/stmcore-display-stx7109c3.ko
-   insmod $MODDIR/stmfb.ko display0=1280x720-32@50:12m:pal:yuv:yuv
-
-   echo "LOADING MODULES"
-   echo "LOADING" >/dev/vfd
-
-   if [ ! -e /boot/audio.elf ]; then
-      echo "FW MISSING!!!"
-   fi
-
-   echo "load a firmware"
-   /bin/ustslave /dev/st231-1 /boot/audio.elf
-   echo "load v firmware"
-   /bin/ustslave /dev/st231-0 /boot/video.elf
-
-   echo "init embx"
-   insmod $MODDIR/embxshell.ko
-   insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
-   insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
-   insmod $MODDIR/mme_host.ko transport0=shm
-
-   echo "init AVS"
-   insmod $MODDIR/avs.ko type=stv6418
-
-   player=`cat /proc/stb/player/version`
-   player=`cat /proc/stb/player/version | awk '{ print substr( $0, length($0) - 2, length($0) ) }'`
-   echo "init player $player"
-
-   insmod $MODDIR/mmelog.ko
-   insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
-   insmod $MODDIR/ksound.ko
-   insmod $MODDIR/p2div64.ko
-   insmod $MODDIR/stm_v4l2.ko
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/stmvout.ko
-	insmod $MODDIR/stmvbi.ko
-   fi
-   insmod $MODDIR/pseudocard.ko
-   
-   echo "init frontends"
-   insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
-
-   echo "init drivers"
-   insmod $MODDIR/cimax.ko
-   insmod $MODDIR/pti.ko
-
-   if [ $player -gt 131 ]; then
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stm_monitor.ko
-	insmod $MODDIR/stmsysfs.ko
-    	insmod $MODDIR/stmdvb.ko
-   else
-	insmod $MODDIR/pti.ko
-	insmod $MODDIR/stmdvb.ko
-	insmod $MODDIR/stm_monitor.ko
-   fi	
-
-   insmod $MODDIR/player2.ko
-   insmod $MODDIR/sth264pp.ko
-   insmod $MODDIR/stmalloc.ko
-   insmod $MODDIR/platform.ko
-   insmod $MODDIR/smartcard.ko
-
-   showiframe -p /var/boot/bootlogo.mvi &
-   stfbcontrol a 0
-
-   echo "init lircd"
-   mkdir -p /var/run/lirc
-   /usr/bin/lircd
-
-   mknod /dev/rc c 147 1 
-   mknod /dev/sci0 c 169 0
-   mknod /dev/sci1 c 169 1 
-   
-   /bin/evremote2 hl101 &
-
-   /etc/init.d/mountall start
-   /etc/init.d/hostname start
-
-   echo "starting telnetd"
-   /usr/sbin/telnetd -l /bin/autologin
-   /etc/init.d/vsftpd start
-   /usr/sbin/inetd
-
-   NFS=`grep -c nfs /proc/cmdline`
-   if [ "$NFS" -eq "1" ]; then 
-      echo "Booting from nfs, don't set network" 
-   else 
-      if [ -e /etc/network/interfaces ]; then 
-	 ip addr flush eth0 
-	 /etc/init.d/networking stop 
-	 DHCP=`grep -c dhcp /etc/network/interfaces`
-	 if [ "$DHCP" -eq "1" ]; then 
-	    echo "Starting dhcp"
-            /etc/init.d/udhcpc start 
-	 fi 
-	 /etc/init.d/networking start 
-      fi 
-   fi
-
-   echo "run app" > /dev/vfd
-   echo "LOADING E2"
-
-   until false
-   do
-      echo "starting e2->"
-      /usr/local/bin/enigma2
-      rtv=$?
-      echo "e2 ended <- RTV: " $rtv
-      case "$rtv" in
-		0) echo "0"
-		   echo "E2 ERROR"
-		   init 6;;
-		1) echo "1"
-		   echo "SHUTDOWN"
-		   init 0;;
-		2) echo "2"
-		   echo "REBOOT"
-		   init 6;;
-		3) echo "3"
-		   echo "E2 RESTART"
-		   echo "0" > /proc/progress
-		   showiframe -p /var/boot/bootlogo.mvi &;;
-		*) echo "*"
-		   echo "ERROR"
-		   init 6;;
-      esac
-   done 
+echo -n "Starting telnetd "
+autologin=`cat /etc/enigma2/settings | grep systemoptions.autologin | cut -d "=" -f2`
+if [ ! $autologin ]; then
+	/usr/sbin/telnetd -l /bin/autologin
+	echo "with autologin"
+else
+	/usr/sbin/telnetd -l /bin/login
+	echo "with normal login"
 fi
+
+echo "[rcS] Init stmfb (LOAD 9)"
+echo "LOAD 9" > /dev/vfd
+insmod $MODDIR/stmcore-display-stx7109c3.ko
+if grep -q "config.av.videoport=Scart" /etc/enigma2/settings; then
+	insmod $MODDIR/stmfb.ko display0=720x576i-32@50:16m:pal:rgb:rgb; #SCART
+else
+	insmod $MODDIR/stmfb.ko display0=1280x720-32@50:16m:pal:rgb:rgb; #HDMI
+fi
+
+echo "[rcS] Loading modules"
+
+if [ ! -e /boot/audio.elf ] || [ ! -e /boot/video.elf ]; then
+   echo "[rcS] Firmware(s) missing!"
+   echo "NO FIRMWARE" > /dev/vfd
+   sleep 5
+fi
+
+echo "[rcS] Load video firmware (LOAD 8)"
+echo "LOAD 8" > /dev/vfd
+/bin/ustslave /dev/st231-0 /boot/video.elf
+
+echo "[rcS] Load audio firmware (LOAD 7)"
+echo "LOAD 7" > /dev/vfd
+/bin/ustslave /dev/st231-1 /boot/audio.elf
+
+echo "[rcS] Init embx (LOAD 6)"
+echo "LOAD 6" > /dev/vfd
+insmod $MODDIR/embxshell.ko
+insmod $MODDIR/embxmailbox.ko mailbox0=0xb9211000:136:set2 mailbox1=0xb9212000:0 ;
+insmod $MODDIR/embxshm.ko mailbox0=shm:0:7:0x60000000:0:256:256:0:1024:0xa4000000:0x10000000 ;
+insmod $MODDIR/mme_host.ko transport0=shm
+
+echo "[rcS] Init AVS (LOAD 5)"
+echo "LOAD 5" > /dev/vfd
+insmod $MODDIR/avs.ko type=stv6418
+
+echo "[rcS] Init player (LOAD 4)"
+echo "LOAD 4" > /dev/vfd
+insmod $MODDIR/mmelog.ko
+insmod $MODDIR/mpeg2hw.ko mmeName=MPEG2_TRANSFORMER0;
+insmod $MODDIR/ksound.ko
+insmod $MODDIR/p2div64.ko
+insmod $MODDIR/stm_v4l2.ko
+insmod $MODDIR/stmvout.ko
+insmod $MODDIR/stmvbi.ko
+insmod $MODDIR/pseudocard.ko
+insmod $MODDIR/fe-core.ko demod=stb0899 tuner=stb6100 ;
+#insmod $MODDIR/fe-core.ko demod=stv090x tuner=stv6110x;
+#insmod $MODDIR/fe-core.ko demod=stv090x tuner=sharp7306;
+insmod $MODDIR/cimax.ko
+insmod $MODDIR/smartcard.ko
+insmod $MODDIR/pti.ko
+insmod $MODDIR/stm_monitor.ko
+insmod $MODDIR/stmsysfs.ko
+insmod $MODDIR/stmdvb.ko
+
+echo "[rcS] Init player2 (LOAD 3)"
+echo "LOAD 3" > /dev/vfd
+insmod $MODDIR/player2.ko discardlateframe=0
+insmod $MODDIR/sth264pp.ko
+insmod $MODDIR/stmalloc.ko
+insmod $MODDIR/platform.ko
+insmod $MODDIR/bpamem.ko
+
+showiframe -p /boot/bootlogo.mvi &
+stfbcontrol a 0
+
+echo "Init lircd (LOAD 2)"
+echo "LOAD 2" > /dev/vfd
+mkdir -p /var/run/lirc
+/usr/bin/lircd
+
+mknod /dev/rc c 147 1
+
+echo "Init smartcard cardreader"
+mknod /dev/sci0 c 169 0
+mknod /dev/sci1 c 169 1
+   
+/bin/evremote2 hl101 &
+
+/etc/init.d/mountall start
+/etc/init.d/hostname start
+
+echo "LOAD 1" > /dev/vfd
+/etc/init.d/vsftpd start
+/usr/sbin/inetd
+
+NFS=`grep -c nfs /proc/cmdline`
+if [ "$NFS" -eq "1" ]; then
+	echo "Booting from nfs, don't set network"
+else
+	if [ -e /etc/network/interfaces ]; then
+		ip addr flush eth0
+		/etc/init.d/networking stop
+		DHCP=`grep -c dhcp /etc/network/interfaces`
+		if [ "$DHCP" -eq "1" ]; then
+			echo "Starting DHCP"
+			/etc/init.d/udhcpc start
+      	fi
+		/etc/init.d/networking start
+	fi
+fi
+
+echo "Start Enigma2"
+echo "LOAD E2" > /dev/vfd
+
+until false
+do
+   /usr/local/bin/enigma2
+   rtv=$?
+   echo "e2 ended <- RTV: " $rtv
+   case "$rtv" in
+      0) echo "0"
+         echo "E2 ERROR"
+         init 6;;
+      1) echo "1"
+         echo "SHUTDOWN"
+         init 0;;
+      2) echo "2"
+         echo "REBOOT"
+         init 6;;
+      3) echo "3"
+         echo "E2 RESTART"
+         echo "0" > /proc/progress
+         showiframe -p /boot/bootlogo.mvi &;;
+      *) echo "*"
+         echo "ERROR"
+         init 6;;
+   esac
+done 
 
 #never reached
 echo "REBOOT HL101" > /dev/vfd
 echo "REBOOT HL101"
 reboot
-
