@@ -1,0 +1,170 @@
+--- fbshot-0.3/fbshot.c
++++ fbshot-0.3/fbshot.c
+@@ -46,7 +46,9 @@
+ 
+ #include <sys/vt.h>
+ #include <png.h>
++#include <zlib.h>
+ #include <linux/fb.h> 
+ 
+ #define DEFAULT_FB      "/dev/fb0"
+ #define PACKAGE 	"fbshot"
+@@ -71,7 +73,7 @@
+   int xres,yres;
+   char *buffer;
+   struct fb_cmap *colormap;
+-  char bps,gray;
++  char bps,gray,bgr;
+ };
+ 
+ void FatalError(char* err){
+@@ -81,7 +83,7 @@
+ }
+ 
+ void Usage(char *binary){
+-  printf("Usage: %s [-ghi] [-{C|c} vt] [-d dev] [-s n] filename.png\n", binary);
++  printf("Usage: %s [-ghi] [-{C|c} vt] [-d dev] [-s n] [-q] filename.png\n", binary);
+ }
+ 
+ void Help(char *binary){
+@@ -100,6 +102,7 @@
+     printf("\t-h    \tprint this usage information\n");
+     printf("\t-i    \tturns OFF interlacing\n");
+     printf("\t-s n  \tsleep n seconds before making screenshot\n");
++    printf("\t-q    \tquick: less compression\n");
+ 
+     printf("\nSend feedback !!!\n");
+ }
+@@ -168,6 +171,12 @@
+     i=pict->bps>>3;
+   }
+    
++  /* check if framebuffer is bgr instead of rgb */
++  if(pict->bps==32 && fb_varinfo.red.offset==16 && fb_varinfo.blue.offset==0)
++    pict->bgr=1;
++  else
++    pict->bgr=0;
++
+   if(!(pict->buffer=malloc(pict->xres*pict->yres*i)))
+     FatalError("couldnt malloc");
+ 
+@@ -185,6 +194,10 @@
+   fprintf(stdout, "FIX: card:%s mem:0x%.8X mem_len:%d visual:%i type:%i type_aux:%i line_len:%i accel:%i\n",
+   fb_fixinfo.id,fb_fixinfo.smem_start,fb_fixinfo.smem_len,fb_fixinfo.visual,
+   fb_fixinfo.type,fb_fixinfo.type_aux,fb_fixinfo.line_length,fb_fixinfo.accel);
++  printf("red:	off %2d len %d msb_right %d\n",fb_varinfo.red.offset,fb_varinfo.red.length,fb_varinfo.red.msb_right);
++  printf("blue:	off %2d len %d msb_right %d\n",fb_varinfo.blue.offset,fb_varinfo.blue.length,fb_varinfo.blue.msb_right);
++  printf("green:	off %2d len %d msb_right %d\n",fb_varinfo.green.offset,fb_varinfo.green.length,fb_varinfo.green.msb_right);
++  printf("transp:	off %2d len %d msb_right %d\n",fb_varinfo.transp.offset,fb_varinfo.transp.length,fb_varinfo.transp.msb_right);
+ #endif
+ 
+   fflush(stdout);
+@@ -257,7 +270,7 @@
+   pict->buffer=out;
+ }
+ 
+-static int Write_PNG(struct picture * pict, char *filename, int interlace, int gray){
++static int Write_PNG(struct picture * pict, char *filename, int interlace, int gray, int quick){
+   png_bytep *row_pointers;
+   png_structp png_ptr;
+   png_infop info_ptr;
+@@ -272,7 +285,10 @@
+     fprintf(stdout, "%i\n",write(i,(void*)pict->buffer,(pict->xres)*(pict->yres)));
+     perror("dupa");
+     fprintf(stdout, "Writing to %s %ix%i %i\n", filename,(pict->xres),(pict->yres),(pict->xres)*(pict->yres));
++if (pict->colormap != NULL)
+     fprintf(stdout, "start: %i, size: %i\n", pict->colormap->start,pict->colormap->len);
++else
++    printf("no pict->colormap!\n");
+     fflush(stdout);
+     close(i);
+ #endif
+@@ -312,7 +328,10 @@
+ 
+   png_init_io(png_ptr, OUTfd);
+     
+-  png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
++  if(quick != 0)  
++    png_set_compression_level(png_ptr, Z_BEST_SPEED);
++  else
++    png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
+ 
+   row_pointers=(png_bytep*)malloc(sizeof(png_bytep)*pict->yres);
+ 
+@@ -332,7 +351,10 @@
+       color_type=PNG_COLOR_TYPE_RGB_ALPHA;
+       for (i=0; i<(pict->yres); i++)
+         row_pointers[i]=pict->buffer+i*4*(pict->xres);
+-      png_set_invert_alpha(png_ptr);
++      if(pict->bgr)
++        png_set_bgr(png_ptr);
++      else /* i'm not sure if the invert_alpha is related to pict->bgr --seife */
++        png_set_invert_alpha(png_ptr);
+       break;
+ 
+     case 16:
+@@ -354,10 +376,13 @@
+ 
+     case 32:
+       bit_depth=8;
+-      color_type=PNG_COLOR_TYPE_RGB_ALPHA;
++      //color_type=PNG_COLOR_TYPE_RGB_ALPHA;
++      color_type=PNG_COLOR_TYPE_RGBA;
+       for (i=0; i<(pict->yres); i++)
++        //row_pointers[i] = (png_bytep) (pict->buffer + i * pict->yres);
+         row_pointers[i]=pict->buffer+i*4*(pict->xres);
+-      png_set_invert_alpha(png_ptr);
++      //png_set_invert_alpha(png_ptr);
++      png_set_bgr(png_ptr);
+       break;
+     }
+     
+@@ -387,7 +412,7 @@
+ 
+ 
+ 
+-static char optstring[] = "hiC:c:d:s:";
++static char optstring[] = "hiqC:c:d:s:";
+ static struct option long_options[] = {
+         {"slowcon", 1, 0, 'C'},
+         {"console", 1, 0, 'c'},
+@@ -395,6 +420,7 @@
+         {"help", 0, 0, 'h'},
+         {"noint", 0, 0, 'i'},
+         {"sleep", 1, 0, 's'},
++        {"quick", 0, 0, 'q'},
+         {0, 0, 0, 0}
+         };
+                                                                 
+@@ -402,8 +428,9 @@
+   char *buffer, *device = NULL, *outfile = argv[argc-1];
+   int optc, vt_num=-1;
+   struct picture pict;
+-  int interlace=PNG_INTERLACE_ADAM7;
++  int interlace=PNG_INTERLACE_NONE;
+   int gray=0; /* -1 on ; 0 off ; */
++  int quick=0;
+ 
+   pict.colormap=NULL;
+   
+@@ -432,7 +459,10 @@
+       return 1;
+       break;
+     case 'i':
+-      interlace=PNG_INTERLACE_NONE;
++      interlace=PNG_INTERLACE_ADAM7;
++      break;
++    case 'q':
++      quick=1;
+       break;
+     case 's':
+       sleep (atoi(optarg));
+@@ -458,7 +488,7 @@
+ 
+   printf("Writing %s ...",outfile);fflush(stdout);
+       
+-  Write_PNG(&pict, outfile, interlace, gray );
++  Write_PNG(&pict, outfile, interlace, gray, quick);
+ 
+   if(pict.colormap){
+     free(pict.colormap->red);

@@ -744,7 +744,7 @@ $(D)/hdidle: $(D)/bootstrap $(ARCHIVE)/$(HDIDLE_SOURCE)
 #
 FBSHOT_VER = 0.3
 FBSHOT_SOURCE = fbshot-$(FBSHOT_VER).tar.gz
-FBSHOT_PATCH = fbshot-$(FBSHOT_VER).patch
+FBSHOT_PATCH = fbshot-$(FBSHOT_VER)-$(BOXARCH).patch
 
 $(ARCHIVE)/$(FBSHOT_SOURCE):
 	$(WGET) http://distro.ibiblio.org/amigolinux/download/Utils/fbshot/$(FBSHOT_SOURCE)
