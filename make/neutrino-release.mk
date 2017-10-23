@@ -552,24 +552,6 @@ endif
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/embxshm/embxshm.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/embxshm/embxshm.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/mme/mme_host.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/mme/mme_host.ko $(RELEASE_DIR)/lib/modules/ || true
 #
-# multicom 406
-#
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embx/embx.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embx/embx.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embxmailbox/embxmailbox.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embxmailbox/embxmailbox.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embxshm/embxshm.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/embxshm/embxshm.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/ics/ics.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/ics/ics.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/ics/ics_user.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/ics/ics_user.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/mme/mme.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/mme/mme.ko $(RELEASE_DIR)/lib/modules/ || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/mme/mme_user.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/src/mme/mme_user.ko $(RELEASE_DIR)/lib/modules/ || true
-#
-# infrastructure
-#
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/event/stm_event.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/event/stm_event.ko $(RELEASE_DIR)/lib/modules || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/memsink/stm_memsink.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/memsink/stm_memsink.ko $(RELEASE_DIR)/lib/modules || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/memsrc/stm_memsrc.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/memsrc/stm_memsrc.ko $(RELEASE_DIR)/lib/modules || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/registry/stm_registry.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/registry/stm_registry.ko $(RELEASE_DIR)/lib/modules || true
-	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/wrapper/stm_wrapper.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/infrastructure/linux/wrapper/stm_wrapper.ko $(RELEASE_DIR)/lib/modules || true
-#
 #
 #
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/simu_button/simu_button.ko $(RELEASE_DIR)/lib/modules/

@@ -187,12 +187,6 @@ $(HOST_DIR)/bin/opkg%sh: | directories
 #
 BOOTSTRAP  = directories
 BOOTSTRAP += $(D)/ccache
-BOOTSTRAP += $(HOST_DIR)/bin/opkg.sh
-BOOTSTRAP += $(HOST_DIR)/bin/opkg-chksvn.sh
-BOOTSTRAP += $(HOST_DIR)/bin/opkg-gitdescribe.sh
-BOOTSTRAP += $(HOST_DIR)/bin/opkg-find-requires.sh
-BOOTSTRAP += $(HOST_DIR)/bin/opkg-find-provides.sh
-BOOTSTRAP += $(HOST_DIR)/bin/opkg-module-deps.sh
 BOOTSTRAP += $(HOST_DIR)/bin/get-git-archive.sh
 BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6

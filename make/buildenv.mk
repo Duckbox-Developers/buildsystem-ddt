@@ -54,10 +54,6 @@ CROSS_DIR             = $(TUFSBOX_DIR)/cross
 HOST_DIR              = $(TUFSBOX_DIR)/host
 RELEASE_DIR           = $(TUFSBOX_DIR)/release
 
-CONTROL_DIR           = $(BASE_DIR)/pkgs/control
-PACKAGE_DIR           = $(BASE_DIR)/pkgs/opkg
-PKG_DIR               = $(BUILD_TMP)/pkg
-
 CUSTOM_DIR            = $(BASE_DIR)/custom
 OWN_BUILD             = $(BASE_DIR)/own_build
 PATCHES               = $(BASE_DIR)/Patches
@@ -127,15 +123,10 @@ TERM_NORMAL          := \033[0m
 REWRITE_LIBTOOL       = sed -i "s,^libdir=.*,libdir='$(TARGET_DIR)/usr/lib'," $(TARGET_DIR)/usr/lib
 REWRITE_LIBTOOLDEP    = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\ $(TARGET_DIR)/usr/lib,g" $(TARGET_DIR)/usr/lib
 REWRITE_PKGCONF       = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/usr',"
-REWRITE_LIBTOOL_OPT   = sed -i "s,^libdir=.*,libdir='$(TARGET_DIR)/opt/pkg/lib'," $(TARGET_DIR)/opt/pkg/lib
-REWRITE_PKGCONF_OPT   = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/opt/pkg',"
-
-export RM=$(shell which rm) -f
 
 # unpack tarballs, clean up
 UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 REMOVE                = rm -rf $(BUILD_TMP)
-RM_PKG_DIR            = rm -rf $(PKG_DIR)
 
 #
 split_deps_dir=$(subst ., ,$(1))
@@ -189,17 +180,6 @@ define post_patch
     fi; \
     echo
 endef
-
-#
-#
-#
-OPKG_SH_ENV  = PACKAGE_DIR=$(PACKAGE_DIR)
-OPKG_SH_ENV += STRIP=$(TARGET)-strip
-OPKG_SH_ENV += MAINTAINER="$(MAINTAINER)"
-OPKG_SH_ENV += ARCH=$(BOXARCH)
-OPKG_SH_ENV += SOURCE=$(PKG_DIR)
-OPKG_SH_ENV += BUILD_TMP=$(BUILD_TMP)
-OPKG_SH = $(OPKG_SH_ENV) opkg.sh
 
 # wget tarballs into archive directory
 WGET = wget --no-check-certificate -t6 -T20 -c -P $(ARCHIVE)
@@ -288,7 +268,7 @@ buildinplayer      = 1
 endif
 
 #
-DRIVER_PLATFORM   := $(PLAYER2) $(WLANDRIVER)
+DRIVER_PLATFORM   := $(WLANDRIVER)
 
 #
 ifeq ($(BOXTYPE), ufs910)

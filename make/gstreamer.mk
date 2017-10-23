@@ -359,31 +359,6 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 	$(TOUCH)
 
 #
-# gst_plugins_fluendo
-#
-GST_PLUGINS_FLUENDO_VER = 0.10.71
-GST_PLUGINS_FLUENDO_SOURCE = gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VER).tar.gz
-GST_PLUGINS_FLUENDO_PATCH = gst-plugins-fluendo-$(GST_PLUGINS_FLUENDO_VER)-mpegdemux.patch
-
-$(ARCHIVE)/$(GST_PLUGINS_FLUENDO_SOURCE):
-	$(WGET) http://core.fluendo.com/gstreamer/src/gst-fluendo-mpegdemux/$(GST_PLUGINS_FLUENDO_SOURCE)
-
-$(D)/gst_plugins_fluendo: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_FLUENDO_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VER)
-	$(UNTAR)/$(GST_PLUGINS_FLUENDO_SOURCE)
-	set -e; cd $(BUILD_TMP)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VER); \
-		$(call post_patch,$(GST_PLUGINS_FLUENDO_PATCH)); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--with-check=no \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/gst-fluendo-mpegdemux-$(GST_PLUGINS_FLUENDO_VER)
-	$(TOUCH)
-
-#
 # gmediarender
 #
 GST_GMEDIARENDER_VER = 0.0.6
