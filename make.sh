@@ -16,9 +16,8 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-38)"
 	echo "Parameter 2: kernel (1-2)"
 	echo "Parameter 3: optimization (1-4)"
-	echo "Parameter 5: Media Framework (1-4)"
-	echo "Parameter 6: External LCD support (1-3)"
-	echo "Parameter 7: Image (Enigma=1/2 Neutrino=3/4 (1-4)"
+	echo "Parameter 4: Media Framework (1-4)"
+	echo "Parameter 5: Image (Enigma=1/2 Neutrino=3/4 (1-4)"
 	exit
 fi
 
@@ -192,27 +191,8 @@ echo "MEDIAFW=$MEDIAFW" >> config
 
 ##############################################
 
-case $6 in
-	[1-3]) REPLY=$6;;
-	*)	echo -e "\nExternal LCD support:"
-		echo "   1)  No external LCD"
-		echo "   2)  graphlcd for external LCD"
-		echo "   3)  lcd4linux for external LCD"
-		read -p "Select external LCD support (1-3)? ";;
-esac
-
-case "$REPLY" in
-	1) EXTERNAL_LCD="none";;
-	2) EXTERNAL_LCD="externallcd";;
-	3) EXTERNAL_LCD="lcd4linux";;
-	*) EXTERNAL_LCD="none";;
-esac
-echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
-
-##############################################
-
-case $7 in
-	[1-4]) REPLY=$7;;
+case $5 in
+	[1-4]) REPLY=$5;;
 	*)	echo -e "\nWhich Image do you want to build:"
 		echo "   1)  Enigma2"
 		echo "   2)  Enigma2  (includes WLAN drivers)"

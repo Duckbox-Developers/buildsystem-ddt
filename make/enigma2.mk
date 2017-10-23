@@ -15,15 +15,6 @@ ifeq ($(IMAGE), enigma2-wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-ifeq ($(EXTERNAL_LCD), externallcd)
-ENIGMA2_DEPS  += $(D)/graphlcd
-E_CONFIG_OPTS += --with-graphlcd
-endif
-
-ifeq ($(EXTERNAL_LCD), lcd4linux)
-ENIGMA2_DEPS += $(D)/lcd4linux
-endif
-
 ifeq ($(MEDIAFW), eplayer3)
 ENIGMA2_DEPS  += $(D)/tools-libeplayer3
 E_CONFIG_OPTS += --enable-libeplayer3
