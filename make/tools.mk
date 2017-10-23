@@ -192,8 +192,6 @@ $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 	set -e; cd $(APPS_DIR)/tools/libmme_host; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
-			$(if $(MULTICOM324), --enable-multicom324) \
-			$(if $(MULTICOM406), --enable-multicom406) \
 		; \
 		$(MAKE) DRIVER_TOPDIR=$(DRIVER_DIR); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR) DRIVER_TOPDIR=$(DRIVER_DIR)

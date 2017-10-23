@@ -288,32 +288,6 @@ buildinplayer      = 1
 endif
 
 #
-# multicom
-#
-ifeq ($(MULTICOM_VER), 324)
-MULTICOM324        = multicom324
-MULTICOM_LINK      = multicom-3.2.4
-else
-MULTICOM406        = multicom406
-MULTICOM_LINK      = multicom-4.0.6
-endif
-
-#
-# player 2
-#
-ifeq ($(PLAYER_VER), 191)
-PLAYER2            = PLAYER191=player191
-PLAYER191          = 1
-PLAYER_VER_DRIVER  = 191
-PLAYER2_LINK       = player2_191
-else ifeq ($(PLAYER_VER), 191_test)
-PLAYER2            = PLAYER191=player191
-PLAYER191          = 1
-PLAYER_VER_DRIVER  = 191
-PLAYER2_LINK       = player2_191_test
-endif
-
-#
 DRIVER_PLATFORM   := $(PLAYER2) $(WLANDRIVER)
 
 #
