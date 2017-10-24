@@ -1,6 +1,6 @@
 --- fbshot-0.3/fbshot.c
 +++ fbshot-0.3/fbshot.c
-@@ -46,7 +46,9 @@
+@@ -46,6 +46,7 @@
  
  #include <sys/vt.h>
  #include <png.h>
@@ -8,8 +8,7 @@
  #include <linux/fb.h> 
  
  #define DEFAULT_FB      "/dev/fb0"
- #define PACKAGE 	"fbshot"
-@@ -71,7 +73,7 @@
+@@ -71,7 +72,7 @@
    int xres,yres;
    char *buffer;
    struct fb_cmap *colormap;
@@ -18,7 +17,7 @@
  };
  
  void FatalError(char* err){
-@@ -81,7 +83,7 @@
+@@ -81,7 +82,7 @@
  }
  
  void Usage(char *binary){
@@ -27,7 +26,7 @@
  }
  
  void Help(char *binary){
-@@ -100,6 +102,7 @@
+@@ -100,6 +101,7 @@
      printf("\t-h    \tprint this usage information\n");
      printf("\t-i    \tturns OFF interlacing\n");
      printf("\t-s n  \tsleep n seconds before making screenshot\n");
@@ -35,7 +34,7 @@
  
      printf("\nSend feedback !!!\n");
  }
-@@ -168,6 +171,12 @@
+@@ -168,6 +170,12 @@
      i=pict->bps>>3;
    }
     
@@ -48,7 +47,7 @@
    if(!(pict->buffer=malloc(pict->xres*pict->yres*i)))
      FatalError("couldnt malloc");
  
-@@ -185,6 +194,10 @@
+@@ -185,6 +193,10 @@
    fprintf(stdout, "FIX: card:%s mem:0x%.8X mem_len:%d visual:%i type:%i type_aux:%i line_len:%i accel:%i\n",
    fb_fixinfo.id,fb_fixinfo.smem_start,fb_fixinfo.smem_len,fb_fixinfo.visual,
    fb_fixinfo.type,fb_fixinfo.type_aux,fb_fixinfo.line_length,fb_fixinfo.accel);
@@ -59,7 +58,7 @@
  #endif
  
    fflush(stdout);
-@@ -257,7 +270,7 @@
+@@ -257,7 +269,7 @@
    pict->buffer=out;
  }
  
@@ -68,7 +67,7 @@
    png_bytep *row_pointers;
    png_structp png_ptr;
    png_infop info_ptr;
-@@ -272,7 +285,10 @@
+@@ -272,7 +284,10 @@
      fprintf(stdout, "%i\n",write(i,(void*)pict->buffer,(pict->xres)*(pict->yres)));
      perror("dupa");
      fprintf(stdout, "Writing to %s %ix%i %i\n", filename,(pict->xres),(pict->yres),(pict->xres)*(pict->yres));
@@ -79,7 +78,7 @@
      fflush(stdout);
      close(i);
  #endif
-@@ -312,7 +328,10 @@
+@@ -312,7 +327,10 @@
  
    png_init_io(png_ptr, OUTfd);
      
@@ -91,7 +90,7 @@
  
    row_pointers=(png_bytep*)malloc(sizeof(png_bytep)*pict->yres);
  
-@@ -332,7 +351,10 @@
+@@ -332,7 +350,10 @@
        color_type=PNG_COLOR_TYPE_RGB_ALPHA;
        for (i=0; i<(pict->yres); i++)
          row_pointers[i]=pict->buffer+i*4*(pict->xres);
@@ -103,7 +102,7 @@
        break;
  
      case 16:
-@@ -354,10 +376,13 @@
+@@ -354,10 +375,13 @@
  
      case 32:
        bit_depth=8;
@@ -119,7 +118,7 @@
        break;
      }
      
-@@ -387,7 +412,7 @@
+@@ -387,7 +411,7 @@
  
  
  
@@ -128,7 +127,7 @@
  static struct option long_options[] = {
          {"slowcon", 1, 0, 'C'},
          {"console", 1, 0, 'c'},
-@@ -395,6 +420,7 @@
+@@ -395,6 +419,7 @@
          {"help", 0, 0, 'h'},
          {"noint", 0, 0, 'i'},
          {"sleep", 1, 0, 's'},
@@ -136,7 +135,7 @@
          {0, 0, 0, 0}
          };
                                                                  
-@@ -402,8 +428,9 @@
+@@ -402,8 +427,9 @@
    char *buffer, *device = NULL, *outfile = argv[argc-1];
    int optc, vt_num=-1;
    struct picture pict;
@@ -147,7 +146,7 @@
  
    pict.colormap=NULL;
    
-@@ -432,7 +459,10 @@
+@@ -432,7 +458,10 @@
        return 1;
        break;
      case 'i':
@@ -159,7 +158,7 @@
        break;
      case 's':
        sleep (atoi(optarg));
-@@ -458,7 +488,7 @@
+@@ -458,7 +487,7 @@
  
    printf("Writing %s ...",outfile);fflush(stdout);
        
