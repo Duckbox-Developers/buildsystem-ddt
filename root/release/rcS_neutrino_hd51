@@ -1,2 +1,86 @@
 #!/bin/sh
-# Dummy File for now
+
+read model < /etc/model
+
+if [ -e /var/etc/.firstboot ]; then
+  rm /var/etc/.firstboot
+fi
+
+mount -t proc proc /proc
+mount -t sysfs sys /sys
+mount -t tmpfs tmp /tmp
+mount -t tmpfs media /media
+mount -t tmpfs mnt /mnt
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+echo /sbin/mdev >/proc/sys/kernel/hotplug
+mdev -s
+
+echo "starting interface"
+/etc/init.d/mountall start
+
+insmod /lib/modules/hd51_1.ko
+insmod /lib/modules/hd51_2.ko
+insmod /lib/modules/hd51_3.ko
+insmod /lib/modules/hd51_4.ko
+
+echo "Booting... DDT" > /dev/dbox/oled0
+
+echo "setup network"
+/etc/init.d/hostname start
+/etc/init.d/portmap start
+/usr/sbin/inetd
+NFS=$(grep -c nfs /proc/cmdline)
+  if [ "$NFS" -eq "1" ]; then
+    echo "Booting from nfs, don't set network"
+    elif [ -e /var/tuxbox/config/.bootargs ]; then
+    echo "using ip set via bootargs, don't reset network"
+  else
+    if [ -e /etc/network/interfaces ]; then
+      ip addr flush eth0
+      /etc/init.d/networking stop
+      DHCP=$(grep -c dhcp /etc/network/interfaces)
+      if [ "$DHCP" -eq "1" ]; then
+        echo "Starting dhcp"
+        /etc/init.d/udhcpc start
+      fi
+      /etc/init.d/networking start
+    fi
+  fi
+/sbin/ifconfig lo 127.0.0.1 up
+
+# set dummy time
+date -s "2017-01-01 00:00"
+
+until false
+do
+    echo "starting GUI ->"
+    chmod 755 /usr/local/bin/*
+    /usr/local/bin/neutrino -v 0
+    rtv=$?
+    echo "GUI ended <- RTV: " $rtv
+    case "$rtv" in
+      0) echo "0"
+        echo "SHUTDOWN"
+      init 0;;
+      1) echo "1"
+        echo "REBOOT"
+        echo "      *-*       " > /dev/dbox/oled0
+      init 6;;
+      3) echo "3"
+        echo "RESTART"
+        echo "    RESTART     " > /dev/dbox/oled0
+      sync;;
+      *) echo "*"
+        echo -e "\033[01;31mERROR: $rtv\033[00m"
+        echo "    *ERROR*     " > /dev/dbox/oled0
+      init 6;;
+    esac
+done
+echo "      *-*       " > /dev/dbox/oled0
+
+#never reached
+echo "REBOOT $model" > /dev/dbox/oled0
+echo "REBOOT $model"
+reboot -f
+

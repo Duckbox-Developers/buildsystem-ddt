@@ -74,7 +74,7 @@ FOURTH_KERNEL_PARTITION_OFFSET = $(shell expr $(THRID_ROOTFS_PARTITION_OFFSET) \
 FOURTH_ROOTFS_PARTITION_OFFSET = $(shell expr $(FOURTH_KERNEL_PARTITION_OFFSET) \+ $(KERNEL_PARTITION_SIZE))
 SWAP_PARTITION_OFFSET = $(shell expr $(FOURTH_ROOTFS_PARTITION_OFFSET) \+ $(ROOTFS_PARTITION_SIZE_MULTI))
 
-flash-image-axt-multi: $(D)/host_resize2fs
+flash-image-hd51-multi: $(D)/host_resize2fs
 	rm -rf $(AX_BUILD_TMP)
 	mkdir -p $(AX_BUILD_TMP)
 	# Create a sparse image block

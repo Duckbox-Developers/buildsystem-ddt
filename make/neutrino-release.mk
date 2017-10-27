@@ -447,6 +447,7 @@ neutrino_release_arivalink200:
 neutrino_release_hd51:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
+	install -m 0644 $(SKEL_ROOT)/release/mdev_hd51.conf $(RELEASE_DIR)/etc/mdev.conf
 	find $(RELEASE_DIR)/usr/lib/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/ -name '*.la' -exec rm -f {} \;
