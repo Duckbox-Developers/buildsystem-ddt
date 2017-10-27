@@ -76,7 +76,7 @@ ifeq ($(BOXARCH), sh4)
 INITSCRIPTS_ADAPTED_ETC_FILES += \
 	init.d/getfb.awk \
 	init.d/makedev \
-	init.d/mountvirtfs \
+	init.d/mountvirtfs
 endif
 
 #
