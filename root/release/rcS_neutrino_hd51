@@ -3,6 +3,10 @@
 read model < /etc/model
 
 if [ -e /var/etc/.firstboot ]; then
+/usr/bin/passwd root <<EOF
+root
+root
+EOF
   rm /var/etc/.firstboot
 fi
 
