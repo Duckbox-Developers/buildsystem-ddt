@@ -210,7 +210,8 @@ neutrino-hd2-plugins-distclean: neutrino-hd2-plugins-clean
 	rm -f $(D)/neutrino-hd2-plugins.do_prepare
 	rm -f $(D)/neutrino-hd2-plugins.do_compile
 
-neutrino-mediathek:
+$(D)/neutrino-mediathek:
+	$(START_BUILD)
 	$(REMOVE)/$@
 	git clone https://github.com/neutrino-mediathek/mediathek.git $(BUILD_TMP)/$@
 	set -e; cd $(BUILD_TMP)/$@ && \
@@ -218,3 +219,4 @@ neutrino-mediathek:
 	cp -a plugins/* $(TARGET_DIR)/lib/tuxbox/plugins/ && \
 	cp -a share $(TARGET_DIR)/usr/
 	$(REMOVE)/$@
+	$(TOUCH)
