@@ -117,8 +117,9 @@ flash-image-hd51-multi: $(D)/host_resize2fs
 	cd $(RELEASE_DIR) && \
 	tar -cvf $(AX_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=$(RELEASE_DIR)/boot/zImage* . > /dev/null 2>&1; \
 	bzip2 $(AX_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(AX_BUILD_TMP)/$(BOXTYPE)/imageversion
 	mv $(AX_BUILD_TMP)/disk.img $(AX_BUILD_TMP)/$(BOXTYPE)/
 	cd $(AX_BUILD_TMP) && \
-	zip -r $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d%m%Y-%H%M%S').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/disk.img
+	zip -r $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d%m%Y-%H%M%S').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/disk.img $(BOXTYPE)/imageversion
 	# cleanup
 	rm -rf $(AX_BUILD_TMP)
