@@ -234,9 +234,7 @@ $(D)/bootstrap: $(BOOTSTRAP)
 SYSTEM_TOOLS  = $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
-ifeq ($(BOXARCH), sh4)
 SYSTEM_TOOLS += $(D)/diverse-tools
-endif
 SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/hdidle

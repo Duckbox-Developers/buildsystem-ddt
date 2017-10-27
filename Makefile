@@ -113,6 +113,7 @@ else
 include make/linux-kernel-arm.mk
 include make/crosstool-arm.mk
 include make/driver-arm.mk
+include make/root-etc.mk
 include make/python.mk
 include make/gstreamer-arm.mk
 endif

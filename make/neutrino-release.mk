@@ -447,6 +447,9 @@ neutrino_release_arivalink200:
 neutrino_release_hd51:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
+	find $(RELEASE_DIR)/usr/lib/ -name '*.a' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/ -name '*.o' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/ -name '*.la' -exec rm -f {} \;
 
 #
 # neutrino_release_base

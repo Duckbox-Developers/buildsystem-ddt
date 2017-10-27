@@ -62,10 +62,7 @@ INITSCRIPTS_ADAPTED_ETC_FILES = \
 	hostname \
 	vdstandby.cfg \
 	init.d/bootclean.sh \
-	init.d/getfb.awk \
 	init.d/hostname \
-	init.d/makedev \
-	init.d/mountvirtfs \
 	init.d/mountall \
 	init.d/network \
 	init.d/networking \
@@ -74,6 +71,13 @@ INITSCRIPTS_ADAPTED_ETC_FILES = \
 	init.d/sendsigs \
 	init.d/udhcpc \
 	init.d/umountfs
+
+ifeq ($(BOXARCH), sh4)
+INITSCRIPTS_ADAPTED_ETC_FILES += \
+	init.d/getfb.awk \
+	init.d/makedev \
+	init.d/mountvirtfs \
+endif
 
 #
 # Functions for copying customized etc files from cdk/root/etc into yaud targets and
