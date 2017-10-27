@@ -60,7 +60,12 @@ until false
 do
     echo "starting GUI ->"
     chmod 755 /usr/local/bin/*
-    /usr/local/bin/neutrino -v 0
+    if [ -e /tmp/neutrino ]; then
+      chmod 755 /tmp/neutrino
+      /tmp/neutrino
+    else
+      /usr/local/bin/neutrino -v 0
+    fi
     rtv=$?
     echo "GUI ended <- RTV: " $rtv
     case "$rtv" in
