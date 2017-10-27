@@ -30,6 +30,7 @@ ifeq ($(BOXARCH), arm)
 NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
 NEUTRINO_DEPS += $(D)/ntfs_3g
 NEUTRINO_DEPS += $(D)/aio-grab
+NEUTRINO_DEPS += neutrino-mediathek
 endif
 
 ifeq ($(IMAGE), neutrino-wlandriver)
