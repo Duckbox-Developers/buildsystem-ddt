@@ -114,6 +114,7 @@ PACKAGES="\
 	                                                             ${FEDORA:+byacc}                                 \
 	${UBUNTU:+libssl-dev}           ${SUSE:+libopenssl-devel}    ${FEDORA:+openssl-devel}                         \
 	${UBUNTU:+libmount-dev}                                                                                       \
+	${UBUNTU:+mtools}                                                                                             \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
