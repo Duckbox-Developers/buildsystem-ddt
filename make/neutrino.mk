@@ -308,11 +308,11 @@ libstb-hal-cst-next-ni-distclean:
 #
 # neutrino-mp-cst-next-ni
 #
-yaud-neutrino-mp-cst-next-ni: yaud-none \
+yaud-neutrino-mp-cst-next-ni: $(D)/bootstrap yaud-none \
 		neutrino-mp-cst-next-ni $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
-yaud-neutrino-mp-cst-next-ni-plugins: yaud-none \
+yaud-neutrino-mp-cst-next-ni-plugins: $(D)/bootstrap yaud-none \
 		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
@@ -579,15 +579,15 @@ libstb-hal-cst-next-tangos-distclean:
 #
 # yaud-neutrino-mp-tangos
 #
-yaud-neutrino-mp-tangos: yaud-none \
+yaud-neutrino-mp-tangos: $(D)/bootstrap yaud-none \
 		$(D)/neutrino-mp-tangos $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
-yaud-neutrino-mp-tangos-plugins: yaud-none \
+yaud-neutrino-mp-tangos-plugins: $(D)/bootstrap yaud-none \
 		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
-yaud-neutrino-mp-tangos-all: yaud-none \
+yaud-neutrino-mp-tangos-all: $(D)/bootstrap yaud-none \
 		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/shairport $(D)/neutrino_release
 	$(TUXBOX_YAUD_CUSTOMIZE)
 
