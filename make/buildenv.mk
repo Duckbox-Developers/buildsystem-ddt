@@ -121,7 +121,11 @@ TERM_YELLOW          := \033[00;33m
 TERM_YELLOW_BOLD     := \033[01;33m
 TERM_NORMAL          := \033[0m
 
-# helper-"functions":
+# certificates
+CA_BUNDLE             = ca-certificates.crt
+CA_BUNDLE_DIR         = /etc/ssl/certs
+
+# helper-"functions"
 REWRITE_LIBTOOL       = sed -i "s,^libdir=.*,libdir='$(TARGET_DIR)/usr/lib'," $(TARGET_DIR)/usr/lib
 REWRITE_LIBTOOLDEP    = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\ $(TARGET_DIR)/usr/lib,g" $(TARGET_DIR)/usr/lib
 REWRITE_PKGCONF       = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/usr',"
