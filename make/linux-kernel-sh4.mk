@@ -303,7 +303,7 @@ $(D)/kernel.do_prepare: $(PATCHES)/$(BUILD_CONFIG)/$(KERNEL_CONFIG) \
 	-rm $(KERNEL_DIR)/localversion*
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm
 ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
-	@echo "Using kernel debug"
+	@echo "Configuring kernel for debug."
 	@grep -v "CONFIG_PRINTK" "$(KERNEL_DIR)/.config" > $(KERNEL_DIR)/.config.tmp
 	cp $(KERNEL_DIR)/.config.tmp $(KERNEL_DIR)/.config
 	@echo "CONFIG_PRINTK=y" >> $(KERNEL_DIR)/.config

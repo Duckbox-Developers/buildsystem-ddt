@@ -105,18 +105,16 @@ ifeq ($(BOXARCH), sh4)
 include make/linux-kernel-sh4.mk
 include make/crosstool-sh4.mk
 include make/driver.mk
-include make/tools.mk
-include make/root-etc.mk
-include make/python.mk
 include make/gstreamer.mk
 else
 include make/linux-kernel-arm.mk
 include make/crosstool-arm.mk
 include make/driver-arm.mk
-include make/root-etc.mk
-include make/python.mk
 include make/gstreamer-arm.mk
 endif
+include make/root-etc.mk
+include make/python.mk
+include make/tools.mk
 include make/enigma2.mk
 include make/enigma2-plugins.mk
 include make/enigma2-release.mk
