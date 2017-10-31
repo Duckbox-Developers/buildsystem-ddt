@@ -204,8 +204,7 @@ $(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 #
 #
 $(HOST_DIR)/bin/unpack%.sh \
-$(HOST_DIR)/bin/get%.sh \
-$(HOST_DIR)/bin/opkg%sh: | directories
+$(HOST_DIR)/bin/get%.sh: | directories
 	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOST_DIR)/bin
 
 #
@@ -246,9 +245,8 @@ SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/udpxy
 SYSTEM_TOOLS += $(D)/dvbsnoop
-ifeq ($(BOXARCH), sh4)
 SYSTEM_TOOLS += $(D)/fbshot
-else
+ifeq ($(BOXARCH), arm)
 SYSTEM_TOOLS += $(D)/ofgwrite
 endif
 SYSTEM_TOOLS += $(D)/driver
