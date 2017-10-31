@@ -1,6 +1,5 @@
-diff -NEbur '--exclude-from=/home/dbo/DDT/cdk/scripts/diff-exclude' udpxy-1.0.23-0.org/netop.c udpxy-1.0.23-0/netop.c
---- udpxy-1.0.23-0.org/netop.c	2012-07-16 19:20:03.000000000 +0200
-+++ udpxy-1.0.23-0/netop.c	2014-12-20 23:19:43.189507235 +0100
+--- a/netop.c
++++ b/netop.c
 @@ -53,16 +53,24 @@
  
      extern const char IPv4_ALL[];
@@ -46,9 +45,8 @@ diff -NEbur '--exclude-from=/home/dbo/DDT/cdk/scripts/diff-exclude' udpxy-1.0.23
  
          rc = listen (lsock, (bklog > 0 ? bklog : 1));
          if( 0 != rc ) break;
-diff -NEbur '--exclude-from=/home/dbo/DDT/cdk/scripts/diff-exclude' udpxy-1.0.23-0.org/udpxy.c udpxy-1.0.23-0/udpxy.c
---- udpxy-1.0.23-0.org/udpxy.c	2012-07-16 19:20:03.000000000 +0200
-+++ udpxy-1.0.23-0/udpxy.c	2014-12-20 23:19:43.193507235 +0100
+--- a/udpxy.c
++++ b/udpxy.c
 @@ -1389,7 +1389,12 @@
      openlog( g_udpxy_app, LOG_CONS | LOG_PID, LOG_LOCAL0 );
  

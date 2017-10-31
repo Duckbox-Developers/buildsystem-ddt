@@ -1440,12 +1440,12 @@ $(D)/dvbsnoop: $(D)/bootstrap $(ARCHIVE)/$(DVBSNOOP_SOURCE)
 #
 # udpxy
 #
-UDPXY_VER = 1.0.23-9
-UDPXY_SOURCE = udpxy.$(UDPXY_VER)-prod.tar.gz
+UDPXY_VER = 1.0.23-10
+UDPXY_SOURCE = udpxy-src.tar.gz
 UDPXY_PATCH = udpxy-$(UDPXY_VER).patch
 
 $(ARCHIVE)/$(UDPXY_SOURCE):
-	$(WGET) http://www.udpxy.com/download/1_23/$(UDPXY_SOURCE)
+	$(WGET) http://www.udpxy.com/download/udpxy/$(UDPXY_SOURCE)
 
 $(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
 	$(START_BUILD)
