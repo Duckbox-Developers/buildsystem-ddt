@@ -953,7 +953,7 @@ $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 #
 # libcurl
 #
-LIBCURL_VER = 7.54.1
+LIBCURL_VER = 7.56.1
 LIBCURL_SOURCE = curl-$(LIBCURL_VER).tar.bz2
 LIBCURL_PATCH = libcurl-$(LIBCURL_VER).patch
 
@@ -967,7 +967,7 @@ $(D)/ca-bundle: $(ARCHIVE)/cacert.pem
 $(ARCHIVE)/$(LIBCURL_SOURCE):
 	$(WGET) https://curl.haxx.se/download/$(LIBCURL_SOURCE)
 
-$(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/$(LIBCURL_SOURCE)
+$(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(LIBCURL_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/curl-$(LIBCURL_VER)
 	$(UNTAR)/$(LIBCURL_SOURCE)
@@ -990,7 +990,8 @@ $(D)/libcurl: $(D)/bootstrap $(D)/openssl $(D)/zlib $(ARCHIVE)/$(LIBCURL_SOURCE)
 			--disable-ldap \
 			--without-libidn \
 			--without-libpsl \
-			--with-random \
+			--with-ca-bundle=$(CA_BUNDLE_DIR)/$(CA_BUNDLE) \
+			--with-random=/dev/urandom \
 			--with-ssl=$(TARGET_DIR) \
 		; \
 		$(MAKE) all; \
