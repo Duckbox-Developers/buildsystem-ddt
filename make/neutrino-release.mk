@@ -461,7 +461,7 @@ neutrino_release_base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{autofs,bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
-	install -d $(RELEASE_DIR)/etc/{init.d,network,mdev}
+	install -d $(RELEASE_DIR)/etc/{init.d,network,mdev,pem,ssl}
 	install -d $(RELEASE_DIR)/etc/network/if-{post-{up,down},pre-{up,down},up,down}.d
 	install -d $(RELEASE_DIR)/lib/{modules,udev,firmware,tuxbox}
 	install -d $(RELEASE_DIR)/lib/tuxbox/plugins
@@ -477,7 +477,7 @@ neutrino_release_base:
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
 	ln -sf /usr/share $(RELEASE_DIR)/share
-	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,net,tuxbox,update}
+	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,logos,net,tuxbox,update}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/net/epg
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
