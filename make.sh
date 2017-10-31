@@ -14,31 +14,12 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-38)"
-	echo "Parameter 2: kernel (1-2)"
+	echo "Parameter 2: kernel (1-2) for sh4 cpu"
 	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: Media Framework (1-4)"
 	echo "Parameter 5: Image (Enigma=1/2 Neutrino=3/4 (1-4)"
 	exit
 fi
-
-##############################################
-
-CURDIR=`pwd`
-echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
-set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
-for i in $set;
-do
-	if [ ! -e $CURDIR/root/boot/$i.elf ]; then
-		echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
-		echo "           ($i.elf is one of them)"
-		echo
-		echo "    Correct this and retry."
-		echo
-		exit
-	fi
-done
-echo " [OK]"
-echo
 
 ##############################################
 
@@ -130,6 +111,33 @@ esac
 echo "BOXARCH=$BOXARCH" > config
 echo "BOXTYPE=$BOXTYPE" >> config
 
+if [ $BOXARCH == 'arm' ]; then
+	echo "KBUILD_VERBOSE=1" >> config
+fi
+
+##############################################
+
+if [ $BOXARCH == "sh4" ]; then
+
+##############################################
+
+CURDIR=`pwd`
+echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
+set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
+for i in $set;
+do
+	if [ ! -e $CURDIR/root/boot/$i.elf ]; then
+		echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
+		echo "           ($i.elf is one of them)"
+		echo
+		echo "    Correct this and retry."
+		echo
+		exit
+	fi
+done
+echo " [OK]"
+echo
+
 ##############################################
 
 case $2 in
@@ -146,6 +154,10 @@ case "$REPLY" in
 	*)  KERNEL_STM="p0217";;
 esac
 echo "KERNEL_STM=$KERNEL_STM" >> config
+
+##############################################
+
+fi
 
 ##############################################
 
@@ -219,14 +231,18 @@ echo "Your build environment is ready :-)"
 echo "Your next step could be:"
 case "$IMAGE" in
 		neutrino*)
+		echo "  make yaud-neutrino-mp-tangos"
+		echo "  make yaud-neutrino-mp-tangos-plugins"
+		if [ $BOXARCH == 'arm' ]; then
+			echo "  make yaud-neutrino-mp-cst-next-ni"
+		fi
 		echo "  make yaud-neutrino-mp-cst-next"
 		echo "  make yaud-neutrino-mp-cst-next-plugins"
-		echo "  make yaud-neutrino-mp-cst-next-ni"
-		echo "  make yaud-neutrino-mp-cst-next-ni-plugins"
 		echo "  make yaud-neutrino-hd2"
 		echo "  make yaud-neutrino-hd2-plugins";;
 		enigma2*)
 		echo "  make yaud-enigma2";;
 		*)
+		echo "  make flashimage";;
 esac
 echo " "
