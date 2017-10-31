@@ -32,7 +32,7 @@ diff --git a/testsuite/Makefile.in b/testsuite/Makefile.in
 index 6bc1907..bb65bf0 100644
 --- a/testsuite/Makefile.in
 +++ b/testsuite/Makefile.in
-@@ -116,6 +116,8 @@ $(TARGETS) $(EXTRA_TARGETS): testutils.$(OBJEXT) ../nettle-internal.$(OBJEXT) \
+@@ -121,6 +121,8 @@ $(TARGETS) $(EXTRA_TARGETS): testutils.$(OBJEXT) ../nettle-internal.$(OBJEXT) \
  # data.
  VALGRIND = valgrind --error-exitcode=1 --leak-check=full --show-reachable=yes @IF_ASM@ --partial-loads-ok=yes
  
