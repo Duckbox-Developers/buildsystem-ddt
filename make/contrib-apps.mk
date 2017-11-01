@@ -1589,33 +1589,3 @@ $(D)/ofgwrite: $(D)/bootstrap
 	sed -i "s,/usr/bin/,/bin/," $(TARGET_DIR)/bin/ofgwrite
 	$(REMOVE)/ofgwrite
 	$(TOUCH)
-
-#
-# aio_grab
-#
-AIO_GRAB_VER = 9e4e986
-AIO_GRAB_SOURCE = aio_grab-$(AIO_GRAB_VER).tar.bz2
-AIO_GRAB_URL = git://github.com/oe-alliance/aio-grab.git
-
-$(ARCHIVE)/$(AIO_GRAB_SOURCE):
-	get-git-archive.sh $(AIO_GRAB_URL) $(AIO_GRAB_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/aio_grab: $(D)/bootstrap $(D)/zlib $(D)/libpng $(D)/libjpeg $(ARCHIVE)/$(AIO_GRAB_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/aio_grab-$(AIO_GRAB_VER)
-	$(UNTAR)/$(AIO_GRAB_SOURCE)
-	set -e; cd $(BUILD_TMP)/aio_grab-$(AIO_GRAB_VER); \
-		aclocal --force -I m4; \
-		libtoolize --copy --ltdl --force; \
-		autoconf --force; \
-		automake --add-missing --copy --force-missing --foreign; \
-		$(CONFIGURE) \
-			--target=$(TARGET) \
-			--prefix= \
-			--enable-silent-rules \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/aio_grab-$(AIO_GRAB_VER)
-	$(TOUCH)
-
