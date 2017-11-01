@@ -1,7 +1,7 @@
 #
 # ncurses
 #
-NCURSES_VER = 5.9
+NCURSES_VER = 6.0
 NCURSES_SOURCE = ncurses-$(NCURSES_VER).tar.gz
 NCURSES_PATCH = ncurses-$(NCURSES_VER)-gcc-5.x-MKlib_gen.patch
 
@@ -18,7 +18,8 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 			--target=$(TARGET) \
 			--prefix=/usr \
 			--with-terminfo-dirs=/usr/share/terminfo \
-			--with-pkg-config=/usr/lib/pkgconfig \
+			--with-pkg-config \
+			--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			--with-shared \
 			--without-cxx \
 			--without-cxx-binding \
