@@ -351,7 +351,7 @@ LIBDCA_SOURCE = libdca-$(LIBDCA_VER).tar.bz2
 LIBDCA_PATCH =
 
 $(ARCHIVE)/$(LIBDCA_SOURCE):
-	$(WGET) http://download.videolan.org/pub/videolan/libdca/$(LIBDCA_VER)/$(LIBDCA_SOURCE)
+	$(WGET) https://get.videolan.org/libdca/$(LIBDCA_VER)/$(LIBDCA_SOURCE)
 
 $(D)/libdca: $(D)/bootstrap $(ARCHIVE)/$(LIBDCA_SOURCE)
 	$(START_BUILD)
