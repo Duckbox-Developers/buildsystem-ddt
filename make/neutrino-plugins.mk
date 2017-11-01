@@ -50,6 +50,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 #
 NEUTRINO_PLUGINS  = $(D)/neutrino-mp-plugins
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugins-scripts-lua
+NEUTRINO_PLUGINS += $(D)/neutrino-mediathek
 NEUTRINO_PLUGINS += $(D)/xupnpd
 
 ifeq ($(BOXARCH), sh4)
@@ -163,6 +164,24 @@ $(D)/neutrino-mp-plugins-scripts-lua: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# neutrino-mediathek
+#
+$(D)/neutrino-mediathek:
+	$(START_BUILD)
+	$(REMOVE)/plugins-mediathek
+	set -e; if [ -d $(ARCHIVE)/plugins-mediathek.git ]; \
+		then cd $(ARCHIVE)/plugins-mediathek.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/neutrino-mediathek/mediathek.git plugins-mediathek.git; \
+		fi
+	cp -ra $(ARCHIVE)/plugins-mediathek.git $(BUILD_TMP)/plugins-mediathek
+	install -d $(TARGET_DIR)/var/tuxbox/plugins
+	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
+		cp -a plugins/* $(TARGET_DIR)/var/tuxbox/plugins/; \
+		cp -a share $(TARGET_DIR)/usr/
+	$(REMOVE)/plugins-mediathek
+	$(TOUCH)
+
+#
 # neutrino-hd2 plugins
 #
 NEUTRINO_HD2_PLUGINS_PATCHES =
@@ -213,13 +232,3 @@ neutrino-hd2-plugins-distclean: neutrino-hd2-plugins-clean
 	rm -f $(D)/neutrino-hd2-plugins.do_prepare
 	rm -f $(D)/neutrino-hd2-plugins.do_compile
 
-$(D)/neutrino-mediathek:
-	$(START_BUILD)
-	$(REMOVE)/$@
-	git clone https://github.com/neutrino-mediathek/mediathek.git $(BUILD_TMP)/$@
-	set -e; cd $(BUILD_TMP)/$@ && \
-	install -d $(TARGET_DIR)/lib/tuxbox/plugins && \
-	cp -a plugins/* $(TARGET_DIR)/lib/tuxbox/plugins/ && \
-	cp -a share $(TARGET_DIR)/usr/
-	$(REMOVE)/$@
-	$(TOUCH)
