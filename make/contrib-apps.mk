@@ -84,7 +84,7 @@ SYSVINIT_VER = 2.88dsf
 SYSVINIT_SOURCE = sysvinit_$(SYSVINIT_VER).orig.tar.gz
 
 $(ARCHIVE)/$(SYSVINIT_SOURCE):
-	$(WGET) ftp://ftp.debian.org/debian/pool/main/s/sysvinit/$(SYSVINIT_SOURCE)
+	$(WGET) http://ftp.debian.org/debian/pool/main/s/sysvinit/$(SYSVINIT_SOURCE)
 
 $(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 	$(START_BUILD)
