@@ -680,3 +680,164 @@ neutrino-mp-tangos-clean:
 neutrino-mp-tangos-distclean:
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-mp-tangos*
+
+################################################################################
+#
+# libstb-hal-max
+#
+NEUTRINO_LIBSTB_MAX_PATCHES =
+
+$(D)/libstb-hal-max.do_prepare:
+	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/libstb-hal-max
+	rm -rf $(SOURCE_DIR)/libstb-hal-max.org
+	rm -rf $(LH_OBJDIR)
+	[ -d "$(ARCHIVE)/libstb-hal-max.git" ] && \
+	(cd $(ARCHIVE)/libstb-hal-max.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/libstb-hal-max.git" ] || \
+	git clone https://bitbucket.org/max_10/libstb-hal-max.git $(ARCHIVE)/libstb-hal-max.git; \
+	cp -ra $(ARCHIVE)/libstb-hal-max.git $(SOURCE_DIR)/libstb-hal-max;\
+	cp -ra $(SOURCE_DIR)/libstb-hal-max $(SOURCE_DIR)/libstb-hal-max.org
+	set -e; cd $(SOURCE_DIR)/libstb-hal-max; \
+		$(call post_patch,$(NEUTRINO_LIBSTB_MAX_PATCHES))
+	@touch $@
+
+$(D)/libstb-hal-max.config.status: | $(NEUTRINO_DEPS)
+	rm -rf $(LH_OBJDIR)
+	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
+	cd $(LH_OBJDIR); \
+		$(SOURCE_DIR)/libstb-hal-max/autogen.sh; \
+		export PKG_CONFIG=$(PKG_CONFIG); \
+		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
+		$(BUILDENV) \
+		$(SOURCE_DIR)/libstb-hal-max/configure --enable-silent-rules \
+			--host=$(TARGET) \
+			--build=$(BUILD) \
+			--prefix= \
+			--with-target=cdk \
+			--with-boxtype=$(BOXTYPE) \
+			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
+
+$(D)/libstb-hal-max.do_compile: $(D)/libstb-hal-max.config.status
+	cd $(SOURCE_DIR)/libstb-hal-max; \
+		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
+	@touch $@
+
+$(D)/libstb-hal-max: $(D)/libstb-hal-max.do_prepare $(D)/libstb-hal-max.do_compile
+	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+libstb-hal-max-clean:
+	rm -f $(D)/libstb-hal-max
+	cd $(LH_OBJDIR); \
+		$(MAKE) -C $(LH_OBJDIR) distclean
+
+libstb-hal-cst-distclean:
+	rm -rf $(LH_OBJDIR)
+	rm -f $(D)/libstb-hal-max.do_prepare
+	rm -f $(D)/libstb-hal-max.do_compile
+	rm -f $(D)/libstb-hal-max
+
+################################################################################
+#
+# neutrino-mp
+#
+NEUTRINO_MP_PATCHES =
+
+yaud-neutrino-mp: yaud-none \
+		$(D)/neutrino-mp $(D)/neutrino_release
+	$(TUXBOX_YAUD_CUSTOMIZE)
+
+yaud-neutrino-mp-plugins: yaud-none \
+		$(D)/neutrino-mp $(D)/neutrino-plugins $(D)/neutrino_release
+	$(TUXBOX_YAUD_CUSTOMIZE)
+
+$(D)/neutrino-mp.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
+	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/neutrino-mp
+	rm -rf $(SOURCE_DIR)/neutrino-mp.org
+	rm -rf $(N_OBJDIR)
+	[ -d "$(ARCHIVE)/gui-neutrino-mp.git" ] && \
+	(cd $(ARCHIVE)/gui-neutrino-mp.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/gui-neutrino-mp.git" ] || \
+	git clone /home/max/buildsystem-ddt/Makefile.local $(ARCHIVE)/gui-neutrino-mp.git; \
+	cp -ra $(ARCHIVE)/gui-neutrino-mp.git $(SOURCE_DIR)/neutrino-mp; \
+	cp -ra $(SOURCE_DIR)/neutrino-mp $(SOURCE_DIR)/neutrino-mp.org
+	set -e; cd $(SOURCE_DIR)/neutrino-mp; \
+		$(call post_patch,$(NEUTRINO_MP_PATCHES))
+	@touch $@
+
+$(D)/neutrino-mp.config.status:
+	rm -rf $(N_OBJDIR)
+	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
+	cd $(N_OBJDIR); \
+		$(SOURCE_DIR)/neutrino-mp/autogen.sh; \
+		$(BUILDENV) \
+		$(SOURCE_DIR)/neutrino-mp/configure --enable-silent-rules \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			$(N_CONFIG_OPTS) \
+			--with-boxtype=$(BOXTYPE) \
+			--enable-upnp \
+			--with-tremor \
+			--enable-reschange \
+			--with-libdir=/usr/lib \
+			--with-datadir=/usr/share/tuxbox \
+			--with-fontdir=/usr/share/fonts \
+			--with-configdir=/var/tuxbox/config \
+			--with-gamesdir=/var/tuxbox/games \
+			--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
+			--with-iconsdir_var=/var/tuxbox/icons \
+			--with-luaplugindir=/var/tuxbox/plugins \
+			--with-localedir=/usr/share/tuxbox/neutrino/locale \
+			--with-localedir_var=/var/tuxbox/locale \
+			--with-plugindir=/var/tuxbox/plugins \
+			--with-plugindir_var=/var/tuxbox/plugins \
+			--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
+			--with-themesdir=/usr/share/tuxbox/neutrino/themes \
+			--with-themesdir_var=/var/tuxbox/themes \
+			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-max/include \
+			--with-stb-hal-build=$(LH_OBJDIR) \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
+			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
+
+$(SOURCE_DIR)/neutrino-mp/src/gui/version.h:
+	@rm -f $@; \
+	echo '#define BUILT_DATE "'`date`'"' > $@
+	@if test -d $(SOURCE_DIR)/libstb-hal-max ; then \
+		pushd $(SOURCE_DIR)/libstb-hal-max ; \
+		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
+		popd ; \
+		pushd $(SOURCE_DIR)/neutrino-mp ; \
+		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
+		popd ; \
+		pushd $(BASE_DIR) ; \
+		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
+		popd ; \
+		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
+	fi
+
+$(D)/neutrino-mp.do_compile: $(D)/neutrino-mp.config.status $(SOURCE_DIR)/neutrino-mp/src/gui/version.h
+	cd $(SOURCE_DIR)/neutrino-mp; \
+		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGET_DIR)
+	@touch $@
+
+$(D)/neutrino-mp: $(D)/neutrino-mp.do_prepare $(D)/neutrino-mp.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/var/etc/.version
+	$(TOUCH)
+
+neutrino-mp-clean:
+	rm -f $(D)/neutrino-mp
+	rm -f $(SOURCE_DIR)/neutrino-mp/src/gui/version.h
+	cd $(N_OBJDIR); \
+		$(MAKE) -C $(N_OBJDIR) distclean
+
+neutrino-mp-distclean:
+	rm -rf $(N_OBJDIR)
+	rm -f $(D)/neutrino-mp.do_prepare
+	rm -f $(D)/neutrino-mp.do_compile
+	rm -f $(D)/neutrino-mp
+
