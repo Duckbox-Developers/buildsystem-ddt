@@ -732,7 +732,7 @@ libstb-hal-max-clean:
 	cd $(LH_OBJDIR); \
 		$(MAKE) -C $(LH_OBJDIR) distclean
 
-libstb-hal-cst-distclean:
+libstb-hal-max-distclean:
 	rm -rf $(LH_OBJDIR)
 	rm -f $(D)/libstb-hal-max.do_prepare
 	rm -f $(D)/libstb-hal-max.do_compile
