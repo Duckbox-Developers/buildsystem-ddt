@@ -269,7 +269,7 @@ $(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/po
 #
 # e2fsprogs
 #
-E2FSPROGS_VER = 1.42.13
+E2FSPROGS_VER = 1.43.7
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
 E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
 
@@ -283,13 +283,13 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 	set -e; cd $(BUILD_TMP)/e2fsprogs-$(E2FSPROGS_VER); \
 		$(call post_patch,$(E2FSPROGS_PATCH)); \
 		PATH=$(BUILD_TMP)/e2fsprogs-$(E2FSPROGS_VER):$(PATH) \
+		autoreconf -fi && \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--libdir=/usr/lib \
 			--mandir=/.remove \
 			--infodir=/.remove \
 			--disable-rpath \
-			--disable-quota \
 			--disable-testio-debug \
 			--disable-defrag \
 			--disable-nls \
@@ -299,8 +299,15 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 			--disable-debugfs \
 			--disable-imager \
 			--disable-resizer \
+			--disable-backtrace \
+			--disable-mmp \
+			--disable-tdb \
+			--disable-bmap-stats \
+			--disable-fuse2fs \
 			--enable-elf-shlibs \
 			--enable-fsck \
+			--enable-libblkid \
+			--enable-libuuid \
 			--enable-verbose-makecmds \
 			--enable-symlink-install \
 			--without-libintl-prefix \

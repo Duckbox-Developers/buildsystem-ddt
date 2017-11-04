@@ -24,6 +24,19 @@
  
  Name: uuid
  Description: Universally unique id library
+--- a/configure.ac
++++ b/configure.ac
+@@ -1449,10 +1449,8 @@
+ dnl
+ dnl Build CFLAGS
+ dnl
+-if test $cross_compiling = no; then
+    BUILD_CFLAGS="$CFLAGS $CPPFLAGS $INCLUDES -DHAVE_CONFIG_H"
+    BUILD_LDFLAGS="$LDFLAGS"
+-fi
+ AC_SUBST(BUILD_CFLAGS)
+ AC_SUBST(BUILD_LDFLAGS)
+ dnl
 --- a/lib/Makefile.elf-lib
 +++ b/lib/Makefile.elf-lib
 @@ -50,8 +50,6 @@ install-shlibs install:: $(ELF_LIB) installdirs-elf-lib $(DEP_INSTALL_SYMLINK)
@@ -45,9 +58,9 @@
  	$(RM) -rf elfshared
 --- a/misc/Makefile.in
 +++ b/misc/Makefile.in
-@@ -151,10 +151,10 @@
+@@ -162,10 +162,10 @@
  	$(E) "	LD $@"
- 	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o $(LIBCOM_ERR)
  
 -e2initrd_helper: e2initrd_helper.o $(DEPLIBS) $(DEPLIBBLKID) $(LIBEXT2FS)
 +e2initrd_helper: e2initrd_helper.o $(DEPLIBS) $(DEPLIBBLKID) $(DEPLIBUUID) $(LIBEXT2FS)
@@ -57,10 +70,10 @@
 +		$(LIBBLKID) $(LIBUUID) $(LIBEXT2FS) $(LIBINTL) $(SYSLIBS)
  
  tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
- 		$(DEPLIBUUID) $(DEPLIBQUOTA) $(LIBEXT2FS)
-@@ -304,10 +304,10 @@
- 		$(PROFILED_DUMPE2FS_OBJS) $(PROFILED_LIBS) \
- 		$(PROFILED_LIBE2P) $(PROFILED_LIBUUID) $(LIBINTL) $(SYSLIBS)
+ 		$(DEPLIBUUID) $(LIBEXT2FS)
+@@ -329,10 +329,10 @@
+ 		$(PROFILED_LIBE2P) $(PROFILED_LIBUUID) $(LIBINTL) $(SYSLIBS) \
+ 		$(PROFILED_LIBBLKID) $(LIBMAGIC)
  
 -fsck: $(FSCK_OBJS) $(DEPLIBBLKID)
 +fsck: $(FSCK_OBJS) $(DEPLIBBLKID) $(DEPLIBUUID)
