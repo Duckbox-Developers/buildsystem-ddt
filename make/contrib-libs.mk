@@ -336,6 +336,7 @@ OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-optimize-for-size.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-makefile-dirs.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-disable_doc_tests.patch
 OPENSSL_PATCH += openssl-$(OPENSSL_VER)-fix-parallel-building.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-compat_versioned_symbols-1.patch
 
 ifeq ($(BOXARCH), sh4)
 OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile
