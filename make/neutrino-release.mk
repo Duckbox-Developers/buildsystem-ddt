@@ -841,6 +841,10 @@ $(D)/%neutrino_release: neutrino_release_base neutrino_release_$(BOXTYPE)
 	rm -f $(RELEASE_DIR)/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/lib/*.py
 	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_cst_v?.*
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
+	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_ax_hd51.png
+	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_mutant_hd51.png
+endif
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
 	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_spark_new.jpg
 	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_spark_old.jpg
