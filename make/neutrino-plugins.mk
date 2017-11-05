@@ -60,12 +60,16 @@ endif
 $(D)/neutrino-plugins: $(NEUTRINO_PLUGINS)
 	@touch $@
 
+OBJDIR = $(BUILD_TMP)
+NP_OBJDIR = $(OBJDIR)/neutrino-mp-plugins
+
 #
 # neutrino-mp-plugins
 #
 $(D)/neutrino-mp-plugins.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins
+	rm -rf $(SOURCE_DIR)/neutrino-mp-plugins.org
 	set -e; if [ -d $(ARCHIVE)/neutrino-mp-plugins.git ]; \
 		then cd $(ARCHIVE)/neutrino-mp-plugins.git; git pull; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-mp-plugins.git neutrino-mp-plugins.git; \
@@ -78,13 +82,16 @@ endif
 	@touch $@
 
 $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
-	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
-		./autogen.sh && automake --add-missing; \
+	rm -rf $(NP_OBJDIR); \
+	test -d $(NP_OBJDIR) || mkdir -p $(NP_OBJDIR); \
+	cd $(NP_OBJDIR); \
+		$(SOURCE_DIR)/neutrino-mp-plugins/autogen.sh && automake --add-missing; \
 		$(BUILDENV) \
-		./configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-plugins/configure \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
+			--enable-silent-rules
 			--with-target=cdk \
 			--oldinclude=$(TARGET_DIR)/include \
 			--enable-maintainer-mode \
@@ -100,22 +107,21 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
 
 $(D)/neutrino-mp-plugins.do_compile: $(SOURCE_DIR)/neutrino-mp-plugins/config.status
 	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
-		$(MAKE)
+		$(MAKE) -C $(NP_OBJDIR)
 	@touch $@
 
 $(D)/neutrino-mp-plugins: $(D)/neutrino-mp-plugins.do_prepare $(D)/neutrino-mp-plugins.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-mp-plugins install DESTDIR=$(TARGET_DIR)
+	$(MAKE) -C $(NP_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 neutrino-mp-plugins-clean:
 	rm -f $(D)/neutrino-mp-plugins
-	cd $(SOURCE_DIR)/neutrino-mp-plugins; \
-		$(MAKE) clean
+	cd $(NP_OBJDIR); \
+		$(MAKE) -C $(NP_OBJDIR) clean
 
 neutrino-mp-plugins-distclean:
-	rm -f $(D)/neutrino-mp-plugins.do_prepare
-	rm -f $(D)/neutrino-mp-plugins.do_compile
-	rm -f $(D)/neutrino-mp-plugins.config.status
+	rm -rf $(NP_OBJDIR)
+	rm -f $(D)/neutrino-mp-plugins*
 
 #
 # xupnpd
