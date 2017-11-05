@@ -321,7 +321,7 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/uuid.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/blkid.pc
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,badblocks dumpe2fs logsave e2undo)
-	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,filefrag e2freefrag mklost+found uuidd)
+	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,filefrag e2freefrag mklost+found uuidd e4crypt)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,chattr lsattr uuidgen)
 	$(REMOVE)/e2fsprogs-$(E2FSPROGS_VER)
 	$(TOUCH)
