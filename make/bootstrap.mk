@@ -57,13 +57,9 @@ $(D)/host_pkgconfig: directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
 #
 # host_module_init_tools
 #
-HOST_MODULE_INIT_TOOLS_VER = 3.16
-HOST_MODULE_INIT_TOOLS_SOURCE = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER).tar.bz2
+HOST_MODULE_INIT_TOOLS_VER = $(MODULE_INIT_TOOLS_VER)
+HOST_MODULE_INIT_TOOLS_SOURCE = $(MODULE_INIT_TOOLS_SOURCE)
 HOST_MODULE_INIT_TOOLS_PATCH = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER).patch
-HOST_MODULE_INIT_TOOLS_HOST_PATCH = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER).patch
-
-$(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE):
-	$(WGET) ftp.europeonline.com/pub/linux/utils/kernel/module-init-tools/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 
 $(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	$(START_BUILD)
@@ -84,12 +80,9 @@ $(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 #
 # host_mtd_utils
 #
-HOST_MTD_UTILS_VER = 1.5.2
-HOST_MTD_UTILS_SOURCE = mtd-utils-$(HOST_MTD_UTILS_VER).tar.bz2
+HOST_MTD_UTILS_VER = $(MTD_UTILS_VER)
+HOST_MTD_UTILS_SOURCE = $(MTD_UTILS_SOURCE)
 HOST_MTD_UTILS_PATCH = host-mtd-utils-$(HOST_MTD_UTILS_VER).patch
-
-$(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE):
-	$(WGET) ftp://ftp.infradead.org/pub/mtd-utils/$(HOST_MTD_UTILS_SOURCE)
 
 $(D)/host_mtd_utils: directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
 	$(START_BUILD)
@@ -174,16 +167,16 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
 	$(TOUCH)
 
-HOST_E2FSPROGS_VER = 1.43.7
-HOST_E2FSPROGS_SOURCE = e2fsprogs-$(HOST_E2FSPROGS_VER).tar.gz
-
-$(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE):
-	$(WGET) http://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v$(HOST_E2FSPROGS_VER)/$(HOST_E2FSPROGS_SOURCE)
+#
+# host_resize2fs
+#
+HOST_E2FSPROGS_VER = $(E2FSPROGS_VER)
+HOST_E2FSPROGS_SOURCE = $(E2FSPROGS_SOURCE)
 
 $(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(START_BUILD)
 	$(UNTAR)/$(HOST_E2FSPROGS_SOURCE)
-	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER) && \
+	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER); \
 		./configure; \
 		$(MAKE)
 	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/resize/resize2fs $(HOST_DIR)/bin/
