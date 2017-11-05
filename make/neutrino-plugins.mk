@@ -74,7 +74,7 @@ $(D)/neutrino-mp-plugins.do_prepare:
 ifeq ($(BOXARCH), arm)
 	sed -i -e 's#shellexec fx2#shellexec#g' $(SOURCE_DIR)/neutrino-mp-plugins/Makefile.am
 endif
-	$(SOURCE_DIR)/neutrino-mp-plugins $(SOURCE_DIR)/neutrino-mp-plugins.org
+	cp -ra $(SOURCE_DIR)/neutrino-mp-plugins $(SOURCE_DIR)/neutrino-mp-plugins.org
 	@touch $@
 
 $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
