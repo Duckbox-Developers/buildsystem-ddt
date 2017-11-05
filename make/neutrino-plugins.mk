@@ -91,7 +91,7 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
-			--enable-silent-rules
+			--enable-silent-rules \
 			--with-target=cdk \
 			--oldinclude=$(TARGET_DIR)/include \
 			--enable-maintainer-mode \
