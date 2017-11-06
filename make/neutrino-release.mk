@@ -460,7 +460,7 @@ neutrino_release_hd51:
 neutrino_release_base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
-	install -d $(RELEASE_DIR)/{autofs,bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
+	install -d $(RELEASE_DIR)/{autofs,bin,boot,dev,dev.static,etc,hdd,home,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
 	install -d $(RELEASE_DIR)/etc/{init.d,network,mdev,ssl}
 	install -d $(RELEASE_DIR)/etc/network/if-{post-{up,down},pre-{up,down},up,down}.d
 	install -d $(RELEASE_DIR)/lib/{modules,udev,firmware,tuxbox}
@@ -525,7 +525,6 @@ endif
 #
 #
 ifeq ($(BOXARCH), sh4)
-
 #
 # player
 #
@@ -581,7 +580,6 @@ endif
 # Boxtype sh4
 #
 endif
-
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/button/button.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/button/button.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/cec/cec.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/cec/cec.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/cpu_frequ/cpu_frequ.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/cpu_frequ/cpu_frequ.ko $(RELEASE_DIR)/lib/modules/ || true
