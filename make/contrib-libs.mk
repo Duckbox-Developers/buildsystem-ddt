@@ -127,7 +127,7 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(TOUCH)
 
 #
-# host_glib2_genmarshal
+# host_libglib2_genmarshal
 #
 LIBGLIB2_VER_MAJOR = 2
 LIBGLIB2_VER_MINOR = 45
@@ -297,7 +297,7 @@ $(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(TOUCH)
 
 #
-# libreadline
+# readline
 #
 READLINE_VER = 6.2
 READLINE_SOURCE = readline-$(READLINE_VER).tar.gz
@@ -566,7 +566,7 @@ $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 	$(TOUCH)
 
 #
-# libboost
+# boost
 #
 BOOST_VER_MAJOR = 1
 BOOST_VER_MINOR = 61
@@ -1927,7 +1927,7 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(TOUCH)
 
 #
-#libpopt
+# libpopt
 #
 LIBPOPT_VER = 1.16
 LIBPOPT_SOURCE = popt-$(LIBPOPT_VER).tar.gz
@@ -1952,7 +1952,7 @@ $(D)/libpopt: $(D)/bootstrap $(ARCHIVE)/$(LIBPOPT_SOURCE)
 	$(TOUCH)
 
 #
-#libroxml
+# libroxml
 #
 LIBROXML_VER = 2.3.0
 LIBROXML_SOURCE = libroxml-$(LIBROXML_VER).tar.gz
