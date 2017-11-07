@@ -130,13 +130,12 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/$(LIBFFI_SOURCE)
 # host_libglib2_genmarshal
 #
 LIBGLIB2_VER_MAJOR = 2
-LIBGLIB2_VER_MINOR = 45
-LIBGLIB2_VER_MICRO = 4
+LIBGLIB2_VER_MINOR = 54
+LIBGLIB2_VER_MICRO = 0
 LIBGLIB2_VER = $(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR).$(LIBGLIB2_VER_MICRO)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VER).tar.xz
-LIBGLIB2_HOST_PATCH = libglib2-$(LIBGLIB2_VER)-gdate-suppress-string-format-literal-warning.patch
+LIBGLIB2_HOST_PATCH =
 LIBGLIB2_PATCH  = libglib2-$(LIBGLIB2_VER)-disable-tests.patch
-LIBGLIB2_PATCH += libglib2-$(LIBGLIB2_VER)-gdate-suppress-string-format-literal-warning.patch
 
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
 	$(WGET) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR)/$(LIBGLIB2_SOURCE)
@@ -153,6 +152,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 			--enable-static=yes \
 			--enable-shared=no \
 			--disable-fam \
+			--disable-libmount \
 			--prefix=`pwd`/out \
 		; \
 		$(MAKE) install; \
@@ -180,9 +180,13 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 			--prefix=/usr \
 			--mandir=/.remove \
 			--cache-file=config.cache \
+			--disable-fam \
 			--disable-gtk-doc \
 			--disable-gtk-doc-html \
+			--disable-libmount \
 			--with-threads="posix" \
+			--with-html-dir=/.remove \
+			--with-pcre=internal \
 			--enable-static \
 		; \
 		$(MAKE) all; \
