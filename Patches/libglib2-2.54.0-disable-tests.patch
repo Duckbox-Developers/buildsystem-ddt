@@ -1,6 +1,6 @@
 --- a/gio/Makefile.am
 +++ b/gio/Makefile.am
-@@ -233,7 +233,7 @@
+@@ -244,7 +244,7 @@
  platform_deps += win32/libgiowin32.la
  endif
  
@@ -30,6 +30,6 @@
  
 -SUBDIRS = . m4macros glib gmodule gthread gobject gio po docs tests
 +SUBDIRS = . m4macros glib gmodule gthread gobject gio
- DIST_SUBDIRS = $(SUBDIRS) build
+ DIST_SUBDIRS = $(SUBDIRS) build win32
  
  bin_SCRIPTS = glib-gettextize
