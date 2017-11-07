@@ -1806,7 +1806,6 @@ $(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 			--disable-debug \
 			--disable-asm-optimizations \
 			--disable-sse \
-			--disable-3dnow \
 			--disable-altivec \
 			--disable-doxygen-docs \
 			--disable-thorough-tests \
