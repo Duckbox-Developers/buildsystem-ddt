@@ -42,9 +42,9 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)"; \
 		$(MAKE) install.libs DESTDIR=$(TARGET_DIR); \
-		install -D -m 0755 misc/ncurses-config $(HOST_DIR)/bin/ncurses5-config; \
-		rm -f $(TARGET_DIR)/usr/bin/ncurses5-config
-	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncurses5-config
+		install -D -m 0755 misc/ncurses-config $(HOST_DIR)/bin/ncurses6-config; \
+		rm -f $(TARGET_DIR)/usr/bin/ncurses6-config
+	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncurses6-config
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/form.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/menu.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ncurses.pc
