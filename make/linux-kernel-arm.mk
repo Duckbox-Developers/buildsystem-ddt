@@ -43,7 +43,8 @@ HD51_PATCHES = \
 		armbox/hd51_blindscan2.patch \
 		armbox/hd51_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/hd51_reserve_dvb_adapter_0.patch \
-		armbox/hd51_blacklist_mmc0.patch
+		armbox/hd51_blacklist_mmc0.patch \
+		armbox/hd51_export_pmpoweroffprepare.patch
 
 VUSOLO4K_PATCHES = \
 		armbox/vusolo4k_bcm_genet_disable_warn.patch \
