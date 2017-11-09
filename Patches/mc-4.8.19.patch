@@ -1,0 +1,32 @@
+--- a/src/vfs/extfs/extfs.c
++++ b/src/vfs/extfs/extfs.c
+@@ -1568,8 +1568,6 @@
+      * appear on screen. */
+     if (dir == NULL)
+     {
+-        if (!silent)
+-            fprintf (stderr, _("Warning: cannot open %s directory\n"), dirname);
+         g_free (dirname);
+         return FALSE;
+     }
+--- a/src/vfs/sfs/sfs.c
++++ b/src/vfs/sfs/sfs.c
+@@ -432,7 +432,6 @@
+ 
+     if (cfg == NULL)
+     {
+-        fprintf (stderr, _("%s: Warning: file %s not found\n"), "sfs_init()", mc_sfsini);
+         g_free (mc_sfsini);
+         return 0;
+     }
+--- a/src/editor/syntax.c
++++ b/src/editor/syntax.c
+@@ -1488,8 +1488,6 @@
+     if (r == -1)
+     {
+         edit_free_syntax_rules (edit);
+-        message (D_ERROR, _("Load syntax file"),
+-                 _("Cannot open file %s\n%s"), f, unix_error_string (errno));
+     }
+     else if (r != 0)
+     {
