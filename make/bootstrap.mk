@@ -196,16 +196,8 @@ $(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 #
 #
 #
-$(HOST_DIR)/bin/unpack%.sh \
-$(HOST_DIR)/bin/get%.sh: | directories
-	ln -sf $(SCRIPTS_DIR)/$(shell basename $@) $(HOST_DIR)/bin
-
-#
-#
-#
 BOOTSTRAP  = directories
 BOOTSTRAP += $(D)/ccache
-BOOTSTRAP += $(HOST_DIR)/bin/get-git-archive.sh
 BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig

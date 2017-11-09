@@ -433,7 +433,7 @@ $(ARCHIVE)/$(LUA_SOURCE):
 	$(WGET) https://www.lua.org/ftp/$(LUA_SOURCE)
 
 $(ARCHIVE)/$(LUAPOSIX_SOURCE):
-	get-git-archive.sh $(LUAPOSIX_URL) release-v$(LUAPOSIX_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAPOSIX_URL) release-v$(LUAPOSIX_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
 	$(START_BUILD)
@@ -462,7 +462,7 @@ LUACURL_SOURCE = luacurl-$(LUACURL_VER).tar.bz2
 LUACURL_URL = git://github.com/Lua-cURL/Lua-cURLv3.git
 
 $(ARCHIVE)/$(LUACURL_SOURCE):
-	get-git-archive.sh $(LUACURL_URL) $(LUACURL_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LUACURL_URL) $(LUACURL_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 	$(START_BUILD)
@@ -505,7 +505,7 @@ LUASOCKET_SOURCE = luasocket-$(LUASOCKET_VER).tar.bz2
 LUASOCKET_URL = git://github.com/diegonehab/luasocket.git
 
 $(ARCHIVE)/$(LUASOCKET_SOURCE):
-	get-git-archive.sh $(LUASOCKET_URL) $(LUASOCKET_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LUASOCKET_URL) $(LUASOCKET_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 	$(START_BUILD)
@@ -526,7 +526,7 @@ LUAFEEDPARSER_SOURCE = luafeedparser-$(LUAFEEDPARSER_VER).tar.bz2
 LUAFEEDPARSER_URL = git://github.com/slact/lua-feedparser.git
 
 $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE):
-	get-git-archive.sh $(LUAFEEDPARSER_URL) $(LUAFEEDPARSER_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAFEEDPARSER_URL) $(LUAFEEDPARSER_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE)
 	$(START_BUILD)
@@ -2021,7 +2021,7 @@ GRAPHLCD_URL = git://projects.vdr-developer.org/graphlcd-base.git
 GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
 
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):
-	get-git-archive.sh $(GRAPHLCD_URL) $(GRAPHLCD_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(GRAPHLCD_URL) $(GRAPHLCD_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
@@ -2270,7 +2270,7 @@ LIBRTMPDUMP_URL = git://github.com/oe-alliance/rtmpdump.git
 LIBRTMPDUMP_PATCH = rtmpdump-2.4.patch
 
 $(ARCHIVE)/$(LIBRTMPDUMP_SOURCE):
-	get-git-archive.sh $(LIBRTMPDUMP_URL) $(LIBRTMPDUMP_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBRTMPDUMP_URL) $(LIBRTMPDUMP_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP_SOURCE)
 	$(START_BUILD)
@@ -2295,7 +2295,7 @@ LIBDVBSI_URL = git://git.opendreambox.org/git/obi/libdvbsi++.git
 LIBDVBSI_PATCH = libdvbsi-git.patch
 
 $(ARCHIVE)/$(LIBDVBSI_SOURCE):
-	get-git-archive.sh $(LIBDVBSI_URL) $(LIBDVBSI_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBDVBSI_URL) $(LIBDVBSI_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 	$(START_BUILD)

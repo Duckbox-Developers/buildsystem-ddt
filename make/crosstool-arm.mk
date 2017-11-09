@@ -27,7 +27,7 @@ CROSSTOOL = crosstool
 crosstool: crosstool-ng
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
-	get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
 crosstool-ng: directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	make $(BUILD_TMP)

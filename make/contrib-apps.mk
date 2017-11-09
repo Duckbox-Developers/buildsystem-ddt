@@ -1437,7 +1437,7 @@ DVBSNOOP_SOURCE = dvbsnoop-$(DVBSNOOP_VER).tar.bz2
 DVBSNOOP_URL = https://github.com/cotdp/dvbsnoop.git
 
 $(ARCHIVE)/$(DVBSNOOP_SOURCE):
-	get-git-archive.sh $(DVBSNOOP_URL) $(DVBSNOOP_VER) $(notdir $@) $(ARCHIVE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(DVBSNOOP_URL) $(DVBSNOOP_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/dvbsnoop: $(D)/bootstrap $(ARCHIVE)/$(DVBSNOOP_SOURCE)
 	$(START_BUILD)

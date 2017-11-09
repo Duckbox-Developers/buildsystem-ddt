@@ -52,13 +52,12 @@ $(STL_ARCHIVE)/stlinux24-sh4-glibc-dev-$(GLIBC_VER).sh4.rpm \
 $(STL_ARCHIVE)/stlinux24-sh4-libgcc-$(LIBGCC_VER).sh4.rpm \
 $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-$(LIBGCC_VER).sh4.rpm \
 $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
-	unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
+	$(SCRIPTS_DIR)/unpack-rpm.sh $(BUILD_TMP) $(STM_RELOCATE)/devkit/sh4 $(CROSS_DIR) \
 		$^
 	touch $(D)/$(notdir $@)
 
 CROSSTOOL = crosstool
 crosstool: directories driver-symlink \
-$(HOST_DIR)/bin/unpack-rpm.sh \
 crosstool-rpminstall
 	@touch $(D)/$(notdir $@)
 
