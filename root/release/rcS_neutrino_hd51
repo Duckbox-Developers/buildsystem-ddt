@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. /etc/profile
+
 read model < /etc/model
 
 if [ -e /var/etc/.firstboot ]; then
