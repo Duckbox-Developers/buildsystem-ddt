@@ -66,7 +66,7 @@ crossmenuconfig: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	$(REMOVE)/crosstool-ng-$(CROSSTOOL_NG_VER)
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng-$(CROSSTOOL_NG_VER); \
-		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER)-$(BOXARCH).config .config; \
+		cp -a $(PATCHES)/crosstool-ng-$(CROSSTOOL_NG_VER)-$(BOXARCH)-$(BOXTYPE).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
