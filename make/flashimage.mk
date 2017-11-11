@@ -25,7 +25,13 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	cd $(BASE_DIR)/flash/$(BOXTYPE) && $(SUDOCMD) ./$(BOXTYPE).sh
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
-	$(MAKE) flash-image-hd51-multi
+	$(MAKE) flash-image-hd51-multi-disk flash-image-hd51-multi-rootfs
+endif
+	$(TUXBOX_CUSTOMIZE)
+
+ofgimage:
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
+	$(MAKE) flash-image-hd51-multi-rootfs
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -47,6 +53,12 @@ HD51_BOOT_IMAGE = boot.img
 HD51_IMAGE_LINK = $(HD51_IMAGE_NAME).ext4
 HD51_IMAGE_ROOTFS_SIZE = 294912
 HD51_BUILD_TMP = $(BUILD_TMP)/image-build
+HD51_BOXMODE ?= 1
+ifeq ($(HD51_BOXMODE), $(filter $(HD51_BOXMODE), 1))
+HD51_BOXMODE_MEM = brcm_cma=440M@328M brcm_cma=192M@768M
+else
+HD51_BOXMODE_MEM = brcm_cma=520M@248M brcm_cma=200M@768M
+endif
 
 # emmc image
 EMMC_IMAGE_SIZE = 3817472
@@ -76,9 +88,9 @@ FOURTH_KERNEL_PARTITION_OFFSET = $(shell expr $(THRID_ROOTFS_PARTITION_OFFSET) \
 FOURTH_ROOTFS_PARTITION_OFFSET = $(shell expr $(FOURTH_KERNEL_PARTITION_OFFSET) \+ $(KERNEL_PARTITION_SIZE))
 SWAP_PARTITION_OFFSET = $(shell expr $(FOURTH_ROOTFS_PARTITION_OFFSET) \+ $(ROOTFS_PARTITION_SIZE_MULTI))
 
-flash-image-hd51-multi: $(D)/host_resize2fs
+flash-image-hd51-multi-disk: $(D)/host_resize2fs
 	rm -rf $(HD51_BUILD_TMP)
-	mkdir -p $(HD51_BUILD_TMP)
+	mkdir -p $(HD51_BUILD_TMP)/$(BOXTYPE)
 	# Create a sparse image block
 	dd if=/dev/zero of=$(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) seek=$(shell expr $(HD51_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
 	$(HOST_DIR)/bin/mkfs.ext4 -F $(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) -d $(RELEASE_DIR)
@@ -98,11 +110,11 @@ flash-image-hd51-multi: $(D)/host_resize2fs
 	parted -s $(EMMC_IMAGE) unit KiB mkpart swap linux-swap $(SWAP_PARTITION_OFFSET) $(shell expr $(EMMC_IMAGE_SIZE) \- 1024)
 	dd if=/dev/zero of=$(HD51_BUILD_TMP)/$(HD51_BOOT_IMAGE) bs=$(BLOCK_SIZE) count=$(shell expr $(BOOT_PARTITION_SIZE) \* $(BLOCK_SECTOR))
 	mkfs.msdos -S 512 $(HD51_BUILD_TMP)/$(HD51_BOOT_IMAGE)
-	echo "boot emmcflash0.kernel1 'brcm_cma=440M@328M brcm_cma=192M@768M root=/dev/mmcblk0p3 rw rootwait $(BOXMODEL)_4.boxmode=1'" > $(HD51_BUILD_TMP)/STARTUP
-	echo "boot emmcflash0.kernel1 'brcm_cma=440M@328M brcm_cma=192M@768M root=/dev/mmcblk0p3 rw rootwait $(BOXMODEL)_4.boxmode=1'" > $(HD51_BUILD_TMP)/STARTUP_1
-	echo "boot emmcflash0.kernel2 'brcm_cma=440M@328M brcm_cma=192M@768M root=/dev/mmcblk0p5 rw rootwait $(BOXMODEL)_4.boxmode=1'" > $(HD51_BUILD_TMP)/STARTUP_2
-	echo "boot emmcflash0.kernel3 'brcm_cma=440M@328M brcm_cma=192M@768M root=/dev/mmcblk0p7 rw rootwait $(BOXMODEL)_4.boxmode=1'" > $(HD51_BUILD_TMP)/STARTUP_3
-	echo "boot emmcflash0.kernel4 'brcm_cma=440M@328M brcm_cma=192M@768M root=/dev/mmcblk0p9 rw rootwait $(BOXMODEL)_4.boxmode=1'" > $(HD51_BUILD_TMP)/STARTUP_4
+	echo "boot emmcflash0.kernel1 '$(HD51_BOXMODE_MEM) root=/dev/mmcblk0p3 rw rootwait $(BOXMODEL)_4.boxmode=$(HD51_BOXMODE)'" > $(HD51_BUILD_TMP)/STARTUP
+	echo "boot emmcflash0.kernel1 '$(HD51_BOXMODE_MEM) root=/dev/mmcblk0p3 rw rootwait $(BOXMODEL)_4.boxmode=$(HD51_BOXMODE)'" > $(HD51_BUILD_TMP)/STARTUP_1
+	echo "boot emmcflash0.kernel2 '$(HD51_BOXMODE_MEM) root=/dev/mmcblk0p5 rw rootwait $(BOXMODEL)_4.boxmode=$(HD51_BOXMODE)'" > $(HD51_BUILD_TMP)/STARTUP_2
+	echo "boot emmcflash0.kernel3 '$(HD51_BOXMODE_MEM) root=/dev/mmcblk0p7 rw rootwait $(BOXMODEL)_4.boxmode=$(HD51_BOXMODE)'" > $(HD51_BUILD_TMP)/STARTUP_3
+	echo "boot emmcflash0.kernel4 '$(HD51_BOXMODE_MEM) root=/dev/mmcblk0p9 rw rootwait $(BOXMODEL)_4.boxmode=$(HD51_BOXMODE)'" > $(HD51_BUILD_TMP)/STARTUP_4
 	mcopy -i $(HD51_BUILD_TMP)/$(HD51_BOOT_IMAGE) -v $(HD51_BUILD_TMP)/STARTUP ::
 	mcopy -i $(HD51_BUILD_TMP)/$(HD51_BOOT_IMAGE) -v $(HD51_BUILD_TMP)/STARTUP_1 ::
 	mcopy -i $(HD51_BUILD_TMP)/$(HD51_BOOT_IMAGE) -v $(HD51_BUILD_TMP)/STARTUP_2 ::
@@ -113,6 +125,9 @@ flash-image-hd51-multi: $(D)/host_resize2fs
 	$(HOST_DIR)/bin/resize2fs $(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
 	dd if=$(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(HD51_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
+	mv $(HD51_BUILD_TMP)/disk.img $(HD51_BUILD_TMP)/$(BOXTYPE)/
+
+flash-image-hd51-multi-rootfs:
 	# Create final USB-image
 	mkdir -p $(HD51_BUILD_TMP)/$(BOXTYPE)
 	cp $(RELEASE_DIR)/boot/zImage.dtb $(HD51_BUILD_TMP)/$(BOXTYPE)/kernel.bin
@@ -120,7 +135,6 @@ flash-image-hd51-multi: $(D)/host_resize2fs
 	tar -cvf $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=$(RELEASE_DIR)/boot/zImage* . > /dev/null 2>&1; \
 	bzip2 $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD51_BUILD_TMP)/$(BOXTYPE)/imageversion
-	mv $(HD51_BUILD_TMP)/disk.img $(HD51_BUILD_TMP)/$(BOXTYPE)/
 	cd $(HD51_BUILD_TMP) && \
 	zip -r $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d%m%Y-%H%M%S').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/disk.img $(BOXTYPE)/imageversion
 	# cleanup
