@@ -281,7 +281,7 @@ case "$IMAGE" in
 		enigma2*)
 		echo "  make yaud-enigma2";;
 		*)
-		echo "  make flashimage";;
+		echo "  make flashimage"
 		echo "  make ofgimage";;
 esac
 echo " "
