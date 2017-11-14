@@ -29,6 +29,7 @@ endif
 ifeq ($(BOXARCH), arm)
 NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
 NEUTRINO_DEPS += $(D)/ntfs_3g
+NEUTRINO_DEPS += $(D)/mc
 endif
 
 ifeq ($(IMAGE), neutrino-wlandriver)

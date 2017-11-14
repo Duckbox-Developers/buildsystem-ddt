@@ -712,6 +712,13 @@ endif
 		mkdir -p $(RELEASE_DIR)/usr/share/xupnpd/playlists; \
 	fi
 #
+# mc
+#
+	if [ -e $(TARGET_DIR)/usr/bin/mc ]; then \
+		cp -aR $(TARGET_DIR)/usr/share/mc $(RELEASE_DIR)/usr/share/; \
+		cp -af $(TARGET_DIR)/usr/libexec $(RELEASE_DIR)/usr/; \
+	fi
+#
 # lua
 #
 	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
@@ -766,24 +773,24 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/lua/5.2/*.la
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
+	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
-	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
 	rm -rf $(RELEASE_DIR)/usr/lib/cmake
+	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
-	rm -f $(RELEASE_DIR)/usr/lib/libtermcap*
-	rm -f $(RELEASE_DIR)/usr/lib/libmenu*
-	rm -f $(RELEASE_DIR)/usr/lib/libpanel*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdcss*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdnav*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdread*
-	rm -f $(RELEASE_DIR)/usr/lib/libncurses*
+ifeq ($(BOXARCH), sh4)
 	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
+	rm -f $(RELEASE_DIR)/usr/lib/libncurses*
+endif
 	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
