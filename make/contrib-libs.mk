@@ -17,7 +17,6 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
-			--with-terminfo-dirs=/usr/share/terminfo \
 			--with-pkg-config \
 			--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			--with-shared \
@@ -26,8 +25,9 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 			--without-ada \
 			--without-progs \
 			--without-tests \
-			--disable-big-core \
 			--without-profile \
+			--without-debug \
+			--disable-big-core \
 			--disable-rpath \
 			--disable-rpath-hack \
 			--enable-echo \
@@ -42,13 +42,12 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)"; \
 		$(MAKE) install.libs DESTDIR=$(TARGET_DIR); \
-		install -D -m 0755 misc/ncurses-config $(HOST_DIR)/bin/ncurses6-config; \
-		rm -f $(TARGET_DIR)/usr/bin/ncurses6-config
+		install -D -m 0755 misc/ncurses-config $(HOST_DIR)/bin/ncurses6-config
+	rm -f $(TARGET_DIR)/usr/bin/ncurses6-config
+	rm -f $(addprefix $(TARGET_LIB_DIR)/,libform* libmenu* libpanel*)
+	rm -f $(addprefix $(PKG_CONFIG_PATH)/,form.pc menu.pc panel.pc)
 	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncurses6-config
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/form.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/menu.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ncurses.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/panel.pc
 	$(REMOVE)/ncurses-$(NCURSES_VER)
 	$(TOUCH)
 
