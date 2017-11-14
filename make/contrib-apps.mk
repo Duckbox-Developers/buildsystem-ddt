@@ -533,7 +533,6 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	set -e; cd $(BUILD_TMP)/mc-$(MC_VER); \
 		$(call post_patch,$(MC_PATCH)); \
 		autoreconf -fi; \
-		$(BUILDENV) \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -544,6 +543,7 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 			--disable-doxygen-dot \
 			--disable-doxygen-html \
 			--enable-charset \
+			--disable-nls \
 			--with-screen=ncurses \
 			--without-x \
 		; \
