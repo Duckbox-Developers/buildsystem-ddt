@@ -1546,6 +1546,38 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(TOUCH)
 
 #
+# dropbear
+#
+DROPBEAR_VER = 2017.75
+DROPBEAR_SOURCE = dropbear-$(DROPBEAR_VER).tar.bz2
+
+$(ARCHIVE)/$(DROPBEAR_SOURCE):
+	$(WGET) http://matt.ucc.asn.au/dropbear/releases/$(DROPBEAR_SOURCE)
+
+$(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/dropbear-$(DROPBEAR_VER)
+	$(UNTAR)/$(DROPBEAR_SOURCE)
+	set -e; cd $(BUILD_TMP)/dropbear-$(DROPBEAR_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--disable-pututxline \
+			--disable-wtmp \
+			--disable-wtmpx \
+			--disable-loginfunc \
+			--disable-pam \
+		; \
+		sed -i 's:.*\(#define NO_FAST_EXPTMOD\).*:\1:' options.h; \
+		sed -i 's:^#define DROPBEAR_SMALL_CODE::' options.h; \
+		$(MAKE) PROGRAMS="dropbear dbclient dropbearkey scp" SCPPROGRESS=1; \
+		$(MAKE) PROGRAMS="dropbear dbclient dropbearkey scp" install DESTDIR=$(TARGET_DIR)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/dropbear $(TARGET_DIR)/etc/init.d/
+	install -d -m 0755 $(TARGET_DIR)/etc/dropbear
+	$(REMOVE)/dropbear-$(DROPBEAR_VER)
+	$(TOUCH)
+
+#
 # usb_modeswitch_data
 #
 USB_MODESWITCH_DATA_VER = 20160112
