@@ -3,6 +3,8 @@
 
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/var/bin"
 
+TERM=xterm
+
 if [ ! -e /etc/localtime ]; then
 	TZ="UTC"		# Time Zone. Look at http://theory.uwinnipeg.ca/gnu/glibc/libc_303.html 
 				# for an explanation of how to set this to your local timezone.
@@ -25,16 +27,23 @@ else
   fi
 fi
 
-export PATH PS1
-
 umask 022
 
-export PATH=$PATH
 #aliase
 #BEGIN
-alias ll='ls -al'
-alias l='ls -l'
+alias l='ls -al'
+alias ll='ls -l'
+alias dir='ls -lA'
 alias ..='cd ..'
+alias mc='mc -u'
+alias sc='setconsole'
+alias sr='setconsole -r'
+#END
+
+#export
+#BEGIN
+export PATH PS1 TERM
+export PATH=$PATH
 #END
 
 DEBUG=0
