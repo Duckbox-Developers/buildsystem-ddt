@@ -11,11 +11,6 @@ if [ ! -e /etc/localtime ]; then
 	export TZ
 fi
 
-if [ "`id -u`" -eq 0 ]; then
-  PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
-fi
-
-
 if [ "$BASH" ]; then
   PS1='\u@\H:\w\$ '
 else
@@ -29,7 +24,7 @@ fi
 
 umask 022
 
-#aliase
+# aliase
 #BEGIN
 alias l='ls -al'
 alias ll='ls -l'
@@ -40,10 +35,9 @@ alias sc='setconsole'
 alias sr='setconsole -r'
 #END
 
-#export
+# export
 #BEGIN
 export PATH PS1 TERM
-export PATH=$PATH
 #END
 
 DEBUG=0
