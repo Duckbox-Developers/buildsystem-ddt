@@ -35,7 +35,7 @@ alias l='ls -al'
 alias ll='ls -l'
 alias dir='ls -lA'
 alias ..='cd ..'
-alias mc='mc -u'
+alias mc='mc -a -u'
 alias sc='setconsole'
 alias sr='setconsole -r'
 #END
