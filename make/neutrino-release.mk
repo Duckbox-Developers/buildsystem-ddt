@@ -736,7 +736,7 @@ endif
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/tuxwetter.so ]; then \
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
 	fi
-	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/soko.so ]; then \
+	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/sokoban.so ]; then \
 		cp -rf $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/var/tuxbox/plugins; \
 		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/usr/share/tuxbox/sokoban; \
 	fi
