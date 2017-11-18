@@ -2231,17 +2231,17 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 #
 # libopenthreads
 #
-LIBOPENTHREADS_VER = 2.6.0
-LIBOPENTHREADS_SOURCE = OpenThreads-$(LIBOPENTHREADS_VER).zip
+LIBOPENTHREADS_VER = 3.2
+LIBOPENTHREADS_SOURCE = OpenThreads-$(LIBOPENTHREADS_VER).tar.gz
 LIBOPENTHREADS_PATCH = libopenthreads-$(LIBOPENTHREADS_VER).patch
 
 $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE):
-	$(WGET) https://trac.openscenegraph.org/downloads/developer_releases/$(LIBOPENTHREADS_SOURCE)
+	$(WGET) https://sourceforge.net/projects/mxedeps/files/$(LIBOPENTHREADS_SOURCE)
 
 $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/OpenThreads-$(LIBOPENTHREADS_VER)
-	unzip -q $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE) -d $(BUILD_TMP)
+	$(UNTAR)/$(LIBOPENTHREADS_SOURCE)
 	set -e; cd $(BUILD_TMP)/OpenThreads-$(LIBOPENTHREADS_VER); \
 		$(call post_patch,$(LIBOPENTHREADS_PATCH)); \
 		echo "# dummy file to prevent warning message" > examples/CMakeLists.txt; \
