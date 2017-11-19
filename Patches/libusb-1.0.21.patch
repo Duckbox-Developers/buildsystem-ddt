@@ -1,25 +1,14 @@
---- libusb-1.0.9/configure.ac
-+++ libusb-1.0.9/configure.ac
-@@ -31,7 +31,7 @@
-
- AC_CONFIG_SRCDIR([libusb/core.c])
- AC_CONFIG_MACRO_DIR([m4])
--AM_CONFIG_HEADER([config.h])
-+AC_CONFIG_HEADERS([config.h])
- m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
-
- AC_PREREQ([2.50])
 --- a/libusb/io.c
 +++ b/libusb/io.c
-@@ -31,6 +31,7 @@
+@@ -34,6 +34,7 @@
+ #include <sys/time.h>
  #endif
- 
  #ifdef USBI_TIMERFD_AVAILABLE
 +#include <fcntl.h>
  #include <sys/timerfd.h>
  #endif
  
-@@ -1072,7 +1073,7 @@
+@@ -1148,7 +1149,7 @@
  
  #ifdef USBI_TIMERFD_AVAILABLE
  	ctx->timerfd = timerfd_create(usbi_backend->get_timerfd_clockid(),

@@ -2093,9 +2093,8 @@ $(D)/gd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/$(GD_S
 #
 # libusb
 #
+LIBUSB_VER = 1.0.21
 LIBUSB_VER_MAJOR = 1.0
-LIBUSB_VER_MINOR = 9
-LIBUSB_VER = $(LIBUSB_VER_MAJOR).$(LIBUSB_VER_MINOR)
 LIBUSB_SOURCE = libusb-$(LIBUSB_VER).tar.bz2
 LIBUSB_PATCH = libusb-$(LIBUSB_VER).patch
 
@@ -2113,6 +2112,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 			--enable-static \
 			--disable-log \
 			--disable-debug-log \
+			--disable-udev \
 			--disable-examples-build \
 		; \
 		$(MAKE) ; \
