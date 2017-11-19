@@ -2065,7 +2065,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb
 #
 # gd
 #
-GD_VER = 2.2.1
+GD_VER = 2.2.5
 GD_SOURCE = libgd-$(GD_VER).tar.xz
 
 $(ARCHIVE)/$(GD_SOURCE):
@@ -2079,8 +2079,9 @@ $(D)/gd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/$(GD_S
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
-			--enable-static \
-			--disable-shared \
+			--without-fontconfig \
+			--without-xpm \
+			--without-x \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
