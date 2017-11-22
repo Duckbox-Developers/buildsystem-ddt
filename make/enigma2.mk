@@ -58,7 +58,7 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 	rm -rf $(SOURCE_DIR)/enigma2; \
 	rm -rf $(SOURCE_DIR)/enigma2.org; \
 	REVISION=""; \
-	HEAD="release"; \
+	HEAD="develop"; \
 	DIFF="0"; \
 	clear; \
 	echo ""; \
