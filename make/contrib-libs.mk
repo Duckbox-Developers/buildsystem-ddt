@@ -148,11 +148,12 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 		$(call post_patch,$(LIBGLIB2_HOST_PATCH)); \
 		./configure \
+			--prefix=`pwd`/out \
 			--enable-static=yes \
 			--enable-shared=no \
 			--disable-fam \
 			--disable-libmount \
-			--prefix=`pwd`/out \
+			--with-pcre=internal \
 		; \
 		$(MAKE) install; \
 		cp -a out/bin/glib-* $(HOST_DIR)/bin
@@ -177,16 +178,16 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 		$(call post_patch,$(LIBGLIB2_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			--enable-static \
 			--mandir=/.remove \
 			--cache-file=config.cache \
 			--disable-fam \
+			--disable-libmount \
 			--disable-gtk-doc \
 			--disable-gtk-doc-html \
-			--disable-libmount \
 			--with-threads="posix" \
 			--with-html-dir=/.remove \
 			--with-pcre=internal \
-			--enable-static \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
