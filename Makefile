@@ -27,7 +27,7 @@ printenv:
 	@echo
 	@echo '================================================================================'
 	@echo "Build Environment Variables:"
-	@echo "MAINTAINER       : $(MAINTAINER)"
+	@echo "PATH             : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
 	@echo "ARCHIVE_DIR      : $(ARCHIVE)"
 	@echo "BASE_DIR         : $(BASE_DIR)"
 	@echo "CUSTOM_DIR       : $(CUSTOM_DIR)"
@@ -40,23 +40,14 @@ printenv:
 	@echo "HOST_DIR         : $(HOST_DIR)"
 	@echo "TARGET_DIR       : $(TARGET_DIR)"
 	@echo "KERNEL_DIR       : $(KERNEL_DIR)"
-	@echo "PATH             : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
+	@echo "MAINTAINER       : $(MAINTAINER)"
 	@echo "BOXARCH          : $(BOXARCH)"
 	@echo "BUILD            : $(BUILD)"
 	@echo "TARGET           : $(TARGET)"
-	@echo "PLATFORM         : $(PLATFORM)"
 	@echo "BOXTYPE          : $(BOXTYPE)"
 	@echo "KERNEL_VERSION   : $(KERNEL_VER)"
-	@echo "MULTICOM_VERSION : $(MULTICOM_VER)"
-	@echo "PLAYER_VERSION   : $(PLAYER_VER)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
-	@echo "EXTERNAL_LCD     : $(EXTERNAL_LCD)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
-ifeq ($(KBUILD_VERBOSE), 1)
-	@echo "VERBOSE_BUILD    : yes"
-else
-	@echo "VERBOSE_BUILD    : no"
-endif
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
