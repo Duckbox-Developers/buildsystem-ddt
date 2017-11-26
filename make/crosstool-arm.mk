@@ -45,6 +45,9 @@ crosstool-ng: directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOU
 		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
 		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
 		\
+		if [ "$(BOXTYPE)" = "hd51" ]; then \
+			cp $(PATCHES)/ct-ng/backport-fix-of-check-for-empty-string-in-ubsan.c.patch patches/gcc/linaro-6.3-2017.02; \
+		fi; \
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
 		export CT_NG_BASE_DIR=$(CROSS_BASE); \
 		export CT_NG_CUSTOM_KERNEL=$(CUSTOM_KERNEL); \
