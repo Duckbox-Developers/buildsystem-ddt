@@ -96,7 +96,7 @@ ifeq ($(BOXARCH), sh4)
 include make/linux-kernel-sh4.mk
 include make/crosstool-sh4.mk
 include make/driver.mk
-include make/gstreamer.mk
+include make/gstreamer-sh4.mk
 else
 include make/linux-kernel-arm.mk
 include make/crosstool-arm.mk
