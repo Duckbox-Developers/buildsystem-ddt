@@ -519,7 +519,7 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 #
 # mc
 #
-MC_VER = 4.8.19
+MC_VER = 4.8.20
 MC_SOURCE = mc-$(MC_VER).tar.xz
 MC_PATCH = mc-$(MC_VER).patch
 
