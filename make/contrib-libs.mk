@@ -333,7 +333,7 @@ $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 # openssl
 #
 OPENSSL_MAJOR = 1.0.2
-OPENSSL_MINOR = k
+OPENSSL_MINOR = m
 OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
 OPENSSL_SOURCE = openssl-$(OPENSSL_VER).tar.gz
 OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-optimize-for-size.patch
