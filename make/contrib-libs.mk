@@ -1672,7 +1672,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 #
 # libass
 #
-LIBASS_VER = 0.12.3
+LIBASS_VER = 0.14.0
 LIBASS_SOURCE = libass-$(LIBASS_VER).tar.xz
 LIBASS_PATCH = libass-$(LIBASS_VER).patch
 
@@ -1691,7 +1691,7 @@ $(D)/libass: $(D)/bootstrap $(D)/freetype $(D)/libfribidi $(ARCHIVE)/$(LIBASS_SO
 			--disable-test \
 			--disable-fontconfig \
 			--disable-harfbuzz \
-			--disable-enca \
+			--disable-require-system-font-provider \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)

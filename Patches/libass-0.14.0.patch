@@ -1,6 +1,6 @@
 --- a/libass/ass.c
 +++ b/libass/ass.c
-@@ -594,6 +594,26 @@
+@@ -627,6 +627,26 @@
              "No event format found, using fallback");
  }
  
@@ -27,7 +27,7 @@
  static int process_events_line(ASS_Track *track, char *str)
  {
      if (!strncmp(str, "Format:", 7)) {
-@@ -620,6 +640,11 @@
+@@ -653,6 +673,11 @@
              event_format_fallback(track);
  
          process_event_tail(track, event, str, 0);
@@ -39,7 +39,7 @@
      } else {
          ass_msg(track->library, MSGL_V, "Not understood: '%.30s'", str);
      }
-@@ -902,6 +927,9 @@
+@@ -939,6 +964,9 @@
  
          event->Start = timecode;
          event->Duration = duration;
@@ -49,4 +49,3 @@
  
          free(str);
          return;
-
