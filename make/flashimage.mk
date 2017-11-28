@@ -137,7 +137,7 @@ flash-image-hd51-multi-rootfs:
 	mkdir -p $(HD51_BUILD_TMP)/$(BOXTYPE)
 	cp $(RELEASE_DIR)/boot/zImage.dtb $(HD51_BUILD_TMP)/$(BOXTYPE)/kernel.bin
 	cd $(RELEASE_DIR); \
-	tar -cvf $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=$(RELEASE_DIR)/boot/zImage* . > /dev/null 2>&1; \
+	tar -cvf $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
 	bzip2 $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD51_BUILD_TMP)/$(BOXTYPE)/imageversion
 	cd $(HD51_BUILD_TMP) && \
