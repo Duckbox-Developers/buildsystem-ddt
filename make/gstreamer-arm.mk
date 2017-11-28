@@ -1,7 +1,7 @@
 #
 # change to activate debug
 #
-GSTREAMER_DEBUG = no
+GSTREAMER_DEBUG =
 
 ifeq ($(GSTREAMER_DEBUG), yes)
   GST_MAIN_CONFIG_DEBUG   = --enable-gst-debug
@@ -66,8 +66,10 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $
 #
 GST_PLUGINS_BASE_VER = $(GSTREAMER_VER)
 GST_PLUGINS_BASE_SOURCE = gst-plugins-base-$(GST_PLUGINS_BASE_VER).tar.xz
-GST_PLUGINS_BASE_PATCH = gst-plugins-base-$(GST_PLUGINS_BASE_VER)-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch
+GST_PLUGINS_BASE_PATCH  = gst-plugins-base-$(GST_PLUGINS_BASE_VER)-Makefile.am-don-t-hardcode-libtool-name-when-running.patch
+GST_PLUGINS_BASE_PATCH += gst-plugins-base-$(GST_PLUGINS_BASE_VER)-riff-media-added-fourcc-to-all-ffmpeg-mpeg4-video-caps.patch
 GST_PLUGINS_BASE_PATCH += gst-plugins-base-$(GST_PLUGINS_BASE_VER)-subparse-avoid-false-negatives-dealing-with-UTF-8.patch
+GST_PLUGINS_BASE_PATCH += gst-plugins-base-$(GST_PLUGINS_BASE_VER)-rtsp-drop-incorrect-reference-to-gstreamer-sdp-in-Ma.patch
 
 $(ARCHIVE)/$(GST_PLUGINS_BASE_SOURCE):
 	$(WGET) https://gstreamer.freedesktop.org/src/gst-plugins-base/$(GST_PLUGINS_BASE_SOURCE)
