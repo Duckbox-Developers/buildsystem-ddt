@@ -1862,10 +1862,14 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 			--datarootdir=/.remove \
 			--enable-shared \
 			--disable-static \
-			--without-c14n \
 			--without-debug \
+			--without-c14n \
+			--without-legacy \
+			--without-catalog \
 			--without-docbook \
 			--without-mem-debug \
+			--without-lzma \
+			--without-schematron \
 			$(LIBXML2_CONF_OPTS) \
 		; \
 		$(MAKE) all; \
