@@ -809,27 +809,27 @@ $(D)/jpeg: $(D)/bootstrap $(ARCHIVE)/$(JPEG_SOURCE)
 	$(TOUCH)
 
 #
-# jpeg_turbo
+# libjpeg_turbo
 #
-JPEG_TURBO_VER = 1.5.2
-JPEG_TURBO_SOURCE = libjpeg-turbo-$(JPEG_TURBO_VER).tar.gz
+LIBJPEG_TURBO_VER = 1.5.2
+LIBJPEG_TURBO_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO_VER).tar.gz
 
-$(ARCHIVE)/$(JPEG_TURBO_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(JPEG_TURBO_VER)/$(JPEG_TURBO_SOURCE)
+$(ARCHIVE)/$(JPEG_LIBTURBO_SOURCE):
+	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO_VER)/$(LIBJPEG_TURBO_SOURCE)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 $(D)/libjpeg: $(D)/jpeg
 	@touch $@
 else
-$(D)/libjpeg: $(D)/jpeg_turbo
+$(D)/libjpeg: $(D)/libjpeg_turbo
 	@touch $@
 endif
 
-$(D)/jpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(JPEG_TURBO_SOURCE)
+$(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VER)
-	$(UNTAR)/$(JPEG_TURBO_SOURCE)
-	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(JPEG_TURBO_VER); \
+	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO_VER)
+	$(UNTAR)/$(LIBJPEG_TURBO_SOURCE)
+	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(LIBJPEG_TURBO_VER); \
 		export CC=$(TARGET)-gcc; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -855,7 +855,7 @@ $(D)/jpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(JPEG_TURBO_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libjpeg.pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cjpeg djpeg jpegtran rdjpgcom wrjpgcom tjbench)
 	rm -f $(TARGET_DIR)/usr/lib/libturbojpeg* $(TARGET_DIR)/usr/include/turbojpeg.h $(PKG_CONFIG_PATH)/libturbojpeg.pc
-	$(REMOVE)/libjpeg-turbo-$(JPEG_TURBO_VER)
+	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO_VER)
 	$(TOUCH)
 
 #
