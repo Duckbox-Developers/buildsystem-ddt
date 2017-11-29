@@ -2198,7 +2198,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 #
 # alsa-utils
 #
-ALSA_UTILS_VER = 1.1.4
+ALSA_UTILS_VER = 1.1.5
 ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VER).tar.bz2
 
 $(ARCHIVE)/$(ALSA_UTILS_SOURCE):
