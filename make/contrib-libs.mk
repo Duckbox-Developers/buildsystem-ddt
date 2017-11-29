@@ -1449,12 +1449,12 @@ FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VER).patch
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-ifeq ($(IMAGE), enigma2)
+ifeq ($(IMAGE), enigma2 enigma2-wlandriver)
 FFMPEG_CONF_OPTS  = --enable-librtmp
 LIBRTMPDUMP = $(D)/librtmpdump
 endif
 
-ifeq ($(IMAGE), neutrino)
+ifeq ($(IMAGE), neutrino neutrino-wlandriver)
 FFMPEG_CONF_OPTS = --disable-iconv
 endif
 
