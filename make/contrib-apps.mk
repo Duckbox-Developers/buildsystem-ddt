@@ -341,6 +341,8 @@ DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VER).tar.xz
 $(ARCHIVE)/$(DOSFSTOOLS_SOURCE):
 	$(WGET) https://github.com/dosfstools/dosfstools/releases/download/v$(DOSFSTOOLS_VER)/$(DOSFSTOOLS_SOURCE)
 
+DOSFSTOOLS_CFLAGS = $(TARGET_CFLAGS) -D_GNU_SOURCE -fomit-frame-pointer -D_FILE_OFFSET_BITS=64
+
 $(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/dosfstools-$(DOSFSTOOLS_VER)
@@ -349,9 +351,11 @@ $(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
 		autoreconf -fi; \
 		$(CONFIGURE) \
 			--prefix= \
+			--mandir=/.remove \
+			--docdir=/.remove \
 			--without-udev \
 			--enable-compat-symlinks \
-			CFLAGS="$(TARGET_CFLAGS) -fomit-frame-pointer -D_FILE_OFFSET_BITS=64" \
+			CFLAGS="$(DOSFSTOOLS_CFLAGS)" \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
