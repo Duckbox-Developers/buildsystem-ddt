@@ -16,8 +16,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1: target system (1-38)"
 	echo "Parameter 2: kernel (1-2) for sh4 cpu"
 	echo "Parameter 3: optimization (1-4)"
-	echo "Parameter 4: Media Framework (1-4)"
-	echo "Parameter 5: Image Neutrino (1-2)"
+	echo "Parameter 4: Image Neutrino (1-2)"
 	exit
 fi
 
@@ -221,32 +220,11 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 ##############################################
 
 case $4 in
-	[1-4]) REPLY=$4;;
-	*)	echo -e "\nMedia Framework:"
-		echo "   1) eplayer3"
-		echo "   2) gstreamer"
-		echo "   3) use built-in       (required for Neutrino)"
-		echo "   4) gstreamer+eplayer3"
-		read -p "Select media framework (1-4)? ";;
-esac
-
-case "$REPLY" in
-	1) MEDIAFW="eplayer3";;
-	2) MEDIAFW="gstreamer";;
-	3) MEDIAFW="buildinplayer";;
-	4) MEDIAFW="gst-eplayer3";;
-	*) MEDIAFW="buildinplayer";;
-esac
-echo "MEDIAFW=$MEDIAFW" >> config
-
-##############################################
-
-case $5 in
-	[1-2]) REPLY=$5;;
+	[1-2]) REPLY=$4;;
 	*)	echo -e "\nWhich Image do you want to build:"
 		echo "   1)  Neutrino"
 		echo "   2)  Neutrino (includes WLAN drivers sh4)"
-		read -p "Select Image to build (1-4)? ";;
+		read -p "Select Image to build (1-2)? ";;
 esac
 
 case "$REPLY" in

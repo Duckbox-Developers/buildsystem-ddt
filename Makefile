@@ -46,7 +46,6 @@ printenv:
 	@echo "TARGET           : $(TARGET)"
 	@echo "BOXTYPE          : $(BOXTYPE)"
 	@echo "KERNEL_VERSION   : $(KERNEL_VER)"
-	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
 	@echo "IMAGE            : $(IMAGE)"
 	@echo '================================================================================'

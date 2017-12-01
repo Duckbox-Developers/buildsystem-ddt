@@ -254,20 +254,6 @@ BUILD_CONFIG       = build-neutrino
 endif
 
 #
-#
-#
-ifeq ($(MEDIAFW), eplayer3)
-EPLAYER3           = 1
-else ifeq ($(MEDIAFW), gstreamer)
-gstreamer          = 1
-else ifeq ($(MEDIAFW), gst-eplayer3)
-EPLAYER3           = 1
-gst-eplayer3       = 1
-else
-buildinplayer      = 1
-endif
-
-#
 DRIVER_PLATFORM   := $(WLANDRIVER)
 
 #

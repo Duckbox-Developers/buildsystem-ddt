@@ -20,9 +20,6 @@ ifeq ($(BOXARCH), sh4)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 	-$(MAKE) -C $(APPS_DIR)/tools/ipbox_eeprom distclean
 endif
-ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
-	-$(MAKE) -C $(APPS_DIR)/tools/libeplayer3 distclean
-endif
 	-$(MAKE) -C $(APPS_DIR)/tools/stfbcontrol distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/streamproxy distclean
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
@@ -395,9 +392,6 @@ endif
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
-ifeq ($(MEDIAFW), $(filter $(MEDIAFW), eplayer3 gst-eplayer3))
-TOOLS += $(D)/tools-libeplayer3
-endif
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
 TOOLS += $(D)/tools-own-tools
