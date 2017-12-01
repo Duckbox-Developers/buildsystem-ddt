@@ -370,7 +370,7 @@ endif
 ifeq ($(BOXTYPE), cuberevo)
 KERNEL_PATCHES_24  = $(CUBEREVO_PATCHES_24)
 DRIVER_PLATFORM   += CUBEREVO=cuberevo
-Eendif
+endif
 ifeq ($(BOXTYPE), cuberevo_mini)
 KERNEL_PATCHES_24  = $(CUBEREVO_MINI_PATCHES_24)
 DRIVER_PLATFORM   += CUBEREVO_MINI=cuberevo_mini

@@ -1452,15 +1452,6 @@ FFMPEG_PATCH += ffmpeg-kodi-$(FFMPEG_VER).patch
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-ifeq ($(IMAGE), enigma2 enigma2-wlandriver)
-FFMPEG_CONF_OPTS  = --enable-librtmp
-LIBRTMPDUMP = $(D)/librtmpdump
-endif
-
-ifeq ($(IMAGE), neutrino neutrino-wlandriver)
-FFMPEG_CONF_OPTS = --disable-iconv
-endif
-
 ifeq ($(BOXARCH), sh4)
 FFMPEG_CONF_OPTS += --disable-armv5te --disable-armv6 --disable-armv6t2
 endif
