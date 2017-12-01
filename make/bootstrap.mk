@@ -240,16 +240,6 @@ $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	@touch $@
 
 #
-# YAUD NONE
-#
-YAUD_NONE     = $(D)/bootstrap
-YAUD_NONE    += $(KERNEL)
-YAUD_NONE    += $(D)/system-tools
-
-yaud-none: $(YAUD_NONE)
-	@touch $(D)/$(notdir $@)
-
-#
 #
 #
 $(DRIVER_DIR):

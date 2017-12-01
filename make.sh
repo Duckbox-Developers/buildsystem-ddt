@@ -265,15 +265,15 @@ echo "Your build environment is ready :-)"
 echo "Your next step could be:"
 case "$IMAGE" in
 		neutrino*)
-		echo "  make yaud-neutrino-mp-tangos"
-		echo "  make yaud-neutrino-mp-tangos-plugins"
+		echo "  make neutrino-mp-tangos"
+		echo "  make neutrino-mp-tangos-plugins"
 		if [ $BOXARCH == 'arm' ]; then
-			echo "  make yaud-neutrino-mp-cst-next-ni"
+			echo "  make neutrino-mp-cst-next-ni"
 		fi
-		echo "  make yaud-neutrino-mp-cst-next"
-		echo "  make yaud-neutrino-mp-cst-next-plugins"
-		echo "  make yaud-neutrino-hd2"
-		echo "  make yaud-neutrino-hd2-plugins";;
+		echo "  make neutrino-mp-cst-next"
+		echo "  make neutrino-mp-cst-next-plugins"
+		echo "  make neutrino-hd2"
+		echo "  make neutrino-hd2-plugins";;
 		*)
 		echo "  make flashimage"
 		echo "  make ofgimage";;
