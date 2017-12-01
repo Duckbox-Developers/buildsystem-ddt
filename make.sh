@@ -17,7 +17,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 2: kernel (1-2) for sh4 cpu"
 	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: Media Framework (1-4)"
-	echo "Parameter 5: Image (Enigma=1/2 Neutrino=3/4 (1-4)"
+	echo "Parameter 5: Image Neutrino (1-2)"
 	exit
 fi
 
@@ -226,7 +226,7 @@ case $4 in
 		echo "   1) eplayer3"
 		echo "   2) gstreamer"
 		echo "   3) use built-in       (required for Neutrino)"
-		echo "   4) gstreamer+eplayer3 (required for OpenPLi)"
+		echo "   4) gstreamer+eplayer3"
 		read -p "Select media framework (1-4)? ";;
 esac
 
@@ -242,20 +242,16 @@ echo "MEDIAFW=$MEDIAFW" >> config
 ##############################################
 
 case $5 in
-	[1-4]) REPLY=$5;;
+	[1-2]) REPLY=$5;;
 	*)	echo -e "\nWhich Image do you want to build:"
-		echo "   1)  Enigma2"
-		echo "   2)  Enigma2  (includes WLAN drivers)"
-		echo "   3)  Neutrino"
-		echo "   4)  Neutrino (includes WLAN drivers)"
+		echo "   1)  Neutrino"
+		echo "   2)  Neutrino (includes WLAN drivers sh4)"
 		read -p "Select Image to build (1-4)? ";;
 esac
 
 case "$REPLY" in
-	1) IMAGE="enigma2";;
-	2) IMAGE="enigma2-wlandriver";;
-	3) IMAGE="neutrino";;
-	4) IMAGE="neutrino-wlandriver";;
+	1) IMAGE="neutrino";;
+	2) IMAGE="neutrino-wlandriver";;
 	*) IMAGE="neutrino";;
 esac
 echo "IMAGE=$IMAGE" >> config
@@ -278,8 +274,6 @@ case "$IMAGE" in
 		echo "  make yaud-neutrino-mp-cst-next-plugins"
 		echo "  make yaud-neutrino-hd2"
 		echo "  make yaud-neutrino-hd2-plugins";;
-		enigma2*)
-		echo "  make yaud-enigma2";;
 		*)
 		echo "  make flashimage"
 		echo "  make ofgimage";;

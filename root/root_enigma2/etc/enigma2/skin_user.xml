@@ -1,8 +1,0 @@
-<skin>
-	<subtitles>
-		<sub name="Subtitle_TTX"	font="Regular;34"		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
-		<sub name="Subtitle_Regular"	font="Regular;34"		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
-		<sub name="Subtitle_Bold"	font="Replacement;34"		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
-		<sub name="Subtitle_Italic"	font="Regular;34"		foregroundColor="#ffffff" shadowColor="#40101010" shadowOffset="-3,-3" />
-	</subtitles>
-</skin>
