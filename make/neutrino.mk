@@ -2,6 +2,7 @@
 # Makefile to build NEUTRINO
 #
 $(TARGET_DIR)/var/etc/.version:
+	rm -f $(TARGET_DIR)/var/etc/.version; \
 	echo "imagename=Neutrino MP" > $@
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
 	echo "creator=$(MAINTAINER)" >> $@
@@ -10,7 +11,7 @@ $(TARGET_DIR)/var/etc/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
-NEUTRINO_DEPS  = $(D)/bootstrap $(KERNEL)  $(D)/system-tools
+NEUTRINO_DEPS  = $(D)/bootstrap $(KERNEL) $(D)/system-tools
 NEUTRINO_DEPS += $(D)/ncurses $(LIRC) $(D)/libcurl
 NEUTRINO_DEPS += $(D)/libpng $(D)/libjpeg $(D)/giflib $(D)/freetype
 NEUTRINO_DEPS += $(D)/alsa_utils $(D)/ffmpeg
@@ -171,15 +172,6 @@ libstb-hal-cst-next-distclean:
 #
 # neutrino-mp-cst-next
 #
-neutrino-mp-cst-next: \
-		neutrino-mp-cst-next $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-mp \
-neutrino-mp-cst-next-plugins: \
-		$(D)/neutrino-mp-cst-next $(D)/neutrino-plugins $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
 NEUTRINO_MP_CST_NEXT_PATCHES =
 
 $(D)/neutrino-mp-cst-next.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next
@@ -232,11 +224,21 @@ $(D)/neutrino-mp-cst-next.do_compile: $(D)/neutrino-mp-cst-next.config.status $(
 		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
-$(D)/neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
+neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
+	touch $(D)/$(notdir $@)
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+mp \
+neutrino-mp-cst-next-plugins: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
 
 mp-clean \
 neutrino-mp-cst-next-clean: neutrino-cdkroot-clean
@@ -312,14 +314,6 @@ libstb-hal-cst-next-ni-distclean:
 #
 # neutrino-mp-cst-next-ni
 #
-neutrino-mp-cst-next-ni: \
-		neutrino-mp-cst-next-ni $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-neutrino-mp-cst-next-ni-plugins: \
-		$(D)/neutrino-mp-cst-next-ni $(D)/neutrino-plugins $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
 NEUTRINO_MP_CST_NEXT_NI_PATCHES =
 
 $(D)/neutrino-mp-cst-next-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-ni
@@ -373,11 +367,20 @@ $(D)/neutrino-mp-cst-next-ni.do_compile: $(D)/neutrino-mp-cst-next-ni.config.sta
 		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
-$(D)/neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
+neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
+	touch $(D)/$(notdir $@)
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+neutrino-mp-cst-next-ni-plugins: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-cst-next-ni-clean: neutrino-cdkroot-clean
 	rm -f $(D)/neutrino-mp-cst-next-ni
@@ -390,115 +393,8 @@ neutrino-mp-cst-next-ni-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-mp-cst-next-ni*
 ################################################################################
+
 endif
-################################################################################
-neutrino-cdkroot-clean:
-	[ -e $(TARGET_DIR)/usr/local/bin ] && cd $(TARGET_DIR)/usr/local/bin && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cd $(TARGET_DIR)/usr/local/share/iso-codes && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/share/tuxbox/neutrino ] && cd $(TARGET_DIR)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/var/tuxbox ] && cd $(TARGET_DIR)/var/tuxbox && find -name '*' -delete || true
-
-dual:
-	make nhd2
-	make neutrino-cdkroot-clean
-	make mp
-
-dual-clean:
-	make nhd2-clean
-	make mp-clean
-
-dual-distclean:
-	make nhd2-distclean
-	make mp-distclean
-
-################################################################################
-#
-# neutrino-hd2
-#
-neutrino-hd2: \
-		$(D)/neutrino-hd2 $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-nhd2 \
-neutrino-hd2-plugins: \
-		$(D)/neutrino-hd2 $(D)/neutrino-hd2-plugins $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-ifeq ($(BOXTYPE), spark)
-NHD2_OPTS = --enable-4digits
-else ifeq ($(BOXTYPE), spark7162)
-NHD2_OPTS =
-else
-NHD2_OPTS = --enable-ci
-endif
-
-#
-# neutrino-hd2
-#
-NEUTRINO_HD2_PATCHES =
-
-$(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
-	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrino-hd2
-	rm -rf $(SOURCE_DIR)/neutrino-hd2.org
-	rm -rf $(SOURCE_DIR)/neutrino-hd2.git
-	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] && \
-	(cd $(ARCHIVE)/neutrino-hd2.git; git pull;); \
-	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] || \
-	git clone https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrino-hd2.git; \
-	cp -ra $(ARCHIVE)/neutrino-hd2.git $(SOURCE_DIR)/neutrino-hd2.git; \
-	ln -s $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2;\
-	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
-	set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
-		$(call post_patch,$(NEUTRINO_HD2_PATCHES))
-	@touch $@
-
-$(SOURCE_DIR)/neutrino-hd2/config.status:
-	cd $(SOURCE_DIR)/neutrino-hd2; \
-		./autogen.sh; \
-		$(BUILDENV) \
-		./configure \
-			--build=$(BUILD) \
-			--host=$(TARGET) \
-			--with-boxtype=$(BOXTYPE) \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
-			--with-configdir=/var/tuxbox/config \
-			--with-gamesdir=/var/tuxbox/games \
-			--with-plugindir=/var/tuxbox/plugins \
-			--with-isocodesdir=/usr/local/share/iso-codes \
-			$(NHD2_OPTS) \
-			--enable-scart \
-			--enable-silent-rules \
-			PKG_CONFIG=$(PKG_CONFIG) \
-			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CPPFLAGS="$(N_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
-	@touch $@
-
-$(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
-	cd $(SOURCE_DIR)/neutrino-hd2; \
-		$(MAKE) all
-	@touch $@
-
-$(D)/neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
-	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
-
-nhd2-clean \
-neutrino-hd2-clean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrino-hd2
-	cd $(SOURCE_DIR)/neutrino-hd2; \
-		$(MAKE) clean
-
-nhd2-distclean \
-neutrino-hd2-distclean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrino-hd2
-	rm -f $(D)/neutrino-hd2.do_compile
-	rm -f $(D)/neutrino-hd2.do_prepare
-	rm -f $(D)/neutrino-hd2-plugins*
 
 ################################################################################
 #
@@ -559,21 +455,6 @@ libstb-hal-cst-next-tangos-distclean:
 #
 # neutrino-mp-tangos
 #
-neutrino-mp-tangos: \
-		$(D)/neutrino-mp-tangos $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-neutrino-mp-tangos-plugins: \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-neutrino-mp-tangos-all: \
-		$(D)/neutrino-mp-tangos $(D)/neutrino-plugins $(D)/shairport $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-#
-# neutrino-mp-tangos
-#
 NEUTRINO_MP_TANGOS_PATCHES =
 
 $(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-tangos
@@ -626,11 +507,32 @@ $(D)/neutrino-mp-tangos.do_compile: $(D)/neutrino-mp-tangos.config.status $(SOUR
 		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
-$(D)/neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
+#
+# neutrino-mp-tangos
+#
+neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
+	touch $(D)/$(notdir $@)
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+neutrino-mp-tangos-all: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make shairport
+	make neutrino-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+neutrino-mp-tangos-plugins: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-tangos-clean:
 	rm -f $(D)/neutrino-mp-tangos
@@ -701,54 +603,46 @@ libstb-hal-max-distclean:
 
 ################################################################################
 #
-# neutrino-mp
+# neutrino-mp-max
 #
-NEUTRINO_MP_PATCHES =
+NEUTRINO_MP_MAX_PATCHES =
 
-neutrino-mp: \
-		$(D)/neutrino-mp $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-neutrino-mp-plugins: \
-		$(D)/neutrino-mp $(D)/neutrino-plugins $(D)/neutrino_release
-	$(TUXBOX_CUSTOMIZE)
-
-$(D)/neutrino-mp.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
+$(D)/neutrino-mp-max.do_prepare: $(NEUTRINO_DEPS) $(D)/libstb-hal-max
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrino-mp
-	rm -rf $(SOURCE_DIR)/neutrino-mp.org
+	rm -rf $(SOURCE_DIR)/neutrino-mp-max
+	rm -rf $(SOURCE_DIR)/neutrino-mp-max.org
 	rm -rf $(N_OBJDIR)
-	[ -d "$(ARCHIVE)/gui-neutrino-mp.git" ] && \
-	(cd $(ARCHIVE)/gui-neutrino-mp.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/gui-neutrino-mp.git" ] || \
-	git clone https://bitbucket.org/max_10/gui-neutrino-mp.git $(ARCHIVE)/gui-neutrino-mp.git; \
-	cp -ra $(ARCHIVE)/gui-neutrino-mp.git $(SOURCE_DIR)/neutrino-mp; \
-	cp -ra $(SOURCE_DIR)/neutrino-mp $(SOURCE_DIR)/neutrino-mp.org
-	set -e; cd $(SOURCE_DIR)/neutrino-mp; \
-		$(call post_patch,$(NEUTRINO_MP_PATCHES))
+	[ -d "$(ARCHIVE)/neutrino-mp-max.git" ] && \
+	(cd $(ARCHIVE)/neutrino-mp-max.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/neutrino-mp-max.git" ] || \
+	git clone https://bitbucket.org/max_10/neutrino-mp-max.git $(ARCHIVE)/neutrino-mp-max.git; \
+	cp -ra $(ARCHIVE)/neutrino-mp-max.git $(SOURCE_DIR)/neutrino-mp-max; \
+	cp -ra $(SOURCE_DIR)/neutrino-mp-max $(SOURCE_DIR)/neutrino-mp-max.org
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-max; \
+		$(call post_patch,$(NEUTRINO_MP_MAX_PATCHES))
 	@touch $@
 
-$(D)/neutrino-mp.config.status:
+$(D)/neutrino-mp-max.config.status:
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
-		$(SOURCE_DIR)/neutrino-mp/autogen.sh; \
+		$(SOURCE_DIR)/neutrino-mp-max/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/neutrino-mp/configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-max/configure --enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
 			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-max/include \
 			--with-stb-hal-build=$(LH_OBJDIR)
 
-$(SOURCE_DIR)/neutrino-mp/src/gui/version.h:
+$(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h:
 	@rm -f $@; \
 	echo '#define BUILT_DATE "'`date`'"' > $@
 	@if test -d $(SOURCE_DIR)/libstb-hal-max ; then \
 		pushd $(SOURCE_DIR)/libstb-hal-max ; \
 		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(SOURCE_DIR)/neutrino-mp ; \
+		pushd $(SOURCE_DIR)/neutrino-mp-max ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		pushd $(BASE_DIR) ; \
@@ -757,26 +651,145 @@ $(SOURCE_DIR)/neutrino-mp/src/gui/version.h:
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
 	fi
 
-$(D)/neutrino-mp.do_compile: $(D)/neutrino-mp.config.status $(SOURCE_DIR)/neutrino-mp/src/gui/version.h
-	cd $(SOURCE_DIR)/neutrino-mp; \
+$(D)/neutrino-mp-max.do_compile: $(D)/neutrino-mp-max.config.status $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h
+	cd $(SOURCE_DIR)/neutrino-mp-max; \
 		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
-$(D)/neutrino-mp: $(D)/neutrino-mp.do_prepare $(D)/neutrino-mp.do_compile
+neutrino-mp-max: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
-	$(TOUCH)
+	touch $(D)/$(notdir $@)
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
 
-neutrino-mp-clean:
-	rm -f $(D)/neutrino-mp
-	rm -f $(SOURCE_DIR)/neutrino-mp/src/gui/version.h
+neutrino-mp-max-plugins: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
+	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+neutrino-mp-max-clean:
+	rm -f $(D)/neutrino-mp-max
+	rm -f $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h
 	cd $(N_OBJDIR); \
 		$(MAKE) -C $(N_OBJDIR) distclean
 
-neutrino-mp-distclean:
+neutrino-mp-max-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp.do_prepare
-	rm -f $(D)/neutrino-mp.do_compile
-	rm -f $(D)/neutrino-mp
+	rm -f $(D)/neutrino-mp-max.do_prepare
+	rm -f $(D)/neutrino-mp-max.do_compile
+	rm -f $(D)/neutrino-mp-max
+
+################################################################################
+#
+# neutrino-hd2
+#
+ifeq ($(BOXTYPE), spark)
+NHD2_OPTS = --enable-4digits
+else ifeq ($(BOXTYPE), spark7162)
+NHD2_OPTS =
+else
+NHD2_OPTS = --enable-ci
+endif
+
+#
+# neutrino-hd2
+#
+NEUTRINO_HD2_PATCHES =
+
+$(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
+	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/neutrino-hd2
+	rm -rf $(SOURCE_DIR)/neutrino-hd2.org
+	rm -rf $(SOURCE_DIR)/neutrino-hd2.git
+	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] && \
+	(cd $(ARCHIVE)/neutrino-hd2.git; git pull;); \
+	[ -d "$(ARCHIVE)/neutrino-hd2.git" ] || \
+	git clone https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrino-hd2.git; \
+	cp -ra $(ARCHIVE)/neutrino-hd2.git $(SOURCE_DIR)/neutrino-hd2.git; \
+	ln -s $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2;\
+	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
+	set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
+		$(call post_patch,$(NEUTRINO_HD2_PATCHES))
+	@touch $@
+
+$(SOURCE_DIR)/neutrino-hd2/config.status:
+	cd $(SOURCE_DIR)/neutrino-hd2; \
+		./autogen.sh; \
+		$(BUILDENV) \
+		./configure \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--with-boxtype=$(BOXTYPE) \
+			--with-datadir=/usr/share/tuxbox \
+			--with-fontdir=/usr/share/fonts \
+			--with-configdir=/var/tuxbox/config \
+			--with-gamesdir=/var/tuxbox/games \
+			--with-plugindir=/var/tuxbox/plugins \
+			--with-isocodesdir=/usr/local/share/iso-codes \
+			$(NHD2_OPTS) \
+			--enable-scart \
+			--enable-silent-rules \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
+			CPPFLAGS="$(N_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
+	@touch $@
+
+$(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
+	cd $(SOURCE_DIR)/neutrino-hd2; \
+		$(MAKE) all
+	@touch $@
+
+neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+nhd2 \
+neutrino-hd2-plugins: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
+	make $(TARGET_DIR)/var/etc/.version
+	touch $(D)/$(notdir $@)
+	make neutrino-hd2-plugins
+	make neutrino_release
+	$(TUXBOX_CUSTOMIZE)
+
+nhd2-clean \
+neutrino-hd2-clean: neutrino-cdkroot-clean
+	rm -f $(D)/neutrino-hd2
+	cd $(SOURCE_DIR)/neutrino-hd2; \
+		$(MAKE) clean
+
+nhd2-distclean \
+neutrino-hd2-distclean: neutrino-cdkroot-clean
+	rm -f $(D)/neutrino-hd2
+	rm -f $(D)/neutrino-hd2.do_compile
+	rm -f $(D)/neutrino-hd2.do_prepare
+	rm -f $(D)/neutrino-hd2-plugins*
+
+################################################################################
+neutrino-cdkroot-clean:
+	[ -e $(TARGET_DIR)/usr/local/bin ] && cd $(TARGET_DIR)/usr/local/bin && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cd $(TARGET_DIR)/usr/local/share/iso-codes && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/share/tuxbox/neutrino ] && cd $(TARGET_DIR)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/var/tuxbox ] && cd $(TARGET_DIR)/var/tuxbox && find -name '*' -delete || true
+
+dual:
+	make nhd2
+	make neutrino-cdkroot-clean
+	make mp
+
+dual-clean:
+	make nhd2-clean
+	make mp-clean
+
+dual-distclean:
+	make nhd2-distclean
+	make mp-distclean
 
