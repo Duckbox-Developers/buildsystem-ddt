@@ -105,14 +105,10 @@ case "$REPLY" in
 	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
 	37) BOXARCH="arm";BOXTYPE="hd51";;
 	38) BOXARCH="arm";BOXTYPE="vusolo4k";;
-	 *) BOXARCH="sh4";BOXTYPE="atevio7500";;
+	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
 echo "BOXTYPE=$BOXTYPE" >> config
-
-if [ $BOXARCH == 'arm' ]; then
-	echo "KBUILD_VERBOSE=1" >> config
-fi
 
 ##############################################
 
@@ -237,7 +233,6 @@ echo "IMAGE=$IMAGE" >> config
 ##############################################
 echo " "
 make printenv
-echo " "
 ##############################################
 echo "Your build environment is ready :-)"
 echo "Your next step could be:"
