@@ -119,7 +119,7 @@ NEUTRINO_MP_LIBSTB_DDT_PATCHES =
 $(D)/libstb-hal-ddt.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/libstb-hal-ddt
-	rm -rf $(SOURCE_DIR)/libstb-ggt.org
+	rm -rf $(SOURCE_DIR)/libstb-ddt.org
 	rm -rf $(LH_OBJDIR)
 	[ -d "$(ARCHIVE)/libstb-hal-ddt.git" ] && \
 	(cd $(ARCHIVE)/libstb-hal-ddt.git; git pull; cd "$(BUILD_TMP)";); \
@@ -144,7 +144,6 @@ $(D)/libstb-hal-ddt.config.status: | $(NEUTRINO_DEPS)
 			--prefix= \
 			--with-target=cdk \
 			--with-boxtype=$(BOXTYPE) \
-			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
@@ -167,11 +166,13 @@ libstb-hal-ddt-clean:
 
 libstb-hal-ddt-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-ddt*
+	rm -f $(D)/libstb-hal-ddt.do_prepare
+	rm -f $(D)/libstb-hal-ddt.do_compile
+	rm -f $(D)/libstb-hal-ddt
 
 ################################################################################
 #
-# neutrino-mp-cst-next
+# neutrino-mp-ddt
 #
 NEUTRINO_MP_DDT_PATCHES =
 
@@ -253,6 +254,8 @@ neutrino-mp-ddt-clean: neutrino-cdkroot-clean
 mp-distclean \
 neutrino-mp-ddt-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
+	rm -f $(D)/neutrino-mp-ddt.do_prepare
+	rm -f $(D)/neutrino-mp-ddt.do_compile
 	rm -f $(D)/neutrino-mp-ddt*
 
 ################################################################################
@@ -311,7 +314,9 @@ libstb-hal-ni-clean:
 
 libstb-hal-ni-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-ni*
+	rm -f $(D)/libstb-hal-ni.do_prepare
+	rm -f $(D)/libstb-hal-ni.do_compile
+	rm -f $(D)/libstb-hal-ni
 
 ################################################################################
 #
@@ -386,16 +391,19 @@ neutrino-mp-ni-plugins: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_co
 	make neutrino_release
 	$(TUXBOX_CUSTOMIZE)
 
-neutrino-mp-ni-clean: neutrino-cdkroot-clean
+neutrino-mp-ni-clean:
 	rm -f $(D)/neutrino-mp-ni
 	rm -f $(D)/neutrino-mp-ni.config.status
 	rm -f $(SOURCE_DIR)/neutrino-mp-ni/src/gui/version.h
 	cd $(N_OBJDIR); \
 		$(MAKE) -C $(N_OBJDIR) distclean
 
-neutrino-mp-ni-distclean: neutrino-cdkroot-clean
+neutrino-mp-ni-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-ni*
+	rm -f $(D)/neutrino-mp-ni.do_prepare
+	rm -f $(D)/neutrino-mp-ni.do_compile
+	rm -f $(D)/neutrino-mp-ni
+
 ################################################################################
 
 endif
@@ -454,7 +462,9 @@ libstb-hal-tangos-clean:
 
 libstb-hal-tangos-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-tangos*
+	rm -f $(D)/libstb-hal-tangos.do_prepare
+	rm -f $(D)/libstb-hal-tangos.do_compile
+	rm -f $(D)/libstb-hal-tangos
 
 ################################################################################
 #
@@ -548,7 +558,9 @@ neutrino-mp-tangos-clean:
 
 neutrino-mp-tangos-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-tangos*
+	rm -f $(D)/neutrino-mp-tangos.do_prepare
+	rm -f $(D)/neutrino-mp-tangos.do_compile
+	rm -f $(D)/neutrino-mp-tangos
 
 ################################################################################
 #
@@ -572,14 +584,15 @@ $(D)/libstb-hal-max.do_prepare:
 	@touch $@
 
 $(D)/libstb-hal-max.config.status: | $(NEUTRINO_DEPS)
-	rm -rf $(LH_OBJDIR)
+	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
 		$(SOURCE_DIR)/libstb-hal-max/autogen.sh; \
 		export PKG_CONFIG=$(PKG_CONFIG); \
 		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/libstb-hal-max/configure --enable-silent-rules \
+		$(SOURCE_DIR)/libstb-hal-max/configure \
+			--enable-silent-rules \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
@@ -613,7 +626,7 @@ libstb-hal-max-distclean:
 #
 NEUTRINO_MP_MAX_PATCHES =
 
-$(D)/neutrino-mp-max.do_prepare: $(NEUTRINO_DEPS) $(D)/libstb-hal-max
+$(D)/neutrino-mp-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-max
 	rm -rf $(SOURCE_DIR)/neutrino-mp-max.org
@@ -634,7 +647,8 @@ $(D)/neutrino-mp-max.config.status:
 	cd $(N_OBJDIR); \
 		$(SOURCE_DIR)/neutrino-mp-max/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/neutrino-mp-max/configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-max/configure \
+			--enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
@@ -659,7 +673,7 @@ $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h:
 
 $(D)/neutrino-mp-max.do_compile: $(D)/neutrino-mp-max.config.status $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h
 	cd $(SOURCE_DIR)/neutrino-mp-max; \
-		$(MAKE) -C $(N_OBJDIR) all DESTDIR=$(TARGET_DIR)
+		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
 neutrino-mp-max: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
@@ -729,6 +743,7 @@ $(SOURCE_DIR)/neutrino-hd2/config.status:
 		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
+			--enable-silent-rules \
 			--with-boxtype=$(BOXTYPE) \
 			--with-datadir=/usr/share/tuxbox \
 			--with-fontdir=/usr/share/fonts \
@@ -738,7 +753,6 @@ $(SOURCE_DIR)/neutrino-hd2/config.status:
 			--with-isocodesdir=/usr/local/share/iso-codes \
 			$(NHD2_OPTS) \
 			--enable-scart \
-			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
