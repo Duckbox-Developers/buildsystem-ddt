@@ -2,7 +2,6 @@
 # Makefile to build NEUTRINO
 #
 $(TARGET_DIR)/var/etc/.version:
-	rm -f $(TARGET_DIR)/var/etc/.version; \
 	echo "imagename=Neutrino MP" > $@
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
 	echo "creator=$(MAINTAINER)" >> $@
@@ -229,6 +228,7 @@ $(D)/neutrino-mp-ddt.do_compile: $(D)/neutrino-mp-ddt.config.status $(SOURCE_DIR
 
 neutrino-mp-ddt: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
@@ -237,6 +237,7 @@ neutrino-mp-ddt: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 mp \
 neutrino-mp-ddt-plugins: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
@@ -378,6 +379,7 @@ $(D)/neutrino-mp-ni.do_compile: $(D)/neutrino-mp-ni.config.status $(SOURCE_DIR)/
 
 neutrino-mp-ni: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
@@ -385,6 +387,7 @@ neutrino-mp-ni: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 
 neutrino-mp-ni-plugins: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
@@ -528,6 +531,7 @@ $(D)/neutrino-mp-tangos.do_compile: $(D)/neutrino-mp-tangos.config.status $(SOUR
 #
 neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
@@ -535,6 +539,7 @@ neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.d
 
 neutrino-mp-tangos-all: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make shairport
@@ -544,6 +549,7 @@ neutrino-mp-tangos-all: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tang
 
 neutrino-mp-tangos-plugins: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
@@ -678,6 +684,7 @@ $(D)/neutrino-mp-max.do_compile: $(D)/neutrino-mp-max.config.status $(SOURCE_DIR
 
 neutrino-mp-max: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
@@ -685,6 +692,7 @@ neutrino-mp-max: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
 
 neutrino-mp-max-plugins: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
@@ -765,6 +773,7 @@ $(D)/neutrino-hd2.do_compile: $(SOURCE_DIR)/neutrino-hd2/config.status
 
 neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
@@ -773,6 +782,7 @@ neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 nhd2 \
 neutrino-hd2-plugins: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR); \
+	rm -f $(TARGET_DIR)/var/etc/.version
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-hd2-plugins
