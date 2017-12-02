@@ -112,32 +112,33 @@ LH_OBJDIR = $(OBJDIR)/libstb-hal
 
 ################################################################################
 #
-# libstb-hal-cst-next
+# libstb-hal-ddt
 #
-NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES =
+NEUTRINO_MP_LIBSTB_DDT_PATCHES =
 
-$(D)/libstb-hal-cst-next.do_prepare:
+$(D)/libstb-hal-ddt.do_prepare:
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next.org
+	rm -rf $(SOURCE_DIR)/libstb-hal-ddt
+	rm -rf $(SOURCE_DIR)/libstb-ggt.org
 	rm -rf $(LH_OBJDIR)
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next.git" ] && \
-	(cd $(ARCHIVE)/libstb-hal-cst-next.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next.git" ] || \
-	git clone https://github.com/Duckbox-Developers/libstb-hal-cst-next.git $(ARCHIVE)/libstb-hal-cst-next.git; \
-	cp -ra $(ARCHIVE)/libstb-hal-cst-next.git $(SOURCE_DIR)/libstb-hal-cst-next;\
-	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next $(SOURCE_DIR)/libstb-hal-cst-next.org
-	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
+	[ -d "$(ARCHIVE)/libstb-hal-ddt.git" ] && \
+	(cd $(ARCHIVE)/libstb-hal-ddt.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/libstb-hal-ddt.git" ] || \
+	git clone https://github.com/Duckbox-Developers/libstb-hal-ddt.git $(ARCHIVE)/libstb-hal-ddt.git; \
+	cp -ra $(ARCHIVE)/libstb-hal-ddt.git $(SOURCE_DIR)/libstb-hal-ddt;\
+	cp -ra $(SOURCE_DIR)/libstb-hal-ddt $(SOURCE_DIR)/libstb-hal-ddt.org
+	set -e; cd $(SOURCE_DIR)/libstb-hal-ddt; \
+		$(call post_patch,$(NEUTRINO_MP_LIBSTB_DDT_PATCHES))
 	@touch $@
 
-$(D)/libstb-hal-cst-next.config.status: | $(NEUTRINO_DEPS)
+$(D)/libstb-hal-ddt.config.status: | $(NEUTRINO_DEPS)
 	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
-		$(SOURCE_DIR)/libstb-hal-cst-next/autogen.sh; \
+		$(SOURCE_DIR)/libstb-hal-ddt/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/libstb-hal-cst-next/configure --enable-silent-rules \
+		$(SOURCE_DIR)/libstb-hal-ddt/configure \
+			--enable-silent-rules \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
@@ -149,68 +150,69 @@ $(D)/libstb-hal-cst-next.config.status: | $(NEUTRINO_DEPS)
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 	@touch $@
 
-$(D)/libstb-hal-cst-next.do_compile: $(D)/libstb-hal-cst-next.config.status
-	cd $(SOURCE_DIR)/libstb-hal-cst-next; \
+$(D)/libstb-hal-ddt.do_compile: $(D)/libstb-hal-ddt.config.status
+	cd $(SOURCE_DIR)/libstb-ddt-next; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
-$(D)/libstb-hal-cst-next: $(D)/libstb-hal-cst-next.do_prepare $(D)/libstb-hal-cst-next.do_compile
+$(D)/libstb-hal-ddt: $(D)/libstb-hal-ddt.do_prepare $(D)/libstb-hal-ddt.do_compile
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
-libstb-hal-cst-next-clean:
-	rm -f $(D)/libstb-hal-cst-next
-	rm -f $(D)/libstb-hal-cst-next.config.status
+libstb-hal-ddt-clean:
+	rm -f $(D)/libstb-hal-ddt
+	rm -f $(D)/libstb-hal-ddt.config.status
 	cd $(LH_OBJDIR); \
 		$(MAKE) -C $(LH_OBJDIR) distclean
 
-libstb-hal-cst-next-distclean:
+libstb-hal-ddt-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-cst-next*
+	rm -f $(D)/libstb-hal-ddt*
 
 ################################################################################
 #
 # neutrino-mp-cst-next
 #
-NEUTRINO_MP_CST_NEXT_PATCHES =
+NEUTRINO_MP_DDT_PATCHES =
 
-$(D)/neutrino-mp-cst-next.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next
+$(D)/neutrino-mp-ddt.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-ddt
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrino-mp-cst-next
-	rm -rf $(SOURCE_DIR)/neutrino-mp-cst-next.org
+	rm -rf $(SOURCE_DIR)/neutrino-mp-ddt
+	rm -rf $(SOURCE_DIR)/neutrino-mp-ddt.org
 	rm -rf $(N_OBJDIR)
-	[ -d "$(ARCHIVE)/neutrino-mp-cst-next.git" ] && \
-	(cd $(ARCHIVE)/neutrino-mp-cst-next.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/neutrino-mp-cst-next.git" ] || \
-	git clone https://github.com/Duckbox-Developers/neutrino-mp-cst-next.git $(ARCHIVE)/neutrino-mp-cst-next.git; \
-	cp -ra $(ARCHIVE)/neutrino-mp-cst-next.git $(SOURCE_DIR)/neutrino-mp-cst-next; \
-	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next $(SOURCE_DIR)/neutrino-mp-cst-next.org
-	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
-		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_PATCHES))
+	[ -d "$(ARCHIVE)/neutrino-mp-ddt.git" ] && \
+	(cd $(ARCHIVE)/neutrino-mp-ddt.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/neutrino-mp-ddt.git" ] || \
+	git clone https://github.com/Duckbox-Developers/neutrino-mp-ddt.git $(ARCHIVE)/neutrino-mp-ddt.git; \
+	cp -ra $(ARCHIVE)/neutrino-mp-ddt.git $(SOURCE_DIR)/neutrino-mp-ddt; \
+	cp -ra $(SOURCE_DIR)/neutrino-mp-ddt $(SOURCE_DIR)/neutrino-mp-ddt.org
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-ddt; \
+		$(call post_patch,$(NEUTRINO_MP_DDT_PATCHES))
 	@touch $@
 
-$(D)/neutrino-mp-cst-next.config.status:
+$(D)/neutrino-mp-ddt.config.status:
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
-		$(SOURCE_DIR)/neutrino-mp-cst-next/autogen.sh; \
+		$(SOURCE_DIR)/neutrino-mp-ddt/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/neutrino-mp-cst-next/configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-ddt/configure \
+			--enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
-			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next/include \
+			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-ddt/include \
 			--with-stb-hal-build=$(LH_OBJDIR)
 	@touch $@
 
-$(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h:
+$(SOURCE_DIR)/neutrino-mp-ddt/src/gui/version.h:
 	@rm -f $@; \
 	echo '#define BUILT_DATE "'`date`'"' > $@
-	@if test -d $(SOURCE_DIR)/libstb-hal-cst-next ; then \
-		pushd $(SOURCE_DIR)/libstb-hal-cst-next ; \
+	@if test -d $(SOURCE_DIR)/libstb-hal-ddt ; then \
+		pushd $(SOURCE_DIR)/libstb-hal-ddt ; \
 		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(SOURCE_DIR)/neutrino-mp-cst-next ; \
+		pushd $(SOURCE_DIR)/neutrino-mp-ddt ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		pushd $(BASE_DIR) ; \
@@ -219,12 +221,12 @@ $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h:
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
 	fi
 
-$(D)/neutrino-mp-cst-next.do_compile: $(D)/neutrino-mp-cst-next.config.status $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h
-	cd $(SOURCE_DIR)/neutrino-mp-cst-next; \
+$(D)/neutrino-mp-ddt.do_compile: $(D)/neutrino-mp-ddt.config.status $(SOURCE_DIR)/neutrino-mp-ddt/src/gui/version.h
+	cd $(SOURCE_DIR)/neutrino-mp-ddt; \
 		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
-neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
+neutrino-mp-ddt: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
@@ -232,7 +234,7 @@ neutrino-mp-cst-next: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-
 	$(TUXBOX_CUSTOMIZE)
 
 mp \
-neutrino-mp-cst-next-plugins: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino-mp-cst-next.do_compile
+neutrino-mp-ddt-plugins: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
@@ -241,48 +243,49 @@ neutrino-mp-cst-next-plugins: $(D)/neutrino-mp-cst-next.do_prepare $(D)/neutrino
 	$(TUXBOX_CUSTOMIZE)
 
 mp-clean \
-neutrino-mp-cst-next-clean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrino-mp-cst-next
-	rm -f $(D)/neutrino-mp-cst-next.config.status
-	rm -f $(SOURCE_DIR)/neutrino-mp-cst-next/src/gui/version.h
+neutrino-mp-ddt-clean: neutrino-cdkroot-clean
+	rm -f $(D)/neutrino-mp-ddt
+	rm -f $(D)/neutrino-mp-ddt.config.status
+	rm -f $(SOURCE_DIR)/neutrino-mp-ddt/src/gui/version.h
 	cd $(N_OBJDIR); \
 		$(MAKE) -C $(N_OBJDIR) distclean
 
 mp-distclean \
-neutrino-mp-cst-next-distclean: neutrino-cdkroot-clean
+neutrino-mp-ddt-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-cst-next*
+	rm -f $(D)/neutrino-mp-ddt*
 
 ################################################################################
 ifeq ($(BOXARCH), arm)
 ################################################################################
 #
-# libstb-hal-cst-next-ni
+# libstb-hal-ni
 #
-NEUTRINO_MP_LIBSTB_CST_NEXT_NI_PATCHES =
+NEUTRINO_MP_LIBSTB_NI_PATCHES =
 
 $(D)/libstb-hal-cst-next-ni.do_prepare:
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next-ni
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next-ni.org
+	rm -rf $(SOURCE_DIR)/libstb-hal-ni
+	rm -rf $(SOURCE_DIR)/libstb-hal-ni.org
 	rm -rf $(LH_OBJDIR)
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next-ni.git" ] && \
-	(cd $(ARCHIVE)/libstb-hal-cst-next-ni.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next-ni.git" ] || \
-	git clone https://bitbucket.org/neutrino-images/ni-libstb-hal-next.git $(ARCHIVE)/libstb-hal-cst-next-ni.git; \
-	cp -ra $(ARCHIVE)/libstb-hal-cst-next-ni.git $(SOURCE_DIR)/libstb-hal-cst-next-ni;\
-	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-ni $(SOURCE_DIR)/libstb-hal-cst-next-ni.org
-	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-ni; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_NI_PATCHES))
+	[ -d "$(ARCHIVE)/libstb-hal-ni.git" ] && \
+	(cd $(ARCHIVE)/libstb-hal-ni.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/libstb-hal-ni.git" ] || \
+	git clone https://bitbucket.org/neutrino-images/ni-libstb-hal-next.git $(ARCHIVE)/libstb-hal-ni.git; \
+	cp -ra $(ARCHIVE)/libstb-hal-ni.git $(SOURCE_DIR)/libstb-hal-ni;\
+	cp -ra $(SOURCE_DIR)/libstb-hal-ni $(SOURCE_DIR)/libstb-hal-ni.org
+	set -e; cd $(SOURCE_DIR)/libstb-hal-ni; \
+		$(call post_patch,$(NEUTRINO_MP_LIBSTB_NI_PATCHES))
 	@touch $@
 
-$(D)/libstb-hal-cst-next-ni.config.status: | $(NEUTRINO_DEPS)
+$(D)/libstb-hal-ni.config.status: | $(NEUTRINO_DEPS)
 	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
-		$(SOURCE_DIR)/libstb-hal-cst-next-ni/autogen.sh; \
+		$(SOURCE_DIR)/libstb-hal-ni/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/libstb-hal-cst-next-ni/configure --enable-silent-rules \
+		$(SOURCE_DIR)/libstb-hal-ni/configure \
+			--enable-silent-rules \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
@@ -292,65 +295,66 @@ $(D)/libstb-hal-cst-next-ni.config.status: | $(NEUTRINO_DEPS)
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 
-$(D)/libstb-hal-cst-next-ni.do_compile: $(D)/libstb-hal-cst-next-ni.config.status
-	cd $(SOURCE_DIR)/libstb-hal-cst-next-ni; \
+$(D)/libstb-hal-ni.do_compile: $(D)/libstb-hal-ni.config.status
+	cd $(SOURCE_DIR)/libstb-hal-ni; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
-$(D)/libstb-hal-cst-next-ni: $(D)/libstb-hal-cst-next-ni.do_prepare $(D)/libstb-hal-cst-next-ni.do_compile
+$(D)/libstb-hal-ni: $(D)/libstb-hal-ni.do_prepare $(D)/libstb-hal-ni.do_compile
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
-libstb-hal-cst-next-ni-clean:
-	rm -f $(D)/libstb-hal-cst-next-ni
+libstb-hal-ni-clean:
+	rm -f $(D)/libstb-hal-ni
 	cd $(LH_OBJDIR); \
 		$(MAKE) -C $(LH_OBJDIR) distclean
 
-libstb-hal-cst-next-ni-distclean:
+libstb-hal-ni-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-cst-next-ni*
+	rm -f $(D)/libstb-hal-ni*
 
 ################################################################################
 #
-# neutrino-mp-cst-next-ni
+# neutrino-mp-ni
 #
-NEUTRINO_MP_CST_NEXT_NI_PATCHES =
+NEUTRINO_MP_NI_PATCHES =
 
-$(D)/neutrino-mp-cst-next-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-ni
+$(D)/neutrino-mp-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-ni
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrino-mp-cst-next-ni
-	rm -rf $(SOURCE_DIR)/neutrino-mp-cst-next-ni.org
+	rm -rf $(SOURCE_DIR)/neutrino-mp-ni
+	rm -rf $(SOURCE_DIR)/neutrino-mp-ni.org
 	rm -rf $(N_OBJDIR)
-	[ -d "$(ARCHIVE)/neutrino-mp-cst-next-ni.git" ] && \
-	(cd $(ARCHIVE)/neutrino-mp-cst-next-ni.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/neutrino-mp-cst-next-ni.git" ] || \
-	git clone -b ni/mp/tuxbox https://bitbucket.org/neutrino-images/ni-neutrino-hd.git $(ARCHIVE)/neutrino-mp-cst-next-ni.git; \
-	cp -ra $(ARCHIVE)/neutrino-mp-cst-next-ni.git $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
-	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next-ni $(SOURCE_DIR)/neutrino-mp-cst-next-ni.org
-	set -e; cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
-		$(call post_patch,$(NEUTRINO_MP_CST_NEXT_NI_PATCHES))
+	[ -d "$(ARCHIVE)/neutrino-mp-ni.git" ] && \
+	(cd $(ARCHIVE)/neutrino-mp-ni.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/neutrino-mp-ni.git" ] || \
+	git clone -b ni/mp/tuxbox https://bitbucket.org/neutrino-images/ni-neutrino-hd.git $(ARCHIVE)/neutrino-mp-ni.git; \
+	cp -ra $(ARCHIVE)/neutrino-mp-ni.git $(SOURCE_DIR)/neutrino-mp-ni; \
+	cp -ra $(SOURCE_DIR)/neutrino-mp-ni $(SOURCE_DIR)/neutrino-mp-ni.org
+	set -e; cd $(SOURCE_DIR)/neutrino-mp-ni; \
+		$(call post_patch,$(NEUTRINO_MP_NI_PATCHES))
 	@touch $@
 
-$(D)/neutrino-mp-cst-next-ni.config.status:
+$(D)/neutrino-mp-ni.config.status:
 	rm -rf $(N_OBJDIR)
 	test -d $(N_OBJDIR) || mkdir -p $(N_OBJDIR); \
 	cd $(N_OBJDIR); \
-		$(SOURCE_DIR)/neutrino-mp-cst-next-ni/autogen.sh; \
+		$(SOURCE_DIR)/neutrino-mp-ni/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/neutrino-mp-cst-next-ni/configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-ni/configure \
+			--enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
 			--with-boxtype=armbox \
-			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next-ni/include \
+			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-ni/include \
 			--with-stb-hal-build=$(LH_OBJDIR)
 	@touch $@
 
-$(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h:
+$(SOURCE_DIR)/neutrino-mp-ni/src/gui/version.h:
 	@rm -f $@; \
 	echo '#define BUILT_DATE "'`date`'"' > $@
-	@if test -d $(SOURCE_DIR)/libstb-hal-cst-next-ni ; then \
-		pushd $(SOURCE_DIR)/libstb-hal-cst-next-ni ; \
+	@if test -d $(SOURCE_DIR)/libstb-hal-ni ; then \
+		pushd $(SOURCE_DIR)/libstb-hal-ni ; \
 		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		pushd $(SOURCE_DIR)/neutrino-mp-cst-next-ni ; \
@@ -362,19 +366,19 @@ $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h:
 		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
 	fi
 
-$(D)/neutrino-mp-cst-next-ni.do_compile: $(D)/neutrino-mp-cst-next-ni.config.status $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h
-	cd $(SOURCE_DIR)/neutrino-mp-cst-next-ni; \
+$(D)/neutrino-mp-ni.do_compile: $(D)/neutrino-mp-ni.config.status $(SOURCE_DIR)/neutrino-mp-ni/src/gui/version.h
+	cd $(SOURCE_DIR)/neutrino-mp-ni; \
 		$(MAKE) -C $(N_OBJDIR) all
 	@touch $@
 
-neutrino-mp-cst-next-ni: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
+neutrino-mp-ni: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino_release
 	$(TUXBOX_CUSTOMIZE)
 
-neutrino-mp-cst-next-ni-plugins: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/neutrino-mp-cst-next-ni.do_compile
+neutrino-mp-ni-plugins: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
@@ -382,48 +386,49 @@ neutrino-mp-cst-next-ni-plugins: $(D)/neutrino-mp-cst-next-ni.do_prepare $(D)/ne
 	make neutrino_release
 	$(TUXBOX_CUSTOMIZE)
 
-neutrino-mp-cst-next-ni-clean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrino-mp-cst-next-ni
-	rm -f $(D)/neutrino-mp-cst-next-ni.config.status
-	rm -f $(SOURCE_DIR)/neutrino-mp-cst-next-ni/src/gui/version.h
+neutrino-mp-ni-clean: neutrino-cdkroot-clean
+	rm -f $(D)/neutrino-mp-ni
+	rm -f $(D)/neutrino-mp-ni.config.status
+	rm -f $(SOURCE_DIR)/neutrino-mp-ni/src/gui/version.h
 	cd $(N_OBJDIR); \
 		$(MAKE) -C $(N_OBJDIR) distclean
 
-neutrino-mp-cst-next-ni-distclean: neutrino-cdkroot-clean
+neutrino-mp-ni-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-cst-next-ni*
+	rm -f $(D)/neutrino-mp-ni*
 ################################################################################
 
 endif
 
 ################################################################################
 #
-# libstb-hal-cst-next-tangos
+# libstb-hal-tangos
 #
-NEUTRINO_MP_LIBSTB_CST_NEXT_TANGOS_PATCHES =
+NEUTRINO_MP_LIBSTB_TANGOS_PATCHES =
 
-$(D)/libstb-hal-cst-next-tangos.do_prepare:
+$(D)/libstb-hal-tangos.do_prepare:
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next-tangos
-	rm -rf $(SOURCE_DIR)/libstb-hal-cst-next-tangos.org
+	rm -rf $(SOURCE_DIR)/libstb-hal-tangos
+	rm -rf $(SOURCE_DIR)/libstb-hal-tangos.org
 	rm -rf $(LH_OBJDIR)
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next-tangos.git" ] && \
-	(cd $(ARCHIVE)/libstb-hal-cst-next-tangos.git; git pull; cd "$(BUILD_TMP)";); \
-	[ -d "$(ARCHIVE)/libstb-hal-cst-next-tangos.git" ] || \
-	git clone https://github.com/TangoCash/libstb-hal-cst-next.git $(ARCHIVE)/libstb-hal-cst-next-tangos.git; \
-	cp -ra $(ARCHIVE)/libstb-hal-cst-next-tangos.git $(SOURCE_DIR)/libstb-hal-cst-next-tangos;\
-	cp -ra $(SOURCE_DIR)/libstb-hal-cst-next-tangos $(SOURCE_DIR)/libstb-hal-cst-next-tangos.org
-	set -e; cd $(SOURCE_DIR)/libstb-hal-cst-next-tangos; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
+	[ -d "$(ARCHIVE)/libstb-hal-tangos.git" ] && \
+	(cd $(ARCHIVE)/libstb-hal-tangos.git; git pull; cd "$(BUILD_TMP)";); \
+	[ -d "$(ARCHIVE)/libstb-hal-tangos.git" ] || \
+	git clone https://github.com/TangoCash/libstb-hal-cst-next.git $(ARCHIVE)/libstb-hal-tangos.git; \
+	cp -ra $(ARCHIVE)/libstb-hal-tangos.git $(SOURCE_DIR)/libstb-hal-tangos;\
+	cp -ra $(SOURCE_DIR)/libstb-hal-tangos $(SOURCE_DIR)/libstb-hal-tangos.org
+	set -e; cd $(SOURCE_DIR)/libstb-hal-tangos; \
+		$(call post_patch,$(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES))
 	@touch $@
 
-$(D)/libstb-hal-cst-next-tangos.config.status: | $(NEUTRINO_DEPS)
+$(D)/libstb-hal-tangos.config.status: | $(NEUTRINO_DEPS)
 	rm -rf $(LH_OBJDIR); \
 	test -d $(LH_OBJDIR) || mkdir -p $(LH_OBJDIR); \
 	cd $(LH_OBJDIR); \
-		$(SOURCE_DIR)/libstb-hal-cst-next-tangos/autogen.sh; \
+		$(SOURCE_DIR)/libstb-hal-tangos/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/libstb-hal-cst-next-tangos/configure --enable-silent-rules \
+		$(SOURCE_DIR)/libstb-hal-tangos/configure \
+			--enable-silent-rules \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix= \
@@ -433,23 +438,23 @@ $(D)/libstb-hal-cst-next-tangos.config.status: | $(NEUTRINO_DEPS)
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
 
-$(D)/libstb-hal-cst-next-tangos.do_compile: $(D)/libstb-hal-cst-next-tangos.config.status
-	cd $(SOURCE_DIR)/libstb-hal-cst-next-tangos; \
+$(D)/libstb-hal-tangos.do_compile: $(D)/libstb-hal-tangos.config.status
+	cd $(SOURCE_DIR)/libstb-hal-tangos; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
-$(D)/libstb-hal-cst-next-tangos: $(D)/libstb-hal-cst-next-tangos.do_prepare $(D)/libstb-hal-cst-next-tangos.do_compile
+$(D)/libstb-hal-tangos: $(D)/libstb-hal-tangos.do_prepare $(D)/libstb-hal-tangos.do_compile
 	$(MAKE) -C $(LH_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
-libstb-hal-cst-next-tangos-clean:
-	rm -f $(D)/libstb-hal-cst-next-tangos
+libstb-hal-tangos-clean:
+	rm -f $(D)/libstb-hal-tangos
 	cd $(LH_OBJDIR); \
 		$(MAKE) -C $(LH_OBJDIR) distclean
 
-libstb-hal-cst-next-tangos-distclean:
+libstb-hal-tangos-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-cst-next-tangos*
+	rm -f $(D)/libstb-hal-tangos*
 
 ################################################################################
 #
@@ -457,7 +462,7 @@ libstb-hal-cst-next-tangos-distclean:
 #
 NEUTRINO_MP_TANGOS_PATCHES =
 
-$(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-cst-next-tangos
+$(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-tangos
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-mp-tangos
 	rm -rf $(SOURCE_DIR)/neutrino-mp-tangos.org
@@ -478,18 +483,19 @@ $(D)/neutrino-mp-tangos.config.status:
 	cd $(N_OBJDIR); \
 		$(SOURCE_DIR)/neutrino-mp-tangos/autogen.sh; \
 		$(BUILDENV) \
-		$(SOURCE_DIR)/neutrino-mp-tangos/configure --enable-silent-rules \
+		$(SOURCE_DIR)/neutrino-mp-tangos/configure \
+			--enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
-			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-cst-next-tangos/include \
+			--with-stb-hal-includes=$(SOURCE_DIR)/libstb-hal-tangos/include \
 			--with-stb-hal-build=$(LH_OBJDIR)
 
 $(SOURCE_DIR)/neutrino-mp-tangos/src/gui/version.h:
 	@rm -f $@; \
 	echo '#define BUILT_DATE "'`date`'"' > $@
-	@if test -d $(SOURCE_DIR)/libstb-hal-cst-next-tangos ; then \
-		pushd $(SOURCE_DIR)/libstb-hal-cst-next-tangos ; \
+	@if test -d $(SOURCE_DIR)/libstb-hal-tangos ; then \
+		pushd $(SOURCE_DIR)/libstb-hal-tangos ; \
 		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		pushd $(SOURCE_DIR)/neutrino-mp-tangos ; \

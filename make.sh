@@ -241,10 +241,11 @@ case "$IMAGE" in
 		echo "  make neutrino-mp-tangos"
 		echo "  make neutrino-mp-tangos-plugins"
 		if [ $BOXARCH == 'arm' ]; then
-			echo "  make neutrino-mp-cst-next-ni"
+			echo "  make neutrino-mp-ni"
+			echo "  make neutrino-mp-ni-plugins"
 		fi
-		echo "  make neutrino-mp-cst-next"
-		echo "  make neutrino-mp-cst-next-plugins"
+		echo "  make neutrino-mp-ddt"
+		echo "  make neutrino-mp-ddt-plugins"
 		echo "  make neutrino-hd2"
 		echo "  make neutrino-hd2-plugins";;
 		*)
