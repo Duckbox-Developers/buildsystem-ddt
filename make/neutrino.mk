@@ -267,7 +267,7 @@ ifeq ($(BOXARCH), arm)
 #
 NEUTRINO_MP_LIBSTB_NI_PATCHES =
 
-$(D)/libstb-hal-cst-next-ni.do_prepare:
+$(D)/libstb-hal-ni.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/libstb-hal-ni
 	rm -rf $(SOURCE_DIR)/libstb-hal-ni.org
@@ -363,7 +363,7 @@ $(SOURCE_DIR)/neutrino-mp-ni/src/gui/version.h:
 		pushd $(SOURCE_DIR)/libstb-hal-ni ; \
 		HAL_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		pushd $(SOURCE_DIR)/neutrino-mp-cst-next-ni ; \
+		pushd $(SOURCE_DIR)/neutrino-mp-ni ; \
 		NMP_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
 		pushd $(BASE_DIR) ; \
