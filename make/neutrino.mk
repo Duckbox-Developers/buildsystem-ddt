@@ -149,7 +149,7 @@ $(D)/libstb-hal-ddt.config.status: | $(NEUTRINO_DEPS)
 	@touch $@
 
 $(D)/libstb-hal-ddt.do_compile: $(D)/libstb-hal-ddt.config.status
-	cd $(SOURCE_DIR)/libstb-ddt-next; \
+	cd $(SOURCE_DIR)/libstb-hal-ddt; \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
