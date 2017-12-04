@@ -6,7 +6,7 @@ $(TARGET_DIR)/var/etc/.version:
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
 	echo "creator=$(MAINTAINER)" >> $@
 	echo "docs=https://github.com/Duckbox-Developers" >> $@
-	echo "forum=https://github.com/Duckbox-Developers/neutrino-mp-cst-next" >> $@
+	echo "forum=https://github.com/Duckbox-Developers/neutrino-mp-ddt" >> $@
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
@@ -674,7 +674,7 @@ $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h:
 		pushd $(BASE_DIR) ; \
 		DDT_REV=$$(git log | grep "^commit" | wc -l) ; \
 		popd ; \
-		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'"' >> $@ ; \
+		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'-max"' >> $@ ; \
 	fi
 
 $(D)/neutrino-mp-max.do_compile: $(D)/neutrino-mp-max.config.status $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h
