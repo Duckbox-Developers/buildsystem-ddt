@@ -1,17 +1,6 @@
---- a/configure.ac
-+++ b/configure.ac
-@@ -5,7 +5,7 @@
- # Set VERSION so we only need to edit in one place (i.e., here)
- m4_define(PYTHON_VERSION, 2.7)
- 
--AC_PREREQ(2.65)
-+AC_PREREQ(2.64)
- 
- AC_REVISION($Revision$)
- AC_INIT(python, PYTHON_VERSION, http://bugs.python.org/)
 --- a/configure
 +++ b/configure
-@@ -14777,7 +14777,7 @@
+@@ -14927,7 +14927,7 @@
  $as_echo "$ac_cv_have_long_long_format" >&6; }
  fi
  
@@ -22,7 +11,7 @@
  $as_echo "#define PY_FORMAT_LONG_LONG \"ll\"" >>confdefs.h
 --- a/Include/pyport.h
 +++ b/Include/pyport.h
-@@ -883,7 +883,7 @@
+@@ -892,7 +892,7 @@
   * rather than waiting for integer multiplication to trigger bogus
   * overflows.
   */
@@ -33,7 +22,7 @@
  #ifdef __cplusplus
 --- a/Lib/httplib.py
 +++ b/Lib/httplib.py
-@@ -1259,7 +1259,7 @@
+@@ -1244,7 +1244,7 @@
              self.key_file = key_file
              self.cert_file = cert_file
              if context is None:
@@ -42,41 +31,9 @@
              if key_file or cert_file:
                  context.load_cert_chain(cert_file, key_file)
              self._context = context
---- a/Modules/_ctypes/_ctypes.c
-+++ b/Modules/_ctypes/_ctypes.c
-@@ -645,7 +645,13 @@
-                      "symbol '%s' not found",
-                      name);
- #else
--        PyErr_SetString(PyExc_ValueError, ctypes_dlerror());
-+        const char *err = ctypes_dlerror();
-+        if (!err)
-+            PyErr_Format(PyExc_ValueError,
-+                         "symbol '%s' not found",
-+                         name);
-+        else
-+            PyErr_SetString(PyExc_ValueError, err);
- #endif
-         return NULL;
-     }
-@@ -3385,7 +3391,13 @@
-                      "function '%s' not found",
-                      name);
- #else
--        PyErr_SetString(PyExc_AttributeError, ctypes_dlerror());
-+        const char *err = ctypes_dlerror();
-+        if (!err)
-+            PyErr_Format(PyExc_AttributeError,
-+                         "function '%s' not found",
-+                         name);
-+        else
-+            PyErr_SetString(PyExc_AttributeError, err);
- #endif
-         Py_DECREF(ftuple);
-         return NULL;
 --- a/Lib/ctypes/util.py
 +++ b/Lib/ctypes/util.py
-@@ -234,7 +234,16 @@
+@@ -271,7 +271,16 @@
              return res.group(1)
  
          def find_library(name):
@@ -96,18 +53,17 @@
  # test code
 --- a/Lib/distutils/command/build_ext.py
 +++ b/Lib/distutils/command/build_ext.py
-@@ -437,7 +437,9 @@
+@@ -438,7 +438,8 @@
          # "build" tree.
          outputs = []
          for ext in self.extensions:
 -            outputs.append(self.get_ext_fullpath(ext.name))
 +            fullname = self.get_ext_fullname(ext.name)
-+            outputs.append(os.path.join(self.build_lib,
-+                                        self.get_ext_filename(fullname)))
++            outputs.append(os.path.join(self.build_lib, self.get_ext_filename(fullname)))
          return outputs
  
      def build_extensions(self):
-@@ -456,9 +458,24 @@
+@@ -457,9 +458,24 @@
                     "a list of source filenames") % ext.name
          sources = list(sources)
  
@@ -134,7 +90,7 @@
              log.debug("skipping '%s' extension (up-to-date)", ext.name)
              return
          else:
-@@ -519,7 +536,7 @@
+@@ -520,7 +536,7 @@
          language = ext.language or self.compiler.detect_language(sources)
  
          self.compiler.link_shared_object(
@@ -143,7 +99,7 @@
              libraries=self.get_libraries(ext),
              library_dirs=ext.library_dirs,
              runtime_library_dirs=ext.runtime_library_dirs,
-@@ -530,7 +547,7 @@
+@@ -531,7 +547,7 @@
              target_lang=language)
  
  
@@ -211,6 +167,38 @@
 +    __enableDefaultEncoding()
 +    __registerExitHandler()
 +    __enableReadlineSupport()
+--- a/Modules/_ctypes/_ctypes.c
++++ b/Modules/_ctypes/_ctypes.c
+@@ -651,7 +651,13 @@
+                      "symbol '%s' not found",
+                      name);
+ #else
+-        PyErr_SetString(PyExc_ValueError, ctypes_dlerror());
++        const char *err = ctypes_dlerror();
++        if (!err)
++            PyErr_Format(PyExc_ValueError,
++                         "symbol '%s' not found",
++                         name);
++        else
++            PyErr_SetString(PyExc_ValueError, err);
+ #endif
+         return NULL;
+     }
+@@ -3410,7 +3416,13 @@
+                      "function '%s' not found",
+                      name);
+ #else
+-        PyErr_SetString(PyExc_AttributeError, ctypes_dlerror());
++        const char *err = ctypes_dlerror();
++        if (!err)
++            PyErr_Format(PyExc_AttributeError,
++                         "function '%s' not found",
++                         name);
++        else
++            PyErr_SetString(PyExc_AttributeError, err);
+ #endif
+         Py_DECREF(ftuple);
+         return NULL;
 --- a/Modules/_ctypes/libffi/configure.ac
 +++ b/Modules/_ctypes/libffi/configure.ac
 @@ -3,7 +3,7 @@
@@ -242,17 +230,6 @@
  
 -ffi_cflags = '@CFLAGS@'
 +ffi_cflags = '@CFLAGS@ -DPIC'
---- a/Python/compile.c
-+++ b/Python/compile.c
-@@ -32,7 +32,7 @@
- #include "symtable.h"
- #include "opcode.h"
- 
--int Py_OptimizeFlag = 0;
-+int Py_OptimizeFlag = 1;
- 
- #define DEFAULT_BLOCK_SIZE 16
- #define DEFAULT_BLOCKS 8
 --- a/Modules/termios.c
 +++ b/Modules/termios.c
 @@ -17,6 +17,12 @@
@@ -268,6 +245,17 @@
  
  /* HP-UX requires that this be included to pick up MDCD, MCTS, MDSR,
   * MDTR, MRI, and MRTS (appearantly used internally by some things
+--- a/Python/compile.c
++++ b/Python/compile.c
+@@ -32,7 +32,7 @@
+ #include "symtable.h"
+ #include "opcode.h"
+ 
+-int Py_OptimizeFlag = 0;
++int Py_OptimizeFlag = 1;
+ 
+ #define DEFAULT_BLOCK_SIZE 16
+ #define DEFAULT_BLOCKS 8
 --- a/setup.py
 +++ b/setup.py
 @@ -34,6 +34,21 @@

@@ -8,7 +8,7 @@
             ]
  
  _default_localedir = os.path.join(sys.prefix, 'share', 'locale')
-@@ -195,11 +196,21 @@
+@@ -268,9 +269,19 @@
              return self._fallback.gettext(message)
          return message
  
@@ -20,17 +20,15 @@
      def lgettext(self, message):
          if self._fallback:
              return self._fallback.lgettext(message)
-         return message
- 
++        return message
++
 +    def lpgettext(self, context, message):
 +        if self._fallback:
 +            return self._fallback.lpgettext(context, message)
-+        return message
-+
+         return message
+ 
      def ngettext(self, msgid1, msgid2, n):
-         if self._fallback:
-             return self._fallback.ngettext(msgid1, msgid2, n)
-@@ -208,6 +219,14 @@
+@@ -281,6 +292,14 @@
          else:
              return msgid2
  
@@ -45,10 +43,11 @@
      def lngettext(self, msgid1, msgid2, n):
          if self._fallback:
              return self._fallback.lngettext(msgid1, msgid2, n)
-@@ -229,6 +248,14 @@
+@@ -301,6 +320,14 @@
+             return unicode(msgid1)
          else:
              return unicode(msgid2)
- 
++
 +    def lnpgettext(self, context, msgid1, msgid2, n):
 +        if self._fallback:
 +            return self._fallback.lnpgettext(context, msgid1, msgid2, n)
@@ -56,11 +55,10 @@
 +            return msgid1
 +        else:
 +            return msgid2
-+
+ 
      def info(self):
          return self._info
- 
-@@ -254,13 +281,22 @@
+@@ -327,12 +354,21 @@
                  __builtin__.__dict__['lgettext'] = self.lgettext
              if "lngettext" in names:
                  __builtin__.__dict__['lngettext'] = self.lngettext
@@ -76,15 +74,14 @@
      # Magic number of .mo files
      LE_MAGIC = 0x950412deL
      BE_MAGIC = 0xde120495L
- 
++
 +    # The encoding of a msgctxt and a msgid in a .mo file is
 +    # msgctxt + "\x04" + msgid (gettext version >= 0.15)
 +    CONTEXT = "%s\x04%s"
-+
+ 
      def _parse(self, fp):
          """Override this method to support alternative .mo formats."""
-         unpack = struct.unpack
-@@ -357,6 +393,21 @@
+@@ -430,12 +466,39 @@
              return tmsg.encode(self._charset)
          return tmsg
  
@@ -106,10 +103,14 @@
      def lgettext(self, message):
          missing = object()
          tmsg = self._catalog.get(message, missing)
-@@ -368,6 +419,18 @@
-             return tmsg.encode(self._output_charset)
-         return tmsg.encode(locale.getpreferredencoding())
- 
+         if tmsg is missing:
+             if self._fallback:
+                 return self._fallback.lgettext(message)
++            return message
++        if self._output_charset:
++            return tmsg.encode(self._output_charset)
++        return tmsg.encode(locale.getpreferredencoding())
++
 +    def lpgettext(self, context, message):
 +        ctxt_msg_id = self.CONTEXT % (context, message)
 +        missing = object()
@@ -117,15 +118,10 @@
 +        if tmsg is missing:
 +            if self._fallback:
 +                return self._fallback.lpgettext(context, message)
-+            return message
-+        if self._output_charset:
-+            return tmsg.encode(self._output_charset)
-+        return tmsg.encode(locale.getpreferredencoding())
-+
-     def ngettext(self, msgid1, msgid2, n):
-         try:
-             tmsg = self._catalog[(msgid1, self.plural(n))]
-@@ -384,6 +447,23 @@
+             return message
+         if self._output_charset:
+             return tmsg.encode(self._output_charset)
+@@ -457,6 +520,23 @@
              else:
                  return msgid2
  
@@ -149,10 +145,11 @@
      def lngettext(self, msgid1, msgid2, n):
          try:
              tmsg = self._catalog[(msgid1, self.plural(n))]
-@@ -419,6 +499,21 @@
+@@ -491,6 +571,21 @@
+             else:
                  tmsg = unicode(msgid2)
          return tmsg
- 
++
 +    def lnpgettext(self, context, msgid1, msgid2, n):
 +        ctxt_msg_id = self.CONTEXT % (context, msgid1)
 +        try:
@@ -167,11 +164,10 @@
 +                return msgid1
 +            else:
 +                return msgid2
-+
+ 
  
  # Locate a .mo file using the gettext strategy
- def find(domain, localedir=None, languages=None, all=0):
-@@ -535,6 +630,14 @@
+@@ -608,6 +703,14 @@
          return message
      return t.gettext(message)
  
@@ -186,7 +182,7 @@
  def ldgettext(domain, message):
      try:
          t = translation(domain, _localedirs.get(domain, None),
-@@ -543,6 +646,14 @@
+@@ -616,6 +719,14 @@
          return message
      return t.lgettext(message)
  
@@ -201,11 +197,22 @@
  def dngettext(domain, msgid1, msgid2, n):
      try:
          t = translation(domain, _localedirs.get(domain, None),
-@@ -554,6 +665,17 @@
+@@ -627,7 +738,7 @@
              return msgid2
      return t.ngettext(msgid1, msgid2, n)
  
+-def ldngettext(domain, msgid1, msgid2, n):
 +def dnpgettext(domain, context, msgid1, msgid2, n):
+     try:
+         t = translation(domain, _localedirs.get(domain, None),
+                         codeset=_localecodesets.get(domain))
+@@ -636,19 +747,53 @@
+             return msgid1
+         else:
+             return msgid2
++    return t.npgettext(context, msgid1, msgid2, n)
++
++def ldngettext(domain, msgid1, msgid2, n):
 +    try:
 +        t = translation(domain, _localedirs.get(domain, None),
 +                        codeset=_localecodesets.get(domain))
@@ -214,15 +221,8 @@
 +            return msgid1
 +        else:
 +            return msgid2
-+    return t.npgettext(context, msgid1, msgid2, n)
-+
- def ldngettext(domain, msgid1, msgid2, n):
-     try:
-         t = translation(domain, _localedirs.get(domain, None),
-@@ -565,18 +687,41 @@
-             return msgid2
      return t.lngettext(msgid1, msgid2, n)
- 
++
 +def ldnpgettext(domain, context, msgid1, msgid2, n):
 +    try:
 +        t = translation(domain, _localedirs.get(domain, None),
@@ -233,7 +233,7 @@
 +        else:
 +            return msgid2
 +    return t.lnpgettext(context, msgid1, msgid2, n)
-+
+ 
  def gettext(message):
      return dgettext(_current_domain, message)
  
@@ -254,10 +254,10 @@
 +
  def lngettext(msgid1, msgid2, n):
      return ldngettext(_current_domain, msgid1, msgid2, n)
- 
++
 +def lnpgettext(context, msgid1, msgid2, n):
 +    return ldnpgettext(_current_domain, context, msgid1, msgid2, n)
-+
+ 
  # dcgettext() has been deemed unnecessary and is not implemented.
  
  # James Henstridge's Catalog constructor from GNOME gettext.  Documented usage

@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -3451,7 +3451,7 @@
+@@ -3516,7 +3516,7 @@
  
  AC_MSG_RESULT($ac_cv_buggy_getaddrinfo)
  
@@ -17,9 +17,9 @@
  BUILDPYTHON=	python$(BUILDEXE)
 +HOSTPYTHON=	$(BUILDPYTHON)
  
- cross_compiling=@cross_compiling@
  PYTHON_FOR_BUILD=@PYTHON_FOR_BUILD@
-@@ -246,6 +247,7 @@
+ _PYTHON_HOST_PLATFORM=@_PYTHON_HOST_PLATFORM@
+@@ -245,6 +246,7 @@
  ##########################################################################
  # Parser
  PGEN=		Parser/pgen$(EXE)
@@ -27,7 +27,7 @@
  
  PSRCS=		\
  		Parser/acceler.c \
-@@ -513,7 +515,7 @@
+@@ -512,7 +514,7 @@
  			$(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
  
  platform: $(BUILDPYTHON) pybuilddir.txt
@@ -36,7 +36,7 @@
  
  # Create build directory and generate the sysconfig build-time data there.
  # pybuilddir.txt contains the name of the build dir and is used for
-@@ -546,6 +548,7 @@
+@@ -545,6 +547,7 @@
  	esac; \
  	$(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' \
  		_TCLTK_INCLUDES='$(TCLTK_INCLUDES)' _TCLTK_LIBS='$(TCLTK_LIBS)' \
@@ -44,16 +44,16 @@
  		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
  
  # Build static library
-@@ -684,7 +687,7 @@
+@@ -681,7 +684,7 @@
+ 
+ $(GRAMMAR_H): @GENERATED_COMMENT@ $(GRAMMAR_INPUT) $(PGEN)
  	@$(MKDIR_P) Include
- 	# Avoid copying the file onto itself for an in-tree build
- 	if test "$(cross_compiling)" != "yes"; then \
--		$(PGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C); \
-+		$(HOSTPGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C); \
- 	else \
- 		cp $(srcdir)/Include/graminit.h $(GRAMMAR_H).tmp; \
- 		mv $(GRAMMAR_H).tmp $(GRAMMAR_H); \
-@@ -1133,27 +1136,27 @@
+-	$(PGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
++	$(HOSTPGEN) $(GRAMMAR_INPUT) $(GRAMMAR_H) $(GRAMMAR_C)
+ $(GRAMMAR_C): @GENERATED_COMMENT@ $(GRAMMAR_H)
+ 	touch $(GRAMMAR_C)
+ 
+@@ -1121,27 +1124,27 @@
  			$(DESTDIR)$(LIBDEST)/distutils/tests ; \
  	fi
  	PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
@@ -87,7 +87,7 @@
  
  # Create the PLATDIR source directory, if one wasn't distributed..
  $(srcdir)/Lib/$(PLATDIR):
-@@ -1265,11 +1268,13 @@
+@@ -1253,11 +1256,13 @@
  # Install the dynamically loadable modules
  # This goes into $(exec_prefix)
  sharedinstall: sharedmods
