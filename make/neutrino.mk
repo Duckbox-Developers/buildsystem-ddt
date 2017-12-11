@@ -89,11 +89,11 @@ N_CONFIG_OPTS += \
 	--with-gamesdir=/var/tuxbox/games \
 	--with-iconsdir=/usr/share/tuxbox/neutrino/icons \
 	--with-iconsdir_var=/var/tuxbox/icons \
-	--with-luaplugindir=/var/tuxbox/plugins \
 	--with-localedir=/usr/share/tuxbox/neutrino/locale \
 	--with-localedir_var=/var/tuxbox/locale \
 	--with-plugindir=/var/tuxbox/plugins \
 	--with-plugindir_var=/var/tuxbox/plugins \
+	--with-luaplugindir=/var/tuxbox/plugins \
 	--with-private_httpddir=/usr/share/tuxbox/neutrino/httpd \
 	--with-public_httpddir=/var/tuxbox/httpd \
 	--with-themesdir=/usr/share/tuxbox/neutrino/themes \
@@ -425,7 +425,7 @@ $(D)/libstb-hal-tangos.do_prepare:
 	[ -d "$(ARCHIVE)/libstb-hal-tangos.git" ] && \
 	(cd $(ARCHIVE)/libstb-hal-tangos.git; git pull; cd "$(BUILD_TMP)";); \
 	[ -d "$(ARCHIVE)/libstb-hal-tangos.git" ] || \
-	git clone https://github.com/TangoCash/libstb-hal-cst-next.git $(ARCHIVE)/libstb-hal-tangos.git; \
+	git clone https://github.com/TangoCash/libstb-hal-tangos.git $(ARCHIVE)/libstb-hal-tangos.git; \
 	cp -ra $(ARCHIVE)/libstb-hal-tangos.git $(SOURCE_DIR)/libstb-hal-tangos;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-tangos $(SOURCE_DIR)/libstb-hal-tangos.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-tangos; \
@@ -483,7 +483,7 @@ $(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-tangos
 	[ -d "$(ARCHIVE)/neutrino-mp-tangos.git" ] && \
 	(cd $(ARCHIVE)/neutrino-mp-tangos.git; git pull; cd "$(BUILD_TMP)";); \
 	[ -d "$(ARCHIVE)/neutrino-mp-tangos.git" ] || \
-	git clone https://github.com/TangoCash/neutrino-mp-cst-next.git $(ARCHIVE)/neutrino-mp-tangos.git; \
+	git clone https://github.com/TangoCash/neutrino-mp-tangos.git $(ARCHIVE)/neutrino-mp-tangos.git; \
 	cp -ra $(ARCHIVE)/neutrino-mp-tangos.git $(SOURCE_DIR)/neutrino-mp-tangos; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-tangos $(SOURCE_DIR)/neutrino-mp-tangos.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-tangos; \
