@@ -201,7 +201,7 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 		$(call post_patch,$(NEUTRINO_HD2_PLUGINS_PATCHES))
 	@touch $@
 
-$(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
+$(D)/neutrino-hd2-plugins.config.status: $(D)/bootstrap neutrino-hd2
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 		./autogen.sh; \
 		$(BUILDENV) \
@@ -219,23 +219,26 @@ $(SOURCE_DIR)/neutrino-hd2-plugins/config.status: $(D)/bootstrap neutrino-hd2
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(CPPFLAGS) -I$(driverdir) -I$(KERNEL_DIR)/include -I$(TARGET_DIR)/include" \
 			LDFLAGS="$(TARGET_LDFLAGS)"
+	@touch $@
 
-$(D)/neutrino-hd2-plugins.do_compile: $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
+$(D)/neutrino-hd2-plugins.do_compile: $(D)/neutrino-hd2-plugins.config.status
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 	$(MAKE) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
 	@touch $@
 
-$(D)/neutrino-hd2-plugins: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
+$(D)/neutrino-hd2-plugins.build: neutrino-hd2-plugins.do_prepare neutrino-hd2-plugins.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2-plugins install DESTDIR=$(TARGET_DIR) top_srcdir=$(SOURCE_DIR)/neutrino-hd2
 	$(TOUCH)
 
 neutrino-hd2-plugins-clean:
-	rm -f $(D)/neutrino-hd2-plugins
 	cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
 	$(MAKE) clean
-	rm -f $(SOURCE_DIR)/neutrino-hd2-plugins/config.status
+	rm -f $(D)/neutrino-hd2-plugins.build
+	rm -f $(D)/neutrino-hd2-plugins.config.status
 
-neutrino-hd2-plugins-distclean: neutrino-hd2-plugins-clean
+neutrino-hd2-plugins-distclean:
+	rm -f $(D)/neutrino-hd2-plugins.build
+	rm -f $(D)/neutrino-hd2-plugins.config.status
 	rm -f $(D)/neutrino-hd2-plugins.do_prepare
 	rm -f $(D)/neutrino-hd2-plugins.do_compile
 
