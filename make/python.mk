@@ -11,7 +11,7 @@ PYTHON_BUILD = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
-	$(HOST_DIR)/bin/python ./setup.py build --executable=/usr/bin/python
+	$(HOST_DIR)/bin/python ./setup.py -q build --executable=/usr/bin/python
 
 PYTHON_INSTALL = \
 	CC="$(TARGET)-gcc" \
@@ -20,7 +20,7 @@ PYTHON_INSTALL = \
 	LDSHARED="$(TARGET)-gcc -shared" \
 	PYTHONPATH=$(TARGET_DIR)/$(PYTHON_DIR)/site-packages \
 	CPPFLAGS="$(TARGET_CPPFLAGS) -I$(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)" \
-	$(HOST_DIR)/bin/python ./setup.py install --root=$(TARGET_DIR) --prefix=/usr
+	$(HOST_DIR)/bin/python ./setup.py -q install --root=$(TARGET_DIR) --prefix=/usr
 
 #
 # host_python
