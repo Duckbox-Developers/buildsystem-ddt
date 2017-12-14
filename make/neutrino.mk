@@ -255,7 +255,7 @@ neutrino-mp-ddt-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-mp-ddt.do_prepare
 	rm -f $(D)/neutrino-mp-ddt.do_compile
-	rm -f $(D)/neutrino-mp-ddt
+	rm -f $(D)/neutrino-mp-ddt*
 
 ################################################################################
 ifeq ($(BOXARCH), arm)
