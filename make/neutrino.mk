@@ -165,9 +165,7 @@ libstb-hal-ddt-clean:
 
 libstb-hal-ddt-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-ddt.do_prepare
-	rm -f $(D)/libstb-hal-ddt.do_compile
-	rm -f $(D)/libstb-hal-ddt
+	rm -f $(D)/libstb-hal-ddt*
 
 ################################################################################
 #
@@ -253,8 +251,6 @@ neutrino-mp-ddt-clean: neutrino-cdkroot-clean
 mp-distclean \
 neutrino-mp-ddt-distclean: neutrino-cdkroot-clean
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-ddt.do_prepare
-	rm -f $(D)/neutrino-mp-ddt.do_compile
 	rm -f $(D)/neutrino-mp-ddt*
 
 ################################################################################
@@ -313,9 +309,7 @@ libstb-hal-ni-clean:
 
 libstb-hal-ni-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-ni.do_prepare
-	rm -f $(D)/libstb-hal-ni.do_compile
-	rm -f $(D)/libstb-hal-ni
+	rm -f $(D)/libstb-hal-ni*
 
 ################################################################################
 #
@@ -399,9 +393,7 @@ neutrino-mp-ni-clean:
 
 neutrino-mp-ni-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-ni.do_prepare
-	rm -f $(D)/neutrino-mp-ni.do_compile
-	rm -f $(D)/neutrino-mp-ni
+	rm -f $(D)/neutrino-mp-ni*
 
 ################################################################################
 
@@ -461,9 +453,7 @@ libstb-hal-tangos-clean:
 
 libstb-hal-tangos-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-tangos.do_prepare
-	rm -f $(D)/libstb-hal-tangos.do_compile
-	rm -f $(D)/libstb-hal-tangos
+	rm -f $(D)/libstb-hal-tangos*
 
 ################################################################################
 #
@@ -556,9 +546,7 @@ neutrino-mp-tangos-clean:
 
 neutrino-mp-tangos-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-tangos.do_prepare
-	rm -f $(D)/neutrino-mp-tangos.do_compile
-	rm -f $(D)/neutrino-mp-tangos
+	rm -f $(D)/neutrino-mp-tangos*
 
 ################################################################################
 #
@@ -614,9 +602,7 @@ libstb-hal-max-clean:
 
 libstb-hal-max-distclean:
 	rm -rf $(LH_OBJDIR)
-	rm -f $(D)/libstb-hal-max.do_prepare
-	rm -f $(D)/libstb-hal-max.do_compile
-	rm -f $(D)/libstb-hal-max
+	rm -f $(D)/libstb-hal-max*
 
 ################################################################################
 #
@@ -666,7 +652,7 @@ $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h:
 		pushd $(BASE_DIR); \
 		DDT_REV=$$(git log | grep "^commit" | wc -l); \
 		popd; \
-		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-rev'$$HAL_REV'_NMP-rev'$$NMP_REV'-max"' >> $@ ; \
+		echo '#define VCS "DDT-rev'$$DDT_REV'_HAL-max-rev'$$HAL_REV'_NMP-max-rev'$$NMP_REV'"' >> $@ ; \
 	fi
 
 $(D)/neutrino-mp-max.do_compile: $(D)/neutrino-mp-max.config.status $(SOURCE_DIR)/neutrino-mp-max/src/gui/version.h
@@ -697,9 +683,7 @@ neutrino-mp-max-clean:
 
 neutrino-mp-max-distclean:
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino-mp-max.do_prepare
-	rm -f $(D)/neutrino-mp-max.do_compile
-	rm -f $(D)/neutrino-mp-max
+	rm -f $(D)/neutrino-mp-max*
 
 ################################################################################
 #
@@ -786,10 +770,7 @@ neutrino-hd2-clean: neutrino-cdkroot-clean
 
 nhd2-distclean \
 neutrino-hd2-distclean: neutrino-cdkroot-clean
-	rm -f $(D)/neutrino-hd2
-	rm -f $(D)/neutrino-hd2.config.status
-	rm -f $(D)/neutrino-hd2.do_compile
-	rm -f $(D)/neutrino-hd2.do_prepare
+	rm -f $(D)/neutrino-hd2*
 	rm -f $(D)/neutrino-hd2-plugins*
 
 ################################################################################
