@@ -1,5 +1,5 @@
---- a/scripts/build/mkver.in	2014-12-19 12:56:52.000000000 +0100
-+++ b/scripts/build/mkver.in	2015-02-03 12:44:15.008408400 +0100
+--- a/scripts/build/mkver.in
++++ b/scripts/build/mkver.in
 @@ -15,7 +15,7 @@
   *) ConfStr="${ConfStr}-@VER_SUFFIX@" ;;
  esac
