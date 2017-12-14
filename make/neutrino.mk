@@ -228,7 +228,7 @@ neutrino-mp-ddt: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 mp \
@@ -237,7 +237,7 @@ neutrino-mp-ddt-plugins: $(D)/neutrino-mp-ddt.do_prepare $(D)/neutrino-mp-ddt.do
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 mp-clean \
@@ -373,7 +373,7 @@ neutrino-mp-ni: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-ni-plugins: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_compile
@@ -381,7 +381,7 @@ neutrino-mp-ni-plugins: $(D)/neutrino-mp-ni.do_prepare $(D)/neutrino-mp-ni.do_co
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-ni-clean:
@@ -518,7 +518,7 @@ neutrino-mp-tangos: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.d
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-tangos-all: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
@@ -527,7 +527,7 @@ neutrino-mp-tangos-all: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tang
 	touch $(D)/$(notdir $@)
 	make shairport
 	make neutrino-plugins
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-tangos-plugins: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-tangos.do_compile
@@ -535,7 +535,7 @@ neutrino-mp-tangos-plugins: $(D)/neutrino-mp-tangos.do_prepare $(D)/neutrino-mp-
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-tangos-clean:
@@ -664,7 +664,7 @@ neutrino-mp-max: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-max-plugins: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do_compile
@@ -672,7 +672,7 @@ neutrino-mp-max-plugins: $(D)/neutrino-mp-max.do_prepare $(D)/neutrino-mp-max.do
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-plugins
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-mp-max-clean:
@@ -749,7 +749,7 @@ neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 nhd2 \
@@ -758,7 +758,7 @@ neutrino-hd2-plugins: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	make $(TARGET_DIR)/var/etc/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-hd2-plugins.build
-	make neutrino_release
+	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
 nhd2-clean \
