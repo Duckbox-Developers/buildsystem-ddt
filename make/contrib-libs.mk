@@ -1442,6 +1442,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 #
 # ffmpeg
 #
+ifeq ($(BOXARCH), sh4)
 FFMPEG_VER = 2.8.10
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-buffer-size.patch
@@ -1449,14 +1450,24 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-kodi.patch
 
+FFMPEG_EXTERN = 
+FFMPEG_CONF_OPTS = --disable-armv5te --disable-armv6 --disable-armv6t2 --disable-neon
+else
+FFMPEG_VER = 3.2.2
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
+FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-buffer-size.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add-dash-demux.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-mpegts.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow-to-choose-rtmp-impl-at-runtime.patch
+
+FFMPEG_EXTERN = $(D)/libxml2 $(D)/librtmpdump
+FFMPEG_CONF_OPTS = --enable-librtmp
+endif
+
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-ifeq ($(BOXARCH), sh4)
-FFMPEG_CONF_OPTS += --disable-armv5te --disable-armv6 --disable-armv6t2
-endif
-
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(LIBRTMPDUMP) $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(FFMPEG_EXTERN) $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
@@ -1487,7 +1498,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--disable-avx \
 			--disable-fma4 \
 			--disable-vfp \
-			--disable-neon \
 			--disable-inline-asm \
 			--disable-yasm \
 			--disable-mips32r2 \
@@ -1622,25 +1632,30 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--disable-filters \
 			--enable-filter=scale \
 			\
+			--disable-indevs \
+			\
+			--disable-outdevs \
+			\
+			$(FFMPEG_CONF_OPTS) \
+			\
 			--disable-iconv \
 			--disable-xlib \
 			--disable-libxcb \
 			--disable-postproc \
+			--disable-static \
+			--disable-debug \
+			--disable-runtime-cpudetect \
+			\
 			--enable-bsfs \
-			--disable-indevs \
-			--disable-outdevs \
 			--enable-bzlib \
 			--enable-zlib \
-			$(FFMPEG_CONF_OPTS) \
-			--disable-static \
 			--enable-libass \
 			--enable-openssl \
 			--enable-network \
 			--enable-shared \
 			--enable-small \
 			--enable-stripping \
-			--disable-debug \
-			--disable-runtime-cpudetect \
+			\
 			--enable-cross-compile \
 			--cross-prefix=$(TARGET)- \
 			--extra-cflags="$(TARGET_CFLAGS)" \

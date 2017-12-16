@@ -63,7 +63,7 @@
      url_resetbuf(s, s->write_flag ? AVIO_FLAG_WRITE : AVIO_FLAG_READ);
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -1871,8 +1871,10 @@
+@@ -1887,8 +1887,10 @@
      HLSContext *c = s->priv_data;
      int ret, i, minplaylist = -1;
  
