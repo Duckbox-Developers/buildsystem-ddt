@@ -217,7 +217,7 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 ##############################################
 
 case $4 in
-	[1-4]) REPLY=$4;;
+	[1-2]) REPLY=$4;;
 	*)	echo -e "\nMedia Framework:"
 		echo "   1) build integrated libeplayer3"
 		echo "   2) gstreamer"
