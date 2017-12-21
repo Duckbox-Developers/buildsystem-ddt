@@ -1,3 +1,6 @@
+Fix VIDEO_GET_PTS error in libeplayer3 intruduced in:
+http://git.videolan.org/gitweb.cgi/ffmpeg.git/?p=ffmpeg.git;a=commitdiff;h=14f7a3d55a43c1082ee1186a1990a431c641052d
+
 --- a/libavformat/mpegts.c
 +++ b/libavformat/mpegts.c
 @@ -917,10 +917,10 @@
