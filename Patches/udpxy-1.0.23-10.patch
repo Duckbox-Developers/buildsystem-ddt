@@ -47,7 +47,7 @@
          if( 0 != rc ) break;
 --- a/udpxy.c
 +++ b/udpxy.c
-@@ -1389,7 +1389,12 @@
+@@ -1379,7 +1379,12 @@
      openlog( g_udpxy_app, LOG_CONS | LOG_PID, LOG_LOCAL0 );
  
      do {
