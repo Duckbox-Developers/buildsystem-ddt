@@ -1637,6 +1637,7 @@ $(D)/ofgwrite: $(D)/bootstrap
 		$(BUILDENV) \
 		$(MAKE); \
 	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite_bin $(TARGET_DIR)/usr/bin
+	install -m 755 $(BUILD_TMP)/$(NI_OFGWRITE)/ofgwrite_tgz $(TARGET_DIR)/usr/bin
 	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite $(TARGET_DIR)/usr/bin
 	$(REMOVE)/ofgwrite
 	$(TOUCH)
