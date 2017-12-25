@@ -35,6 +35,12 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 endif
 	$(TUXBOX_CUSTOMIZE)
 
+onlimage:
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
+	$(MAKE) flash-image-hd51-multi-rootfs-onl
+endif
+	$(TUXBOX_CUSTOMIZE)
+
 flash-clean:
 	cd $(BASE_DIR)/flash/nor_flash && $(SUDOCMD) rm -rf ./tmp ./out
 	cd $(BASE_DIR)/flash/spark7162 && $(SUDOCMD) rm -rf ./tmp ./out
@@ -142,5 +148,18 @@ flash-image-hd51-multi-rootfs:
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD51_BUILD_TMP)/$(BOXTYPE)/imageversion
 	cd $(HD51_BUILD_TMP) && \
 	zip -r $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/disk.img $(BOXTYPE)/imageversion
+	# cleanup
+	rm -rf $(HD51_BUILD_TMP)
+
+flash-image-hd51-multi-rootfs-onl:
+	# Create final USB-image
+	mkdir -p $(HD51_BUILD_TMP)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/zImage.dtb $(HD51_BUILD_TMP)/$(BOXTYPE)/kernel.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
+	bzip2 $(HD51_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD51_BUILD_TMP)/$(BOXTYPE)/imageversion
+	cd $(HD51_BUILD_TMP)/$(BOXTYPE) && \
+	tar -cvzf $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 kernel.bin imageversion
 	# cleanup
 	rm -rf $(HD51_BUILD_TMP)
