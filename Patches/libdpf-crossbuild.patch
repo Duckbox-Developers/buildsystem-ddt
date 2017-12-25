@@ -1,0 +1,10 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ OBJS = dpflib.o rawusb.o scsi.o bootload.o
+ 
+-CFLAGS = -Wall -fPIC -I../include -g
++CFLAGS = -Wall -fPIC -I$(PREFIX)/include -I../include -g
+ # CFLAGS += -DDEBUG
+ 
+ ifndef DESTDIR

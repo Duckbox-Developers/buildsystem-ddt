@@ -1807,9 +1807,36 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SO
 	$(TOUCH)
 
 #
+#
+#
+DPF-AX_REV = 54
+LIBPDF_PATCH = libdpf-crossbuild.patch
+
+$(ARCHIVE)/dpf-ax_svn$(DPF-AX_REV).tar.gz:
+	cd $(BUILD_TMP); \
+		svn co -r$(DPF-AX_REV) https://dpf-ax.svn.sourceforge.net/svnroot/dpf-ax/trunk dpf-ax_svn$(DPF-AX_REV); \
+		tar cvpzf $@ dpf-ax_svn$(DPF-AX_REV)
+	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
+
+$(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/dpf-ax_svn$(DPF-AX_REV).tar.gz
+	$(START_BUILD)
+	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
+	$(UNTAR)/dpf-ax_svn$(DPF-AX_REV).tar.gz
+	cd $(BUILD_TMP)/dpf-ax_svn$(DPF-AX_REV)/dpflib; \
+		$(call post_patch,$(LIBPDF_PATCH)); \
+		make libdpf.a CC=$(TARGET)-gcc PREFIX=$(TARGET_DIR)/usr; \
+		mkdir -p $(TARGET_INCLUDE_DIR)/libdpf; \
+		cp dpf.h $(TARGET_INCLUDE_DIR)/libdpf/libdpf.h; \
+		cp ../include/spiflash.h $(TARGET_INCLUDE_DIR)/libdpf/; \
+		cp ../include/usbuser.h $(TARGET_INCLUDE_DIR)/libdpf/; \
+		cp libdpf.a $(TARGET_LIB_DIR)/
+	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
+	$(TOUCH)
+
+#
 # lcd4linux
 #
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
