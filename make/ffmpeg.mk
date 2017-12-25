@@ -251,7 +251,7 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add-dash-demux.patch
 
 FFMPEG_DEPS = $(D)/libxml2 $(D)/librtmpdump
 FFMPEG_CONF_OPTS  = --enable-librtmp
-FFMPRG_EXTRA_CFLAGS = -fPIC -mfpu=neon-vfpv4 -mfloat-abi=hard
+FFMPRG_EXTRA_CFLAGS = -I$(TARGET_DIR)/usr/include/libxml2 -mfpu=neon-vfpv4 -mfloat-abi=hard
 
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
