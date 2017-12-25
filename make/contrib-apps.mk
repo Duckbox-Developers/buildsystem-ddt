@@ -1641,4 +1641,3 @@ $(D)/ofgwrite: $(D)/bootstrap
 	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite $(TARGET_DIR)/usr/bin
 	$(REMOVE)/ofgwrite
 	$(TOUCH)
-

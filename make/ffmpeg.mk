@@ -206,7 +206,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-libass \
 			--enable-openssl \
 			--enable-network \
-			--enable-shared \
 			--enable-small \
 			--enable-stripping \
 			\
@@ -521,6 +520,10 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			$(FFMPEG_CONF_OPTS) \
 			\
 			--enable-shared \
+			--enable-openssl \
+			--enable-network \
+			--enable-small \
+			--enable-stripping \
 			--disable-static \
 			--disable-debug \
 			--disable-runtime-cpudetect \
@@ -558,4 +561,3 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 	$(TOUCH)
 
 endif
-

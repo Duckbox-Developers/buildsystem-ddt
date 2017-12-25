@@ -145,4 +145,3 @@ crossmenuconfig: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 		MAKELEVEL=0 make; \
 		chmod 0755 ct-ng; \
 		./ct-ng menuconfig
-

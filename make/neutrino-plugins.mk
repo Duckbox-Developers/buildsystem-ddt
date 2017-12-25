@@ -241,4 +241,3 @@ neutrino-hd2-plugins-distclean:
 	rm -f $(D)/neutrino-hd2-plugins.config.status
 	rm -f $(D)/neutrino-hd2-plugins.do_prepare
 	rm -f $(D)/neutrino-hd2-plugins.do_compile
-
