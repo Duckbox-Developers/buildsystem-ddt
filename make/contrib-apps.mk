@@ -1631,9 +1631,12 @@ $(D)/usb_modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb_modeswitch_data $(ARCHI
 $(D)/ofgwrite: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/ofgwrite
-	set -e; cd $(BUILD_TMP); \
-	git clone https://github.com/Duckbox-Developers/ofgwrite-ddt.git ofgwrite; \
-	cd ofgwrite; \
+	set -e; if [ -d $(ARCHIVE)/ofgwrite-ddt.git ]; \
+		then cd $(ARCHIVE)/ofgwrite-ddt.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/ofgwrite-ddt.git ofgwrite-ddt.git; \
+		fi
+	cp -ra $(ARCHIVE)/ofgwrite-ddt.git $(BUILD_TMP)/ofgwrite
+	set -e; cd $(BUILD_TMP)/ofgwrite; \
 		$(BUILDENV) \
 		$(MAKE); \
 	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite_bin $(TARGET_DIR)/usr/bin
