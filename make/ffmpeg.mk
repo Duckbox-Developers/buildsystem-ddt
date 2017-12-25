@@ -256,7 +256,7 @@ FFMPRG_EXTRA_CFLAGS = -fPIC -mfpu=neon-vfpv4 -mfloat-abi=hard
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
@@ -517,19 +517,19 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			\
 			--enable-zlib \
 			--enable-bzlib \
+			--enable-openssl \
+			--disable-xlib \
+			--disable-libxcb \
 			\
 			$(FFMPEG_CONF_OPTS) \
 			\
 			--enable-shared \
-			--enable-openssl \
 			--enable-network \
 			--enable-small \
 			--enable-stripping \
 			--disable-static \
 			--disable-debug \
 			--disable-runtime-cpudetect \
-			--disable-xlib \
-			--disable-libxcb \
 			--enable-pic \
 			--enable-pthreads \
 			--enable-hardcoded-tables \
