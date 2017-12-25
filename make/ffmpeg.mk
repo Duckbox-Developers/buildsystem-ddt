@@ -206,6 +206,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-libass \
 			--enable-openssl \
 			--enable-network \
+			--enable-shared \
 			--enable-small \
 			--enable-stripping \
 			\
