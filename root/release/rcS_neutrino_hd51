@@ -30,9 +30,9 @@ insmod /lib/modules/hd51_2.ko
 insmod /lib/modules/hd51_3.ko
 insmod /lib/modules/hd51_4.ko
 
-if [ -e /backup_flash.tar.gz ]; then
-  tar xvf /backup_flash.tar.gz -C /
-  rm -f /backup_flash.tar.gz
+if [ -e /var/backup_flash.tar.gz ]; then
+  tar xvf /var/backup_flash.tar.gz -C /
+  rm -f /var/backup_flash.tar.gz
 fi
 
 echo "Booting... DDT" > /dev/dbox/oled0

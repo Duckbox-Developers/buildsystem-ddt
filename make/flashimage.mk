@@ -35,9 +35,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 endif
 	$(TUXBOX_CUSTOMIZE)
 
-onlimage:
+online-image:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
-	$(MAKE) flash-image-hd51-multi-rootfs-onl
+	$(MAKE) flash-image-hd51-online
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -151,7 +151,7 @@ flash-image-hd51-multi-rootfs:
 	# cleanup
 	rm -rf $(HD51_BUILD_TMP)
 
-flash-image-hd51-multi-rootfs-onl:
+flash-image-hd51-online:
 	# Create final USB-image
 	mkdir -p $(HD51_BUILD_TMP)/$(BOXTYPE)
 	cp $(RELEASE_DIR)/boot/zImage.dtb $(HD51_BUILD_TMP)/$(BOXTYPE)/kernel.bin
