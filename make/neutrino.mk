@@ -558,6 +558,7 @@ neutrino-mp-tangos-distclean:
 #
 # libstb-hal-max
 #
+GIT_BRANCH_LIBSTB_MAX ?= master
 NEUTRINO_LIBSTB_MAX_PATCHES =
 
 $(D)/libstb-hal-max.do_prepare:
@@ -570,6 +571,7 @@ $(D)/libstb-hal-max.do_prepare:
 	[ -d "$(ARCHIVE)/libstb-hal-max.git" ] || \
 	git clone https://bitbucket.org/max_10/libstb-hal-max.git $(ARCHIVE)/libstb-hal-max.git; \
 	cp -ra $(ARCHIVE)/libstb-hal-max.git $(SOURCE_DIR)/libstb-hal-max;\
+	(cd $(SOURCE_DIR)/libstb-hal-max; git checkout $(GIT_BRANCH_LIBSTB_MAX);); \
 	cp -ra $(SOURCE_DIR)/libstb-hal-max $(SOURCE_DIR)/libstb-hal-max.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-max; \
 		$(call post_patch,$(NEUTRINO_LIBSTB_MAX_PATCHES))
@@ -615,6 +617,7 @@ libstb-hal-max-distclean:
 #
 # neutrino-mp-max
 #
+GIT_BRANCH_NMP_MAX ?= master
 NEUTRINO_MP_MAX_PATCHES =
 
 $(D)/neutrino-mp-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
@@ -627,6 +630,7 @@ $(D)/neutrino-mp-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
 	[ -d "$(ARCHIVE)/neutrino-mp-max.git" ] || \
 	git clone https://bitbucket.org/max_10/neutrino-mp-max.git $(ARCHIVE)/neutrino-mp-max.git; \
 	cp -ra $(ARCHIVE)/neutrino-mp-max.git $(SOURCE_DIR)/neutrino-mp-max; \
+	(cd $(SOURCE_DIR)/neutrino-mp-max; git checkout $(GIT_BRANCH_NMP_MAX);); \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-max $(SOURCE_DIR)/neutrino-mp-max.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-max; \
 		$(call post_patch,$(NEUTRINO_MP_MAX_PATCHES))
