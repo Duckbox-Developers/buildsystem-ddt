@@ -1631,7 +1631,7 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 #
 # libxslt
 #
-LIBXSLT_VER = 1.1.28
+LIBXSLT_VER = 1.1.32
 LIBXSLT_SOURCE = libxslt-$(LIBXSLT_VER).tar.gz
 
 $(ARCHIVE)/$(LIBXSLT_SOURCE):
@@ -1645,10 +1645,10 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 		$(CONFIGURE) \
 			CPPFLAGS="$(CPPFLAGS) -I$(TARGET_DIR)/usr/include/libxml2" \
 			--prefix=/usr \
-			--with-libxml-prefix="$(HOST_DIR)" \
-			--with-libxml-include-prefix="$(TARGET_DIR)/usr/include" \
-			--with-libxml-libs-prefix="$(TARGET_DIR)/usr/lib" \
-			--with-python=$(HOST_DIR) \
+			--datarootdir=/.remove \
+			--enable-shared \
+			--disable-static \
+			--without-python \
 			--without-crypto \
 			--without-debug \
 			--without-mem-debug \
@@ -1669,7 +1669,9 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(REWRITE_LIBTOOL)/libexslt.la
 	$(REWRITE_LIBTOOL)/libxslt.la
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
+ifeq ($(BOXARCH), sh4)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,xsltproc xslt-config)
+endif
 	$(REMOVE)/libxslt-$(LIBXSLT_VER)
 	$(TOUCH)
 
