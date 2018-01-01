@@ -9,10 +9,12 @@ FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-fix-hls.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
+# ffmpeg exteplayer3 patches
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow-to-choose-rtmp-impl-at-runtime.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add-dash-demux.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls-replace-key-uri.patch
 
 FFMPEG_DEPS = $(D)/librtmpdump
 FFMPEG_CONF_OPTS  = --enable-librtmp
