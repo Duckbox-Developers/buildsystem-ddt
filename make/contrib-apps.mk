@@ -165,6 +165,34 @@ $(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 	$(TOUCH)
 
 #
+# valgrind
+#
+VALGRIND_VER = 3.13.0
+VALGRIND_SOURCE = valgrind-$(VALGRIND_VER).tar.bz2
+
+$(ARCHIVE)/$(VALGRIND_SOURCE):
+	$(WGET) ftp://sourceware.org/pub/valgrind/$(VALGRIND_SOURCE)
+
+$(D)/valgrind: $(D)/bootstrap $(ARCHIVE)/$(VALGRIND_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/valgrind-$(VALGRIND_VER)
+	$(UNTAR)/$(VALGRIND_SOURCE)
+	set -e; cd $(BUILD_TMP)/valgrind-$(VALGRIND_VER); \
+		sed -i -e "s#armv7#arm#g" configure; \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--datadir=/.remove \
+			-enable-only32bit \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	rm -f $(addprefix $(TARGET_DIR)/usr/lib/valgrind/,*.a *.xml)
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cg_* callgrind_* ms_print)
+	$(REMOVE)/valgrind-$(VALGRIND_VER)
+	$(TOUCH)
+
+#
 # host_opkg
 #
 OPKG_VER = 0.3.3
@@ -1625,7 +1653,6 @@ $(D)/dropbearmulti: $(D)/bootstrap
 	install -d -m 0755 $(TARGET_DIR)/etc/dropbear
 	$(REMOVE)/dropbearmulti
 	$(TOUCH)
-
 
 #
 # usb_modeswitch_data
