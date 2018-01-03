@@ -1622,7 +1622,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
 	set -e; cd $(BUILD_TMP)/dropbearmulti; \
 		$(BUILDENV) \
-		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal; \
+		autoreconf -fi; \
 		$(CONFIGURE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
