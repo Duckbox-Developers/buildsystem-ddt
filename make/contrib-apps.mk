@@ -11,7 +11,9 @@ BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-flashcp-small-output.patch
 $(ARCHIVE)/$(BUSYBOX_SOURCE):
 	$(WGET) https://busybox.net/downloads/$(BUSYBOX_SOURCE)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm))
+BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config_arm
+else ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config_nandwrite
 else
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
