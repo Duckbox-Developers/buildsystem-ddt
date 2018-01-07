@@ -129,7 +129,7 @@
  
  	/* Compat note:
  	 * 2.6 style insmod has no options and required filename
-@@ -68,9 +99,91 @@
+@@ -68,9 +99,93 @@
  	if (!filename)
  		bb_show_usage();
  
@@ -141,6 +141,8 @@
 +	if (uname(&uts) == 0) {
 +		if (uts.release[0] == '2') {
 +			k_version = uts.release[2] - '0';
++		} else if ((uts.release[0] == '3') || (uts.release[0] == '4')) {
++			k_version = 6;
 +		}
 +	}
 +
