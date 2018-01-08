@@ -1,20 +1,3 @@
---- a/packaging/pkgconfig/openthreads.pc.in
-+++ b/packaging/pkgconfig/openthreads.pc.in
-@@ -0,0 +1,14 @@
-+# pkg-config source file
-+
-+prefix=@CMAKE_INSTALL_PREFIX@
-+exec_prefix=${prefix}
-+libdir=${exec_prefix}/lib@LIB_POSTFIX@
-+includedir=${prefix}/include
-+
-+Name: openthreads
-+Description: Object-Oriented (OO) thread interface for C++ programmers
-+Version: @OPENTHREADS_VERSION@
-+Requires:
-+Conflicts:
-+Libs: -L${libdir} -lOpenThreads
-+Cflags: -I${includedir}
 --- a/Make/makedefs
 +++ b/Make/makedefs
 @@ -85,7 +85,7 @@
