@@ -83,7 +83,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-muxer=apng \
 			--enable-muxer=mpegts \
 			\
-			--disable-encoders \
+			--enable-encoders \
 			--enable-encoder=aac \
 			--enable-encoder=h261 \
 			--enable-encoder=h263 \
@@ -290,7 +290,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-demuxer=h264 \
 			--enable-demuxer=mpegvideo \
 			\
-			--disable-parsers \
 			--enable-parser=aac \
 			--enable-parser=aac_latm \
 			--enable-parser=ac3 \
