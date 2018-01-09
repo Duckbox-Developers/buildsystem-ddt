@@ -73,7 +73,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--disable-vaapi \
 			--disable-vdpau \
 			\
-			--disable-muxers
+			--disable-muxers \
 			--enable-muxer=apng \
 			--enable-muxer=flac \
 			--enable-muxer=mp3 \
