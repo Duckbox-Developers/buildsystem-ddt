@@ -179,6 +179,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-decoder=metasound \
 			--enable-decoder=mjpeg \
 			--enable-decoder=mlp \
+			--enable-decoder=movtext \
 			--enable-decoder=mp1 \
 			--enable-decoder=mp3 \
 			--enable-decoder=mp3adu \
@@ -251,6 +252,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-demuxer=aac \
 			--enable-demuxer=ac3 \
 			--enable-demuxer=apng \
+			--enable-demuxer=ass \
 			--enable-demuxer=avi \
 			--enable-demuxer=dts \
 			--enable-demuxer=ffmetadata \
@@ -273,6 +275,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-demuxer=mpegtsraw \
 			--enable-demuxer=mpegps \
 			--enable-demuxer=mpegvideo \
+			--enable-demuxer=mpjpeg \
 			--enable-demuxer=ogg \
 			--enable-demuxer=pcm_s16be \
 			--enable-demuxer=pcm_s16le \
