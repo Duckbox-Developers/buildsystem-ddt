@@ -1,6 +1,6 @@
 --- a/miscutils/flashcp.c
 +++ b/miscutils/flashcp.c
-@@ -18,10 +18,11 @@
+@@ -19,10 +19,11 @@
  //kbuild:lib-$(CONFIG_FLASHCP) += flashcp.o
  
  //usage:#define flashcp_trivial_usage
@@ -13,7 +13,7 @@
  
  #include "libbb.h"
  #include <mtd/mtd-user.h>
-@@ -30,6 +31,7 @@
+@@ -31,6 +32,7 @@
  #define MTD_DEBUG 0
  
  #define OPT_v (1 << 0)
@@ -21,7 +21,7 @@
  
  #define BUFSIZE (4 * 1024)
  
-@@ -42,9 +44,15 @@
+@@ -43,9 +45,15 @@
  	percent = count * 100;
  	if (total)
  		percent = (unsigned) (percent / total);
@@ -30,7 +30,7 @@
 -		count, total, (unsigned)percent);
 +	if (option_mask32 & OPT_s) {
 +		printf("%s%"OFF_FMT"u/%"OFF_FMT"u",
-+			(mode < 0) ? "Er.Bl: " : ((mode == 0) ? "W.Kb:" : "V.kb:"),
++			(mode < 0) ? "E:" : ((mode == 0) ? "W:" : "V:"),
 +			count, total);
 +	} else {
 +		printf("\r%s: %"OFF_FMT"u/%"OFF_FMT"u (%u%%) ",
@@ -41,11 +41,11 @@
  }
  
 @@ -69,7 +77,7 @@
+ 	RESERVE_CONFIG_UBUFFER(buf, BUFSIZE);
  	RESERVE_CONFIG_UBUFFER(buf2, BUFSIZE);
  
- 	opt_complementary = "=2"; /* exactly 2 non-option args: file, dev */
--	/*opts =*/ getopt32(argv, "v");
-+	/*opts =*/ getopt32(argv, "vs");
+-	/*opts =*/ getopt32(argv, "^" "v" "\0" "=2"/*exactly 2 non-option args: file,dev*/);
++	/*opts =*/ getopt32(argv, "^" "vs" "\0" "=2"/*exactly 2 non-option args: file,dev*/);
  	argv += optind;
  //	filename = *argv++;
  //	devicename = *argv;
