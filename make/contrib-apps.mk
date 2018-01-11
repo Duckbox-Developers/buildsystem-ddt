@@ -1466,7 +1466,7 @@ $(D)/wpa_supplicant: $(D)/bootstrap $(D)/openssl $(D)/wireless_tools $(ARCHIVE)/
 #
 # dvbsnoop
 #
-DVBSNOOP_VER = f1bec1e
+DVBSNOOP_VER = d3f134b
 DVBSNOOP_SOURCE = dvbsnoop-$(DVBSNOOP_VER).tar.bz2
 DVBSNOOP_URL = https://github.com/Duckbox-Developers/dvbsnoop.git
 
