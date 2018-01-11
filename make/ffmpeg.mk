@@ -255,6 +255,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-demuxer=ass \
 			--enable-demuxer=avi \
 			--enable-demuxer=dts \
+			--enable-demuxer=dash \
 			--enable-demuxer=ffmetadata \
 			--enable-demuxer=flac \
 			--enable-demuxer=flv \
@@ -287,6 +288,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 			--enable-demuxer=srt \
 			--enable-demuxer=vc1 \
 			--enable-demuxer=wav \
+			--enable-demuxer=webm_dash_manifest \
 			\
 			--disable-filters \
 			--enable-filter=scale \
