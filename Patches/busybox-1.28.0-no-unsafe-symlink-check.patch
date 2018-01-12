@@ -1,0 +1,23 @@
+--- a/archival/libarchive/unsafe_symlink_target_org.c	2017-08-17 13:50:45.000000000 +0200
++++ b/archival/libarchive/unsafe_symlink_target.c	2018-01-12 15:42:58.479995606 +0100
+@@ -16,8 +16,9 @@
+ 		if (var) {
+ 			if (LONE_CHAR(var, '1'))
+ 				return 0; /* pretend it's safe */
+-			return 1; /* "UNSAFE!" */
++			return 0; /* "UNSAFE! */
+ 		}
++#if 0
+ 		bb_error_msg("skipping unsafe symlink to '%s' in archive,"
+ 			" set %s=1 to extract",
+ 			target,
+@@ -25,7 +26,8 @@
+ 		);
+ 		/* Prevent further messages */
+ 		setenv("EXTRACT_UNSAFE_SYMLINKS", "0", 0);
+-		return 1; /* "UNSAFE!" */
++#endif
++		return 0; /* "UNSAFE!" */
+ 	}
+ 
+ 	dot = target;
