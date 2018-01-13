@@ -87,14 +87,24 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
+ifeq ($(BOXTYPE), hd51)
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+	set -e; cd $(KERNEL_DIR); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- zImage modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+	@touch $@
+endif
 
 KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
+ifeq ($(BOXTYPE), hd51)
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
@@ -103,6 +113,16 @@ $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
+	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
+	$(TOUCH)
+endif
 
 $(D)/kernel-headers: $(D)/kernel.do_prepare
 	$(START_BUILD)
@@ -134,4 +154,4 @@ kernel.%: $(D)/kernel
 	@echo "You have to edit $(PATCHES)/armbox/$(KERNEL_CONFIG) m a n u a l l y to make changes permanent !!!"
 	@echo ""
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config
-	@echo ""
+	@echo "".
