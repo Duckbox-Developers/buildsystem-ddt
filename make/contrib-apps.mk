@@ -1278,7 +1278,7 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 #
 SAMBA_VER = 3.6.25
 SAMBA_SOURCE = samba-$(SAMBA_VER).tar.gz
-SAMBA_PATCH = samba-$(SAMBA_VER).patch
+SAMBA_PATCH = PATCHES)/samba
 
 $(ARCHIVE)/$(SAMBA_SOURCE):
 	$(WGET) https://ftp.samba.org/pub/samba/stable/$(SAMBA_SOURCE)
@@ -1292,6 +1292,27 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 		cd source3; \
 		./autogen.sh; \
 		$(BUILDENV) \
+		ac_cv_lib_attr_getxattr=no \
+		ac_cv_search_getxattr=no \
+		ac_cv_file__proc_sys_kernel_core_pattern=yes \
+		libreplace_cv_HAVE_C99_VSNPRINTF=yes \
+		libreplace_cv_HAVE_GETADDRINFO=yes \
+		libreplace_cv_HAVE_IFACE_IFCONF=yes \
+		LINUX_LFS_SUPPORT=no \
+		samba_cv_CC_NEGATIVE_ENUM_VALUES=yes \
+		samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+		samba_cv_HAVE_IFACE_IFCONF=yes \
+		samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=yes \
+		samba_cv_HAVE_SECURE_MKSTEMP=yes \
+		samba_cv_HAVE_WRFILE_KEYTAB=no \
+		samba_cv_USE_SETREUID=yes \
+		samba_cv_USE_SETRESUID=yes \
+		samba_cv_have_setreuid=yes \
+		samba_cv_have_setresuid=yes \
+		ac_cv_header_zlib_h=no \
+		samba_cv_zlib_1_2_3=no \
+		ac_cv_path_PYTHON="" \
+		ac_cv_path_PYTHON_CONFIG="" \
 		libreplace_cv_HAVE_GETADDRINFO=no \
 		libreplace_cv_READDIR_NEEDED=no \
 		./configure \
@@ -1342,10 +1363,21 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 			--with-lockdir=/var/lock \
 			--with-swatdir=/usr/share/swat \
 			--disable-cups \
+			--without-winbind \
+			--without-libtdb \
+			--without-libtalloc \
+			--without-libnetapi \
+			--without-libsmbclient \
+			--without-libsmbsharemodes \
+			--without-libtevent \
+			--without-libaddns \
 		; \
 		$(MAKE) $(MAKE_OPTS); \
 		$(MAKE) $(MAKE_OPTS) installservers installbin installscripts installdat installmodules \
-			SBIN_PROGS="bin/smbd bin/nmbd bin/winbindd" DESTDIR=$(TARGET_DIR) prefix=./. ; \
+			SBIN_PROGS="bin/samba_multicall" DESTDIR=$(TARGET_DIR) prefix=./. ; \
+			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/nmbd
+			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/smbd
+			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/smbpasswd
 	install -m 755 $(SKEL_ROOT)/etc/init.d/samba $(TARGET_DIR)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/samba/smb.conf $(TARGET_DIR)/etc/samba/
 	$(REMOVE)/samba-$(SAMBA_VER)
