@@ -5,8 +5,8 @@
 
 smbd=/usr/sbin/smbd
 test -x "$smbd" || exit 0
-winbindd=/usr/sbin/winbindd
-test -x "$winbindd" || exit 0
+#winbindd=/usr/sbin/winbindd
+#test -x "$winbindd" || exit 0
 nmbd=/usr/sbin/nmbd
 test -x "$nmbd" || exit 0
 
