@@ -1278,7 +1278,7 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 #
 SAMBA_VER = 3.6.25
 SAMBA_SOURCE = samba-$(SAMBA_VER).tar.gz
-SAMBA_PATCH = PATCHES)/samba
+SAMBA_PATCH = $(PATCHES)/samba
 
 $(ARCHIVE)/$(SAMBA_SOURCE):
 	$(WGET) https://ftp.samba.org/pub/samba/stable/$(SAMBA_SOURCE)
