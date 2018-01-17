@@ -19,7 +19,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 	$(REMOVE)/links-$(LINKS_VER)
 	$(UNTAR)/links-$(LINKS_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/links-$(LINKS_VER); \
-		$(call post_patch,$(LINKS_PATCH)); \
+		$(call apply_patches,$(LINKS_PATCH)); \
 		$(CONFIGURE) \
 			--prefix= \
 			--mandir=/.remove \
@@ -137,7 +137,7 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-mp-plugins-scrip
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
 	set -e; cd $(BUILD_TMP)/xupnpd; \
-		$(call post_patch,$(XUPNPD_PATCH))
+		$(call apply_patches,$(XUPNPD_PATCH))
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) sh4 TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG); \
@@ -198,7 +198,7 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
 	set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
-		$(call post_patch,$(NEUTRINO_HD2_PLUGINS_PATCHES))
+		$(call apply_patches,$(NEUTRINO_HD2_PLUGINS_PATCHES))
 	@touch $@
 
 $(D)/neutrino-hd2-plugins.config.status: $(D)/bootstrap neutrino-hd2

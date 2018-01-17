@@ -161,7 +161,7 @@ TOUCH                 = @touch $@; \
 #
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
-define post_patch
+define apply_patches
     for i in $(1); do \
         if [ -d $$i ]; then \
             for p in $$i/*; do \

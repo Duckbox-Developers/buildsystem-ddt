@@ -26,7 +26,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
 	$(UNTAR)/$(GSTREAMER_SOURCE)
 	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
-		$(call post_patch,$(GSTREAMER_PATCH)); \
+		$(call apply_patches,$(GSTREAMER_PATCH)); \
 		./autogen.sh --noconfigure; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -79,7 +79,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstr
 	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)
 	$(UNTAR)/$(GST_PLUGINS_BASE_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GST_PLUGINS_BASE_VER); \
-		$(call post_patch,$(GST_PLUGINS_BASE_PATCH)); \
+		$(call apply_patches,$(GST_PLUGINS_BASE_PATCH)); \
 		./autogen.sh --noconfigure; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -146,7 +146,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(
 	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)
 	$(UNTAR)/$(GST_PLUGINS_GOOD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER); \
-		$(call post_patch,$(GST_PLUGINS_GOOD_PATCH)); \
+		$(call apply_patches,$(GST_PLUGINS_GOOD_PATCH)); \
 		./autogen.sh --noconfigure; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -184,7 +184,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/
 	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)
 	$(UNTAR)/$(GST_PLUGINS_BAD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER); \
-		$(call post_patch,$(GST_PLUGINS_BAD_PATCH)); \
+		$(call apply_patches,$(GST_PLUGINS_BAD_PATCH)); \
 		./autogen.sh --noconfigure; \
 		$(CONFIGURE) \
 			--build=$(BUILD) \
@@ -241,7 +241,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)
 	$(UNTAR)/$(GST_PLUGINS_UGLY_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER); \
-		$(call post_patch,$(GST_PLUGINS_UGLY_PATCH)); \
+		$(call apply_patches,$(GST_PLUGINS_UGLY_PATCH)); \
 		./autogen.sh --noconfigure; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -348,7 +348,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 	$(REMOVE)/gst-libav-$(GST_LIBAV_VER)
 	$(UNTAR)/$(GST_LIBAV_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-libav-$(GST_LIBAV_VER); \
-		$(call post_patch,$(GST_LIBAV_PATCH)); \
+		$(call apply_patches,$(GST_LIBAV_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-fatal-warnings \
@@ -393,7 +393,7 @@ $(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp
 	$(REMOVE)/gmediarender-$(GST_GMEDIARENDER_VER)
 	$(UNTAR)/$(GST_GMEDIARENDER_SOURCE)
 	set -e; cd $(BUILD_TMP)/gmediarender-$(GST_GMEDIARENDER_VER); \
-		$(call post_patch,$(GST_GMEDIARENDER_PATCH)); \
+		$(call apply_patches,$(GST_GMEDIARENDER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-libupnp=$(TARGET_DIR)/usr \

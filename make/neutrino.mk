@@ -130,7 +130,7 @@ $(D)/libstb-hal-ddt.do_prepare:
 	cp -ra $(ARCHIVE)/libstb-hal-ddt.git $(SOURCE_DIR)/libstb-hal-ddt;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-ddt $(SOURCE_DIR)/libstb-hal-ddt.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-ddt; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_DDT_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_LIBSTB_DDT_PATCHES))
 	@touch $@
 
 $(D)/libstb-hal-ddt.config.status: | $(NEUTRINO_DEPS)
@@ -189,7 +189,7 @@ $(D)/neutrino-mp-ddt.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-ddt
 	cp -ra $(ARCHIVE)/neutrino-mp-ddt.git $(SOURCE_DIR)/neutrino-mp-ddt; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-ddt $(SOURCE_DIR)/neutrino-mp-ddt.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-ddt; \
-		$(call post_patch,$(NEUTRINO_MP_DDT_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_DDT_PATCHES))
 	@touch $@
 
 $(D)/neutrino-mp-ddt.config.status:
@@ -277,7 +277,7 @@ $(D)/libstb-hal-ni.do_prepare:
 	cp -ra $(ARCHIVE)/libstb-hal-ni.git $(SOURCE_DIR)/libstb-hal-ni;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-ni $(SOURCE_DIR)/libstb-hal-ni.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-ni; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_NI_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_LIBSTB_NI_PATCHES))
 	@touch $@
 
 $(D)/libstb-hal-ni.config.status: | $(NEUTRINO_DEPS)
@@ -334,7 +334,7 @@ $(D)/neutrino-mp-ni.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-ni
 	cp -ra $(ARCHIVE)/neutrino-mp-ni.git $(SOURCE_DIR)/neutrino-mp-ni; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-ni $(SOURCE_DIR)/neutrino-mp-ni.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-ni; \
-		$(call post_patch,$(NEUTRINO_MP_NI_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_NI_PATCHES))
 	@touch $@
 
 $(D)/neutrino-mp-ni.config.status:
@@ -422,7 +422,7 @@ $(D)/libstb-hal-tangos.do_prepare:
 	cp -ra $(ARCHIVE)/libstb-hal-tangos.git $(SOURCE_DIR)/libstb-hal-tangos;\
 	cp -ra $(SOURCE_DIR)/libstb-hal-tangos $(SOURCE_DIR)/libstb-hal-tangos.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-tangos; \
-		$(call post_patch,$(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES))
 	@touch $@
 
 $(D)/libstb-hal-tangos.config.status: | $(NEUTRINO_DEPS)
@@ -479,7 +479,7 @@ $(D)/neutrino-mp-tangos.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-tangos
 	cp -ra $(ARCHIVE)/neutrino-mp-tangos.git $(SOURCE_DIR)/neutrino-mp-tangos; \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-tangos $(SOURCE_DIR)/neutrino-mp-tangos.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-tangos; \
-		$(call post_patch,$(NEUTRINO_MP_TANGOS_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_TANGOS_PATCHES))
 	@touch $@
 
 $(D)/neutrino-mp-tangos.config.status:
@@ -574,7 +574,7 @@ $(D)/libstb-hal-max.do_prepare:
 	(cd $(SOURCE_DIR)/libstb-hal-max; git checkout $(GIT_BRANCH_LIBSTB_MAX);); \
 	cp -ra $(SOURCE_DIR)/libstb-hal-max $(SOURCE_DIR)/libstb-hal-max.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-max; \
-		$(call post_patch,$(NEUTRINO_LIBSTB_MAX_PATCHES))
+		$(call apply_patches,$(NEUTRINO_LIBSTB_MAX_PATCHES))
 	@touch $@
 
 $(D)/libstb-hal-max.config.status: | $(NEUTRINO_DEPS)
@@ -633,7 +633,7 @@ $(D)/neutrino-mp-max.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-max
 	(cd $(SOURCE_DIR)/neutrino-mp-max; git checkout $(GIT_BRANCH_NMP_MAX);); \
 	cp -ra $(SOURCE_DIR)/neutrino-mp-max $(SOURCE_DIR)/neutrino-mp-max.org
 	set -e; cd $(SOURCE_DIR)/neutrino-mp-max; \
-		$(call post_patch,$(NEUTRINO_MP_MAX_PATCHES))
+		$(call apply_patches,$(NEUTRINO_MP_MAX_PATCHES))
 	@touch $@
 
 $(D)/neutrino-mp-max.config.status:
@@ -726,7 +726,7 @@ $(D)/neutrino-hd2.do_prepare: | $(NEUTRINO_DEPS) $(NEUTRINO_DEPS2)
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2;\
 	cp -ra $(SOURCE_DIR)/neutrino-hd2.git/nhd2-exp $(SOURCE_DIR)/neutrino-hd2.org
 	set -e; cd $(SOURCE_DIR)/neutrino-hd2; \
-		$(call post_patch,$(NEUTRINO_HD2_PATCHES))
+		$(call apply_patches,$(NEUTRINO_HD2_PATCHES))
 	@touch $@
 
 $(D)/neutrino-hd2.config.status:
