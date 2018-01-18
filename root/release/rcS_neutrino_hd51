@@ -70,9 +70,8 @@ insmod /lib/modules/hd51_4.ko
 echo "Booting... DDT" > /dev/dbox/oled0
 
 echo "[rcS] starting mdev"
-# avoid mdev actions until cmds is ready
-[ "$AUTOFS" == "1" ] && touch /tmp/.cmds-start
 echo /sbin/mdev >/proc/sys/kernel/hotplug
+mdev -s
 
 # set dummy time
 NTPDATE=`date +"%Y%m%d"`
