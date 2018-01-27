@@ -54,19 +54,17 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 #
 # gmp
 #
-GMP_VER_MAJOR = 6.0.0
-GMP_VER_MINOR = a
-GMP_VER = $(GMP_VER_MAJOR)$(GMP_VER_MINOR)
+GMP_VER = 6.1.2
 GMP_SOURCE = gmp-$(GMP_VER).tar.xz
 
 $(ARCHIVE)/$(GMP_SOURCE):
-	$(WGET) ftp://ftp.gmplib.org/pub/gmp-$(GMP_VER_MAJOR)/$(GMP_SOURCE)
+	$(WGET) https://gmplib.org/download/gmp/$(GMP_SOURCE)
 
 $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/$(GMP_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/gmp-$(GMP_VER_MAJOR)
+	$(REMOVE)/gmp-$(GMP_VER)
 	$(UNTAR)/$(GMP_SOURCE)
-	set -e; cd $(BUILD_TMP)/gmp-$(GMP_VER_MAJOR); \
+	set -e; cd $(BUILD_TMP)/gmp-$(GMP_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--infodir=/.remove \
@@ -74,7 +72,7 @@ $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/$(GMP_SOURCE)
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libgmp.la
-	$(REMOVE)/gmp-$(GMP_VER_MAJOR)
+	$(REMOVE)/gmp-$(GMP_VER)
 	$(TOUCH)
 
 #
