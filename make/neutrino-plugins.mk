@@ -98,8 +98,8 @@ $(SOURCE_DIR)/neutrino-mp-plugins/config.status: $(D)/bootstrap
 			--with-boxtype=$(BOXTYPE) \
 			--with-plugindir=/var/tuxbox/plugins \
 			--with-libdir=/usr/lib \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
+			--with-datadir=/share/tuxbox \
+			--with-fontdir=/share/fonts \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS) $(EXTRA_CPPFLAGS_MP_PLUGINS) -DNEW_LIBCURL" \
@@ -143,10 +143,10 @@ $(D)/xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-mp-plugins-scrip
 		$(MAKE) sh4 TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	: install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/share/xupnpd/plugins/
+	: install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/plugins-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/share/xupnpd/plugins/
 	$(REMOVE)/xupnpd
 	$(TOUCH)
 
@@ -184,7 +184,7 @@ $(D)/neutrino-mediathek:
 	install -d $(TARGET_DIR)/var/tuxbox/plugins
 	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
 		cp -a plugins/* $(TARGET_DIR)/var/tuxbox/plugins/; \
-		cp -a share $(TARGET_DIR)/usr/
+		cp -a share $(TARGET_DIR)/
 	$(REMOVE)/plugins-mediathek
 	$(TOUCH)
 
@@ -212,8 +212,8 @@ $(D)/neutrino-hd2-plugins.config.status: $(D)/bootstrap neutrino-hd2
 			--with-target=cdk \
 			--with-boxtype=$(BOXTYPE) \
 			--with-plugindir=/var/tuxbox/plugins \
-			--with-datadir=/usr/share/tuxbox \
-			--with-fontdir=/usr/share/fonts \
+			--with-datadir=/share/tuxbox \
+			--with-fontdir=/share/fonts \
 			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \

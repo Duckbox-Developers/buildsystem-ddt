@@ -469,14 +469,14 @@ neutrino-release-base:
 	ln -sf /hdd $(RELEASE_DIR)/media/hdd
 	install -d $(RELEASE_DIR)/mnt/{hdd,nfs,usb}
 	install -d $(RELEASE_DIR)/mnt/mnt{0..7}
-	install -d $(RELEASE_DIR)/usr/{bin,lib,local,sbin,share}
+	install -d $(RELEASE_DIR)/usr/{bin,lib,local,sbin}
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin}
-	install -d $(RELEASE_DIR)/usr/share/{fonts,tuxbox,udhcpc,zoneinfo,lua}
-	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino
-	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
-	install -d $(RELEASE_DIR)/usr/share/lua/5.2
-	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
-	ln -sf /usr/share $(RELEASE_DIR)/share
+	install -d $(RELEASE_DIR)/share/{fonts,tuxbox,udhcpc,zoneinfo,lua}
+	install -d $(RELEASE_DIR)/share/tuxbox/neutrino
+	install -d $(RELEASE_DIR)/share/tuxbox/neutrino/icons/logo
+	install -d $(RELEASE_DIR)/share/lua/5.2
+	ln -sf /share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
+	ln -sf ../share $(RELEASE_DIR)/usr
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,logos,net,tuxbox,update}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/net/epg
@@ -506,8 +506,8 @@ neutrino-release-base:
 	ln -sf ../../sbin/MAKEDEV $(RELEASE_DIR)/lib/udev/MAKEDEV
 	cp -aR $(SKEL_ROOT)/etc/mdev/* $(RELEASE_DIR)/etc/mdev/
 	cp -aR $(SKEL_ROOT)/etc/mdev.conf $(RELEASE_DIR)/etc/mdev.conf
-	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
-	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
+	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/share/udhcpc/
+	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/share/zoneinfo/
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
@@ -669,24 +669,24 @@ endif
 #
 # fonts
 #
-	if [ -e $(TARGET_DIR)/usr/share/fonts/ubuntu-l-webfont.ttf ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/fonts $(RELEASE_DIR)/usr/share/; \
+	if [ -e $(TARGET_DIR)/share/fonts/ubuntu-l-webfont.ttf ]; then \
+		cp -aR $(TARGET_DIR)/share/fonts $(RELEASE_DIR)/share/; \
 	else \
-		if [ -e $(TARGET_DIR)/usr/share/fonts/neutrino.ttf ]; then \
-			cp -aR $(TARGET_DIR)/usr/share/fonts/neutrino.ttf $(RELEASE_DIR)/usr/share/fonts; \
+		if [ -e $(TARGET_DIR)/share/fonts/neutrino.ttf ]; then \
+			cp -aR $(TARGET_DIR)/share/fonts/neutrino.ttf $(RELEASE_DIR)/share/fonts; \
 		fi; \
-		if [ -e $(TARGET_DIR)/usr/share/fonts/micron.ttf ]; then \
-			cp -aR $(TARGET_DIR)/usr/share/fonts/micron.ttf $(RELEASE_DIR)/usr/share/fonts; \
+		if [ -e $(TARGET_DIR)/share/fonts/micron.ttf ]; then \
+			cp -aR $(TARGET_DIR)/share/fonts/micron.ttf $(RELEASE_DIR)/share/fonts; \
 		fi; \
-		if [ -e $(TARGET_DIR)/usr/share/fonts/DejaVuLGCSansMono-Bold.ttf ]; then \
-			cp -aR $(TARGET_DIR)/usr/share/fonts/DejaVuLGCSansMono-Bold.ttf $(RELEASE_DIR)/usr/share/fonts; \
-			ln -s /usr/share/fonts/DejaVuLGCSansMono-Bold.ttf $(RELEASE_DIR)/usr/share/fonts/tuxtxt.ttf; \
+		if [ -e $(TARGET_DIR)/share/fonts/DejaVuLGCSansMono-Bold.ttf ]; then \
+			cp -aR $(TARGET_DIR)/share/fonts/DejaVuLGCSansMono-Bold.ttf $(RELEASE_DIR)/share/fonts; \
+			ln -s /share/fonts/DejaVuLGCSansMono-Bold.ttf $(RELEASE_DIR)/share/fonts/tuxtxt.ttf; \
 		fi; \
 	fi
 #
 # neutrino
 #
-	ln -sf /usr/share $(RELEASE_DIR)/usr/local/share
+	ln -sf ../../share $(RELEASE_DIR)/usr/local/share
 	cp $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
 	cp $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
 	cp $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
@@ -720,12 +720,12 @@ endif
 #
 # iso-codes
 #
-	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cp -aR $(TARGET_DIR)/usr/local/share/iso-codes $(RELEASE_DIR)/usr/share/ || true
-	[ -e $(TARGET_DIR)/usr/share/tuxbox/iso-codes ] && cp -aR $(TARGET_DIR)/usr/share/tuxbox/iso-codes $(RELEASE_DIR)/usr/share/tuxbox/ || true
+	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cp -aR $(TARGET_DIR)/usr/local/share/iso-codes $(RELEASE_DIR)/share/ || true
+	[ -e $(TARGET_DIR)/share/tuxbox/iso-codes ] && cp -aR $(TARGET_DIR)/share/tuxbox/iso-codes $(RELEASE_DIR)/share/tuxbox/ || true
 #
 # httpd/icons/locale/themes
 #
-	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino/* $(RELEASE_DIR)/usr/share/tuxbox/neutrino
+	cp -aR $(TARGET_DIR)/share/tuxbox/neutrino/* $(RELEASE_DIR)/share/tuxbox/neutrino
 #
 # backup/restore NMP
 #
@@ -735,26 +735,26 @@ endif
 # alsa
 #
 	if [ -e $(TARGET_DIR)/usr/share/alsa ]; then \
-		mkdir -p $(RELEASE_DIR)/usr/share/alsa/; \
-		mkdir $(RELEASE_DIR)/usr/share/alsa/cards/; \
-		mkdir $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-		cp -dp $(TARGET_DIR)/usr/share/alsa/alsa.conf $(RELEASE_DIR)/usr/share/alsa/alsa.conf; \
-		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
-		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
+		mkdir -p $(RELEASE_DIR)/share/alsa/; \
+		mkdir $(RELEASE_DIR)/share/alsa/cards/; \
+		mkdir $(RELEASE_DIR)/share/alsa/pcm/; \
+		cp -dp $(TARGET_DIR)/usr/share/alsa/alsa.conf $(RELEASE_DIR)/share/alsa/alsa.conf; \
+		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/share/alsa/cards/; \
+		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/share/alsa/pcm/; \
+		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/share/alsa/pcm/; \
 	fi
 #
 # xupnpd
 #
 	if [ -e $(TARGET_DIR)/usr/bin/xupnpd ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/usr/share; \
-		mkdir -p $(RELEASE_DIR)/usr/share/xupnpd/playlists; \
+		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/share; \
+		mkdir -p $(RELEASE_DIR)/share/xupnpd/playlists; \
 	fi
 #
 # mc
 #
 	if [ -e $(TARGET_DIR)/usr/bin/mc ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/mc $(RELEASE_DIR)/usr/share/; \
+		cp -aR $(TARGET_DIR)/usr/share/mc $(RELEASE_DIR)/share/; \
 		cp -af $(TARGET_DIR)/usr/libexec $(RELEASE_DIR)/usr/; \
 	fi
 #
@@ -874,17 +874,17 @@ $(D)/%neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -s /tmp $(RELEASE_DIR)/var/run
 	ln -s /tmp $(RELEASE_DIR)/var/tmp
 #
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/scan.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/mp3.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
-	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/mp3-?.jpg
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/shutdown.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/shutdown.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/radiomode.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/radiomode.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
-	mv -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/start.jpg $(RELEASE_DIR)/var/boot/
-	ln -s /var/boot/start.jpg $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
+	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/scan.jpg $(RELEASE_DIR)/var/boot/
+	ln -s /var/boot/scan.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
+	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/mp3.jpg $(RELEASE_DIR)/var/boot/
+	ln -s /var/boot/mp3.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
+	rm -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/mp3-?.jpg
+	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/shutdown.jpg $(RELEASE_DIR)/var/boot/
+	ln -s /var/boot/shutdown.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
+	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/radiomode.jpg $(RELEASE_DIR)/var/boot/
+	ln -s /var/boot/radiomode.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
+	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/start.jpg $(RELEASE_DIR)/var/boot/
+	ln -s /var/boot/start.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
 #
 	rm -f $(RELEASE_DIR)/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/lib/*.py

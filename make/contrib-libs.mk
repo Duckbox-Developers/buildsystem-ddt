@@ -436,13 +436,13 @@ $(ARCHIVE)/$(LUAPOSIX_SOURCE):
 $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lua-$(LUA_VER)
-	mkdir -p $(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
+	mkdir -p $(TARGET_DIR)/share/lua/$(LUA_VER_SHORT)
 	$(UNTAR)/$(LUA_SOURCE)
 	set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
 		$(call apply_patches,$(LUAPOSIX_PATCH)); \
 		tar xf $(ARCHIVE)/$(LUAPOSIX_SOURCE); \
 		cd luaposix-$(LUAPOSIX_VER)/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
-		cd luaposix-$(LUAPOSIX_VER)/lib; cp *.lua $(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT); cd ../..; \
+		cd luaposix-$(LUAPOSIX_VER)/lib; cp *.lua $(TARGET_DIR)/share/lua/$(LUA_VER_SHORT); cd ../..; \
 		sed -i 's/<config.h>/"config.h"/' src/posix.c; \
 		sed -i '/^#define/d' src/lua52compat.h; \
 		sed -i 's|man/man1|/.remove|' Makefile; \
@@ -470,7 +470,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" \
 			LIBDIR=$(TARGET_DIR)/usr/lib \
 			LUA_INC=$(TARGET_DIR)/usr/include; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR) LUA_CMOD=/usr/lib/lua/$(LUA_VER_SHORT) LUA_LMOD=/usr/share/lua/$(LUA_VER_SHORT)
+		$(MAKE) install DESTDIR=$(TARGET_DIR) LUA_CMOD=/usr/lib/lua/$(LUA_VER_SHORT) LUA_LMOD=/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luacurl-$(LUACURL_VER)
 	$(TOUCH)
 
@@ -491,7 +491,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VER); \
 		$(call apply_patches,$(LUAEXPAT_PATCH)); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" PREFIX=$(TARGET_DIR)/usr; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr
+		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr LUA_LDIR=$(TARGET_DIR)/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
 	$(TOUCH)
 
@@ -510,7 +510,7 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 	$(REMOVE)/luasocket-$(LUASOCKET_VER)
 	$(UNTAR)/$(LUASOCKET_SOURCE)
 	set -e; cd $(BUILD_TMP)/luasocket-$(LUASOCKET_VER); \
-		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGET_DIR)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGET_DIR)/usr@" src/makefile; \
+		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGET_DIR)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGET_DIR)@" src/makefile; \
 		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VER_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGET_DIR)/usr/include LUAPREFIX_linux=; \
 		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VER_SHORT)
 	$(REMOVE)/luasocket-$(LUASOCKET_VER)
@@ -532,7 +532,7 @@ $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHI
 	$(UNTAR)/$(LUAFEEDPARSER_SOURCE)
 	set -e; cd $(BUILD_TMP)/luafeedparser-$(LUAFEEDPARSER_VER); \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
-		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
+		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGET_DIR)/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luafeedparser-$(LUAFEEDPARSER_VER)
 	$(TOUCH)
 
@@ -552,7 +552,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(
 	$(UNTAR)/$(LUASOAP_SOURCE)
 	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
 		$(call apply_patches,$(LUASOAP_PATCH)); \
-		$(MAKE) install LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
+		$(MAKE) install LUA_DIR=$(TARGET_DIR)/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(TOUCH)
 
@@ -564,7 +564,7 @@ $(ARCHIVE)/json.lua:
 
 $(D)/luajson: $(D)/bootstrap $(D)/lua $(ARCHIVE)/json.lua
 	$(START_BUILD)
-	cp $(ARCHIVE)/json.lua $(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)/json.lua
+	cp $(ARCHIVE)/json.lua $(TARGET_DIR)/share/lua/$(LUA_VER_SHORT)/json.lua
 	$(TOUCH)
 
 #

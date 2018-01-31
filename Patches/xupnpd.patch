@@ -24,8 +24,8 @@
 +	if ( test ! -d $(DESTDIR)/usr/bin ) ; then mkdir -p $(DESTDIR)/usr/bin ; fi
 +	cp -f xupnpd $(DESTDIR)/usr/bin
 +	chmod a+x $(DESTDIR)/usr/bin/xupnpd
-+	if ( test ! -d $(DESTDIR)/usr/share/xupnpd ) ; then mkdir -p $(DESTDIR)/usr/share/xupnpd ; fi
-+	cp -ap plugins profiles ui www *.lua $(DESTDIR)/usr/share/xupnpd/
++	if ( test ! -d $(DESTDIR)/share/xupnpd ) ; then mkdir -p $(DESTDIR)/share/xupnpd ; fi
++	cp -ap plugins profiles ui www *.lua $(DESTDIR)/share/xupnpd/
  
  embedded:
  	PATH=$(PATH):$(UTILS) $(MAKE) -C $(LUA) CC=$(SDK)/gcc a MYCFLAGS='$(LUAMYCFLAGS)'
