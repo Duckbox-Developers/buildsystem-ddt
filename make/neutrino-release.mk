@@ -747,7 +747,7 @@ endif
 # xupnpd
 #
 	if [ -e $(TARGET_DIR)/usr/bin/xupnpd ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/share; \
+		cp -aR $(TARGET_DIR)/share/xupnpd $(RELEASE_DIR)/share; \
 		mkdir -p $(RELEASE_DIR)/share/xupnpd/playlists; \
 	fi
 #
@@ -760,8 +760,8 @@ endif
 #
 # lua
 #
-	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/lua $(RELEASE_DIR)/share; \
+	if [ -d $(TARGET_DIR)/share/lua ]; then \
+		cp -aR $(TARGET_DIR)/share/lua $(RELEASE_DIR)/share; \
 	fi
 #
 # plugins
@@ -776,7 +776,7 @@ endif
 		cp -rf $(TARGET_DIR)/var/tuxbox/config/tuxwetter $(RELEASE_DIR)/var/tuxbox/config; \
 	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/sokoban.so ]; then \
-		cp -rf $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/var/tuxbox/plugins; \
+		cp -rf $(TARGET_DIR)/share/tuxbox/sokoban $(RELEASE_DIR)/var/tuxbox/plugins; \
 		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/share/tuxbox/sokoban; \
 	fi
 #
