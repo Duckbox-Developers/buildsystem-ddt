@@ -491,7 +491,7 @@ neutrino-release-base:
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc6.d/S20sendsigs
 	ln -s ../init.d/umountfs $(RELEASE_DIR)/etc/rc.d/rc6.d/S40umountfs
 	ln -s ../init.d/reboot $(RELEASE_DIR)/etc/rc.d/rc6.d/S90reboot
-	ln -sf /usr/share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
+	ln -sf /share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/var/httpd/logos
 	touch $(RELEASE_DIR)/var/etc/.firstboot
 	cp -a $(TARGET_DIR)/bin/* $(RELEASE_DIR)/bin/
 	cp -a $(TARGET_DIR)/usr/bin/* $(RELEASE_DIR)/usr/bin/
@@ -777,7 +777,7 @@ endif
 	fi
 	if [ -e $(RELEASE_DIR)/var/tuxbox/plugins/sokoban.so ]; then \
 		cp -rf $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/var/tuxbox/plugins; \
-		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/usr/share/tuxbox/sokoban; \
+		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/share/tuxbox/sokoban; \
 	fi
 #
 # shairport
