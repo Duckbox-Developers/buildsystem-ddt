@@ -93,32 +93,32 @@ NEUTRINO_MP  = neutrino-mp-max
 LIBSTB_HAL   = libstb-hal-max
 N_BRANCH    ?= master
 L_BRANCH    ?= master
-N_PATCHES    = NEUTRINO_MP_MAX_PATCHES =
-L_PATCHE     = NEUTRINO_MP_LIBSTB_MAX_PATCHES =
+N_PATCHES    = $(NEUTRINO_MP_MAX_PATCHES)
+L_PATCHE     = $(NEUTRINO_MP_LIBSTB_MAX_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-ni)
 GIT_URL      = https://bitbucket.org/neutrino-images
 NEUTRINO_MP  = ni-neutrino-hd
 LIBSTB_HAL   = ni-libstb-hal-next
 N_BRANCH    ?= master
 L_BRANCH    ?= master
-N_PATCHES    = NEUTRINO_MP_NI_PATCHES =
-L_PATCHE     = NEUTRINO_MP_LIBSTB_NI_PATCHES =
+N_PATCHES    = $(NEUTRINO_MP_NI_PATCHES)
+L_PATCHE     = $(NEUTRINO_MP_LIBSTB_NI_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-tangos)
 GIT_URL      = https://github.com/TangoCash
 NEUTRINO_MP  = neutrino-mp-tangos
 LIBSTB_HAL   = libstb-hal-tangos
 N_BRANCH    ?= master
 L_BRANCH    ?= master
-N_PATCHES    = NEUTRINO_MP_TANGOS_PATCHES =
-L_PATCHE     = NEUTRINO_MP_LIBSTB_TANGOS_PATCHES =
+N_PATCHES    = $(NEUTRINO_MP_TANGOS_PATCHES)
+L_PATCHE     = $(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-ddt)
 GIT_URL      = https://github.com/Duckbox-Developers
 NEUTRINO_MP  = neutrino-mp-ddt
 LIBSTB_HAL   = libstb-hal-ddt
 N_BRANCH    ?= master
 L_BRANCH    ?= master
-N_PATCHES    = NEUTRINO_MP_DDT_PATCHES =
-L_PATCHE     = NEUTRINO_MP_LIBSTB_DDT_PATCHES =
+N_PATCHES    = $(NEUTRINO_MP_DDT_PATCHES)
+L_PATCHE     = $(NEUTRINO_MP_LIBSTB_DDT_PATCHES)
 endif
 
 OBJDIR = $(BUILD_TMP)
