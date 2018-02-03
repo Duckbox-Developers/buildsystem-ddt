@@ -18,6 +18,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: Media Framework (1-2)"
 	echo "Parameter 5: Image Neutrino (1-2)"
+	echo "Parameter 6: Neutrino variant (1-5)"
 	exit
 fi
 
@@ -219,7 +220,7 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 case $4 in
 	[1-2]) REPLY=$4;;
 	*)	echo -e "\nMedia Framework:"
-		echo "   1) build integrated libeplayer3"
+		echo "   1) libeplayer3"
 		echo "   2) gstreamer"
 		read -p "Select media framework (1-2)? ";;
 esac
@@ -249,24 +250,42 @@ esac
 echo "IMAGE=$IMAGE" >> config
 
 ##############################################
+
+case $6 in
+	[1-5]) REPLY=$5;;
+	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
+		echo "   1)  neutrino-mp-ddt"
+		echo "   2)  neutrino-mp-max"
+		echo "   3)  neutrino-mp-ni"
+		echo "   4)  neutrino-mp-tangos"
+		echo "   5)  neutrino-hd2"
+		read -p "Select Image to build (1-5)? ";;
+esac
+
+case "$REPLY" in
+	1) FLAVOUR="neutrino-mp-ddt";;
+	2) FLAVOUR="neutrino-mp-max";;
+	3) FLAVOUR="neutrino-mp-ni";;
+	4) FLAVOUR="neutrino-mp-tangos";;
+	5) FLAVOUR="neutrino-hd2";;
+	*) FLAVOUR="neutrino-mp-ddt";;
+esac
+echo "FLAVOUR=$FLAVOUR" >> config
+
+##############################################
 echo " "
 make printenv
 ##############################################
-echo "Your build environment is ready :-)"
+echo "FLAVOUR=$FLAVOUR"
 echo "Your next step could be:"
-case "$IMAGE" in
-		neutrino*)
-		echo "  make neutrino-mp-tangos"
-		echo "  make neutrino-mp-tangos-plugins"
-		if [ $BOXARCH == 'arm' ]; then
-			echo "  make neutrino-mp-ni"
-			echo "  make neutrino-mp-ni-plugins"
-		fi
-		echo "  make neutrino-mp-ddt"
-		echo "  make neutrino-mp-ddt-plugins"
+case "$FLAVOUR" in
+	neutrino-mp*)
+		echo "  make neutrino-mp"
+		echo "  make neutrino-mp-plugins";;
+	neutrino-hd2*)
 		echo "  make neutrino-hd2"
 		echo "  make neutrino-hd2-plugins";;
-		*)
+	*)
 		echo "  make flashimage"
 		echo "  make ofgimage";;
 esac
