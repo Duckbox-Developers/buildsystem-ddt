@@ -218,7 +218,7 @@ $(D)/neutrino-mp-plugins.config.status:
 			--host=$(TARGET) \
 			$(N_CONFIG_OPTS) \
 			--with-boxtype=$(BOXTYPE) \
-			--with-libdir=/usr/lib \
+			--with-libdir=/usr/lib/tuxbox \
 			--with-datadir=/share/tuxbox \
 			--with-fontdir=/share/fonts \
 			--with-fontdir_var=/var/tuxbox/fonts \
@@ -236,7 +236,7 @@ $(D)/neutrino-mp-plugins.config.status:
 			--with-themesdir=/share/tuxbox/neutrino/themes \
 			--with-themesdir_var=/var/tuxbox/themes \
 			--with-webtvdir=/share/tuxbox/neutrino/webtv \
-			--with-webtvdir_var=/var/tuxbox/plugins/webtv \
+			--with-webtvdir_var=/var/tuxbox/webtv \
 			--with-stb-hal-includes=$(SOURCE_DIR)/$(LIBSTB_HAL)/include \
 			--with-stb-hal-build=$(LH_OBJDIR) \
 			PKG_CONFIG=$(PKG_CONFIG) \
