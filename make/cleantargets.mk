@@ -9,6 +9,7 @@ clean: depsclean
 	@-rm -rf $(BASE_DIR)/tufsbox
 	@-rm -rf $(D)/kernel
 	@-rm -rf $(D)/*.do_compile
+	@-rm -rf $(D)/*.config.status
 	@printf "$(TERM_YELLOW)done\n$(TERM_NORMAL)"
 
 distclean:
