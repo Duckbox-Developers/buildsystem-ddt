@@ -166,7 +166,7 @@ $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
 	@touch $@
 
 $(D)/libstb-hal.do_compile: $(D)/libstb-hal.config.status
-	cd $(SOURCE_DIR)/libstb-hal; \
+	cd $(SOURCE_DIR)/$(LIBSTB_HAL); \
 		$(MAKE) -C $(LH_OBJDIR) all DESTDIR=$(TARGET_DIR)
 	@touch $@
 
