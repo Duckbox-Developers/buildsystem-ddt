@@ -819,6 +819,7 @@ endif
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
 	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
 	rm -rf $(RELEASE_DIR)/usr/lib/cmake
+	rm -f $(RELEASE_DIR)/usr/lib/*.py
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
@@ -837,12 +838,12 @@ endif
 	rm -f $(RELEASE_DIR)/bin/streamproxy
 	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
+	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 ifeq ($(BOXARCH), arm)
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
 endif
-
 #
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
@@ -885,9 +886,6 @@ $(D)/%neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	ln -s /var/boot/radiomode.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
 	mv -f $(RELEASE_DIR)/share/tuxbox/neutrino/icons/start.jpg $(RELEASE_DIR)/var/boot/
 	ln -s /var/boot/start.jpg $(RELEASE_DIR)/share/tuxbox/neutrino/icons/
-#
-	rm -f $(RELEASE_DIR)/bin/pic2m2v
-	rm -f $(RELEASE_DIR)/usr/lib/*.py
 #
 # linux-strip all
 #
