@@ -1662,7 +1662,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 		else cd $(ARCHIVE); git clone --recursive git://github.com/mkj/dropbear.git $(ARCHIVE)/dropbearmulti.git; \
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
-	cd $(BUILD_TMP)/dropbearmulti && git checkout -q fa3b0dd3ca62309c7d786df849da31426348c0bf
+	cd $(BUILD_TMP)/dropbearmulti && git checkout fa3b0dd3ca62309c7d786df849da31426348c0bf
 	set -e; cd $(BUILD_TMP)/dropbearmulti; \
 		$(BUILDENV) \
 		autoreconf -fi; \
