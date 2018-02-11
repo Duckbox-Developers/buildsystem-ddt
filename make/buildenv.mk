@@ -23,20 +23,7 @@ SOURCE_DIR            = $(BASE_DIR)/source
 -include $(BASE_DIR)/config.local
 
 # default platform...
-ifeq ($(BOXARCH), sh4)
-CCACHE_DIR            = $(HOME)/.ccache-bs-sh4
-export CCACHE_DIR
-TARGET               ?= sh4-linux
-BOXARCH              ?= sh4
-KERNELNAME            = uImage
-else
-CCACHE_DIR            = $(HOME)/.ccache-bs-arm
-export CCACHE_DIR
-TARGET               ?= arm-cortex-linux-gnueabihf
-BOXARCH              ?= arm
-KERNELNAME            = zImage
-endif
-
+MAKEFLAGS            += --no-print-directory
 GIT_PROTOCOL         ?= http
 ifneq ($(GIT_PROTOCOL), http)
 GITHUB               ?= git://github.com
@@ -68,43 +55,58 @@ DEPDIR                = $(D)
 SUDOCMD               = echo $(SUDOPASSWD) | sudo -S
 
 MAINTAINER           ?= $(shell whoami)
-MAINTAINEER           = $(shell echo -en "\x74\x68\x6f\x6d\x61\x73")
+MAIN_ID               = $(shell echo -en "\x74\x68\x6f\x6d\x61\x73")
 CCACHE                = /usr/bin/ccache
 
 BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess 2>/dev/null || /usr/share/misc/config.guess 2>/dev/null)
 
+ifeq ($(BOXARCH), sh4)
+CCACHE_DIR            = $(HOME)/.ccache-bs-sh4
+export CCACHE_DIR
+TARGET               ?= sh4-linux
+BOXARCH              ?= sh4
+KERNELNAME            = uImage
+TARGET_MARCH_CFLAGS   =
+CORTEX_STRINGS        =
+else
+CCACHE_DIR            = $(HOME)/.ccache-bs-arm
+export CCACHE_DIR
+TARGET               ?= arm-cortex-linux-gnueabihf
+BOXARCH              ?= arm
+KERNELNAME            = zImage
+TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloat-abi=hard
+CORTEX_STRINGS        = -lcortex-strings
+endif
+
 OPTIMIZATIONS        ?= size
-TARGET_CFLAGS         = -pipe
 ifeq ($(OPTIMIZATIONS), size)
-TARGET_CFLAGS        += -Os
+TARGET_O_CFLAGS       = -Os
 TARGET_EXTRA_CFLAGS   = -ffunction-sections -fdata-sections
 TARGET_EXTRA_LDFLAGS  = -Wl,--gc-sections
 endif
 ifeq ($(OPTIMIZATIONS), normal)
-TARGET_CFLAGS        += -O2
+TARGET_O_CFLAGS       = -O2
 TARGET_EXTRA_CFLAGS   =
 TARGET_EXTRA_LDFLAGS  =
 endif
 ifeq ($(OPTIMIZATIONS), kerneldebug)
-TARGET_CFLAGS        += -O2
+TARGET_O_CFLAGS       = -O2
 TARGET_EXTRA_CFLAGS   =
 TARGET_EXTRA_LDFLAGS  =
 endif
 ifeq ($(OPTIMIZATIONS), debug)
-TARGET_CFLAGS        += -O0 -g
+TARGET_O_CFLAGS       = -O0 -g
 TARGET_EXTRA_CFLAGS   =
 TARGET_EXTRA_LDFLAGS  =
 endif
 
-MAKEFLAGS            += --no-print-directory
-
 TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
 TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
 
-TARGET_CFLAGS        += $(TARGET_EXTRA_CFLAGS) -I$(TARGET_INCLUDE_DIR)
+TARGET_CFLAGS         = -pipe $(TARGET_O_CFLAGS) $(TARGET_MARCH_CFLAGS) $(TARGET_EXTRA_CFLAGS) -I$(TARGET_INCLUDE_DIR)
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
 TARGET_CXXFLAGS       = $(TARGET_CFLAGS)
-TARGET_LDFLAGS        = -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_LIB_DIR) -L$(TARGET_LIB_DIR) -L$(TARGET_DIR)/lib $(TARGET_EXTRA_LDFLAGS)
+TARGET_LDFLAGS        = $(CORTEX_STRINGS) -Wl,-rpath -Wl,/usr/lib -Wl,-rpath-link -Wl,$(TARGET_LIB_DIR) -L$(TARGET_LIB_DIR) -L$(TARGET_DIR)/lib $(TARGET_EXTRA_LDFLAGS)
 LD_FLAGS              = $(TARGET_LDFLAGS)
 PKG_CONFIG            = $(HOST_DIR)/bin/$(TARGET)-pkg-config
 PKG_CONFIG_PATH       = $(TARGET_LIB_DIR)/pkgconfig
