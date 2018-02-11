@@ -54,7 +54,7 @@ case $1 in
 		echo "   27)  Spark           29)  AM520"
 		echo "   28)  Spark7162       30)  AM530"
 		echo
-		echo "  Various"
+		echo "  Various sh4-based receivers"
 		echo "   31)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
 		echo "   32)  SpiderBox HL-101"
 		echo "   33)  B4Team ADB 5800S"
@@ -62,7 +62,8 @@ case $1 in
 		echo "   35)  SagemCom 88 series"
 		echo "   36)  Ferguson Ariva @Link 200"
 		echo
-		echo "   37)  Mutant HD51"
+		echo "  arm-based receivers"
+		echo "   37)  Mut@nt HD51"
 		echo "   "
 		echo
 		read -p "Select target (1-38)? ";;
@@ -276,7 +277,6 @@ echo "FLAVOUR=$FLAVOUR" >> config
 echo " "
 make printenv
 ##############################################
-echo "FLAVOUR=$FLAVOUR"
 echo "Your next step could be:"
 case "$FLAVOUR" in
 	neutrino-mp*)
