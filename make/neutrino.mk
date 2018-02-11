@@ -93,34 +93,34 @@ ifeq ($(FLAVOUR), neutrino-mp-max)
 GIT_URL      = https://bitbucket.org/max_10
 NEUTRINO_MP  = neutrino-mp-max
 LIBSTB_HAL   = libstb-hal-max
-N_BRANCH    ?= master
-L_BRANCH    ?= master
-N_PATCHES    = $(NEUTRINO_MP_MAX_PATCHES)
-L_PATCHE     = $(NEUTRINO_MP_LIBSTB_MAX_PATCHES)
+NMP_BRANCH  ?= master
+HAL_BRANCH  ?= master
+NMP_PATCHES  = $(NEUTRINO_MP_MAX_PATCHES)
+HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_MAX_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-ni)
 GIT_URL      = https://bitbucket.org/neutrino-images
 NEUTRINO_MP  = ni-neutrino-hd
 LIBSTB_HAL   = ni-libstb-hal-next
-N_BRANCH    ?= ni/mp/tuxbox
-L_BRANCH    ?= master
-N_PATCHES    = $(NEUTRINO_MP_NI_PATCHES)
-L_PATCHE     = $(NEUTRINO_MP_LIBSTB_NI_PATCHES)
+NMP_BRANCH  ?= ni/mp/tuxbox
+HAL_BRANCH  ?= master
+NMP_PATCHES  = $(NEUTRINO_MP_NI_PATCHES)
+HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_NI_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-tangos)
 GIT_URL      = https://github.com/TangoCash
 NEUTRINO_MP  = neutrino-mp-tangos
 LIBSTB_HAL   = libstb-hal-tangos
-N_BRANCH    ?= master
-L_BRANCH    ?= master
-N_PATCHES    = $(NEUTRINO_MP_TANGOS_PATCHES)
-L_PATCHE     = $(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES)
+NMP_BRANCH  ?= master
+HAL_BRANCH  ?= master
+NMP_PATCHES  = $(NEUTRINO_MP_TANGOS_PATCHES)
+HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_TANGOS_PATCHES)
 else ifeq  ($(FLAVOUR), neutrino-mp-ddt)
 GIT_URL      = https://github.com/Duckbox-Developers
 NEUTRINO_MP  = neutrino-mp-ddt
 LIBSTB_HAL   = libstb-hal-ddt
-N_BRANCH    ?= master
-L_BRANCH    ?= master
-N_PATCHES    = $(NEUTRINO_MP_DDT_PATCHES)
-L_PATCHE     = $(NEUTRINO_MP_LIBSTB_DDT_PATCHES)
+NMP_BRANCH  ?= master
+HAL_BRANCH  ?= master
+NMP_PATCHES  = $(NEUTRINO_MP_DDT_PATCHES)
+HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_DDT_PATCHES)
 endif
 
 N_OBJDIR = $(BUILD_TMP)/$(NEUTRINO_MP)
@@ -142,10 +142,10 @@ $(D)/libstb-hal.do_prepare:
 	[ -d "$(ARCHIVE)/$(LIBSTB_HAL).git" ] || \
 	git clone $(GIT_URL)/$(LIBSTB_HAL).git $(ARCHIVE)/$(LIBSTB_HAL).git; \
 	cp -ra $(ARCHIVE)/$(LIBSTB_HAL).git $(SOURCE_DIR)/$(LIBSTB_HAL);\
-	(cd $(SOURCE_DIR)/$(LIBSTB_HAL); git checkout $(L_BRANCH);); \
+	(cd $(SOURCE_DIR)/$(LIBSTB_HAL); git checkout $(HAL_BRANCH);); \
 	cp -ra $(SOURCE_DIR)/$(LIBSTB_HAL) $(SOURCE_DIR)/$(LIBSTB_HAL).org
 	set -e; cd $(SOURCE_DIR)/$(LIBSTB_HAL); \
-		$(call apply_patches,$(L_PATCHE))
+		$(call apply_patches,$(HAL_PATCHES))
 	@touch $@
 
 $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
@@ -207,10 +207,10 @@ $(D)/neutrino-mp.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal
 	[ -d "$(ARCHIVE)/$(NEUTRINO_MP).git" ] || \
 	git clone $(GIT_URL)/$(NEUTRINO_MP).git $(ARCHIVE)/$(NEUTRINO_MP).git; \
 	cp -ra $(ARCHIVE)/$(NEUTRINO_MP).git $(SOURCE_DIR)/$(NEUTRINO_MP); \
-	(cd $(SOURCE_DIR)/$(NEUTRINO_MP); git checkout $(N_BRANCH);); \
+	(cd $(SOURCE_DIR)/$(NEUTRINO_MP); git checkout $(NMP_BRANCH);); \
 	cp -ra $(SOURCE_DIR)/$(NEUTRINO_MP) $(SOURCE_DIR)/$(NEUTRINO_MP).org
 	set -e; cd $(SOURCE_DIR)/$(NEUTRINO_MP); \
-		$(call apply_patches,$(N_PATCHES))
+		$(call apply_patches,$(NMP_PATCHES))
 	@touch $@
 
 $(D)/neutrino-mp.config.status \
