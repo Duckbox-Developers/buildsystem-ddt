@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -3340,6 +3340,7 @@
+@@ -3432,6 +3432,7 @@
  
  AC_CHECK_SIZEOF(size_t)
  AC_CHECK_SIZEOF(long)
@@ -10,7 +10,7 @@
  AC_CHECK_SIZEOF(time_t)
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -156,7 +156,7 @@
+@@ -168,7 +168,7 @@
  bin_SCRIPTS = curl-config
  
  SUBDIRS = lib src
@@ -21,7 +21,7 @@
  pkgconfig_DATA = libcurl.pc
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -629,7 +629,7 @@
+@@ -642,7 +642,7 @@
  
  bin_SCRIPTS = curl-config
  SUBDIRS = lib src
