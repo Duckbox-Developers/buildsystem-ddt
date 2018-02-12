@@ -1,7 +1,3 @@
----
- drivers/mmc/host/sdhci-brcmstb.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
 diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
 index 942b42b..b678310 100644
 --- a/drivers/mmc/host/sdhci-brcmstb.c
@@ -17,5 +13,3 @@ index 942b42b..b678310 100644
  	clk = devm_clk_get(&pdev->dev, NULL);
  	if (IS_ERR(clk)) {
  		dev_err(&pdev->dev, "Clock not found in Device Tree\n");
--- 
-2.7.4

@@ -27,7 +27,7 @@ index 264c4b8..12fd3d0 100644
  /* internal params node */
  struct stv090x_dev {
  	/* pointer for internal params, one for each pair of demods */
-@@ -3693,7 +3705,10 @@ static int stv090x_read_signal_strength(struct dvb_frontend *fe, u16 *strength)
+@@ -3687,7 +3699,10 @@ static int stv090x_read_signal_strength(struct dvb_frontend *fe, u16 *strength)
  		str = 0;
  	else if (agc < stv090x_rf_tab[ARRAY_SIZE(stv090x_rf_tab) - 1].read)
  		str = -100;
@@ -39,7 +39,7 @@ index 264c4b8..12fd3d0 100644
  
  	return 0;
  }
-@@ -3704,8 +3719,7 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
+@@ -3698,8 +3713,7 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
  	u32 reg_0, reg_1, reg, i;
  	s32 val_0, val_1, val = 0;
  	u8 lock_f;
@@ -49,7 +49,7 @@ index 264c4b8..12fd3d0 100644
  
  	switch (state->delsys) {
  	case STV090x_DVBS2:
-@@ -3722,10 +3736,14 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
+@@ -3716,10 +3730,14 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
  				msleep(1);
  			}
  			val /= 16;
@@ -68,7 +68,7 @@ index 264c4b8..12fd3d0 100644
  		}
  		break;
  
-@@ -3744,10 +3762,14 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
+@@ -3738,10 +3756,14 @@ static int stv090x_read_cnr(struct dvb_frontend *fe, u16 *cnr)
  				msleep(1);
  			}
  			val /= 16;
