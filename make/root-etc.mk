@@ -59,7 +59,6 @@ NETBASE_ADAPTED_ETC_FILES = \
 	network/options
 
 INITSCRIPTS_ADAPTED_ETC_FILES = \
-	hostname \
 	vdstandby.cfg \
 	init.d/bootclean.sh \
 	init.d/hostname \

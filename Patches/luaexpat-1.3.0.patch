@@ -21,12 +21,3 @@
  CF		 = $(LUA_INC) $(EXPAT_INC) $(COMMON_CFLAGS) $(CFLAGS)
  
  EXPAT_LIB	 = -lexpat
-@@ -28,7 +28,7 @@
- 
- install:
- 	$(INSTALL_PROGRAM) -D src/$(LIBNAME) $(DESTDIR)$(LUA_CDIR)/$(LIBNAME)
--	$(INSTALL_PROGRAM) -D src/$T/lom.lua $(DESTDIR)$(LUA_LDIR)/$T/lom.lua
-+	$(INSTALL_PROGRAM) -D src/$T/lom.lua $(LUA_LDIR)/$T/lom.lua
- 
- clean:
- 	$(RM) src/$(LIBNAME) $(OBJS)
