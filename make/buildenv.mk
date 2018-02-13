@@ -13,9 +13,9 @@ BASE_DIR             := $(shell pwd)
 ARCHIVE               = $(HOME)/Archive
 APPS_DIR              = $(BASE_DIR)/apps
 BUILD_TMP             = $(BASE_DIR)/build_tmp
+SOURCE_DIR            = $(BASE_DIR)/build_source
 DRIVER_DIR            = $(BASE_DIR)/driver
 FLASH_DIR             = $(BASE_DIR)/flash
-SOURCE_DIR            = $(BASE_DIR)/source
 
 -include $(BASE_DIR)/config
 

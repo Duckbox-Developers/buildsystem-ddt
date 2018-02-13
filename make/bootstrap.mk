@@ -319,16 +319,15 @@ directories:
 	install -d $(BOOT_DIR)
 	install -d $(HOST_DIR)
 	install -d $(HOST_DIR)/{bin,lib,share}
-	install -d $(TARGET_DIR)/{bin,boot,etc,lib,sbin,share,usr,var}
+	install -d $(TARGET_DIR)/{bin,boot,etc,lib,sbin,usr,var}
 	install -d $(TARGET_DIR)/etc/{init.d,mdev,network,rc.d}
 	install -d $(TARGET_DIR)/etc/rc.d/{rc0.d,rc6.d}
 	ln -sf ../init.d $(TARGET_DIR)/etc/rc.d/init.d
 	install -d $(TARGET_DIR)/lib/{lsb,firmware}
-	install -d $(TARGET_DIR)/usr/{bin,lib,local,sbin,share}
+	install -d $(TARGET_DIR)/usr/{bin,lib,sbin,share}
 	install -d $(TARGET_DIR)/usr/lib/pkgconfig
 	install -d $(TARGET_DIR)/usr/include/linux
 	install -d $(TARGET_DIR)/usr/include/linux/dvb
-	install -d $(TARGET_DIR)/usr/local/{bin,sbin,share}
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs}
 	install -d $(TARGET_DIR)/var/bin
