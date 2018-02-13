@@ -476,7 +476,7 @@ neutrino-release-base:
 	install -d $(RELEASE_DIR)/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/share/lua/5.2
 	ln -sf /share/tuxbox/neutrino/icons/logo $(RELEASE_DIR)/logos
-	ln -sf /share $(RELEASE_DIR)/usr
+	ln -sf ../share $(RELEASE_DIR)/usr
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,logos,net,tuxbox,update}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/net/epg
@@ -686,7 +686,7 @@ endif
 #
 # neutrino
 #
-	ln -sf /share $(RELEASE_DIR)/usr/local/share
+	ln -sf ../../share $(RELEASE_DIR)/usr/local/share
 	cp $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
 	cp $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
 	cp $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
@@ -761,7 +761,7 @@ endif
 # lua
 #
 	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
-		cp -aR $(TARGET_DIR)/usr/share/lua $(RELEASE_DIR)/share; \
+		cp -aR $(TARGET_DIR)/usr/share/lua $(RELEASE_DIR)/usr/share; \
 	fi
 #
 # plugins
