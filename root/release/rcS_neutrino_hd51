@@ -95,7 +95,7 @@ do
 		chmod 755 /tmp/neutrino
 		/tmp/neutrino
 	else
-		/usr/local/bin/neutrino -v 0
+		/usr/bin/neutrino -v 0
 	fi
 	rtv=$?
 	echo "GUI ended <- RTV: " $rtv

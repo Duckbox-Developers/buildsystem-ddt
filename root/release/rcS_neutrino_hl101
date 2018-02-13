@@ -141,7 +141,7 @@ echo "Start Neutrino" > /dev/vfd
 until false
 do
    echo "[rcS] Starting neutrino ->"
-   /usr/local/bin/neutrino
+   /usr/bin/neutrino
    rtv=$?
    echo "[rcS] Neutrino ended <- return value: " $rtv
    case "$rtv" in

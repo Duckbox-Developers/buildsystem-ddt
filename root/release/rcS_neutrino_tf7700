@@ -130,7 +130,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    until false
    do
       echo "starting neutrino ->"
-      /usr/local/bin/neutrino
+      /usr/bin/neutrino
       rtv=$?
       # update the GMT offset in case it changed while being turned on
       /bin/tffpctl --setgmtoffset

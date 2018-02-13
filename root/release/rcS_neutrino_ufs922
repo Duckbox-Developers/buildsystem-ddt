@@ -102,7 +102,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    until false
    do
       echo "starting neutrino ->"
-      /usr/local/bin/neutrino
+      /usr/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv
       case "$rtv" in

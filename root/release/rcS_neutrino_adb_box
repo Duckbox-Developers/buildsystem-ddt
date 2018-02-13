@@ -126,7 +126,7 @@ if [ ! -e /var/etc/.firstboot ]; then
       echo "starting neutrino ->"
       /etc/init.d/networking restart
       /usr/bin/start-emu.sh
-      /usr/local/bin/neutrino
+      /usr/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv
       case "$rtv" in
