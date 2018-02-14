@@ -2131,6 +2131,7 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/lzo2.pc
 	$(REWRITE_LIBTOOL)/liblzo2.la
 	$(REMOVE)/lzo-$(LZO_VER)
 	$(TOUCH)
