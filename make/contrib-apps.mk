@@ -1256,11 +1256,11 @@ $(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/$(VSFTPD_SOURCE)
 #
 # ethtool
 #
-ETHTOOL_VER = 6
-ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.gz
+ETHTOOL_VER = 4.15
+ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
-	$(WGET) https://downloads.openwrt.org/sources/$(ETHTOOL_SOURCE)
+	$(WGET) https://www.kernel.org/pub/software/network/ethtool/$(ETHTOOL_SOURCE)
 
 $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 	$(START_BUILD)
