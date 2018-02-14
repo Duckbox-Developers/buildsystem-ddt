@@ -1761,7 +1761,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 #
 # graphlcd
 #
-GRAPHLCD_VER = 7958e1b
+GRAPHLCD_VER = f5528fe
 GRAPHLCD_SOURCE = graphlcd-$(GRAPHLCD_VER).tar.bz2
 GRAPHLCD_URL = git://projects.vdr-developer.org/graphlcd-base.git
 GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
