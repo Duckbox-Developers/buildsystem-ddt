@@ -383,26 +383,29 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 #
 # gmediarender
 #
-GST_GMEDIARENDER_VER = 0.0.6
-GST_GMEDIARENDER_SOURCE = gmediarender-$(GST_GMEDIARENDER_VER).tar.bz2
-GST_GMEDIARENDER_PATCH = gst-gmediarender-$(GST_GMEDIARENDER_VER).patch
+GST_GMEDIARENDER_VER =
+GST_GMEDIARENDER_SOURCE =
+GST_GMEDIARENDER_PATCH =
 
 $(ARCHIVE)/$(GST_GMEDIARENDER_SOURCE):
 	$(WGET) http://savannah.nongnu.org/download/gmrender/$(GST_GMEDIARENDER_SOURCE)
 
-$(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp $(ARCHIVE)/$(GST_GMEDIARENDER_SOURCE)
+$(D)/gst_gmediarender: $(D)/bootstrap $(D)/gst_plugins_dvbmediasink $(D)/libupnp
 	$(START_BUILD)
-	$(REMOVE)/gmediarender-$(GST_GMEDIARENDER_VER)
-	$(UNTAR)/$(GST_GMEDIARENDER_SOURCE)
-	set -e; cd $(BUILD_TMP)/gmediarender-$(GST_GMEDIARENDER_VER); \
+	$(REMOVE)/gmrender-resurrect
+	set -e; if [ -d $(ARCHIVE)/gmrender-resurrect.git ]; \
+		then cd $(ARCHIVE)/gmrender-resurrect.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/hzeller/gmrender-resurrect.git gmrender-resurrect.git; \
+		fi
+	cp -ra $(ARCHIVE)/gmrender-resurrect.git $(BUILD_TMP)/gmrender-resurrect
+	set -e; cd $(BUILD_TMP)/gmrender-resurrect; \
 		$(call apply_patches,$(GST_GMEDIARENDER_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
-			--with-libupnp=$(TARGET_DIR)/usr \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/gmediarender-$(GST_GMEDIARENDER_VER)
+	$(REMOVE)/gmrender-resurrect
 	$(TOUCH)
 
 #
