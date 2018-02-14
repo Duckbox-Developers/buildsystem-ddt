@@ -1,0 +1,12 @@
+--- a/Makefile
++++ b/Makefile
+@@ -43,8 +43,7 @@
+ 	rm -f $(OBJS) $(TARGET)
+ 
+ install: $(TARGET)
+-	install -D -g root -o root $(TARGET) $(TARGET_DIR)/sbin/$(TARGET)
+-	install -D -g root -o root $(TARGET).1 $(TARGET_DIR)/share/man/man1/$(TARGET).1
++	install -D $(TARGET) $(TARGET_DIR)/sbin/$(TARGET)
+ 
+ hd-idle.o:     hd-idle.c
+ 

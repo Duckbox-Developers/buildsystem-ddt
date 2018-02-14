@@ -777,6 +777,7 @@ $(D)/hdparm: $(D)/bootstrap $(ARCHIVE)/$(HDPARM_SOURCE)
 #
 HDIDLE_VER = 1.05
 HDIDLE_SOURCE = hd-idle-$(HDIDLE_VER).tgz
+HDIDLE_PATCH = hd-idle-$(HDIDLE_VER).patch
 
 $(ARCHIVE)/$(HDIDLE_SOURCE):
 	$(WGET) https://sourceforge.net/projects/hd-idle/files/$(HDIDLE_SOURCE)
@@ -786,7 +787,7 @@ $(D)/hdidle: $(D)/bootstrap $(ARCHIVE)/$(HDIDLE_SOURCE)
 	$(REMOVE)/hd-idle
 	$(UNTAR)/$(HDIDLE_SOURCE)
 	set -e; cd $(BUILD_TMP)/hd-idle; \
-		sed -i -e 's/-g root -o root//g' Makefile; \
+		$(call apply_patches,$(HDIDLE_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) CC=$(TARGET)-gcc; \
 		$(MAKE) install TARGET_DIR=$(TARGET_DIR) install
