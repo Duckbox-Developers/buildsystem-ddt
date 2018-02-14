@@ -621,7 +621,7 @@ $(D)/nano: $(D)/bootstrap $(ARCHIVE)/$(NANO_SOURCE)
 #
 # rsync
 #
-RSYNC_VER = 3.1.2
+RSYNC_VER = 3.1.3
 RSYNC_SOURCE = rsync-$(RSYNC_VER).tar.gz
 
 $(ARCHIVE)/$(RSYNC_SOURCE):
