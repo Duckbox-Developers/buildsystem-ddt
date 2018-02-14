@@ -338,16 +338,6 @@ $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 
-$(D)/kernel-headers: $(D)/kernel.do_prepare
-	$(START_BUILD)
-	cd $(KERNEL_DIR); \
-		install -d $(TARGET_DIR)/usr/include
-		cp -a include/linux $(TARGET_DIR)/usr/include
-		cp -a include/asm-sh $(TARGET_DIR)/usr/include/asm
-		cp -a include/asm-generic $(TARGET_DIR)/usr/include
-		cp -a include/mtd $(TARGET_DIR)/usr/include
-	$(TOUCH)
-
 kernel-distclean:
 	rm -f $(D)/kernel
 	rm -f $(D)/kernel.do_compile

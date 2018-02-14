@@ -124,16 +124,6 @@ ifeq ($(BOXTYPE), vusolo4k)
 	$(TOUCH)
 endif
 
-$(D)/kernel-headers: $(D)/kernel.do_prepare
-	$(START_BUILD)
-	cd $(KERNEL_DIR); \
-		install -d $(TARGET_DIR)/usr/include
-		cp -a include/linux $(TARGET_DIR)/usr/include
-		cp -a include/asm-arm $(TARGET_DIR)/usr/include/asm
-		cp -a include/asm-generic $(TARGET_DIR)/usr/include
-		cp -a include/mtd $(TARGET_DIR)/usr/include
-	$(TOUCH)
-
 kernel-distclean:
 	rm -f $(D)/kernel
 	rm -f $(D)/kernel.do_compile
@@ -154,4 +144,4 @@ kernel.%: $(D)/kernel
 	@echo "You have to edit $(PATCHES)/armbox/$(KERNEL_CONFIG) m a n u a l l y to make changes permanent !!!"
 	@echo ""
 	diff $(KERNEL_DIR)/.config.old $(KERNEL_DIR)/.config
-	@echo "".
+	@echo ""
