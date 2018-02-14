@@ -669,6 +669,7 @@ $(D)/fuse: $(D)/bootstrap $(ARCHIVE)/$(FUSE_SOURCE)
 		-rmdir $(TARGET_DIR)/etc/udev
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fuse.pc
 	$(REWRITE_LIBTOOL)/libfuse.la
+	$(REWRITE_LIBTOOL)/libulockmgr.la
 	$(REMOVE)/fuse-$(FUSE_VER)
 	$(TOUCH)
 
