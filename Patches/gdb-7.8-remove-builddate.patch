@@ -16,7 +16,7 @@
    sim_io_printf (sd, "WITH_TARGET_BYTE_ORDER   = %s\n",
 --- a/sim/ppc/options.c
 +++ b/sim/ppc/options.c
-@@ -113,9 +113,9 @@ INLINE_OPTIONS\
+@@ -112,9 +112,9 @@ INLINE_OPTIONS\
  print_options (void)
  {
  #if defined(_GNUC_) && defined(__VERSION__)

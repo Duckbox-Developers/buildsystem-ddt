@@ -158,9 +158,12 @@ $(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
 			--build=$(BUILD) \
 			--target=$(TARGET) \
 			--prefix=/usr \
+			--includedir=$(TARGET_DIR)/usr/include \
 			--mandir=$(TARGET_DIR)/.remove \
 			--infodir=$(TARGET_DIR)/.remove \
-			--nfp --disable-werror \
+			--datarootdir=$(TARGET_DIR)/.remove \
+			--nfp \
+			--disable-werror \
 		; \
 		$(MAKE) all-gdb; \
 		$(MAKE) install-gdb prefix=$(TARGET_DIR)
