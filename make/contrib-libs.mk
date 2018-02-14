@@ -956,7 +956,9 @@ $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libconfig.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libconfig++.pc
 	$(REWRITE_LIBTOOL)/libconfig.la
+	$(REWRITE_LIBTOOL)/libconfig++.la
 	$(REMOVE)/libconfig-$(LIBCONFIG_VER)
 	$(TOUCH)
 
