@@ -135,7 +135,7 @@ $(D)/neutrino-mp-plugin-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutri
 		$(call apply_patches,$(XUPNPD_PATCH))
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
-		$(MAKE) sh4 TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG); \
+		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
 	install -m 644 $(ARCHIVE)/plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
