@@ -123,6 +123,7 @@ neutrino-mp-plugin-distclean:
 #
 XUPNPD_PATCH = xupnpd.patch
 
+$(D)/xupnpd \
 $(D)/neutrino-mp-plugin-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-mp-plugin-scripts-lua
 	$(START_BUILD)
 	$(REMOVE)/xupnpd
@@ -168,6 +169,8 @@ $(D)/neutrino-mp-plugin-scripts-lua: $(D)/bootstrap
 #
 # neutrino-mediathek
 #
+NEUTRINO_MEDIATHEK_PATCH = neutrino-mediathek.patch
+
 $(D)/neutrino-mp-plugin-mediathek:
 	$(START_BUILD)
 	$(REMOVE)/plugins-mediathek
@@ -177,6 +180,8 @@ $(D)/neutrino-mp-plugin-mediathek:
 		fi
 	cp -ra $(ARCHIVE)/plugins-mediathek.git $(BUILD_TMP)/plugins-mediathek
 	install -d $(TARGET_DIR)/var/tuxbox/plugins
+	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
+		$(call apply_patches,$(NEUTRINO_MEDIATHEK_PATCH))
 	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
 		cp -a plugins/* $(TARGET_DIR)/var/tuxbox/plugins/; \
 		cp -a share $(TARGET_DIR)/usr/

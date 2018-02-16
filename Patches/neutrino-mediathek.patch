@@ -1,0 +1,37 @@
+--- a/plugins/neutrino-mediathek/images.lua
++++ b/plugins/neutrino-mediathek/images.lua
+@@ -38,20 +38,20 @@
+ 		-- neutrino system icons
+ 		-- TODO: allow user icons from /var/tuxbox/icons/
+ 		-- TODO: get path to icons from build environment
+-		btn0		= "/share/tuxbox/neutrino/icons/0.png"
+-		btn1		= "/share/tuxbox/neutrino/icons/1.png"
+-		btn2		= "/share/tuxbox/neutrino/icons/2.png"
+-		btn3		= "/share/tuxbox/neutrino/icons/3.png"
+-		btn4		= "/share/tuxbox/neutrino/icons/4.png"
+-		btn5		= "/share/tuxbox/neutrino/icons/5.png"
+-		btn6		= "/share/tuxbox/neutrino/icons/6.png"
+-		btn7		= "/share/tuxbox/neutrino/icons/7.png"
+-		btn8		= "/share/tuxbox/neutrino/icons/8.png"
+-		btn9		= "/share/tuxbox/neutrino/icons/9.png"
+-		btnBlue		= "/share/tuxbox/neutrino/icons/blau.png"
+-		btnGreen	= "/share/tuxbox/neutrino/icons/gruen.png"
+-		btnRed		= "/share/tuxbox/neutrino/icons/rot.png"
+-		btnYellow	= "/share/tuxbox/neutrino/icons/gelb.png"
++		btn0		= "/usr/share/tuxbox/neutrino/icons/0.png"
++		btn1		= "/usr/share/tuxbox/neutrino/icons/1.png"
++		btn2		= "/usr/share/tuxbox/neutrino/icons/2.png"
++		btn3		= "/usr/share/tuxbox/neutrino/icons/3.png"
++		btn4		= "/usr/share/tuxbox/neutrino/icons/4.png"
++		btn5		= "/usr/share/tuxbox/neutrino/icons/5.png"
++		btn6		= "/usr/share/tuxbox/neutrino/icons/6.png"
++		btn7		= "/usr/share/tuxbox/neutrino/icons/7.png"
++		btn8		= "/usr/share/tuxbox/neutrino/icons/8.png"
++		btn9		= "/usr/share/tuxbox/neutrino/icons/9.png"
++		btnBlue		= "/usr/share/tuxbox/neutrino/icons/blau.png"
++		btnGreen	= "/usr/share/tuxbox/neutrino/icons/gruen.png"
++		btnRed		= "/usr/share/tuxbox/neutrino/icons/rot.png"
++		btnYellow	= "/usr/share/tuxbox/neutrino/icons/gelb.png"
+ 	end
+ end
+ 
