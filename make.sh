@@ -61,9 +61,11 @@ case $1 in
 		echo "   34)  Vitamin HD5000"
 		echo "   35)  SagemCom 88 series"
 		echo "   36)  Ferguson Ariva @Link 200"
+                #echo "   37)  Pace HDS-7241 (stm 217 only)"
 		echo
 		echo "  arm-based receivers"
-		echo "   37)  Mut@nt HD51"
+		echo "   38)  Mut@nt HD51"
+                #echo "   39)  Vu Solo4K"
 		echo "   "
 		echo
 		read -p "Select target (1-38)? ";;
@@ -106,8 +108,9 @@ case "$REPLY" in
 	34) BOXARCH="sh4";BOXTYPE="vitamin_hd5000";;
 	35) BOXARCH="sh4";BOXTYPE="sagemcom88";;
 	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
-	37) BOXARCH="arm";BOXTYPE="hd51";;
-	38) BOXARCH="arm";BOXTYPE="vusolo4k";;
+        37) BOXARCH="sh4";BOXTYPE="pace7241";;
+	38) BOXARCH="arm";BOXTYPE="hd51";;
+	39) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
