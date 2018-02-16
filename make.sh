@@ -25,7 +25,7 @@ fi
 ##############################################
 
 case $1 in
-	[1-9] | 1[0-9] | 2[0-9] | 3[0-8]) REPLY=$1;;
+	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9]) REPLY=$1;;
 	*)
 		echo "Target receivers:"
 		echo
@@ -61,14 +61,14 @@ case $1 in
 		echo "   34)  Vitamin HD5000"
 		echo "   35)  SagemCom 88 series"
 		echo "   36)  Ferguson Ariva @Link 200"
-                #echo "   37)  Pace HDS-7241 (stm 217 only)"
+		#echo "   37)  Pace HDS-7241 (stm 217 only)"
 		echo
 		echo "  arm-based receivers"
-		echo "   38)  Mut@nt HD51"
-                #echo "   39)  Vu Solo4K"
+		echo "   50)  Vu Solo4K"
+		echo "   51)  Mut@nt HD51"
 		echo "   "
 		echo
-		read -p "Select target (1-38)? ";;
+		read -p "Select target (1-59)? ";;
 esac
 
 case "$REPLY" in
@@ -108,9 +108,9 @@ case "$REPLY" in
 	34) BOXARCH="sh4";BOXTYPE="vitamin_hd5000";;
 	35) BOXARCH="sh4";BOXTYPE="sagemcom88";;
 	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
-        37) BOXARCH="sh4";BOXTYPE="pace7241";;
-	38) BOXARCH="arm";BOXTYPE="hd51";;
-	39) BOXARCH="arm";BOXTYPE="vusolo4k";;
+	37) BOXARCH="sh4";BOXTYPE="pace7241";;
+	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
+	51) BOXARCH="arm";BOXTYPE="hd51";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
