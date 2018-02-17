@@ -819,6 +819,7 @@ endif
 	rm -rf $(RELEASE_DIR)/usr/lib/cmake
 	rm -f $(RELEASE_DIR)/usr/lib/*.py
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
+	rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdcss*
