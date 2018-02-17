@@ -1669,6 +1669,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
 	set -e; cd $(BUILD_TMP)/dropbearmulti; \
+		git checkout -q c8d852caf646d060babd4be9d074caee51c5aead; \
 		$(BUILDENV) \
 		autoreconf -fi; \
 		$(CONFIGURE) \
