@@ -1,5 +1,6 @@
 apps/
 build_logfile/
+build_source/
 build_tmp/
 cross/
 custom/*-local*
@@ -8,7 +9,6 @@ flash/
 own_build/
 Patches/patch-neutrino/
 root/boot/*
-source/
 tufsbox/
 .deps/
 config*
