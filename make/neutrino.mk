@@ -373,7 +373,7 @@ $(D)/neutrino-hd2.do_compile: $(D)/neutrino-hd2.config.status
 
 neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR)
-	make $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
@@ -381,7 +381,7 @@ neutrino-hd2: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 nhd2 \
 neutrino-hd2-plugins: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino-hd2 install DESTDIR=$(TARGET_DIR)
-	make $(TARGET_DIR)/var/etc/.version
+	make $(TARGET_DIR)/.version
 	touch $(D)/$(notdir $@)
 	make neutrino-hd2-plugins.build
 	make neutrino-release
