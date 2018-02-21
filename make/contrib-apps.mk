@@ -1536,7 +1536,7 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel $(ARCHIVE)/$(DVBSNOOP_SOURCE)
 # udpxy
 #
 UDPXY_VER = 612d227
-UDPXY_SOURCE = udpxy-$(UDPXY_VER).tar.bz2
+UDPXY_SOURCE = udpxy-git-$(UDPXY_VER).tar.bz2
 UDPXY_URL = https://github.com/pcherenkov/udpxy.git
 UDPXY_PATCH = udpxy-$(UDPXY_VER).patch
 
@@ -1545,14 +1545,14 @@ $(ARCHIVE)/$(UDPXY_SOURCE):
 
 $(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/udpxy-$(UDPXY_VER)
+	$(REMOVE)/udpxy-git-$(UDPXY_VER)
 	$(UNTAR)/$(UDPXY_SOURCE)
-	set -e; cd $(BUILD_TMP)/udpxy-$(UDPXY_VER)/chipmunk; \
+	set -e; cd $(BUILD_TMP)/udpxy-git-$(UDPXY_VER)/chipmunk; \
 		$(call apply_patches,$(UDPXY_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) CC=$(TARGET)-gcc CCKIND=gcc; \
 		$(MAKE) install INSTALLROOT=$(TARGET_DIR)/usr MANPAGE_DIR=$(TARGET_DIR)/.remove
-	$(REMOVE)/udpxy-$(UDPXY_VER)
+	$(REMOVE)/udpxy-git-$(UDPXY_VER)
 	$(TOUCH)
 
 #
