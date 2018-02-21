@@ -2065,7 +2065,7 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP
 # libdvbsi++
 #
 LIBDVBSI_VER = ff57e58
-LIBDVBSI_SOURCE = libdvbsi-$(LIBDVBSI_VER).tar.bz2
+LIBDVBSI_SOURCE = libdvbsi-git-$(LIBDVBSI_VER).tar.bz2
 LIBDVBSI_URL = git://git.opendreambox.org/git/obi/libdvbsi++.git
 LIBDVBSI_PATCH = libdvbsi-git.patch
 
@@ -2074,9 +2074,9 @@ $(ARCHIVE)/$(LIBDVBSI_SOURCE):
 
 $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/libdvbsi-$(LIBDVBSI_VER)
+	$(REMOVE)/libdvbsi-git-$(LIBDVBSI_VER)
 	$(UNTAR)/$(LIBDVBSI_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdvbsi-$(LIBDVBSI_VER); \
+	set -e; cd $(BUILD_TMP)/libdvbsi-git-$(LIBDVBSI_VER); \
 		$(call apply_patches,$(LIBDVBSI_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2085,7 +2085,7 @@ $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdvbsi++.pc
 	$(REWRITE_LIBTOOL)/libdvbsi++.la
-	$(REMOVE)/libdvbsi-$(LIBDVBSI_VER)
+	$(REMOVE)/libdvbsi-git-$(LIBDVBSI_VER)
 	$(TOUCH)
 
 #
