@@ -1812,15 +1812,18 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBPDF_SOURCE)
 #
 # lcd4linux
 #
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
+LCD4LINUX_VER = 07ef2dd
+LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
+LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
+
+$(ARCHIVE)/$(LCD4LINUX_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LCD4LINUX_URL) $(LCD4LINUX_VER) $(notdir $@) $(ARCHIVE)
+
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(ARCHIVE)/$(LCD4LINUX_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/lcd4linux
-	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
-		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
-		fi
-	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
-	set -e; cd $(BUILD_TMP)/lcd4linux; \
+	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
+	$(UNTAR)/$(LCD4LINUX_SOURCE)
+	set -e; cd $(BUILD_TMP)/lcd4linux-git-$(LCD4LINUX_VER); \
 		$(BUILDENV) ./bootstrap; \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
 			--prefix=/usr \
@@ -1832,7 +1835,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(TARGET_DIR)/etc/init.d/
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_ni.conf $(TARGET_DIR)/etc/lcd4linux.conf
-	$(REMOVE)/lcd4linux
+	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
 	$(TOUCH)
 
 #
