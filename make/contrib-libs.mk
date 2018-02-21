@@ -499,7 +499,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 # luasocket
 #
 LUASOCKET_VER = 5a17f79
-LUASOCKET_SOURCE = luasocket-$(LUASOCKET_VER).tar.bz2
+LUASOCKET_SOURCE = luasocket-git-$(LUASOCKET_VER).tar.bz2
 LUASOCKET_URL = git://github.com/diegonehab/luasocket.git
 
 $(ARCHIVE)/$(LUASOCKET_SOURCE):
@@ -507,13 +507,13 @@ $(ARCHIVE)/$(LUASOCKET_SOURCE):
 
 $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luasocket-$(LUASOCKET_VER)
+	$(REMOVE)/luasocke-gitt-$(LUASOCKET_VER)
 	$(UNTAR)/$(LUASOCKET_SOURCE)
-	set -e; cd $(BUILD_TMP)/luasocket-$(LUASOCKET_VER); \
+	set -e; cd $(BUILD_TMP)/luasocket-git-$(LUASOCKET_VER); \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGET_DIR)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGET_DIR)/usr@" src/makefile; \
 		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VER_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGET_DIR)/usr/include LUAPREFIX_linux=; \
 		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VER_SHORT)
-	$(REMOVE)/luasocket-$(LUASOCKET_VER)
+	$(REMOVE)/luasocket-git-$(LUASOCKET_VER)
 	$(TOUCH)
 
 #
