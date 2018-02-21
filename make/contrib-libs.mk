@@ -1762,7 +1762,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 # graphlcd
 #
 GRAPHLCD_VER = f5528fe
-GRAPHLCD_SOURCE = graphlcd-$(GRAPHLCD_VER).tar.bz2
+GRAPHLCD_SOURCE = graphlcd-git-$(GRAPHLCD_VER).tar.bz2
 GRAPHLCD_URL = git://projects.vdr-developer.org/graphlcd-base.git
 GRAPHLCD_PATCH = graphlcd-base-touchcol.patch
 
@@ -1771,16 +1771,16 @@ $(ARCHIVE)/$(GRAPHLCD_SOURCE):
 
 $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/graphlcd-$(GRAPHLCD_VER)
+	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
 	$(UNTAR)/$(GRAPHLCD_SOURCE)
-	set -e; cd $(BUILD_TMP)/graphlcd-$(GRAPHLCD_VER); \
+	set -e; cd $(BUILD_TMP)/graphlcd-git-$(GRAPHLCD_VER); \
 		$(call apply_patches,$(GRAPHLCD_PATCH)); \
 		$(MAKE) -C glcdgraphics all TARGET=$(TARGET)- DESTDIR=$(TARGET_DIR); \
 		$(MAKE) -C glcddrivers all TARGET=$(TARGET)- DESTDIR=$(TARGET_DIR); \
 		$(MAKE) -C glcdgraphics install DESTDIR=$(TARGET_DIR); \
 		$(MAKE) -C glcddrivers install DESTDIR=$(TARGET_DIR); \
 		cp -a graphlcd.conf $(TARGET_DIR)/etc
-	$(REMOVE)/graphlcd-$(GRAPHLCD_VER)
+	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
 	$(TOUCH)
 
 #
