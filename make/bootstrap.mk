@@ -197,17 +197,17 @@ $(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 # cortex-strings
 #
 CORTEX_STRINGS_VER = 48fd30c
-CORTEX_STRINGS_SOURCE = cortex-strings-$(CORTEX_STRINGS_VER).tar.bz2
+CORTEX_STRINGS_SOURCE = cortex-strings-git-$(CORTEX_STRINGS_VER).tar.bz2
 CORTEX_STRINGS_URL = http://git.linaro.org/git-ro/toolchain/cortex-strings.git
 
-$(ARCHIVE)/cortex-strings-$(CORTEX_STRINGS_VER).tar.bz2:
+$(ARCHIVE)/$(CORTEX_STRINGS_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CORTEX_STRINGS_URL) $(CORTEX_STRINGS_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/cortex-strings: $(ARCHIVE)/cortex-strings-$(CORTEX_STRINGS_VER).tar.bz2 directories
+$(D)/cortex-strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
 	$(START_BUILD)
-	$(REMOVE)/cortex-strings-$(CORTEX_STRINGS_VER)
+	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
-	set -e; cd $(BUILD_TMP)/cortex-strings-$(CORTEX_STRINGS_VER); \
+	set -e; cd $(BUILD_TMP)/cortex-strings-git-$(CORTEX_STRINGS_VER); \
 		./autogen.sh; \
 		$(MAKE_OPTS) \
 		./configure \
@@ -220,7 +220,7 @@ $(D)/cortex-strings: $(ARCHIVE)/cortex-strings-$(CORTEX_STRINGS_VER).tar.bz2 dir
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libcortex-strings.la
-	$(REMOVE)/cortex-strings-$(CORTEX_STRINGS_VER)
+	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(TOUCH)
 
 #
