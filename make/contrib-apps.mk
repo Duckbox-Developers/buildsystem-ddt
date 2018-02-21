@@ -1751,19 +1751,22 @@ $(D)/usb_modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb_modeswitch_data $(ARCHI
 #
 # ofgwrite
 #
-$(D)/ofgwrite: $(D)/bootstrap
+OFGWRITE_VER = b7808ce
+OFGWRITE_SOURCE = ofgwrite-git-$(OFGWRITE_VER).tar.bz2
+OFGWRITE_URL = https://github.com/Duckbox-Developers/ofgwrite-ddt.git
+
+$(ARCHIVE)/$(OFGWRITE_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(OFGWRITE_URL) $(OFGWRITE_VER) $(notdir $@) $(ARCHIVE)
+
+$(D)/ofgwrite: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/ofgwrite
-	set -e; if [ -d $(ARCHIVE)/ofgwrite-ddt.git ]; \
-		then cd $(ARCHIVE)/ofgwrite-ddt.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/ofgwrite-ddt.git ofgwrite-ddt.git; \
-		fi
-	cp -ra $(ARCHIVE)/ofgwrite-ddt.git $(BUILD_TMP)/ofgwrite
-	set -e; cd $(BUILD_TMP)/ofgwrite; \
+	$(REMOVE)/ofgwrite-git-$(OFGWRITE_VER)
+	$(UNTAR)/$(OFGWRITE_SOURCE)
+	set -e; cd $(BUILD_TMP)/ofgwrite-git-$(OFGWRITE_VER); \
 		$(BUILDENV) \
 		$(MAKE); \
-	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite_bin $(TARGET_DIR)/usr/bin
-	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite_tgz $(TARGET_DIR)/usr/bin
-	install -m 755 $(BUILD_TMP)/ofgwrite/ofgwrite $(TARGET_DIR)/usr/bin
-	$(REMOVE)/ofgwrite
+	install -m 755 $(BUILD_TMP)/ofgwrite-git-$(OFGWRITE_VER)/ofgwrite_bin $(TARGET_DIR)/usr/bin
+	install -m 755 $(BUILD_TMP)/ofgwrite-git-$(OFGWRITE_VER)/ofgwrite_tgz $(TARGET_DIR)/usr/bin
+	install -m 755 $(BUILD_TMP)/ofgwrite-git-$(OFGWRITE_VER)/ofgwrite $(TARGET_DIR)/usr/bin
+	$(REMOVE)/ofgwrite-git-$(OFGWRITE_VER)
 	$(TOUCH)
