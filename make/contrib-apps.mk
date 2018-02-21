@@ -1658,18 +1658,20 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 	$(TOUCH)
 
 #
-# dropbear multi
+# dropbearmulti
 #
-$(D)/dropbearmulti: $(D)/bootstrap
+DROPBEARMULTI_VER = c8d852c
+DROPBEARMULTI_SOURCE = dropbearmulti-git-$(DROPBEARMULTI_VER).tar.bz2
+DROPBEARMULTI_URL = https://github.com/mkj/dropbear.git
+
+$(ARCHIVE)/$(DROPBEARMULTI_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(DROPBEARMULTI_URL) $(DROPBEARMULTI_VER) $(notdir $@) $(ARCHIVE)
+
+$(D)/dropbearmulti: $(D)/bootstrap $(ARCHIVE)/$(DROPBEARMULTI_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/dropbearmulti
-	set -e; if [ -d $(ARCHIVE)/dropbearmulti.git ]; \
-		then cd $(ARCHIVE)/dropbearmulti.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/mkj/dropbear.git $(ARCHIVE)/dropbearmulti.git; \
-		fi
-	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
-	set -e; cd $(BUILD_TMP)/dropbearmulti; \
-		git checkout -q c8d852caf646d060babd4be9d074caee51c5aead; \
+	$(REMOVE)/dropbearmulti-git-$(DROPBEARMULTI_VER)
+	$(UNTAR)/$(DROPBEARMULTI_SOURCE)
+	set -e; cd $(BUILD_TMP)/dropbearmulti-git-$(DROPBEARMULTI_VER); \
 		$(BUILDENV) \
 		autoreconf -fi; \
 		$(CONFIGURE) \
@@ -1701,7 +1703,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 	cd $(TARGET_DIR)/usr/bin && ln -sf /usr/bin/dropbearmulti dropbear
 	install -m 755 $(SKEL_ROOT)/etc/init.d/dropbear $(TARGET_DIR)/etc/init.d/
 	install -d -m 0755 $(TARGET_DIR)/etc/dropbear
-	$(REMOVE)/dropbearmulti
+	$(REMOVE)/dropbearmulti-git-$(DROPBEARMULTI_VER)
 	$(TOUCH)
 
 #
