@@ -1784,22 +1784,21 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SO
 	$(TOUCH)
 
 #
+# libdpf
 #
-#
-DPF-AX_REV = 54
+LIBPDF_VER = 62c8fd0
+LIBPDF_SOURCE = dpf-ax-git-$(LIBPDF_VER).tar.bz2
+LIBPDF_URL = https://github.com/MaxWiesel/dpf-ax.git
 LIBPDF_PATCH = libdpf-crossbuild.patch
 
-$(ARCHIVE)/dpf-ax_svn$(DPF-AX_REV).tar.gz:
-	cd $(BUILD_TMP); \
-		svn co -r$(DPF-AX_REV) https://dpf-ax.svn.sourceforge.net/svnroot/dpf-ax/trunk dpf-ax_svn$(DPF-AX_REV); \
-		tar cvpzf $@ dpf-ax_svn$(DPF-AX_REV)
-	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
+$(ARCHIVE)/$(LIBPDF_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBPDF_URL) $(LIBPDF_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/dpf-ax_svn$(DPF-AX_REV).tar.gz
+$(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBPDF_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
-	$(UNTAR)/dpf-ax_svn$(DPF-AX_REV).tar.gz
-	cd $(BUILD_TMP)/dpf-ax_svn$(DPF-AX_REV)/dpflib; \
+	$(REMOVE)/dpf-ax-git-$(LIBPDF_VER)
+	$(UNTAR)/$(LIBPDF_SOURCE)
+	set -e; cd $(BUILD_TMP)/dpf-ax-git-$(LIBPDF_VER)/dpflib; \
 		$(call apply_patches,$(LIBPDF_PATCH)); \
 		make libdpf.a CC=$(TARGET)-gcc PREFIX=$(TARGET_DIR)/usr; \
 		mkdir -p $(TARGET_INCLUDE_DIR)/libdpf; \
@@ -1807,7 +1806,7 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/dpf-ax_svn$(DPF-AX_REV
 		cp ../include/spiflash.h $(TARGET_INCLUDE_DIR)/libdpf/; \
 		cp ../include/usbuser.h $(TARGET_INCLUDE_DIR)/libdpf/; \
 		cp libdpf.a $(TARGET_LIB_DIR)/
-	$(REMOVE)/dpf-ax_svn$(DPF-AX_REV)
+	$(REMOVE)/dpf-ax-git-$(LIBPDF_VER)
 	$(TOUCH)
 
 #

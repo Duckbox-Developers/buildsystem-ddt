@@ -1,7 +1,8 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -1,6 +1,6 @@
- OBJS = dpflib.o rawusb.o scsi.o bootload.o
+@@ -10,7 +10,7 @@
+ LIBS=-lusb -lsgutils2
+ endif
  
 -CFLAGS = -Wall -fPIC -I../include -g
 +CFLAGS = -Wall -fPIC -I$(PREFIX)/include -I../include -g
