@@ -267,6 +267,11 @@ ARIVALINK200_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-ipbox_dvb_ca_stm24_$(KERNEL_LABEL).patch
 
+PACE7241_PATCHES_24 = $(COMMONPATCHES_24) \
+		linux-sh4-pace7241_setup_stm24$(PATCH_STR).patch \
+		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
+		linux-sh4-lmb_stm24$(PATCH_STR).patch
+
 #
 # KERNEL
 #
