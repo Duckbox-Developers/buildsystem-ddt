@@ -1,6 +1,6 @@
 --- a/arch/sh/boards/mach-mb680/setup.c	2014-04-09 06:54:15.000000000 +0200
 +++ b/arch/sh/boards/mach-mb680/setup.c	2014-03-20 18:46:14.000000000 +0100
-@@ -22,22 +22,54 @@
+@@ -22,22 +22,52 @@
  #include <linux/input.h>
  #include <linux/stm/platform.h>
  #include <linux/stm/stx7105.h>
@@ -18,8 +18,6 @@
  
  
 +//#define PIO13_2 stm_gpio(x, y) //reset usb1
-+//#define PIO13_3 stm_gpio(x, y) //reset usb2
-+//#define PIO16_2 stm_gpio(x, y) //reset dvb-t
 +#define PIO15_3 stm_gpio(15, 3) //reset dvb-t found by J....
  
 -#define MB680_PIO_PHY_RESET stm_gpio(5, 5)
@@ -287,8 +285,8 @@
 	stx7105_configure_pwm(&(struct stx7105_pwm_config) {
 -			.out0 = stx7105_pwm_out0_pio13_0,
 -			.out1 = stx7105_pwm_out1_disabled, });
-+			.out0 = stx7105_pwm_out0_pio4_4,
-+			.out1 = stx7105_pwm_out1_disabled, }); // j00zek: this is interesting, fan is connected to pio4.5 but works only when defined as 4.4
++			.out0 = stx7105_pwm_out0_disabled, // j00zek: nothing connected
++			.out1 = stx7105_pwm_out1_disabled, }); // j00zek: fan is connected to pio4.5, configured in the fan_ctrl driver
 -
 -	/* NIM CD I2C bus*/
 -	stx7105_configure_ssc_i2c(1, &(struct stx7105_ssc_config) {
