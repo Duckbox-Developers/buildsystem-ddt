@@ -1,5 +1,5 @@
---- a/libavformat/Makefile	2016-12-06 00:28:54.000000000 +0100
-+++ b/ffmpeg-3.3_dash_demux/libavformat/Makefile	2017-10-22 14:30:41.170550487 +0200
+--- a/libavformat/Makefile
++++ b/libavformat/Makefile
 @@ -135,7 +135,7 @@
  OBJS-$(CONFIG_DATA_DEMUXER)              += rawdec.o
  OBJS-$(CONFIG_DATA_MUXER)                += rawenc.o

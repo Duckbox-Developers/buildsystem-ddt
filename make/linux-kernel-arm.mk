@@ -57,7 +57,15 @@ VUSOLO4K_PATCHES = \
 		armbox/vusolo4k_0001-STV-Add-SNR-Signal-report-parameters.patch \
 		armbox/vusolo4k_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/vusolo4k_linux_dvb_adapter.patch \
-		armbox/vusolo4k_kernel-gcc6.patch
+		armbox/vusolo4k_kernel-gcc6.patch \
+		armbox/vusolo4k_genksyms_fix_typeof_handling.patch \
+		armbox/vusolo4k_0001-tuners-tda18273-silicon-tuner-driver.patch \
+		armbox/vusolo4k_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		armbox/vusolo4k_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		armbox/vusolo4k_0003-cxusb-Geniatech-T230-support.patch \
+		armbox/vusolo4k_CONFIG_DVB_SP2.patch \
+		armbox/vusolo4k_dvbsky.patch \
+		armbox/vusolo4k_rtl2832u-2.patch
 
 #
 # KERNEL
