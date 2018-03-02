@@ -420,5 +420,5 @@ dual-distclean:
 	make nhd2-distclean
 	make mp-distclean
 
-PHONY += $(TARGET_DIR)/var/etc/.version
+PHONY += $(TARGET_DIR)/.version
 PHONY += $(SOURCE_DIR)/$(NEUTRINO_MP)/src/gui/version.h
