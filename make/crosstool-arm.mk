@@ -18,12 +18,20 @@ $(TARGET_DIR)/lib/libc.so.6:
 CROSSTOOL_NG_VER = 1dbb06f2
 CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.bz2
 CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
+ifeq ($(BOXTYPE), vusolo4k)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vusolo4k.patch
+endif
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
 CUSTOM_KERNEL = $(ARCHIVE)/$(KERNEL_SRC)
+ifeq ($(BOXTYPE), hd51)
 CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+CUSTOM_KERNEL_VER = 3.14-1.8
+endif
 
 ifeq ($(wildcard $(CROSS_BASE)/build.log.bz2),)
 CROSSTOOL = crosstool
@@ -45,9 +53,9 @@ crosstool-ng: directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOU
 		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
 		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
 		\
-		if [ "$(BOXTYPE)" = "hd51" ]; then \
-			cp $(PATCHES)/ct-ng/gcc-6.3-backport-fix-of-check-for-empty-string-in-ubsan.c.patch patches/gcc/linaro-6.3-2017.02; \
-		fi; \
+		$(call apply_patches,$(CROSSTOOL_BOXTYPE_PATCH)); \
+		cp $(PATCHES)/ct-ng/gcc-6.3-backport-fix-of-check-for-empty-string-in-ubsan.c.patch patches/gcc/linaro-6.3-2017.02; \
+		\
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
 		export CT_NG_BASE_DIR=$(CROSS_BASE); \
 		export CT_NG_CUSTOM_KERNEL=$(CUSTOM_KERNEL); \
