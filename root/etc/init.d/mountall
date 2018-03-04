@@ -28,7 +28,6 @@ mount -av -t nonfs,nonfs4,nosmbfs,nocifs,noncp,noncpfs,nocoda 2>&1 |
 [ ! -d /var/lib/urandom ] && mkdir /var/lib/urandom
 [ ! -d /var/run ] && mkdir /var/run
 ln -sf /tmp /var/tmp
-ln -sf /usr/share /share
 #END
 
 case `uname -s` in
