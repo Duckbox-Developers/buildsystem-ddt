@@ -75,13 +75,13 @@
 +	},
 +	{
 +		.name = "ROOT SQUASHFS",
-+		.size =   0x00C00000, //root 0x240000-0xcffff 12,0MB
++		.size =   0x00E00000, //root 0x240000-0xeffff 14,6MB
 +		.offset = 0x00240000
 +	},
 +	{
 +		.name = "VAR-JFFS2",
-+		.size =   0x011C0000,  //0xa40000-0x1dfffff 17,5MB
-+		.offset = 0x00E40000
++		.size =   0x0FC0000,  //0x1040000-0x1ffffff 16,5MB
++		.offset = 0x01040000
 +	},
 +	{
 +		.name = "Boot Config",
