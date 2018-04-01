@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -3432,6 +3432,7 @@
+@@ -3441,6 +3441,7 @@
  
  AC_CHECK_SIZEOF(size_t)
  AC_CHECK_SIZEOF(long)
