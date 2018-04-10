@@ -1652,24 +1652,18 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 			--without-mem-debug \
 		; \
 		$(MAKE) all; \
-		sed -e "s,^prefix=,prefix=$(TARGET_DIR)," < xslt-config > $(HOST_DIR)/bin/xslt-config; \
-		chmod 755 $(HOST_DIR)/bin/xslt-config; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		if [ -e "$(TARGET_DIR)/$(PYTHON_DIR)/site-packages/libxsltmod.la" ]; then \
-			sed -e "/^dependency_libs/ s,/usr/lib/libexslt.la,$(TARGET_DIR)/usr/lib/libexslt.la,g" -i $(TARGET_DIR)/$(PYTHON_DIR)/site-packages/libxsltmod.la; \
-			sed -e "/^dependency_libs/ s,/usr/lib/libxslt.la,$(TARGET_DIR)/usr/lib/libxslt.la,g" -i $(TARGET_DIR)/$(PYTHON_DIR)/site-packages/libxsltmod.la; \
-			sed -e "/^libdir/ s,$(PYTHON_DIR)/site-packages,$(TARGET_DIR)/$(PYTHON_DIR)/site-packages,g" -i $(TARGET_DIR)/$(PYTHON_DIR)/site-packages/libxsltmod.la; \
-		fi; \
-		sed -e "/^XSLT_LIBDIR/ s,/usr/lib,$(TARGET_DIR)/usr/lib,g" -i $(TARGET_DIR)/usr/lib/xsltConf.sh; \
-		sed -e "/^XSLT_INCLUDEDIR/ s,/usr/include,$(TARGET_DIR)/usr/include,g" -i $(TARGET_DIR)/usr/lib/xsltConf.sh
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libexslt.pc $(HOST_DIR)/bin/xslt-config
+	mv $(TARGETPREFIX)/bin/xslt-config $(HOST_DIR)/bin
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libexslt.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libxslt.pc
+	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/xslt-config
 	$(REWRITE_LIBTOOL)/libexslt.la
 	$(REWRITE_LIBTOOL)/libxslt.la
 	$(REWRITE_LIBTOOLDEP)/libexslt.la
 ifeq ($(BOXARCH), sh4)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,xsltproc xslt-config)
 endif
+	rm -rf $(TARGETLIB)/libxslt-plugins/
 	$(REMOVE)/libxslt-$(LIBXSLT_VER)
 	$(TOUCH)
 
