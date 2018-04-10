@@ -1150,6 +1150,49 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	$(TOUCH)
 
 #
+# flac
+#
+FLAC_VER = 1.3.2
+FLAC_SOURCE = flac-$(FLAC_VER).tar.xz
+FLAC_PATCH = flac-$(FLAC_VER).patch
+
+$(ARCHIVE)/$(FLAC_SOURCE):
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/flac/$(FLAC_SOURCE)
+
+$(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/flac-$(FLAC_VER)
+	$(UNTAR)/$(FLAC_SOURCE)
+	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
+		$(call apply_patches,$(FLAC_PATCH)); \
+		touch NEWS AUTHORS ChangeLog; \
+		autoreconf -fi; \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--datarootdir=/.remove \
+			--disable-cpplibs \
+			--disable-debug \
+			--disable-asm-optimizations \
+			--disable-sse \
+			--disable-altivec \
+			--disable-doxygen-docs \
+			--disable-thorough-tests \
+			--disable-exhaustive-tests \
+			--disable-valgrind-testing \
+			--disable-ogg \
+			--disable-oggtest \
+			--disable-local-xmms-plugin \
+			--disable-xmms-plugin \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR) docdir=/.remove
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/flac.pc
+	$(REWRITE_LIBTOOL)/libFLAC.la
+	$(REMOVE)/flac-$(FLAC_VER)
+	$(TOUCH)
+
+#
 # libogg
 #
 LIBOGG_VER = 1.3.3
@@ -1529,48 +1572,6 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libsoup-2.4.pc
 	$(REWRITE_LIBTOOL)/libsoup-2.4.la
 	$(REMOVE)/libsoup-$(LIBSOUP_VER)
-	$(TOUCH)
-
-#
-# flac
-#
-FLAC_VER = 1.3.1
-FLAC_SOURCE = flac-$(FLAC_VER).tar.xz
-FLAC_PATCH = flac-$(FLAC_VER).patch
-
-$(ARCHIVE)/$(FLAC_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/flac/$(FLAC_SOURCE)
-
-$(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/flac-$(FLAC_VER)
-	$(UNTAR)/$(FLAC_SOURCE)
-	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
-		$(call apply_patches,$(FLAC_PATCH)); \
-		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi; \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--disable-cpplibs \
-			--disable-debug \
-			--disable-asm-optimizations \
-			--disable-sse \
-			--disable-altivec \
-			--disable-doxygen-docs \
-			--disable-thorough-tests \
-			--disable-exhaustive-tests \
-			--disable-valgrind-testing \
-			--disable-ogg \
-			--disable-oggtest \
-			--disable-local-xmms-plugin \
-			--disable-xmms-plugin \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR) docdir=/.remove
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/flac.pc
-	$(REWRITE_LIBTOOL)/libFLAC.la
-	$(REMOVE)/flac-$(FLAC_VER)
 	$(TOUCH)
 
 #
