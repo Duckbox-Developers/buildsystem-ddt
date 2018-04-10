@@ -1150,6 +1150,33 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	$(TOUCH)
 
 #
+# libogg
+#
+LIBOGG_VER = 1.3.3
+LIBOGG_SOURCE = libogg-$(LIBOGG_VER).tar.gz
+
+$(ARCHIVE)/$(LIBOGG_SOURCE):
+	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ogg/$(LIBOGG_SOURCE)
+
+$(D)/libogg: $(D)/bootstrap $(ARCHIVE)/$(LIBOGG_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libogg-$(LIBOGG_VER)
+	$(UNTAR)/$(LIBOGG_SOURCE)
+	set -e; cd $(BUILD_TMP)/libogg-$(LIBOGG_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--docdir=/.remove \
+			--enable-shared \
+			--disable-static \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ogg.pc
+	$(REWRITE_LIBTOOL)/libogg.la
+	$(REMOVE)/libogg-$(LIBOGG_VER)
+	$(TOUCH)
+
+#
 # libvorbis
 #
 LIBVORBIS_VER = 1.3.6
@@ -1502,33 +1529,6 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libsoup-2.4.pc
 	$(REWRITE_LIBTOOL)/libsoup-2.4.la
 	$(REMOVE)/libsoup-$(LIBSOUP_VER)
-	$(TOUCH)
-
-#
-# libogg
-#
-LIBOGG_VER = 1.3.2
-LIBOGG_SOURCE = libogg-$(LIBOGG_VER).tar.gz
-
-$(ARCHIVE)/$(LIBOGG_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ogg/$(LIBOGG_SOURCE)
-
-$(D)/libogg: $(D)/bootstrap $(ARCHIVE)/$(LIBOGG_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libogg-$(LIBOGG_VER)
-	$(UNTAR)/$(LIBOGG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libogg-$(LIBOGG_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--docdir=/.remove \
-			--enable-shared \
-			--disable-static \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ogg.pc
-	$(REWRITE_LIBTOOL)/libogg.la
-	$(REMOVE)/libogg-$(LIBOGG_VER)
 	$(TOUCH)
 
 #
