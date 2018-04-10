@@ -36,9 +36,6 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 	echo "name=Links Web Browser"	 > $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
 	echo "desc=Web Browser"		>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
 	echo "type=2"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
-	echo "needfb=1"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
-	echo "needrc=1"			>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
-	echo "needoffsets=1"		>> $(TARGET_DIR)/var/tuxbox/plugins/links.cfg
 	echo "bookmarkcount=0"		 > $(TARGET_DIR)/var/tuxbox/config/bookmarks
 	touch $(TARGET_DIR)/var/tuxbox/config/links/links.his
 	cp -a $(SKEL_ROOT)/var/tuxbox/config/links/bookmarks.html $(SKEL_ROOT)/var/tuxbox/config/links/tables.tar.gz $(TARGET_DIR)/var/tuxbox/config/links
