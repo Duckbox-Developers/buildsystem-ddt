@@ -1152,7 +1152,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 #
 # libvorbis
 #
-LIBVORBIS_VER = 1.3.5
+LIBVORBIS_VER = 1.3.6
 LIBVORBIS_SOURCE = libvorbis-$(LIBVORBIS_VER).tar.xz
 
 $(ARCHIVE)/$(LIBVORBIS_SOURCE):
@@ -1169,6 +1169,7 @@ $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBIS_SOURCE)
 			--mandir=/.remove \
 			--disable-docs \
 			--disable-examples \
+			--disable-oggtest \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR) docdir=/.remove
