@@ -1,0 +1,11 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -201,7 +201,7 @@
+          [AC_CHECK_HEADERS([ncurses/curses.h],[:],
+             [AC_CHECK_HEADERS([ncurses.h],[:],[missing_headers="$missing_headers $ac_header"])])])])
+ else
+-   HTOP_CHECK_SCRIPT([ncurses6], [refresh], [HAVE_LIBNCURSES], "ncurses6-config",
++   HTOP_CHECK_SCRIPT([ncurses], [refresh], [HAVE_LIBNCURSES], "ncurses6-config",
+     HTOP_CHECK_SCRIPT([ncurses], [refresh], [HAVE_LIBNCURSES], "ncurses5-config",
+      HTOP_CHECK_LIB([ncurses6],  [refresh], [HAVE_LIBNCURSES],
+       HTOP_CHECK_LIB([ncurses],  [refresh], [HAVE_LIBNCURSES],
