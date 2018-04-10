@@ -1919,7 +1919,7 @@ $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE
 	$(TOUCH)
 
 #
-# alsa_lib
+# alsa-lib
 #
 ALSA_LIB_VER = 1.1.5
 ALSA_LIB_SOURCE = alsa-lib-$(ALSA_LIB_VER).tar.bz2
@@ -2059,7 +2059,7 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
 LIBDVBSI_VER = ff57e58
 LIBDVBSI_SOURCE = libdvbsi-git-$(LIBDVBSI_VER).tar.bz2
 LIBDVBSI_URL = git://git.opendreambox.org/git/obi/libdvbsi++.git
-LIBDVBSI_PATCH = libdvbsi-git.patch
+LIBDVBSI_PATCH = libdvbsi-git-$(LIBDVBSI_VER).patch
 
 $(ARCHIVE)/$(LIBDVBSI_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBDVBSI_URL) $(LIBDVBSI_VER) $(notdir $@) $(ARCHIVE)
