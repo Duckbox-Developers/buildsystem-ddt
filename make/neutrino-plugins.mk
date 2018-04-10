@@ -83,7 +83,7 @@ $(D)/neutrino-mp-plugin.config.status: $(D)/bootstrap
 			--prefix= \
 			--enable-silent-rules \
 			--with-target=cdk \
-			--oldinclude=$(TARGET_DIR)/include \
+			--include=/usr/include \
 			--enable-maintainer-mode \
 			--with-boxtype=$(BOXTYPE) \
 			--with-plugindir=/var/tuxbox/plugins \
