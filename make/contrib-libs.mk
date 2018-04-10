@@ -1789,27 +1789,27 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SO
 #
 # libdpf
 #
-LIBPDF_VER = 62c8fd0
-LIBPDF_SOURCE = dpf-ax-git-$(LIBPDF_VER).tar.bz2
-LIBPDF_URL = https://github.com/MaxWiesel/dpf-ax.git
-LIBPDF_PATCH = libdpf-crossbuild.patch
+LIBDPF_VER = 62c8fd0
+LIBDPF_SOURCE = dpf-ax-git-$(LIBDPF_VER).tar.bz2
+LIBDPF_URL = https://github.com/MaxWiesel/dpf-ax.git
+LIBDPF_PATCH = libdpf-crossbuild.patch
 
-$(ARCHIVE)/$(LIBPDF_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBPDF_URL) $(LIBPDF_VER) $(notdir $@) $(ARCHIVE)
+$(ARCHIVE)/$(LIBDPF_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBDPF_URL) $(LIBDPF_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBPDF_SOURCE)
+$(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/dpf-ax-git-$(LIBPDF_VER)
-	$(UNTAR)/$(LIBPDF_SOURCE)
-	set -e; cd $(BUILD_TMP)/dpf-ax-git-$(LIBPDF_VER)/dpflib; \
-		$(call apply_patches,$(LIBPDF_PATCH)); \
+	$(REMOVE)/dpf-ax-git-$(LIBDPF_VER)
+	$(UNTAR)/$(LIBDPF_SOURCE)
+	set -e; cd $(BUILD_TMP)/dpf-ax-git-$(LIBDPF_VER)/dpflib; \
+		$(call apply_patches,$(LIBDPF_PATCH)); \
 		make libdpf.a CC=$(TARGET)-gcc PREFIX=$(TARGET_DIR)/usr; \
 		mkdir -p $(TARGET_INCLUDE_DIR)/libdpf; \
 		cp dpf.h $(TARGET_INCLUDE_DIR)/libdpf/libdpf.h; \
 		cp ../include/spiflash.h $(TARGET_INCLUDE_DIR)/libdpf/; \
 		cp ../include/usbuser.h $(TARGET_INCLUDE_DIR)/libdpf/; \
 		cp libdpf.a $(TARGET_LIB_DIR)/
-	$(REMOVE)/dpf-ax-git-$(LIBPDF_VER)
+	$(REMOVE)/dpf-ax-git-$(LIBDPF_VER)
 	$(TOUCH)
 
 #
