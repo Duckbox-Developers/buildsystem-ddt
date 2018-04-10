@@ -26,7 +26,7 @@ endif
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-chunked_transfer_fix_eof.patch
 
-FFMPEG_DEPS = $(D)/librtmpdump
+FFMPEG_DEPS = $(D)/librtmp
 FFMPEG_CONF_OPTS  = --enable-librtmp
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
