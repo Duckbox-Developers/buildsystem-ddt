@@ -1283,6 +1283,38 @@ $(D)/procps_ng: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(PROCPS_NG_SOURCE)
 	$(TOUCH)
 
 #
+# htop
+#
+HTOP_VER = 2.1.0
+HTOP_SOURCE = htop-$(HTOP_VER).tar.gz
+HTOP_PATCH = htop-$(HTOP_VER).patch
+
+$(ARCHIVE)/$(HTOP_SOURCE):
+	$(WGET) http://hisham.hm/htop/releases/$(HTOP_VER)/$(HTOP_SOURCE)
+
+$(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/htop-$(HTOP_VER)
+	$(UNTAR)/$(HTOP_SOURCE)
+	cd $(BUILD_TMP)/htop-$(HTOP_VER); \
+		$(call apply_patches,$(HTOP_PATCH)); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--sysconfdir=/etc \
+			--disable-unicode \
+			ac_cv_func_malloc_0_nonnull=yes \
+			ac_cv_func_realloc_0_nonnull=yes \
+			ac_cv_file__proc_stat=yes \
+			ac_cv_file__proc_meminfo=yes \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	rm -rf $(addprefix $(TARGET_DIR)/usr/share/,pixmaps applications)
+	$(REMOVE)/htop-$(HTOP_VER)
+	$(TOUCH)
+
+#
 # ethtool
 #
 ETHTOOL_VER = 4.15
