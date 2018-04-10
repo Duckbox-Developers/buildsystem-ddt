@@ -1988,7 +1988,7 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
-			--with-curses=ncursesw \
+			--with-curses=ncurses \
 			--disable-bat \
 			--disable-nls \
 			--disable-alsatest \
