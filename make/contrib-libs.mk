@@ -682,7 +682,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
 #
 # freetype
 #
-FREETYPE_VER = 2.8.1
+FREETYPE_VER = 2.9
 FREETYPE_SOURCE = freetype-$(FREETYPE_VER).tar.bz2
 FREETYPE_PATCH  = freetype-$(FREETYPE_VER).patch
 

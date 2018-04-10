@@ -10,4 +10,5 @@
 +includedir=${prefix}/include
  
  Name: FreeType 2
- URL: http://freetype.org
+ URL: https://freetype.org
+
