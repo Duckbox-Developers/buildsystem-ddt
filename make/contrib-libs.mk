@@ -820,7 +820,7 @@ endif
 #
 # libjpeg_turbo
 #
-LIBJPEG_TURBO_VER = 1.5.2
+LIBJPEG_TURBO_VER = 1.5.3
 LIBJPEG_TURBO_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO_VER).tar.gz
 
 $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE):
