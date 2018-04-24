@@ -1653,7 +1653,7 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	mv $(TARGETPREFIX)/bin/xslt-config $(HOST_DIR)/bin
+	mv $(TARGET_DIR)/bin/xslt-config $(HOST_DIR)/bin
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libexslt.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libxslt.pc
 	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/xslt-config
