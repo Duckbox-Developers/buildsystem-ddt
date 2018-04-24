@@ -17,33 +17,32 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
+			--enable-pc-files \
 			--with-pkg-config \
 			--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			--with-shared \
+			--with-fallbacks='linux vt100 xterm' \
+			--without-ada \
 			--without-cxx \
 			--without-cxx-binding \
-			--without-ada \
+			--without-debug \
+			--without-manpages \
+			--without-profile \
 			--without-progs \
 			--without-tests \
-			--without-profile \
-			--without-debug \
 			--disable-big-core \
 			--disable-rpath \
 			--disable-rpath-hack \
 			--enable-echo \
 			--enable-const \
 			--enable-overwrite \
-			--enable-pc-files \
-			--without-manpages \
-			--with-fallbacks='linux vt100 xterm' \
 		; \
 		$(MAKE) libs \
 			HOSTCC=gcc \
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)"; \
-		$(MAKE) install.libs DESTDIR=$(TARGET_DIR); \
-		install -D -m 0755 misc/ncurses-config $(HOST_DIR)/bin/ncurses6-config
-	rm -f $(TARGET_DIR)/usr/bin/ncurses6-config
+		$(MAKE) install.libs DESTDIR=$(TARGET_DIR)
+	mv $(TARGET_DIR)/usr/bin/ncurses6-config $(HOST_DIR)/bin
 	rm -f $(addprefix $(TARGET_LIB_DIR)/,libform* libmenu* libpanel*)
 	rm -f $(addprefix $(PKG_CONFIG_PATH)/,form.pc menu.pc panel.pc)
 	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncurses6-config
