@@ -1618,11 +1618,12 @@ $(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
 #
 # openvpn
 #
-OPENVPN_VER = 2.4.5
+OPENVPN_VER = 2.4.6
 OPENVPN_SOURCE = openvpn-$(OPENVPN_VER).tar.xz
 
 $(ARCHIVE)/$(OPENVPN_SOURCE):
-	$(WGET) http://swupdate.openvpn.org/community/releases/$(OPENVPN_SOURCE)
+	$(WGET) http://swupdate.openvpn.org/community/releases/$(OPENVPN_SOURCE) || \
+	$(WGET) http://build.openvpn.net/downloads/releases/$(OPENVPN_SOURCE)
 
 $(D)/openvpn: $(D)/bootstrap $(D)/openssl $(D)/lzo $(ARCHIVE)/$(OPENVPN_SOURCE)
 	$(START_BUILD)
