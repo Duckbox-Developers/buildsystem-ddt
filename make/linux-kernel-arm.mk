@@ -3,7 +3,7 @@
 #
 ifeq ($(BOXTYPE), hd51)
 KERNEL_VER             = 4.10.12
-KERNEL_DATE            = 20171103
+KERNEL_DATE            = 20180424
 KERNEL_TYPE            = hd51
 KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
 KERNEL_URL             = http://source.mynonpublic.com/gfutures
