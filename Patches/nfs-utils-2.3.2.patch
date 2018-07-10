@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -18785,6 +18785,7 @@
+@@ -18858,6 +18858,7 @@
  if test "x$ac_cv_func_gethostbyname" = xyes; then :
  
  else
@@ -8,7 +8,7 @@
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gethostbyname in -lnsl" >&5
  $as_echo_n "checking for gethostbyname in -lnsl... " >&6; }
  if ${ac_cv_lib_nsl_gethostbyname+:} false; then :
-@@ -18824,6 +18825,7 @@
+@@ -18897,6 +18898,7 @@
  if test "x$ac_cv_lib_nsl_gethostbyname" = xyes; then :
    LIBNSL="-lnsl"
  fi
@@ -16,7 +16,7 @@
  
  fi
  
-@@ -20511,7 +20513,7 @@
+@@ -20542,7 +20544,7 @@
  
  
  
@@ -43,7 +43,7 @@
  #include <netinet/in.h>
  #include <rpc/rpc.h>
  #include <rpc/pmap_prot.h>
-@@ -1132,6 +1134,7 @@
+@@ -1136,6 +1138,7 @@
  		if (bind(sock, SAFE_SOCKADDR(&sin), sizeof(sin)) < 0)
  			goto out;
  		break;
@@ -51,7 +51,7 @@
  	case AF_INET6:
  		/* Make sure the call-back address is public/permanent */
  		val = IPV6_PREFER_SRC_PUBLIC;
-@@ -1139,6 +1142,7 @@
+@@ -1143,6 +1146,7 @@
  		if (bind(sock, SAFE_SOCKADDR(&sin6), sizeof(sin6)) < 0)
  			goto out;
  		break;
