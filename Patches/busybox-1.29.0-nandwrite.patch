@@ -21,7 +21,7 @@
  //usage:     "\n	-o	Dump oob data"
  //usage:     "\n	-s ADDR	Start address"
  //usage:     "\n	-l LEN	Length"
-@@ -58,11 +56,10 @@
+@@ -67,11 +65,10 @@
  
  #define OPT_p  (1 << 0) /* nandwrite only */
  #define OPT_o  (1 << 0) /* nanddump only */
@@ -37,7 +37,7 @@
  
  #define BB_PADBAD (1 << 0)
  #define BB_SKIPBAD (1 << 1)
-@@ -122,12 +119,12 @@
+@@ -131,12 +128,12 @@
  	const char *opt_s = "0", *opt_f = "-", *opt_l, *opt_bb;
  
  	if (IS_NANDDUMP) {
@@ -52,7 +52,7 @@
  	}
  	argv += optind;
  
-@@ -143,9 +140,6 @@
+@@ -152,9 +149,6 @@
  	fd = xopen(argv[0], IS_NANDWRITE ? O_RDWR : O_RDONLY);
  	xioctl(fd, MEMGETINFO, &meminfo);
  
