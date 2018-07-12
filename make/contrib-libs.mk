@@ -681,7 +681,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
 #
 # freetype
 #
-FREETYPE_VER = 2.9
+FREETYPE_VER = 2.9.1
 FREETYPE_SOURCE = freetype-$(FREETYPE_VER).tar.bz2
 FREETYPE_PATCH  = freetype-$(FREETYPE_VER).patch
 
@@ -702,10 +702,11 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 			--mandir=/.remove \
 			--disable-static \
 			--enable-shared \
-			--with-png \
-			--with-zlib \
+			--enable-freetype-config \
+			--with-bzip2=no \
+			--with-zlib=yes \
+			--with-png=yes \
 			--without-harfbuzz \
-			--without-bzip2 \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
