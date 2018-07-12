@@ -861,12 +861,11 @@ endif
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(D)/neutrino-release: \
-$(D)/%neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
+$(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
 	@touch $@
 #
-# FOR YOUR OWN CHANGES use these folder in cdk/own_build/neutrino-hd
+# FOR YOUR OWN CHANGES use these folder in own_build/neutrino-hd
 #
 #	default for all receiver
 	find $(OWN_BUILD)/neutrino-hd/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} +
