@@ -697,6 +697,7 @@ $(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/libglib2 $(ARCHIVE)/$
 			CFLAGS="$(TARGET_CFLAGS) -I$(KERNEL_DIR)/arch/sh" \
 			--target=$(TARGET) \
 			--prefix=/usr \
+			--mandir=/.remove \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
