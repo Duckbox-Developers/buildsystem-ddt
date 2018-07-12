@@ -963,7 +963,7 @@ $(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $
 #
 # dbus
 #
-DBUS_VER = 1.8.0
+DBUS_VER = 1.12.6
 DBUS_SOURCE = dbus-$(DBUS_VER).tar.gz
 
 $(ARCHIVE)/$(DBUS_SOURCE):
