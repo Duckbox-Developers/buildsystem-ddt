@@ -203,7 +203,7 @@ CORTEX_STRINGS_URL = http://git.linaro.org/git-ro/toolchain/cortex-strings.git
 $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CORTEX_STRINGS_URL) $(CORTEX_STRINGS_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/cortex-strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
+$(D)/cortex_strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
 	$(START_BUILD)
 	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
@@ -237,7 +237,7 @@ BOOTSTRAP += $(D)/host_mkcramfs
 BOOTSTRAP += $(D)/host_mksquashfs
 ifeq ($(BOXARCH), arm)
 BOOTSTRAP += $(D)/host_resize2fs
-BOOTSTRAP += $(D)/cortex-strings
+BOOTSTRAP += $(D)/cortex_strings
 endif
 
 $(D)/bootstrap: $(BOOTSTRAP)
