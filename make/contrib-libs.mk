@@ -1024,12 +1024,12 @@ endif
 #
 # libfribidi
 #
-LIBFRIBIDI_VER = 0.19.7
+LIBFRIBIDI_VER = 1.0.3
 LIBFRIBIDI_SOURCE = fribidi-$(LIBFRIBIDI_VER).tar.bz2
 LIBFRIBIDI_PATCH = libfribidi-$(LIBFRIBIDI_VER).patch
 
 $(ARCHIVE)/$(LIBFRIBIDI_SOURCE):
-	$(WGET) https://download.videolan.org/contrib/fribidi/$(LIBFRIBIDI_SOURCE)
+	$(WGET) https://github.com/fribidi/fribidi/releases/download/v$(LIBFRIBIDI_VER)/$(LIBFRIBIDI_SOURCE)
 
 $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 	$(START_BUILD)
