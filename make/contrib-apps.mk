@@ -557,6 +557,158 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 	$(TOUCH)
 
 #
+# gptfdisk
+#
+GPTFDISK_VER = 1.0.3
+GPTFDISK_SOURCE = gptfdisk-$(GPTFDISK_VER).tar.gz
+GPTFDISK_PATCH = gptfdisk-1.0.3.patch
+
+$(ARCHIVE)/$(GPTFDISK_SOURCE):
+	$(WGET) https://sourceforge.net/projects/gptfdisk/files/gptfdisk/$(GPTFDISK_VER)/$(GPTFDISK_SOURCE)
+
+$(D)/gptfdisk: $(D)/bootstrap $(D)/util_linux $(D)/ncurses $(D)/libpopt $(ARCHIVE)/$(GPTFDISK_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/gptfdisk-$(GPTFDISK_VER)
+	$(UNTAR)/$(GPTFDISK_SOURCE)
+	set -e; cd $(BUILD_TMP)/gptfdisk-$(GPTFDISK_VER); \
+		$(call apply_patches,$(GPTFDISK_PATCH)); \
+		$(BUILDENV) \
+		$(MAKE) sgdisk; \
+		install -m755 sgdisk $(TARGET_DIR)/usr/sbin/sgdisk
+	$(REMOVE)/gptfdisk-$(GPTFDISK_VER)
+	$(TOUCH)
+
+#
+# parted
+#
+PARTED_VER = 3.2
+PARTED_SOURCE = parted-$(PARTED_VER).tar.xz
+PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
+
+$(ARCHIVE)/$(PARTED_SOURCE):
+	$(WGET) https://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
+
+$(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/parted-$(PARTED_VER)
+	$(UNTAR)/$(PARTED_SOURCE)
+	set -e; cd $(BUILD_TMP)/parted-$(PARTED_VER); \
+		$(call apply_patches,$(PARTED_PATCH)); \
+		$(CONFIGURE) \
+			--target=$(TARGET) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--infodir=/.remove \
+			--without-readline \
+			--disable-shared \
+			--disable-dynamic-loading \
+			--disable-debug \
+			--disable-device-mapper \
+			--disable-nls \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libparted.pc
+	$(REWRITE_LIBTOOL)/libparted.la
+	$(REWRITE_LIBTOOL)/libparted-fs-resize.la
+	$(REMOVE)/parted-$(PARTED_VER)
+	$(TOUCH)
+
+#
+# dosfstools
+#
+DOSFSTOOLS_VER = 4.1
+DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VER).tar.xz
+
+$(ARCHIVE)/$(DOSFSTOOLS_SOURCE):
+	$(WGET) https://github.com/dosfstools/dosfstools/releases/download/v$(DOSFSTOOLS_VER)/$(DOSFSTOOLS_SOURCE)
+
+DOSFSTOOLS_CFLAGS = $(TARGET_CFLAGS) -D_GNU_SOURCE -fomit-frame-pointer -D_FILE_OFFSET_BITS=64
+
+$(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/dosfstools-$(DOSFSTOOLS_VER)
+	$(UNTAR)/$(DOSFSTOOLS_SOURCE)
+	set -e; cd $(BUILD_TMP)/dosfstools-$(DOSFSTOOLS_VER); \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix= \
+			--mandir=/.remove \
+			--docdir=/.remove \
+			--without-udev \
+			--enable-compat-symlinks \
+			CFLAGS="$(DOSFSTOOLS_CFLAGS)" \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REMOVE)/dosfstools-$(DOSFSTOOLS_VER)
+	$(TOUCH)
+
+#
+# jfsutils
+#
+JFSUTILS_VER = 1.1.15
+JFSUTILS_SOURCE = jfsutils-$(JFSUTILS_VER).tar.gz
+JFSUTILS_PATCH = jfsutils-$(JFSUTILS_VER).patch
+
+$(ARCHIVE)/$(JFSUTILS_SOURCE):
+	$(WGET) http://jfs.sourceforge.net/project/pub/$(JFSUTILS_SOURCE)
+
+$(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/jfsutils-$(JFSUTILS_VER)
+	$(UNTAR)/$(JFSUTILS_SOURCE)
+	set -e; cd $(BUILD_TMP)/jfsutils-$(JFSUTILS_VER); \
+		$(call apply_patches,$(JFSUTILS_PATCH)); \
+		sed "s@<unistd.h>@&\n#include <sys/types.h>@g" -i fscklog/extract.c; \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix= \
+			--target=$(TARGET) \
+			--mandir=/.remove \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	rm -f $(addprefix $(TARGET_DIR)/sbin/,jfs_debugfs jfs_fscklog jfs_logdump)
+	$(REMOVE)/jfsutils-$(JFSUTILS_VER)
+	$(TOUCH)
+
+#
+# ntfs-3g
+#
+NTFS_3G_VER = 2017.3.23
+NTFS_3G_SOURCE = ntfs-3g_ntfsprogs-$(NTFS_3G_VER).tgz
+
+$(ARCHIVE)/$(NTFS_3G_SOURCE):
+	$(WGET) https://tuxera.com/opensource/$(NTFS_3G_SOURCE)
+
+$(D)/ntfs_3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/ntfs-3g_ntfsprogs-$(NTFS_3G_VER)
+	$(UNTAR)/$(NTFS_3G_SOURCE)
+	set -e; cd $(BUILD_TMP)/ntfs-3g_ntfsprogs-$(NTFS_3G_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--exec-prefix=/usr \
+			--bindir=/usr/bin \
+			--mandir=/.remove \
+			--docdir=/.remove \
+			--disable-ldconfig \
+			--disable-static \
+			--disable-ntfsprogs \
+			--enable-silent-rules \
+			--with-fuse=internal \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libntfs-3g.pc
+	$(REWRITE_LIBTOOL)/libntfs-3g.la
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,lowntfs-3g ntfs-3g.probe)
+	rm -f $(addprefix $(TARGET_DIR)/sbin/,mount.lowntfs-3g)
+	$(REMOVE)/ntfs-3g_ntfsprogs-$(NTFS_3G_VER)
+	$(TOUCH)
+
+#
 # mc
 #
 MC_VER = 4.8.20
