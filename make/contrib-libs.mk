@@ -1736,19 +1736,20 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(UNTAR)/$(PUGIXML_SOURCE)
 	set -e; cd $(BUILD_TMP)/pugixml-$(PUGIXML_VER); \
 		$(call apply_patches,$(PUGIXML_PATCH)); \
-		cmake \
-		--no-warn-unused-cli \
-		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DBUILD_SHARED_LIBS=ON \
-		-DCMAKE_BUILD_TYPE=Linux \
-		-DCMAKE_C_COMPILER=$(TARGET)-gcc \
-		-DCMAKE_CXX_COMPILER=$(TARGET)-g++ \
-		-DCMAKE_C_FLAGS="-pipe -Os" \
-		-DCMAKE_CXX_FLAGS="-pipe -Os" \
+		cmake  --no-warn-unused-cli \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DBUILD_SHARED_LIBS=ON \
+			-DCMAKE_BUILD_TYPE=Linux \
+			-DCMAKE_C_COMPILER=$(TARGET)-gcc \
+			-DCMAKE_CXX_COMPILER=$(TARGET)-g++ \
+			-DCMAKE_C_FLAGS="-pipe -Os" \
+			-DCMAKE_CXX_FLAGS="-pipe -Os" \
+			| tail -n +90 \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REMOVE)/pugixml-$(PUGIXML_VER)
+	cd $(TARGET_DIR) && rm -rf usr/lib/cmake
 	$(TOUCH)
 
 #
