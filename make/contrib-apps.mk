@@ -1658,7 +1658,7 @@ $(D)/openvpn: $(D)/bootstrap $(D)/openssl $(D)/lzo $(ARCHIVE)/$(OPENVPN_SOURCE)
 #
 # openssh
 #
-OPENSSH_VER = 7.5p1
+OPENSSH_VER = 7.7p1
 OPENSSH_SOURCE = openssh-$(OPENSSH_VER).tar.gz
 
 $(ARCHIVE)/$(OPENSSH_SOURCE):
