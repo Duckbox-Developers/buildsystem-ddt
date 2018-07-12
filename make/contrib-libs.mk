@@ -205,6 +205,7 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 	$(REWRITE_LIBTOOLDEP)/libgio-2.0.la
 	$(REWRITE_LIBTOOLDEP)/libgobject-2.0.la
 	$(REWRITE_LIBTOOLDEP)/libgthread-2.0.la
+	rm -rf $(addprefix $(TARGET_DIR)/usr/share/,bash-completion gettext gdb glib-2.0)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
 	$(TOUCH)
 

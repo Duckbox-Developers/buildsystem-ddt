@@ -851,6 +851,7 @@ endif
 	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
 	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
+	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
 ifeq ($(BOXARCH), arm)
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
