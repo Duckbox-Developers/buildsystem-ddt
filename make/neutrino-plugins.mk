@@ -23,12 +23,17 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 		$(CONFIGURE) \
 			--prefix= \
 			--mandir=/.remove \
-			--without-svgalib \
-			--without-x \
 			--without-libtiff \
+			--without-svgalib \
+			--with-fb \
+			--without-directfb \
+			--without-pmshell \
+			--without-atheos \
 			--enable-graphics \
 			--enable-javascript \
-			--with-ssl; \
+			--with-ssl=$(TARGET_DIR)/usr \
+			--without-x \
+		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	mkdir -p $(TARGET_DIR)/var/tuxbox/plugins $(TARGET_DIR)/var/tuxbox/config/links
