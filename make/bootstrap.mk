@@ -37,7 +37,7 @@ HOST_PKGCONFIG_SOURCE = pkg-config-$(HOST_PKGCONFIG_VER).tar.gz
 $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE):
 	$(WGET) https://pkgconfig.freedesktop.org/releases/$(HOST_PKGCONFIG_SOURCE)
 
-$(D)/host_pkgconfig: directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
+$(D)/host_pkgconfig: $(D)/directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/pkg-config-$(HOST_PKGCONFIG_VER)
 	$(UNTAR)/$(HOST_PKGCONFIG_SOURCE)
@@ -61,7 +61,7 @@ HOST_MODULE_INIT_TOOLS_VER = $(MODULE_INIT_TOOLS_VER)
 HOST_MODULE_INIT_TOOLS_SOURCE = $(MODULE_INIT_TOOLS_SOURCE)
 HOST_MODULE_INIT_TOOLS_PATCH = module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER).patch
 
-$(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
+$(D)/host_module_init_tools: $(D)/directories $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER)
 	$(UNTAR)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
@@ -84,7 +84,7 @@ HOST_MTD_UTILS_VER = $(MTD_UTILS_VER)
 HOST_MTD_UTILS_SOURCE = $(MTD_UTILS_SOURCE)
 HOST_MTD_UTILS_PATCH = host-mtd-utils-$(HOST_MTD_UTILS_VER).patch
 
-$(D)/host_mtd_utils: directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
+$(D)/host_mtd_utils: $(D)/directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(HOST_MTD_UTILS_VER)
 	$(UNTAR)/$(HOST_MTD_UTILS_SOURCE)
@@ -104,7 +104,7 @@ HOST_MKCRAMFS_SOURCE = cramfs-$(HOST_MKCRAMFS_VER).tar.gz
 $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE):
 	$(WGET) https://sourceforge.net/projects/cramfs/files/cramfs/$(HOST_MKCRAMFS_VER)/$(HOST_MKCRAMFS_SOURCE)
 
-$(D)/host_mkcramfs: directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
+$(D)/host_mkcramfs: $(D)/directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/cramfs-$(HOST_MKCRAMFS_VER)
 	$(UNTAR)/$(HOST_MKCRAMFS_SOURCE)
@@ -173,7 +173,7 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 HOST_E2FSPROGS_VER = $(E2FSPROGS_VER)
 HOST_E2FSPROGS_SOURCE = $(E2FSPROGS_SOURCE)
 
-$(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
+$(D)/host_resize2fs: $(D)/directories $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(START_BUILD)
 	$(UNTAR)/$(HOST_E2FSPROGS_SOURCE)
 	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER); \
@@ -203,7 +203,7 @@ CORTEX_STRINGS_URL = http://git.linaro.org/git-ro/toolchain/cortex-strings.git
 $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CORTEX_STRINGS_URL) $(CORTEX_STRINGS_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/cortex_strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
+$(D)/cortex_strings: $(D)/directories $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
@@ -226,7 +226,7 @@ $(D)/cortex_strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
 #
 # bootstrap
 #
-BOOTSTRAP  = directories
+BOOTSTRAP  = $(D)/directories
 BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
@@ -308,7 +308,8 @@ preqs: $(PREQS)
 #
 # directories
 #
-directories:
+$(D)/directories:
+	$(START_BUILD)
 	test -d $(D) || mkdir $(D)
 	test -d $(ARCHIVE) || mkdir $(ARCHIVE)
 	test -d $(STL_ARCHIVE) || mkdir $(STL_ARCHIVE)
@@ -331,7 +332,7 @@ directories:
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs}
 	install -d $(TARGET_DIR)/var/bin
-	touch $(D)/$(notdir $@)
+	$(TOUCH)
 
 #
 # ccache

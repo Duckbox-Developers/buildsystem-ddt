@@ -89,7 +89,7 @@ $(D)/tools-fp_control: $(D)/bootstrap
 #
 # flashtool-fup
 #
-$(D)/tools-flashtool-fup: directories
+$(D)/tools-flashtool-fup: $(D)/directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-fup; \
 		./autogen.sh; \
@@ -103,7 +103,7 @@ $(D)/tools-flashtool-fup: directories
 #
 # flashtool-mup
 #
-$(D)/tools-flashtool-mup: directories
+$(D)/tools-flashtool-mup: $(D)/directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-mup; \
 		./autogen.sh; \
@@ -130,7 +130,7 @@ $(D)/tools_flashtool_mup:
 #
 # flashtool-pad
 #
-$(D)/tools-flashtool-pad: directories
+$(D)/tools-flashtool-pad: $(D)/directories
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/flashtool-pad; \
 		./autogen.sh; \

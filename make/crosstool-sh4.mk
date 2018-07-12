@@ -57,7 +57,7 @@ $(STL_ARCHIVE)/stlinux24-sh4-libstdc++-dev-$(LIBGCC_VER).sh4.rpm
 	touch $(D)/$(notdir $@)
 
 CROSSTOOL = crosstool
-crosstool: directories driver-symlink \
+crosstool: $(D)/directories driver-symlink \
 crosstool-rpminstall
 	@touch $(D)/$(notdir $@)
 
@@ -108,7 +108,7 @@ CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(WGET) http://crosstool-ng.org/download/crosstool-ng/$(CROSSTOOL_NG_SOURCE)
 
-crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
+crosstool-ng: $(D)/directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	make $(BUILD_TMP)
 	if [ ! -e $(CROSS_BASE) ]; then \
 		mkdir -p $(CROSS_BASE); \
@@ -135,7 +135,7 @@ crosstool-ng: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	rm -f $(CROSS_BASE)/sh4-unknown-linux-gnu/sys-root/lib/libstdc++.so.6.0.20-gdb.py
 	$(REMOVE)/crosstool-ng
 
-crossmenuconfig: directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
+crossmenuconfig: $(D)/directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	$(REMOVE)/crosstool-ng
 	$(UNTAR)/$(CROSSTOOL_NG_SOURCE)
 	set -e; unset CONFIG_SITE; cd $(BUILD_TMP)/crosstool-ng; \
