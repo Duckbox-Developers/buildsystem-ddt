@@ -1710,8 +1710,7 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 			--disable-loginfunc \
 			--disable-pam \
 		; \
-		sed -i 's:.*\(#define NO_FAST_EXPTMOD\).*:\1:' options.h; \
-		sed -i 's:^#define DROPBEAR_SMALL_CODE::' options.h; \
+		sed -i 's|^\(#define DROPBEAR_SMALL_CODE\).*|\1 0|' default_options.h; \
 		$(MAKE) PROGRAMS="dropbear dbclient dropbearkey scp" SCPPROGRESS=1; \
 		$(MAKE) PROGRAMS="dropbear dbclient dropbearkey scp" install DESTDIR=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/dropbear $(TARGET_DIR)/etc/init.d/
