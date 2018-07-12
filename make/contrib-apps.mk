@@ -997,7 +997,7 @@ $(D)/dbus: $(D)/bootstrap $(D)/expat $(ARCHIVE)/$(DBUS_SOURCE)
 #
 # avahi
 #
-AVAHI_VER = 0.6.32
+AVAHI_VER = 0.7
 AVAHI_SOURCE = avahi-$(AVAHI_VER).tar.gz
 
 $(ARCHIVE)/$(AVAHI_SOURCE):
