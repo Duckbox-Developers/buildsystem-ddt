@@ -1660,7 +1660,7 @@ $(D)/wireless_tools: $(D)/bootstrap $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE)
 #
 # libnl
 #
-LIBNL_VER = 2.0
+LIBNL_VER = 3.2.25
 LIBNL_SOURCE = libnl-$(LIBNL_VER).tar.gz
 
 $(ARCHIVE)/$(LIBNL_SOURCE):
@@ -1679,12 +1679,17 @@ $(D)/libnl: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(LIBNL_SOURCE)
 			--infodir=/.remove \
 		make; \
 		make install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-$(LIBNL_VER).pc
-	$(REWRITE_LIBTOOL)/libnl.la
-	$(REWRITE_LIBTOOL)/libnl-cli.la
-	$(REWRITE_LIBTOOL)/libnl-genl.la
-	$(REWRITE_LIBTOOL)/libnl-nf.la
-	$(REWRITE_LIBTOOL)/libnl-route.la
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-3.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-cli-3.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-genl-3.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-nf-3.0.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-route-3.0.pc
+	$(REWRITE_LIBTOOL)/libnl-3.la
+	$(REWRITE_LIBTOOL)/libnl-cli-3.la
+	$(REWRITE_LIBTOOL)/libnl-genl-3.la
+	$(REWRITE_LIBTOOL)/libnl-idiag-3.la
+	$(REWRITE_LIBTOOL)/libnl-nf-3.la
+	$(REWRITE_LIBTOOL)/libnl-route-3.la
 	$(REMOVE)/libnl-$(LIBNL_VER)
 	$(TOUCH)
 
