@@ -1723,9 +1723,9 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 #
 # pugixml
 #
-PUGIXML_VER = 1.8
+PUGIXML_VER = 1.9
 PUGIXML_SOURCE = pugixml-$(PUGIXML_VER).tar.gz
-PUGIXML_PATCH = pugixml-1.8-config.patch
+PUGIXML_PATCH = pugixml-$(PUGIXML_VER)-config.patch
 
 $(ARCHIVE)/$(PUGIXML_SOURCE):
 	$(WGET) https://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VER)/$(PUGIXML_SOURCE)
