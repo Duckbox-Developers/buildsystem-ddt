@@ -1319,7 +1319,7 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 #
 # ethtool
 #
-ETHTOOL_VER = 4.15
+ETHTOOL_VER = 4.17
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
@@ -1333,7 +1333,7 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
-			--libdir=$(TARGET_DIR)/usr/lib \
+			--disable-pretty-dump \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
