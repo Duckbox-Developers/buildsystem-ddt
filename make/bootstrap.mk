@@ -67,8 +67,8 @@ $(D)/host_module_init_tools: $(ARCHIVE)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	$(UNTAR)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER); \
 		$(call apply_patches,$(HOST_MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi; \
-		./configure \
+		autoreconf -fi $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--sbindir=$(HOST_DIR)/bin \
 		; \
@@ -177,7 +177,7 @@ $(D)/host_resize2fs: $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(START_BUILD)
 	$(UNTAR)/$(HOST_E2FSPROGS_SOURCE)
 	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER); \
-		./configure; \
+		./configure $(SILENT_OPT); \
 		$(MAKE)
 	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/resize/resize2fs $(HOST_DIR)/bin/
 	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/misc/mke2fs $(HOST_DIR)/bin/
@@ -208,9 +208,9 @@ $(D)/cortex-strings: $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE) directories
 	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
 	set -e; cd $(BUILD_TMP)/cortex-strings-git-$(CORTEX_STRINGS_VER); \
-		./autogen.sh; \
+		./autogen.sh  $(SILENT_OPT); \
 		$(MAKE_OPTS) \
-		./configure \
+		./configure $(SILENT_OPT)\
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix=/usr \

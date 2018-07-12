@@ -27,7 +27,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $
 	$(UNTAR)/$(GSTREAMER_SOURCE)
 	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
 		$(call apply_patches,$(GSTREAMER_PATCH)); \
-		./autogen.sh --noconfigure; \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--libexecdir=/usr/lib \
@@ -80,7 +80,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstr
 	$(UNTAR)/$(GST_PLUGINS_BASE_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GST_PLUGINS_BASE_VER); \
 		$(call apply_patches,$(GST_PLUGINS_BASE_PATCH)); \
-		./autogen.sh --noconfigure; \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \
@@ -147,7 +147,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(
 	$(UNTAR)/$(GST_PLUGINS_GOOD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER); \
 		$(call apply_patches,$(GST_PLUGINS_GOOD_PATCH)); \
-		./autogen.sh --noconfigure; \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \
@@ -185,7 +185,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/
 	$(UNTAR)/$(GST_PLUGINS_BAD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER); \
 		$(call apply_patches,$(GST_PLUGINS_BAD_PATCH)); \
-		./autogen.sh --noconfigure; \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
@@ -233,7 +233,6 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/
 #
 GST_PLUGINS_UGLY_VER = $(GSTREAMER_VER)
 GST_PLUGINS_UGLY_SOURCE = gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER).tar.xz
-GST_PLUGINS_UGLY_PATCH  =
 
 $(ARCHIVE)/$(GST_PLUGINS_UGLY_SOURCE):
 	$(WGET) https://gstreamer.freedesktop.org/src/gst-plugins-ugly/$(GST_PLUGINS_UGLY_SOURCE)
@@ -243,8 +242,7 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)
 	$(UNTAR)/$(GST_PLUGINS_UGLY_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER); \
-		$(call apply_patches,$(GST_PLUGINS_UGLY_PATCH)); \
-		./autogen.sh --noconfigure; \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \

@@ -72,7 +72,7 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(MODULE_INIT_TOOLS_S
 	$(UNTAR)/$(MODULE_INIT_TOOLS_SOURCE)
 	set -e; cd $(BUILD_TMP)/module-init-tools-$(MODULE_INIT_TOOLS_VER); \
 		$(call apply_patches,$(MODULE_INIT_TOOLS_PATCH)); \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix= \
@@ -217,10 +217,10 @@ $(D)/host_opkg: directories $(D)/host_libarchive $(ARCHIVE)/$(OPKG_SOURCE)
 	$(UNTAR)/$(OPKG_SOURCE)
 	set -e; cd $(BUILD_TMP)/opkg-$(OPKG_VER); \
 		$(call apply_patches,$(OPKG_HOST_PATCH)); \
-		./autogen.sh; \
+		./autogen.sh $(SILENT_OPT); \
 		CFLAGS="-I$(HOST_DIR)/include" \
 		LDFLAGS="-L$(HOST_DIR)/lib" \
-		./configure \
+		./configure $(SILENT_OPT) \
 			PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig \
 			--prefix= \
 			--disable-curl \
@@ -325,7 +325,7 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 	set -e; cd $(BUILD_TMP)/e2fsprogs-$(E2FSPROGS_VER); \
 		$(call apply_patches,$(E2FSPROGS_PATCH)); \
 		PATH=$(BUILD_TMP)/e2fsprogs-$(E2FSPROGS_VER):$(PATH) \
-		autoreconf -fi && \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--libdir=/usr/lib \
@@ -572,7 +572,7 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	$(UNTAR)/$(MC_SOURCE)
 	set -e; cd $(BUILD_TMP)/mc-$(MC_VER); \
 		$(call apply_patches,$(MC_PATCH)); \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -943,7 +943,7 @@ $(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $
 		fi
 	cp -ra $(ARCHIVE)/shairport-sync.git $(BUILD_TMP)/shairport-sync
 	set -e; cd $(BUILD_TMP)/shairport-sync; \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		PKG_CONFIG=$(PKG_CONFIG) \
 		$(BUILDENV) \
 		$(CONFIGURE) \
@@ -1381,7 +1381,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 		ac_cv_path_PYTHON_CONFIG="" \
 		libreplace_cv_HAVE_GETADDRINFO=no \
 		libreplace_cv_READDIR_NEEDED=no \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			--prefix= \
@@ -1669,7 +1669,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 	$(UNTAR)/$(OPENSSH_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssh-$(OPENSSH_VER); \
 		CC=$(TARGET)-gcc; \
-		./configure \
+		./configure $(SILENT_OPT) \
 			$(CONFIGURE_OPTS) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1734,10 +1734,8 @@ $(D)/dropbearmulti: $(D)/bootstrap $(ARCHIVE)/$(DROPBEARMULTI_SOURCE)
 	$(UNTAR)/$(DROPBEARMULTI_SOURCE)
 	set -e; cd $(BUILD_TMP)/dropbearmulti-git-$(DROPBEARMULTI_VER); \
 		$(BUILDENV) \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
-			--build=$(BUILD) \
-			--host=$(TARGET) \
 			--prefix=/usr \
 			--disable-syslog \
 			--disable-lastlog \

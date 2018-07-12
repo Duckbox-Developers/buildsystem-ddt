@@ -89,7 +89,7 @@ $(D)/host_libffi: $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/$(LIBFFI_SOURCE)
 	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--disable-static \
 		; \
@@ -130,8 +130,6 @@ LIBGLIB2_VER_MINOR = 54
 LIBGLIB2_VER_MICRO = 0
 LIBGLIB2_VER = $(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR).$(LIBGLIB2_VER_MICRO)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VER).tar.xz
-LIBGLIB2_HOST_PATCH =
-LIBGLIB2_PATCH = libglib2-$(LIBGLIB2_VER)-disable-tests.patch
 
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
 	$(WGET) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR)/$(LIBGLIB2_SOURCE)
@@ -143,8 +141,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 	set -e; cd $(BUILD_TMP)/glib-$(LIBGLIB2_VER); \
 		export PKG_CONFIG=/usr/bin/pkg-config; \
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
-		$(call apply_patches,$(LIBGLIB2_HOST_PATCH)); \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--prefix=`pwd`/out \
 			--enable-static=yes \
 			--enable-shared=no \
@@ -160,6 +157,8 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 #
 # libglib2
 #
+LIBGLIB2_PATCH = libglib2-$(LIBGLIB2_VER)-disable-tests.patch
+
 $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
@@ -258,7 +257,7 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
 	$(UNTAR)/$(LIBARCHIVE_SOURCE)
 	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
 			--prefix= \
@@ -355,7 +354,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER); \
 		$(call apply_patches,$(OPENSSL_PATCH)); \
 		$(BUILDENV) \
-		./Configure \
+		./Configure $(SILENT_OPT) \
 			-DL_ENDIAN \
 			shared \
 			no-hw \
@@ -608,7 +607,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
 		$(call apply_patches,$(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS)" \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--prefix=/usr \
 			--shared \
 			--uname=Linux \
@@ -1106,7 +1105,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(LIBMAD_SOURCE)
 	set -e; cd $(BUILD_TMP)/libmad-$(LIBMAD_VER); \
 		$(call apply_patches,$(LIBMAD_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-debugging \
@@ -1138,7 +1137,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	set -e; cd $(BUILD_TMP)/libid3tag-$(LIBID3TAG_VER); \
 		$(call apply_patches,$(LIBID3TAG_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared=yes \
@@ -1167,7 +1166,7 @@ $(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
 		$(call apply_patches,$(FLAC_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1275,7 +1274,12 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE
 	set -e; cd $(BUILD_TMP)/libvorbisidec-$(LIBVORBISIDEC_VER); \
 		$(call apply_patches,$(LIBVORBISIDEC_PATCH)); \
 		ACLOCAL_FLAGS="-I . -I $(TARGET_DIR)/usr/share/aclocal" \
-		$(BUILDENV) ./autogen.sh $(CONFIGURE_OPTS) --prefix=/usr; \
+		$(BUILDENV) \
+		./autogen.sh $(SILENT_OPT) \
+			--host=$(TARGET) \
+			--build=$(BUILD) \
+			--prefix=/usr \
+		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/vorbisidec.pc
@@ -1596,6 +1600,7 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 	$(UNTAR)/$(LIBXML2_SOURCE)
 	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VER); \
 		$(call apply_patches,$(LIBXML2_PATCH)); \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -1818,8 +1823,8 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
 	$(UNTAR)/$(LCD4LINUX_SOURCE)
 	set -e; cd $(BUILD_TMP)/lcd4linux-git-$(LCD4LINUX_VER); \
-		$(BUILDENV) ./bootstrap; \
-		$(BUILDENV) ./configure $(CONFIGURE_OPTS) \
+		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
+		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
 			--prefix=/usr \
 			--with-drivers='DPF,SamsungSPF' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
@@ -1975,7 +1980,7 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(UNTAR)/$(ALSA_UTILS_SOURCE)
 	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_UTILS_VER); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
-		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal; \
+		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2147,7 +2152,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 	$(UNTAR)/$(MINIDLNA_SOURCE)
 	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
 		$(call apply_patches,$(MINIDLNA_PATCH)); \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2203,7 +2208,7 @@ $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(DJMOUNT_SOURCE)
 	set -e; cd $(BUILD_TMP)/djmount-$(DJMOUNT_VER); \
 		touch libupnp/config.aux/config.rpath; \
 		$(call apply_patches,$(DJMOUNT_PATCH)); \
-		autoreconf -fi; \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) -C \
 			--prefix=/usr \
 			--disable-debug \
