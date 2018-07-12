@@ -21,16 +21,18 @@ NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 hd51 spark spark7162 ufs912 ufs913 ufs910))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
-NEUTRINO_DEPS += $(D)/mtd_utils $(D)/gptfdisk
+NEUTRINO_DEPS += $(D)/mtd_utils
+NEUTRINO_DEPS += $(D)/gptfdisk
 endif
 #NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
 ifeq ($(BOXARCH), arm)
 NEUTRINO_DEPS += $(D)/ntfs_3g
+NEUTRINO_DEPS += $(D)/gptfdisk
 NEUTRINO_DEPS += $(D)/mc
 endif
 
