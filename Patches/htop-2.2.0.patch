@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -201,7 +201,7 @@
+@@ -220,7 +220,7 @@
           [AC_CHECK_HEADERS([ncurses/curses.h],[:],
              [AC_CHECK_HEADERS([ncurses.h],[:],[missing_headers="$missing_headers $ac_header"])])])])
  else
