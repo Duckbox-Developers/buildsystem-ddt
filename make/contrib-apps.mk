@@ -867,18 +867,17 @@ FBSHOT_PATCH = fbshot-$(FBSHOT_VER)-$(BOXARCH).patch
 $(ARCHIVE)/$(FBSHOT_SOURCE):
 	$(WGET) http://distro.ibiblio.org/amigolinux/download/Utils/fbshot/$(FBSHOT_SOURCE)
 
-$(D)/fbshot: $(TARGET_DIR)/bin/fbshot
-	$(TOUCH)
-
-$(TARGET_DIR)/bin/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
+$(D)/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/fbshot-$(FBSHOT_VER)
 	$(UNTAR)/$(FBSHOT_SOURCE)
 	set -e; cd $(BUILD_TMP)/fbshot-$(FBSHOT_VER); \
 		$(call apply_patches,$(FBSHOT_PATCH)); \
-		$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS) fbshot.c -lpng -lz -o $@
+		sed -i s~'gcc'~"$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS)"~ Makefile; \
+		$(MAKE) all; \
+		install -D -m 755 fbshot $(TARGET_DIR)/bin/fbshot
 	$(REMOVE)/fbshot-$(FBSHOT_VER)
-	@touch $@
+	$(TOUCH)
 
 #
 # sysstat
