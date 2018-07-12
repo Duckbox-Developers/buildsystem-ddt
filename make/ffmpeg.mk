@@ -42,7 +42,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches,$(FFMPEG_PATCH)); \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--disable-ffserver \
 			--disable-ffplay \
 			--enable-ffprobe \
@@ -382,7 +382,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches,$(FFMPEG_PATCH)); \
-		./configure \
+		./configure $(SILENT_OPT) \
 			--disable-ffserver \
 			--disable-ffplay \
 			--disable-ffprobe \
