@@ -872,6 +872,7 @@ $(D)/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 	set -e; cd $(BUILD_TMP)/fbshot-$(FBSHOT_VER); \
 		$(call apply_patches,$(FBSHOT_PATCH)); \
 		sed -i s~'gcc'~"$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS)"~ Makefile; \
+		sed -i 's/strip fbshot/$(TARGET)-strip fbshot/' Makefile; \
 		$(MAKE) all; \
 		install -D -m 755 fbshot $(TARGET_DIR)/bin/fbshot
 	$(REMOVE)/fbshot-$(FBSHOT_VER)
