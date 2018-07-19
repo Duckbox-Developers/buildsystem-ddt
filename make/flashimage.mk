@@ -61,9 +61,7 @@ flash-clean:
 	cd $(BASE_DIR)/flash/tf7700 && $(SUDOCMD) rm -rf ./tmp ./out
 	echo ""
 
-###############################################################################
-# armbox hd51
-#
+### armbox hd51
 
 # general
 HD51_IMAGE_NAME = disk
@@ -71,7 +69,6 @@ HD51_BOOT_IMAGE = boot.img
 HD51_IMAGE_LINK = $(HD51_IMAGE_NAME).ext4
 HD51_IMAGE_ROOTFS_SIZE = 294912
 HD51_BUILD_TMP = $(BUILD_TMP)/image-build
-
 HD51_BOXMODE ?= 1
 ifeq ($(HD51_BOXMODE), $(filter $(HD51_BOXMODE), 1))
 HD51_BOXMODE_MEM = brcm_cma=440M@328M brcm_cma=192M@768M
@@ -148,7 +145,7 @@ flash-image-hd51-multi-disk: $(D)/host_resize2fs
 	dd conv=notrunc if=$(RELEASE_DIR)/boot/zImage.dtb of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(KERNEL_PARTITION_OFFSET) \* $(BLOCK_SECTOR))
 	$(HOST_DIR)/bin/resize2fs $(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
-	dd if=$(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR))
+	dd if=$(HD51_BUILD_TMP)/$(HD51_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(HD51_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
 	mv $(HD51_BUILD_TMP)/disk.img $(HD51_BUILD_TMP)/$(BOXTYPE)/
 
 flash-image-hd51-multi-rootfs:
@@ -177,9 +174,7 @@ flash-image-hd51-online:
 	# cleanup
 	rm -rf $(HD51_BUILD_TMP)
 
-###############################################################################
-# armbox vusolo4k
-#
+### armbox vusolo4k
 
 # general
 VUSOLO4K_IMAGE_NAME = disk
@@ -248,7 +243,7 @@ flash-image-vusolo4k-multi-disk: $(D)/host_resize2fs
 	dd conv=notrunc if=$(RELEASE_DIR)/boot/zImage.dtb of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(KERNEL_PARTITION_OFFSET) \* $(BLOCK_SECTOR))
 	$(HOST_DIR)/bin/resize2fs $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
-	dd if=$(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR))
+	dd if=$(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(HD51_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
 	mv $(VUSOLO4K_BUILD_TMP)/disk.img $(VUSOLO4K_BUILD_TMP)/$(BOXTYPE)/
 
 flash-image-vusolo4k-multi-rootfs:
@@ -280,5 +275,3 @@ flash-image-vusolo4k-online:
 	tar -cvzf $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin reboot.update imageversion
 	# cleanup
 	rm -rf $(VUSOLO4K_BUILD_TMP)
-
-###############################################################################
