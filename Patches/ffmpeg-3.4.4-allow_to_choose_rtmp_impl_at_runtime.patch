@@ -1,6 +1,6 @@
-diff -uNr ffmpeg-3.4.3/configure ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/configure
---- ffmpeg-3.4.3/configure	2018-02-12 01:29:18.000000000 +0100
-+++ ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/configure	2018-02-14 21:07:28.278640757 +0100
+diff -uNr ffmpeg/configure ffmpeg_allow_to_choose_rtmp_impl_at_runtime/configure
+--- ffmpeg/configure	2018-02-12 01:29:18.000000000 +0100
++++ ffmpeg_allow_to_choose_rtmp_impl_at_runtime/configure	2018-02-14 21:07:28.278640757 +0100
 @@ -3129,10 +3129,8 @@
  # protocols
  async_protocol_deps="threads"
@@ -33,9 +33,9 @@ diff -uNr ffmpeg-3.4.3/configure ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runti
  rtp_protocol_select="udp_protocol"
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
  sctp_protocol_select="network"
-diff -uNr ffmpeg-3.4.3/libavformat/Makefile ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/Makefile
---- ffmpeg-3.4.3/libavformat/Makefile	2018-02-12 01:29:06.000000000 +0100
-+++ ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/Makefile	2018-02-14 20:10:19.763205912 +0100
+diff -uNr ffmpeg/libavformat/Makefile ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/Makefile
+--- ffmpeg/libavformat/Makefile	2018-02-12 01:29:06.000000000 +0100
++++ ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/Makefile	2018-02-14 20:10:19.763205912 +0100
 @@ -575,12 +575,12 @@
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
@@ -55,9 +55,9 @@ diff -uNr ffmpeg-3.4.3/libavformat/Makefile ffmpeg-3.4.3_allow_to_choose_rtmp_im
  OBJS-$(CONFIG_RTP_PROTOCOL)              += rtpproto.o
  OBJS-$(CONFIG_SCTP_PROTOCOL)             += sctp.o
  OBJS-$(CONFIG_SRTP_PROTOCOL)             += srtpproto.o srtp.o
-diff -uNr ffmpeg-3.4.3/libavformat/protocols.c ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/protocols.c
---- ffmpeg-3.4.3/libavformat/protocols.c	2018-02-12 01:29:06.000000000 +0100
-+++ ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/protocols.c	2018-02-14 20:12:01.235570344 +0100
+diff -uNr ffmpeg/libavformat/protocols.c ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/protocols.c
+--- ffmpeg/libavformat/protocols.c	2018-02-12 01:29:06.000000000 +0100
++++ ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/protocols.c	2018-02-14 20:12:01.235570344 +0100
 @@ -44,12 +44,12 @@
  extern const URLProtocol ff_md5_protocol;
  extern const URLProtocol ff_pipe_protocol;
@@ -77,9 +77,9 @@ diff -uNr ffmpeg-3.4.3/libavformat/protocols.c ffmpeg-3.4.3_allow_to_choose_rtmp
  extern const URLProtocol ff_rtp_protocol;
  extern const URLProtocol ff_sctp_protocol;
  extern const URLProtocol ff_srtp_protocol;
-diff -uNr ffmpeg-3.4.3/libavformat/rtmpproto.c ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/rtmpproto.c
---- ffmpeg-3.4.3/libavformat/rtmpproto.c	2018-02-12 01:29:06.000000000 +0100
-+++ ffmpeg-3.4.3_allow_to_choose_rtmp_impl_at_runtime/libavformat/rtmpproto.c	2018-02-14 20:21:41.701280041 +0100
+diff -uNr ffmpeg/libavformat/rtmpproto.c ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/rtmpproto.c
+--- ffmpeg/libavformat/rtmpproto.c	2018-02-12 01:29:06.000000000 +0100
++++ ffmpeg_allow_to_choose_rtmp_impl_at_runtime/libavformat/rtmpproto.c	2018-02-14 20:21:41.701280041 +0100
 @@ -2626,7 +2626,7 @@
  static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **opts)
  {

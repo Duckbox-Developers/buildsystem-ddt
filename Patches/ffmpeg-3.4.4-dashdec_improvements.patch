@@ -1,6 +1,6 @@
-diff -uNr ffmpeg-3.4.3/libavformat/dashdec.c ffmpeg-3.4.3_dashdec/libavformat/dashdec.c
---- ffmpeg-3.4.3/libavformat/dashdec.c	2018-02-12 01:29:06.000000000 +0100
-+++ ffmpeg-3.4.3_dashdec/libavformat/dashdec.c	2018-02-15 19:43:08.889757019 +0100
+diff -uNr ffmpeg/libavformat/dashdec.c ffmpeg_dashdec/libavformat/dashdec.c
+--- ffmpeg/libavformat/dashdec.c	2018-02-12 01:29:06.000000000 +0100
++++ ffmpeg_dashdec/libavformat/dashdec.c	2018-02-15 19:43:08.889757019 +0100
 @@ -39,7 +39,7 @@
  /*
   * reference to : ISO_IEC_23009-1-DASH-2012

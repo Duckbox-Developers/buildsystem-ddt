@@ -1,5 +1,5 @@
---- ffmpeg-3.4.3/libavformat/hls.c
-+++ ffmpeg-3.4.3/libavformat/hls.c
+--- ffmpeg/libavformat/hls.c
++++ ffmpeg/libavformat/hls.c
 @@ -206,6 +206,8 @@
      int strict_std_compliance;
      char *allowed_extensions;
