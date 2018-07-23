@@ -68,7 +68,7 @@ diff --git a/libavformat/utils.c b/libavformat/utils.c
 index 30567fa..8a947d6 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -1349,6 +1349,8 @@ static int read_frame_internal(AVFormatContext *s, AVPacket *pkt)
+@@ -1350,6 +1350,8 @@ static int read_frame_internal(AVFormatContext *s, AVPacket *pkt)
          if (ret < 0) {
              if (ret == AVERROR(EAGAIN))
                  return ret;
@@ -309,7 +309,7 @@ diff --git a/libavformat/utils.c b/libavformat/utils.c
 index 8a947d6..88786f1 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -2479,6 +2479,41 @@ static void estimate_timings_from_bit_rate(AVFormatContext *ic)
+@@ -2481,6 +2481,41 @@ static void estimate_timings_from_bit_rate(AVFormatContext *ic)
  #define DURATION_MAX_READ_SIZE 250000LL
  #define DURATION_MAX_RETRY 6
  
@@ -351,7 +351,7 @@ index 8a947d6..88786f1 100644
  /* only usable for MPEG-PS streams */
  static void estimate_timings_from_pts(AVFormatContext *ic, int64_t old_offset)
  {
-@@ -2629,6 +2664,10 @@ static void estimate_timings(AVFormatContext *ic, int64_t old_offset)
+@@ -2631,6 +2666,10 @@ static void estimate_timings(AVFormatContext *ic, int64_t old_offset)
           * the components */
          fill_all_stream_timings(ic);
          ic->duration_estimation_method = AVFMT_DURATION_FROM_STREAM;
@@ -377,7 +377,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 4ce4e2d..2c364ac 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -4643,8 +4643,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
+@@ -4695,8 +4695,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
              if (!sample || (!s->pb->seekable && current_sample->pos < sample->pos) ||
                  (s->pb->seekable &&
                   ((msc->pb != s->pb && dts < best_dts) || (msc->pb == s->pb &&
@@ -496,7 +496,7 @@ diff --git a/libavcodec/h264.h b/libavcodec/h264.h
 index 7356288..907ee5e 100644
 --- a/libavcodec/h264.h
 +++ b/libavcodec/h264.h
-@@ -813,6 +813,8 @@ typedef struct H264Context {
+@@ -814,6 +814,8 @@ typedef struct H264Context {
       * slices) anymore */
      int setup_finished;
  

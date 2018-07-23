@@ -32,7 +32,7 @@
      s->buffer_size = buffer_size;
      s->buf_ptr     = buffer;
      s->opaque      = opaque;
-@@ -466,16 +466,16 @@
+@@ -468,16 +468,16 @@
      }
  
      /* make buffer smaller in case it ended up large after probing */
@@ -53,7 +53,7 @@
      }
  
      if (s->read_packet)
-@@ -847,7 +847,6 @@
+@@ -849,7 +849,6 @@
  
      av_free(s->buffer);
      s->buffer = buffer;
@@ -63,7 +63,7 @@
      url_resetbuf(s, s->write_flag ? AVIO_FLAG_WRITE : AVIO_FLAG_READ);
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -1795,8 +1795,10 @@
+@@ -1812,8 +1812,10 @@
      HLSContext *c = s->priv_data;
      int ret, i, minplaylist = -1;
  
