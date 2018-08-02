@@ -1006,7 +1006,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(
 			--without-libpsl \
 			--with-ca-bundle=$(CA_BUNDLE_DIR)/$(CA_BUNDLE) \
 			--with-random=/dev/urandom \
-			--with-ssl=$(TARGET_DIR) \
+			--with-ssl=$(TARGET_DIR)/usr \
 		; \
 		$(MAKE) all; \
 		sed -e "s,^prefix=,prefix=$(TARGET_DIR)," < curl-config > $(HOST_DIR)/bin/curl-config; \
