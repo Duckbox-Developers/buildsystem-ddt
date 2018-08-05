@@ -1,7 +1,7 @@
 #
 # busybox
 #
-BUSYBOX_VER = 1.29.1
+BUSYBOX_VER = 1.29.2
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VER).tar.bz2
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VER)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-unicode.patch
