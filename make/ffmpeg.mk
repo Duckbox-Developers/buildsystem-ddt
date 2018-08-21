@@ -5,26 +5,28 @@
 ifeq ($(BOXARCH), arm)
 
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 3.4.4
+FFMPEG_VER = 4.0.2
+FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
 else
 FFMPEG_VER = 3.3
+FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add_dash_demux.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-chunked_transfer_fix_eof.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
 endif
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-fix-hls.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
-# ffmpeg exteplayer3 patches
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-dashdec_improvements.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-dash-build.patch
-else
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add_dash_demux.patch
-endif
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-chunked_transfer_fix_eof.patch
 
 FFMPEG_DEPS = $(D)/librtmp
 FFMPEG_CONF_OPTS  = --enable-librtmp
@@ -33,6 +35,7 @@ FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --disable-x86asm
 else
 FFMPEG_CONF_OPTS  += --disable-yasm
+FFMPEG_CONF_OPTS  += --disable-ffserver
 endif
 FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_DIR)/usr/include/libxml2
 
@@ -46,9 +49,8 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches,$(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
-			--disable-ffserver \
 			--disable-ffplay \
-			--enable-ffprobe \
+			--disable-ffprobe \
 			\
 			--disable-doc \
 			--disable-htmlpages \
