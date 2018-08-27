@@ -77,7 +77,7 @@ insmod /lib/modules/fpga_directc.ko
 echo "Booting... DDT" > /dev/dbox/oled0
 
 while [ ! -c /dev/fb0 ]; do
-	usleep 10000
+	usleep 100000
 done
 
 echo "[rcS] starting mdev"
