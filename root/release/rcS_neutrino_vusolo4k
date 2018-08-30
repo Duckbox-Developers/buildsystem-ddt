@@ -80,7 +80,7 @@ while [ ! -c /dev/fb0 ]; do
 	usleep 100000
 done
 
-/bin/initfb
+/bin/initfb $(sed -n 's/osd_resolution=//p' /var/tuxbox/config/neutrino.conf)
 
 echo "[rcS] starting mdev"
 echo /sbin/mdev >/proc/sys/kernel/hotplug
