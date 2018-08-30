@@ -26,6 +26,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	-$(MAKE) -C $(APPS_DIR)/tools/tfd2mtd distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/tffpctl distclean
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
+endif
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
@@ -147,6 +150,19 @@ $(D)/tools-flashtool-pad: $(D)/directories
 $(D)/tools-hotplug: $(D)/bootstrap
 	$(START_BUILD)
 	set -e; cd $(APPS_DIR)/tools/hotplug; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
+# initfb
+#
+$(D)/tools-initfb: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(APPS_DIR)/tools/initfb; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -388,6 +404,9 @@ TOOLS += $(D)/tools-streamproxy
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 TOOLS += $(D)/tools-tfd2mtd
 TOOLS += $(D)/tools-tffpctl
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+TOOLS += $(D)/tools-initfb
 endif
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl

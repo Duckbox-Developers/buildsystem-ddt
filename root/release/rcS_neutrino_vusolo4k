@@ -80,6 +80,8 @@ while [ ! -c /dev/fb0 ]; do
 	usleep 100000
 done
 
+/bin/initfb
+
 echo "[rcS] starting mdev"
 echo /sbin/mdev >/proc/sys/kernel/hotplug
 mdev -s
