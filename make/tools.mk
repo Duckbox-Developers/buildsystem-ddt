@@ -26,12 +26,12 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	-$(MAKE) -C $(APPS_DIR)/tools/tfd2mtd distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/tffpctl distclean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
-endif
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
 	-$(MAKE) -C $(APPS_DIR)/tools/own-tools distclean
@@ -405,12 +405,12 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 TOOLS += $(D)/tools-tfd2mtd
 TOOLS += $(D)/tools-tffpctl
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-TOOLS += $(D)/tools-initfb
-endif
 TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+TOOLS += $(D)/tools-initfb
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
 TOOLS += $(D)/tools-own-tools
