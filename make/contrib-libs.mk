@@ -1816,7 +1816,10 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 LCD4LINUX_VER = 07ef2dd
 LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
 LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
+ifeq ($(BOXTYPE), vusolo4k)
 LCD4LINUX_PATCH = lcd4linux-vusolo4k.patch
+LCD4LINUX_DRV = ,VUSOLO4K
+endif
 
 $(ARCHIVE)/$(LCD4LINUX_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LCD4LINUX_URL) $(LCD4LINUX_VER) $(notdir $@) $(ARCHIVE)
@@ -1830,7 +1833,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
 			--prefix=/usr \
-			--with-drivers='DPF,SamsungSPF' \
+			--with-drivers='DPF,SamsungSPF$(LCD4LINUX_DRV)' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
 			--without-ncurses \
 		; \
