@@ -2482,7 +2482,7 @@ $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/$(NETTLE_SOURCE)
 # gnutls
 #
 GNUTLS_VER_MAJOR = 3.6
-GNUTLS_VER_MINOR = 0
+GNUTLS_VER_MINOR = 1
 GNUTLS_VER = $(GNUTLS_VER_MAJOR).$(GNUTLS_VER_MINOR)
 GNUTLS_SOURCE = gnutls-$(GNUTLS_VER).tar.xz
 
@@ -2507,6 +2507,9 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/$(GNUTLS_SOURCE)
 			--with-default-trust-store-dir=$(CA_BUNDLE_DIR)/ \
 			--disable-guile \
 			--without-p11-kit \
+			--without-idn \
+			--disable-libdane \
+			--without-tpm \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
