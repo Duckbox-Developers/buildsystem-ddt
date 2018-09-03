@@ -1295,11 +1295,9 @@ $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBIS_SOURCE)
 #
 # libvorbisidec
 #
-LIBVORBISIDEC_SVN = 18153
-LIBVORBISIDEC_VER = 1.0.2+svn$(LIBVORBISIDEC_SVN)
+LIBVORBISIDEC_VER = 1.2.1+git20180316
 LIBVORBISIDEC_VER_APPEND = .orig
 LIBVORBISIDEC_SOURCE = libvorbisidec_$(LIBVORBISIDEC_VER)$(LIBVORBISIDEC_VER_APPEND).tar.gz
-LIBVORBISIDEC_PATCH = libvorbisidec-$(LIBVORBISIDEC_VER).patch
 
 $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE):
 	$(WGET) https://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/$(LIBVORBISIDEC_SOURCE)
