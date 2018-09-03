@@ -2381,6 +2381,7 @@ $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/$(LIBDAEMON_SOURCE)
 			ac_cv_func_setpgrp_void=yes \
 			--prefix=/usr \
 			--disable-static \
+			--disable-lynx \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
