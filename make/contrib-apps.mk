@@ -1004,7 +1004,6 @@ $(D)/dbus: $(D)/bootstrap $(D)/expat $(ARCHIVE)/$(DBUS_SOURCE)
 			--localstatedir=/var \
 			--with-console-auth-dir=/run/console/ \
 			--without-systemdsystemunitdir \
-			--enable-abstract-sockets \
 			--disable-systemd \
 			--disable-static \
 		; \
