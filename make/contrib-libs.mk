@@ -506,7 +506,7 @@ $(ARCHIVE)/$(LUASOCKET_SOURCE):
 
 $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/luasocke-gitt-$(LUASOCKET_VER)
+	$(REMOVE)/luasocket-git-$(LUASOCKET_VER)
 	$(UNTAR)/$(LUASOCKET_SOURCE)
 	set -e; cd $(BUILD_TMP)/luasocket-git-$(LUASOCKET_VER); \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGET_DIR)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGET_DIR)/usr@" src/makefile; \
