@@ -1356,7 +1356,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 #
 # expat
 #
-EXPAT_VER = 2.2.0
+EXPAT_VER = 2.2.6
 EXPAT_SOURCE = expat-$(EXPAT_VER).tar.bz2
 
 $(ARCHIVE)/$(EXPAT_SOURCE):
@@ -1371,6 +1371,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 			--prefix=/usr \
 			--mandir=/.remove \
 			--bindir=/.remove \
+			--without-xmlwf \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
