@@ -813,9 +813,42 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922 ipbox55 ipbox99 ipbox9900 c
 $(D)/libjpeg: $(D)/jpeg
 	@touch $@
 else
-$(D)/libjpeg: $(D)/libjpeg_turbo
+$(D)/libjpeg: $(D)/libjpeg_turbo2
 	@touch $@
 endif
+
+#
+# libjpeg_turbo2
+#
+LIBJPEG_TURBO2_VER = 2.0.0
+LIBJPEG_TURBO2_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO2_VER).tar.gz
+LIBJPEG_TURBO2_PATCH = libjpeg-turbo-tiff-ojpeg.patch
+
+$(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE):
+	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO2_VER)/$(LIBJPEG_TURBO2_SOURCE)
+
+$(D)/libjpeg_turbo2: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER)
+	$(UNTAR)/$(LIBJPEG_TURBO2_SOURCE)
+	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER); \
+		$(call apply_patches,$(LIBJPEG_TURBO2_PATCH)); \
+		cmake   -DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_C_COMPILER=$(TARGET)-gcc \
+			-DCMAKE_CXX_COMPILER=$(TARGET)-g++ \
+			-DCMAKE_C_FLAGS="-pipe -Os" \
+			-DCMAKE_CXX_FLAGS="-pipe -Os" \
+			-DWITH_SIMD=False \
+			-DCMAKE_INSTALL_DOCDIR=/.remove \
+			-DCMAKE_INSTALL_MANDIR=/.remove \
+			-DCMAKE_INSTALL_DEFAULT_LIBDIR=lib \
+			-DENABLE_STATIC=OFF \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cjpeg djpeg jpegtran rdjpgcom wrjpgcom tjbench)
+	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER)
+	$(TOUCH)
 
 #
 # libjpeg_turbo
