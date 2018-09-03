@@ -1037,6 +1037,8 @@ $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(
 			--enable-shared \
 			--disable-ldap \
 			--without-libidn \
+			--without-libidn2 \
+			--without-winidn \
 			--without-libpsl \
 			--with-ca-bundle=$(CA_BUNDLE_DIR)/$(CA_BUNDLE) \
 			--with-random=/dev/urandom \
