@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -3446,6 +3446,7 @@
+@@ -3456,6 +3456,7 @@
  
  AX_COMPILE_CHECK_SIZEOF(size_t)
  AX_COMPILE_CHECK_SIZEOF(long)
