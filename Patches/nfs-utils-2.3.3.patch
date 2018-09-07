@@ -43,7 +43,7 @@
  #include <netinet/in.h>
  #include <rpc/rpc.h>
  #include <rpc/pmap_prot.h>
-@@ -1136,6 +1138,7 @@
+@@ -1138,6 +1140,7 @@
  		if (bind(sock, SAFE_SOCKADDR(&sin), sizeof(sin)) < 0)
  			goto out;
  		break;
@@ -51,7 +51,7 @@
  	case AF_INET6:
  		/* Make sure the call-back address is public/permanent */
  		val = IPV6_PREFER_SRC_PUBLIC;
-@@ -1143,6 +1146,7 @@
+@@ -1145,6 +1148,7 @@
  		if (bind(sock, SAFE_SOCKADDR(&sin6), sizeof(sin6)) < 0)
  			goto out;
  		break;
