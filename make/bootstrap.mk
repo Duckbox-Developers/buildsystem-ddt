@@ -254,13 +254,13 @@ SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/portmap
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs922))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 SYSTEM_TOOLS += $(D)/nfs_utils
+SYSTEM_TOOLS += $(D)/dvbsnoop
 endif
 SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/udpxy
-SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), arm)
 SYSTEM_TOOLS += $(D)/ofgwrite
