@@ -1051,7 +1051,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(
 		rm -f $(TARGET_DIR)/usr/bin/curl-config
 	$(REWRITE_LIBTOOL)/libcurl.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcurl.pc
-ifeq ($(BOXARCH), sh4)
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,curl)
 endif
 	$(REMOVE)/curl-$(LIBCURL_VER)
