@@ -1916,7 +1916,7 @@ $(D)/gd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/$(GD_S
 #
 # libusb
 #
-LIBUSB_VER = 1.0.21
+LIBUSB_VER = 1.0.22
 LIBUSB_VER_MAJOR = 1.0
 LIBUSB_SOURCE = libusb-$(LIBUSB_VER).tar.bz2
 LIBUSB_PATCH = libusb-$(LIBUSB_VER).patch
