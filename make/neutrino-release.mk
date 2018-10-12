@@ -472,6 +472,32 @@ neutrino-mp-release-vusolo4k:
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
+python-iptv-install:
+	rm -f $(RELEASE_DIR)/usr/bin/{cftp,ckeygen,easy_install*,mailmail,pyhtmlizer,tkconch,trial,twist,twistd}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,email,ensurepip,hotshot,idlelib,lib2to3}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/lib-dynload/*-py$(PYTHON_VER_MAJOR).egg-info
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{lib-old,lib-tk,multiprocessing,plat-linux2,pydoc_data,sqlite3,unittest,wsgiref}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VER_MAJOR).egg-info
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/setuptools
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/{application,conch,cred,enterprise,flow,lore,mail,names,news,pair,persisted}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/{plugins,positioning,runner,scripts,spread,tap,_threads,trial,web,words}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/python/_pydoctortemplates
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ $(RELEASE_DIR)/usr/share/E2emulator/ \
+		\( -name '*.a' \
+		-o -name '*.c' \
+		-o -name '*.doc' \
+		-o -name '*.la' \
+		-o -name '*.o' \
+		-o -name '*.pyc' \
+		-o -name '*.pyx' \
+		-o -name 'test' \
+		-o -name 'tests' \) \
+		-print0 | xargs --no-run-if-empty -0 rm -rf
+ifeq ($(OPTIMIZATIONS), size)
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.py' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/share/E2emulator/ -name '*.py' -exec rm -f {} \;
+endif
+
 #
 # neutrino-mp-release-base
 #
@@ -800,31 +826,6 @@ endif
 		make python-iptv-install; \
 	fi
 
-python-iptv-install:
-	rm -f $(RELEASE_DIR)/usr/bin/{cftp,ckeygen,easy_install*,mailmail,pyhtmlizer,tkconch,trial,twist,twistd}
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,email,ensurepip,hotshot,idlelib,lib2to3}
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/lib-dynload/*-py$(PYTHON_VER_MAJOR).egg-info
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{lib-old,lib-tk,multiprocessing,plat-linux2,pydoc_data,sqlite3,unittest,wsgiref}
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VER_MAJOR).egg-info
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/setuptools
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/{application,conch,cred,enterprise,flow,lore,mail,names,news,pair,persisted}
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/{plugins,positioning,runner,scripts,spread,tap,_threads,trial,web,words}
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/python/_pydoctortemplates
-	find $(RELEASE_DIR)/$(PYTHON_DIR)/ $(RELEASE_DIR)/usr/share/E2emulator/ \
-		\( -name '*.a' \
-		-o -name '*.c' \
-		-o -name '*.doc' \
-		-o -name '*.la' \
-		-o -name '*.o' \
-		-o -name '*.pyc' \
-		-o -name '*.pyx' \
-		-o -name 'test' \
-		-o -name 'tests' \) \
-		-print0 | xargs --no-run-if-empty -0 rm -rf
-ifeq ($(OPTIMIZATIONS), size)
-	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.py' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/share/E2emulator/ -name '*.py' -exec rm -f {} \;
-endif
 #
 # shairport
 #
