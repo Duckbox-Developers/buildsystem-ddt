@@ -473,6 +473,10 @@ neutrino-mp-release-vusolo4k:
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 python-iptv-install:
+	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
+	cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
+	cp -af $(TARGET_DIR)/usr/share/E2emulator $(RELEASE_DIR)/usr/share/; \
+	ln -sf /usr/share/E2emulator/Plugins/Extensions/IPTVPlayer/cmdlineIPTV.sh $(RELEASE_DIR)/usr/bin/cmdlineIPTV; \
 	rm -f $(RELEASE_DIR)/usr/bin/{cftp,ckeygen,easy_install*,mailmail,pyhtmlizer,tkconch,trial,twist,twistd}
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,email,ensurepip,hotshot,idlelib,lib2to3}
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/lib-dynload/*-py$(PYTHON_VER_MAJOR).egg-info
@@ -819,10 +823,6 @@ endif
 		ln -s /var/tuxbox/plugins/sokoban $(RELEASE_DIR)/usr/share/tuxbox/sokoban; \
 	fi
 	if [ -d $(TARGET_DIR)/usr/share/E2emulator ]; then \
-		install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
-		cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
-		cp -af $(TARGET_DIR)/usr/share/E2emulator $(RELEASE_DIR)/usr/share/; \
-		ln -sf /usr/share/E2emulator/Plugins/Extensions/IPTVPlayer/cmdlineIPTV.sh $(RELEASE_DIR)/usr/bin/cmdlineIPTV; \
 		make python-iptv-install; \
 	fi
 
