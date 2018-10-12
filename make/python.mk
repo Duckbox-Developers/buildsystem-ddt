@@ -723,6 +723,113 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(REMOVE)/livestreamersrv
 	$(TOUCH)
 
+# -----------------------------------------------------------------------------
+
+#
+# python-small
+#
+$(D)/python_small: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(ARCHIVE)/$(PYTHON_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/Python-$(PYTHON_VER)
+	$(UNTAR)/$(PYTHON_SOURCE)
+	set -e; cd $(BUILD_TMP)/Python-$(PYTHON_VER); \
+		$(call apply_patches,$(PYTHON_PATCH)); \
+		CONFIG_SITE= \
+		$(BUILDENV) \
+		autoreconf -fiv Modules/_ctypes/libffi; \
+		autoconf $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--target=$(TARGET) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--sysconfdir=/etc \
+			--enable-shared \
+			--with-lto \
+			--enable-ipv6 \
+			--with-threads \
+			--with-pymalloc \
+			--with-signal-module \
+			--with-wctype-functions \
+			ac_sys_system=Linux \
+			ac_sys_release=2 \
+			ac_cv_file__dev_ptmx=no \
+			ac_cv_file__dev_ptc=no \
+			ac_cv_have_long_long_format=yes \
+			ac_cv_no_strict_aliasing_ok=yes \
+			ac_cv_pthread=yes \
+			ac_cv_cxx_thread=yes \
+			ac_cv_sizeof_off_t=8 \
+			ac_cv_have_chflags=no \
+			ac_cv_have_lchflags=no \
+			ac_cv_py_format_size_t=yes \
+			ac_cv_broken_sem_getvalue=no \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
+		; \
+		$(MAKE) $(MAKE_OPTS) \
+			PYTHON_MODULES_INCLUDE="$(TARGET_DIR)/usr/include" \
+			PYTHON_MODULES_LIB="$(TARGET_DIR)/usr/lib" \
+			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(TARGET_DIR)" \
+			CROSS_COMPILE_TARGET=yes \
+			CROSS_COMPILE=$(TARGET) \
+			MACHDEP=linux2 \
+			HOSTARCH=$(TARGET) \
+			CFLAGS="$(TARGET_CFLAGS)" \
+			LDFLAGS="$(TARGET_LDFLAGS)" \
+			LD="$(TARGET)-gcc" \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
+			HOSTPGEN=$(HOST_DIR)/bin/pgen \
+			all DESTDIR=$(TARGET_DIR) \
+		; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	ln -sf ../../libpython$(PYTHON_VER_MAJOR).so.1.0 $(TARGET_DIR)/$(PYTHON_DIR)/config/libpython$(PYTHON_VER_MAJOR).so; \
+	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
+	$(REMOVE)/Python-$(PYTHON_VER)
+	$(TOUCH)
+
+#
+# python_twisted_small
+#
+$(D)/python_twisted_small: $(D)/bootstrap $(D)/python_small $(D)/python_setuptools_small $(D)/python_zope_interface_small $(ARCHIVE)/$(PYTHON_TWISTED_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/Twisted-$(PYTHON_TWISTED_VER)
+	$(UNTAR)/$(PYTHON_TWISTED_SOURCE)
+	set -e; cd $(BUILD_TMP)/Twisted-$(PYTHON_TWISTED_VER); \
+		$(PYTHON_BUILD); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/Twisted-$(PYTHON_TWISTED_VER)
+	$(TOUCH)
+
+#
+# python_setuptools_small
+#
+$(D)/python_setuptools_small: $(D)/bootstrap $(D)/python_small $(ARCHIVE)/$(PYTHON_SETUPTOOLS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/setuptools-$(PYTHON_SETUPTOOLS_VER)
+	$(UNTAR)/$(PYTHON_SETUPTOOLS_SOURCE)
+	set -e; cd $(BUILD_TMP)/setuptools-$(PYTHON_SETUPTOOLS_VER); \
+		$(PYTHON_BUILD); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/setuptools-$(PYTHON_SETUPTOOLS_VER)
+	$(TOUCH)
+
+#
+# python_zope_interface_small
+#
+$(D)/python_zope_interface_small: $(D)/bootstrap $(D)/python_small $(D)/python_setuptools_small $(ARCHIVE)/$(PYTHON_ZOPE_INTERFACE_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/zope.interface-$(PYTHON_ZOPE_INTERFACE_VER)
+	$(UNTAR)/$(PYTHON_ZOPE_INTERFACE_SOURCE)
+	set -e; cd $(BUILD_TMP)/zope.interface-$(PYTHON_ZOPE_INTERFACE_VER); \
+		$(PYTHON_BUILD); \
+		$(PYTHON_INSTALL)
+	$(REMOVE)/zope.interface-$(PYTHON_ZOPE_INTERFACE_VER)
+	$(TOUCH)
+
+# -----------------------------------------------------------------------------
+
 PYTHON_DEPS  = $(D)/host_python
 PYTHON_DEPS += $(D)/python
 PYTHON_DEPS += $(D)/python_elementtree
