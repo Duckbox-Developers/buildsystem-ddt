@@ -196,6 +196,7 @@ $(D)/neutrino-mp-plugin-mediathek:
 #
 # neutrino-iptvplayer
 #
+$(D)/neutrino-mp-plugin-iptvplayer-nightly \
 $(D)/neutrino-mp-plugin-iptvplayer: $(D)/librtmp $(D)/python_twisted_small
 	$(START_BUILD)
 	$(REMOVE)/iptvplayer
@@ -204,6 +205,9 @@ $(D)/neutrino-mp-plugin-iptvplayer: $(D)/librtmp $(D)/python_twisted_small
 		else cd $(ARCHIVE); git clone https://github.com/TangoCash/crossplatform_iptvplayer.git iptvplayer.git; \
 		fi
 	cp -ra $(ARCHIVE)/iptvplayer.git $(BUILD_TMP)/iptvplayer
+	@if [ "$@" = "$(D)/neutrino-mp-plugin-iptvplayer-nightly" ]; then \
+		$(BUILD_TMP)/iptvplayer/SyncWithGitLab.sh $(BUILD_TMP)/iptvplayer; \
+	fi
 	install -d $(TARGET_DIR)/var/tuxbox/plugins
 	install -d $(TARGET_DIR)/usr/share/E2emulator
 	cp -R $(BUILD_TMP)/iptvplayer/E2emulator/* $(TARGET_DIR)/usr/share/E2emulator/
