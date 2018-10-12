@@ -473,8 +473,15 @@ neutrino-mp-release-vusolo4k:
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 python-iptv-install:
+	install -d $(RELEASE_DIR)/usr/bin; \
+	install -d $(RELEASE_DIR)/usr/include; \
+	install -d $(RELEASE_DIR)/usr/lib; \
 	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
+	install -d $(RELEASE_DIR)/$(PYTHON_DIR); \
 	cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
+	cp -P $(TARGET_DIR)/usr/lib/libpython* $(RELEASE_DIR)/usr/lib; \
+	cp -P $(TARGET_DIR)/usr/bin/python* $(RELEASE_DIR)/usr/bin; \
+	cp -a $(TARGET_DIR)/$(PYTHON_DIR)/* $(RELEASE_DIR)/$(PYTHON_DIR)/; \
 	cp -af $(TARGET_DIR)/usr/share/E2emulator $(RELEASE_DIR)/usr/share/; \
 	ln -sf /usr/share/E2emulator/Plugins/Extensions/IPTVPlayer/cmdlineIPTV.sh $(RELEASE_DIR)/usr/bin/cmdlineIPTV; \
 	rm -f $(RELEASE_DIR)/usr/bin/{cftp,ckeygen,easy_install*,mailmail,pyhtmlizer,tkconch,trial,twist,twistd}
