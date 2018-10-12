@@ -204,6 +204,7 @@ $(D)/neutrino-mp-plugin-iptvplayer: $(D)/librtmp $(D)/python_twisted_small
 		else cd $(ARCHIVE); git clone https://github.com/TangoCash/crossplatform_iptvplayer.git iptvplayer.git; \
 		fi
 	cp -ra $(ARCHIVE)/iptvplayer.git $(BUILD_TMP)/iptvplayer
+	install -d $(TARGET_DIR)/var/tuxbox/plugins
 	install -d $(TARGET_DIR)/usr/share/E2emulator
 	cp -R $(BUILD_TMP)/iptvplayer/E2emulator/* $(TARGET_DIR)/usr/share/E2emulator/
 	install -d $(TARGET_DIR)/usr/share/E2emulator/Plugins/Extensions/IPTVPlayer
