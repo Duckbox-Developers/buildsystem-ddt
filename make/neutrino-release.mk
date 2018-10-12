@@ -5,7 +5,7 @@
 #
 # release_cube_common
 #
-neutrino-release-cube_common:
+neutrino-mp-release-cube_common:
 	install -m 0755 $(SKEL_ROOT)/release/halt_cuberevo $(RELEASE_DIR)/etc/init.d/halt
 	install -m 0777 $(SKEL_ROOT)/release/reboot_cuberevo $(RELEASE_DIR)/etc/init.d/reboot
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
@@ -18,54 +18,54 @@ neutrino-release-cube_common:
 #
 # release_cube_common_tuner
 #
-neutrino-release-cube_common_tuner:
+neutrino-mp-release-cube_common_tuner:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/media/dvb/frontends/dvb-pll.ko $(RELEASE_DIR)/lib/modules/
 
 #
 # cuberevo_9500hd
 #
-neutrino-release-cuberevo_9500hd: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_9500hd: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_2000hd
 #
-neutrino-release-cuberevo_2000hd: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_2000hd: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_250hd
 #
-neutrino-release-cuberevo_250hd: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_250hd: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_mini_fta
 #
-neutrino-release-cuberevo_mini_fta: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_mini_fta: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_mini2
 #
-neutrino-release-cuberevo_mini2: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_mini2: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_mini
 #
-neutrino-release-cuberevo_mini: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_mini: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo
 #
-neutrino-release-cuberevo: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # cuberevo_3000hd
 #
-neutrino-release-cuberevo_3000hd: neutrino-release-cube_common neutrino-release-cube_common_tuner
+neutrino-mp-release-cuberevo_3000hd: neutrino-mp-release-cube_common neutrino-mp-release-cube_common_tuner
 
 #
 # common_ipbox
 #
-neutrino-release-common_ipbox:
+neutrino-mp-release-common_ipbox:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ipbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
@@ -83,7 +83,7 @@ neutrino-release-common_ipbox:
 #
 # ipbox9900
 #
-neutrino-release-ipbox9900: neutrino-release-common_ipbox
+neutrino-mp-release-ipbox9900: neutrino-mp-release-common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/rmu/rmu.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
@@ -92,7 +92,7 @@ neutrino-release-ipbox9900: neutrino-release-common_ipbox
 #
 # ipbox99
 #
-neutrino-release-ipbox99: neutrino-release-common_ipbox
+neutrino-mp-release-ipbox99: neutrino-mp-release-common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/ipbox99xx/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/ipbox99xx_fan/ipbox_fan.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox $(RELEASE_DIR)/usr/bin/tvmode
@@ -100,14 +100,14 @@ neutrino-release-ipbox99: neutrino-release-common_ipbox
 #
 # ipbox55
 #
-neutrino-release-ipbox55: neutrino-release-common_ipbox
+neutrino-mp-release-ipbox55: neutrino-mp-release-common_ipbox
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/ipbox55/front.ko $(RELEASE_DIR)/lib/modules/
 	cp -p $(SKEL_ROOT)/release/tvmode_ipbox55 $(RELEASE_DIR)/usr/bin/tvmode
 
 #
 # ufs910
 #
-neutrino-release-ufs910:
+neutrino-mp-release-ufs910:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -121,7 +121,7 @@ neutrino-release-ufs910:
 #
 # ufs912
 #
-neutrino-release-ufs912:
+neutrino-mp-release-ufs912:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -133,7 +133,7 @@ neutrino-release-ufs912:
 #
 # ufs913
 #
-neutrino-release-ufs913:
+neutrino-mp-release-ufs913:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -146,7 +146,7 @@ neutrino-release-ufs913:
 #
 # ufs922
 #
-neutrino-release-ufs922:
+neutrino-mp-release-ufs922:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -162,7 +162,7 @@ neutrino-release-ufs922:
 #
 # ufc960
 #
-neutrino-release-ufc960:
+neutrino-mp-release-ufc960:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/micom/micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -175,7 +175,7 @@ neutrino-release-ufc960:
 #
 # spark
 #
-neutrino-release-spark:
+neutrino-mp-release-spark:
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -190,7 +190,7 @@ neutrino-release-spark:
 #
 # spark7162
 #
-neutrino-release-spark7162:
+neutrino-mp-release-spark7162:
 	install -m 0755 $(SKEL_ROOT)/release/halt_spark7162 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/aotom_spark/aotom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
@@ -206,7 +206,7 @@ neutrino-release-spark7162:
 #
 # fortis_hdbox
 #
-neutrino-release-fortis_hdbox:
+neutrino-mp-release-fortis_hdbox:
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -217,7 +217,7 @@ neutrino-release-fortis_hdbox:
 #
 # atevio7500
 #
-neutrino-release-atevio7500:
+neutrino-mp-release-atevio7500:
 	install -m 0755 $(SKEL_ROOT)/release/halt_fortis_hdbox $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/multituner/*.ko $(RELEASE_DIR)/lib/modules/
@@ -233,7 +233,7 @@ neutrino-release-atevio7500:
 #
 # octagon1008
 #
-neutrino-release-octagon1008:
+neutrino-mp-release-octagon1008:
 	install -m 0755 $(SKEL_ROOT)/release/halt_octagon1008 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -246,7 +246,7 @@ neutrino-release-octagon1008:
 #
 # hs7110
 #
-neutrino-release-hs7110:
+neutrino-mp-release-hs7110:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7110 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -259,7 +259,7 @@ neutrino-release-hs7110:
 #
 # hs7420
 #
-neutrino-release-hs7420:
+neutrino-mp-release-hs7420:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -273,7 +273,7 @@ neutrino-release-hs7420:
 #
 # hs7429
 #
-neutrino-release-hs7429:
+neutrino-mp-release-hs7429:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs742x $(RELEASE_DIR)/etc/init.d/halt
 	chmod 755 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
@@ -287,7 +287,7 @@ neutrino-release-hs7429:
 #
 # hs7810a
 #
-neutrino-release-hs7810a:
+neutrino-mp-release-hs7810a:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7810a $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -300,7 +300,7 @@ neutrino-release-hs7810a:
 #
 # hs7119
 #
-neutrino-release-hs7119:
+neutrino-mp-release-hs7119:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7119 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -313,7 +313,7 @@ neutrino-release-hs7119:
 #
 # hs7819
 #
-neutrino-release-hs7819:
+neutrino-mp-release-hs7819:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hs7819 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/nuvoton/nuvoton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -326,7 +326,7 @@ neutrino-release-hs7819:
 #
 # atemio520
 #
-neutrino-release-atemio520:
+neutrino-mp-release-atemio520:
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio520 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -339,7 +339,7 @@ neutrino-release-atemio520:
 #
 # atemio530
 #
-neutrino-release-atemio530:
+neutrino-mp-release-atemio530:
 	install -m 0755 $(SKEL_ROOT)/release/halt_atemio530 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/cn_micom/cn_micom.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/lnb/lnb.ko $(RELEASE_DIR)/lib/modules/
@@ -352,7 +352,7 @@ neutrino-release-atemio530:
 #
 # hl101
 #
-neutrino-release-hl101:
+neutrino-mp-release-hl101:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hl101 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/proton/proton.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -368,7 +368,7 @@ neutrino-release-hl101:
 #
 # adb_box
 #
-neutrino-release-adb_box:
+neutrino-mp-release-adb_box:
 	install -m 0755 $(SKEL_ROOT)/release/halt_adb_box $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/adb_box_vfd/vfd.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -388,7 +388,7 @@ neutrino-release-adb_box:
 #
 # tf7700
 #
-neutrino-release-tf7700:
+neutrino-mp-release-tf7700:
 	install -m 0755 $(SKEL_ROOT)/release/halt_tf7700 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/tffp/tffp.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
@@ -402,7 +402,7 @@ neutrino-release-tf7700:
 #
 # vitamin_hd5000
 #
-neutrino-release-vitamin_hd5000:
+neutrino-mp-release-vitamin_hd5000:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7111.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/vitamin_hd5000/micom.ko $(RELEASE_DIR)/lib/modules/
@@ -415,7 +415,7 @@ neutrino-release-vitamin_hd5000:
 #
 # sagemcom88
 #
-neutrino-release-sagemcom88:
+neutrino-mp-release-sagemcom88:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/front_led/front_led.ko $(RELEASE_DIR)/lib/modules/
@@ -431,7 +431,7 @@ neutrino-release-sagemcom88:
 #
 # arivalink200
 #
-neutrino-release-arivalink200:
+neutrino-mp-release-arivalink200:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontends/*.ko $(RELEASE_DIR)/lib/modules/
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/front_ArivaLink200/vfd.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/front_ArivaLink200/vfd.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -444,7 +444,7 @@ neutrino-release-arivalink200:
 #
 # pace7241
 #
-neutrino-release-pace7241:
+neutrino-mp-release-pace7241:
 	install -m 0755 $(SKEL_ROOT)/release/halt_ufs912 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmcore-display-sti7105.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/frontcontroller/front_vfd/front_vfd.ko $(RELEASE_DIR)/lib/modules/
@@ -458,7 +458,7 @@ neutrino-release-pace7241:
 #
 # Mutant HD51
 #
-neutrino-release-hd51:
+neutrino-mp-release-hd51:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
@@ -466,17 +466,17 @@ neutrino-release-hd51:
 #
 # vusolo4k
 #
-neutrino-release-vusolo4k:
+neutrino-mp-release-vusolo4k:
 	install -m 0755 $(SKEL_ROOT)/release/halt_vusolo4k $(RELEASE_DIR)/etc/init.d/halt
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 #
-# neutrino-release-base
+# neutrino-mp-release-base
 #
 # the following target creates the common file base
-neutrino-release-base:
+neutrino-mp-release-base:
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
 	install -d $(RELEASE_DIR)/{autofs,bin,boot,dev,dev.static,etc,hdd,lib,media,mnt,proc,ram,root,sbin,swap,sys,tmp,usr,var}
@@ -894,7 +894,7 @@ endif
 # The main target depends on the model.
 # IMPORTANT: it is assumed that only one variable is set. Otherwise the target name won't be resolved.
 #
-$(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
+$(D)/neutrino-mp-release: neutrino-mp-release-base neutrino-mp-release-$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
 	@touch $@
 #
@@ -943,7 +943,7 @@ endif
 	@echo -e "\033[00m"
 	@echo "***************************************************************"
 #
-# neutrino-release-clean
+# neutrino-mp-release-clean
 #
-neutrino-release-clean:
-	rm -f $(D)/neutrino-release
+neutrino-mp-release-clean:
+	rm -f $(D)/neutrino-mp-release
