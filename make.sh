@@ -256,7 +256,7 @@ echo "IMAGE=$IMAGE" >> config
 ##############################################
 
 case $6 in
-	[1-5]) REPLY=$6;;
+	[1-4]) REPLY=$6;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-mp-ddt    [ arm/sh4 ]"
 		echo "   2)  neutrino-mp-ni     [ arm     ]"
