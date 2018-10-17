@@ -18,7 +18,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 3: optimization (1-4)"
 	echo "Parameter 4: Media Framework (1-2)"
 	echo "Parameter 5: Image Neutrino (1-2)"
-	echo "Parameter 6: Neutrino variant (1-5)"
+	echo "Parameter 6: Neutrino variant (1-4)"
 	exit
 fi
 
@@ -259,19 +259,17 @@ case $6 in
 	[1-5]) REPLY=$6;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-mp-ddt    [ arm/sh4 ]"
-		echo "   2)  neutrino-mp-max    [ arm     ]"
-		echo "   3)  neutrino-mp-ni     [ arm     ]"
-		echo "   4)  neutrino-mp-tangos [ arm/sh4 ]"
-		echo "   5)  neutrino-hd2       [ arm/sh4 ]"
-		read -p "Select Image to build (1-5)? ";;
+		echo "   2)  neutrino-mp-ni     [ arm     ]"
+		echo "   3)  neutrino-mp-tangos [ arm/sh4 ]"
+		echo "   4)  neutrino-hd2       [ arm/sh4 ]"
+		read -p "Select Image to build (1-4)? ";;
 esac
 
 case "$REPLY" in
 	1) FLAVOUR="neutrino-mp-ddt";;
-	2) FLAVOUR="neutrino-mp-max";;
-	3) FLAVOUR="neutrino-mp-ni";;
-	4) FLAVOUR="neutrino-mp-tangos";;
-	5) FLAVOUR="neutrino-hd2";;
+	2) FLAVOUR="neutrino-mp-ni";;
+	3) FLAVOUR="neutrino-mp-tangos";;
+	4) FLAVOUR="neutrino-hd2";;
 	*) FLAVOUR="neutrino-mp-ddt";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config

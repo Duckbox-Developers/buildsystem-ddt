@@ -107,15 +107,7 @@ N_CONFIG_OPTS += --enable-flac
 NEUTRINO_DEPS += $(D)/flac
 endif
 
-ifeq ($(FLAVOUR), neutrino-mp-max)
-GIT_URL     ?= https://bitbucket.org/max_10
-NEUTRINO_MP  = neutrino-mp-max
-LIBSTB_HAL   = libstb-hal-max
-NMP_BRANCH  ?= master
-HAL_BRANCH  ?= master
-NMP_PATCHES  = $(NEUTRINO_MP_MAX_PATCHES)
-HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_MAX_PATCHES)
-else ifeq  ($(FLAVOUR), neutrino-mp-ni)
+ifeq  ($(FLAVOUR), neutrino-mp-ni)
 GIT_URL     ?= https://bitbucket.org/neutrino-images
 NEUTRINO_MP  = ni-neutrino-hd
 LIBSTB_HAL   = ni-libstb-hal-next
