@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.29.3
-# Thu Sep 13 14:14:14 2018
+# Thu Okt 20 20:36:36 2018
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -282,7 +282,7 @@ CONFIG_FEATURE_READLINK_FOLLOW=y
 # CONFIG_REALPATH is not set
 CONFIG_RM=y
 CONFIG_RMDIR=y
-# CONFIG_SEQ is not set
+# CONFIG_SEQ=y
 # CONFIG_SHRED is not set
 # CONFIG_SHUF is not set
 CONFIG_SLEEP=y
