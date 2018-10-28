@@ -371,7 +371,7 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 # util_linux
 #
-UTIL_LINUX_MAJOR = 2.25
+UTIL_LINUX_MAJOR = 2.26
 UTIL_LINUX_MINOR = 2
 UTIL_LINUX_VER = $(UTIL_LINUX_MAJOR).$(UTIL_LINUX_MINOR)
 UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VER).tar.xz
@@ -387,14 +387,14 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
-			--disable-static \
+			--disable-shared \
 			--disable-gtk-doc \
 			--disable-nls \
 			--disable-rpath \
-			--disable-libuuid \
+			--enable-libuuid \
 			--disable-libblkid \
 			--disable-libmount \
-			--disable-libsmartcols \
+			--enable-libsmartcols \
 			--disable-mount \
 			--disable-partx \
 			--disable-mountpoint \
@@ -454,7 +454,7 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 			--disable-makeinstall-chown \
 			--without-systemdsystemunitdir \
 		; \
-		$(MAKE); \
+		$(MAKE) sfdisk mkfs; \
 		install -D -m 755 sfdisk $(TARGET_DIR)/sbin/sfdisk; \
 		install -D -m 755 mkfs $(TARGET_DIR)/sbin/mkfs
 	$(REMOVE)/util-linux-$(UTIL_LINUX_VER)
