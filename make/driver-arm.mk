@@ -7,6 +7,16 @@ DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(KERNEL_VER)-$(KERNEL_DATE).zip
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) http://source.mynonpublic.com/gfutures/$(DRIVER_SRC)
 endif
+
+ifeq ($(BOXTYPE), hd60)
+DRIVER_VER = 4.4.35
+DRIVER_DATE = 20180918
+DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(DRIVER_VER)-$(DRIVER_DATE).zip
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), vusolo4k)
 DRIVER_VER = 3.14.28
 DRIVER_DATE = 20180702
@@ -26,6 +36,14 @@ ifeq ($(BOXTYPE), hd51)
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
 	unzip -o $(ARCHIVE)/$(DRIVER_SRC) -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), hd60)
+	$(START_BUILD)
+	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
+	unzip -o $(ARCHIVE)/$(DRIVER_SRC) -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
+	install -d $(TARGET_DIR)/bin
+	mv $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/turnoff_power $(TARGET_DIR)/bin
 	$(TOUCH)
 endif
 ifeq ($(BOXTYPE), vusolo4k)

@@ -27,6 +27,9 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 	$(MAKE) flash-image-hd51-multi-disk flash-image-hd51-multi-rootfs
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60))
+	$(MAKE) flash-image-hd60-multi-disk
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 	$(MAKE) flash-image-vusolo4k-multi-disk flash-image-vusolo4k-multi-rootfs
 endif
@@ -173,6 +176,53 @@ flash-image-hd51-online:
 	tar -cvzf $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 kernel.bin imageversion
 	# cleanup
 	rm -rf $(HD51_BUILD_TMP)
+
+### armbox hd60
+HD60_BUILD_TMP = $(BUILD_TMP)/image-build
+HD60_IMAGE_NAME = disk
+HD60_BOOT_IMAGE = bootoptions.img
+HD60_IMAGE_LINK = $(HD60_IMAGE_NAME).ext4
+
+HD60_BOOTOPTIONS_PARTITION_SIZE = 4096
+HD60_IMAGE_ROOTFS_SIZE = 1048576
+
+HD60_SRCDATE = 20180912
+HD60_BOOTARGS_SRC = $(KERNEL_TYPE)-bootargs-$(HD60_SRCDATE).zip
+HD60_PARTITONS_SRC = $(KERNEL_TYPE)-partitions-$(HD60_SRCDATE).zip
+
+$(ARCHIVE)/$(HD60_BOOTARGS_SRC):
+	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_BOOTARGS_SRC)
+
+$(ARCHIVE)/$(HD60_PARTITONS_SRC):
+	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_PARTITONS_SRC)
+
+flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_PARTITONS_SRC)
+	# Create image
+	mkdir -p $(HD60_BUILD_TMP)/$(BOXTYPE)
+	unzip -o $(ARCHIVE)/$(HD60_BOOTARGS_SRC) -d $(HD60_BUILD_TMP)
+	unzip -o $(ARCHIVE)/$(HD60_PARTITONS_SRC) -d $(HD60_BUILD_TMP)
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD60_BUILD_TMP)/$(BOXTYPE)/imageversion
+	dd if=/dev/zero of=$(HD60_BUILD_TMP)/$(HD60_IMAGE_LINK) seek=$(shell expr $(HD60_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
+	$(HOST_DIR)/bin/mkfs.ext4 -F $(HD60_BUILD_TMP)/$(HD60_IMAGE_LINK) -d $(RELEASE_DIR)
+	# Error codes 0-3 indicate successfull operation of fsck (no errors or errors corrected)
+	$(HOST_DIR)/bin/fsck.ext4 -pvfD $(HD60_BUILD_TMP)/$(HD60_IMAGE_LINK) || [ $? -le 3 ]
+	dd if=/dev/zero of=$(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE) bs=1024 count=$(HD60_BOOTOPTIONS_PARTITION_SIZE)
+	mkfs.msdos -S 512 $(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE)
+	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(HD60_BUILD_TMP)/STARTUP
+	echo "bootcmd=mmc read 0 0x3F000000 0x70000 0x4000; bootm 0x3F000000; mmc read 0 0x1FFBFC0 0x52000 0xC800; bootargs=androidboot.selinux=enforcing androidboot.serialno=0123456789 console=ttyAMA0,115200" > $(HD60_BUILD_TMP)/STARTUP_1
+	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(HD60_BUILD_TMP)/STARTUP_2
+	mcopy -i $(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE) -v $(HD60_BUILD_TMP)/STARTUP ::
+	mcopy -i $(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE) -v $(HD60_BUILD_TMP)/STARTUP_1 ::
+	mcopy -i $(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE) -v $(HD60_BUILD_TMP)/STARTUP_2 ::
+	cp $(HD60_BUILD_TMP)/$(HD60_BOOT_IMAGE) $(HD60_BUILD_TMP)/$(BOXTYPE)/$(HD60_BOOT_IMAGE)
+	ext2simg -zv $(HD60_BUILD_TMP)/$(HD60_IMAGE_LINK) $(HD60_BUILD_TMP)/$(BOXTYPE)/rootfs.fastboot.gz
+	mv $(HD60_BUILD_TMP)/bootargs-8gb.bin $(HD60_BUILD_TMP)/bootargs.bin
+	mv $(HD60_BUILD_TMP)/$(BOXTYPE)/bootargs-8gb.bin $(HD60_BUILD_TMP)/$(BOXTYPE)/bootargs.bin
+	cp $(RELEASE_DIR)/boot/uImage $(HD51_BUILD_TMP)/$(BOXTYPE)/uImage
+	cd $(HD60_BUILD_TMP) && \
+	zip -r $(BASE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip *
+	# cleanup
+	rm -rf $(HD60_BUILD_TMP)
 
 ### armbox vusolo4k
 

@@ -66,6 +66,7 @@ case $1 in
 		echo "  arm-based receivers"
 		echo "   50)  Vu Solo4K"
 		echo "   51)  Mut@nt HD51"
+		echo "   60)  Mut@nt HD60"
 		echo "   "
 		echo
 		read -p "Select target (1-59)? ";;
@@ -111,6 +112,7 @@ case "$REPLY" in
 	37) BOXARCH="sh4";BOXTYPE="pace7241";;
 	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	51) BOXARCH="arm";BOXTYPE="hd51";;
+	60) BOXARCH="arm";BOXTYPE="hd60";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config

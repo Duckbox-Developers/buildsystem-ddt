@@ -13,6 +13,17 @@ KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 
+ifeq ($(BOXTYPE), hd60)
+KERNEL_VER             = 4.4.35
+KERNEL_DATE            = 20180301
+KERNEL_TYPE            = hd60
+KERNEL_SRC             = linux-$(KERNEL_VER)-$(KERNEL_DATE)-arm.tar.gz
+KERNEL_URL             = http://downloads.mutant-digital.net
+KERNEL_CONFIG          = hd60_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
+KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
+endif
+
 ifeq ($(BOXTYPE), vusolo4k)
 KERNEL_VER             = 3.14.28-1.8
 KERNEL_TYPE            = vusolo4k
@@ -45,6 +56,8 @@ HD51_PATCHES = \
 		armbox/hd51_reserve_dvb_adapter_0.patch \
 		armbox/hd51_blacklist_mmc0.patch \
 		armbox/hd51_export_pmpoweroffprepare.patch
+
+HD60_PATCHES = \
 
 VUSOLO4K_PATCHES = \
 		armbox/vusolo4k_bcm_genet_disable_warn.patch \
@@ -102,6 +115,13 @@ ifeq ($(BOXTYPE), hd51)
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
+ifeq ($(BOXTYPE), hd60)
+	set -e; cd $(KERNEL_DIR); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- uImage modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+	@touch $@
+endif
 ifeq ($(BOXTYPE), vusolo4k)
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
@@ -118,6 +138,15 @@ ifeq ($(BOXTYPE), hd51)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
 	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
 	cat $(KERNEL_DIR)/arch/arm/boot/zImage $(KERNEL_DIR)/arch/arm/boot/dts/$(KERNEL_DTB_VER) > $(TARGET_DIR)/boot/zImage.dtb
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), hd60)
+	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
+	cp $(KERNEL_DIR)/arch/arm/boot/uImage $(TARGET_DIR)/boot/
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)

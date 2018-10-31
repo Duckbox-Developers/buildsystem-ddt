@@ -115,6 +115,8 @@ PACKAGES="\
 	${UBUNTU:+libssl-dev}           ${SUSE:+libopenssl-devel}    ${FEDORA:+openssl-devel}                         \
 	${UBUNTU:+libmount-dev}                                                                                       \
 	${UBUNTU:+mtools}                                                                                             \
+	${UBUNTU:+u-boot-tools}                                                                                       \
+	${UBUNTU:+android-tools-fsutils}                                                                              \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
