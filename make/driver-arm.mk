@@ -2,7 +2,9 @@
 # driver
 #
 ifeq ($(BOXTYPE), hd51)
-DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(KERNEL_VER)-$(KERNEL_DATE).zip
+DRIVER_VER = 4.10.12
+DRIVER_DATE = 20180424
+DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(DRIVER_VER)-$(DRIVER_DATE).zip
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) http://source.mynonpublic.com/gfutures/$(DRIVER_SRC)
