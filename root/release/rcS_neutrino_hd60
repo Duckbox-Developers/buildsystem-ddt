@@ -30,6 +30,8 @@ insmod /lib/modules/hd60_2.ko
 insmod /lib/modules/hd60_3.ko
 insmod /lib/modules/hd60_4.ko
 
+insmod /lib/modules/hi_play.ko
+
 # load moduls from modules.extra ( kerneloptions )
 [ -f /var/etc/modules.extra ] && eval `awk '{ if ($1) print "insmod /lib/modules/" $1 ".ko " $2,$3,$4,$5,$6,$7,$8,$9 "; "}' < /var/etc/modules.extra`
 
@@ -68,7 +70,7 @@ NFS=$(grep -c nfs /proc/cmdline)
 /sbin/ifconfig lo 127.0.0.1 up
 
 # set dummy time
-date -s "2017-01-01 00:00"
+date -s "2018-01-01 00:00"
 
 killall -9 showiframe
 
