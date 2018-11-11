@@ -36,22 +36,6 @@ NEUTRINO_DEPS += $(D)/gptfdisk
 NEUTRINO_DEPS += $(D)/mc
 endif
 
-ifeq ($(BOXTYPE), hd60)
-EXTRA_LIBS_DATE = 20180912
-EXTRA_LIBS_SRC = $(KERNEL_TYPE)-libs-$(EXTRA_LIBS_DATE).zip
-
-$(ARCHIVE)/$(EXTRA_LIBS_SRC):
-	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(EXTRA_LIBS_SRC)
-
-$(D)/install-$(BOXTYPE)-extra-libs: $(ARCHIVE)/$(EXTRA_LIBS_SRC) $(D)/zlib $(D)/libpng $(D)/freetype $(D)/libcurl $(D)/libxml2 $(D)/libjpeg_turbo2 $(D)/harfbuzz
-	$(START_BUILD)
-	install -d $(TARGET_DIR)/usr/lib
-	unzip -o $(ARCHIVE)/$(EXTRA_LIBS_SRC) -d $(TARGET_DIR)/usr/lib
-	$(TOUCH)
-
-NEUTRINO_DEPS += $(D)/install-$(BOXTYPE)-extra-libs
-endif
-
 ifeq ($(IMAGE), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif

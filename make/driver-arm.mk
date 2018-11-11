@@ -15,8 +15,28 @@ DRIVER_VER = 4.4.35
 DRIVER_DATE = 20180918
 DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(DRIVER_VER)-$(DRIVER_DATE).zip
 
+EXTRA_PLAYERLIB_DATE = 20180912
+EXTRA_PLAYERLIB_SRC = $(KERNEL_TYPE)-libs-$(EXTRA_PLAYERLIB_DATE).zip
+
+EXTRA_MALILIB_DATE = 20180912
+EXTRA_MALILIB_SRC = $(KERNEL_TYPE)-mali-$(EXTRA_MALILIB_DATE).zip
+
+EXTRA_MALI_MODULE_VER = DX910-SW-99002-r7p0-00rel0
+EXTRA_MALI_MODULE_SRC = $(EXTRA_MALI_MODULE_VER).tgz
+EXTRA_MALI_MODULE_PATCH = 0001-hi3798mv200-support.patch
+
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(DRIVER_SRC)
+
+$(ARCHIVE)/$(EXTRA_PLAYERLIB_SRC):
+	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(EXTRA_PLAYERLIB_SRC)
+
+$(ARCHIVE)/$(EXTRA_MALILIB_SRC):
+	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(EXTRA_MALILIB_SRC)
+
+$(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC):
+	$(WGET) https://developer.arm.com/-/media/Files/downloads/mali-drivers/kernel/mali-utgard-gpu/$(EXTRA_MALI_MODULE_SRC);name=driver
+
 endif
 
 ifeq ($(BOXTYPE), vusolo4k)
@@ -46,6 +66,52 @@ ifeq ($(BOXTYPE), hd60)
 	unzip -o $(ARCHIVE)/$(DRIVER_SRC) -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
 	install -d $(TARGET_DIR)/bin
 	mv $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/turnoff_power $(TARGET_DIR)/bin
+	$(MAKE) install-extra-libs
+	$(MAKE) mali-gpu-modul
+	$(TOUCH)
+
+$(D)/install-extra-libs: $(ARCHIVE)/$(EXTRA_PLAYERLIB_SRC) $(ARCHIVE)/$(EXTRA_MALILIB_SRC) $(D)/zlib $(D)/libpng $(D)/freetype $(D)/libcurl $(D)/libxml2 $(D)/libjpeg_turbo2 $(D)/harfbuzz
+	install -d $(TARGET_DIR)/usr/lib
+	unzip -o $(PATCHES)/libgles-mali-utgard-headers.zip -d $(TARGET_DIR)/usr/include
+	unzip -o $(ARCHIVE)/$(EXTRA_PLAYERLIB_SRC) -d $(TARGET_DIR)/usr/lib
+	unzip -o $(ARCHIVE)/$(EXTRA_MALILIB_SRC) -d $(TARGET_DIR)/usr/lib
+	ln -sf libMali.so $(TARGET_DIR)/usr/lib/libmali.so
+	ln -sf libMali.so $(TARGET_DIR)/usr/lib/libEGL.so
+	ln -sf libMali.so $(TARGET_DIR)/usr/lib/libGLESv1_CM.so
+	ln -sf libMali.so $(TARGET_DIR)/usr/lib/libGLESv2.so
+
+$(D)/mali-gpu-modul: $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC) $(D)/bootstrap $(D)/kernel
+	$(START_BUILD)
+	$(REMOVE)/$(EXTRA_MALI_MODULE_VER)
+	$(UNTAR)/$(EXTRA_MALI_MODULE_SRC)
+	set -e; cd $(BUILD_TMP)/$(EXTRA_MALI_MODULE_VER); \
+		$(call apply_patches,$(EXTRA_MALI_MODULE_PATCH)); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- \
+		M=$(BUILD_TMP)/$(EXTRA_MALI_MODULE_VER)/driver/src/devicedrv/mali \
+		EXTRA_CFLAGS="-DCONFIG_MALI_SHARED_INTERRUPTS=y \
+		-DCONFIG_MALI400=m \
+		-DCONFIG_MALI450=y \
+		-DCONFIG_MALI_DVFS=y \
+		-DCONFIG_GPU_AVS_ENABLE=y" \
+		CONFIG_MALI_SHARED_INTERRUPTS=y \
+		CONFIG_MALI400=m \
+		CONFIG_MALI450=y \
+		CONFIG_MALI_DVFS=y \
+		CONFIG_GPU_AVS_ENABLE=y ; \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- \
+		M=$(BUILD_TMP)/$(EXTRA_MALI_MODULE_VER)/driver/src/devicedrv/mali \
+		EXTRA_CFLAGS="-DCONFIG_MALI_SHARED_INTERRUPTS=y \
+		-DCONFIG_MALI400=m \
+		-DCONFIG_MALI450=y \
+		-DCONFIG_MALI_DVFS=y \
+		-DCONFIG_GPU_AVS_ENABLE=y" \
+		CONFIG_MALI_SHARED_INTERRUPTS=y \
+		CONFIG_MALI400=m \
+		CONFIG_MALI450=y \
+		CONFIG_MALI_DVFS=y \
+		CONFIG_GPU_AVS_ENABLE=y \
+		DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+	$(REMOVE)/$(EXTRA_MALI_MODULE_VER)
 	$(TOUCH)
 endif
 ifeq ($(BOXTYPE), vusolo4k)
