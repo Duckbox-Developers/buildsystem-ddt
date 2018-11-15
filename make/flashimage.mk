@@ -187,14 +187,14 @@ HD60_BOOTOPTIONS_PARTITION_SIZE = 4096
 HD60_IMAGE_ROOTFS_SIZE = 1048576
 
 HD60_SRCDATE = 20180912
-HD60_BOOTARGS_SRC = $(KERNEL_TYPE)-bootargs-$(HD60_SRCDATE).zip
-HD60_PARTITONS_SRC = $(KERNEL_TYPE)-partitions-$(HD60_SRCDATE).zip
+HD60_BOOTARGS_SRC = hd60-bootargs-$(HD60_SRCDATE).zip
+HD60_PARTITONS_SRC = hd60-partitions-$(HD60_SRCDATE).zip
 
 $(ARCHIVE)/$(HD60_BOOTARGS_SRC):
-	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_BOOTARGS_SRC)
+	$(WGET) http://downloads.mutant-digital.net/hd60/$(HD60_BOOTARGS_SRC)
 
 $(ARCHIVE)/$(HD60_PARTITONS_SRC):
-	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_PARTITONS_SRC)
+	$(WGET) http://downloads.mutant-digital.net/hd60/$(HD60_PARTITONS_SRC)
 
 flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_PARTITONS_SRC)
 	# Create image
