@@ -33,7 +33,7 @@
  build_testapps:
 --- a/crypto/Makefile
 +++ b/crypto/Makefile
-@@ -85,7 +85,7 @@
+@@ -87,7 +87,7 @@
  	@if [ -z "$(THIS)" ]; then $(MAKE) -f $(TOP)/Makefile reflect THIS=$@; fi
  
  subdirs:
@@ -42,7 +42,7 @@
  
  files:
  	$(PERL) $(TOP)/util/files.pl "CPUID_OBJ=$(CPUID_OBJ)" Makefile >> $(TOP)/MINFO
-@@ -100,7 +100,7 @@
+@@ -102,7 +102,7 @@
  # lib: $(LIB): are splitted to avoid end-less loop
  lib:	$(LIB)
  	@touch lib

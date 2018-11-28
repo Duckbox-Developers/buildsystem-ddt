@@ -8,7 +8,7 @@ Description:             Use versioned symbols for OpenSSL binary compatibility.
 diff -Naurp openssl-1.0.2k-orig/Configure openssl-1.0.2k/Configure
 --- openssl-1.0.2k-orig/Configure	2017-01-26 07:22:03.000000000 -0600
 +++ openssl-1.0.2k/Configure	2017-05-23 19:05:07.857304703 -0500
-@@ -1681,6 +1681,8 @@ if ($strict_warnings)
+@@ -1696,6 +1696,8 @@ if ($strict_warnings)
  		}
  	}
  
