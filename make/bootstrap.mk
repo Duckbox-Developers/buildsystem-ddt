@@ -41,7 +41,7 @@ $(D)/host_pkgconfig: $(D)/directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/pkg-config-$(HOST_PKGCONFIG_VER)
 	$(UNTAR)/$(HOST_PKGCONFIG_SOURCE)
-	set -e; cd $(BUILD_TMP)/pkg-config-$(HOST_PKGCONFIG_VER); \
+	$(CHDIR)/pkg-config-$(HOST_PKGCONFIG_VER); \
 		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--program-prefix=$(TARGET)- \
@@ -65,7 +65,7 @@ $(D)/host_module_init_tools: $(D)/directories $(ARCHIVE)/$(HOST_MODULE_INIT_TOOL
 	$(START_BUILD)
 	$(REMOVE)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER)
 	$(UNTAR)/$(HOST_MODULE_INIT_TOOLS_SOURCE)
-	set -e; cd $(BUILD_TMP)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER); \
+	$(CHDIR)/module-init-tools-$(HOST_MODULE_INIT_TOOLS_VER); \
 		$(call apply_patches,$(HOST_MODULE_INIT_TOOLS_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
 		./configure $(SILENT_OPT) \
@@ -88,7 +88,7 @@ $(D)/host_mtd_utils: $(D)/directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/mtd-utils-$(HOST_MTD_UTILS_VER)
 	$(UNTAR)/$(HOST_MTD_UTILS_SOURCE)
-	set -e; cd $(BUILD_TMP)/mtd-utils-$(HOST_MTD_UTILS_VER); \
+	$(CHDIR)/mtd-utils-$(HOST_MTD_UTILS_VER); \
 		$(call apply_patches,$(HOST_MTD_UTILS_PATCH)); \
 		$(MAKE) `pwd`/mkfs.jffs2 `pwd`/sumtool BUILDDIR=`pwd` WITHOUT_XATTR=1 DESTDIR=$(HOST_DIR); \
 		$(MAKE) install DESTDIR=$(HOST_DIR)/bin
@@ -108,7 +108,7 @@ $(D)/host_mkcramfs: $(D)/directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/cramfs-$(HOST_MKCRAMFS_VER)
 	$(UNTAR)/$(HOST_MKCRAMFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VER); \
+	$(CHDIR)/cramfs-$(HOST_MKCRAMFS_VER); \
 		$(MAKE) all
 		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VER)/mkcramfs $(HOST_DIR)/bin
 		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VER)/cramfsck $(HOST_DIR)/bin
@@ -128,7 +128,7 @@ $(D)/host_mksquashfs3: directories $(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/squashfs$(HOST_MKSQUASHFS3_VER)
 	$(UNTAR)/$(HOST_MKSQUASHFS3_SOURCE)
-	set -e; cd $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools; \
+	$(CHDIR)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools; \
 		$(MAKE) CC=gcc all
 		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
 		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
@@ -156,7 +156,7 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(UNTAR)/$(LZMA_SOURCE)
 	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
 	$(UNTAR)/$(HOST_MKSQUASHFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS_VER); \
+	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_VER); \
 		$(MAKE) -C squashfs-tools \
 			LZMA_SUPPORT=1 \
 			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VER) \
@@ -176,7 +176,7 @@ HOST_E2FSPROGS_SOURCE = $(E2FSPROGS_SOURCE)
 $(D)/host_resize2fs: $(D)/directories $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(START_BUILD)
 	$(UNTAR)/$(HOST_E2FSPROGS_SOURCE)
-	set -e; cd $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER); \
+	$(CHDIR)/e2fsprogs-$(HOST_E2FSPROGS_VER); \
 		./configure $(SILENT_OPT); \
 		$(MAKE)
 	install -D -m 0755 $(BUILD_TMP)/e2fsprogs-$(HOST_E2FSPROGS_VER)/resize/resize2fs $(HOST_DIR)/bin/
@@ -207,7 +207,7 @@ $(D)/cortex_strings: $(D)/directories $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
 	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
-	set -e; cd $(BUILD_TMP)/cortex-strings-git-$(CORTEX_STRINGS_VER); \
+	$(CHDIR)/cortex-strings-git-$(CORTEX_STRINGS_VER); \
 		./autogen.sh  $(SILENT_OPT); \
 		$(MAKE_OPTS) \
 		./configure $(SILENT_OPT)\

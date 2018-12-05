@@ -12,7 +12,7 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ncurses-$(NCURSES_VER)
 	$(UNTAR)/$(NCURSES_SOURCE)
-	set -e; cd $(BUILD_TMP)/ncurses-$(NCURSES_VER); \
+	$(CHDIR)/ncurses-$(NCURSES_VER); \
 		$(call apply_patches, $(NCURSES_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
@@ -63,7 +63,7 @@ $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/$(GMP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/gmp-$(GMP_VER)
 	$(UNTAR)/$(GMP_SOURCE)
-	set -e; cd $(BUILD_TMP)/gmp-$(GMP_VER); \
+	$(CHDIR)/gmp-$(GMP_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--infodir=/.remove \
@@ -88,7 +88,7 @@ $(D)/host_libffi: $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/$(LIBFFI_SOURCE)
-	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
+	$(CHDIR)/libffi-$(LIBFFI_VER); \
 		./configure $(SILENT_OPT) \
 			--prefix=$(HOST_DIR) \
 			--disable-static \
@@ -105,7 +105,7 @@ $(D)/libffi: $(D)/bootstrap $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libffi-$(LIBFFI_VER)
 	$(UNTAR)/$(LIBFFI_SOURCE)
-	set -e; cd $(BUILD_TMP)/libffi-$(LIBFFI_VER); \
+	$(CHDIR)/libffi-$(LIBFFI_VER); \
 		$(call apply_patches, $(LIBFFI_PATCH)); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
@@ -138,7 +138,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 	$(START_BUILD)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
 	$(UNTAR)/$(LIBGLIB2_SOURCE)
-	set -e; cd $(BUILD_TMP)/glib-$(LIBGLIB2_VER); \
+	$(CHDIR)/glib-$(LIBGLIB2_VER); \
 		export PKG_CONFIG=/usr/bin/pkg-config; \
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 		./configure $(SILENT_OPT) \
@@ -163,7 +163,7 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 	$(START_BUILD)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
 	$(UNTAR)/$(LIBGLIB2_SOURCE)
-	set -e; cd $(BUILD_TMP)/glib-$(LIBGLIB2_VER); \
+	$(CHDIR)/glib-$(LIBGLIB2_VER); \
 		echo "glib_cv_va_copy=no" > config.cache; \
 		echo "glib_cv___va_copy=yes" >> config.cache; \
 		echo "glib_cv_va_val_copy=yes" >> config.cache; \
@@ -222,7 +222,7 @@ $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/pcre-$(LIBPCRE_VER)
 	$(UNTAR)/$(LIBPCRE_SOURCE)
-	set -e; cd $(BUILD_TMP)/pcre-$(LIBPCRE_VER); \
+	$(CHDIR)/pcre-$(LIBPCRE_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -257,7 +257,7 @@ $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
 	$(UNTAR)/$(LIBARCHIVE_SOURCE)
-	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
+	$(CHDIR)/libarchive-$(LIBARCHIVE_VER); \
 		./configure $(SILENT_OPT) \
 			--build=$(BUILD) \
 			--host=$(BUILD) \
@@ -276,7 +276,7 @@ $(D)/libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libarchive-$(LIBARCHIVE_VER)
 	$(UNTAR)/$(LIBARCHIVE_SOURCE)
-	set -e; cd $(BUILD_TMP)/libarchive-$(LIBARCHIVE_VER); \
+	$(CHDIR)/libarchive-$(LIBARCHIVE_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -310,7 +310,7 @@ $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/readline-$(READLINE_VER)
 	$(UNTAR)/$(READLINE_SOURCE)
-	set -e; cd $(BUILD_TMP)/readline-$(READLINE_VER); \
+	$(CHDIR)/readline-$(READLINE_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -352,7 +352,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/openssl-$(OPENSSL_VER)
 	$(UNTAR)/$(OPENSSL_SOURCE)
-	set -e; cd $(BUILD_TMP)/openssl-$(OPENSSL_VER); \
+	$(CHDIR)/openssl-$(OPENSSL_VER); \
 		$(call apply_patches, $(OPENSSL_PATCH)); \
 		$(BUILDENV) \
 		./Configure $(SILENT_OPT) \
@@ -391,7 +391,7 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
 	$(UNTAR)/$(LIBBLURAY_SOURCE)
-	set -e; cd $(BUILD_TMP)/libbluray-$(LIBBLURAY_VER); \
+	$(CHDIR)/libbluray-$(LIBBLURAY_VER); \
 		$(call apply_patches, $(LIBBLURAY_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -437,7 +437,7 @@ $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$
 	$(REMOVE)/lua-$(LUA_VER)
 	mkdir -p $(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
 	$(UNTAR)/$(LUA_SOURCE)
-	set -e; cd $(BUILD_TMP)/lua-$(LUA_VER); \
+	$(CHDIR)/lua-$(LUA_VER); \
 		$(call apply_patches, $(LUAPOSIX_PATCH)); \
 		tar xf $(ARCHIVE)/$(LUAPOSIX_SOURCE); \
 		cd luaposix-git-$(LUAPOSIX_VER)/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
@@ -465,7 +465,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/luacurl-git-$(LUACURL_VER)
 	$(UNTAR)/$(LUACURL_SOURCE)
-	set -e; cd $(BUILD_TMP)/luacurl-git-$(LUACURL_VER); \
+	$(CHDIR)/luacurl-git-$(LUACURL_VER); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" \
 			LIBDIR=$(TARGET_DIR)/usr/lib \
 			LUA_INC=$(TARGET_DIR)/usr/include; \
@@ -487,7 +487,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
 	$(UNTAR)/$(LUAEXPAT_SOURCE)
-	set -e; cd $(BUILD_TMP)/luaexpat-$(LUAEXPAT_VER); \
+	$(CHDIR)/luaexpat-$(LUAEXPAT_VER); \
 		$(call apply_patches, $(LUAEXPAT_PATCH)); \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" PREFIX=$(TARGET_DIR)/usr; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr
@@ -508,7 +508,7 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/luasocket-git-$(LUASOCKET_VER)
 	$(UNTAR)/$(LUASOCKET_SOURCE)
-	set -e; cd $(BUILD_TMP)/luasocket-git-$(LUASOCKET_VER); \
+	$(CHDIR)/luasocket-git-$(LUASOCKET_VER); \
 		sed -i -e "s@LD_linux=gcc@LD_LINUX=$(TARGET)-gcc@" -e "s@CC_linux=gcc@CC_LINUX=$(TARGET)-gcc -L$(TARGET_DIR)/usr/lib@" -e "s@DESTDIR?=@DESTDIR?=$(TARGET_DIR)/usr@" src/makefile; \
 		$(MAKE) CC=$(TARGET)-gcc LD=$(TARGET)-gcc LUAV=$(LUA_VER_SHORT) PLAT=linux COMPAT=COMPAT LUAINC_linux=$(TARGET_DIR)/usr/include LUAPREFIX_linux=; \
 		$(MAKE) install LUAPREFIX_linux= LUAV=$(LUA_VER_SHORT)
@@ -529,7 +529,7 @@ $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHI
 	$(START_BUILD)
 	$(REMOVE)/luafeedparser-git-$(LUAFEEDPARSER_VER)
 	$(UNTAR)/$(LUAFEEDPARSER_SOURCE)
-	set -e; cd $(BUILD_TMP)/luafeedparser-git-$(LUAFEEDPARSER_VER); \
+	$(CHDIR)/luafeedparser-git-$(LUAFEEDPARSER_VER); \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
 		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luafeedparser-git-$(LUAFEEDPARSER_VER)
@@ -549,7 +549,7 @@ $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(
 	$(START_BUILD)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(UNTAR)/$(LUASOAP_SOURCE)
-	set -e; cd $(BUILD_TMP)/luasoap-$(LUASOAP_VER); \
+	$(CHDIR)/luasoap-$(LUASOAP_VER); \
 		$(call apply_patches, $(LUASOAP_PATCH)); \
 		$(MAKE) install LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
@@ -584,7 +584,7 @@ $(D)/boost: $(D)/bootstrap $(ARCHIVE)/$(BOOST_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/boost_$(BOOST_VER)
 	$(UNTAR)/$(BOOST_SOURCE)
-	set -e; cd $(BUILD_TMP)/boost_$(BOOST_VER); \
+	$(CHDIR)/boost_$(BOOST_VER); \
 		$(call apply_patches, $(BOOST_PATCH)); \
 		rm -rf $(TARGET_DIR)/usr/include/boost; \
 		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGET_DIR)/usr/include/boost
@@ -605,7 +605,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/zlib-$(ZLIB_VER)
 	$(UNTAR)/$(ZLIB_SOURCE)
-	set -e; cd $(BUILD_TMP)/zlib-$(ZLIB_VER); \
+	$(CHDIR)/zlib-$(ZLIB_VER); \
 		$(call apply_patches, $(ZLIB_Patch)); \
 		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS)" \
 		./configure $(SILENT_OPT) \
@@ -634,7 +634,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/bzip2-$(BZIP2_VER)
 	$(UNTAR)/$(BZIP2_SOURCE)
-	set -e; cd $(BUILD_TMP)/bzip2-$(BZIP2_VER); \
+	$(CHDIR)/bzip2-$(BZIP2_VER); \
 		$(call apply_patches, $(BZIP2_Patch)); \
 		mv Makefile-libbz2_so Makefile; \
 		$(MAKE) all CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib; \
@@ -660,7 +660,7 @@ $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
 	$(REMOVE)/timezone
 	mkdir $(BUILD_TMP)/timezone
 	tar -C $(BUILD_TMP)/timezone -xf $(ARCHIVE)/$(TZDATA_SOURCE)
-	set -e; cd $(BUILD_TMP)/timezone; \
+	$(CHDIR)/timezone; \
 		unset ${!LC_*}; LANG=POSIX; LC_ALL=POSIX; export LANG LC_ALL; \
 		for zone in $(TZDATA_ZONELIST); do \
 			zic -d zoneinfo -L /dev/null -y yearistype.sh $$zone ; \
@@ -692,7 +692,7 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 	$(START_BUILD)
 	$(REMOVE)/freetype-$(FREETYPE_VER)
 	$(UNTAR)/$(FREETYPE_SOURCE)
-	set -e; cd $(BUILD_TMP)/freetype-$(FREETYPE_VER); \
+	$(CHDIR)/freetype-$(FREETYPE_VER); \
 		$(call apply_patches, $(FREETYPE_PATCH)); \
 		sed -r "s:.*(#.*SUBPIXEL_(RENDERING|HINTING  2)) .*:\1:g" \
 			-i include/freetype/config/ftoption.h; \
@@ -751,7 +751,7 @@ $(D)/lirc: $(D)/bootstrap $(ARCHIVE)/$(LIRC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lirc-$(LIRC_VER)
 	$(UNTAR)/$(LIRC_SOURCE)
-	set -e; cd $(BUILD_TMP)/lirc-$(LIRC_VER); \
+	$(CHDIR)/lirc-$(LIRC_VER); \
 		$(call apply_patches, $(LIRC_PATCH)); \
 		$(CONFIGURE) \
 		ac_cv_path_LIBUSB_CONFIG= \
@@ -793,7 +793,7 @@ $(D)/jpeg: $(D)/bootstrap $(ARCHIVE)/$(JPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/jpeg-$(JPEG_VER)
 	$(UNTAR)/$(JPEG_SOURCE)
-	set -e; cd $(BUILD_TMP)/jpeg-$(JPEG_VER); \
+	$(CHDIR)/jpeg-$(JPEG_VER); \
 		$(call apply_patches, $(JPEG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -831,7 +831,7 @@ $(D)/libjpeg_turbo2: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER)
 	$(UNTAR)/$(LIBJPEG_TURBO2_SOURCE)
-	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER); \
+	$(CHDIR)/libjpeg-turbo-$(LIBJPEG_TURBO2_VER); \
 		$(call apply_patches, $(LIBJPEG_TURBO2_PATCH)); \
 		cmake   -DCMAKE_INSTALL_PREFIX=/usr \
 			-DCMAKE_C_COMPILER=$(TARGET)-gcc \
@@ -863,7 +863,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO_VER)
 	$(UNTAR)/$(LIBJPEG_TURBO_SOURCE)
-	set -e; cd $(BUILD_TMP)/libjpeg-turbo-$(LIBJPEG_TURBO_VER); \
+	$(CHDIR)/libjpeg-turbo-$(LIBJPEG_TURBO_VER); \
 		export CC=$(TARGET)-gcc; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -908,7 +908,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libpng-$(LIBPNG_VER)
 	$(UNTAR)/$(LIBPNG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libpng-$(LIBPNG_VER); \
+	$(CHDIR)/libpng-$(LIBPNG_VER); \
 		$(call apply_patches, $(LIBPNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -939,7 +939,7 @@ $(D)/pngpp: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(PNGPP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/png++-$(PNGPP_VER)
 	$(UNTAR)/$(PNGPP_SOURCE)
-	set -e; cd $(BUILD_TMP)/png++-$(PNGPP_VER); \
+	$(CHDIR)/png++-$(PNGPP_VER); \
 		$(MAKE) install-headers PREFIX=$(TARGET_DIR)/usr
 	$(REMOVE)/png++-$(PNGPP_VER)
 	$(TOUCH)
@@ -957,7 +957,7 @@ $(D)/giflib: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/giflib-$(GIFLIB_VER)
 	$(UNTAR)/$(GIFLIB_SOURCE)
-	set -e; cd $(BUILD_TMP)/giflib-$(GIFLIB_VER); \
+	$(CHDIR)/giflib-$(GIFLIB_VER); \
 		export ac_cv_prog_have_xmlto=no; \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -983,7 +983,7 @@ $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libconfig-$(LIBCONFIG_VER)
 	$(UNTAR)/$(LIBCONFIG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libconfig-$(LIBCONFIG_VER); \
+	$(CHDIR)/libconfig-$(LIBCONFIG_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-static \
@@ -1019,7 +1019,7 @@ $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(
 	$(START_BUILD)
 	$(REMOVE)/curl-$(LIBCURL_VER)
 	$(UNTAR)/$(LIBCURL_SOURCE)
-	set -e; cd $(BUILD_TMP)/curl-$(LIBCURL_VER); \
+	$(CHDIR)/curl-$(LIBCURL_VER); \
 		$(call apply_patches, $(LIBCURL_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1070,7 +1070,7 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/fribidi-$(LIBFRIBIDI_VER)
 	$(UNTAR)/$(LIBFRIBIDI_SOURCE)
-	set -e; cd $(BUILD_TMP)/fribidi-$(LIBFRIBIDI_VER); \
+	$(CHDIR)/fribidi-$(LIBFRIBIDI_VER); \
 		$(call apply_patches, $(LIBFRIBIDI_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1106,7 +1106,7 @@ $(D)/libsigc: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libsigc++-$(LIBSIGC_VER)
 	$(UNTAR)/$(LIBSIGC_SOURCE)
-	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGC_VER); \
+	$(CHDIR)/libsigc++-$(LIBSIGC_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -1138,7 +1138,7 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(LIBMAD_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libmad-$(LIBMAD_VER)
 	$(UNTAR)/$(LIBMAD_SOURCE)
-	set -e; cd $(BUILD_TMP)/libmad-$(LIBMAD_VER); \
+	$(CHDIR)/libmad-$(LIBMAD_VER); \
 		$(call apply_patches, $(LIBMAD_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi $(SILENT_OPT); \
@@ -1170,7 +1170,7 @@ $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libid3tag-$(LIBID3TAG_VER)
 	$(UNTAR)/$(LIBID3TAG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libid3tag-$(LIBID3TAG_VER); \
+	$(CHDIR)/libid3tag-$(LIBID3TAG_VER); \
 		$(call apply_patches, $(LIBID3TAG_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi $(SILENT_OPT); \
@@ -1199,7 +1199,7 @@ $(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/flac-$(FLAC_VER)
 	$(UNTAR)/$(FLAC_SOURCE)
-	set -e; cd $(BUILD_TMP)/flac-$(FLAC_VER); \
+	$(CHDIR)/flac-$(FLAC_VER); \
 		$(call apply_patches, $(FLAC_PATCH)); \
 		touch NEWS AUTHORS ChangeLog; \
 		autoreconf -fi $(SILENT_OPT); \
@@ -1241,7 +1241,7 @@ $(D)/libogg: $(D)/bootstrap $(ARCHIVE)/$(LIBOGG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libogg-$(LIBOGG_VER)
 	$(UNTAR)/$(LIBOGG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libogg-$(LIBOGG_VER); \
+	$(CHDIR)/libogg-$(LIBOGG_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -1268,7 +1268,7 @@ $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBIS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libvorbis-$(LIBVORBIS_VER)
 	$(UNTAR)/$(LIBVORBIS_SOURCE)
-	set -e; cd $(BUILD_TMP)/libvorbis-$(LIBVORBIS_VER); \
+	$(CHDIR)/libvorbis-$(LIBVORBIS_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -1305,7 +1305,7 @@ $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE
 	$(START_BUILD)
 	$(REMOVE)/libvorbisidec-$(LIBVORBISIDEC_VER)
 	$(UNTAR)/$(LIBVORBISIDEC_SOURCE)
-	set -e; cd $(BUILD_TMP)/libvorbisidec-$(LIBVORBISIDEC_VER); \
+	$(CHDIR)/libvorbisidec-$(LIBVORBISIDEC_VER); \
 		$(call apply_patches, $(LIBVORBISIDEC_PATCH)); \
 		ACLOCAL_FLAGS="-I . -I $(TARGET_DIR)/usr/share/aclocal" \
 		$(BUILDENV) \
@@ -1334,7 +1334,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libiconv-$(LIBICONV_VER)
 	$(UNTAR)/$(LIBICONV_SOURCE)
-	set -e; cd $(BUILD_TMP)/libiconv-$(LIBICONV_VER); \
+	$(CHDIR)/libiconv-$(LIBICONV_VER); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -1365,7 +1365,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/expat-$(EXPAT_VER)
 	$(UNTAR)/$(EXPAT_SOURCE)
-	set -e; cd $(BUILD_TMP)/expat-$(EXPAT_VER); \
+	$(CHDIR)/expat-$(EXPAT_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1392,7 +1392,7 @@ $(D)/fontconfig: $(D)/bootstrap $(D)/freetype $(D)/expat $(ARCHIVE)/$(FONTCONFIG
 	$(START_BUILD)
 	$(REMOVE)/fontconfig-$(FONTCONFIG_VER)
 	$(UNTAR)/$(FONTCONFIG_SOURCE)
-	set -e; cd $(BUILD_TMP)/fontconfig-$(FONTCONFIG_VER); \
+	$(CHDIR)/fontconfig-$(FONTCONFIG_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-freetype-config=$(HOST_DIR)/bin/freetype-config \
@@ -1421,7 +1421,7 @@ $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDCSS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvdcss-$(LIBDVDCSS_VER)
 	$(UNTAR)/$(LIBDVDCSS_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdvdcss-$(LIBDVDCSS_VER); \
+	$(CHDIR)/libdvdcss-$(LIBDVDCSS_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-doc \
@@ -1447,7 +1447,7 @@ $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/$(LIBDVDNAV_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvdnav-$(LIBDVDNAV_VER)
 	$(UNTAR)/$(LIBDVDNAV_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdvdnav-$(LIBDVDNAV_VER); \
+	$(CHDIR)/libdvdnav-$(LIBDVDNAV_VER); \
 		$(call apply_patches, $(LIBDVDNAV_PATCH)); \
 		$(BUILDENV) \
 		libtoolize --copy --force --quiet --ltdl; \
@@ -1481,7 +1481,7 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDREAD_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvdread-$(LIBDVDREAD_VER)
 	$(UNTAR)/$(LIBDVDREAD_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdvdread-$(LIBDVDREAD_VER); \
+	$(CHDIR)/libdvdread-$(LIBDVDREAD_VER); \
 		$(call apply_patches, $(LIBDVDREAD_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1508,7 +1508,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 		else cd $(ARCHIVE); git clone git://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
-	set -e; cd $(BUILD_TMP)/libdreamdvd; \
+	$(CHDIR)/libdreamdvd; \
 		$(call apply_patches, $(LIBDREAMDVD_PATCH)); \
 		$(BUILDENV) \
 		libtoolize --copy --ltdl --force --quiet; \
@@ -1539,7 +1539,7 @@ $(D)/libass: $(D)/bootstrap $(D)/freetype $(D)/libfribidi $(ARCHIVE)/$(LIBASS_SO
 	$(START_BUILD)
 	$(REMOVE)/libass-$(LIBASS_VER)
 	$(UNTAR)/$(LIBASS_SOURCE)
-	set -e; cd $(BUILD_TMP)/libass-$(LIBASS_VER); \
+	$(CHDIR)/libass-$(LIBASS_VER); \
 		$(call apply_patches, $(LIBASS_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1569,7 +1569,7 @@ $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/$(SQLITE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/sqlite-autoconf-$(SQLITE_VER)
 	$(UNTAR)/$(SQLITE_SOURCE)
-	set -e; cd $(BUILD_TMP)/sqlite-autoconf-$(SQLITE_VER); \
+	$(CHDIR)/sqlite-autoconf-$(SQLITE_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1597,7 +1597,7 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$
 	$(START_BUILD)
 	$(REMOVE)/libsoup-$(LIBSOUP_VER)
 	$(UNTAR)/$(LIBSOUP_SOURCE)
-	set -e; cd $(BUILD_TMP)/libsoup-$(LIBSOUP_VER); \
+	$(CHDIR)/libsoup-$(LIBSOUP_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datarootdir=/.remove \
@@ -1633,7 +1633,7 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libxml2-$(LIBXML2_VER).tar.gz
 	$(UNTAR)/$(LIBXML2_SOURCE)
-	set -e; cd $(BUILD_TMP)/libxml2-$(LIBXML2_VER); \
+	$(CHDIR)/libxml2-$(LIBXML2_VER); \
 		$(call apply_patches, $(LIBXML2_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
@@ -1680,7 +1680,7 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libxslt-$(LIBXSLT_VER)
 	$(UNTAR)/$(LIBXSLT_SOURCE)
-	set -e; cd $(BUILD_TMP)/libxslt-$(LIBXSLT_VER); \
+	$(CHDIR)/libxslt-$(LIBXSLT_VER); \
 		$(CONFIGURE) \
 			CPPFLAGS="$(CPPFLAGS) -I$(TARGET_DIR)/usr/include/libxml2" \
 			--prefix=/usr \
@@ -1722,7 +1722,7 @@ $(D)/libpopt: $(D)/bootstrap $(ARCHIVE)/$(LIBPOPT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/popt-$(LIBPOPT_VER)
 	$(UNTAR)/$(LIBPOPT_SOURCE)
-	set -e; cd $(BUILD_TMP)/popt-$(LIBPOPT_VER); \
+	$(CHDIR)/popt-$(LIBPOPT_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-static \
@@ -1747,7 +1747,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libroxml-$(LIBROXML_VER)
 	$(UNTAR)/$(LIBROXML_SOURCE)
-	set -e; cd $(BUILD_TMP)/libroxml-$(LIBROXML_VER); \
+	$(CHDIR)/libroxml-$(LIBROXML_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -1775,7 +1775,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/pugixml-$(PUGIXML_VER)
 	$(UNTAR)/$(PUGIXML_SOURCE)
-	set -e; cd $(BUILD_TMP)/pugixml-$(PUGIXML_VER); \
+	$(CHDIR)/pugixml-$(PUGIXML_VER); \
 		$(call apply_patches, $(PUGIXML_PATCH)); \
 		cmake  --no-warn-unused-cli \
 			-DCMAKE_INSTALL_PREFIX=/usr \
@@ -1811,7 +1811,7 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SO
 	$(START_BUILD)
 	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
 	$(UNTAR)/$(GRAPHLCD_SOURCE)
-	set -e; cd $(BUILD_TMP)/graphlcd-git-$(GRAPHLCD_VER); \
+	$(CHDIR)/graphlcd-git-$(GRAPHLCD_VER); \
 		$(call apply_patches, $(GRAPHLCD_PATCH)); \
 		$(MAKE) -C glcdgraphics all TARGET=$(TARGET)- DESTDIR=$(TARGET_DIR); \
 		$(MAKE) -C glcddrivers all TARGET=$(TARGET)- DESTDIR=$(TARGET_DIR); \
@@ -1836,7 +1836,7 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/dpf-ax-git-$(LIBDPF_VER)
 	$(UNTAR)/$(LIBDPF_SOURCE)
-	set -e; cd $(BUILD_TMP)/dpf-ax-git-$(LIBDPF_VER)/dpflib; \
+	$(CHDIR)/dpf-ax-git-$(LIBDPF_VER)/dpflib; \
 		$(call apply_patches, $(LIBDPF_PATCH)); \
 		make libdpf.a CC=$(TARGET)-gcc PREFIX=$(TARGET_DIR)/usr; \
 		mkdir -p $(TARGET_INCLUDE_DIR)/libdpf; \
@@ -1866,7 +1866,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
 	$(UNTAR)/$(LCD4LINUX_SOURCE)
-	set -e; cd $(BUILD_TMP)/lcd4linux-git-$(LCD4LINUX_VER); \
+	$(CHDIR)/lcd4linux-git-$(LCD4LINUX_VER); \
 		$(call apply_patches, $(LCD4LINUX_PATCH)); \
 		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
@@ -1895,7 +1895,7 @@ $(D)/gd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/$(GD_S
 	$(START_BUILD)
 	$(REMOVE)/libgd-$(GD_VER)
 	$(UNTAR)/$(GD_SOURCE)
-	set -e; cd $(BUILD_TMP)/libgd-$(GD_VER); \
+	$(CHDIR)/libgd-$(GD_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--bindir=/.remove \
@@ -1928,7 +1928,7 @@ $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libusb-$(LIBUSB_VER)
 	$(UNTAR)/$(LIBUSB_SOURCE)
-	set -e; cd $(BUILD_TMP)/libusb-$(LIBUSB_VER); \
+	$(CHDIR)/libusb-$(LIBUSB_VER); \
 		$(call apply_patches, $(LIBUSB_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -1958,7 +1958,7 @@ $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE
 	$(START_BUILD)
 	$(REMOVE)/libusb-compat-$(LIBUSB_COMPAT_VER)
 	$(UNTAR)/$(LIBUSB_COMPAT_SOURCE)
-	set -e; cd $(BUILD_TMP)/libusb-compat-$(LIBUSB_COMPAT_VER); \
+	$(CHDIR)/libusb-compat-$(LIBUSB_COMPAT_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-log \
@@ -1988,7 +1988,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/alsa-lib-$(ALSA_LIB_VER)
 	$(UNTAR)/$(ALSA_LIB_SOURCE)
-	set -e; cd $(BUILD_TMP)/alsa-lib-$(ALSA_LIB_VER); \
+	$(CHDIR)/alsa-lib-$(ALSA_LIB_VER); \
 		$(call apply_patches, $(ALSA_LIB_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2026,7 +2026,7 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/alsa-utils-$(ALSA_UTILS_VER)
 	$(UNTAR)/$(ALSA_UTILS_SOURCE)
-	set -e; cd $(BUILD_TMP)/alsa-utils-$(ALSA_UTILS_VER); \
+	$(CHDIR)/alsa-utils-$(ALSA_UTILS_VER); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
 		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal $(SILENT_OPT); \
 		$(CONFIGURE) \
@@ -2066,7 +2066,7 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/OpenThreads-$(LIBOPENTHREADS_VER)
 	$(UNTAR)/$(LIBOPENTHREADS_SOURCE)
-	set -e; cd $(BUILD_TMP)/OpenThreads-$(LIBOPENTHREADS_VER); \
+	$(CHDIR)/OpenThreads-$(LIBOPENTHREADS_VER); \
 		$(call apply_patches, $(LIBOPENTHREADS_PATCH)); \
 		echo "# dummy file to prevent warning message" > examples/CMakeLists.txt; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \
@@ -2099,7 +2099,7 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/rtmpdump-git-$(LIBRTMP_VER)
 	$(UNTAR)/$(LIBRTMP_SOURCE)
-	set -e; cd $(BUILD_TMP)/rtmpdump-git-$(LIBRTMP_VER); \
+	$(CHDIR)/rtmpdump-git-$(LIBRTMP_VER); \
 		$(call apply_patches, $(LIBRTMP_PATCH)); \
 		$(MAKE) CROSS_COMPILE=$(TARGET)- XCFLAGS="-I$(TARGET_INCLUDE_DIR) -L$(TARGET_LIB_DIR)" LDFLAGS="-L$(TARGET_LIB_DIR)"; \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR) MANDIR=$(TARGET_DIR)/.remove
@@ -2123,7 +2123,7 @@ $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvbsi-git-$(LIBDVBSI_VER)
 	$(UNTAR)/$(LIBDVBSI_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdvbsi-git-$(LIBDVBSI_VER); \
+	$(CHDIR)/libdvbsi-git-$(LIBDVBSI_VER); \
 		$(call apply_patches, $(LIBDVBSI_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2148,7 +2148,7 @@ $(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/$(LIBMODPLUG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
 	$(UNTAR)/$(LIBMODPLUG_SOURCE)
-	set -e; cd $(BUILD_TMP)/libmodplug-$(LIBMODPLUG_VER); \
+	$(CHDIR)/libmodplug-$(LIBMODPLUG_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2172,7 +2172,7 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lzo-$(LZO_VER)
 	$(UNTAR)/$(LZO_SOURCE)
-	set -e; cd $(BUILD_TMP)/lzo-$(LZO_VER); \
+	$(CHDIR)/lzo-$(LZO_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--docdir=/.remove \
@@ -2198,7 +2198,7 @@ $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(
 	$(START_BUILD)
 	$(REMOVE)/minidlna-$(MINIDLNA_VER)
 	$(UNTAR)/$(MINIDLNA_SOURCE)
-	set -e; cd $(BUILD_TMP)/minidlna-$(MINIDLNA_VER); \
+	$(CHDIR)/minidlna-$(MINIDLNA_VER); \
 		$(call apply_patches, $(MINIDLNA_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
@@ -2222,7 +2222,7 @@ $(D)/libexif: $(D)/bootstrap $(ARCHIVE)/$(LIBEXIF_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libexif-$(LIBEXIF_VER)
 	$(UNTAR)/$(LIBEXIF_SOURCE)
-	set -e; cd $(BUILD_TMP)/libexif-$(LIBEXIF_VER); \
+	$(CHDIR)/libexif-$(LIBEXIF_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2253,7 +2253,7 @@ $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(DJMOUNT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/djmount-$(DJMOUNT_VER)
 	$(UNTAR)/$(DJMOUNT_SOURCE)
-	set -e; cd $(BUILD_TMP)/djmount-$(DJMOUNT_VER); \
+	$(CHDIR)/djmount-$(DJMOUNT_VER); \
 		touch libupnp/config.aux/config.rpath; \
 		$(call apply_patches, $(DJMOUNT_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
@@ -2279,7 +2279,7 @@ $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libupnp-$(LIBUPNP_VER)
 	$(UNTAR)/$(LIBUPNP_SOURCE)
-	set -e; cd $(BUILD_TMP)/libupnp-$(LIBUPNP_VER); \
+	$(CHDIR)/libupnp-$(LIBUPNP_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 		; \
@@ -2305,7 +2305,7 @@ $(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(RARFS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/rarfs-$(RARFS_VER)
 	$(UNTAR)/$(RARFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/rarfs-$(RARFS_VER); \
+	$(CHDIR)/rarfs-$(RARFS_VER); \
 		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
 		$(CONFIGURE) \
 			CFLAGS="$(TARGET_CFLAGS) -D_FILE_OFFSET_BITS=64" \
@@ -2331,7 +2331,7 @@ $(D)/sshfs: $(D)/bootstrap $(D)/libglib2 $(D)/fuse $(ARCHIVE)/$(SSHFS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/sshfs-$(SSHFS_VER)
 	$(UNTAR)/$(SSHFS_SOURCE)
-	set -e; cd $(BUILD_TMP)/sshfs-$(SSHFS_VER); \
+	$(CHDIR)/sshfs-$(SSHFS_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2354,7 +2354,7 @@ $(D)/howl: $(D)/bootstrap $(ARCHIVE)/$(HOWL_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/howl-$(HOWL_VER)
 	$(UNTAR)/$(HOWL_SOURCE)
-	set -e; cd $(BUILD_TMP)/howl-$(HOWL_VER); \
+	$(CHDIR)/howl-$(HOWL_VER); \
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
@@ -2379,7 +2379,7 @@ $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/$(LIBDAEMON_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdaemon-$(LIBDAEMON_VER)
 	$(UNTAR)/$(LIBDAEMON_SOURCE)
-	set -e; cd $(BUILD_TMP)/libdaemon-$(LIBDAEMON_VER); \
+	$(CHDIR)/libdaemon-$(LIBDAEMON_VER); \
 		$(CONFIGURE) \
 			ac_cv_func_setpgrp_void=yes \
 			--prefix=/usr \
@@ -2407,7 +2407,7 @@ $(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBPLIST_SOURCE)
 	$(REMOVE)/libplist-$(LIBPLIST_VER)
 	$(UNTAR)/$(LIBPLIST_SOURCE)
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
-	set -e; cd $(BUILD_TMP)/libplist-$(LIBPLIST_VER); \
+	$(CHDIR)/libplist-$(LIBPLIST_VER); \
 		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
 		cmake . -DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_SYSTEM_NAME="Linux" \
@@ -2438,7 +2438,7 @@ $(D)/libao: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(LIBAO_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libao-$(LIBAO_VER)
 	$(UNTAR)/$(LIBAO_SOURCE)
-	set -e; cd $(BUILD_TMP)/libao-$(LIBAO_VER); \
+	$(CHDIR)/libao-$(LIBAO_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
@@ -2467,7 +2467,7 @@ $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/$(NETTLE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/nettle-$(NETTLE_VER)
 	$(UNTAR)/$(NETTLE_SOURCE)
-	set -e; cd $(BUILD_TMP)/nettle-$(NETTLE_VER); \
+	$(CHDIR)/nettle-$(NETTLE_VER); \
 		$(call apply_patches, $(NETTLE_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -2496,7 +2496,7 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/$(GNUTLS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/gnutls-$(GNUTLS_VER)
 	$(UNTAR)/$(GNUTLS_SOURCE)
-	set -e; cd $(BUILD_TMP)/gnutls-$(GNUTLS_VER); \
+	$(CHDIR)/gnutls-$(GNUTLS_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -2539,7 +2539,7 @@ $(D)/glib_networking: $(D)/bootstrap $(D)/gnutls $(D)/libglib2 $(ARCHIVE)/$(GLIB
 	$(START_BUILD)
 	$(REMOVE)/glib-networking-$(GLIB_NETWORKING_VER)
 	$(UNTAR)/$(GLIB_NETWORKING_SOURCE)
-	set -e; cd $(BUILD_TMP)/glib-networking-$(GLIB_NETWORKING_VER); \
+	$(CHDIR)/glib-networking-$(GLIB_NETWORKING_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--datadir=/.remove \
