@@ -19,7 +19,7 @@ $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER
 	$(REMOVE)/links-$(LINKS_VER)
 	$(UNTAR)/links-$(LINKS_VER).tar.bz2
 	set -e; cd $(BUILD_TMP)/links-$(LINKS_VER); \
-		$(call apply_patches,$(LINKS_PATCH)); \
+		$(call apply_patches, $(LINKS_PATCH)); \
 		$(CONFIGURE) \
 			--prefix= \
 			--mandir=/.remove \
@@ -136,7 +136,7 @@ $(D)/neutrino-mp-plugin-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutri
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
 	set -e; cd $(BUILD_TMP)/xupnpd; \
-		$(call apply_patches,$(XUPNPD_PATCH))
+		$(call apply_patches, $(XUPNPD_PATCH))
 	set -e; cd $(BUILD_TMP)/xupnpd/src; \
 		$(BUILDENV) \
 		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
@@ -186,7 +186,7 @@ $(D)/neutrino-mp-plugin-mediathek:
 	cp -ra $(ARCHIVE)/plugins-mediathek.git $(BUILD_TMP)/plugins-mediathek
 	install -d $(TARGET_DIR)/var/tuxbox/plugins
 	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
-		$(call apply_patches,$(NEUTRINO_MEDIATHEK_PATCH))
+		$(call apply_patches, $(NEUTRINO_MEDIATHEK_PATCH))
 	set -e; cd $(BUILD_TMP)/plugins-mediathek; \
 		cp -a plugins/* $(TARGET_DIR)/var/tuxbox/plugins/; \
 		cp -a share $(TARGET_DIR)/usr/
@@ -233,7 +233,7 @@ $(D)/neutrino-hd2-plugins.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-hd2-plugins
 	ln -s $(SOURCE_DIR)/neutrino-hd2.git/plugins $(SOURCE_DIR)/neutrino-hd2-plugins
 	set -e; cd $(SOURCE_DIR)/neutrino-hd2-plugins; \
-		$(call apply_patches,$(NEUTRINO_HD2_PLUGINS_PATCHES))
+		$(call apply_patches, $(NEUTRINO_HD2_PLUGINS_PATCHES))
 	@touch $@
 
 $(D)/neutrino-hd2-plugins.config.status: $(D)/bootstrap neutrino-hd2

@@ -47,7 +47,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
-		$(call apply_patches,$(FFMPEG_PATCH)); \
+		$(call apply_patches, $(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffplay \
 			--disable-ffprobe \
@@ -386,7 +386,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)
 	set -e; cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER); \
-		$(call apply_patches,$(FFMPEG_PATCH)); \
+		$(call apply_patches, $(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffserver \
 			--disable-ffplay \

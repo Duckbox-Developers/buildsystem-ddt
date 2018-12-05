@@ -59,7 +59,7 @@ crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_N
 		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
 		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
 		\
-		$(call apply_patches,$(CROSSTOOL_BOXTYPE_PATCH)); \
+		$(call apply_patches, $(CROSSTOOL_BOXTYPE_PATCH)); \
 		\
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
 		export CT_NG_BASE_DIR=$(CROSS_BASE); \

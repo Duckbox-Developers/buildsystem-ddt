@@ -26,7 +26,7 @@ $(D)/gstreamer: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
 	$(UNTAR)/$(GSTREAMER_SOURCE)
 	set -e; cd $(BUILD_TMP)/gstreamer-$(GSTREAMER_VER); \
-		$(call apply_patches,$(GSTREAMER_PATCH)); \
+		$(call apply_patches, $(GSTREAMER_PATCH)); \
 		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -79,7 +79,7 @@ $(D)/gst_plugins_base: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstr
 	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)
 	$(UNTAR)/$(GST_PLUGINS_BASE_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-base-$(GST_PLUGINS_BASE_VER); \
-		$(call apply_patches,$(GST_PLUGINS_BASE_PATCH)); \
+		$(call apply_patches, $(GST_PLUGINS_BASE_PATCH)); \
 		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -146,7 +146,7 @@ $(D)/gst_plugins_good: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(
 	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)
 	$(UNTAR)/$(GST_PLUGINS_GOOD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER); \
-		$(call apply_patches,$(GST_PLUGINS_GOOD_PATCH)); \
+		$(call apply_patches, $(GST_PLUGINS_GOOD_PATCH)); \
 		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -184,7 +184,7 @@ $(D)/gst_plugins_bad: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/
 	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)
 	$(UNTAR)/$(GST_PLUGINS_BAD_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER); \
-		$(call apply_patches,$(GST_PLUGINS_BAD_PATCH)); \
+		$(call apply_patches, $(GST_PLUGINS_BAD_PATCH)); \
 		./autogen.sh --noconfigure $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--build=$(BUILD) \
@@ -348,7 +348,7 @@ $(D)/gst_libav: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$
 	$(REMOVE)/gst-libav-$(GST_LIBAV_VER)
 	$(UNTAR)/$(GST_LIBAV_SOURCE)
 	set -e; cd $(BUILD_TMP)/gst-libav-$(GST_LIBAV_VER); \
-		$(call apply_patches,$(GST_LIBAV_PATCH)); \
+		$(call apply_patches, $(GST_LIBAV_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-fatal-warnings \
