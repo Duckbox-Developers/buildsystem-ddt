@@ -306,9 +306,9 @@ index 0000000..826843c
 +		{
 +			int w=-1;
 +			w = write(fd, row_pointers_bit_shift, height * width * 4);
-+			printf("write ret : %d\n",w);
++//			printf("write ret : %d\n",w);
 +			//ret = ioctl(lcdfd, 0);
-+			printf("write to /dev/dbox/oled0 : %d\n",w);
++//			printf("write to /dev/dbox/oled0 : %d\n",w);
 +		}
 +	}
 +}
