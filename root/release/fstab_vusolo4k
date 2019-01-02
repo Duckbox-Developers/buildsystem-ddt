@@ -1,0 +1,13 @@
+# /etc/fstab: static file system information.
+#
+# <file system>	<mount point>	<type>	<options>					<dump>	<pass>
+#/dev/root	/		auto	defaults,errors=remount-rw,noatime,nodiratime	0	0
+proc		/proc		proc	defaults					0	0
+sysfs		/sys		sys	defaults					0	0
+tmpfs		/media		media	defaults					0	0
+tmpfs		/tmp		tmpfs	defaults					0	0
+#
+#/dev/sda1	/hdd		auto	defaults,noatime,nodiratime			0	2
+#/dev/sdb1	/hdd		auto	defaults,noatime,nodiratime			0	2
+#/dev/sdc1	/hdd		auto	defaults,noatime,nodiratime			0	2
+#/dev/sdd1	/hdd		auto	defaults,noatime,nodiratime			0	2
