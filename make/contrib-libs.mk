@@ -628,7 +628,7 @@ BZIP2_SOURCE = bzip2-$(BZIP2_VER).tar.gz
 BZIP2_Patch = bzip2-$(BZIP2_VER).patch
 
 $(ARCHIVE)/$(BZIP2_SOURCE):
-	$(WGET) http://www.bzip.org/$(BZIP2_VER)/$(BZIP2_SOURCE)
+	$(WGET) https://sourceforge.net/projects/bzip2/files//$(BZIP2_SOURCE)
 
 $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 	$(START_BUILD)
