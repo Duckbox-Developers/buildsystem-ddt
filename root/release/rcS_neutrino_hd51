@@ -14,12 +14,7 @@ EOF
   rm /var/etc/.firstboot
 fi
 
-mount -t proc proc /proc
-mount -t sysfs sys /sys
-mount -t tmpfs tmp /tmp
-mount -t tmpfs media /media
 mkdir -p /dev/pts
-mount -t devpts devpts /dev/pts
 
 echo "[rcS] starting mountall"
 /etc/init.d/mountall start
