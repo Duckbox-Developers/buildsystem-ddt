@@ -1,7 +1,13 @@
 #
 # busybox
 #
+ifeq ($(BUSYBOX_SNAPSHOT), 1)
+BUSYBOX_VER = snapshot
+BB_SNAPSHOT =
+else
 BUSYBOX_VER = 1.29.3
+BB_SNAPSHOT = -$(BUSYBOX_VER)
+endif
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VER).tar.bz2
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VER)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-unicode.patch
@@ -22,16 +28,24 @@ endif
 
 $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/$(BUSYBOX_SOURCE) $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
+ifeq ($(BUSYBOX_SNAPSHOT), 1)
+	$(REMOVE)/busybox
+else
 	$(REMOVE)/busybox-$(BUSYBOX_VER)
+endif
 	$(UNTAR)/$(BUSYBOX_SOURCE)
-	$(CHDIR)/busybox-$(BUSYBOX_VER); \
+	$(CHDIR)/busybox$(BB_SNAPSHOT); \
 		$(call apply_patches, $(BUSYBOX_PATCH)); \
 		install -m 0644 $(lastword $^) .config; \
 		sed -i -e 's#^CONFIG_PREFIX.*#CONFIG_PREFIX="$(TARGET_DIR)"#' .config; \
 		$(BUILDENV) \
 		$(MAKE) busybox ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
 		$(MAKE) install ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGET_DIR)
+ifeq ($(BUSYBOX_SNAPSHOT), 1)
+	$(REMOVE)/busybox
+else
 	$(REMOVE)/busybox-$(BUSYBOX_VER)
+endif
 	$(TOUCH)
 
 #
