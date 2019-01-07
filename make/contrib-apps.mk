@@ -28,11 +28,7 @@ endif
 
 $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/$(BUSYBOX_SOURCE) $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
-ifeq ($(BUSYBOX_SNAPSHOT), 1)
-	$(REMOVE)/busybox
-else
-	$(REMOVE)/busybox-$(BUSYBOX_VER)
-endif
+	$(REMOVE)/busybox$(BB_SNAPSHOT)
 	$(UNTAR)/$(BUSYBOX_SOURCE)
 	$(CHDIR)/busybox$(BB_SNAPSHOT); \
 		$(call apply_patches, $(BUSYBOX_PATCH)); \
@@ -41,11 +37,7 @@ endif
 		$(BUILDENV) \
 		$(MAKE) busybox ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
 		$(MAKE) install ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGET_DIR)
-ifeq ($(BUSYBOX_SNAPSHOT), 1)
-	$(REMOVE)/busybox
-else
-	$(REMOVE)/busybox-$(BUSYBOX_VER)
-endif
+	$(REMOVE)/busybox$(BB_SNAPSHOT)
 	$(TOUCH)
 
 #
