@@ -378,6 +378,10 @@ FFMPEG_DEPS =
 FFMPEG_CONF_OPTS = 
 FFMPRG_EXTRA_CFLAGS =
 
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+FFMPEG_CONF_OPTS = --enable-muxer=hevc --enable-parser=hevc --enable-decoder=hevc
+endif
+
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
