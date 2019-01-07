@@ -70,7 +70,7 @@ diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
 index ea2446a89814..8b70f99e7633 100644
 --- a/scripts/kconfig/conf.c
 +++ b/scripts/kconfig/conf.c
-@@ -537,7 +537,7 @@ int main(int ac, char **av)
+@@ -539,7 +539,7 @@ int main(int ac, char **av)
  			break;
  		case 's':
  			input_mode = ask_silent;
