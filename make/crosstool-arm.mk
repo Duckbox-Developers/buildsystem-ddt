@@ -40,10 +40,8 @@ endif
 ifeq ($(wildcard $(CROSS_BASE)/build.log.bz2),)
 CROSSTOOL = crosstool
 crosstool:
-	make MAKEFLAGS=--no-print-directory crosstool-ng
-	ifeq ($(wildcard $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz),)
+	make crosstool-ng
 	make crosstool-backup
-	endif
 
 crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	make $(BUILD_TMP)
@@ -80,11 +78,9 @@ crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_N
 	$(REMOVE)/crosstool-ng-git-$(CROSSTOOL_NG_VER)
 endif
 
-ifeq ($(wildcard $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz),)
 crosstool-backup:
 	cd $(CROSS_BASE); \
 	tar czvf $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz *
-endif
 
 crosstool-restore: $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz
 	rm -rf $(CROSS_BASE) ; \
