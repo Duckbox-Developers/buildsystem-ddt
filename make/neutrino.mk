@@ -107,6 +107,11 @@ N_CONFIG_OPTS += --enable-flac
 NEUTRINO_DEPS += $(D)/flac
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+N_CONFIG_OPTS += --enable-graphlcd
+NEUTRINO_DEPS += $(D)/graphlcd
+endif
+
 ifeq  ($(FLAVOUR), neutrino-mp-ni)
 GIT_URL     ?= https://bitbucket.org/neutrino-images
 NEUTRINO_MP  = ni-neutrino-hd
