@@ -41,7 +41,7 @@ endif
 
 ifeq ($(BOXTYPE), vusolo4k)
 DRIVER_VER = 3.14.28
-DRIVER_DATE = 20180702
+DRIVER_DATE = 20181204
 DRIVER_REV = r0
 DRIVER_SRC = vuplus-dvb-proxy-$(KERNEL_TYPE)-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
 
@@ -127,7 +127,7 @@ ifeq ($(BOXTYPE), vusolo4k)
 # platform util
 #
 UTIL_VER = 17.1
-UTIL_DATE = 20180702
+UTIL_DATE = 20181204
 UTIL_REV = r0
 UTIL_SRC = platform-util-$(KERNEL_TYPE)-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
 
@@ -145,7 +145,7 @@ $(D)/platform_util: $(D)/bootstrap $(ARCHIVE)/$(UTIL_SRC)
 # libgles
 #
 GLES_VER = 17.1
-GLES_DATE = 20180702
+GLES_DATE = 20181204
 GLES_REV = r0
 GLES_SRC = libgles-$(KERNEL_TYPE)-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
 
