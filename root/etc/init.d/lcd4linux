@@ -1,8 +1,5 @@
 #!/bin/sh
 
-[ -x /usr/bin/lcd4linux ]	|| exit 1
-[ -e /tmp/.lcd-* ]		|| exit 1
-
 configfile() {
 	read layout < /tmp/lcd/layout
 	test $layout = user && CONF_DIR=/var/etc || CONF_DIR=/etc
@@ -10,13 +7,16 @@ configfile() {
 	chmod 600 ${CONF_DIR}/lcd4linux.conf
 	chown 0:0 ${CONF_DIR}/lcd4linux.conf
 
-	printf "${CONF_DIR}/lcd4linux.conf"
+	lcd4l_dpf_type="$(sed -n 's/lcd4l_dpf_type=//p' /var/tuxbox/config/neutrino.conf)"
+	[ "$lcd4l_dpf_type" == "3" ] && L4LADD='-o /tmp/lcd4linux.png'
+
+	printf "${CONF_DIR}/lcd4linux.conf $L4LADD"
 }
 
 doStart() {
 	( # do always run in background
 		while [ ! -e /tmp/.lcd4linux ]; do sleep 2; done
-		/usr/bin/lcd4linux -q -f $(configfile)
+		lcd4linux -f $(configfile)
 	) &
 }
 
@@ -25,21 +25,13 @@ doStop() {
 		# read pid from pidfile
 		read PID < /tmp/lcd4linux.pid
 
-		# kill child processes
-		CHILDS=$(ps -o pid --ppid $PID --no-heading)
-		for CHILD in $CHILDS; do
-			kill -KILL $CHILD
-		done
-		sleep 5
-
 		# terminate main process
 		kill -TERM $PID > /dev/null 2>&1 &
-		sleep 5
 	fi
 }
 
 doOff() {
-	echo "LCD::backlight(0)" | /usr/bin/lcd4linux -q -i > /dev/null 2>&1
+	echo "LCD::backlight(0)" | lcd4linux -i > /dev/null 2>&1
 }
 
 case "$1" in
