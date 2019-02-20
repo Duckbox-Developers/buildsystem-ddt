@@ -454,10 +454,10 @@ $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$
 #
 # luacurl
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo_250hd cuberevo_2000hd))
+ifeq ($(BOXARCH), sh4)
 LUACURL_VER = 9ac72c7
 else
-LUACURL_VER = e0b1d2ee
+LUACURL_VER = e0b1d2e
 endif
 LUACURL_SOURCE = luacurl-git-$(LUACURL_VER).tar.bz2
 LUACURL_URL = git://github.com/Lua-cURL/Lua-cURLv3.git
@@ -1006,7 +1006,7 @@ $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 #
 # libcurl
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922 ipbox55 ipbox99 ipbox9900 cuberevo_250hd cuberevo_2000hd))
+ifeq ($(BOXARCH), sh4)
 LIBCURL_VER = 7.61.1
 else
 LIBCURL_VER = 7.64.0
