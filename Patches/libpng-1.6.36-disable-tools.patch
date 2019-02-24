@@ -17,5 +17,5 @@
  @HAVE_CLOCK_GETTIME_TRUE@am__append_1 = timepng
 -bin_PROGRAMS = pngfix$(EXEEXT) png-fix-itxt$(EXEEXT)
  @PNG_ARM_NEON_TRUE@am__append_2 = arm/arm_init.c\
- @PNG_ARM_NEON_TRUE@	arm/filter_neon.S arm/filter_neon_intrinsics.c
- 
+ @PNG_ARM_NEON_TRUE@	arm/filter_neon.S arm/filter_neon_intrinsics.c \
+ @PNG_ARM_NEON_TRUE@	arm/palette_neon_intrinsics.c
