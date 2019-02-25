@@ -2000,7 +2000,7 @@ ALSA_LIB_PATCH  = alsa-lib-$(ALSA_LIB_VER).patch
 ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-link_fix.patch
 
 $(ARCHIVE)/$(ALSA_LIB_SOURCE):
-	$(WGET) ftp://ftp.alsa-project.org/pub/lib/$(ALSA_LIB_SOURCE)
+	$(WGET) https://www.alsa-project.org/files/pub/lib/$(ALSA_LIB_SOURCE)
 
 $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 	$(START_BUILD)
@@ -2038,7 +2038,7 @@ ALSA_UTILS_VER = 1.1.8
 ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VER).tar.bz2
 
 $(ARCHIVE)/$(ALSA_UTILS_SOURCE):
-	$(WGET) ftp://ftp.alsa-project.org/pub/utils/$(ALSA_UTILS_SOURCE)
+	$(WGET) https://www.alsa-project.org/files/pub/utils/$(ALSA_UTILS_SOURCE)
 
 $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(START_BUILD)
