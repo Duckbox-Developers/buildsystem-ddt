@@ -32,6 +32,7 @@ FFMPEG_DEPS = $(D)/librtmp
 FFMPEG_CONF_OPTS  = --enable-librtmp
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
+FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
 else
 FFMPEG_CONF_OPTS  += --disable-yasm
