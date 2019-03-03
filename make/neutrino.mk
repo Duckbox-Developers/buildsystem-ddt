@@ -112,6 +112,24 @@ N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif
 
+ifeq ($(EXTERNAL_LCD), graphlcd)
+N_CONFIG_OPTS += --enable-graphlcd
+NEUTRINO_DEPS += $(D)/graphlcd
+endif
+
+ifeq ($(EXTERNAL_LCD), lcd4linux)
+N_CONFIG_OPTS += --enable-lcd4linux
+NEUTRINO_DEPS += $(D)/lcd4linux
+#NEUTRINO_DEPS += $(D)/neutrino-mp-plugin-l4l-skins
+endif
+
+ifeq ($(EXTERNAL_LCD), both)
+N_CONFIG_OPTS += --enable-graphlcd
+NEUTRINO_DEPS += $(D)/graphlcd
+N_CONFIG_OPTS += --enable-lcd4linux
+NEUTRINO_DEPS += $(D)/lcd4linux
+endif
+
 ifeq  ($(FLAVOUR), neutrino-mp-ni)
 GIT_URL     ?= https://bitbucket.org/neutrino-images
 NEUTRINO_MP  = ni-neutrino-hd
