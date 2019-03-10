@@ -1,0 +1,53 @@
+--- a/source3/script/installmodules.sh.org	2015-02-22 15:11:32.000000000 +0100
++++ b/source3/script/installmodules.sh	2019-03-09 10:27:49.274989036 +0100
+@@ -29,11 +29,11 @@
+ for p in $*; do
+  p2=`basename $p`
+  name=`echo $p2 | sed -es/${mtype}_//`
+- echo Preserving old module as $DESTDIR/$LIBDIR/$name.old
+- if [ -f $DESTDIR/$LIBDIR/$name ]; then
+-   rm -f $DESTDIR/$LIBDIR/$name.old
+-   mv $DESTDIR/$LIBDIR/$name $DESTDIR/$LIBDIR/$name.old
+- fi
++ #echo Preserving old module as $DESTDIR/$LIBDIR/$name.old
++ #if [ -f $DESTDIR/$LIBDIR/$name ]; then
++ #  rm -f $DESTDIR/$LIBDIR/$name.old
++ #  mv $DESTDIR/$LIBDIR/$name $DESTDIR/$LIBDIR/$name.old
++ #fi
+  echo Installing $p as $DESTDIR/$LIBDIR/$name
+  cp -f $p $DESTDIR/$LIBDIR/$name
+  chmod $INSTALLPERMS $DESTDIR/$LIBDIR/$name
+--- a/source3/script/installbin.sh.in.org	2015-02-22 15:11:32.000000000 +0100
++++ b/source3/script/installbin.sh.in	2019-03-10 16:23:02.669416663 +0100
+@@ -13,10 +13,10 @@
+ for p in $*; do
+  p2=`basename $p`
+  echo "Installing $p as $DESTDIR/$BINDIR/$p2 "
+- if [ -f $DESTDIR/$BINDIR/$p2 ]; then
+-   rm -f $DESTDIR/$BINDIR/$p2.old
+-   mv $DESTDIR/$BINDIR/$p2 $DESTDIR/$BINDIR/$p2.old
+- fi
++# if [ -f $DESTDIR/$BINDIR/$p2 ]; then
++#   rm -f $DESTDIR/$BINDIR/$p2.old
++#   mv $DESTDIR/$BINDIR/$p2 $DESTDIR/$BINDIR/$p2.old
++# fi
+  cp $p $DESTDIR/$BINDIR/
+  chmod $INSTALLPERMS $DESTDIR/$BINDIR/$p2
+ done
+--- a/source3/script/installscripts.sh.org	2015-02-22 15:11:32.000000000 +0100
++++ b/source3/script/installscripts.sh	2019-03-10 16:57:24.644168880 +0100
+@@ -24,10 +24,10 @@
+ for p in $*; do
+   p2=`basename $p`
+   echo Installing $BINDIR/$p2
+-  if [ -f $BINDIR/$p2 ]; then
+-    rm -f $BINDIR/$p2.old
+-    mv $BINDIR/$p2 $BINDIR/$p2.old
+-  fi
++#  if [ -f $BINDIR/$p2 ]; then
++#    rm -f $BINDIR/$p2.old
++#    mv $BINDIR/$p2 $BINDIR/$p2.old
++#  fi
+   cp $p $BINDIR/
+   chmod $INSTALLPERMS $BINDIR/$p2
+   if [ ! -f $BINDIR/$p2 ]; then

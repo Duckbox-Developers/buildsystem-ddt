@@ -1374,6 +1374,21 @@ SAMBA_VER = 3.6.25
 SAMBA_SOURCE = samba-$(SAMBA_VER).tar.gz
 SAMBA_PATCH = $(PATCHES)/samba
 
+ifeq ($(SAMBA_SMALL_INSTALL), 1)
+SAMBA_INSTALL = \
+		$(MAKE) $(MAKE_OPTS) \
+			installservers installbin installdat installmodules \
+			SBIN_PROGS="bin/samba_multicall" \
+			BIN_PROGS="bin/testparm" \
+			DESTDIR=$(TARGET_DIR) prefix=./. ;
+else
+SAMBA_INSTALL = \
+		$(MAKE) $(MAKE_OPTS) \
+			installservers installbin installscripts installdat installmodules \
+			SBIN_PROGS="bin/samba_multicall" \
+			DESTDIR=$(TARGET_DIR) prefix=./. ;
+endif
+
 $(ARCHIVE)/$(SAMBA_SOURCE):
 	$(WGET) https://ftp.samba.org/pub/samba/stable/$(SAMBA_SOURCE)
 
@@ -1467,13 +1482,16 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 			--without-libaddns \
 		; \
 		$(MAKE) $(MAKE_OPTS); \
-		$(MAKE) $(MAKE_OPTS) installservers installbin installscripts installdat installmodules \
-			SBIN_PROGS="bin/samba_multicall" DESTDIR=$(TARGET_DIR) prefix=./. ; \
-			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/nmbd
-			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/smbd
-			ln -s samba_multicall $(TARGET_DIR)/usr/sbin/smbpasswd
+		$(SAMBA_INSTALL)
+			ln -sf samba_multicall $(TARGET_DIR)/usr/sbin/nmbd
+			ln -sf samba_multicall $(TARGET_DIR)/usr/sbin/smbd
+			ln -sf samba_multicall $(TARGET_DIR)/usr/sbin/smbpasswd
 	install -m 755 $(SKEL_ROOT)/etc/init.d/samba $(TARGET_DIR)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/samba/smb.conf $(TARGET_DIR)/etc/samba/
+	rm -rf $(TARGET_DIR)/usr/lib/pdb
+	rm -rf $(TARGET_DIR)/usr/lib/perfcount
+	rm -rf $(TARGET_DIR)/usr/lib/nss_info
+	rm -rf $(TARGET_DIR)/usr/lib/gpext
 	$(REMOVE)/samba-$(SAMBA_VER)
 	$(TOUCH)
 
