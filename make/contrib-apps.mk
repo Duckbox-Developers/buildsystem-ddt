@@ -1413,11 +1413,13 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 		samba_cv_HAVE_IFACE_IFCONF=yes \
 		samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=yes \
 		samba_cv_HAVE_SECURE_MKSTEMP=yes \
+		libreplace_cv_HAVE_SECURE_MKSTEMP=yes \
 		samba_cv_HAVE_WRFILE_KEYTAB=no \
 		samba_cv_USE_SETREUID=yes \
 		samba_cv_USE_SETRESUID=yes \
 		samba_cv_have_setreuid=yes \
 		samba_cv_have_setresuid=yes \
+		samba_cv_optimize_out_funcation_calls=no \
 		ac_cv_header_zlib_h=no \
 		samba_cv_zlib_1_2_3=no \
 		ac_cv_path_PYTHON="" \
