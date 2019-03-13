@@ -1998,6 +1998,7 @@ ALSA_LIB_VER = 1.1.8
 ALSA_LIB_SOURCE = alsa-lib-$(ALSA_LIB_VER).tar.bz2
 ALSA_LIB_PATCH  = alsa-lib-$(ALSA_LIB_VER).patch
 ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-link_fix.patch
+ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-header.patch
 
 $(ARCHIVE)/$(ALSA_LIB_SOURCE):
 	$(WGET) https://www.alsa-project.org/files/pub/lib/$(ALSA_LIB_SOURCE)
@@ -2016,6 +2017,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 			--with-debug=no \
 			--with-versioned=no \
 			--enable-symbolic-functions \
+			--enable-silent-rules \
 			--disable-aload \
 			--disable-rawmidi \
 			--disable-resmgr \
@@ -2036,6 +2038,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 #
 ALSA_UTILS_VER = 1.1.8
 ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VER).tar.bz2
+ALSA_UTILS_PATCH = alsa-utils-$(ALSA_UTILS_VER).patch
 
 $(ARCHIVE)/$(ALSA_UTILS_SOURCE):
 	$(WGET) https://www.alsa-project.org/files/pub/utils/$(ALSA_UTILS_SOURCE)
@@ -2045,12 +2048,14 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(REMOVE)/alsa-utils-$(ALSA_UTILS_VER)
 	$(UNTAR)/$(ALSA_UTILS_SOURCE)
 	$(CHDIR)/alsa-utils-$(ALSA_UTILS_VER); \
+		$(call apply_patches, $(ALSA_UTILS_PATCH)); \
 		sed -ir -r "s/(alsamixer|amidi|aplay|iecset|speaker-test|seq|alsactl|alsaucm|topology)//g" Makefile.am ;\
 		autoreconf -fi -I $(TARGET_DIR)/usr/share/aclocal $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
 			--with-curses=ncurses \
+			--enable-silent-rules \
 			--disable-bat \
 			--disable-nls \
 			--disable-alsatest \

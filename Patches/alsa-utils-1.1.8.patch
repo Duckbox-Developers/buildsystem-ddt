@@ -1,0 +1,40 @@
+diff -Naur a/axfer/container.h b/axfer/container.h
+--- a/axfer/container.h	2019-01-07 15:01:46.000000000 +0100
++++ b/axfer/container.h	2019-03-12 23:49:23.467430212 +0100
+@@ -16,6 +16,8 @@
+ #include <stdbool.h>
+ #include <stdint.h>
+ 
++#include <assert.h>
++
+ #include <alsa/asoundlib.h>
+ 
+ enum container_type {
+diff -Naur a/configure.ac b/configure.ac
+--- a/configure.ac	2019-01-07 15:30:31.000000000 +0100
++++ b/configure.ac	2019-03-13 00:06:53.523463715 +0100
+@@ -3,7 +3,7 @@
+ AC_INIT(alsa-utils, 1.1.8)
+ AC_CONFIG_SRCDIR([aplay/aplay.c])
+ AC_PREFIX_DEFAULT(/usr)
+-AM_INIT_AUTOMAKE
++AM_INIT_AUTOMAKE([subdir-objects])
+ 
+ AM_MAINTAINER_MODE([enable])
+ 
+diff -Naur a/alsamixer/volume_mapping.c b/alsamixer/volume_mapping.c
+--- a/alsamixer/volume_mapping.c	2019-01-07 15:01:46.000000000 +0100
++++ b/alsamixer/volume_mapping.c	2019-03-13 02:01:09.310126660 +0100
+@@ -36,10 +36,10 @@
+ #include <stdbool.h>
+ #include "volume_mapping.h"
+ 
+-#ifdef __UCLIBC__
++//#ifdef __UCLIBC__
+ /* 10^x = 10^(log e^x) = (e^x)^log10 = e^(x * log 10) */
+ #define exp10(x) (exp((x) * log(10)))
+-#endif /* __UCLIBC__ */
++//#endif /* __UCLIBC__ */
+ 
+ #define MAX_LINEAR_DB_SCALE	24
+ 
