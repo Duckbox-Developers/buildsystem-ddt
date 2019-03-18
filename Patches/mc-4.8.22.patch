@@ -1,6 +1,6 @@
 --- a/src/vfs/extfs/extfs.c
 +++ b/src/vfs/extfs/extfs.c
-@@ -1571,8 +1571,6 @@
+@@ -1546,8 +1546,6 @@
       * appear on screen. */
      if (dir == NULL)
      {
