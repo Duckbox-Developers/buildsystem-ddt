@@ -232,13 +232,14 @@ BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
+ifeq ($(BOXARCH), arm)
+BOOTSTRAP += $(D)/host_resize2fs
+BOOTSTRAP += $(D)/cortex_strings
+else
 BOOTSTRAP += $(D)/host_module_init_tools
 BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
 BOOTSTRAP += $(D)/host_mksquashfs
-ifeq ($(BOXARCH), arm)
-BOOTSTRAP += $(D)/host_resize2fs
-BOOTSTRAP += $(D)/cortex_strings
 endif
 
 $(D)/bootstrap: $(BOOTSTRAP)
