@@ -49,6 +49,10 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 bre2ze4k))
 BOXCPU                = bcm7251s
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
+BOXCPU                = bcm7335
+CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)
+endif
 
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
@@ -81,7 +85,9 @@ BOXARCH              ?= sh4
 KERNELNAME            = uImage
 TARGET_MARCH_CFLAGS   =
 CORTEX_STRINGS        =
-else
+endif
+
+ifeq ($(BOXARCH), arm)
 CCACHE_DIR            = $(HOME)/.ccache-bs-arm
 export CCACHE_DIR
 TARGET               ?= arm-cortex-linux-gnueabihf
@@ -93,6 +99,16 @@ KERNELNAME            = zImage
 endif
 TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloat-abi=hard
 CORTEX_STRINGS        = -lcortex-strings
+endif
+
+ifeq ($(BOXARCH), mips)
+CCACHE_DIR            = $(HOME)/.ccache-bs-mips
+export CCACHE_DIR
+TARGET               ?= mipsel-unknown-linux-gnu
+BOXARCH              ?= mips
+KERNELNAME            = vmlinux
+TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32 -mfpu=neon-vfpv4
+CORTEX_STRINGS        =
 endif
 
 OPTIMIZATIONS        ?= size

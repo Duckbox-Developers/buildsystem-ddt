@@ -92,10 +92,16 @@ ifeq ($(BOXARCH), sh4)
 include make/linux-kernel-sh4.mk
 include make/crosstool-sh4.mk
 include make/driver-sh4.mk
-else
+endif
+ifeq ($(BOXARCH), arm)
 include make/linux-kernel-arm.mk
 include make/crosstool-arm.mk
 include make/driver-arm.mk
+endif
+ifeq ($(BOXARCH), mips)
+include make/linux-kernel-mips.mk
+include make/crosstool-mips.mk
+include make/driver-mips.mk
 endif
 include make/gstreamer.mk
 include make/root-etc.mk

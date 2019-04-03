@@ -235,7 +235,8 @@ BOOTSTRAP += $(D)/host_pkgconfig
 ifeq ($(BOXARCH), arm)
 BOOTSTRAP += $(D)/host_resize2fs
 BOOTSTRAP += $(D)/cortex_strings
-else
+endif
+ifeq ($(BOXARCH), sh4)
 BOOTSTRAP += $(D)/host_module_init_tools
 BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
