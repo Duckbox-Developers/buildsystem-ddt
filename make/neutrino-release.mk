@@ -481,6 +481,7 @@ neutrino-mp-release-vusolo4k:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(SKEL_ROOT)/usr/bin/turnoff_power_vusolo4k $(RELEASE_DIR)/usr/bin/turnoff_power
 
 #
 # vuduo
@@ -490,6 +491,7 @@ neutrino-mp-release-vuduo:
 	cp -f $(SKEL_ROOT)/release/fstab_vuduo $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
+	cp $(SKEL_ROOT)/usr/bin/turnoff_power_vuduo $(RELEASE_DIR)/usr/bin/turnoff_power
 
 python-iptv-install:
 	install -d $(RELEASE_DIR)/usr/bin; \

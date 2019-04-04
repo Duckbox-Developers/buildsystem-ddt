@@ -24,6 +24,7 @@ then
 	hddown=""
 fi
 
+/usr/bin/turnoff_power
 halt -d -f -p $hddown
 
 : exit 0
