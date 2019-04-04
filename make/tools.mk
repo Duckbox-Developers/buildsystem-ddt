@@ -30,7 +30,7 @@ endif
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo))
 	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
@@ -409,7 +409,7 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo))
 TOOLS += $(D)/tools-initfb
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
