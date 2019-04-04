@@ -107,7 +107,7 @@ export CCACHE_DIR
 TARGET               ?= mipsel-unknown-linux-gnu
 BOXARCH              ?= mips
 KERNELNAME            = vmlinux
-TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32 -mfpu=neon-vfpv4
+TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32
 CORTEX_STRINGS        =
 endif
 
