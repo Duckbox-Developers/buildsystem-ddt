@@ -1,0 +1,13 @@
+# These drivers are available to the user for selection in
+# the Neutrino Kernel Options menue.
+#
+#
+rfkill cfg80211 mac80211 mt7601u					# MediaTek MT7601U USB WLAN
+rfkill cfg80211 mac80211 rtl8xxxu					# Realtek RTL8xxxU USB WLAN
+rfkill cfg80211 r8188eu							# Realtek RTL8188EU USB WLAN
+rfkill cfg80211 mac80211 rtlwifi rtl8192c-common rtl_usb rtl8192cu	# Realtek RTL8192CU USB WLAN
+r8192u_usb								# Realtek RTL8192U USB WLAN
+r8712u									# Realtek RTL8712U USB WLAN
+pl2303									# Prolific PL-2303 USB-to-serial
+ftdi_sio								# FTDI_SIO USB-to-serial
+

@@ -482,6 +482,15 @@ neutrino-mp-release-vusolo4k:
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
+#
+# vuduo
+#
+neutrino-mp-release-vuduo:
+	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_vuduo $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
+
 python-iptv-install:
 	install -d $(RELEASE_DIR)/usr/bin; \
 	install -d $(RELEASE_DIR)/usr/include; \
@@ -681,7 +690,7 @@ endif
 #
 #
 ################################################################################
-ifeq ($(BOXARCH), arm)
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 ################################################################################
 #
 #
@@ -910,7 +919,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/bin/mk_cmds
 	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
-ifeq ($(BOXARCH), arm)
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
