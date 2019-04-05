@@ -318,6 +318,7 @@ $(D)/directories:
 	test -d $(STL_ARCHIVE) || mkdir $(STL_ARCHIVE)
 	test -d $(BUILD_TMP) || mkdir $(BUILD_TMP)
 	test -d $(SOURCE_DIR) || mkdir $(SOURCE_DIR)
+	test -d $(RELEASE_IMAGE_DIR) || mkdir $(RELEASE_IMAGE_DIR)
 	install -d $(TARGET_DIR)
 	install -d $(CROSS_DIR)
 	install -d $(BOOT_DIR)

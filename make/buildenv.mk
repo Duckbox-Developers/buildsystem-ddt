@@ -16,6 +16,7 @@ BUILD_TMP             = $(BASE_DIR)/build_tmp
 SOURCE_DIR            = $(BASE_DIR)/build_source
 DRIVER_DIR            = $(BASE_DIR)/driver
 FLASH_DIR             = $(BASE_DIR)/flash
+RELEASE_IMAGE_DIR     = $(BASE_DIR)/release_image
 
 -include $(BASE_DIR)/config
 
@@ -240,6 +241,7 @@ TUXBOX_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && \
 	$(FLASH_DIR) \
 	$(BOXTYPE) \
 	$(FLAVOUR) \
+	$(RELEASE_IMAGE_DIR) \
 	|| true
 
 #

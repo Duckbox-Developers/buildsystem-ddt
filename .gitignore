@@ -6,6 +6,7 @@ cross/
 custom/*-local*
 driver/
 flash/
+release_image/
 own_build/
 Patches/patch-neutrino/
 root/boot/*
