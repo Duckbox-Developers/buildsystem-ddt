@@ -17,7 +17,7 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 CROSSTOOL_NG_VER = 872341e3
 CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
-CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
+CROSSTOOL_NG_URL = https://github.com/Duckbox-Developers/crosstool-ng.git
 CROSSTOOL_NG_BACKUP = $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz
 
 ifeq ($(BOXTYPE), vuduo)
