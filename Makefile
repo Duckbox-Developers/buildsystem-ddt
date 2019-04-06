@@ -26,7 +26,7 @@ printenv:
 	@echo
 	@echo '================================================================================'
 	@echo "Build Environment Variables:"
-	@echo "PATH              : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                 : /;'||echo $(PATH)`"
+	@echo "PATH              : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                  : /;'||echo $(PATH)`"
 	@echo "ARCHIVE_DIR       : $(ARCHIVE)"
 	@echo "BASE_DIR          : $(BASE_DIR)"
 	@echo "CUSTOM_DIR        : $(CUSTOM_DIR)"
