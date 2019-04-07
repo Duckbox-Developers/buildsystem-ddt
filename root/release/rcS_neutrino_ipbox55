@@ -24,6 +24,10 @@ fi
 insmod $MODDIR/e2_proc.ko
 
 if [ ! -e /var/etc/.firstboot ]; then
+    echo "[rcS] starting mdev"
+    echo /sbin/mdev >/proc/sys/kernel/hotplug
+    mdev -s
+
    echo "LOADING MODULES" > /dev/dbox/vfd
    echo "LOADING MODULES"
 

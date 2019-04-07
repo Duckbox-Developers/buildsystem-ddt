@@ -18,6 +18,10 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    insmod $MODDIR/e2_proc.ko
 
+    echo "[rcS] starting mdev"
+    echo /sbin/mdev >/proc/sys/kernel/hotplug
+    mdev -s
+
    echo "load video firmware"
    /bin/dd if=/dev/zero of=/dev/st231-0 bs=1024 count=4096
    /bin/ustslave /dev/st231-0 /lib/firmware/video.elf

@@ -29,6 +29,10 @@ if [ -e $MODDIR/autofs4.ko ]; then
 fi
 /usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
+echo "[rcS] starting mdev"
+echo /sbin/mdev >/proc/sys/kernel/hotplug
+mdev -s
+
 echo "[rcS] Starting DEBUG Interface"
 /etc/init.d/mountall start
 /etc/init.d/hostname start

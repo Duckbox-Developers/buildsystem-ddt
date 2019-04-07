@@ -35,6 +35,10 @@ fi
 /etc/init.d/portmap start
 /etc/init.d/autofs start
 if [ ! -e /var/etc/.firstboot ]; then
+    echo "[rcS] starting mdev"
+    echo /sbin/mdev >/proc/sys/kernel/hotplug
+    mdev -s
+
    echo "LOAD" > /dev/fpsmall
    echo "MODULES" > /dev/fplarge
    echo "LOADING MODULES"

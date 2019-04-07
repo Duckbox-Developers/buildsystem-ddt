@@ -15,6 +15,9 @@ fi
 /etc/init.d/mountvirtfs start
 
 if [ ! -e /var/etc/.firstboot ]; then
+    echo "[rcS] starting mdev"
+    echo /sbin/mdev >/proc/sys/kernel/hotplug
+    mdev -s
 
    insmod $MODDIR/e2_proc.ko
 
