@@ -1,0 +1,25 @@
+# help for file : usb-private.rules
+# private symlinks to ttyUSBx for cardreaders with serial number
+#
+# format:
+#
+# name : your wanted symlink name pointing to /dev/ttyUSB[0-9] ( no spaces !! ) with it you can access the reader in /dev/serial 
+# serial : the serial number of chip, as it is reported from system
+# perhaps some have spaces in serial, then replace spaces with underline: _ (e.g. smargos)
+# if-nr : some readers have one serial number but more interface numbers: 00, 01 ... (e.g. StingerUSB)
+#
+# readers without serial number (e.g. PL2303) may use here PL2303 as serial number
+# and only one adapter at the same time may have an unique name
+# also the names must be unique, and different when using more than one reader at same time
+#
+# examples :
+# replaced space in serial:
+# my-symname1 Reader_12345 
+# one if-nr, interface number not needed :
+# my-symname2 12345
+# two if-nr, interface number needed :
+# my-symname3 12345 00
+# my-symname4 12345 01
+# one PL2303:
+# my-symname5 PL2303
+

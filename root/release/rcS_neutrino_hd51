@@ -24,6 +24,9 @@ if [ -e /var/backup_flash.tar.gz ]; then
 	rm -f /var/backup_flash.tar.gz
 fi
 
+# for start from power off
+/etc/mdev/ttyUSB-check.sh
+
 # load moduls from modules.extra ( kerneloptions )
 [ -f /var/etc/modules.extra ] && eval `awk '{ if ($1) print "insmod /lib/modules/" $1 ".ko " $2,$3,$4,$5,$6,$7,$8,$9 "; "}' < /var/etc/modules.extra`
 
