@@ -25,7 +25,6 @@ fi
 
 if [ ! -e /var/etc/.firstboot ]; then
     echo "[rcS] starting mdev"
-    echo /sbin/mdev >/proc/sys/kernel/hotplug
     mdev -s
 
    echo "LOADING MODULES" > /dev/dbox/fp0

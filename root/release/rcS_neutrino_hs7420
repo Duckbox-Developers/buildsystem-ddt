@@ -34,7 +34,6 @@ fi
 /usr/sbin/automount --timeout=5 /autofs file /etc/auto.usb
 
 echo "[rcS] starting mdev"
-echo /sbin/mdev >/proc/sys/kernel/hotplug
 mdev -s
 
 echo "[rcS] Starting DEBUG Interface"

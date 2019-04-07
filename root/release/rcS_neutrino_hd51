@@ -65,7 +65,6 @@ insmod /lib/modules/hd51_4.ko
 echo "Booting... DDT" > /dev/dbox/oled0
 
 echo "[rcS] starting mdev"
-echo /sbin/mdev >/proc/sys/kernel/hotplug
 mdev -s
 
 # set dummy time

@@ -78,7 +78,6 @@ done
 /bin/initfb $(sed -n 's/osd_resolution=//p' /var/tuxbox/config/neutrino.conf)
 
 echo "[rcS] starting mdev"
-echo /sbin/mdev >/proc/sys/kernel/hotplug
 mdev -s
 
 # set dummy time
