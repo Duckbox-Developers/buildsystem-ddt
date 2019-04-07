@@ -395,7 +395,7 @@ TOOLS += $(D)/tools_flashtool_mup
 endif
 TOOLS += $(D)/tools-flashtool-mup
 TOOLS += $(D)/tools-flashtool-pad
-TOOLS += $(D)/tools-hotplug
+#TOOLS += $(D)/tools-hotplug
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 TOOLS += $(D)/tools-ipbox_eeprom
 endif
