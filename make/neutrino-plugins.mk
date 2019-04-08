@@ -159,13 +159,12 @@ $(D)/neutrino-mp-plugin-scripts-lua: $(D)/bootstrap
 	$(REMOVE)/neutrino-mp-plugin-scripts-lua
 	set -e; if [ -d $(ARCHIVE)/plugin-scripts-lua.git ]; \
 		then cd $(ARCHIVE)/plugin-scripts-lua.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/tuxbox-neutrino/plugin-scripts-lua.git plugin-scripts-lua.git; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/plugin-scripts-lua.git plugin-scripts-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugin-scripts-lua.git/plugins $(BUILD_TMP)/neutrino-mp-plugin-scripts-lua
 	$(CHDIR)/neutrino-mp-plugin-scripts-lua; \
 		install -d $(TARGET_DIR)/var/tuxbox/plugins
 		cp -R $(BUILD_TMP)/neutrino-mp-plugin-scripts-lua/ard_mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
-		cp -R $(BUILD_TMP)/neutrino-mp-plugin-scripts-lua/favorites2bin/* $(TARGET_DIR)/var/tuxbox/plugins/
 		cp -R $(BUILD_TMP)/neutrino-mp-plugin-scripts-lua/mtv/* $(TARGET_DIR)/var/tuxbox/plugins/
 		cp -R $(BUILD_TMP)/neutrino-mp-plugin-scripts-lua/netzkino/* $(TARGET_DIR)/var/tuxbox/plugins/
 	$(REMOVE)/neutrino-mp-plugin-scripts-lua
