@@ -32,6 +32,7 @@ endif
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo))
 	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
+	-$(MAKE) -C $(APPS_DIR)/tools/turnoff_power distclean
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
 	-$(MAKE) -C $(APPS_DIR)/tools/own-tools distclean
@@ -327,6 +328,21 @@ $(D)/tools-tffpctl: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# turnoff_power
+#
+$(D)/tools-turnoff_power: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(APPS_DIR)/tools/turnoff_power; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # ustslave
 #
 $(D)/tools-ustslave: $(D)/bootstrap
@@ -411,6 +427,7 @@ TOOLS += $(D)/tools-wait4button
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo))
 TOOLS += $(D)/tools-initfb
+TOOLS += $(D)/tools-turnoff_power
 endif
 ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
 TOOLS += $(D)/tools-own-tools
