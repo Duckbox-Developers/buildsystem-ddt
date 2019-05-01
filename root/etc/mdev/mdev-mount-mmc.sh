@@ -18,8 +18,8 @@ fi
 case "$ACTION" in
 	add)
 		# do not mount kernel partitions
-		for i in 2 4 6 8; do
-			if [ ${MDEV:$((${#MDEV}-1)):1} -eq $i ]; then
+		for i in 2 4 6 8 10; do
+			if [ ${MDEV:$((${#MDEV}-1)):2} -eq $i ]; then
 				$LOG "[$ACTION] /dev/$MDEV is a kernel partition - not mounting."
 				exit 0
 			fi
