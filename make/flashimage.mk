@@ -31,7 +31,11 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60))
 	$(MAKE) flash-image-hd60-multi-disk
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+ifeq ($(VUSOLO4K_MULTIBOOT), 1)
+	$(MAKE) flash-image-vusolo4k-multi-rootfs
+else
 	$(MAKE) flash-image-vusolo4k-rootfs
+endif
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
 	$(MAKE) flash-image-vuduo
@@ -234,10 +238,26 @@ flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_P
 	rm -rf $(HD60_BUILD_TMP)
 
 ### armbox vusolo4k
-
 # general
 VUSOLO4K_BUILD_TMP = $(BUILD_TMP)/image-build
 VUSOLO4K_PREFIX = vuplus/solo4k
+
+flash-image-vusolo4k-multi-rootfs:
+	# Create final USB-image
+	mkdir -p $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7366c0 $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/kernel_1_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/rootfs.tar
+	mv $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/rootfs.tar.bz2 $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/rootfs_1.ext4.tar.bz2
+	echo This file forces a reboot after the update. > $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/reboot.update
+	echo This file forces creating partitions. > $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/mkpart.update
+	echo $(BOXTYPE)_DDT_multi_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUSOLO4K_BUILD_TMP)/$(VUSOLO4K_PREFIX)/imageversion
+	cd $(VUSOLO4K_BUILD_TMP) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUSOLO4K_PREFIX)/rootfs*.tar.bz2 $(VUSOLO4K_PREFIX)/initrd_auto.bin $(VUSOLO4K_PREFIX)/kernel*_auto.bin $(VUSOLO4K_PREFIX)/reboot.update $(VUSOLO4K_PREFIX)/imageversion
+	# cleanup
+	rm -rf $(VUSOLO4K_BUILD_TMP)
 
 flash-image-vusolo4k-rootfs:
 	# Create final USB-image
@@ -271,8 +291,11 @@ flash-image-vusolo4k-online:
 	# cleanup
 	rm -rf $(VUSOLO4K_BUILD_TMP)
 
+### mipsbox vuduo
+# general
 VUDUO_PREFIX = vuplus/duo
 VUDUO_BUILD_TMP = $(BUILD_TMP)/image-build
+
 flash-image-vuduo:
 	# Create final USB-image
 	mkdir -p $(VUDUO_BUILD_TMP)/$(VUDUO_PREFIX)
