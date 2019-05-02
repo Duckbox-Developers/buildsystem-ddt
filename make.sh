@@ -162,9 +162,26 @@ fi
 
 ##############################################
 
-if [ $BOXARCH == "sh4" ]; then
+if [ $BOXTYPE == 'vusolo4k' ]; then
+case $2 in
+	[1-2]) REPLY=$2;;
+	*)	echo -e "\nNormal or MultiBoot:"
+		echo "   1)  Normal    (default)"
+		echo "   2)  Multiboot"
+		read -p "Select mode (1-2)? ";;
+esac
+
+case "$REPLY" in
+	1)  VUSOLO4K_MULTIBOOT="0";;
+	2)  VUSOLO4K_MULTIBOOT="1";;
+	*)  VUSOLO4K_MULTIBOOT="0";;
+esac
+echo "VUSOLO4K_MULTIBOOT=$VUSOLO4K_MULTIBOOT" >> config
+fi
 
 ##############################################
+
+if [ $BOXARCH == "sh4" ]; then
 
 CURDIR=`pwd`
 echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
