@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.31.0.git
-# Wed Mar 27 13:13:13 2019
+# Thu May  9 09:00:00 2019
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -34,6 +34,7 @@ CONFIG_FEATURE_SUID=y
 CONFIG_BUSYBOX_EXEC_PATH="/proc/self/exe"
 # CONFIG_SELINUX is not set
 # CONFIG_FEATURE_CLEAN_UP is not set
+# CONFIG_FEATURE_SYSLOG_INFO is not set
 CONFIG_FEATURE_SYSLOG=y
 CONFIG_PLATFORM_LINUX=y
 
@@ -236,7 +237,6 @@ CONFIG_EXPR=y
 # CONFIG_FACTOR is not set
 CONFIG_FALSE=y
 # CONFIG_FOLD is not set
-# CONFIG_FSYNC is not set
 CONFIG_HEAD=y
 # CONFIG_FEATURE_FANCY_HEAD is not set
 # CONFIG_HOSTID is not set
@@ -303,6 +303,7 @@ CONFIG_STTY=y
 # CONFIG_SUM is not set
 CONFIG_SYNC=y
 # CONFIG_FEATURE_SYNC_FANCY is not set
+# CONFIG_FSYNC is not set
 # CONFIG_TAC is not set
 CONFIG_TAIL=y
 CONFIG_FEATURE_FANCY_TAIL=y
