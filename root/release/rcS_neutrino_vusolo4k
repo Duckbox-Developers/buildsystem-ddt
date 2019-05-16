@@ -69,7 +69,7 @@ fi
 
 insmod /lib/modules/fpga_directc.ko
 
-echo "Booting... DDT" > /dev/dbox/oled0
+oled -tc "Booting... DDT"
 
 while [ ! -c /dev/fb0 ]; do
 	usleep 100000
@@ -111,22 +111,21 @@ do
 			init 0;;
 		1) echo "$rtv"
 			echo "REBOOT"
-			echo "      *-*       " > /dev/dbox/oled0
+			oled -tc "REBOOT"
 			init 6;;
 		3) echo "$rtv"
 			echo "RESTART"
-			echo "    RESTART     " > /dev/dbox/oled0
+			oled -tc "RESTART"
 			sync;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			echo "    *ERROR*     " > /dev/dbox/oled0
+			oled -tc "ERROR: $rtv"
 			#init 6
 			;;
 	esac
 done
-echo "      *-*       " > /dev/dbox/oled0
 
 #never reached
-echo "REBOOT $model" > /dev/dbox/oled0
+oled -tc "REBOOT $model"
 echo "REBOOT $model"
 reboot -f
