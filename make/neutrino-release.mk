@@ -487,6 +487,16 @@ endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 #
+# vuduo4k
+#
+neutrino-mp-release-vuduo4k:
+	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo4k $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_vuduo4k $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+
+#
 # vuduo
 #
 neutrino-mp-release-vuduo:
@@ -795,7 +805,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 vusolo4k vuduo4k))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif

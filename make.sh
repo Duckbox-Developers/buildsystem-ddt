@@ -64,13 +64,12 @@ case $1 in
 		#echo "   37)  Pace HDS-7241 (stm 217 only)"
 		echo
 		echo "  arm-based receivers"
-		echo "   50)  Vu Solo4K"
-		echo "   51)  Mut@nt HD51"
-		echo "   60)  Mut@nt HD60"
-		echo "   "
+		echo "  AX/Mut@nt            VU+"
+		echo "   51)  HD51            50) VU+ Solo 4K"
+		echo "   60)  HD60            52) VU+ Duo 4K"
 		echo
 		echo "  mips-based receivers"
-		echo "   70)  Vu Duo"
+		echo "   70)  VU+ Duo"
 		echo
 		read -p "Select target (1-70)? ";;
 esac
@@ -115,6 +114,7 @@ case "$REPLY" in
 	37) BOXARCH="sh4";BOXTYPE="pace7241";;
 	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	51) BOXARCH="arm";BOXTYPE="hd51";;
+	52) BOXARCH="arm";BOXTYPE="vuduo4k";;
 	60) BOXARCH="arm";BOXTYPE="hd60";;
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
