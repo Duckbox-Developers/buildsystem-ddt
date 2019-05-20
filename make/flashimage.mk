@@ -37,6 +37,9 @@ else
 	$(MAKE) flash-image-vusolo4k-rootfs
 endif
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
+	$(MAKE) flash-image-vuduo4k-rootfs
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
 	$(MAKE) flash-image-vuduo
 endif
@@ -49,6 +52,9 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 	$(MAKE) flash-image-vusolo4k-rootfs
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
+	$(MAKE) flash-image-vuduo4k-rootfs
+endif
 	$(TUXBOX_CUSTOMIZE)
 
 oi \
@@ -58,6 +64,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 	$(MAKE) flash-image-vusolo4k-online
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
+	$(MAKE) flash-image-vuduo4k-rootfs
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -292,6 +301,43 @@ flash-image-vusolo4k-online:
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
 	# cleanup
 	rm -rf $(VUSOLO4K_BUILD_TMP)
+
+### armbox vuduo4k
+# general
+VUDUO4K_BUILD_TMP = $(BUILD_TMP)/image-build
+VUDUO4K_PREFIX = vuplus/duo4k
+
+flash-image-vuduo4k-rootfs:
+	# Create final USB-image
+	mkdir -p $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7278b1 $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/kernel_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/rootfs.tar
+	echo This file forces a reboot after the update. > $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/reboot.update
+	echo This file forces creating partitions. > $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/mkpart.update
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUDUO4K_BUILD_TMP)/$(VUDUO4K_PREFIX)/imageversion
+	cd $(VUDUO4K_BUILD_TMP) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUDUO4K_PREFIX)/rootfs.tar.bz2 $(VUDUO4K_PREFIX)/initrd_auto.bin $(VUDUO4K_PREFIX)/kernel_auto.bin $(VUDUO4K_PREFIX)/*.update $(VUDUO4K_PREFIX)/imageversion
+	# cleanup
+	rm -rf $(VUDUO4K_BUILD_TMP)
+
+flash-image-vuduo4k-online:
+	# Create final USB-image
+	mkdir -p $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7278b1 $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/kernel_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo This file forces a reboot after the update. > $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/reboot.update
+	echo This file forces creating partitions. > $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/mkpart.update
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUDUO4K_BUILD_TMP)/$(BOXTYPE)/imageversion
+	cd $(VUDUO4K_BUILD_TMP)/$(BOXTYPE) && \
+	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
+	# cleanup
+	rm -rf $(VUDUO4K_BUILD_TMP)
 
 ### mipsbox vuduo
 # general
