@@ -60,6 +60,10 @@ echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 
 if [ ! -e /dev/brcm0 ]; then
 	/usr/bin/bp3flash.sh 2>/dev/null
+### bp3flash.sh does not working -> manually
+	[ ! -e /bp3.bin ] && mkdir -p /tmp/p4 && mount /dev/mmcblk0p4 /tmp/p4 && [ -e /tmp/p4/bp3.bin ] && cp /tmp/p4/bp3.bin / && umount /tmp/p4
+	[ ! -e /bp3.bin ] && mkdir -p /tmp/p5 && mount /dev/mmcblk0p5 /tmp/p5 && [ -e /tmp/p5/bp3.bin ] && cp /tmp/p5/bp3.bin / && umount /tmp/p5
+###
 	insmod /lib/modules/procmk.ko
 	insmod /lib/modules/bcm_event.ko
 	insmod /lib/modules/dvb_base.ko
