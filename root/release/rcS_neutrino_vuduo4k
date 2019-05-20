@@ -59,6 +59,7 @@ fi
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 
 if [ ! -e /dev/brcm0 ]; then
+	/usr/bin/bp3flash.sh 2>/dev/null
 	insmod /lib/modules/procmk.ko
 	insmod /lib/modules/bcm_event.ko
 	insmod /lib/modules/dvb_base.ko
