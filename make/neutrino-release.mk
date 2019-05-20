@@ -495,6 +495,7 @@ neutrino-mp-release-vuduo4k:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
 
 #
 # vuduo
