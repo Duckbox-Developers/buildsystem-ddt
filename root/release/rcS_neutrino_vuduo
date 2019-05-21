@@ -67,11 +67,12 @@ fi
 
 insmod /lib/modules/fpga_directc.ko
 
-echo "Booting... DDT" > /dev/dbox/oled0
-
 while [ ! -c /dev/fb0 ]; do
 	usleep 100000
 done
+
+echo 255 > /proc/stb/fp/oled_brightness
+echo "Booting... DDT" > /dev/dbox/oled0
 
 /bin/initfb $(sed -n 's/osd_resolution=//p' /var/tuxbox/config/neutrino.conf)
 
