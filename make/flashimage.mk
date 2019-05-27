@@ -70,7 +70,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 	$(MAKE) flash-image-vusolo4k-online
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
-	$(MAKE) flash-image-vuduo4k-rootfs
+	$(MAKE) flash-image-vuduo4k-online
 endif
 	$(TUXBOX_CUSTOMIZE)
 
