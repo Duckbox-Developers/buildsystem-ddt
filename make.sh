@@ -141,6 +141,23 @@ esac
 echo "VUSOLO4K_MULTIBOOT=$VUSOLO4K_MULTIBOOT" >> config
 fi
 
+if [ $BOXTYPE == 'vuduo4k' ]; then
+case $2 in
+	[1-2]) REPLY=$2;;
+	*)	echo -e "\nNormal or MultiBoot:"
+		echo "   1)  Normal    (default)"
+		echo "   2)  Multiboot"
+		read -p "Select mode (1-2)? ";;
+esac
+
+case "$REPLY" in
+	1)  VUDUO4K_MULTIBOOT="0";;
+	2)  VUDUO4K_MULTIBOOT="1";;
+	*)  VUDUO4K_MULTIBOOT="0";;
+esac
+echo "VUDUO4K_MULTIBOOT=$VUDUO4K_MULTIBOOT" >> config
+fi
+
 ##############################################
 
 if [ $BOXARCH == "sh4" ]; then

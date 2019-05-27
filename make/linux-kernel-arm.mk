@@ -45,7 +45,11 @@ KERNEL_TYPE            = vuduo4k
 KERNEL_SRC_VER         = 4.1-1.17
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://archive.vuplus.com/download/kernel
+ifeq ($(VUDUO4K_MULTIBOOT), 1)
+KERNEL_CONFIG          = vuduo4k_defconfig_multi
+else
 KERNEL_CONFIG          = vuduo4k_defconfig
+endif
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
 endif
