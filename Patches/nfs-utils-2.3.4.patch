@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -18858,6 +18858,7 @@
+@@ -19023,6 +19023,7 @@
  if test "x$ac_cv_func_gethostbyname" = xyes; then :
  
  else
@@ -8,7 +8,7 @@
    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gethostbyname in -lnsl" >&5
  $as_echo_n "checking for gethostbyname in -lnsl... " >&6; }
  if ${ac_cv_lib_nsl_gethostbyname+:} false; then :
-@@ -18897,6 +18898,7 @@
+@@ -19062,6 +19063,7 @@
  if test "x$ac_cv_lib_nsl_gethostbyname" = xyes; then :
    LIBNSL="-lnsl"
  fi
@@ -16,7 +16,7 @@
  
  fi
  
-@@ -20542,7 +20544,7 @@
+@@ -20791,7 +20793,7 @@
  
  
  
