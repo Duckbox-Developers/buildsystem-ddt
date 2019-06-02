@@ -3,6 +3,18 @@ while [ -z "$(mount | grep '/dev')" ]; do sleep 1; done
 LOG="logger -p user.info -t mdev-mount"
 WARN="logger -p user.warn -t mdev-mount"
 
+model=`cat /proc/stb/info/model`
+[ -e /proc/stb/info/vumodel ] && vumodel=`cat /proc/stb/info/vumodel`
+[ "$model" == "dm8000" ] && [ "$vumodel" == "solo4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "duo4k" ] && model=$vumodel
+
+case $model in
+	hd51) KRNLPARTS="2 4 6 8";;
+	solo4k) KRNLPARTS="4 6 8 10";;
+	duo4k) KRNLPARTS="9 11 13 15";;
+	*) KRNLPARTS="2 4 6 8";;
+esac
+
 MOUNTBASE=/media
 MOUNTPOINT="$MOUNTBASE/$MDEV"
 ROOTDEV=$(readlink /dev/root)
@@ -18,7 +30,7 @@ fi
 case "$ACTION" in
 	add)
 		# do not mount kernel partitions
-		for i in 2 4 6 8 10; do
+		for i in $KRNLPARTS; do
 			if [ ${MDEV:$((${#MDEV}-1)):2} -eq $i ]; then
 				$LOG "[$ACTION] /dev/$MDEV is a kernel partition - not mounting."
 				exit 0
