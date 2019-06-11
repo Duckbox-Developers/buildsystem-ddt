@@ -1844,7 +1844,7 @@ $(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SO
 #
 LIBDPF_VER = 62c8fd0
 LIBDPF_SOURCE = dpf-ax-git-$(LIBDPF_VER).tar.bz2
-LIBDPF_URL = https://github.com/MaxWiesel/dpf-ax.git
+LIBDPF_URL = https://github.com/Duckbox-Developers/dpf-ax.git
 LIBDPF_PATCH = libdpf-crossbuild.patch
 
 $(ARCHIVE)/$(LIBDPF_SOURCE):
