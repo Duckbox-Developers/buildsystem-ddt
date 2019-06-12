@@ -9,52 +9,52 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 atevio7500 ufs912 ufs913 ufc960 tf7700))
 	cd $(BASE_DIR)/flash/$(BOXTYPE) && $(SUDOCMD) ./$(BOXTYPE).sh $(MAINTAINER)
 endif
-ifeq ($(BOXTYPE), hd51))
+ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-multi-disk flash-image-hd51-multi-rootfs
 endif
-ifeq ($(BOXTYPE), hd60))
+ifeq ($(BOXTYPE), hd60)
 	$(MAKE) flash-image-hd60-multi-disk
 endif
-ifeq ($(BOXTYPE), vusolo4k))
+ifeq ($(BOXTYPE), vusolo4k)
 ifeq ($(VUSOLO4K_MULTIBOOT), 1)
 	$(MAKE) flash-image-vusolo4k-multi-rootfs
 else
 	$(MAKE) flash-image-vusolo4k-rootfs
 endif
 endif
-ifeq ($(BOXTYPE), vuduo4k))
+ifeq ($(BOXTYPE), vuduo4k)
 ifeq ($(VUDUO4K_MULTIBOOT), 1)
 	$(MAKE) flash-image-vuduo4k-multi-rootfs
 else
 	$(MAKE) flash-image-vuduo4k-rootfs
 endif
 endif
-ifeq ($(BOXTYPE), vuduo))
+ifeq ($(BOXTYPE), vuduo)
 	$(MAKE) flash-image-vuduo
 endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofgimage:
-ifeq ($(BOXTYPE), hd51))
+ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-multi-rootfs
 endif
-ifeq ($(BOXTYPE), vusolo4k))
+ifeq ($(BOXTYPE), vusolo4k)
 	$(MAKE) flash-image-vusolo4k-rootfs
 endif
-ifeq ($(BOXTYPE), vuduo4k))
+ifeq ($(BOXTYPE), vuduo4k)
 	$(MAKE) flash-image-vuduo4k-rootfs
 endif
 	$(TUXBOX_CUSTOMIZE)
 
 oi \
 online-image:
-ifeq ($(BOXTYPE), hd51))
+ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-online
 endif
-ifeq ($(BOXTYPE), vusolo4k))
+ifeq ($(BOXTYPE), vusolo4k)
 	$(MAKE) flash-image-vusolo4k-online
 endif
-ifeq ($(BOXTYPE), vuduo4k))
+ifeq ($(BOXTYPE), vuduo4k)
 	$(MAKE) flash-image-vuduo4k-online
 endif
 	$(TUXBOX_CUSTOMIZE)
