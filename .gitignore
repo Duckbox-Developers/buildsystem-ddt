@@ -8,7 +8,7 @@ driver/
 flash/
 release_image/
 own_build/
-Patches/patch-neutrino/
+patches/patch-neutrino/
 root/boot/*
 tufsbox/
 .deps/

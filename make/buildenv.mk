@@ -67,7 +67,7 @@ RELEASE_DIR           = $(TUFSBOX_DIR)/release
 
 CUSTOM_DIR            = $(BASE_DIR)/custom
 OWN_BUILD             = $(BASE_DIR)/own_build
-PATCHES               = $(BASE_DIR)/Patches
+PATCHES               = $(BASE_DIR)/patches
 SCRIPTS_DIR           = $(BASE_DIR)/scripts
 SKEL_ROOT             = $(BASE_DIR)/root
 D                     = $(BASE_DIR)/.deps
