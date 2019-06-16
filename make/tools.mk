@@ -3,42 +3,42 @@
 #
 tools-clean:
 	rm -f $(D)/tools-*
-	-$(MAKE) -C $(TOOLS_DIR)/tools/aio-grab-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/satfind distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/showiframe-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/minimon-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/spf_tool distclean
+	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
+	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 ifeq ($(BOXARCH), sh4)
-	-$(MAKE) -C $(TOOLS_DIR)/tools/devinit distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/evremote2 distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/fp_control distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/flashtool-fup distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/flashtool-mup distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/flashtool_mup distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/flashtool-pad distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/hotplug distclean
+	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
+	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
+	-$(MAKE) -C $(TOOLS_DIR)/fp_control distclean
+	-$(MAKE) -C $(TOOLS_DIR)/flashtool-fup distclean
+	-$(MAKE) -C $(TOOLS_DIR)/flashtool-mup distclean
+	-$(MAKE) -C $(TOOLS_DIR)/flashtool_mup distclean
+	-$(MAKE) -C $(TOOLS_DIR)/flashtool-pad distclean
+	-$(MAKE) -C $(TOOLS_DIR)/hotplug distclean
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
-	-$(MAKE) -C $(TOOLS_DIR)/tools/ipbox_eeprom distclean
+	-$(MAKE) -C $(TOOLS_DIR)/ipbox_eeprom distclean
 endif
-	-$(MAKE) -C $(TOOLS_DIR)/tools/stfbcontrol distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/streamproxy distclean
+	-$(MAKE) -C $(TOOLS_DIR)/stfbcontrol distclean
+	-$(MAKE) -C $(TOOLS_DIR)/streamproxy distclean
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
-	-$(MAKE) -C $(TOOLS_DIR)/tools/tfd2mtd distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/tffpctl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tffpctl distclean
 endif
-	-$(MAKE) -C $(TOOLS_DIR)/tools/ustslave distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/vfdctl distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/wait4button distclean
+	-$(MAKE) -C $(TOOLS_DIR)/ustslave distclean
+	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
-	-$(MAKE) -C $(TOOLS_DIR)/tools/oled_ctrl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuduo))
-	-$(MAKE) -C $(TOOLS_DIR)/tools/initfb distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tools/turnoff_power distclean
+	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
+	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
 endif
-ifneq ($(wildcard $(TOOLS_DIR)/tools/own-tools),)
-	-$(MAKE) -C $(TOOLS_DIR)/tools/own-tools distclean
+ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
+	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
 endif
 
 #
@@ -46,7 +46,7 @@ endif
 #
 $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/aio-grab-$(BOXARCH); \
+	set -e; cd $(TOOLS_DIR)/aio-grab-$(BOXARCH); \
 		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
 			--prefix= \
 		; \
@@ -59,7 +59,7 @@ $(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 #
 $(D)/tools-devinit: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/devinit; \
+	set -e; cd $(TOOLS_DIR)/devinit; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -72,7 +72,7 @@ $(D)/tools-devinit: $(D)/bootstrap
 #
 $(D)/tools-evremote2: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/evremote2; \
+	set -e; cd $(TOOLS_DIR)/evremote2; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -85,7 +85,7 @@ $(D)/tools-evremote2: $(D)/bootstrap
 #
 $(D)/tools-fp_control: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/fp_control; \
+	set -e; cd $(TOOLS_DIR)/fp_control; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -98,7 +98,7 @@ $(D)/tools-fp_control: $(D)/bootstrap
 #
 $(D)/tools-flashtool-fup: $(D)/directories
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/flashtool-fup; \
+	set -e; cd $(TOOLS_DIR)/flashtool-fup; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -112,7 +112,7 @@ $(D)/tools-flashtool-fup: $(D)/directories
 #
 $(D)/tools-flashtool-mup: $(D)/directories
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/flashtool-mup; \
+	set -e; cd $(TOOLS_DIR)/flashtool-mup; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -126,7 +126,7 @@ $(D)/tools-flashtool-mup: $(D)/directories
 #
 $(D)/tools_flashtool_mup:
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/flashtool_mup; \
+	set -e; cd $(TOOLS_DIR)/flashtool_mup; \
 		$(CONFIGURE_TOOLS) \
 			--prefix=/usr \
 		; \
@@ -139,7 +139,7 @@ $(D)/tools_flashtool_mup:
 #
 $(D)/tools-flashtool-pad: $(D)/directories
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/flashtool-pad; \
+	set -e; cd $(TOOLS_DIR)/flashtool-pad; \
 		./autogen.sh; \
 		./configure \
 			--prefix= \
@@ -153,7 +153,7 @@ $(D)/tools-flashtool-pad: $(D)/directories
 #
 $(D)/tools-hotplug: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/hotplug; \
+	set -e; cd $(TOOLS_DIR)/hotplug; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -166,7 +166,7 @@ $(D)/tools-hotplug: $(D)/bootstrap
 #
 $(D)/tools-initfb: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/initfb; \
+	set -e; cd $(TOOLS_DIR)/initfb; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -179,7 +179,7 @@ $(D)/tools-initfb: $(D)/bootstrap
 #
 $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/ipbox_eeprom; \
+	set -e; cd $(TOOLS_DIR)/ipbox_eeprom; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -192,7 +192,7 @@ $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 #
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/libeplayer3; \
+	set -e; cd $(TOOLS_DIR)/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -205,7 +205,7 @@ $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 #
 $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/libmme_host; \
+	set -e; cd $(TOOLS_DIR)/libmme_host; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -218,7 +218,7 @@ $(D)/tools-libmme_host: $(D)/bootstrap $(D)/driver
 #
 $(D)/tools-libmme_image: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/libmme_image; \
+	set -e; cd $(TOOLS_DIR)/libmme_image; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -231,7 +231,7 @@ $(D)/tools-libmme_image: $(D)/bootstrap
 #
 $(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/minimon-$(BOXARCH); \
+	set -e; cd $(TOOLS_DIR)/minimon-$(BOXARCH); \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -244,7 +244,7 @@ $(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
 #
 $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/oled_ctrl; \
+	set -e; cd $(TOOLS_DIR)/oled_ctrl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 			--with-boxmodel=$(BOXTYPE) \
@@ -259,7 +259,7 @@ $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
 #
 $(D)/tools-satfind: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/satfind; \
+	set -e; cd $(TOOLS_DIR)/satfind; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -272,7 +272,7 @@ $(D)/tools-satfind: $(D)/bootstrap
 #
 $(D)/tools-showiframe: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/showiframe-$(BOXARCH); \
+	set -e; cd $(TOOLS_DIR)/showiframe-$(BOXARCH); \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -285,7 +285,7 @@ $(D)/tools-showiframe: $(D)/bootstrap
 #
 $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/spf_tool; \
+	set -e; cd $(TOOLS_DIR)/spf_tool; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -298,7 +298,7 @@ $(D)/tools-spf_tool: $(D)/bootstrap $(D)/libusb
 #
 $(D)/tools-stfbcontrol: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/stfbcontrol; \
+	set -e; cd $(TOOLS_DIR)/stfbcontrol; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -311,7 +311,7 @@ $(D)/tools-stfbcontrol: $(D)/bootstrap
 #
 $(D)/tools-streamproxy: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/streamproxy; \
+	set -e; cd $(TOOLS_DIR)/streamproxy; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -324,7 +324,7 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 #
 $(D)/tools-tfd2mtd: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/tfd2mtd; \
+	set -e; cd $(TOOLS_DIR)/tfd2mtd; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -337,7 +337,7 @@ $(D)/tools-tfd2mtd: $(D)/bootstrap
 #
 $(D)/tools-tffpctl: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/tffpctl; \
+	set -e; cd $(TOOLS_DIR)/tffpctl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -350,7 +350,7 @@ $(D)/tools-tffpctl: $(D)/bootstrap
 #
 $(D)/tools-turnoff_power: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/turnoff_power; \
+	set -e; cd $(TOOLS_DIR)/turnoff_power; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 			--with-boxmodel=$(BOXTYPE) \
@@ -365,7 +365,7 @@ $(D)/tools-turnoff_power: $(D)/bootstrap
 #
 $(D)/tools-ustslave: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/ustslave; \
+	set -e; cd $(TOOLS_DIR)/ustslave; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -382,7 +382,7 @@ endif
 
 $(D)/tools-vfdctl: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/vfdctl; \
+	set -e; cd $(TOOLS_DIR)/vfdctl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -395,7 +395,7 @@ $(D)/tools-vfdctl: $(D)/bootstrap
 #
 $(D)/tools-wait4button: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/wait4button; \
+	set -e; cd $(TOOLS_DIR)/wait4button; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -408,7 +408,7 @@ $(D)/tools-wait4button: $(D)/bootstrap
 #
 $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/tools/own-tools; \
+	set -e; cd $(TOOLS_DIR)/own-tools; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -450,7 +450,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuduo))
 TOOLS += $(D)/tools-initfb
 TOOLS += $(D)/tools-turnoff_power
 endif
-ifneq ($(wildcard $(TOOLS_DIR)/tools/own-tools),)
+ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 TOOLS += $(D)/tools-own-tools
 endif
 
