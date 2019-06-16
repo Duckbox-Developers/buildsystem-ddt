@@ -285,12 +285,12 @@ $(DRIVER_DIR):
 		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
 	fi
 
-$(APPS_DIR):
+$(TOOLS_DIR):
 	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_APPS)-apps git repository'
+	@echo '      Cloning $(GIT_NAME_TOOLS)-tools git repository'
 	@echo '===================================================================='
-	if [ ! -e $(APPS_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_APPS)/apps.git apps; \
+	if [ ! -e $(TOOLS_DIR)/.git ]; then \
+		git clone $(GITHUB)/$(GIT_NAME_TOOLS)/tools.git tools; \
 	fi
 
 $(FLASH_DIR):
@@ -303,7 +303,7 @@ $(FLASH_DIR):
 	@echo ''
 
 PREQS  = $(DRIVER_DIR)
-PREQS += $(APPS_DIR)
+PREQS += $(TOOLS_DIR)
 PREQS += $(FLASH_DIR)
 
 preqs: $(PREQS)

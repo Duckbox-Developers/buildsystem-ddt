@@ -11,7 +11,7 @@ export LD_LIBRARY_PATH
 BASE_DIR             := $(shell pwd)
 
 ARCHIVE               = $(HOME)/Archive
-APPS_DIR              = $(BASE_DIR)/apps
+TOOLS_DIR             = $(BASE_DIR)/tools
 BUILD_TMP             = $(BASE_DIR)/build_tmp
 SOURCE_DIR            = $(BASE_DIR)/build_source
 DRIVER_DIR            = $(BASE_DIR)/driver
@@ -33,7 +33,7 @@ GITHUB               ?= https://github.com
 endif
 GIT_NAME             ?= Duckbox-Developers
 GIT_NAME_DRIVER      ?= Duckbox-Developers
-GIT_NAME_APPS        ?= Duckbox-Developers
+GIT_NAME_TOOLS       ?= Duckbox-Developers
 GIT_NAME_FLASH       ?= Duckbox-Developers
 
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
