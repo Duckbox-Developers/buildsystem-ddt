@@ -86,8 +86,8 @@ help:
 	@echo
 
 # define package versions first...
-include make/contrib-libs.mk
-include make/contrib-apps.mk
+include make/system-libs.mk
+include make/system-tools.mk
 include make/ffmpeg.mk
 ifeq ($(BOXARCH), sh4)
 include make/linux-kernel-sh4.mk
