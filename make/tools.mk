@@ -4,10 +4,12 @@
 tools-clean:
 	rm -f $(D)/tools-*
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
 	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
 	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
-	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
 ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
@@ -240,6 +242,21 @@ $(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
 	$(TOUCH)
 
 #
+# msgbox
+#
+$(D)/tools-msgbox: $(D)/bootstrap $(D)/libpng $(D)/freetype
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/msgbox; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # oled_ctrl
 #
 $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
@@ -361,6 +378,21 @@ $(D)/tools-turnoff_power: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# tuxcom
+#
+$(D)/tools-tuxcom: $(D)/bootstrap $(D)/freetype
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/tuxcom; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # ustslave
 #
 $(D)/tools-ustslave: $(D)/bootstrap
@@ -417,8 +449,12 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
 	$(TOUCH)
 
 TOOLS  = $(D)/tools-aio-grab
+TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+TOOLS += $(D)/tools-tuxcom
+endif
 ifeq ($(BOXARCH), sh4)
 TOOLS += $(D)/tools-devinit
 TOOLS += $(D)/tools-evremote2
