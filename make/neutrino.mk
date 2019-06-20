@@ -309,7 +309,7 @@ neutrino-mp: $(D)/neutrino-mp.do_prepare $(D)/neutrino-mp.config.status $(D)/neu
 	$(TUXBOX_CUSTOMIZE)
 
 mp-clean \
-neutrino-mp-clean: neutrino-cdkroot-clean
+neutrino-mp-clean:
 	rm -f $(D)/neutrino-mp
 	rm -f $(D)/neutrino-mp.config.status
 	rm -f $(SOURCE_DIR)/$(NEUTRINO_MP)/src/gui/version.h
@@ -317,7 +317,7 @@ neutrino-mp-clean: neutrino-cdkroot-clean
 		$(MAKE) -C $(N_OBJDIR) distclean
 
 mp-distclean \
-neutrino-mp-distclean: neutrino-cdkroot-clean
+neutrino-mp-distclean:
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-mp*
 
@@ -332,7 +332,7 @@ neutrino-mp-plugins: $(D)/neutrino-mp-plugins.do_prepare $(D)/neutrino-mp-plugin
 	$(TUXBOX_CUSTOMIZE)
 
 mpp-clean \
-neutrino-mp-plugins-clean: neutrino-cdkroot-clean
+neutrino-mp-plugins-clean:
 	rm -f $(D)/neutrino-mp-plugins
 	rm -f $(D)/neutrino-mp-plugins.config.status
 	rm -f $(SOURCE_DIR)/$(NEUTRINO_MP)/src/gui/version.h
@@ -341,7 +341,7 @@ neutrino-mp-plugins-clean: neutrino-cdkroot-clean
 		$(MAKE) -C $(N_OBJDIR) distclean
 
 mpp-distclean \
-neutrino-mp-plugins-distclean: neutrino-cdkroot-clean
+neutrino-mp-plugins-distclean:
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-mp-plugins*
 	make neutrino-mp-plugin-distclean
@@ -420,20 +420,21 @@ neutrino-hd2-plugins: $(D)/neutrino-hd2.do_prepare $(D)/neutrino-hd2.do_compile
 	$(TUXBOX_CUSTOMIZE)
 
 nhd2-clean \
-neutrino-hd2-clean: neutrino-cdkroot-clean
+neutrino-hd2-clean:
 	rm -f $(D)/neutrino-hd2
 	rm -f $(D)/neutrino-hd2.config.status
 	cd $(SOURCE_DIR)/neutrino-hd2; \
 		$(MAKE) clean
 
 nhd2-distclean \
-neutrino-hd2-distclean: neutrino-cdkroot-clean
+neutrino-hd2-distclean:
 	rm -f $(D)/neutrino-hd2*
 	rm -f $(D)/neutrino-hd2-plugins*
 
 ################################################################################
 neutrino-cdkroot-clean:
 	[ -e $(TARGET_DIR)/usr/local/bin ] && cd $(TARGET_DIR)/usr/local/bin && find -name '*' -delete || true
+	[ -e $(TARGET_DIR)/usr/bin ] && cd $(TARGET_DIR)/usr/bin && rm -f neutrino pzapit sectionsdcontrol rcsim luaclient || true
 	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cd $(TARGET_DIR)/usr/local/share/iso-codes && find -name '*' -delete || true
 	[ -e $(TARGET_DIR)/usr/share/tuxbox/neutrino ] && cd $(TARGET_DIR)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
 	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
@@ -447,10 +448,12 @@ dual:
 dual-clean:
 	make nhd2-clean
 	make mp-clean
+	make neutrino-cdkroot-clean
 
 dual-distclean:
 	make nhd2-distclean
 	make mp-distclean
+	make neutrino-cdkroot-clean
 
 PHONY += $(TARGET_DIR)/.version
 PHONY += $(SOURCE_DIR)/$(NEUTRINO_MP)/src/gui/version.h
