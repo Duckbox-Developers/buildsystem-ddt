@@ -10,6 +10,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
+	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
 ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
@@ -266,6 +267,19 @@ $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
 			--prefix= \
 			--with-boxmodel=$(BOXTYPE) \
 			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
+# read-edid
+#
+$(D)/tools-read-edid: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/read-edid; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
