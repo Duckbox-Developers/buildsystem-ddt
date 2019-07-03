@@ -1217,8 +1217,9 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 #
 # expat
 #
-EXPAT_VER = 2.2.6
+EXPAT_VER = 2.2.7
 EXPAT_SOURCE = expat-$(EXPAT_VER).tar.bz2
+EXPAT_PATCH  = expat-$(EXPAT_VER)-libtool-tag.patch
 
 $(ARCHIVE)/$(EXPAT_SOURCE):
 	$(WGET) https://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/$(EXPAT_SOURCE)
@@ -1228,6 +1229,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(REMOVE)/expat-$(EXPAT_VER)
 	$(UNTAR)/$(EXPAT_SOURCE)
 	$(CHDIR)/expat-$(EXPAT_VER); \
+		$(call apply_patches, $(EXPAT_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
