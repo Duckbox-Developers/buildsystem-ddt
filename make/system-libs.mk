@@ -471,12 +471,12 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 #
 # bzip2
 #
-BZIP2_VER = 1.0.6
+BZIP2_VER = 1.0.7
 BZIP2_SOURCE = bzip2-$(BZIP2_VER).tar.gz
 BZIP2_Patch = bzip2-$(BZIP2_VER).patch
 
 $(ARCHIVE)/$(BZIP2_SOURCE):
-	$(WGET) https://sourceforge.net/projects/bzip2/files/$(BZIP2_SOURCE)
+	$(WGET) https://sourceware.org/pub/bzip2/$(BZIP2_SOURCE)
 
 $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 	$(START_BUILD)
