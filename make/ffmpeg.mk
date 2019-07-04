@@ -386,6 +386,7 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-kodi.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-tls.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
 
 FFMPEG_DEPS =
 FFMPEG_CONF_OPTS = 
