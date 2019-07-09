@@ -101,6 +101,7 @@ $(D)/host_mtd_utils: $(D)/directories $(ARCHIVE)/$(HOST_MTD_UTILS_SOURCE)
 #
 HOST_MKCRAMFS_VER = 1.1
 HOST_MKCRAMFS_SOURCE = cramfs-$(HOST_MKCRAMFS_VER).tar.gz
+HOST_MKCRAMFS_PATCH = cramfs-$(HOST_MKCRAMFS_VER)-sysmacros.patch
 
 $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE):
 	$(WGET) https://sourceforge.net/projects/cramfs/files/cramfs/$(HOST_MKCRAMFS_VER)/$(HOST_MKCRAMFS_SOURCE)
@@ -110,6 +111,7 @@ $(D)/host_mkcramfs: $(D)/directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
 	$(REMOVE)/cramfs-$(HOST_MKCRAMFS_VER)
 	$(UNTAR)/$(HOST_MKCRAMFS_SOURCE)
 	$(CHDIR)/cramfs-$(HOST_MKCRAMFS_VER); \
+		$(call apply_patches,$(HOST_MKCRAMFS_PATCH)); \
 		$(MAKE) all
 		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VER)/mkcramfs $(HOST_DIR)/bin
 		cp $(BUILD_TMP)/cramfs-$(HOST_MKCRAMFS_VER)/cramfsck $(HOST_DIR)/bin
@@ -141,6 +143,7 @@ $(D)/host_mksquashfs3: directories $(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE)
 #
 HOST_MKSQUASHFS_VER = 4.2
 HOST_MKSQUASHFS_SOURCE = squashfs$(HOST_MKSQUASHFS_VER).tar.gz
+HOST_MKSQUASHFS_PATCH = squashfs-$(HOST_MKSQUASHFS_VER)-sysmacros.patch
 
 LZMA_VER = 4.65
 LZMA_SOURCE = lzma-$(LZMA_VER).tar.bz2
@@ -158,6 +161,7 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
 	$(UNTAR)/$(HOST_MKSQUASHFS_SOURCE)
 	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_VER); \
+		$(call apply_patches,$(HOST_MKSQUASHFS_PATCH)); \
 		$(MAKE) -C squashfs-tools \
 			LZMA_SUPPORT=1 \
 			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VER) \
