@@ -5,7 +5,7 @@
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 4.1.3
+FFMPEG_VER = 4.1.4
 FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
