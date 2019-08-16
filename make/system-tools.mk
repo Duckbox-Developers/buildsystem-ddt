@@ -7,8 +7,8 @@ BB_SNAPSHOT =
 else
 BUSYBOX_VER = 1.30.1
 BB_SNAPSHOT = -$(BUSYBOX_VER)
-endif
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VER).tar.bz2
+endif
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VER)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-extra.patch
