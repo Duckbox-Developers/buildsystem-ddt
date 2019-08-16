@@ -73,6 +73,14 @@ index e752d0e..108f089 100644
      s->buffer_size = buf_size;
      s->buf_ptr = s->buf_ptr_max = buffer;
      url_resetbuf(s, s->write_flag ? AVIO_FLAG_WRITE : AVIO_FLAG_READ);
+@@ -1116,7 +1116,6 @@
+         memcpy(buffer, s->write_flag ? s->buffer : s->buf_ptr, data_size);
+     av_free(s->buffer);
+     s->buffer = buffer;
+-    s->orig_buffer_size = buf_size;
+     s->buffer_size = buf_size;
+     s->buf_ptr = s->write_flag ? (s->buffer + data_size) : s->buffer;
+     if (s->write_flag)
 diff --git a/libavformat/utils.c b/libavformat/utils.c
 index c25eab4..02ce5e2 100644
 --- a/libavformat/utils.c
