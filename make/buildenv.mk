@@ -46,6 +46,10 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
 BOXCPU                = bcm7278
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuzero4k))
+BOXCPU                = bcm72604
+CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60 hd61))
 BOXCPU                = Hi3798Mv200
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)

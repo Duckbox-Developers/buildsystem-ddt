@@ -54,6 +54,21 @@ KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), vuzero4k)
+KERNEL_VER             = 4.1.20-1.9
+KERNEL_TYPE            = vuzero4k
+KERNEL_SRC_VER         = 4.1-1.9
+KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
+KERNEL_URL             = http://archive.vuplus.com/download/kernel
+ifeq ($(VUZERO4K_MULTIBOOT), 1)
+KERNEL_CONFIG          = vuzero4k_defconfig_multi
+else
+KERNEL_CONFIG          = vuzero4k_defconfig
+endif
+KERNEL_DIR             = $(BUILD_TMP)/linux
+KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
+endif
+
 #
 # Todo: findkerneldevice.py
 
@@ -104,6 +119,14 @@ VUDUO4K_PATCHES = \
 		armbox/vuduo4k_linux_dvb-core.patch \
 		armbox/vuduo4k_linux_dvb_adapter.patch \
 		armbox/vuduo4k_linux_usb_hub.patch
+
+VUZERO4K_PATCHES = \
+		armbox/vuzero4k_bcmgenet-recovery-fix.patch \
+		armbox/vuzero4k_kernel-gcc6.patch \
+		armbox/vuzero4k_linux_dvb-core.patch \
+		armbox/vuzero4k_linux_dvb_adapter.patch \
+		armbox/vuzero4k_linux_rpmb_not_alloc.patch \
+		armbox/vuzero4k_linux_4_1_1_9_dvbs2x.patch
 
 #
 # KERNEL
@@ -161,6 +184,13 @@ ifeq ($(BOXTYPE), vuduo4k)
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
+ifeq ($(BOXTYPE), vuzero4k)
+	set -e; cd $(KERNEL_DIR); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- zImage modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+	@touch $@
+endif
 
 KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
@@ -193,6 +223,15 @@ ifeq ($(BOXTYPE), vusolo4k)
 	$(TOUCH)
 endif
 ifeq ($(BOXTYPE), vuduo4k)
+	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
+	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
+	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), vuzero4k)
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
