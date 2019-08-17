@@ -63,7 +63,3 @@ index 0000000..ba064fa
 +#endif /* CONFIG_ARCH_USE_BUILTIN_BSWAP */
 +
 +#define KASAN_ABI_VERSION 4
--- 
-2.1.0
-
-  
