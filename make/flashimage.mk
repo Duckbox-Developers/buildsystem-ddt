@@ -29,6 +29,13 @@ else
 	$(MAKE) flash-image-vuduo4k-rootfs
 endif
 endif
+ifeq ($(BOXTYPE), vuzero4k)
+ifeq ($(VUZERO4K_MULTIBOOT), 1)
+	$(MAKE) flash-image-vuzero4k-multi-rootfs
+else
+	$(MAKE) flash-image-vuzero4k-rootfs
+endif
+endif
 ifeq ($(BOXTYPE), vuduo)
 	$(MAKE) flash-image-vuduo
 endif
@@ -44,6 +51,9 @@ endif
 ifeq ($(BOXTYPE), vuduo4k)
 	$(MAKE) flash-image-vuduo4k-rootfs
 endif
+ifeq ($(BOXTYPE), vuzero4k)
+	$(MAKE) flash-image-vuzero4k-rootfs
+endif
 	$(TUXBOX_CUSTOMIZE)
 
 oi \
@@ -56,6 +66,9 @@ ifeq ($(BOXTYPE), vusolo4k)
 endif
 ifeq ($(BOXTYPE), vuduo4k)
 	$(MAKE) flash-image-vuduo4k-online
+endif
+ifeq ($(BOXTYPE), vuzero4k)
+	$(MAKE) flash-image-vuzero4k-online
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -350,6 +363,62 @@ flash-image-vuduo4k-online:
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
 	# cleanup
 	rm -rf $(VUDUO4K_BUILD_TMP)
+
+### armbox vuzero4k
+# general
+VUZERO4K_BUILD_TMP = $(BUILD_TMP)/image-build
+VUZERO4K_PREFIX = vuplus/zero4k
+
+flash-image-vuzero4k-multi-rootfs:
+	# Create final USB-image
+	mkdir -p $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7260a0 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/kernel1_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar
+	mv $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar.bz2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs1.tar.bz2
+	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/reboot.update
+	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/mkpart.update
+	echo Dummy for update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/kernel_auto.bin
+	echo Dummy for update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar.bz2
+	echo $(BOXTYPE)_DDT_multi_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/imageversion
+	cd $(VUZERO4K_BUILD_TMP) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUZERO4K_PREFIX)/rootfs*.tar.bz2 $(VUZERO4K_PREFIX)/initrd_auto.bin $(VUZERO4K_PREFIX)/kernel*_auto.bin $(VUZERO4K_PREFIX)/*.update $(VUZERO4K_PREFIX)/imageversion
+	# cleanup
+	rm -rf $(VUZERO4K_BUILD_TMP)
+
+flash-image-vuzero4k-rootfs:
+	# Create final USB-image
+	mkdir -p $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7260a0 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/kernel_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar
+	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/reboot.update
+	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/mkpart.update
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/imageversion
+	cd $(VUZERO4K_BUILD_TMP) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUZERO4K_PREFIX)/rootfs.tar.bz2 $(VUZERO4K_PREFIX)/initrd_auto.bin $(VUZERO4K_PREFIX)/kernel_auto.bin $(VUZERO4K_PREFIX)/*.update $(VUZERO4K_PREFIX)/imageversion
+	# cleanup
+	rm -rf $(VUZERO4K_BUILD_TMP)
+
+flash-image-vuzero4k-online:
+	# Create final USB-image
+	mkdir -p $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/vmlinuz-initrd-7260a0 $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/kernel_auto.bin
+	cd $(RELEASE_DIR); \
+	tar -cvf $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/reboot.update
+	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/mkpart.update
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/imageversion
+	cd $(VUZERO4K_BUILD_TMP)/$(BOXTYPE) && \
+	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
+	# cleanup
+	rm -rf $(VUZERO4K_BUILD_TMP)
 
 ### mipsbox vuduo
 # general
