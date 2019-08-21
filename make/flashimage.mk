@@ -378,6 +378,7 @@ flash-image-vuzero4k-multi-rootfs:
 	tar -cvf $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar
 	mv $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar.bz2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs1.tar.bz2
+	echo This file forces the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/force.update
 	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/reboot.update
 	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/mkpart.update
 	echo Dummy for update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/kernel_auto.bin
@@ -396,6 +397,7 @@ flash-image-vuzero4k-rootfs:
 	cd $(RELEASE_DIR); \
 	tar -cvf $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/rootfs.tar
+	echo This file forces the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/force.update
 	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/reboot.update
 	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/mkpart.update
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUZERO4K_BUILD_TMP)/$(VUZERO4K_PREFIX)/imageversion
@@ -412,6 +414,7 @@ flash-image-vuzero4k-online:
 	cd $(RELEASE_DIR); \
 	tar -cvf $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo This file forces the update. > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/force.update
 	echo This file forces a reboot after the update. > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/reboot.update
 	echo This file forces creating partitions. > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/mkpart.update
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VUZERO4K_BUILD_TMP)/$(BOXTYPE)/imageversion
