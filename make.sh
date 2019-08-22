@@ -263,7 +263,7 @@ case $5 in
 	[1-2]) REPLY=$5;;
 	*)	echo -e "\nWhich Image do you want to build:"
 		echo "   1)  Neutrino"
-		echo "   2)  Neutrino (includes WLAN drivers sh4)"
+		echo "   2)  Neutrino (includes WLAN drivers)"
 		read -p "Select Image to build (1-2)? ";;
 esac
 
