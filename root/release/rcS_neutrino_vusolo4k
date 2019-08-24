@@ -80,7 +80,7 @@ if [ ! -e /dev/brcm0 ]; then
 	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7376.ko /lib/modules/brcmfb.ko -- &
 fi
 
-insmod /lib/modules/fpga_directc.ko
+#insmod /lib/modules/fpga_directc.ko
 
 while [ ! -c /dev/fb0 ]; do
 	usleep 100000

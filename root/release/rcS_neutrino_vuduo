@@ -78,8 +78,6 @@ if [ ! -e /dev/brcm0 ]; then
 	insmod /lib/modules/brcmfb.ko
 fi
 
-insmod /lib/modules/fpga_directc.ko
-
 while [ ! -c /dev/fb0 ]; do
 	usleep 100000
 done
