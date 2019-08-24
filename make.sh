@@ -129,7 +129,7 @@ echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
 
-if [ $BOXTYPE == 'vusolo4k' ]; then
+if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuzero4k' ]; then
 case $2 in
 	[1-2]) REPLY=$2;;
 	*)	echo -e "\nNormal or MultiBoot:"
@@ -139,45 +139,11 @@ case $2 in
 esac
 
 case "$REPLY" in
-	1)  VUSOLO4K_MULTIBOOT="0";;
-	2)  VUSOLO4K_MULTIBOOT="1";;
-	*)  VUSOLO4K_MULTIBOOT="0";;
+	1)  VU_MULTIBOOT="0";;
+	2)  VU_MULTIBOOT="1";;
+	*)  VU_MULTIBOOT="0";;
 esac
-echo "VUSOLO4K_MULTIBOOT=$VUSOLO4K_MULTIBOOT" >> config
-fi
-
-if [ $BOXTYPE == 'vuduo4k' ]; then
-case $2 in
-	[1-2]) REPLY=$2;;
-	*)	echo -e "\nNormal or MultiBoot:"
-		echo "   1)  Normal    (default)"
-		echo "   2)  Multiboot"
-		read -p "Select mode (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1)  VUDUO4K_MULTIBOOT="0";;
-	2)  VUDUO4K_MULTIBOOT="1";;
-	*)  VUDUO4K_MULTIBOOT="0";;
-esac
-echo "VUDUO4K_MULTIBOOT=$VUDUO4K_MULTIBOOT" >> config
-fi
-
-if [ $BOXTYPE == 'vuzero4k' ]; then
-case $2 in
-	[1-2]) REPLY=$2;;
-	*)	echo -e "\nNormal or MultiBoot:"
-		echo "   1)  Normal    (default)"
-		echo "   2)  Multiboot"
-		read -p "Select mode (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1)  VUZERO4K_MULTIBOOT="0";;
-	2)  VUZERO4K_MULTIBOOT="1";;
-	*)  VUZERO4K_MULTIBOOT="0";;
-esac
-echo "VUZERO4K_MULTIBOOT=$VUZERO4K_MULTIBOOT" >> config
+echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
 fi
 
 ##############################################

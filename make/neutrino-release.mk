@@ -480,7 +480,7 @@ neutrino-mp-release-vusolo4k:
 	cp -f $(SKEL_ROOT)/release/fstab_vusolo4k $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VUSOLO4K_MULTIBOOT), 1)
+ifeq ($(VU_MULTIBOOT), 1)
 	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
@@ -495,7 +495,7 @@ neutrino-mp-release-vuduo4k:
 	cp -f $(SKEL_ROOT)/release/fstab_vuduo4k $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VUDUO4K_MULTIBOOT), 1)
+ifeq ($(VU_MULTIBOOT), 1)
 	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
@@ -511,7 +511,7 @@ neutrino-mp-release-vuzero4k:
 	cp -f $(SKEL_ROOT)/release/fstab_vuzero4k $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
-ifeq ($(VUZERO4K_MULTIBOOT), 1)
+ifeq ($(VU_MULTIBOOT), 1)
 	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
