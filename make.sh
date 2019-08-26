@@ -30,39 +30,40 @@ fi
 case $1 in
 	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9] | 6[0-9] | 7[0-9]) REPLY=$1;;
 	*)
+		clear
 		echo "Target receivers:"
 		echo
 		echo "  Kathrein             Fortis"
 		echo "    1)  UFS-910          7)  FS9000 / FS9200 (formerly Fortis HDbox)"
 		echo "    2)  UFS-912          8)  HS9510          (formerly Octagon SF1008P)"
 		echo "    3)  UFS-913          9)  HS8200          (formerly Atevio AV7500)"
-		echo "    4)  UFS-922         10)  HS7110"
-		echo "    5)  UFC-960         11)  HS7119"
-		echo "                        12)  HS7420"
-		echo "  Topfield              13)  HS7429"
-		echo "    6)  TF77X0 HDPVR    14)  HS7810A"
-		echo "                        15)  HS7819"
+		echo -e "    4)  UFS-922         \033[90m10)  HS7110\033[0m"
+		echo -e "    \033[90m5)  UFC-960         11)  HS7119\033[0m"
+		echo -e "                        \033[90m12)  HS7420\033[0m"
+		echo -e "  Topfield              \033[90m13)  HS7429\033[0m"
+		echo -e "    6)  TF77X0 HDPVR    \033[90m14)  HS7810A\033[0m"
+		echo -e "                        \033[90m15)  HS7819\033[0m"
 		echo
 		echo "  AB IPBox             Cuberevo"
 		echo "   16)  55HD            19)  id."
 		echo "   17)  99HD            20)  mini"
 		echo "   18)  9900HD          21)  mini2"
 		echo "   19)  9000HD          22)  250HD"
-		echo "   20)  900HD           23)  9500HD / 7000HD"
+		echo -e "   20)  900HD           \033[90m23)  9500HD / 7000HD\033[0m"
 		echo "   21)  910HD           24)  2000HD"
-		echo "   22)  91HD            25)  mini_fta / 200HD"
+		echo -e "   22)  91HD            \033[90m25)  mini_fta / 200HD\033[0m"
 		echo "                        26)  3000HD / Xsarius Alpha"
 		echo
 		echo "  Fulan                Atemio"
-		echo "   27)  Spark           29)  AM520"
-		echo "   28)  Spark7162       30)  AM530"
+		echo -e "   27)  Spark           \033[90m29)  AM520\033[0m"
+		echo -e "   28)  Spark7162       \033[90m30)  AM530\033[0m"
 		echo
 		echo "  Various sh4-based receivers"
 		echo "   31)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
 		echo "   32)  SpiderBox HL-101"
-		echo "   33)  B4Team ADB 5800S"
-		echo "   34)  Vitamin HD5000"
-		echo "   35)  SagemCom 88 series"
+		echo -e "   \033[90m33)  B4Team ADB 5800S\033[0m"
+		echo -e "   \033[90m34)  Vitamin HD5000\033[0m"
+		echo -e "   \033[90m35)  SagemCom 88 series\033[0m"
 		echo "   36)  Ferguson Ariva @Link 200"
 		#echo "   37)  Pace HDS-7241 (stm 217 only)"
 		echo
