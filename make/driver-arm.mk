@@ -214,7 +214,6 @@ endif
 ifeq ($(BOXTYPE), vuzero4k)
 INITRD_DATE = 20170522
 endif
-
 INITRD_SRC = vmlinuz-initrd_$(KERNEL_TYPE)_$(INITRD_DATE).tar.gz
 
 $(ARCHIVE)/$(INITRD_SRC):
