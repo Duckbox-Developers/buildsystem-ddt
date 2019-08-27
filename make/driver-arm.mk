@@ -39,30 +39,22 @@ $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC):
 
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuzero4k))
 ifeq ($(BOXTYPE), vusolo4k)
 DRIVER_VER = 3.14.28
 DRIVER_DATE = 20190424
 DRIVER_REV = r0
-DRIVER_SRC = vuplus-dvb-proxy-$(KERNEL_TYPE)-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
-
-$(ARCHIVE)/$(DRIVER_SRC):
-	$(WGET) http://archive.vuplus.com/download/build_support/vuplus/$(DRIVER_SRC)
 endif
-
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
 DRIVER_DATE = 20190212
 DRIVER_REV = r0
-DRIVER_SRC = vuplus-dvb-proxy-$(KERNEL_TYPE)-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
-
-$(ARCHIVE)/$(DRIVER_SRC):
-	$(WGET) http://archive.vuplus.com/download/build_support/vuplus/$(DRIVER_SRC)
 endif
-
 ifeq ($(BOXTYPE), vuzero4k)
 DRIVER_VER = 4.1.20
 DRIVER_DATE = 20190424
 DRIVER_REV = r0
+endif
 DRIVER_SRC = vuplus-dvb-proxy-$(KERNEL_TYPE)-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
