@@ -1,6 +1,6 @@
 --- a/libavcodec/amfenc.c
 +++ b/libavcodec/amfenc.c
-@@ -680,6 +680,52 @@ int ff_amf_send_frame(AVCodecContext *avctx, const AVFrame *frame)
+@@ -693,6 +693,52 @@ int ff_amf_send_frame(AVCodecContext *avctx, const AVFrame *frame)
              break;
          }
 
