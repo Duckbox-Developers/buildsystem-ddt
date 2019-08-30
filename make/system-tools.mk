@@ -1165,7 +1165,7 @@ $(D)/coreutils: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(COREUTILS_SOURCE)
 #
 # smartmontools
 #
-SMARTMONTOOLS_VER = 6.6
+SMARTMONTOOLS_VER = 7.0
 SMARTMONTOOLS_SOURCE = smartmontools-$(SMARTMONTOOLS_VER).tar.gz
 
 $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE):
@@ -1180,7 +1180,7 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE)
 			--prefix=/usr \
 		; \
 		$(MAKE); \
-		$(MAKE) install prefix=$(TARGET_DIR)/usr
+		$(MAKE) install prefix=$(TARGET_DIR)/usr mandir=./remove
 	$(REMOVE)/smartmontools-$(SMARTMONTOOLS_VER)
 	$(TOUCH)
 
