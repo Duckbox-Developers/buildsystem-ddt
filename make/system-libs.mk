@@ -247,7 +247,7 @@ $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
 #
 # host_libarchive
 #
-LIBARCHIVE_VER = 3.1.2
+LIBARCHIVE_VER = 3.4.0
 LIBARCHIVE_SOURCE = libarchive-$(LIBARCHIVE_VER).tar.gz
 
 $(ARCHIVE)/$(LIBARCHIVE_SOURCE):
