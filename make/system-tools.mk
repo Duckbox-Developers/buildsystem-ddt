@@ -603,6 +603,8 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 #
 NTFS_3G_VER = 2017.3.23
 NTFS_3G_SOURCE = ntfs-3g_ntfsprogs-$(NTFS_3G_VER).tgz
+NTFS_3G_PATCH = ntfs-3g-fuseint-fix-path-mounted-on-musl.patch
+NTFS_3G_PATCH += ntfs-3g-sysmacros.patch
 
 $(ARCHIVE)/$(NTFS_3G_SOURCE):
 	$(WGET) https://tuxera.com/opensource/$(NTFS_3G_SOURCE)
@@ -612,6 +614,7 @@ $(D)/ntfs_3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 	$(REMOVE)/ntfs-3g_ntfsprogs-$(NTFS_3G_VER)
 	$(UNTAR)/$(NTFS_3G_SOURCE)
 	$(CHDIR)/ntfs-3g_ntfsprogs-$(NTFS_3G_VER); \
+		$(call apply_patches, $(NTFS_3G_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--exec-prefix=/usr \

@@ -1,0 +1,39 @@
+--- a/libntfs-3g/ioctl.c
++++ b/libntfs-3g/ioctl.c
+@@ -56,6 +56,12 @@
+ #include <sys/mkdev.h>
+ #endif
+ #ifdef MAJOR_IN_SYSMACROS
++#include <sys/sysmacros.h>
++#endif
++#ifdef HAVE_SYS_MKDEV_H
++#include <sys/mkdev.h>
++#endif
++#ifdef __GLIBC__
+ #include <sys/sysmacros.h>
+ #endif
+ 
+--- a/src/lowntfs-3g.c
++++ b/src/lowntfs-3g.c
+@@ -77,6 +77,9 @@
+ #include <sys/mkdev.h>
+ #endif
+ #ifdef MAJOR_IN_SYSMACROS
++#include <sys/sysmacros.h>
++#endif
++#ifdef __GLIBC__
+ #include <sys/sysmacros.h>
+ #endif
+ 
+--- a/src/ntfs-3g.c
++++ b/src/ntfs-3g.c
+@@ -76,6 +76,9 @@
+ #include <sys/mkdev.h>
+ #endif
+ #ifdef MAJOR_IN_SYSMACROS
++#include <sys/sysmacros.h>
++#endif
++#ifdef __GLIBC__
+ #include <sys/sysmacros.h>
+ #endif
+ 
