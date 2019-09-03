@@ -7,6 +7,7 @@ sysfs		/sys			sysfs	defaults					0	0
 debugfs		/sys/kernel/debug	debugfs	defaults					0	0
 tmpfs		/tmp			tmpfs	defaults					0	0
 tmpfs		/media			tmpfs	defaults					0	0
+tmpfs		/mnt			tmpfs	defaults					0	0
 devpts		/dev/pts		devpts	defaults					0	0
 #
 #/dev/sda1	/hdd			auto	defaults,noatime,nodiratime			0	2
