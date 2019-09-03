@@ -72,6 +72,7 @@ case $1 in
 		echo "   51)  HD51            50) VU+ Solo 4K"
 		echo "   60)  HD60            52) VU+ Duo 4K"
 		echo "                        53) VU+ Zero 4K"
+		echo "                        54) VU+ Ultimo 4K"
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
@@ -121,6 +122,7 @@ case "$REPLY" in
 	51) BOXARCH="arm";BOXTYPE="hd51";;
 	52) BOXARCH="arm";BOXTYPE="vuduo4k";;
 	53) BOXARCH="arm";BOXTYPE="vuzero4k";;
+	54) BOXARCH="arm";BOXTYPE="vuultimo4k";;
 	60) BOXARCH="arm";BOXTYPE="hd60";;
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
@@ -130,7 +132,7 @@ echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
 
-if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuzero4k' ]; then
+if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuzero4k' ]; then
 case $2 in
 	[1-2]) REPLY=$2;;
 	*)	echo -e "\nNormal or MultiBoot:"

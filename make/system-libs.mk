@@ -487,7 +487,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 		mv Makefile-libbz2_so Makefile; \
 		$(MAKE) all CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib; \
 		$(MAKE) install PREFIX=$(TARGET_DIR)/usr
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 vusolo4k vuduo4k vuzero4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 vusolo4k vuduo4k vuultimo4k vuzero4k))
 	cd $(TARGET_DIR) && rm -f usr/bin/bzip2
 endif
 	$(REMOVE)/bzip2-$(BZIP2_VER)
@@ -1664,7 +1664,7 @@ GRAPHLCD_VER = 55d4bd8
 GRAPHLCD_SOURCE = graphlcd-git-$(GRAPHLCD_VER).tar.bz2
 GRAPHLCD_URL = git://projects.vdr-developer.org/graphlcd-base.git
 GRAPHLCD_PATCH = graphlcd-git-$(GRAPHLCD_VER).patch
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k))
 GRAPHLCD_PATCH += graphlcd-vusolo4k.patch
 endif
 
@@ -1718,7 +1718,7 @@ LCD4LINUX_VER = aa65ff1
 LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
 LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
 LCD4LINUX_PATCH = 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k))
 LCD4LINUX_DRV = ,VUSOLO4K
 endif
 
@@ -1741,7 +1741,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		$(MAKE) vcs_version all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(TARGET_DIR)/etc/init.d/
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_vu.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf

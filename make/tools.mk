@@ -33,10 +33,10 @@ endif
 	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k))
 	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuzero4k vuduo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuduo))
 	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
 	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
 endif
@@ -493,10 +493,10 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k))
 TOOLS += $(D)/tools-oled_ctrl
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuzero4k vuduo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuduo))
 TOOLS += $(D)/tools-initfb
 TOOLS += $(D)/tools-turnoff_power
 endif

@@ -7,6 +7,7 @@ model=`cat /proc/stb/info/model`
 [ -e /proc/stb/info/vumodel ] && vumodel=`cat /proc/stb/info/vumodel`
 [ "$model" == "dm8000" ] && [ "$vumodel" == "solo4k" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "duo4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "ultimo4k" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "zero4k" ] && model=$vumodel
 
 case $model in
