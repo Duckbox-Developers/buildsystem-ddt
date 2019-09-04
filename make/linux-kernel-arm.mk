@@ -108,26 +108,36 @@ HD51_PATCHES = \
 
 HD60_PATCHES = \
 
-VUSOLO4K_PATCHES = \
-		armbox/vusolo4k_bcm_genet_disable_warn.patch \
-		armbox/vusolo4k_linux_dvb-core.patch \
-		armbox/vusolo4k_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-		armbox/vusolo4k_usb_core_hub_msleep.patch \
-		armbox/vusolo4k_rtl8712_fix_build_error.patch \
-		armbox/vusolo4k_0001-Support-TBS-USB-drivers.patch \
-		armbox/vusolo4k_0001-STV-Add-PLS-support.patch \
-		armbox/vusolo4k_0001-STV-Add-SNR-Signal-report-parameters.patch \
-		armbox/vusolo4k_0001-stv090x-optimized-TS-sync-control.patch \
-		armbox/vusolo4k_linux_dvb_adapter.patch \
-		armbox/vusolo4k_kernel-gcc6.patch \
-		armbox/vusolo4k_genksyms_fix_typeof_handling.patch \
-		armbox/vusolo4k_0001-tuners-tda18273-silicon-tuner-driver.patch \
-		armbox/vusolo4k_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-		armbox/vusolo4k_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-		armbox/vusolo4k_0003-cxusb-Geniatech-T230-support.patch \
-		armbox/vusolo4k_CONFIG_DVB_SP2.patch \
-		armbox/vusolo4k_dvbsky.patch \
-		armbox/vusolo4k_rtl2832u-2.patch
+COMMON_PATCHES_3_14 = \
+		armbox/3_14_bcm_genet_disable_warn.patch \
+		armbox/3_14_linux_dvb-core.patch \
+		armbox/3_14_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+		armbox/3_14_usb_core_hub_msleep.patch \
+		armbox/3_14_rtl8712_fix_build_error.patch \
+		armbox/3_14_kernel-add-support-for-gcc6.patch \
+		armbox/3_14_kernel-add-support-for-gcc7.patch \
+		armbox/3_14_kernel-add-support-for-gcc8.patch \
+		armbox/3_14_0001-Support-TBS-USB-drivers.patch \
+		armbox/3_14_0001-STV-Add-PLS-support.patch \
+		armbox/3_14_0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/3_14_0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/3_14_blindscan2.patch \
+		armbox/3_14_genksyms_fix_typeof_handling.patch \
+		armbox/3_14_0001-tuners-tda18273-silicon-tuner-driver.patch \
+		armbox/3_14_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		armbox/3_14_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		armbox/3_14_0003-cxusb-Geniatech-T230-support.patch \
+		armbox/3_14_CONFIG_DVB_SP2.patch \
+		armbox/3_14_dvbsky.patch \
+		armbox/3_14_rtl2832u-2.patch \
+		armbox/3_14_0004-log2-give-up-on-gcc-constant-optimizations.patch \
+		armbox/3_14_0005-uaccess-dont-mark-register-as-const.patch \
+		armbox/3_14_0006-makefile-disable-warnings.patch \
+		armbox/3_14_linux_dvb_adapter.patch
+
+VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
+		armbox/vusolo4k_linux_rpmb_not_alloc.patch \
+		armbox/vusolo4k_fix_mmc_3.14.28-1.10.patch
 
 VUDUO4K_PATCHES = \
 		armbox/vuduo4k_bcmsysport_4_1_45.patch \
@@ -135,28 +145,9 @@ VUDUO4K_PATCHES = \
 		armbox/vuduo4k_linux_dvb_adapter.patch \
 		armbox/vuduo4k_linux_usb_hub.patch
 
-VUULTIMO4K_PATCHES = \
-		armbox/vuultimo4k_bcm_genet_disable_warn.patch \
+VUULTIMO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 		armbox/vuultimo4k_bcmsysport_3.14.28-1.12.patch \
-		armbox/vuultimo4k_kernel-gcc6.patch \
-		armbox/vuultimo4k_linux_prevent_usb_dma_from_bmem.patch \
-		armbox/vusolo4k_linux_dvb-core.patch \
-		armbox/vusolo4k_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-		armbox/vusolo4k_usb_core_hub_msleep.patch \
-		armbox/vusolo4k_rtl8712_fix_build_error.patch \
-		armbox/vusolo4k_0001-Support-TBS-USB-drivers.patch \
-		armbox/vusolo4k_0001-STV-Add-PLS-support.patch \
-		armbox/vusolo4k_0001-STV-Add-SNR-Signal-report-parameters.patch \
-		armbox/vusolo4k_0001-stv090x-optimized-TS-sync-control.patch \
-		armbox/vusolo4k_linux_dvb_adapter.patch \
-		armbox/vusolo4k_genksyms_fix_typeof_handling.patch \
-		armbox/vusolo4k_0001-tuners-tda18273-silicon-tuner-driver.patch \
-		armbox/vusolo4k_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-		armbox/vusolo4k_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-		armbox/vusolo4k_0003-cxusb-Geniatech-T230-support.patch \
-		armbox/vusolo4k_CONFIG_DVB_SP2.patch \
-		armbox/vusolo4k_dvbsky.patch \
-		armbox/vusolo4k_rtl2832u-2.patch
+		armbox/vuultimo4k_linux_prevent_usb_dma_from_bmem.patch
 
 VUZERO4K_PATCHES = \
 		armbox/vuzero4k_bcmgenet-recovery-fix.patch \
