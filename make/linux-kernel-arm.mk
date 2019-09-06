@@ -109,53 +109,81 @@ HD51_PATCHES = \
 HD60_PATCHES = \
 
 COMMON_PATCHES_3_14 = \
-		armbox/3_14_bcm_genet_disable_warn.patch \
-		armbox/3_14_linux_dvb-core.patch \
-		armbox/3_14_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-		armbox/3_14_usb_core_hub_msleep.patch \
-		armbox/3_14_rtl8712_fix_build_error.patch \
-		armbox/3_14_kernel-add-support-for-gcc6.patch \
-		armbox/3_14_kernel-add-support-for-gcc7.patch \
-		armbox/3_14_kernel-add-support-for-gcc8.patch \
-		armbox/3_14_0001-Support-TBS-USB-drivers.patch \
-		armbox/3_14_0001-STV-Add-PLS-support.patch \
-		armbox/3_14_0001-STV-Add-SNR-Signal-report-parameters.patch \
-		armbox/3_14_0001-stv090x-optimized-TS-sync-control.patch \
-		armbox/3_14_blindscan2.patch \
-		armbox/3_14_genksyms_fix_typeof_handling.patch \
-		armbox/3_14_0001-tuners-tda18273-silicon-tuner-driver.patch \
-		armbox/3_14_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-		armbox/3_14_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-		armbox/3_14_0003-cxusb-Geniatech-T230-support.patch \
-		armbox/3_14_CONFIG_DVB_SP2.patch \
-		armbox/3_14_dvbsky.patch \
-		armbox/3_14_rtl2832u-2.patch \
-		armbox/3_14_0004-log2-give-up-on-gcc-constant-optimizations.patch \
-		armbox/3_14_0005-uaccess-dont-mark-register-as-const.patch \
-		armbox/3_14_0006-makefile-disable-warnings.patch \
-		armbox/3_14_linux_dvb_adapter.patch
+		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
+		armbox/vuplus_common/3_14_linux_dvb-core.patch \
+		armbox/vuplus_common/3_14_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+		armbox/vuplus_common/3_14_usb_core_hub_msleep.patch \
+		armbox/vuplus_common/3_14_rtl8712_fix_build_error.patch \
+		armbox/vuplus_common/3_14_kernel-add-support-for-gcc6.patch \
+		armbox/vuplus_common/3_14_kernel-add-support-for-gcc7.patch \
+		armbox/vuplus_common/3_14_kernel-add-support-for-gcc8.patch \
+		armbox/vuplus_common/3_14_0001-Support-TBS-USB-drivers.patch \
+		armbox/vuplus_common/3_14_0001-STV-Add-PLS-support.patch \
+		armbox/vuplus_common/3_14_0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/vuplus_common/3_14_0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/vuplus_common/3_14_blindscan2.patch \
+		armbox/vuplus_common/3_14_genksyms_fix_typeof_handling.patch \
+		armbox/vuplus_common/3_14_0001-tuners-tda18273-silicon-tuner-driver.patch \
+		armbox/vuplus_common/3_14_01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		armbox/vuplus_common/3_14_02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		armbox/vuplus_common/3_14_0003-cxusb-Geniatech-T230-support.patch \
+		armbox/vuplus_common/3_14_CONFIG_DVB_SP2.patch \
+		armbox/vuplus_common/3_14_dvbsky.patch \
+		armbox/vuplus_common/3_14_rtl2832u-2.patch \
+		armbox/vuplus_common/3_14_0004-log2-give-up-on-gcc-constant-optimizations.patch \
+		armbox/vuplus_common/3_14_0005-uaccess-dont-mark-register-as-const.patch \
+		armbox/vuplus_common/3_14_0006-makefile-disable-warnings.patch \
+		armbox/vuplus_common/3_14_linux_dvb_adapter.patch
+
+COMMON_PATCHES_4_1 = \
+		armbox/vuplus_common/4_1_linux_dvb_adapter.patch \
+		armbox/vuplus_common/4_1_linux_dvb-core.patch \
+		armbox/vuplus_common/4_1_linux_4_1_45_dvbs2x.patch \
+		armbox/vuplus_common/4_1_bcmsysport_4_1_45.patch \
+		armbox/vuplus_common/4_1_linux_usb_hub.patch \
+		armbox/vuplus_common/4_1_0001-regmap-add-regmap_write_bits.patch \
+		armbox/vuplus_common/4_1_0002-af9035-fix-device-order-in-ID-list.patch \
+		armbox/vuplus_common/4_1_0003-Add-support-for-dvb-usb-stick-Hauppauge-WinTV-soloHD.patch \
+		armbox/vuplus_common/4_1_0004-af9035-add-USB-ID-07ca-0337-AVerMedia-HD-Volar-A867.patch \
+		armbox/vuplus_common/4_1_0005-Add-support-for-EVOLVEO-XtraTV-stick.patch \
+		armbox/vuplus_common/4_1_0006-dib8000-Add-support-for-Mygica-Geniatech-S2870.patch \
+		armbox/vuplus_common/4_1_0007-dib0700-add-USB-ID-for-another-STK8096-PVR-ref-desig.patch \
+		armbox/vuplus_common/4_1_0008-add-Hama-Hybrid-DVB-T-Stick-support.patch \
+		armbox/vuplus_common/4_1_0009-Add-Terratec-H7-Revision-4-to-DVBSky-driver.patch \
+		armbox/vuplus_common/4_1_0010-media-Added-support-for-the-TerraTec-T1-DVB-T-USB-tu.patch \
+		armbox/vuplus_common/4_1_0011-media-tda18250-support-for-new-silicon-tuner.patch \
+		armbox/vuplus_common/4_1_0012-media-dib0700-add-support-for-Xbox-One-Digital-TV-Tu.patch \
+		armbox/vuplus_common/4_1_0013-mn88472-Fix-possible-leak-in-mn88472_init.patch \
+		armbox/vuplus_common/4_1_0014-staging-media-Remove-unneeded-parentheses.patch \
+		armbox/vuplus_common/4_1_0015-staging-media-mn88472-simplify-NULL-tests.patch \
+		armbox/vuplus_common/4_1_0016-mn88472-fix-typo.patch \
+		armbox/vuplus_common/4_1_0017-mn88472-finalize-driver.patch \
+		armbox/vuplus_common/4_1_0001-dvb-usb-fix-a867.patch \
+		armbox/vuplus_common/4_1_kernel-add-support-for-gcc6.patch \
+		armbox/vuplus_common/4_1_kernel-add-support-for-gcc7.patch \
+		armbox/vuplus_common/4_1_kernel-add-support-for-gcc8.patch \
+		armbox/vuplus_common/4_1_0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
+		armbox/vuplus_common/4_1_0001-TBS-fixes-for-4.1-kernel.patch \
+		armbox/vuplus_common/4_1_0001-STV-Add-PLS-support.patch \
+		armbox/vuplus_common/4_1_0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/vuplus_common/4_1_blindscan2.patch \
+		armbox/vuplus_common/4_1_0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/vuplus_common/4_1_0002-log2-give-up-on-gcc-constant-optimizations.patch \
+		armbox/vuplus_common/4_1_0003-uaccess-dont-mark-register-as-const.patch
 
 VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 		armbox/vusolo4k_linux_rpmb_not_alloc.patch \
 		armbox/vusolo4k_fix_mmc_3.14.28-1.10.patch
 
-VUDUO4K_PATCHES = \
-		armbox/vuduo4k_bcmsysport_4_1_45.patch \
-		armbox/vuduo4k_linux_dvb-core.patch \
-		armbox/vuduo4k_linux_dvb_adapter.patch \
-		armbox/vuduo4k_linux_usb_hub.patch
+VUDUO4K_PATCHES = $(COMMON_PATCHES_4_1) \
 
 VUULTIMO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 		armbox/vuultimo4k_bcmsysport_3.14.28-1.12.patch \
 		armbox/vuultimo4k_linux_prevent_usb_dma_from_bmem.patch
 
-VUZERO4K_PATCHES = \
+VUZERO4K_PATCHES = $(COMMON_PATCHES_4_1) \
 		armbox/vuzero4k_bcmgenet-recovery-fix.patch \
-		armbox/vuzero4k_kernel-gcc6.patch \
-		armbox/vuzero4k_linux_dvb-core.patch \
-		armbox/vuzero4k_linux_dvb_adapter.patch \
-		armbox/vuzero4k_linux_rpmb_not_alloc.patch \
-		armbox/vuzero4k_linux_4_1_1_9_dvbs2x.patch
+		armbox/vuzero4k_linux_rpmb_not_alloc.patch
 
 #
 # KERNEL
