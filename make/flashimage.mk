@@ -13,7 +13,7 @@ ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-multi-disk flash-image-hd51-multi-rootfs
 endif
 ifeq ($(BOXTYPE), hd60)
-	$(MAKE) flash-image-hd60-multi-disk
+	$(MAKE) flash-image-hd60-multi-disk flash-image-hd60-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
 ifeq ($(VU_MULTIBOOT), 1)
@@ -31,6 +31,9 @@ ofgimage:
 ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-multi-rootfs
 endif
+ifeq ($(BOXTYPE), hd60)
+	$(MAKE) flash-image-hd60-multi-rootfs
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
 	$(MAKE) flash-image-vu-rootfs
 endif
@@ -40,6 +43,9 @@ oi \
 online-image:
 ifeq ($(BOXTYPE), hd51)
 	$(MAKE) flash-image-hd51-online
+endif
+ifeq ($(BOXTYPE), hd60)
+	$(MAKE) flash-image-hd60-online
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
 	$(MAKE) flash-image-vu-online
@@ -222,7 +228,33 @@ flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_P
 	mv $(HD60_BUILD_TMP)/$(BOXTYPE)/bootargs-8gb.bin $(HD60_BUILD_TMP)/$(BOXTYPE)/bootargs.bin
 	cp $(RELEASE_DIR)/boot/uImage $(HD60_BUILD_TMP)/$(BOXTYPE)/uImage
 	cd $(HD60_BUILD_TMP) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip *
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_recovery_$(shell date '+%d.%m.%Y-%H.%M').zip *
+	# cleanup
+	rm -rf $(HD60_BUILD_TMP)
+
+flash-image-hd60-multi-rootfs:
+	# Create final USB-image
+	mkdir -p $(HD60_BUILD_TMP)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/uImage $(HD60_BUILD_TMP)/$(BOXTYPE)/uImage
+	cd $(RELEASE_DIR); \
+	tar -cvf $(HD60_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
+	bzip2 $(HD60_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD60_BUILD_TMP)/$(BOXTYPE)/imageversion
+	cd $(HD60_BUILD_TMP) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_mmc_$(shell date '+%d.%m.%Y-%H.%M').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/uImage $(BOXTYPE)/imageversion
+	# cleanup
+	rm -rf $(HD60_BUILD_TMP)
+
+flash-image-hd60-online:
+	# Create final USB-image
+	mkdir -p $(HD60_BUILD_TMP)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/uImage $(HD60_BUILD_TMP)/$(BOXTYPE)/uImage
+	cd $(RELEASE_DIR); \
+	tar -cvf $(HD60_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
+	bzip2 $(HD60_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(HD60_BUILD_TMP)/$(BOXTYPE)/imageversion
+	cd $(HD60_BUILD_TMP)/$(BOXTYPE) && \
+	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_online_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 uImage imageversion
 	# cleanup
 	rm -rf $(HD60_BUILD_TMP)
 
