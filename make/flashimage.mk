@@ -322,17 +322,17 @@ flash-image-vu-rootfs:
 
 flash-image-vu-online:
 	# Create final USB-image
-	mkdir -p $(VU_BUILD_TMP)/$(BOXTYPE)
-	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(VU_BUILD_TMP)/$(BOXTYPE)/initrd_auto.bin
-	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(BOXTYPE)/kernel_auto.bin
+	mkdir -p $(VU_BUILD_TMP)/$(VU_PREFIX)
+	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(VU_BUILD_TMP)/$(VU_PREFIX)/initrd_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel_auto.bin
 	cd $(RELEASE_DIR); \
-	tar -cvf $(VU_BUILD_TMP)/$(BOXTYPE)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
-	bzip2 $(VU_BUILD_TMP)/$(BOXTYPE)/rootfs.tar
-	$(VU_FORCE); \
-	echo This file forces a reboot after the update. > $(VU_BUILD_TMP)/$(BOXTYPE)/reboot.update
-	echo This file forces creating partitions. > $(VU_BUILD_TMP)/$(BOXTYPE)/mkpart.update
-	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VU_BUILD_TMP)/$(BOXTYPE)/imageversion
-	cd $(VU_BUILD_TMP)/$(BOXTYPE) && \
+	tar -cvf $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar
+	$(VU_FORCE)
+	echo This file forces a reboot after the update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/reboot.update
+	echo This file forces creating partitions. > $(VU_BUILD_TMP)/$(VU_PREFIX)/mkpart.update
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VU_BUILD_TMP)/$(VU_PREFIX)/imageversion
+	cd $(VU_BUILD_TMP)/$(VU_PREFIX) && \
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin *.update imageversion
 	# cleanup
 	rm -rf $(VU_BUILD_TMP)
