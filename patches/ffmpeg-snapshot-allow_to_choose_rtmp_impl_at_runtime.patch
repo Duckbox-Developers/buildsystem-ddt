@@ -46,7 +46,7 @@
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
 --- a/libavformat/Makefile	2018-07-18 15:52:01.000000000 +0200
 +++ b/libavformat/Makefile	2018-08-17 12:06:16.348291303 +0200
-@@ -599,12 +599,12 @@
+@@ -600,12 +600,12 @@
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o
