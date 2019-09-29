@@ -288,6 +288,9 @@ flash-image-vu-multi-rootfs:
 	mkdir -p $(VU_BUILD_TMP)/$(VU_PREFIX)
 	cp $(RELEASE_DIR)/boot/$(VU_INITRD) $(VU_BUILD_TMP)/$(VU_PREFIX)/initrd_auto.bin
 	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel1_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel2_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel3_auto.bin
+	cp $(RELEASE_DIR)/boot/zImage $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel4_auto.bin
 	cd $(RELEASE_DIR); \
 	tar -cvf $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar
