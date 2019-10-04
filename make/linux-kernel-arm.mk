@@ -24,64 +24,36 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vusolo4k)
 KERNEL_VER             = 3.14.28-1.8
-KERNEL_TYPE            = vusolo4k
 KERNEL_SRC_VER         = 3.14-1.8
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = vusolo4k_defconfig_multi
-else
-KERNEL_CONFIG          = vusolo4k_defconfig
-endif
-KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
 endif
-
 ifeq ($(BOXTYPE), vuduo4k)
 KERNEL_VER             = 4.1.45-1.17
-KERNEL_TYPE            = vuduo4k
 KERNEL_SRC_VER         = 4.1-1.17
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = vuduo4k_defconfig_multi
-else
-KERNEL_CONFIG          = vuduo4k_defconfig
-endif
-KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
 endif
-
 ifeq ($(BOXTYPE), vuultimo4k)
 KERNEL_VER             = 3.14.28-1.12
-KERNEL_TYPE            = vuultimo4k
 KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = vuultimo4k_defconfig_multi
-else
-KERNEL_CONFIG          = vuultimo4k_defconfig
-endif
-KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
 endif
-
 ifeq ($(BOXTYPE), vuzero4k)
 KERNEL_VER             = 4.1.20-1.9
-KERNEL_TYPE            = vuzero4k
 KERNEL_SRC_VER         = 4.1-1.9
+KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
+endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://archive.vuplus.com/download/kernel
 ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = vuzero4k_defconfig_multi
+KERNEL_CONFIG          = $(BOXTYPE)_defconfig_multi
 else
-KERNEL_CONFIG          = vuzero4k_defconfig
+KERNEL_CONFIG          = $(BOXTYPE)_defconfig
 endif
 KERNEL_DIR             = $(BUILD_TMP)/linux
-KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
 endif
 
 #
