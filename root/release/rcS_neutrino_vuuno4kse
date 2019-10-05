@@ -77,7 +77,7 @@ if [ ! -e /dev/brcm0 ]; then
 	insmod /lib/modules/dvb_base.ko
 	start-stop-daemon --start --quiet --exec /usr/bin/dvb_server -- &
 	mknod -m a=rw /dev/brcm0 c 30 0
-	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7252s.ko /lib/modules/brcmfb.ko -- &
+	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7252sse.ko /lib/modules/brcmfb.ko -- &
 fi
 
 insmod /lib/modules/wakeup_drv.ko
