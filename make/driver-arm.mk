@@ -39,7 +39,7 @@ $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC):
 
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
 ifeq ($(BOXTYPE), vusolo4k)
 DRIVER_VER = 3.14.28
 DRIVER_DATE = 20190424
@@ -56,6 +56,11 @@ DRIVER_DATE = 20181204
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuzero4k)
+DRIVER_VER = 4.1.20
+DRIVER_DATE = 20190424
+DRIVER_REV = r0
+endif
+ifeq ($(BOXTYPE), vuuno4kse)
 DRIVER_VER = 4.1.20
 DRIVER_DATE = 20190424
 DRIVER_REV = r0
@@ -133,7 +138,7 @@ $(D)/mali-gpu-modul: $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC) $(D)/bootstrap $(D)/ker
 	$(REMOVE)/$(EXTRA_MALI_MODULE_VER)
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
@@ -163,6 +168,11 @@ UTIL_DATE = 20181204
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuzero4k)
+UTIL_VER = 17.1
+UTIL_DATE = 20190424
+UTIL_REV = r0
+endif
+ifeq ($(BOXTYPE), vuuno4kse)
 UTIL_VER = 17.1
 UTIL_DATE = 20190424
 UTIL_REV = r0
@@ -202,6 +212,11 @@ GLES_VER = 17.1
 GLES_DATE = 20190424
 GLES_REV = r0
 endif
+ifeq ($(BOXTYPE), vuuno4kse)
+GLES_VER = 17.1
+GLES_DATE = 20190424
+GLES_REV = r0
+endif
 GLES_SRC = libgles-$(KERNEL_TYPE)-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
 
 $(ARCHIVE)/$(GLES_SRC):
@@ -231,6 +246,9 @@ INITRD_DATE = 20170209
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 INITRD_DATE = 20170522
+endif
+ifeq ($(BOXTYPE), vuuno4kse)
+INITRD_DATE = 20170627
 endif
 INITRD_SRC = vmlinuz-initrd_$(KERNEL_TYPE)_$(INITRD_DATE).tar.gz
 

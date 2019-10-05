@@ -1,0 +1,27 @@
+--- crosstool-ng-1dbb06f2/scripts/build/kernel/linux.sh
++++ crosstool-ng-1dbb06f2/scripts/build/kernel/linux.sh
+@@ -58,13 +58,13 @@ do_kernel_get() {
+ do_kernel_extract() {
+     # If using a custom directory location, nothing to do
+     if [ "${CT_KERNEL_LINUX_CUSTOM}" = "y"    \
+-         -a -d "${CT_SRC_DIR}/linux-${CT_KERNEL_VERSION}" ]; then
++         -a -d "${CT_SRC_DIR}/stblinux-${CT_KERNEL_VERSION}" ]; then
+         return 0
+     fi
+ 
+     # Otherwise, we're using either a mainstream tarball, or a custom
+     # tarball; in either case, we need to extract
+-    CT_Extract "linux-${CT_KERNEL_VERSION}"
++    CT_Extract "stblinux-${CT_KERNEL_VERSION}"
+ 
+     # If using a custom tarball, no need to patch
+     if [ "${CT_KERNEL_LINUX_CUSTOM}" = "y" ]; then
+@@ -93,7 +93,7 @@ do_kernel_headers() {
+ 
+     mkdir -p "${CT_BUILD_DIR}/build-kernel-headers"
+ 
+-    kernel_path="${CT_SRC_DIR}/linux-${CT_KERNEL_VERSION}"
++    kernel_path="${CT_SRC_DIR}/stblinux-${CT_KERNEL_VERSION}"
+     V_OPT="V=${CT_KERNEL_LINUX_VERBOSE_LEVEL}"
+ 
+     kernel_arch="${CT_ARCH}"

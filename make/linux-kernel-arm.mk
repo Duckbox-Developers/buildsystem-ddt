@@ -24,7 +24,7 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
 KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vusolo4k)
 KERNEL_VER             = 3.14.28-1.8
@@ -45,6 +45,11 @@ ifeq ($(BOXTYPE), vuzero4k)
 KERNEL_VER             = 4.1.20-1.9
 KERNEL_SRC_VER         = 4.1-1.9
 KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
+endif
+ifeq ($(BOXTYPE), vuuno4kse)
+KERNEL_VER             = 4.1.20-1.9
+KERNEL_SRC_VER         = 4.1-1.9
+KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
 endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://archive.vuplus.com/download/kernel
@@ -157,6 +162,10 @@ VUZERO4K_PATCHES = $(COMMON_PATCHES_4_1) \
 		armbox/vuzero4k_bcmgenet-recovery-fix.patch \
 		armbox/vuzero4k_linux_rpmb_not_alloc.patch
 
+VUUNO4KSE_PATCHES = $(COMMON_PATCHES_4_1) \
+		armbox/vuuno4kse_bcmgenet-recovery-fix.patch \
+		armbox/vuuno4kse_linux_rpmb_not_alloc.patch
+
 #
 # KERNEL
 #
@@ -199,7 +208,7 @@ ifeq ($(BOXTYPE), hd60)
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- zImage modules
@@ -228,7 +237,7 @@ ifeq ($(BOXTYPE), hd60)
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)

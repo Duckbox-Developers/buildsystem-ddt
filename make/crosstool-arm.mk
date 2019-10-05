@@ -36,6 +36,10 @@ ifeq ($(BOXTYPE), vuzero4k)
 CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuzero4k.patch
 endif
 
+ifeq ($(BOXTYPE), vuuno4kse)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuuno4kse.patch
+endif
+
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
@@ -56,6 +60,9 @@ ifeq ($(BOXTYPE), vuultimo4k)
 CUSTOM_KERNEL_VER = 3.14-1.12
 endif
 ifeq ($(BOXTYPE), vuzero4k)
+CUSTOM_KERNEL_VER = 4.1-1.9
+endif
+ifeq ($(BOXTYPE), vuuno4kse)
 CUSTOM_KERNEL_VER = 4.1-1.9
 endif
 
