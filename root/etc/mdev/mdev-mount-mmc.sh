@@ -8,11 +8,12 @@ model=`cat /proc/stb/info/model`
 [ "$model" == "dm8000" ] && [ "$vumodel" == "solo4k" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "duo4k" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "ultimo4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "uno4kse" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "zero4k" ] && model=$vumodel
 
 case $model in
 	hd51) KRNLPARTS="2 4 6 8";;
-	solo4k|ultimo4k) KRNLPARTS="4 6 8 10";;
+	solo4k|ultimo4k|uno4kse) KRNLPARTS="4 6 8 10";;
 	duo4k) KRNLPARTS="9 11 13 15";;
 	*) KRNLPARTS="2 4 6 8";;
 esac
