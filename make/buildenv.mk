@@ -39,34 +39,6 @@ GIT_NAME_FLASH       ?= Duckbox-Developers
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXTYPE)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4k vuuno4kse hd60 hd61 hd51 bre2ze4k vuduo))
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-BOXCPU                = bcm7376
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
-BOXCPU                = bcm7278
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuultimo4k))
-BOXCPU                = bcm7444s
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuzero4k))
-BOXCPU                = bcm72604
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuuno4k vuuno4kse))
-BOXCPU                = bcm7252s
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60 hd61))
-BOXCPU                = Hi3798Mv200
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 bre2ze4k))
-BOXCPU                = bcm7251s
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
-BOXCPU                = bcm7335
-endif
-CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXCPU)
-endif
-
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
 CROSS_DIR             = $(TUFSBOX_DIR)/cross
