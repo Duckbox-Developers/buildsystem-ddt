@@ -24,32 +24,37 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 KERNEL_TYPE            = $(BOXTYPE)
-ifeq ($(BOXTYPE), vusolo4k)
-KERNEL_VER             = 3.14.28-1.8
-KERNEL_SRC_VER         = 3.14-1.8
-KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
-endif
 ifeq ($(BOXTYPE), vuduo4k)
 KERNEL_VER             = 4.1.45-1.17
 KERNEL_SRC_VER         = 4.1-1.17
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
 endif
-ifeq ($(BOXTYPE), vuultimo4k)
-KERNEL_VER             = 3.14.28-1.12
-KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
+ifeq ($(BOXTYPE), vuuno4kse)
+KERNEL_VER             = 4.1.20-1.9
+KERNEL_SRC_VER         = 4.1-1.9
+KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 KERNEL_VER             = 4.1.20-1.9
 KERNEL_SRC_VER         = 4.1-1.9
 KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
 endif
-ifeq ($(BOXTYPE), vuuno4kse)
-KERNEL_VER             = 4.1.20-1.9
-KERNEL_SRC_VER         = 4.1-1.9
-KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
+ifeq ($(BOXTYPE), vuultimo4k)
+KERNEL_VER             = 3.14.28-1.12
+KERNEL_SRC_VER         = 3.14-1.12
+KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
+endif
+ifeq ($(BOXTYPE), vuuno4k)
+KERNEL_VER             = 3.14.28-1.12
+KERNEL_SRC_VER         = 3.14-1.12
+KERNEL_PATCHES_ARM     = $(VUUNO4K_PATCHES)
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+KERNEL_VER             = 3.14.28-1.8
+KERNEL_SRC_VER         = 3.14-1.8
+KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
 endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://archive.vuplus.com/download/kernel
@@ -148,11 +153,11 @@ COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_0002-log2-give-up-on-gcc-constant-optimizations.patch \
 		armbox/vuplus_common/4_1_0003-uaccess-dont-mark-register-as-const.patch
 
-VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
-		armbox/vusolo4k_linux_rpmb_not_alloc.patch \
-		armbox/vusolo4k_fix_mmc_3.14.28-1.10.patch
-
 VUDUO4K_PATCHES = $(COMMON_PATCHES_4_1) \
+
+VUUNO4KSE_PATCHES = $(COMMON_PATCHES_4_1) \
+		armbox/vuuno4kse_bcmgenet-recovery-fix.patch \
+		armbox/vuuno4kse_linux_rpmb_not_alloc.patch
 
 VUULTIMO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 		armbox/vuultimo4k_bcmsysport_3.14.28-1.12.patch \
@@ -162,9 +167,13 @@ VUZERO4K_PATCHES = $(COMMON_PATCHES_4_1) \
 		armbox/vuzero4k_bcmgenet-recovery-fix.patch \
 		armbox/vuzero4k_linux_rpmb_not_alloc.patch
 
-VUUNO4KSE_PATCHES = $(COMMON_PATCHES_4_1) \
-		armbox/vuuno4kse_bcmgenet-recovery-fix.patch \
-		armbox/vuuno4kse_linux_rpmb_not_alloc.patch
+VUUNO4K_PATCHES = $(COMMON_PATCHES_3_14) \
+		armbox/vuuno4k_bcmsysport_3.14.28-1.12.patch \
+		armbox/vuuno4k_linux_prevent_usb_dma_from_bmem.patch
+
+VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
+		armbox/vusolo4k_linux_rpmb_not_alloc.patch \
+		armbox/vusolo4k_fix_mmc_3.14.28-1.10.patch
 
 #
 # KERNEL
@@ -208,7 +217,7 @@ ifeq ($(BOXTYPE), hd60)
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- zImage modules
@@ -237,7 +246,7 @@ ifeq ($(BOXTYPE), hd60)
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)

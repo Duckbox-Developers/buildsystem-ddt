@@ -69,11 +69,9 @@ case $1 in
 		echo
 		echo "  arm-based receivers"
 		echo "  AX/Mut@nt            VU+"
-		echo "   51)  HD51            50) VU+ Solo 4K"
-		echo "   60)  HD60            52) VU+ Duo 4K"
-		echo "                        53) VU+ Zero 4K"
-		echo "                        54) VU+ Ultimo 4K"
-		echo "                        55) VU+ Uno 4K SE"
+		echo "   51)  HD51            50) VU+ Solo 4K     54) VU+ Ultimo 4K"
+		echo "   60)  HD60            52) VU+ Duo 4K      55) VU+ Uno 4K SE"
+		echo "                        53) VU+ Zero 4K     56) VU+ Uno 4K"
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
@@ -125,6 +123,7 @@ case "$REPLY" in
 	53) BOXARCH="arm";BOXTYPE="vuzero4k";;
 	54) BOXARCH="arm";BOXTYPE="vuultimo4k";;
 	55) BOXARCH="arm";BOXTYPE="vuuno4kse";;
+	56) BOXARCH="arm";BOXTYPE="vuuno4k";;
 	60) BOXARCH="arm";BOXTYPE="hd60";;
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;

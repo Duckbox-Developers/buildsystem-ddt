@@ -107,7 +107,7 @@ N_CONFIG_OPTS += --enable-flac
 NEUTRINO_DEPS += $(D)/flac
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuultimo4k vusolo4k))
 N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif

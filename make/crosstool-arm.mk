@@ -20,24 +20,28 @@ CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
 CROSSTOOL_NG_URL = https://github.com/Duckbox-Developers/crosstool-ng.git
 CROSSTOOL_NG_BACKUP = $(ARCHIVE)/crosstool-ng-git-$(BOXARCH)-$(BOXCPU)-$(CROSSTOOL_NG_VER)-backup.tar.gz
 
-ifeq ($(BOXTYPE), vusolo4k)
-CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vusolo4k.patch
-endif
-
 ifeq ($(BOXTYPE), vuduo4k)
 CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuduo4k.patch
 endif
 
-ifeq ($(BOXTYPE), vuultimo4k)
-CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuultimo4k.patch
+ifeq ($(BOXTYPE), vuuno4kse)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuuno4kse.patch
 endif
 
 ifeq ($(BOXTYPE), vuzero4k)
 CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuzero4k.patch
 endif
 
-ifeq ($(BOXTYPE), vuuno4kse)
-CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuuno4kse.patch
+ifeq ($(BOXTYPE), vuultimo4k)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuultimo4k.patch
+endif
+
+ifeq ($(BOXTYPE), vuuno4k)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vuuno4k.patch
+endif
+
+ifeq ($(BOXTYPE), vusolo4k)
+CROSSTOOL_BOXTYPE_PATCH = $(PATCHES)/ct-ng/crosstool-ng-$(CROSSTOOL_NG_VER)-vusolo4k.patch
 endif
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
@@ -50,20 +54,23 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60))
 CUSTOM_KERNEL_VER = $(KERNEL_VER)-$(KERNEL_DATE)-arm
 endif
-ifeq ($(BOXTYPE), vusolo4k)
-CUSTOM_KERNEL_VER = 3.14-1.8
-endif
 ifeq ($(BOXTYPE), vuduo4k)
 CUSTOM_KERNEL_VER = 4.1-1.17
 endif
-ifeq ($(BOXTYPE), vuultimo4k)
-CUSTOM_KERNEL_VER = 3.14-1.12
+ifeq ($(BOXTYPE), vuuno4kse)
+CUSTOM_KERNEL_VER = 4.1-1.9
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 CUSTOM_KERNEL_VER = 4.1-1.9
 endif
-ifeq ($(BOXTYPE), vuuno4kse)
-CUSTOM_KERNEL_VER = 4.1-1.9
+ifeq ($(BOXTYPE), vuultimo4k)
+CUSTOM_KERNEL_VER = 3.14-1.12
+endif
+ifeq ($(BOXTYPE), vuuno4k)
+CUSTOM_KERNEL_VER = 3.14-1.12
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+CUSTOM_KERNEL_VER = 3.14-1.8
 endif
 
 ifeq ($(wildcard $(CROSS_BASE)/build.log.bz2),)

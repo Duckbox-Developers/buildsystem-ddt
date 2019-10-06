@@ -15,7 +15,7 @@ endif
 ifeq ($(BOXTYPE), hd60)
 	$(MAKE) flash-image-hd60-multi-disk flash-image-hd60-multi-rootfs
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(VU_MULTIBOOT), 1)
 	$(MAKE) flash-image-vu-multi-rootfs
 else
@@ -34,7 +34,7 @@ endif
 ifeq ($(BOXTYPE), hd60)
 	$(MAKE) flash-image-hd60-multi-rootfs
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	$(MAKE) flash-image-vu-rootfs
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -47,7 +47,7 @@ endif
 ifeq ($(BOXTYPE), hd60)
 	$(MAKE) flash-image-hd60-online
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	$(MAKE) flash-image-vu-online
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -262,19 +262,9 @@ flash-image-hd60-online:
 ### armbox vu+
 # general
 VU_BUILD_TMP = $(BUILD_TMP)/image-build
-ifeq ($(BOXTYPE), vusolo4k)
-VU_PREFIX = vuplus/solo4k
-VU_INITRD = vmlinuz-initrd-7366c0
-VU_FORCE = echo -n
-endif
 ifeq ($(BOXTYPE), vuduo4k)
 VU_PREFIX = vuplus/duo4k
 VU_INITRD = vmlinuz-initrd-7278b1
-VU_FORCE = echo -n
-endif
-ifeq ($(BOXTYPE), vuultimo4k)
-VU_PREFIX = vuplus/ultimo4k
-VU_INITRD = vmlinuz-initrd-7445d0
 VU_FORCE = echo -n
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
@@ -286,6 +276,21 @@ ifeq ($(BOXTYPE), vuzero4k)
 VU_PREFIX = vuplus/zero4k
 VU_INITRD = vmlinuz-initrd-7260a0
 VU_FORCE = echo This file forces the update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/force.update
+endif
+ifeq ($(BOXTYPE), vuultimo4k)
+VU_PREFIX = vuplus/ultimo4k
+VU_INITRD = vmlinuz-initrd-7445d0
+VU_FORCE = echo -n
+endif
+ifeq ($(BOXTYPE), vuuno4k)
+VU_PREFIX = vuplus/uno4k
+VU_INITRD = vmlinuz-initrd-7439b0
+VU_FORCE = echo This file forces the update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/force.update
+endif
+ifeq ($(BOXTYPE), vusolo4k)
+VU_PREFIX = vuplus/solo4k
+VU_INITRD = vmlinuz-initrd-7366c0
+VU_FORCE = echo -n
 endif
 
 flash-image-vu-multi-rootfs:
@@ -300,7 +305,7 @@ flash-image-vu-multi-rootfs:
 	tar -cvf $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar
 	mv $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar.bz2 $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs1.tar.bz2
-	$(VU_FORCE); \
+	$(VU_FORCE)
 	echo This file forces a reboot after the update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/reboot.update
 	echo This file forces creating partitions. > $(VU_BUILD_TMP)/$(VU_PREFIX)/mkpart.update
 	echo Dummy for update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/kernel_auto.bin
@@ -319,7 +324,7 @@ flash-image-vu-rootfs:
 	cd $(RELEASE_DIR); \
 	tar -cvf $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
 	bzip2 $(VU_BUILD_TMP)/$(VU_PREFIX)/rootfs.tar
-	$(VU_FORCE); \
+	$(VU_FORCE)
 	echo This file forces a reboot after the update. > $(VU_BUILD_TMP)/$(VU_PREFIX)/reboot.update
 	echo This file forces creating partitions. > $(VU_BUILD_TMP)/$(VU_PREFIX)/mkpart.update
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(VU_BUILD_TMP)/$(VU_PREFIX)/imageversion

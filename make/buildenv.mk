@@ -39,7 +39,7 @@ GIT_NAME_FLASH       ?= Duckbox-Developers
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXTYPE)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4kse hd60 hd61 hd51 bre2ze4k vuduo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuzero4k vuuno4k vuuno4kse hd60 hd61 hd51 bre2ze4k vuduo))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 BOXCPU                = bcm7376
 endif
@@ -52,7 +52,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuzero4k))
 BOXCPU                = bcm72604
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuuno4kse))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuuno4k vuuno4kse))
 BOXCPU                = bcm7252s
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60 hd61))
