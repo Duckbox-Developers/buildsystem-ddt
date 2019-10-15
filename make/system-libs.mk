@@ -1719,7 +1719,7 @@ LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
 LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
 LCD4LINUX_PATCH = 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuultimo4k vusolo4k))
-LCD4LINUX_DRV = ,VUSOLO4K
+LCD4LINUX_DRV = ,VUPLUS4K
 endif
 
 $(ARCHIVE)/$(LCD4LINUX_SOURCE):
