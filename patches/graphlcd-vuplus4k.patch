@@ -7,8 +7,8 @@ index 3ddedd2..c00baae 100644
  
  #HAVE_DRIVER_ILI9341=1
 +
-+# uncomment this variable if you want to enable the experimental support for vusolo4k
-+HAVE_DRIVER_VUSOLO4K=1
++# uncomment this variable if you want to enable the experimental support for vuplus4k
++HAVE_DRIVER_VUPLUS4K=1
 +
 diff --git a/glcddrivers/Makefile b/glcddrivers/Makefile
 index 8c2b3d6..43d813c 100644
@@ -18,9 +18,9 @@ index 8c2b3d6..43d813c 100644
      LIBS += -lwiringPi
  endif
  
-+ifeq ($(HAVE_DRIVER_VUSOLO4K), 1)
-+    DEFINES += -DHAVE_DRIVER_VUSOLO4K
-+    OBJS += vusolo4k.o
++ifeq ($(HAVE_DRIVER_VUPLUS4K), 1)
++    DEFINES += -DHAVE_DRIVER_VUPLUS4K
++    OBJS += vuplus4k.o
 +endif
 +
  ### Implicit rules:
@@ -34,8 +34,8 @@ index 4c7e67a..729fdfd 100644
  #ifdef HAVE_DRIVER_ILI9341
  #include "ili9341.h"
  #endif
-+#ifdef HAVE_DRIVER_VUSOLO4K
-+#include "vusolo4k.h"
++#ifdef HAVE_DRIVER_VUPLUS4K
++#include "vuplus4k.h"
 +#endif
  
  namespace GLCD
@@ -45,8 +45,8 @@ index 4c7e67a..729fdfd 100644
  #ifdef HAVE_DRIVER_ILI9341
      {"ili9341",       kDriverILI9341},
 +#endif
-+#ifdef HAVE_DRIVER_VUSOLO4K
-+    {"vusolo4k",      kDriverVUSOLO4K},
++#ifdef HAVE_DRIVER_VUPLUS4K
++    {"vuplus4k",      kDriverVUPLUS4K},
  #endif
      {"",              kDriverUnknown}
  };
@@ -55,9 +55,9 @@ index 4c7e67a..729fdfd 100644
          case kDriverILI9341:
              return new cDriverILI9341(config);
 +#endif
-+#ifdef HAVE_DRIVER_VUSOLO4K
-+        case kDriverVUSOLO4K:
-+            return new cDriverVUSOLO4K(config);
++#ifdef HAVE_DRIVER_VUPLUS4K
++        case kDriverVUPLUS4K:
++            return new cDriverVUPLUS4K(config);
  #endif
          case kDriverUnknown:
          default:
@@ -69,22 +69,22 @@ index 970b01e..85f6292 100644
  #endif
      kDriverUSBserLCD     = 23,
      kDriverST7565RReel   = 24,
-+#ifdef HAVE_DRIVER_VUSOLO4K
-+    kDriverVUSOLO4K      = 25,
++#ifdef HAVE_DRIVER_VUPLUS4K
++    kDriverVUPLUS4K      = 25,
 +#endif
      kDriverSerDisp       = 100,
      kDriverG15daemon     = 200
  };
-diff --git a/glcddrivers/vusolo4k.c b/glcddrivers/vusolo4k.c
+diff --git a/glcddrivers/vuplus4k.c b/glcddrivers/vuplus4k.c
 new file mode 100644
 index 0000000..826843c
 --- /dev/null
-+++ b/glcddrivers/vusolo4k.c
-@@ -0,0 +1,249 @@
++++ b/glcddrivers/vuplus4k.c
+@@ -0,0 +1,268 @@
 +/*
 + * GraphLCD driver library
 + *
-+ * vusolo4k.c  -  VUSOLO4K OLED driver class
++ * vuplus4k.c  -  VUPLUS4K OLED driver class
 + *
 + * This file is released under the GNU General Public License. Refer
 + * to the COPYING file distributed with this package.
@@ -106,18 +106,18 @@ index 0000000..826843c
 +
 +#include "common.h"
 +#include "config.h"
-+#include "vusolo4k.h"
++#include "vuplus4k.h"
 +
 +namespace GLCD
 +{
 +
-+cDriverVUSOLO4K::cDriverVUSOLO4K(cDriverConfig * config)
++cDriverVUPLUS4K::cDriverVUPLUS4K(cDriverConfig * config)
 +:	cDriver(config),
 +	fd(-1)
 +{
 +}
 +
-+cDriverVUSOLO4K::~cDriverVUSOLO4K()
++cDriverVUPLUS4K::~cDriverVUPLUS4K()
 +{
 +	DeInit();
 +}
@@ -135,7 +135,7 @@ index 0000000..826843c
 +	return value;
 +}
 +
-+int cDriverVUSOLO4K::Init()
++int cDriverVUPLUS4K::Init()
 +{
 +	int x;
 +
@@ -148,6 +148,25 @@ index 0000000..826843c
 +		height = lcd_read_value(YRES);
 +
 +	bpp = lcd_read_value(BPP);
++
++	switch (bpp)
++	{
++		case 8:
++			stride_bpp_value = 1;
++			break;
++		case 15:
++		case 16:
++			stride_bpp_value = 2;
++			break;
++		case 24:
++		case 32:
++			stride_bpp_value = 4;
++			break;
++		default:
++			stride_bpp_value = (bpp + 7) / 8;
++	}
++
++	stride = width * stride_bpp_value;
 +
 +	for (unsigned int i = 0; i < config->options.size(); i++)
 +	{
@@ -181,14 +200,14 @@ index 0000000..826843c
 +		printf("failed to set lcd bin mode\n");
 +	}
 +
-+	newLCD = new uint16_t[width * height * 4];
++	newLCD = new uint16_t[height * stride];
 +	if (newLCD)
-+		memset(newLCD, 0, width * height * 4);
-+	oldLCD = new uint16_t[width * height * 4];
++		memset(newLCD, 0, height * stride);
++	oldLCD = new uint16_t[height * stride];
 +	if (oldLCD)
-+		memset(oldLCD, 0, width * height * 4);
++		memset(oldLCD, 0, height * stride);
 +
-+	syslog(LOG_INFO, "%s: current lcd is %dx%d, %dbpp, vusolo4k lcd device was opened successfully\n", config->name.c_str(), width, height, bpp);
++	syslog(LOG_INFO, "%s: current lcd is %dx%d, %dbpp, vuplus4k lcd device was opened successfully\n", config->name.c_str(), width, height, bpp);
 +
 +	*oldConfig = *config;
 +
@@ -196,11 +215,11 @@ index 0000000..826843c
 +	Clear();
 +	//Refresh(true);
 +
-+	syslog(LOG_INFO, "%s: VUSOLO4K initialized.\n", config->name.c_str());
++	syslog(LOG_INFO, "%s: VUPLUS4K initialized.\n", config->name.c_str());
 +	return 0;
 +}
 +
-+int cDriverVUSOLO4K::DeInit()
++int cDriverVUPLUS4K::DeInit()
 +{
 +	if (newLCD)
 +	{
@@ -220,11 +239,11 @@ index 0000000..826843c
 +	return 0;
 +}
 +
-+int cDriverVUSOLO4K::CheckSetup()
++int cDriverVUPLUS4K::CheckSetup()
 +{
 +	if (config->width != oldConfig->width ||
 +		config->height != oldConfig->height)
-+		{
++	{
 +		DeInit();
 +		Init();
 +		return 0;
@@ -240,12 +259,12 @@ index 0000000..826843c
 +	return 0;
 +}
 +
-+void cDriverVUSOLO4K::Clear()
++void cDriverVUPLUS4K::Clear()
 +{
 +	memset(newLCD, 0, width * height);
 +}
 +
-+void cDriverVUSOLO4K::SetPixel(int x, int y, uint32_t data)
++void cDriverVUPLUS4K::SetPixel(int x, int y, uint32_t data)
 +{
 +	if (x >= width || y >= height)
 +		return;
@@ -262,7 +281,7 @@ index 0000000..826843c
 +	red = (data & 0x00FF0000) >> 16;
 +
 +	unsigned char* row_pointers_bit_shift = (unsigned char*) &newLCD[0];
-+	int row_pointers_2_ptr = (y * width + x) * 4;
++	int row_pointers_2_ptr = (y * width + x) * stride_bpp_value;
 +
 + 	if (config->invert) {
 +		blue = 255 - blue;
@@ -276,7 +295,7 @@ index 0000000..826843c
 +	row_pointers_bit_shift[row_pointers_2_ptr+3]=0xff;
 +}
 +
-+void cDriverVUSOLO4K::Refresh(bool refreshAll)
++void cDriverVUPLUS4K::Refresh(bool refreshAll)
 +{
 +	int i;
 +	char fileName[256];
@@ -287,7 +306,7 @@ index 0000000..826843c
 +	if (CheckSetup() > 0)
 +		refreshAll = true;
 +
-+	for (i = 0; i < width * height * 4; i++)
++	for (i = 0; i < height * stride; i++)
 +	{
 +		if (newLCD[i] != oldLCD[i])
 +		{
@@ -298,14 +317,14 @@ index 0000000..826843c
 +
 +	if (refreshAll)
 +	{
-+		for (i = 0; i < width * height * 4; i++)
++		for (i = 0; i < height * stride; i++)
 +		{
 +			oldLCD[i] = newLCD[i];
 +		}
 +		unsigned char* row_pointers_bit_shift = (unsigned char*) &newLCD[0];
 +		{
 +			int w=-1;
-+			w = write(fd, row_pointers_bit_shift, height * width * 4);
++			w = write(fd, row_pointers_bit_shift, height * stride);
 +//			printf("write ret : %d\n",w);
 +			//ret = ioctl(lcdfd, 0);
 +//			printf("write to /dev/dbox/oled0 : %d\n",w);
@@ -313,7 +332,7 @@ index 0000000..826843c
 +	}
 +}
 +
-+void cDriverVUSOLO4K::SetBrightness(unsigned int brightness)
++void cDriverVUPLUS4K::SetBrightness(unsigned int brightness)
 +{
 +	int value = 0;
 +	value = 255 * brightness / 100;
@@ -330,16 +349,16 @@ index 0000000..826843c
 +}
 +
 +} // end of namespace
-diff --git a/glcddrivers/vusolo4k.h b/glcddrivers/vusolo4k.h
+diff --git a/glcddrivers/vuplus4k.h b/glcddrivers/vuplus4k.h
 new file mode 100644
 index 0000000..fac8272
 --- /dev/null
-+++ b/glcddrivers/vusolo4k.h
-@@ -0,0 +1,62 @@
++++ b/glcddrivers/vuplus4k.h
+@@ -0,0 +1,64 @@
 +/*
 + * GraphLCD driver library
 + *
-+ * vusolo4k.c  -  VUSOLO4K OLED driver class
++ * vuplus4k.c  -  VUPLUS4K OLED driver class
 + *
 + * This file is released under the GNU General Public License. Refer
 + * to the COPYING file distributed with this package.
@@ -348,8 +367,8 @@ index 0000000..fac8272
 + */
 +
 +
-+#ifndef _GLCDDRIVERS_VUSOLO4K_H_
-+#define _GLCDDRIVERS_VUSOLO4K_H_
++#ifndef _GLCDDRIVERS_VUPLUS4K_H_
++#define _GLCDDRIVERS_VUPLUS4K_H_
 +
 +#include "driver.h"
 +
@@ -371,19 +390,21 @@ index 0000000..fac8272
 +
 +class cDriverConfig;
 +
-+class cDriverVUSOLO4K : public cDriver
++class cDriverVUPLUS4K : public cDriver
 +{
 +private:
 +	int fd;
 +	uint16_t * newLCD;
 +	uint16_t * oldLCD;
 +	int bpp;
++	int stride;
++	int stride_bpp_value;
 +
 +	int CheckSetup();
 +
 +public:
-+	cDriverVUSOLO4K(cDriverConfig * config);
-+	virtual ~cDriverVUSOLO4K();
++	cDriverVUPLUS4K(cDriverConfig * config);
++	virtual ~cDriverVUPLUS4K();
 +
 +	virtual int Init();
 +	virtual int DeInit();
@@ -407,8 +428,8 @@ index 270cae8..d256e4b 100644
  Brightness=100
  Contrast=80
 +
-+[vusolo4k]
-+# Driver setting for the OLED VUSOLO4K (480x320 pixels)
-+Driver=vusolo4k
++[vuplus4k]
++# Driver setting for the OLED VUPLUS4K (480x320 pixels)
++Driver=vuplus4k
 +#Width=480
 +#Height=320
