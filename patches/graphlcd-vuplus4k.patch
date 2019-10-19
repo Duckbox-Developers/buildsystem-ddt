@@ -423,13 +423,16 @@ diff --git a/graphlcd.conf b/graphlcd.conf
 index 270cae8..d256e4b 100644
 --- a/graphlcd.conf
 +++ b/graphlcd.conf
-@@ -253,3 +253,9 @@
- Device=/dev/ttyS0
- Brightness=100
- Contrast=80
-+
+@@ -117,6 +117,12 @@
+ 
+ ########################################################################
+ 
 +[vuplus4k]
-+# Driver setting for the OLED VUPLUS4K (480x320 pixels)
++# Driver setting for the OLED VUPLUS4K
 +Driver=vuplus4k
 +#Width=480
 +#Height=320
++
+ [ax206dpf]
+ #  THIS IS AN EXPERIMENTAL DRIVER!
+ #  You have to uncomment the variable HAVE_DRIVER_AX206DPF
