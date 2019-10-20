@@ -57,7 +57,7 @@ DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 DRIVER_VER = 3.14.28
-DRIVER_DATE = 20181204
+DRIVER_DATE = 20190104
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
@@ -174,7 +174,7 @@ UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 UTIL_VER = 17.1
-UTIL_DATE = 20181204
+UTIL_DATE = 20190104
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
@@ -219,7 +219,7 @@ GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 GLES_VER = 17.1
-GLES_DATE = 20181204
+GLES_DATE = 20190104
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
