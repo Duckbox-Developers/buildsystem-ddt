@@ -159,32 +159,32 @@ $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 #
 ifeq ($(BOXTYPE), vuduo4k)
 UTIL_VER = 18.1
-UTIL_DATE = 20190212
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 UTIL_VER = 17.1
-UTIL_DATE = 20190104
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 UTIL_VER = 17.1
-UTIL_DATE = 20190424
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 UTIL_VER = 17.1
-UTIL_DATE = 20190104
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
 UTIL_VER = 17.1
-UTIL_DATE = 20190104
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 ifeq ($(BOXTYPE), vusolo4k)
 UTIL_VER = 17.1
-UTIL_DATE = 20190424
+UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
 UTIL_SRC = platform-util-$(KERNEL_TYPE)-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
@@ -204,32 +204,32 @@ $(D)/platform_util: $(D)/bootstrap $(ARCHIVE)/$(UTIL_SRC)
 #
 ifeq ($(BOXTYPE), vuduo4k)
 GLES_VER = 18.1
-GLES_DATE = 20190212
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 GLES_VER = 17.1
-GLES_DATE = 20190104
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 GLES_VER = 17.1
-GLES_DATE = 20190424
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 GLES_VER = 17.1
-GLES_DATE = 20190104
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
 GLES_VER = 17.1
-GLES_DATE = 20190104
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 ifeq ($(BOXTYPE), vusolo4k)
 GLES_VER = 17.1
-GLES_DATE = 20190424
+GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
 GLES_SRC = libgles-$(KERNEL_TYPE)-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
