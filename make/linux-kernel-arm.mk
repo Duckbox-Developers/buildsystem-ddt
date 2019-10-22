@@ -93,6 +93,8 @@ HD60_PATCHES = \
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
 		armbox/vuplus_common/3_14_linux_dvb-core.patch \
+		armbox/vuplus_common/3_14_dvbs2x.patch \
+		armbox/vuplus_common/3_14_dmx_source_dvr.patch \
 		armbox/vuplus_common/3_14_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		armbox/vuplus_common/3_14_usb_core_hub_msleep.patch \
 		armbox/vuplus_common/3_14_rtl8712_fix_build_error.patch \
@@ -121,6 +123,7 @@ COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_linux_dvb_adapter.patch \
 		armbox/vuplus_common/4_1_linux_dvb-core.patch \
 		armbox/vuplus_common/4_1_linux_4_1_45_dvbs2x.patch \
+		armbox/vuplus_common/4_1_dmx_source_dvr.patch \
 		armbox/vuplus_common/4_1_bcmsysport_4_1_45.patch \
 		armbox/vuplus_common/4_1_linux_usb_hub.patch \
 		armbox/vuplus_common/4_1_0001-regmap-add-regmap_write_bits.patch \
