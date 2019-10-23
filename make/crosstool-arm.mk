@@ -52,6 +52,9 @@ endif
 ifeq ($(BOXTYPE), vusolo4k)
 CUSTOM_KERNEL_VER = 3.14-1.8
 endif
+ifeq ($(BOXTYPE), zgemmah7)
+CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
+endif
 
 ifeq ($(wildcard $(CROSS_BASE)/build.log.bz2),)
 CROSSTOOL = crosstool
