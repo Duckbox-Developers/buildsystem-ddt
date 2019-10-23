@@ -73,7 +73,7 @@ case $1 in
 		echo "   60)  HD60            52) VU+ Duo 4K      55) VU+ Uno 4K SE"
 		echo "                        53) VU+ Zero 4K     56) VU+ Uno 4K"
 		echo " Air Digital"
-		echo "   57)  ZGEMMA H7
+		echo "   57)  ZGEMMA H7"
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
