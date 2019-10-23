@@ -39,7 +39,7 @@ $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC):
 
 endif
 
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_DATE = 20190405
 DRIVER_SRC = h7-drivers-$(DRIVER_VER).zip
@@ -153,7 +153,7 @@ $(D)/mali-gpu-modul: $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC) $(D)/bootstrap $(D)/ker
 	$(TOUCH)
 endif
 
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)

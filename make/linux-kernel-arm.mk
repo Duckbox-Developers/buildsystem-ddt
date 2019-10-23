@@ -24,13 +24,13 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
 endif
 
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 KERNEL_VER             = 4.10.12
 KERNEL_DATE            = 20180424
 KERNEL_TYPE            = hd51
 KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
 KERNEL_URL             = http://source.mynonpublic.com/gfutures
-KERNEL_CONFIG          = zgemmah7_defconfig
+KERNEL_CONFIG          = h7_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
@@ -232,7 +232,7 @@ ifeq ($(BOXTYPE), hd60)
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules
@@ -268,7 +268,7 @@ ifeq ($(BOXTYPE), hd60)
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)

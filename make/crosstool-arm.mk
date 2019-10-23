@@ -52,7 +52,7 @@ endif
 ifeq ($(BOXTYPE), vusolo4k)
 CUSTOM_KERNEL_VER = 3.14-1.8
 endif
-ifeq ($(BOXTYPE), zgemmah7)
+ifeq ($(BOXTYPE), h7)
 CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
 endif
 
