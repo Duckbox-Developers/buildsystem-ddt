@@ -473,6 +473,15 @@ neutrino-mp-release-hd60:
 	cp $(TARGET_DIR)/boot/uImage $(RELEASE_DIR)/boot/
 
 #
+# Zgemma H7
+#
+neutrino-mp-release-hd51:
+	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
+
+#
 # vuduo4k
 #
 neutrino-mp-release-vuduo4k:

@@ -24,6 +24,18 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), zgemmah7)
+KERNEL_VER             = 4.10.12
+KERNEL_DATE            = 20180424
+KERNEL_TYPE            = hd51
+KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
+KERNEL_URL             = http://source.mynonpublic.com/gfutures
+KERNEL_CONFIG          = zgemmah7_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
+KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vuduo4k)
@@ -207,6 +219,13 @@ endif
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 ifeq ($(BOXTYPE), hd51)
+	set -e; cd $(KERNEL_DIR); \
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+	@touch $@
+endif
+ifeq ($(BOXTYPE), zgemmah7)
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules

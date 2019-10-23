@@ -39,6 +39,14 @@ $(ARCHIVE)/$(EXTRA_MALI_MODULE_SRC):
 
 endif
 
+ifeq ($(BOXTYPE), zgemmah7)
+DRIVER_VER = 4.10.12
+DRIVER_DATE = 20190405
+DRIVER_SRC = h7-drivers-$(DRIVER_VER)-$(DRIVER_DATE).zip
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(WGET) http://www.zgemma.org/downloads/h7-drivers-$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
