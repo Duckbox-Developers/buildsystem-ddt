@@ -274,6 +274,7 @@ H7_IMAGE_NAME = disk
 H7_BOOT_IMAGE = boot.img
 H7_IMAGE_LINK = $(H7_IMAGE_NAME).ext4
 H7_IMAGE_ROOTFS_SIZE = 294912
+H7_IMAGEDIR = zgemma/$(BOXTYPE)
 
 # emmc image
 EMMC_IMAGE_SIZE = 3817472
@@ -309,7 +310,7 @@ SWAP_PARTITION_OFFSET = $(shell expr $(SWAP_DATA_PARTITION_OFFSET) \+ $(SWAP_DAT
 
 flash-image-h7-multi-disk: $(D)/host_resize2fs
 	rm -rf $(IMAGE_BUILD_DIR)
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)
 	# move kernel files from $(RELEASE_DIR)/boot to $(IMAGE_BUILD_DIR)
 	mv -f $(RELEASE_DIR)/boot/zImage* $(IMAGE_BUILD_DIR)/
 	# Create a sparse image block
@@ -357,18 +358,18 @@ flash-image-h7-multi-disk: $(D)/host_resize2fs
 	$(HOST_DIR)/bin/resize2fs $(IMAGE_BUILD_DIR)/$(H7_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
 	dd if=$(IMAGE_BUILD_DIR)/$(H7_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(H7_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
-	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(BOXTYPE)/
+	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)/
 
 flash-image-h7-multi-rootfs:
 	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin
+	mkdir -p $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)
+	cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)/kernel.bin
 	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
+	tar -cvf $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)/rootfs.tar
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(H7_IMAGEDIR)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/disk.img $(BOXTYPE)/imageversion
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(H7_IMAGEDIR)/rootfs.tar.bz2 $(H7_IMAGEDIR)/kernel.bin $(H7_IMAGEDIR)/disk.img $(H7_IMAGEDIR)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
