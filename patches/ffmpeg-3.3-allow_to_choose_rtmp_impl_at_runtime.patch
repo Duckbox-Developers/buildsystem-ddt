@@ -1,6 +1,6 @@
 --- ffmpeg-3.2.2/configure
 +++ ffmpeg-3.2.2/configure
-@@ -3033,10 +3033,8 @@
+@@ -3036,10 +3036,8 @@
  # protocols
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="network"
-@@ -3053,14 +3051,12 @@
+@@ -3056,14 +3054,12 @@
  libssh_protocol_deps="libssh"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
@@ -70,7 +70,7 @@
 +RTMP_PROTOCOL(ffrtmpts)
 --- a/libavformat/Makefile
 +++ b/libavformat/Makefile
-@@ -566,12 +566,12 @@
+@@ -567,12 +567,12 @@
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o

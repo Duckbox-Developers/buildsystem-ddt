@@ -25,7 +25,7 @@ diff -uNr ffmpeg-3.3_orig/configure ffmpeg-3.3_dash_demux/configure
  dirac_demuxer_select="dirac_parser"
  dts_demuxer_select="dca_parser"
  dtshd_demuxer_select="dca_parser"
-@@ -5730,6 +5733,7 @@
+@@ -5734,6 +5737,7 @@
  disabled  zlib || check_lib  zlib.h      zlibVersion    -lz    || disable  zlib
  disabled bzlib || check_lib bzlib.h BZ2_bzlibVersion    -lbz2  || disable bzlib
  disabled  lzma || check_lib  lzma.h lzma_version_number -llzma || disable lzma
