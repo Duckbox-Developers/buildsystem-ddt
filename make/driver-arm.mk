@@ -44,6 +44,7 @@ DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_DATE = 20190405
 DRIVER_SRC = h7-drivers-$(DRIVER_VER).zip
 DRIVER_URL = http://source.mynonpublic.com/zgemma
+
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
 endif

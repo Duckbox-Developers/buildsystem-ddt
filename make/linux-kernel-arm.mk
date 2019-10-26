@@ -1,13 +1,13 @@
 #
 # KERNEL
 #
-ifeq ($(BOXTYPE), hd51)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 KERNEL_VER             = 4.10.12
 KERNEL_DATE            = 20180424
-KERNEL_TYPE            = hd51
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
 KERNEL_URL             = http://source.mynonpublic.com/gfutures
-KERNEL_CONFIG          = hd51_defconfig
+KERNEL_CONFIG          = $(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
@@ -22,18 +22,6 @@ KERNEL_URL             = http://downloads.mutant-digital.net
 KERNEL_CONFIG          = hd60_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(HD60_PATCHES)
-endif
-
-ifeq ($(BOXTYPE), h7)
-KERNEL_VER             = 4.10.12
-KERNEL_DATE            = 20180424
-KERNEL_TYPE            = hd51
-KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
-KERNEL_URL             = http://source.mynonpublic.com/gfutures
-KERNEL_CONFIG          = h7_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
-KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
-KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
