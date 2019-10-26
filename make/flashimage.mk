@@ -74,6 +74,7 @@ flash-clean:
 # general
 IMAGE_BUILD_DIR = $(BUILD_TMP)/image-build
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7)
 ### armbox hd51 h7
 # general
 $(BOXTYPE)_IMAGE_NAME = disk
@@ -197,6 +198,7 @@ flash-image-$(BOXTYPE)-online:
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 kernel.bin imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
+endif
 
 ### armbox hd60
 HD60_IMAGE_NAME = disk
