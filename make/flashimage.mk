@@ -74,7 +74,7 @@ flash-clean:
 # general
 IMAGE_BUILD_DIR = $(BUILD_TMP)/image-build
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 ### armbox hd51 h7
 # general
 $(BOXTYPE)_IMAGE_NAME = disk
@@ -86,7 +86,7 @@ ifeq ($(BOXTYPE), hd51)
 	IMAGEDIR = $(BOXTYPE)
 endif
 ifeq ($(BOXTYPE), h7)
-	IMAGEDIR = zgemma/h7
+	IMAGEDIR = zgemma/$(BOXTYPE)
 endif
 
 # emmc image
@@ -127,7 +127,7 @@ flash-image-$(BOXTYPE)-multi-disk: $(D)/host_resize2fs
 	# move kernel files from $(RELEASE_DIR)/boot to $(IMAGE_BUILD_DIR)
 	mv -f $(RELEASE_DIR)/boot/zImage* $(IMAGE_BUILD_DIR)/
 	# Create a sparse image block
-	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) seek=$(shell expr $($(BOXTYPE_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
+	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) seek=$(shell expr $($(BOXTYPE)_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
 	$(HOST_DIR)/bin/mkfs.ext4 -F $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) -d $(RELEASE_DIR)
 	# move kernel files back to $(RELEASE_DIR)/boot
 	mv -f $(IMAGE_BUILD_DIR)/zImage* $(RELEASE_DIR)/boot/
@@ -168,9 +168,9 @@ flash-image-$(BOXTYPE)-multi-disk: $(D)/host_resize2fs
 	mcopy -i $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_4_12 ::
 	dd conv=notrunc if=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(IMAGE_ROOTFS_ALIGNMENT) \* $(BLOCK_SECTOR))
 	dd conv=notrunc if=$(RELEASE_DIR)/boot/zImage.dtb of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(KERNEL_PARTITION_OFFSET) \* $(BLOCK_SECTOR))
-	$(HOST_DIR)/bin/resize2fs $(IMAGE_BUILD_DIR)/$($(BOXTXPE)_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
+	$(HOST_DIR)/bin/resize2fs $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
-	dd if=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $($BOXTYPE)_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
+	dd if=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $($(BOXTYPE)_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
 	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/
 
 flash-image-$(BOXTYPE)-multi-rootfs:
