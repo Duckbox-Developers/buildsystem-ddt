@@ -83,6 +83,7 @@ HD51_PATCHES = \
 		armbox/hd51_0001-STV-Add-PLS-support.patch \
 		armbox/hd51_0001-STV-Add-SNR-Signal-report-parameters.patch \
 		armbox/hd51_blindscan2.patch \
+		armbox/hd51_dvbs2x.patch \
 		armbox/hd51_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/hd51_reserve_dvb_adapter_0.patch \
 		armbox/hd51_blacklist_mmc0.patch \
