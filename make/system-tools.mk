@@ -338,6 +338,12 @@ E2FSPROGS_VER = 1.45.4
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
 E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
 
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+E2FSPROGS_ARGS = --enable-resizer
+else
+E2FSPROGS_ARGS = --disable-resizer
+endif
+
 $(ARCHIVE)/$(E2FSPROGS_SOURCE):
 	$(WGET) https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v$(E2FSPROGS_VER)/$(E2FSPROGS_SOURCE)
 
@@ -363,7 +369,7 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 			--disable-testio-debug \
 			--disable-debugfs \
 			--disable-imager \
-			--disable-resizer \
+			$(E2FSPROGS_ARGS) \
 			--disable-backtrace \
 			--disable-mmp \
 			--disable-tdb \
