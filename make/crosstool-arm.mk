@@ -31,9 +31,6 @@ CUSTOM_KERNEL = $(ARCHIVE)/$(KERNEL_SRC)
 ifeq ($(BOXTYPE), hd51)
 CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
 endif
-ifeq ($(BOXTYPE), hd60)
-CUSTOM_KERNEL_VER = $(KERNEL_VER)-$(KERNEL_DATE)-arm
-endif
 ifeq ($(BOXTYPE), vuduo4k)
 CUSTOM_KERNEL_VER = 4.1-1.17
 endif

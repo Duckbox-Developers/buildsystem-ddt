@@ -12,9 +12,6 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-multi-rootfs
 endif
-ifeq ($(BOXTYPE), hd60)
-	$(MAKE) flash-image-hd60-multi-disk flash-image-hd60-multi-rootfs
-endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(VU_MULTIBOOT), 1)
 	$(MAKE) flash-image-vu-multi-rootfs
@@ -31,9 +28,6 @@ ofgimage:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-rootfs
 endif
-ifeq ($(BOXTYPE), hd60)
-	$(MAKE) flash-image-hd60-multi-rootfs
-endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	$(MAKE) flash-image-vu-rootfs
 endif
@@ -43,9 +37,6 @@ oi \
 online-image:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-online
-endif
-ifeq ($(BOXTYPE), hd60)
-	$(MAKE) flash-image-hd60-online
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	$(MAKE) flash-image-vu-online
@@ -192,83 +183,6 @@ flash-image-$(BOXTYPE)-online:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 endif
-
-### armbox hd60
-HD60_IMAGE_NAME = disk
-HD60_BOOT_IMAGE = bootoptions.img
-HD60_IMAGE_LINK = $(HD60_IMAGE_NAME).ext4
-
-HD60_BOOTOPTIONS_PARTITION_SIZE = 4096
-HD60_IMAGE_ROOTFS_SIZE = 1048576
-
-HD60_SRCDATE = 20180912
-HD60_BOOTARGS_SRC = $(KERNEL_TYPE)-bootargs-$(HD60_SRCDATE).zip
-HD60_PARTITONS_SRC = $(KERNEL_TYPE)-partitions-$(HD60_SRCDATE).zip
-
-$(ARCHIVE)/$(HD60_BOOTARGS_SRC):
-	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_BOOTARGS_SRC)
-
-$(ARCHIVE)/$(HD60_PARTITONS_SRC):
-	$(WGET) http://downloads.mutant-digital.net/$(KERNEL_TYPE)/$(HD60_PARTITONS_SRC)
-
-flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_PARTITONS_SRC)
-	# Create image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	unzip -o $(ARCHIVE)/$(HD60_BOOTARGS_SRC) -d $(IMAGE_BUILD_DIR)
-	unzip -o $(ARCHIVE)/$(HD60_PARTITONS_SRC) -d $(IMAGE_BUILD_DIR)
-	echo $(BOXTYPE)_DDT_recovery_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/recoveryversion
-#	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$(HD60_IMAGE_LINK) seek=$(shell expr $(HD60_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
-#	$(HOST_DIR)/bin/mkfs.ext4 -F $(IMAGE_BUILD_DIR)/$(HD60_IMAGE_LINK) -d $(RELEASE_DIR)
-#	# Error codes 0-3 indicate successfull operation of fsck (no errors or errors corrected)
-#	$(HOST_DIR)/bin/fsck.ext4 -pvfD $(IMAGE_BUILD_DIR)/$(HD60_IMAGE_LINK) || [ $? -le 3 ]
-	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) bs=1024 count=$(HD60_BOOTOPTIONS_PARTITION_SIZE)
-	mkfs.msdos -S 512 $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE)
-	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(IMAGE_BUILD_DIR)/STARTUP
-	echo "bootcmd=mmc read 0 0x3F000000 0x70000 0x4000; bootm 0x3F000000; mmc read 0 0x1FFBFC0 0x52000 0xC800; bootargs=androidboot.selinux=enforcing androidboot.serialno=0123456789 console=ttyAMA0,115200" > $(IMAGE_BUILD_DIR)/STARTUP_RED
-	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(IMAGE_BUILD_DIR)/STARTUP_GREEN
-	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(IMAGE_BUILD_DIR)/STARTUP_YELLOW
-	echo "bootcmd=mmc read 0 0x1000000 0x53D000 0x8000; bootm 0x1000000 bootargs=console=ttyAMA0,115200 root=/dev/mmcblk0p21 rootfstype=ext4" > $(IMAGE_BUILD_DIR)/STARTUP_BLUE
-	mcopy -i $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_RED ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_GREEN ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_YELLOW ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_BLUE ::
-	rm -f $(IMAGE_BUILD_DIR)/STARTUP*
-	mv $(IMAGE_BUILD_DIR)/$(HD60_BOOT_IMAGE) $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(HD60_BOOT_IMAGE)
-#	ext2simg -zv $(IMAGE_BUILD_DIR)/$(HD60_IMAGE_LINK) $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.fastboot.gz
-	mv $(IMAGE_BUILD_DIR)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/bootargs.bin
-	mv $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs.bin
-	cp $(RELEASE_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M')_recovery.zip *
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
-
-flash-image-hd60-multi-rootfs:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	cp $(RELEASE_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
-	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_DDT_mmc_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M')_mmc.zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/uImage $(BOXTYPE)/imageversion
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
-
-flash-image-hd60-online:
-	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	cp $(RELEASE_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
-	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_DDT_online_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
-	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz rootfs.tar.bz2 uImage imageversion
-	# cleanup
-	rm -rf $(IMAGE_BUILD_DIR)
 
 ### armbox vu+
 # general

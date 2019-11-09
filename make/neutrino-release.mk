@@ -465,14 +465,6 @@ neutrino-mp-release-hd51:
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 
 #
-# Mutant HD60
-#
-neutrino-mp-release-hd60:
-	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGET_DIR)/boot/uImage $(RELEASE_DIR)/boot/
-
-#
 # Zgemma H7
 #
 neutrino-mp-release-h7:
