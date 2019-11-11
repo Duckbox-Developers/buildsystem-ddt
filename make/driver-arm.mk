@@ -7,7 +7,7 @@ DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 #DRIVER_DATE = 20191031
 DRIVER_DATE = 20191101
 DRIVER_SRC = hd51-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/gfutures/
+DRIVER_URL = http://source.mynonpublic.com/gfutures
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
