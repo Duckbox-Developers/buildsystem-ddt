@@ -2,14 +2,15 @@
 # driver
 #
 ifeq ($(BOXTYPE), hd51)
-DRIVER_VER = 4.10.12
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 #DRIVER_DATE = 20180424
 #DRIVER_DATE = 20191031
 DRIVER_DATE = 20191101
-DRIVER_SRC = $(KERNEL_TYPE)-drivers-$(DRIVER_VER)-$(DRIVER_DATE).zip
+DRIVER_SRC = hd51-drivers-$(DRIVER_VER).zip
+DRIVER_URL = http://source.mynonpublic.com/gfutures/
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(WGET) http://source.mynonpublic.com/gfutures/$(DRIVER_SRC)
+	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), h7)
@@ -63,16 +64,7 @@ endif
 driver-clean:
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 
-ifeq ($(BOXTYPE), hd51)
-driver: $(D)/driver
-$(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
-	$(START_BUILD)
-	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
-	unzip -o $(ARCHIVE)/$(DRIVER_SRC) -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
-	$(TOUCH)
-endif
-
-ifeq ($(BOXTYPE), h7)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
