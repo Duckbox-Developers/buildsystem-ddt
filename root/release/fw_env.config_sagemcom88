@@ -1,2 +1,0 @@
-# MTD device name       Device offset   Env. size       Flash sector size
-/dev/mtd0               0x00040000      0x00010000      0x20000

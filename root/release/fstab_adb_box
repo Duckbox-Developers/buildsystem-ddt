@@ -1,6 +1,0 @@
-# /etc/fstab: static file system information.
-#
-# <file system> <mount point>   <type>  <options>               <dump>  <pass>
-/dev/root       /               auto    defaults,remount,errors=remount-ro,noatime,nodiratime      0 0
-#/dev/sda3        /hdd            auto    defaults,errors=remount-ro,noatime,nodiratime      0 0
-#/dev/sda2 	 none 		 swap 	 sw

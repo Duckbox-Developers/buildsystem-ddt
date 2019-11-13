@@ -88,72 +88,7 @@ ATEVIO7500_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-atevio7500_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch
 
-HS7110_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7110_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
-		linux-sh4-hs7110_mtdconcat_stm24_$(KERNEL_LABEL).patch
-
-HS7119_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7119_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
-
-HS7420_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7420_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
-		linux-sh4-hs7420_mtdconcat_stm24_$(KERNEL_LABEL).patch
-
-HS7429_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7429_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
-
-HS7810A_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7810a_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
-		linux-sh4-hs7810a_mtdconcat_stm24_$(KERNEL_LABEL).patch
-
-HS7819_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-hs7819_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch)
-
-ATEMIO520_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-atemio520_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
-		linux-squashfs-downgrade-stm24_$(KERNEL_LABEL)-to-stm23.patch \
-		linux-squashfs3.0_lzma_stm23.patch \
-		linux-squashfs-downgrade-stm24-patch-2.6.25 \
-		linux-squashfs-downgrade-stm24-rm_d_alloc_anon.patch
-
-ATEMIO530_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-atemio530_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-i2c-stm-downgrade_stm24_$(KERNEL_LABEL).patch) \
-		linux-squashfs-downgrade-stm24_$(KERNEL_LABEL)-to-stm23.patch \
-		linux-squashfs3.0_lzma_stm23.patch \
-		linux-squashfs-downgrade-stm24-patch-2.6.25 \
-		linux-squashfs-downgrade-stm24-rm_d_alloc_anon.patch
-
 UFS922_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-ufs922_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-fortis_hdbox_i2c_st40_stm24_$(KERNEL_LABEL).patch
-
-UFC960_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ufs922_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
@@ -183,15 +118,6 @@ FORTIS_HDBOX_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		$(if $(P0209),linux-sh4-fortis_hdbox_i2c_st40_stm24_$(KERNEL_LABEL).patch)
-
-ADB_BOX_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-stx7100_fdma_fix_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-sata_32bit_fix_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-adb_box_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-usbwait123_stm24.patch \
-		linux-sh4-ufs910_reboot_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-pcm_noise_fix_stm24_$(KERNEL_LABEL).patch
 
 IPBOX9900_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ipbox9900_setup_stm24_$(KERNEL_LABEL).patch \
@@ -224,11 +150,6 @@ CUBEREVO_MINI2_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
 
-CUBEREVO_MINI_FTA_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
 CUBEREVO_250HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_250hd_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
@@ -240,37 +161,16 @@ CUBEREVO_2000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
 
-CUBEREVO_9500HD_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-cuberevo_9500hd_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
 CUBEREVO_3000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_3000hd_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch
-
-VITAMIN_HD5000_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-vitamin_hd5000_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch
-
-SAGEMCOM88_PATCHES_24 = $(COMMON_PATCHES_24) \
-		linux-sh4-sagemcom88_setup_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-sagemcom88_sound_stm24_$(KERNEL_LABEL).patch
 
 ARIVALINK200_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-arivalink200_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-ipbox_bdinfo_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-ipbox_dvb_ca_stm24_$(KERNEL_LABEL).patch
-
-PACE7241_PATCHES_24 = $(COMMONPATCHES_24) \
-		linux-sh4-pace7241_setup_stm24$(PATCH_STR).patch \
-		linux-sh4-stmmac_stm24$(PATCH_STR).patch \
-		linux-sh4-lmb_stm24$(PATCH_STR).patch
 
 #
 # KERNEL

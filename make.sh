@@ -34,38 +34,31 @@ case $1 in
 		echo "Target receivers:"
 		echo
 		echo "  Kathrein             Fortis"
-		echo "    1)  UFS-910          7)  FS9000 / FS9200 (formerly Fortis HDbox)"
-		echo "    2)  UFS-912          8)  HS9510          (formerly Octagon SF1008P)"
-		echo "    3)  UFS-913          9)  HS8200          (formerly Atevio AV7500)"
-		echo -e "    4)  UFS-922         \033[90m10)  HS7110\033[0m"
-		echo -e "    \033[90m5)  UFC-960         11)  HS7119\033[0m"
-		echo -e "                        \033[90m12)  HS7420\033[0m"
-		echo -e "  Topfield              \033[90m13)  HS7429\033[0m"
-		echo -e "    6)  TF77X0 HDPVR    \033[90m14)  HS7810A\033[0m"
-		echo -e "                        \033[90m15)  HS7819\033[0m"
+		echo "    1)  UFS-910          6)  FS9000 / FS9200 (formerly Fortis HDbox)"
+		echo "    2)  UFS-912          7)  HS9510          (formerly Octagon SF1008P)"
+		echo "    3)  UFS-913          8)  HS8200          (formerly Atevio AV7500)"
+		echo "    4)  UFS-922"
+		echo
+		echo "  Topfield"
+		echo "    5)  TF77X0 HDPVR"
 		echo
 		echo "  AB IPBox             Cuberevo"
-		echo "   16)  55HD            19)  id."
-		echo "   17)  99HD            20)  mini"
-		echo "   18)  9900HD          21)  mini2"
-		echo "   19)  9000HD          22)  250HD"
-		echo -e "   20)  900HD           \033[90m23)  9500HD / 7000HD\033[0m"
-		echo "   21)  910HD           24)  2000HD"
-		echo -e "   22)  91HD            \033[90m25)  mini_fta / 200HD\033[0m"
-		echo "                        26)  3000HD / Xsarius Alpha"
+		echo "    9)  55HD            12)  id."
+		echo "   10)  99HD            13)  mini"
+		echo "   11)  9900HD          14)  mini2"
+		echo "   12)  9000HD          15)  250HD"
+		echo "   13)  900HD           16)  2000HD"
+		echo "   14)  910HD           17)  3000HD / Xsarius Alpha"
+		echo "   15)  91HD"
 		echo
-		echo "  Fulan                Atemio"
-		echo -e "   27)  Spark           \033[90m29)  AM520\033[0m"
-		echo -e "   28)  Spark7162       \033[90m30)  AM530\033[0m"
+		echo "  Fulan"
+		echo "   27)  Spark"
+		echo "   28)  Spark7162"
 		echo
 		echo "  Various sh4-based receivers"
 		echo "   31)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
 		echo "   32)  SpiderBox HL-101"
-		echo -e "   \033[90m33)  B4Team ADB 5800S\033[0m"
-		echo -e "   \033[90m34)  Vitamin HD5000\033[0m"
-		echo -e "   \033[90m35)  SagemCom 88 series\033[0m"
-		echo "   36)  Ferguson Ariva @Link 200"
-		#echo "   37)  Pace HDS-7241 (stm 217 only)"
+		echo "   33)  Ferguson Ariva @Link 200"
 		echo
 		echo "  arm-based receivers"
 		echo "  AX/Mut@nt            VU+"
@@ -86,39 +79,30 @@ case "$REPLY" in
 	 2) BOXARCH="sh4";BOXTYPE="ufs912";;
 	 3) BOXARCH="sh4";BOXTYPE="ufs913";;
 	 4) BOXARCH="sh4";BOXTYPE="ufs922";;
-	 5) BOXARCH="sh4";BOXTYPE="ufc960";;
-	 6) BOXARCH="sh4";BOXTYPE="tf7700";;
-	 7) BOXARCH="sh4";BOXTYPE="fortis_hdbox";;
-	 8) BOXARCH="sh4";BOXTYPE="octagon1008";;
-	 9) BOXARCH="sh4";BOXTYPE="atevio7500";;
-	10) BOXARCH="sh4";BOXTYPE="hs7110";;
-	11) BOXARCH="sh4";BOXTYPE="hs7119";;
-	12) BOXARCH="sh4";BOXTYPE="hs7420";;
-	13) BOXARCH="sh4";BOXTYPE="hs7429";;
-	14) BOXARCH="sh4";BOXTYPE="hs7810a";;
-	15) BOXARCH="sh4";BOXTYPE="hs7819";;
-	16) BOXARCH="sh4";BOXTYPE="ipbox55";;
-	17) BOXARCH="sh4";BOXTYPE="ipbox99";;
-	18) BOXARCH="sh4";BOXTYPE="ipbox9900";;
-	19) BOXARCH="sh4";BOXTYPE="cuberevo";;
-	20) BOXARCH="sh4";BOXTYPE="cuberevo_mini";;
-	21) BOXARCH="sh4";BOXTYPE="cuberevo_mini2";;
-	22) BOXARCH="sh4";BOXTYPE="cuberevo_250hd";;
-	23) BOXARCH="sh4";BOXTYPE="cuberevo_9500hd";;
-	24) BOXARCH="sh4";BOXTYPE="cuberevo_2000hd";;
-	25) BOXARCH="sh4";BOXTYPE="cuberevo_mini_fta";;
-	26) BOXARCH="sh4";BOXTYPE="cuberevo_3000hd";;
+
+	 5) BOXARCH="sh4";BOXTYPE="tf7700";;
+
+	 6) BOXARCH="sh4";BOXTYPE="fortis_hdbox";;
+	 7) BOXARCH="sh4";BOXTYPE="octagon1008";;
+	 8) BOXARCH="sh4";BOXTYPE="atevio7500";;
+
+	 9) BOXARCH="sh4";BOXTYPE="ipbox55";;
+	10) BOXARCH="sh4";BOXTYPE="ipbox99";;
+	11) BOXARCH="sh4";BOXTYPE="ipbox9900";;
+	12) BOXARCH="sh4";BOXTYPE="cuberevo";;
+	13) BOXARCH="sh4";BOXTYPE="cuberevo_mini";;
+	14) BOXARCH="sh4";BOXTYPE="cuberevo_mini2";;
+	15) BOXARCH="sh4";BOXTYPE="cuberevo_250hd";;
+	16) BOXARCH="sh4";BOXTYPE="cuberevo_2000hd";;
+	17) BOXARCH="sh4";BOXTYPE="cuberevo_3000hd";;
+
 	27) BOXARCH="sh4";BOXTYPE="spark";;
 	28) BOXARCH="sh4";BOXTYPE="spark7162";;
-	29) BOXARCH="sh4";BOXTYPE="atemio520";;
-	30) BOXARCH="sh4";BOXTYPE="atemio530";;
+
 	31) BOXARCH="sh4";BOXTYPE="hl101";;
 	32) BOXARCH="sh4";BOXTYPE="hl101";;
-	33) BOXARCH="sh4";BOXTYPE="adb_box";;
-	34) BOXARCH="sh4";BOXTYPE="vitamin_hd5000";;
-	35) BOXARCH="sh4";BOXTYPE="sagemcom88";;
-	36) BOXARCH="sh4";BOXTYPE="arivalink200";;
-	37) BOXARCH="sh4";BOXTYPE="pace7241";;
+	33) BOXARCH="sh4";BOXTYPE="arivalink200";;
+
 	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	51) BOXARCH="arm";BOXTYPE="hd51";;
 	52) BOXARCH="arm";BOXTYPE="vuduo4k";;
