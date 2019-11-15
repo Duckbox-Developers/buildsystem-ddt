@@ -16,7 +16,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1           : Target system (1-70)"
 	echo "Parameter 2 (SH4)     : Kernel (1-2)"
 	echo "Parameter 2 (ARM VU+) : Single/Multiboot (1-2)"
-	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder"
+	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder for batch mode"
 	echo "Parameter 3           : Optimization (1-4)"
 	echo "Parameter 4           : Media Framework (1-2)"
 	echo "Parameter 5           : Image Neutrino (1-2)"
@@ -34,8 +34,8 @@ case $1 in
 		echo "Target receivers:"
 		echo
 		echo "  Kathrein             Fortis"
-		echo "    1)  UFS-910          6)  FS9000 / FS9200 (formerly Fortis HDbox)"
-		echo "    2)  UFS-912          7)  HS9510          (formerly Octagon SF1008P)"
+		echo "    1)  UFS-910          6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
+		echo "    2)  UFS-912          7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
 		echo "    3)  UFS-913          8)  HS8200          (formerly Atevio AV7500)"
 		echo "    4)  UFS-922"
 		echo
