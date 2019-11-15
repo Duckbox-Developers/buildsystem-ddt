@@ -427,7 +427,7 @@ neutrino-mp-release-base:
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,logos,net,tuxbox,update}
-	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
+	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
 	install -d $(RELEASE_DIR)/var/net/epg
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,fonts,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/webtv
@@ -828,7 +828,7 @@ $(D)/neutrino-mp-release: neutrino-mp-release-base neutrino-mp-release-$(BOXTYPE
 #
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
-	ln -sf /var/etc $(RELEASE_DIR)
+	ln -sf var/etc $(RELEASE_DIR)/etc
 #
 	ln -s /tmp $(RELEASE_DIR)/lib/init
 	ln -s /tmp $(RELEASE_DIR)/var/lib/urandom

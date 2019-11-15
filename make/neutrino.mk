@@ -10,6 +10,14 @@ $(TARGET_DIR)/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
+# -----------------------------------------------------------------------------
+e2-multiboot:
+	touch $(TARGET_DIR)/usr/bin/enigma2
+	echo -e "$(FLAVOUR) `sed -n 's/\#define PACKAGE_VERSION "//p' $(N_OBJDIR)/config.h | sed 's/"//'` \\\n \\\l\n" > $(TARGET_DIR)/etc/issue
+	touch $(TARGET_DIR)/var/lib/opkg/status
+	cp -a $(TARGET_DIR)/.version $(TARGET_DIR)/etc/image-version
+# -----------------------------------------------------------------------------
+
 AUDIODEC = ffmpeg
 
 NEUTRINO_DEPS  = $(D)/bootstrap $(KERNEL) $(D)/system-tools
@@ -305,6 +313,7 @@ neutrino-mp: $(D)/neutrino-mp.do_prepare $(D)/neutrino-mp.config.status $(D)/neu
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
+	make e2-multiboot
 	touch $(D)/$(notdir $@)
 	make neutrino-mp-release
 	$(TUXBOX_CUSTOMIZE)

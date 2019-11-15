@@ -338,7 +338,7 @@ $(D)/directories:
 	install -d $(TARGET_DIR)/usr/include/linux
 	install -d $(TARGET_DIR)/usr/include/linux/dvb
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
-	install -d $(TARGET_DIR)/var/lib/{misc,nfs}
+	install -d $(TARGET_DIR)/var/lib/{misc,nfs,opkg}
 	install -d $(TARGET_DIR)/var/bin
 	$(TOUCH)
 
