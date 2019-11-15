@@ -58,7 +58,6 @@ case $1 in
 		echo "  Various sh4-based receivers"
 		echo "   31)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
 		echo "   32)  SpiderBox HL-101"
-		echo "   33)  Ferguson Ariva @Link 200"
 		echo
 		echo "  arm-based receivers"
 		echo "  AX/Mut@nt            VU+"
@@ -101,7 +100,6 @@ case "$REPLY" in
 
 	31) BOXARCH="sh4";BOXTYPE="hl101";;
 	32) BOXARCH="sh4";BOXTYPE="hl101";;
-	33) BOXARCH="sh4";BOXTYPE="arivalink200";;
 
 	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	51) BOXARCH="arm";BOXTYPE="hd51";;
