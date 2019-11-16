@@ -338,7 +338,11 @@ $(D)/directories:
 	install -d $(TARGET_DIR)/usr/include/linux
 	install -d $(TARGET_DIR)/usr/include/linux/dvb
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs,opkg}
+else
+	install -d $(TARGET_DIR)/var/lib/{misc,nfs}
+endif
 	install -d $(TARGET_DIR)/var/bin
 	$(TOUCH)
 

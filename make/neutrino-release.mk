@@ -427,7 +427,11 @@ neutrino-mp-release-base:
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/logo
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 	install -d $(RELEASE_DIR)/var/{bin,boot,emu,etc,epg,httpd,keys,lib,logos,net,tuxbox,update}
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules,opkg}
+else
+	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
+endif
 	install -d $(RELEASE_DIR)/var/net/epg
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,fonts,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/webtv
@@ -683,12 +687,14 @@ endif
 #
 # e2-multiboot
 #
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	if [ -e $(TARGET_DIR)/var/lib/opkg/status ]; then \
 		cp -af $(TARGET_DIR)/etc/image-version $(RELEASE_DIR)/etc; \
 		cp -af $(TARGET_DIR)/etc/issue $(RELEASE_DIR)/etc; \
 		cp -af $(TARGET_DIR)/usr/bin/enigma2 $(RELEASE_DIR)/usr/bin; \
 		cp -af $(TARGET_DIR)/var/lib/opkg/status $(RELEASE_DIR)/var/lib/opkg; \
 	fi
+endif
 #
 # alsa
 #
