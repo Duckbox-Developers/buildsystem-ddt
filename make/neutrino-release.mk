@@ -681,6 +681,15 @@ endif
 #
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino/* $(RELEASE_DIR)/usr/share/tuxbox/neutrino
 #
+# e2-multiboot
+#
+	if [ -e $(TARGET_DIR)/var/lib/opkg/status ]; then \
+		cp -af $(TARGET_DIR)/etc/image-version $(RELEASE_DIR)/etc; \
+		cp -af $(TARGET_DIR)/etc/issue $(RELEASE_DIR)/etc; \
+		cp -af $(TARGET_DIR)/usr/bin/enigma2 $(RELEASE_DIR)/usr/bin; \
+		cp -af $(TARGET_DIR)/var/lib/opkg/status $(RELEASE_DIR)/var/lib/opkg; \
+	fi
+#
 # alsa
 #
 	if [ -e $(TARGET_DIR)/usr/share/alsa ]; then \
