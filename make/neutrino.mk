@@ -337,6 +337,7 @@ neutrino-mp-plugins: $(D)/neutrino-mp-plugins.do_prepare $(D)/neutrino-mp-plugin
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
 	make $(NEUTRINO_PLUGINS)
+	make e2-multiboot
 	touch $(D)/$(notdir $@)
 	make neutrino-mp-release
 	$(TUXBOX_CUSTOMIZE)
