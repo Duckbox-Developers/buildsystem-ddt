@@ -21,7 +21,7 @@ start()
 
 	# Decide if we have CI and/or TWIN/TRIPLET
 	CI="No"
-	for BOXLIST in ufs910 ufs912 ufs913 ufs922 fortis_hdbox atevio7500 octagon1008 hl101 tf7700 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_3000hd ipbox9900; do
+	for BOXLIST in ufs910 ufs912 ufs913 ufs922 fortis_hdbox atevio7500 octagon1008 tf7700 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_3000hd ipbox9900; do
 		if [ "${BOXTYPE}" == "${BOXLIST}" ]; then
 			CI="Yes"
 			break

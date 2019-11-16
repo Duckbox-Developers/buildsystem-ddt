@@ -55,10 +55,6 @@ case $1 in
 		echo "   27)  Spark"
 		echo "   28)  Spark7162"
 		echo
-		echo "  Various sh4-based receivers"
-		echo "   31)  Edision Argus VIP1 v1 [ single tuner + 2 CI + 2 USB ]"
-		echo "   32)  SpiderBox HL-101"
-		echo
 		echo "  arm-based receivers"
 		echo "  AX/Mut@nt            VU+"
 		echo "   51)  HD51            50) VU+ Solo 4K     54) VU+ Ultimo 4K"
@@ -97,9 +93,6 @@ case "$REPLY" in
 
 	27) BOXARCH="sh4";BOXTYPE="spark";;
 	28) BOXARCH="sh4";BOXTYPE="spark7162";;
-
-	31) BOXARCH="sh4";BOXTYPE="hl101";;
-	32) BOXARCH="sh4";BOXTYPE="hl101";;
 
 	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	51) BOXARCH="arm";BOXTYPE="hd51";;
