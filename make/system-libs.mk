@@ -1913,6 +1913,8 @@ $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 			--disable-alsamixer \
 			--disable-xmlto \
 			--disable-rst2man \
+			--disable-python \
+			--disable-topology \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
