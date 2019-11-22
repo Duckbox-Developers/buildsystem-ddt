@@ -28,7 +28,7 @@ $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
 CUSTOM_KERNEL = $(ARCHIVE)/$(KERNEL_SRC)
-ifeq ($(BOXTYPE), hd51)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
 CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
 endif
 ifeq ($(BOXTYPE), vuduo4k)
@@ -48,9 +48,6 @@ CUSTOM_KERNEL_VER = 3.14-1.12
 endif
 ifeq ($(BOXTYPE), vusolo4k)
 CUSTOM_KERNEL_VER = 3.14-1.8
-endif
-ifeq ($(BOXTYPE), h7)
-CUSTOM_KERNEL_VER = $(KERNEL_VER)-arm
 endif
 
 ifeq ($(wildcard $(CROSS_BASE)/build.log.bz2),)
