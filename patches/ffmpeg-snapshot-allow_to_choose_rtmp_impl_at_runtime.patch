@@ -46,7 +46,7 @@
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
 --- a/libavformat/Makefile	2018-07-18 15:52:01.000000000 +0200
 +++ b/libavformat/Makefile	2018-08-17 12:06:16.348291303 +0200
-@@ -601,12 +601,12 @@
+@@ -602,12 +602,12 @@
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o
@@ -88,7 +88,7 @@
  extern const URLProtocol ff_srtp_protocol;
 --- a/libavformat/rtmpproto.c	2018-07-18 15:52:02.000000000 +0200
 +++ b/libavformat/rtmpproto.c	2018-08-17 12:11:43.844590847 +0200
-@@ -2592,7 +2592,7 @@
+@@ -2591,7 +2591,7 @@
  static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **opts)
  {
      RTMPContext *rt = s->priv_data;
@@ -97,7 +97,7 @@
      char *old_app, *qmark, *n, fname_buffer[1024];
      uint8_t buf[2048];
      int port;
-@@ -2603,7 +2603,9 @@
+@@ -2602,7 +2602,9 @@
  
      rt->is_input = !(flags & AVIO_FLAG_WRITE);
  
@@ -108,7 +108,7 @@
                   hostname, sizeof(hostname), &port,
                   path, sizeof(path), s->filename);
  
-@@ -3140,9 +3142,9 @@
+@@ -3142,9 +3144,9 @@
  };
  
  
