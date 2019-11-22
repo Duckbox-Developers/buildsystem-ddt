@@ -1,6 +1,16 @@
 #
 # driver
 #
+ifeq ($(BOXTYPE), bre2ze4k)
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
+DRIVER_DATE = 20191120
+DRIVER_SRC = bre2ze4k-drivers-$(DRIVER_VER).zip
+DRIVER_URL = http://source.mynonpublic.com/gfutures
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), hd51)
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 #DRIVER_DATE = 20180424
@@ -69,7 +79,7 @@ endif
 driver-clean:
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)

@@ -234,6 +234,15 @@ neutrino-mp-release-tf7700:
 	$(MAKE) tfinstaller
 
 #
+# WWIO Bre2ze4k
+#
+neutrino-mp-release-bre2ze4k:
+	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
+
+#
 # Mutant HD51
 #
 neutrino-mp-release-hd51:
@@ -655,7 +664,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd bre2ze4k hd51 h7 vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif

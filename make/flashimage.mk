@@ -9,7 +9,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 atevio7500 ufs912 ufs913 tf7700))
 	cd $(BASE_DIR)/flash/$(BOXTYPE) && $(SUDOCMD) ./$(BOXTYPE).sh $(MAINTAINER)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -25,7 +25,7 @@ endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofgimage:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -35,7 +35,7 @@ endif
 
 oi \
 online-image:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 	$(MAKE) flash-image-$(BOXTYPE)-online
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -55,15 +55,15 @@ flash-clean:
 # general
 IMAGE_BUILD_DIR = $(BUILD_TMP)/image-build
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7))
-### armbox hd51 h7
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+### armbox bre2ze4k hd51 h7
 # general
 $(BOXTYPE)_IMAGE_NAME = disk
 $(BOXTYPE)_BOOT_IMAGE = boot.img
 $(BOXTYPE)_IMAGE_LINK = $($(BOXTYPE)_IMAGE_NAME).ext4
 $(BOXTYPE)_IMAGE_ROOTFS_SIZE = 294912
 
-ifeq ($(BOXTYPE), hd51)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51))
 	IMAGEDIR = $(BOXTYPE)
 endif
 ifeq ($(BOXTYPE), h7)

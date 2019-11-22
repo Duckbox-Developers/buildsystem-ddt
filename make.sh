@@ -63,6 +63,9 @@ case $1 in
 		echo "  Air Digital"
 		echo "   57)  ZGEMMA H7"
 		echo
+		echo "  WWIO"
+		echo "   58) WWIO BRE2ZE 4K"
+		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
 		echo
@@ -102,6 +105,7 @@ case "$REPLY" in
 	55) BOXARCH="arm";BOXTYPE="vuuno4kse";;
 	56) BOXARCH="arm";BOXTYPE="vuuno4k";;
 	57) BOXARCH="arm";BOXTYPE="h7";;
+	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
