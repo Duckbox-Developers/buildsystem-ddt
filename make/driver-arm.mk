@@ -2,8 +2,8 @@
 # driver
 #
 ifeq ($(BOXTYPE), bre2ze4k)
-DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_DATE = 20191120
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = bre2ze4k-drivers-$(DRIVER_VER).zip
 DRIVER_URL = http://source.mynonpublic.com/gfutures
 
@@ -12,11 +12,11 @@ $(ARCHIVE)/$(DRIVER_SRC):
 endif
 
 ifeq ($(BOXTYPE), hd51)
-DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 #DRIVER_DATE = 20180424
 #DRIVER_DATE = 20191031
 #DRIVER_DATE = 20191101
 DRIVER_DATE = 20191120
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = hd51-drivers-$(DRIVER_VER).zip
 DRIVER_URL = http://source.mynonpublic.com/gfutures
 
@@ -25,10 +25,10 @@ $(ARCHIVE)/$(DRIVER_SRC):
 endif
 
 ifeq ($(BOXTYPE), h7)
-DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_DATE = 20190405
 #DRIVER_DATE = 20191110
 #DRIVER_DATE = 20191123
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = h7-drivers-$(DRIVER_VER).zip
 DRIVER_URL = http://source.mynonpublic.com/zgemma
 
