@@ -39,6 +39,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
+#DRIVER_DATE = 20191125
 #DRIVER_DATE = 20191014
 DRIVER_DATE = 20190212
 DRIVER_REV = r0
