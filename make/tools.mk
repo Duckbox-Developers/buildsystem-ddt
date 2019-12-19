@@ -4,6 +4,7 @@
 tools-clean:
 	rm -f $(D)/tools-*
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
 	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
 	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
@@ -149,6 +150,19 @@ $(D)/tools-flashtool-pad: $(D)/directories
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(HOST_DIR)
+	$(TOUCH)
+
+#
+# gitVCInfo
+#
+$(D)/tools-gitVCInfo: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/gitVCInfo; \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS)" \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 #
@@ -479,6 +493,7 @@ TOOLS += $(D)/tools_flashtool_mup
 endif
 TOOLS += $(D)/tools-flashtool-mup
 TOOLS += $(D)/tools-flashtool-pad
+#TOOLS  = $(D)/tools-gitVCInfo
 #TOOLS += $(D)/tools-hotplug
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 TOOLS += $(D)/tools-ipbox_eeprom
