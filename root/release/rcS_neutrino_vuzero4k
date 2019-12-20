@@ -119,16 +119,22 @@ do
 	case "$rtv" in
 		0) echo "$rtv"
 			echo "SHUTDOWN"
-			init 0;;
+			init 0
+			sleep 20
+			;;
 		1) echo "$rtv"
 			echo "REBOOT"
-			init 6;;
+			init 6
+			sleep 20
+			;;
 		3) echo "$rtv"
 			echo "RESTART"
-			sync;;
+			sync
+			;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
 			#init 6
+			#sleep 20
 			;;
 	esac
 done

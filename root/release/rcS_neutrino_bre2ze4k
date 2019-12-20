@@ -98,19 +98,26 @@ do
 	case "$rtv" in
 		0) echo "$rtv"
 			echo "SHUTDOWN"
-			init 0;;
+			echo "SHUTDOWN" > /dev/dbox/oled0
+			init 0
+			sleep 20
+			;;
 		1) echo "$rtv"
 			echo "REBOOT"
-			echo "      *-*       " > /dev/dbox/oled0
-			init 6;;
+			echo "REBOOT" > /dev/dbox/oled0
+			init 6
+			sleep 20
+			;;
 		3) echo "$rtv"
 			echo "RESTART"
-			echo "    RESTART     " > /dev/dbox/oled0
-			sync;;
+			echo "RESTART" > /dev/dbox/oled0
+			sync
+			;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			echo "    *ERROR*     " > /dev/dbox/oled0
+			echo "ERROR: $rtv" > /dev/dbox/oled0
 			#init 6
+			#sleep 20
 			;;
 	esac
 done
