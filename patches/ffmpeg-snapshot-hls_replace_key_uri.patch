@@ -36,7 +36,7 @@
          }
          ff_data_to_hex(iv, seg->iv, sizeof(seg->iv), 0);
          ff_data_to_hex(key, pls->key, sizeof(pls->key), 0);
-@@ -2342,6 +2354,8 @@
+@@ -2341,6 +2353,8 @@
          OFFSET(http_multiple), AV_OPT_TYPE_BOOL, {.i64 = -1}, -1, 1, FLAGS},
      {"http_seekable", "Use HTTP partial requests, 0 = disable, 1 = enable, -1 = auto",
          OFFSET(http_seekable), AV_OPT_TYPE_BOOL, { .i64 = -1}, -1, 1, FLAGS},
