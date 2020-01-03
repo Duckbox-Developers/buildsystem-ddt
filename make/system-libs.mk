@@ -1,7 +1,7 @@
 #
 # ncurses
 #
-NCURSES_VER = 6.1
+NCURSES_VER = 6.0
 NCURSES_SOURCE = ncurses-$(NCURSES_VER).tar.gz
 NCURSES_PATCH = ncurses-$(NCURSES_VER)-gcc-5.x-MKlib_gen.patch
 
