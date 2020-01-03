@@ -89,6 +89,7 @@ COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_kernel-add-support-for-gcc6.patch \
 		armbox/vuplus_common/3_14_kernel-add-support-for-gcc7.patch \
 		armbox/vuplus_common/3_14_kernel-add-support-for-gcc8.patch \
+		armbox/vuplus_common/3_14_kernel-add-support-for-gcc9.patch \
 		armbox/vuplus_common/3_14_0001-Support-TBS-USB-drivers.patch \
 		armbox/vuplus_common/3_14_0001-STV-Add-PLS-support.patch \
 		armbox/vuplus_common/3_14_0001-STV-Add-SNR-Signal-report-parameters.patch \
@@ -135,6 +136,7 @@ COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_kernel-add-support-for-gcc6.patch \
 		armbox/vuplus_common/4_1_kernel-add-support-for-gcc7.patch \
 		armbox/vuplus_common/4_1_kernel-add-support-for-gcc8.patch \
+		armbox/vuplus_common/4_1_kernel-add-support-for-gcc9.patch \
 		armbox/vuplus_common/4_1_0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
 		armbox/vuplus_common/4_1_0001-TBS-fixes-for-4.1-kernel.patch \
 		armbox/vuplus_common/4_1_0001-STV-Add-PLS-support.patch \

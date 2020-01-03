@@ -42,7 +42,11 @@ VUDUO_PATCHES = \
 		mipsbox/fix_fuse_for_linux_mips_3-9.patch \
 		mipsbox/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/linux-3.9-gcc-4.9.3-build-error-fixed.patch \
-		mipsbox/kernel-add-support-for-gcc-5.patch \
+		mipsbox/kernel-add-support-for-gcc5.patch \
+		mipsbox/kernel-add-support-for-gcc6.patch \
+		mipsbox/kernel-add-support-for-gcc7.patch \
+		mipsbox/kernel-add-support-for-gcc8.patch \
+		mipsbox/kernel-add-support-for-gcc9.patch \
 		mipsbox/rtl8712-fix-warnings.patch \
 		mipsbox/rtl8187se-fix-warnings.patch \
 		mipsbox/kernel-add-support-for-gcc6.patch \
