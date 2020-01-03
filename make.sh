@@ -22,6 +22,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 5           : Image Neutrino (1-2)"
 	echo "Parameter 6           : Neutrino variant (1-4)"
 	echo "Parameter 7           : External LCD support (1-4)"
+	echo "Parameter 8 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
 fi
 
@@ -115,64 +116,58 @@ echo "BOXTYPE=$BOXTYPE" >> config
 
 ##############################################
 
-# Multiboot for UNO 4K SE maybe later
+# Multiboot for VUPLUS_ARM
 if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
-case $2 in
-	[1-2]) REPLY=$2;;
-	*)	echo -e "\nNormal or MultiBoot:"
-		echo "   1)  Normal    (default)"
-		echo "   2)  Multiboot"
-		read -p "Select mode (1-2)? ";;
-esac
+	case $2 in
+		[1-2]) REPLY=$2;;
+		*)	echo -e "\nNormal or MultiBoot:"
+			echo "   1)  Normal    (default)"
+			echo "   2)  Multiboot"
+			read -p "Select mode (1-2)? ";;
+	esac
 
-case "$REPLY" in
-	1)  VU_MULTIBOOT="0";;
-	2)  VU_MULTIBOOT="1";;
-	*)  VU_MULTIBOOT="0";;
-esac
-echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
+	case "$REPLY" in
+		1)  VU_MULTIBOOT="0";;
+		2)  VU_MULTIBOOT="1";;
+		*)  VU_MULTIBOOT="0";;
+	esac
+	echo "VU_MULTIBOOT=$VU_MULTIBOOT" >> config
 fi
 
 ##############################################
 
 if [ $BOXARCH == "sh4" ]; then
+	CURDIR=`pwd`
+	echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
+	set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
+	for i in $set;
+	do
+		if [ ! -e $CURDIR/root/boot/$i.elf ]; then
+			echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
+			echo "           ($i.elf is one of them)"
+			echo
+			echo "    Correct this and retry."
+			echo
+			exit
+		fi
+	done
+	echo " [OK]"
+	echo
 
-CURDIR=`pwd`
-echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
-set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
-for i in $set;
-do
-	if [ ! -e $CURDIR/root/boot/$i.elf ]; then
-		echo -e "\n    ERROR: One or more .elf files are missing in ./root/boot!"
-		echo "           ($i.elf is one of them)"
-		echo
-		echo "    Correct this and retry."
-		echo
-		exit
-	fi
-done
-echo " [OK]"
-echo
+	case $2 in
+		[1-2]) REPLY=$2;;
+		*)	echo -e "\nKernel:"
+			echo "   1)  STM 24 P0209 [2.6.32.46]"
+			echo "   2)  STM 24 P0217 [2.6.32.71]"
+			read -p "Select kernel (1-2)? ";;
+	esac
 
-##############################################
-
-case $2 in
-	[1-2]) REPLY=$2;;
-	*)	echo -e "\nKernel:"
-		echo "   1)  STM 24 P0209 [2.6.32.46]"
-		echo "   2)  STM 24 P0217 [2.6.32.71]"
-		read -p "Select kernel (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1)  KERNEL_STM="p0209";;
-	2)  KERNEL_STM="p0217";;
-	*)  KERNEL_STM="p0217";;
-esac
-echo "KERNEL_STM=$KERNEL_STM" >> config
-
-##############################################
-
+	case "$REPLY" in
+		1)  KERNEL_STM="p0209";;
+		2)  KERNEL_STM="p0217";;
+		*)  KERNEL_STM="p0217";;
+	esac
+	echo "KERNEL_STM=$KERNEL_STM" >> config
 fi
 
 ##############################################
@@ -271,6 +266,26 @@ case "$REPLY" in
 	*) EXTERNAL_LCD="none";;
 esac
 echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
+
+##############################################
+
+# old/actual kernel modules for VUPLUS_ARM
+if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
+	case $8 in
+		[1-2]) REPLY=$8;;
+		*)	echo -e "\nOld or actual kernel modules:"
+			echo "   1)  OLD kernel modules    (default)"
+			echo "   2)  ACTUAL kernel modules"
+			read -p "Select modul version (1-2)? ";;
+	esac
+
+	case "$REPLY" in
+		1)  VU_NEW_MODULES="0";;
+		2)  VU_NEW_MODULES="1";;
+		*)  VU_NEW_MODULES="0";;
+	esac
+	echo "VU_NEW_MODULES=$VU_NEW_MODULES" >> config
+fi
 
 ##############################################
 echo " "

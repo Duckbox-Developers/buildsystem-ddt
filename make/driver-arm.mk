@@ -39,16 +39,22 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
-#DRIVER_DATE = 20191218
+ifeq ($(VU_NEW_MODULES), 1)
+DRIVER_DATE = 20191218
+else
 #DRIVER_DATE = 20191125
 #DRIVER_DATE = 20191014
 DRIVER_DATE = 20190212
+endif
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 DRIVER_VER = 4.1.20
-#DRIVER_DATE = 20190424
+ifeq ($(VU_NEW_MODULES), 1)
+DRIVER_DATE = 20190424
+else
 DRIVER_DATE = 20190104
+endif
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuzero4k)
@@ -58,14 +64,20 @@ DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 DRIVER_VER = 3.14.28
-#DRIVER_DATE = 20190424
+ifeq ($(VU_NEW_MODULES), 1)
+DRIVER_DATE = 20190424
+else
 DRIVER_DATE = 20190104
+endif
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4k)
 DRIVER_VER = 3.14.28
-#DRIVER_DATE = 20190424
+ifeq ($(VU_NEW_MODULES), 1)
+DRIVER_DATE = 20190424
+else
 DRIVER_DATE = 20190104
+endif
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vusolo4k)
