@@ -1618,6 +1618,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 			--enable-shared \
 			--disable-static \
 			--disable-roxml \
+			--disable-rocat \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
