@@ -126,7 +126,7 @@ $(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 		sed -i -e 's/\ sulogin[^ ]*//' -e 's/pidof\.8//' -e '/ln .*pidof/d' \
 		-e '/bootlogd/d' -e '/utmpdump/d' -e '/mountpoint/d' -e '/mesg/d' src/Makefile; \
 		$(BUILDENV) \
-		$(MAKE) -C src SULOGINLIBS=-lcrypt VERSION=$(SYSVINIT_VER); \
+		$(MAKE) SULOGINLIBS=-lcrypt; \
 		$(MAKE) install ROOT=$(TARGET_DIR) MANDIR=/.remove
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,fstab-decode runlevel telinit)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,lastb)
