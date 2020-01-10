@@ -403,7 +403,11 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 # util_linux
 #
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#UTIL_LINUX_MAJOR = 2.33
+#else
 UTIL_LINUX_MAJOR = 2.26
+#endif
 UTIL_LINUX_MINOR = 2
 UTIL_LINUX_VER = $(UTIL_LINUX_MAJOR).$(UTIL_LINUX_MINOR)
 UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VER).tar.xz
