@@ -954,20 +954,20 @@ $(ARCHIVE)/$(AUTOFS_SOURCE):
 	$(WGET) $(AUTOFS_URL)/$(AUTOFS_SOURCE)
 
 AUTOFS_PATCH  = \
-	autofs-5.1.5-include-linux-nfs.h-directly-in-rpc_sub.patch \
-	autofs-5.1.5-add-strictexpire-mount-option.patch \
-	autofs-5.1.5-fix-hesiod-string-check-in-master_parse.patch \
-	autofs-5.1.5-add-NULL-check-for-get_addr_string-return.patch \
-	autofs-5.1.5-use-malloc-in-spawn_c.patch \
-	autofs-5.1.5-add-mount_verbose-configuration-option.patch \
-	autofs-5.1.5-optionally-log-mount-requestor-process-info.patch \
-	autofs-5.1.5-log-mount-call-arguments-if-mount_verbose-is-set.patch \
-	autofs-5.1.5-add-ignore-mount-option.patch \
-	autofs-5.1.5-Fix-NFS-mount-from-IPv6-addresses.patch \
-	autofs-5.1.5-remove-bashism.patch \
-	autofs-5.1.5-cross.patch \
-	autofs-5.1.5-fix_disable_ldap.patch \
-	autofs-5.1.5-force-STRIP-to-emtpy.patch
+	autofs-$(AUTOFS_VER)-include-linux-nfs.h-directly-in-rpc_sub.patch \
+	autofs-$(AUTOFS_VER)-add-strictexpire-mount-option.patch \
+	autofs-$(AUTOFS_VER)-fix-hesiod-string-check-in-master_parse.patch \
+	autofs-$(AUTOFS_VER)-add-NULL-check-for-get_addr_string-return.patch \
+	autofs-$(AUTOFS_VER)-use-malloc-in-spawn_c.patch \
+	autofs-$(AUTOFS_VER)-add-mount_verbose-configuration-option.patch \
+	autofs-$(AUTOFS_VER)-optionally-log-mount-requestor-process-info.patch \
+	autofs-$(AUTOFS_VER)-log-mount-call-arguments-if-mount_verbose-is-set.patch \
+	autofs-$(AUTOFS_VER)-add-ignore-mount-option.patch \
+	autofs-$(AUTOFS_VER)-Fix-NFS-mount-from-IPv6-addresses.patch \
+	autofs-$(AUTOFS_VER)-remove-bashism.patch \
+	autofs-$(AUTOFS_VER)-cross.patch \
+	autofs-$(AUTOFS_VER)-fix_disable_ldap.patch \
+	autofs-$(AUTOFS_VER)-force-STRIP-to-emtpy.patch
 
 $(D)/autofs: $(D)/bootstrap $(D)/libnsl $(D)/e2fsprogs $(D)/openssl $(D)/libxml2 $(ARCHIVE)/$(AUTOFS_SOURCE)
 	$(START_BUILD)
