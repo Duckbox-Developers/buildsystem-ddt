@@ -1350,7 +1350,7 @@ VSFTPD_PATCH = vsftpd-$(VSFTPD_VER).patch
 $(ARCHIVE)/$(VSFTPD_SOURCE):
 	$(WGET) https://security.appspot.com/downloads/$(VSFTPD_SOURCE)
 
-$(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/$(VSFTPD_SOURCE)
+$(D)/vsftpd: $(D)/bootstrap $(D)/libnsl $(ARCHIVE)/$(VSFTPD_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/vsftpd-$(VSFTPD_VER)
 	$(UNTAR)/$(VSFTPD_SOURCE)
