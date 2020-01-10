@@ -20,3 +20,13 @@
  
  install-data-hook:
  	$(LN) -f $(DESTDIR)$(man8dir)/jfs_mkfs.8 $(DESTDIR)$(man8dir)/mkfs.jfs.8
+--- a/libfs/devices.c_org
++++ b/libfs/devices.c
+@@ -29,6 +29,7 @@
+ #include <string.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <sys/sysmacros.h>
+ 
+ #ifdef HAVE_SYS_MOUNT_H
+ #ifdef HAVE_SYS_PARAM_H
