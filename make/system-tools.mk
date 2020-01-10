@@ -967,38 +967,24 @@ AUTOFS_PATCH  = \
 
 $(D)/autofs: $(D)/bootstrap $(D)/libnsl $(D)/e2fsprogs $(D)/openssl $(D)/libxml2 $(ARCHIVE)/$(AUTOFS_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/$(AUTOFS_DIR)
+	$(REMOVE)/autofs-$(AUTOFS_VER)
 	$(UNTAR)/$(AUTOFS_SOURCE)
-	$(CHDIR)/$(AUTOFS_DIR); \
+	$(CHDIR)/autofs-$(AUTOFS_VER); \
 		$(call apply_patches, $(AUTOFS_PATCH)); \
-		export ac_cv_path_KRB5_CONFIG=no; \
-		export ac_cv_linux_procfs=yes; \
-		autoreconf -fi $(SILENT_OPT); \
+		cp aclocal.m4 acinclude.m4; \
+		autoconf; \
 		$(CONFIGURE) \
 			--prefix=/usr \
-			--datarootdir=/.remove \
-			--disable-mount-locking \
-			--with-openldap=no \
-			--with-sasl=no \
-			--enable-ignore-busy \
-			--with-path=$(PATH) \
-			--with-libtirpc=no \
-			--with-hesiod=no \
-			--with-confdir=/etc \
-			--with-mapdir=/etc \
-			--with-fifodir=/var/run \
-			--with-flagdir=/var/run \
-			; \
-		$(MAKE) SUBDIRS="lib daemon modules" DONTSTRIP=1; \
-		$(MAKE) SUBDIRS="lib daemon modules" install DESTDIR=$(TARGET_DIR)
-	rm -f $(addprefix $(TARGET_DIR)/etc/,autofs_ldap_auth.conf)
+		; \
+		$(MAKE) all CC=$(TARGET)-gcc STRIP=$(TARGET)-strip; \
+		$(MAKE) install INSTALLROOT=$(TARGET_DIR) SUBDIRS="lib daemon modules"
 	install -m 755 $(SKEL_ROOT)/etc/init.d/autofs $(TARGET_DIR)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/auto.hotplug $(TARGET_DIR)/etc/
 	install -m 644 $(SKEL_ROOT)/etc/auto.master $(TARGET_DIR)/etc/
 	install -m 644 $(SKEL_ROOT)/etc/auto.misc $(TARGET_DIR)/etc/
 	install -m 644 $(SKEL_ROOT)/etc/auto.network $(TARGET_DIR)/etc/
 	ln -sf ../usr/sbin/automount $(TARGET_DIR)/sbin/automount
-	$(REMOVE)/$(AUTOFS_DIR)
+	$(REMOVE)/autofs-$(AUTOFS_VER)
 	$(TOUCH)
 else
 #
