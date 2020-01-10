@@ -940,8 +940,73 @@ $(D)/sysstat: $(D)/bootstrap $(ARCHIVE)/$(SYSSTAT_SOURCE)
 	$(REMOVE)/sysstat-$(SYSSTAT_VER)
 	$(TOUCH)
 
+ifeq ($(BOXARCH), $(filter $(BOXARCH), FOR_LATER_USE))
+#($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #
-# autofs
+# autofs (arm/mips)
+#
+AUTOFS_VER    = 5.1.5
+AUTOFS_DIR    = autofs-$(AUTOFS_VER)
+AUTOFS_SOURCE = autofs-$(AUTOFS_VER).tar.xz
+AUTOFS_URL    = https://www.kernel.org/pub/linux/daemons/autofs/v5
+
+$(ARCHIVE)/$(AUTOFS_SOURCE):
+	$(WGET) $(AUTOFS_URL)/$(AUTOFS_SOURCE)
+
+AUTOFS_PATCH  = \
+	autofs-5.1.5-include-linux-nfs.h-directly-in-rpc_sub.patch \
+	autofs-5.1.5-add-strictexpire-mount-option.patch \
+	autofs-5.1.5-fix-hesiod-string-check-in-master_parse.patch \
+	autofs-5.1.5-add-NULL-check-for-get_addr_string-return.patch \
+	autofs-5.1.5-use-malloc-in-spawn_c.patch \
+	autofs-5.1.5-add-mount_verbose-configuration-option.patch \
+	autofs-5.1.5-optionally-log-mount-requestor-process-info.patch \
+	autofs-5.1.5-log-mount-call-arguments-if-mount_verbose-is-set.patch \
+	autofs-5.1.5-add-ignore-mount-option.patch \
+	autofs-5.1.5-Fix-NFS-mount-from-IPv6-addresses.patch \
+	autofs-5.1.5-remove-bashism.patch \
+	autofs-5.1.5-cross.patch \
+	autofs-5.1.5-fix_disable_ldap.patch \
+	autofs-5.1.5-force-STRIP-to-emtpy.patch
+
+$(D)/autofs: $(D)/bootstrap $(D)/libnsl $(D)/e2fsprogs $(D)/openssl $(D)/libxml2 $(ARCHIVE)/$(AUTOFS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/$(AUTOFS_DIR)
+	$(UNTAR)/$(AUTOFS_SOURCE)
+	$(CHDIR)/$(AUTOFS_DIR); \
+		$(call apply_patches, $(AUTOFS_PATCH)); \
+		export ac_cv_path_KRB5_CONFIG=no; \
+		export ac_cv_linux_procfs=yes; \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--datarootdir=/.remove \
+			--disable-mount-locking \
+			--with-openldap=no \
+			--with-sasl=no \
+			--enable-ignore-busy \
+			--with-path=$(PATH) \
+			--with-libtirpc=no \
+			--with-hesiod=no \
+			--with-confdir=/etc \
+			--with-mapdir=/etc \
+			--with-fifodir=/var/run \
+			--with-flagdir=/var/run \
+			; \
+		$(MAKE) SUBDIRS="lib daemon modules" DONTSTRIP=1; \
+		$(MAKE) SUBDIRS="lib daemon modules" install DESTDIR=$(TARGET_DIR)
+	rm -f $(addprefix $(TARGET_DIR)/etc/,autofs_ldap_auth.conf)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/autofs $(TARGET_DIR)/etc/init.d/
+	install -m 644 $(SKEL_ROOT)/etc/auto.hotplug $(TARGET_DIR)/etc/
+	install -m 644 $(SKEL_ROOT)/etc/auto.master $(TARGET_DIR)/etc/
+	install -m 644 $(SKEL_ROOT)/etc/auto.misc $(TARGET_DIR)/etc/
+	install -m 644 $(SKEL_ROOT)/etc/auto.network $(TARGET_DIR)/etc/
+	ln -sf ../usr/sbin/automount $(TARGET_DIR)/sbin/automount
+	$(REMOVE)/$(AUTOFS_DIR)
+	$(TOUCH)
+else
+#
+# autofs (sh4)
 #
 AUTOFS_VER = 4.1.4
 AUTOFS_SOURCE = autofs-$(AUTOFS_VER).tar.gz
@@ -971,6 +1036,7 @@ $(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(AUTOFS_SOURCE)
 	ln -sf ../usr/sbin/automount $(TARGET_DIR)/sbin/automount
 	$(REMOVE)/autofs-$(AUTOFS_VER)
 	$(TOUCH)
+endif
 
 #
 # shairport
