@@ -753,13 +753,7 @@ endif
 		cp -f $(TARGET_DIR)/usr/lib/libhowl.so* $(RELEASE_DIR)/usr/lib; \
 		cp -f $(TARGET_DIR)/usr/lib/libmDNSResponder.so* $(RELEASE_DIR)/usr/lib; \
 	fi
-#
-# Neutrino HD2 Workaround Build in Player
-#
-	if [ -e $(TARGET_DIR)/usr/local/bin/eplayer3 ]; then \
-		cp -f $(TARGET_DIR)/usr/local/bin/eplayer3 $(RELEASE_DIR)/bin/; \
-		cp -f $(TARGET_DIR)/usr/local/bin/meta $(RELEASE_DIR)/bin/; \
-	fi
+
 #
 # delete unnecessary files
 #
