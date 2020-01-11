@@ -1,28 +1,4 @@
 #
-# libnsl
-#
-LIBNSL_VER = 1.2.0
-LIBNSL_SOURCE = libnsl-$(LIBNSL_VER).tar.gz
-
-$(ARCHIVE)/$(LIBNSL_SOURCE):
-	$(WGET) https://github.com/thkukuk/libnsl/archive/v1.2.0/$(LIBNSL_SOURCE)
-
-$(D)/libnsl: $(D)/bootstrap $(ARCHIVE)/$(LIBNSL_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libnsl-$(LIBNSL_VER)
-	$(UNTAR)/$(LIBNSL_SOURCE)
-	$(CHDIR)/libnsl-$(LIBNSL_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnsl.pc
-		$(REWRITE_LIBTOOL)/libnsl.la
-	$(REMOVE)/libnsl-$(LIBNSL_VER)
-	$(TOUCH)
-
-#
 # ncurses
 #
 NCURSES_VER = 6.0
