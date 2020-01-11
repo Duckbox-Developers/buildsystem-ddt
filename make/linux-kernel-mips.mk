@@ -1,27 +1,10 @@
 #
-# KERNEL
+# makefile to build kernel mips
 #
-ifeq ($(BOXTYPE), vuduo)
-KERNEL_VER             = 3.9.6
-KERNEL_TYPE            = vuduo
-KERNEL_SRC_VER         = 3.9.6
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
-KERNEL_CONFIG          = vuduo_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux
-KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
-endif
-
-#
-# Todo: findkerneldevice.py
-
-DEPMOD = $(HOST_DIR)/bin/depmod
 
 #
 # Patches Kernel
 #
-COMMON_PATCHES_MIPS = \
-
 VUDUO_PATCHES = \
 		mipsbox/add-dmx-source-timecode.patch \
 		mipsbox/af9015-output-full-range-SNR.patch \

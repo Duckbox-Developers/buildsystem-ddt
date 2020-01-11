@@ -22,7 +22,8 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 5           : Image Neutrino (1-2)"
 	echo "Parameter 6           : Neutrino variant (1-4)"
 	echo "Parameter 7           : External LCD support (1-4)"
-	echo "Parameter 8 (ARM VU+) : old/actual kernel modules (1-2)"
+	echo "Parameter 8 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 9 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
 fi
 
@@ -267,10 +268,35 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 ##############################################
 
+# gcc version for ARM/MIPS
+if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
+	case $8 in
+		[1-3]) REPLY=$8;;
+		*)	echo -e "\nSelect GCC version:"
+			echo "   1)  GCC version 6.5.0"
+			echo "   2)  GCC version 7.5.0"
+			echo "   3)  GCC version 8.3.0"
+			echo "   4)  GCC version 9.2.0"
+			read -p "Select modul version (1-4)? [1] "
+			REPLY="${REPLY:-1}";;
+	esac
+
+	case "$REPLY" in
+		1)  BS_GCC_VER="6.5.0";;
+		2)  BS_GCC_VER="7.5.0";;
+		3)  BS_GCC_VER="8.3.0";;
+		4)  BS_GCC_VER="9.2.0";;
+		*)  BS_GCC_VER="6.5.0";;
+	esac
+	echo "BS_GCC_VER=$BS_GCC_VER" >> config
+fi
+
+##############################################
+
 # old/actual kernel modules for VUPLUS_ARM
 if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
-	case $8 in
-		[1-2]) REPLY=$8;;
+	case $9 in
+		[1-2]) REPLY=$9;;
 		*)	echo -e "\nOld or actual kernel modules:"
 			echo "   1)  OLD kernel modules    (default)"
 			echo "   2)  ACTUAL kernel modules"

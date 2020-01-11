@@ -5,9 +5,6 @@
 CONFIG_SITE =
 export CONFIG_SITE
 
-LD_LIBRARY_PATH =
-export LD_LIBRARY_PATH
-
 BASE_DIR             := $(shell pwd)
 
 ARCHIVE               = $(HOME)/Archive
@@ -22,6 +19,7 @@ RELEASE_IMAGE_DIR     = $(BASE_DIR)/release_image
 
 # for local extensions
 -include $(BASE_DIR)/config.local
+include make/linux-kernel-env.mk
 
 # default platform...
 MAKEFLAGS            += --no-print-directory
@@ -37,7 +35,7 @@ GIT_NAME_TOOLS       ?= Duckbox-Developers
 GIT_NAME_FLASH       ?= Duckbox-Developers
 
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
-CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)/$(BOXTYPE)
+CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)-$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
 
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
@@ -114,6 +112,22 @@ TARGET_EXTRA_CFLAGS   =
 TARGET_EXTRA_LDFLAGS  =
 endif
 
+ifeq ($(BS_GCC_VER), 6.5.0)
+CROSSTOOL_GCC_VER = gcc-6.5.0
+endif
+
+ifeq ($(BS_GCC_VER), 7.5.0)
+CROSSTOOL_GCC_VER = gcc-7.5.0
+endif
+
+ifeq ($(BS_GCC_VER), 8.3.0)
+CROSSTOOL_GCC_VER = gcc-8.3.0
+endif
+
+ifeq ($(BS_GCC_VER), 9.2.0)
+CROSSTOOL_GCC_VER = gcc-9.2.0
+endif
+
 TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
 TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
 
@@ -150,9 +164,20 @@ REWRITE_PKGCONF       = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/usr',"
 UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)
 REMOVE                = rm -rf $(BUILD_TMP)
 
-CHDIR                 = set -e; cd $(BUILD_TMP)
+# build helper variables
+CD                    = set -e; cd
+CHDIR                 = $(CD) $(BUILD_TMP)
 MKDIR                 = mkdir -p $(BUILD_TMP)
+CPDIR                 = cp -a -t $(BUILD_TMP) $(ARCHIVE)
 STRIP                 = $(TARGET)-strip
+
+INSTALL               = install
+INSTALL_CONF          = $(INSTALL) -m 0600
+INSTALL_DATA          = $(INSTALL) -m 0644
+INSTALL_EXEC          = $(INSTALL) -m 0755
+
+GET-GIT-ARCHIVE       = $(SCRIPTS_DIR)/get-git-archive.sh
+GET-GIT-SOURCE        = $(SCRIPTS_DIR)/get-git-source.sh
 
 #
 split_deps_dir=$(subst ., ,$(1))

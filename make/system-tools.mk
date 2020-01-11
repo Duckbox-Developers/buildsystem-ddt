@@ -936,8 +936,7 @@ $(D)/sysstat: $(D)/bootstrap $(ARCHIVE)/$(SYSSTAT_SOURCE)
 	$(REMOVE)/sysstat-$(SYSSTAT_VER)
 	$(TOUCH)
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), FOR_LATER_USE))
-#($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #
 # autofs (arm/mips)
 #
@@ -965,7 +964,7 @@ AUTOFS_PATCH  = \
 	autofs-$(AUTOFS_VER)-fix_disable_ldap.patch \
 	autofs-$(AUTOFS_VER)-force-STRIP-to-emtpy.patch
 
-$(D)/autofs: $(D)/bootstrap $(D)/libnsl $(D)/e2fsprogs $(D)/openssl $(D)/libxml2 $(ARCHIVE)/$(AUTOFS_SOURCE)
+$(D)/autofs: $(D)/bootstrap $(D)/e2fsprogs $(D)/openssl $(D)/libxml2 $(ARCHIVE)/$(AUTOFS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/autofs-$(AUTOFS_VER)
 	$(UNTAR)/$(AUTOFS_SOURCE)

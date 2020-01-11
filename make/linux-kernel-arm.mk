@@ -1,70 +1,10 @@
 #
-# KERNEL
+# makefile to build kernel arm
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
-KERNEL_VER             = 4.10.12
-KERNEL_DATE            = 20180424
-KERNEL_TYPE            = $(BOXTYPE)
-KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
-KERNEL_URL             = http://source.mynonpublic.com/gfutures
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
-KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
-KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
-endif
-
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
-KERNEL_TYPE            = $(BOXTYPE)
-ifeq ($(BOXTYPE), vuduo4k)
-KERNEL_VER             = 4.1.45-1.17
-KERNEL_SRC_VER         = 4.1-1.17
-KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuuno4kse)
-KERNEL_VER             = 4.1.20-1.9
-KERNEL_SRC_VER         = 4.1-1.9
-KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuzero4k)
-KERNEL_VER             = 4.1.20-1.9
-KERNEL_SRC_VER         = 4.1-1.9
-KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuultimo4k)
-KERNEL_VER             = 3.14.28-1.12
-KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vuuno4k)
-KERNEL_VER             = 3.14.28-1.12
-KERNEL_SRC_VER         = 3.14-1.12
-KERNEL_PATCHES_ARM     = $(VUUNO4K_PATCHES)
-endif
-ifeq ($(BOXTYPE), vusolo4k)
-KERNEL_VER             = 3.14.28-1.8
-KERNEL_SRC_VER         = 3.14-1.8
-KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
-endif
-KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig_multi
-else
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig
-endif
-KERNEL_DIR             = $(BUILD_TMP)/linux
-endif
-
-#
-# Todo: findkerneldevice.py
-
-DEPMOD = $(HOST_DIR)/bin/depmod
 
 #
 # Patches Kernel
 #
-COMMON_PATCHES_ARM = \
-
 HD51_PATCHES = \
 		armbox/hd51_TBS-fixes-for-4.10-kernel.patch \
 		armbox/hd51_0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
