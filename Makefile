@@ -46,6 +46,7 @@ printenv:
 	@echo "TARGET            : $(TARGET)"
 	@echo "BOXTYPE           : $(BOXTYPE)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
+	@echo "GCC VERSION       : $(BS_GCC_VER)"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "MEDIAFW           : $(MEDIAFW)"
 	@echo -e "FLAVOUR           : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
