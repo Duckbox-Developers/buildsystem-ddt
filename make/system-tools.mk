@@ -58,6 +58,8 @@ endif
 #
 MTD_UTILS_VER = 1.5.2
 MTD_UTILS_SOURCE = mtd-utils-$(MTD_UTILS_VER).tar.bz2
+MTD_UTILS_PATCH = host-mtd-utils-$(MTD_UTILS_VER).patch
+MTD_UTILS_PATCH += host-mtd-utils-$(MTD_UTILS_VER)-sysmacros.patch
 
 $(ARCHIVE)/$(MTD_UTILS_SOURCE):
 	$(DOWNLOAD) ftp://ftp.infradead.org/pub/mtd-utils/$(MTD_UTILS_SOURCE)
@@ -67,6 +69,7 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
 	$(UNTAR)/$(MTD_UTILS_SOURCE)
 	$(CHDIR)/mtd-utils-$(MTD_UTILS_VER); \
+		$(call apply_patches, $(MTD_UTILS_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) PREFIX= CC=$(TARGET)-gcc LD=$(TARGET)-ld STRIP=$(TARGET)-strip WITHOUT_XATTR=1 DESTDIR=$(TARGET_DIR); \
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/mkfs.jffs2 $(TARGET_DIR)/usr/sbin
