@@ -32,7 +32,7 @@ PYTHON_SOURCE = Python-$(PYTHON_VER).tar.xz
 HOST_PYTHON_PATCH = python-$(PYTHON_VER).patch
 
 $(ARCHIVE)/$(PYTHON_SOURCE):
-	$(WGET) https://www.python.org/ftp/python/$(PYTHON_VER)/$(PYTHON_SOURCE)
+	$(DOWNLOAD) https://www.python.org/ftp/python/$(PYTHON_VER)/$(PYTHON_SOURCE)
 
 $(D)/host_python: $(ARCHIVE)/$(PYTHON_SOURCE)
 	$(START_BUILD)
@@ -139,7 +139,7 @@ PYTHON_SETUPTOOLS_VER = 5.2
 PYTHON_SETUPTOOLS_SOURCE = setuptools-$(PYTHON_SETUPTOOLS_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_SETUPTOOLS_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/s/setuptools/$(PYTHON_SETUPTOOLS_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/s/setuptools/$(PYTHON_SETUPTOOLS_SOURCE)
 
 $(D)/python_setuptools: $(D)/bootstrap $(D)/python $(ARCHIVE)/$(PYTHON_SETUPTOOLS_SOURCE)
 	$(START_BUILD)
@@ -158,7 +158,7 @@ LIBXMLCCWRAP_VER = 0.0.12
 LIBXMLCCWRAP_SOURCE = libxmlccwrap-$(LIBXMLCCWRAP_VER).tar.gz
 
 $(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE):
-	$(WGET) http://www.ant.uni-bremen.de/whomes/rinas/libxmlccwrap/download/$(LIBXMLCCWRAP_SOURCE)
+	$(DOWNLOAD) http://www.ant.uni-bremen.de/whomes/rinas/libxmlccwrap/download/$(LIBXMLCCWRAP_SOURCE)
 
 $(D)/libxmlccwrap: $(D)/bootstrap $(D)/libxml2 $(D)/libxslt $(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE)
 	$(START_BUILD)
@@ -184,7 +184,7 @@ PYTHON_LXML_VER = $(PYTHON_LXML_MAJOR).$(PYTHON_LXML_MINOR)
 PYTHON_LXML_SOURCE = lxml-$(PYTHON_LXML_VER).tgz
 
 $(ARCHIVE)/$(PYTHON_LXML_SOURCE):
-	$(WGET) http://launchpad.net/lxml/$(PYTHON_LXML_MAJOR)/$(PYTHON_LXML_VER)/+download/$(PYTHON_LXML_SOURCE)
+	$(DOWNLOAD) http://launchpad.net/lxml/$(PYTHON_LXML_MAJOR)/$(PYTHON_LXML_VER)/+download/$(PYTHON_LXML_SOURCE)
 
 $(D)/python_lxml: $(D)/bootstrap $(D)/python $(D)/libxslt $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_LXML_SOURCE)
 	$(START_BUILD)
@@ -205,7 +205,7 @@ PYTHON_TWISTED_VER = 16.4.0
 PYTHON_TWISTED_SOURCE = Twisted-$(PYTHON_TWISTED_VER).tar.bz2
 
 $(ARCHIVE)/$(PYTHON_TWISTED_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/T/Twisted/$(PYTHON_TWISTED_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/T/Twisted/$(PYTHON_TWISTED_SOURCE)
 
 $(D)/python_twisted: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_zope_interface $(D)/python_pyopenssl $(D)/python_service_identity $(ARCHIVE)/$(PYTHON_TWISTED_SOURCE)
 	$(START_BUILD)
@@ -225,7 +225,7 @@ PYTHON_IMAGING_SOURCE = Imaging-$(PYTHON_IMAGING_VER).tar.gz
 PYTHON_IMAGING_PATCH = python-imaging-$(PYTHON_IMAGING_VER).patch
 
 $(ARCHIVE)/$(PYTHON_IMAGING_SOURCE):
-	$(WGET) http://effbot.org/downloads/$(PYTHON_IMAGING_SOURCE)
+	$(DOWNLOAD) http://effbot.org/downloads/$(PYTHON_IMAGING_SOURCE)
 
 $(D)/python_imaging: $(D)/bootstrap $(D)/libjpeg $(D)/freetype $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_IMAGING_SOURCE)
 	$(START_BUILD)
@@ -248,7 +248,7 @@ PYTHON_PYCRYPTO_SOURCE = pycrypto-$(PYTHON_PYCRYPTO_VER).tar.gz
 PYTHON_PYCRYPTO_PATCH = python-pycrypto-$(PYTHON_PYCRYPTO_VER).patch
 
 $(ARCHIVE)/$(PYTHON_PYCRYPTO_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pycrypto/$(PYTHON_PYCRYPTO_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pycrypto/$(PYTHON_PYCRYPTO_SOURCE)
 
 $(D)/python_pycrypto: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_PYCRYPTO_SOURCE)
 	$(START_BUILD)
@@ -272,7 +272,7 @@ PYTHON_PYUSB_VER = 1.0.0a3
 PYTHON_PYUSB_SOURCE = pyusb-$(PYTHON_PYUSB_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_PYUSB_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pyusb/$(PYTHON_PYUSB_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pyusb/$(PYTHON_PYUSB_SOURCE)
 
 $(D)/python_pyusb: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_PYUSB_SOURCE)
 	$(START_BUILD)
@@ -291,7 +291,7 @@ PYTHON_IPADDRESS_VER = 1.0.18
 PYTHON_IPADDRESS_SOURCE = ipaddress-$(PYTHON_IPADDRESS_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_IPADDRESS_SOURCE):
-	$(WGET) https://distfiles.macports.org/py-ipaddress/$(PYTHON_IPADDRESS_SOURCE)
+	$(DOWNLOAD) https://distfiles.macports.org/py-ipaddress/$(PYTHON_IPADDRESS_SOURCE)
 
 $(D)/python_ipaddress: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_IPADDRESS_SOURCE)
 	$(START_BUILD)
@@ -310,7 +310,7 @@ PYTHON_SIX_VER = 1.9.0
 PYTHON_SIX_SOURCE = six-$(PYTHON_SIX_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_SIX_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/s/six/$(PYTHON_SIX_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/s/six/$(PYTHON_SIX_SOURCE)
 
 $(D)/python_six: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_SIX_SOURCE)
 	$(START_BUILD)
@@ -329,7 +329,7 @@ PYTHON_CFFI_VER = 1.2.1
 PYTHON_CFFI_SOURCE = cffi-$(PYTHON_CFFI_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_CFFI_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/c/cffi/$(PYTHON_CFFI_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/c/cffi/$(PYTHON_CFFI_SOURCE)
 
 $(D)/python_cffi: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_CFFI_SOURCE)
 	$(START_BUILD)
@@ -348,7 +348,7 @@ PYTHON_ENUM34_VER = 1.0.4
 PYTHON_ENUM34_SOURCE = enum34-$(PYTHON_ENUM34_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_ENUM34_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/e/enum34/$(PYTHON_ENUM34_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/e/enum34/$(PYTHON_ENUM34_SOURCE)
 
 $(D)/python_enum34: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_ENUM34_SOURCE)
 	$(START_BUILD)
@@ -367,7 +367,7 @@ PYTHON_PYASN1_MODULES_VER = 0.0.7
 PYTHON_PYASN1_MODULES_SOURCE = pyasn1-modules-$(PYTHON_PYASN1_MODULES_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_PYASN1_MODULES_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pyasn1-modules/$(PYTHON_PYASN1_MODULES_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pyasn1-modules/$(PYTHON_PYASN1_MODULES_SOURCE)
 
 $(D)/python_pyasn1_modules: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_PYASN1_MODULES_SOURCE)
 	$(START_BUILD)
@@ -386,7 +386,7 @@ PYTHON_PYASN1_VER = 0.1.8
 PYTHON_PYASN1_SOURCE = pyasn1-$(PYTHON_PYASN1_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_PYASN1_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pyasn1/$(PYTHON_PYASN1_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pyasn1/$(PYTHON_PYASN1_SOURCE)
 
 $(D)/python_pyasn1: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_pyasn1_modules $(ARCHIVE)/$(PYTHON_PYASN1_SOURCE)
 	$(START_BUILD)
@@ -405,7 +405,7 @@ PYTHON_PYCPARSER_VER = 2.14
 PYTHON_PYCPARSER_SOURCE = pycparser-$(PYTHON_PYCPARSER_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_PYCPARSER_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pycparser/$(PYTHON_PYCPARSER_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pycparser/$(PYTHON_PYCPARSER_SOURCE)
 
 $(D)/python_pycparser: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_pyasn1 $(ARCHIVE)/$(PYTHON_PYCPARSER_SOURCE)
 	$(START_BUILD)
@@ -424,7 +424,7 @@ PYTHON_CRYPTOGRAPHY_VER = 0.8.1
 PYTHON_CRYPTOGRAPHY_SOURCE = cryptography-$(PYTHON_CRYPTOGRAPHY_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_CRYPTOGRAPHY_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/c/cryptography/$(PYTHON_CRYPTOGRAPHY_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/c/cryptography/$(PYTHON_CRYPTOGRAPHY_SOURCE)
 
 $(D)/python_cryptography: $(D)/bootstrap $(D)/libffi $(D)/python $(D)/python_setuptools $(D)/python_pyopenssl $(D)/python_six $(D)/python_pycparser $(ARCHIVE)/$(PYTHON_CRYPTOGRAPHY_SOURCE)
 	$(START_BUILD)
@@ -444,7 +444,7 @@ PYTHON_PYOPENSSL_SOURCE = pyOpenSSL-$(PYTHON_PYOPENSSL_VER).tar.gz
 PYTHON_PYOPENSSL_PATCH = python-pyopenssl-$(PYTHON_PYOPENSSL_VER).patch
 
 $(ARCHIVE)/$(PYTHON_PYOPENSSL_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/p/pyOpenSSL/$(PYTHON_PYOPENSSL_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/p/pyOpenSSL/$(PYTHON_PYOPENSSL_SOURCE)
 
 $(D)/python_pyopenssl: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_PYOPENSSL_SOURCE)
 	$(START_BUILD)
@@ -465,7 +465,7 @@ PYTHON_SERVICE_IDENTITY_SOURCE = service_identity-$(PYTHON_SERVICE_IDENTITY_VER)
 PYTHON_SERVICE_IDENTITY_PATCH =
 
 $(ARCHIVE)/$(PYTHON_SERVICE_IDENTITY_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/s/service_identity/$(PYTHON_SERVICE_IDENTITY_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/s/service_identity/$(PYTHON_SERVICE_IDENTITY_SOURCE)
 
 $(D)/python_service_identity: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(D)/python_attr $(D)/python_attrs $(D)/python_pyasn1 $(ARCHIVE)/$(PYTHON_SERVICE_IDENTITY_SOURCE)
 	$(START_BUILD)
@@ -486,7 +486,7 @@ PYTHON_ATTR_SOURCE = attr-$(PYTHON_ATTR_VER).tar.gz
 PYTHON_ATTR_PATCH =
 
 $(ARCHIVE)/$(PYTHON_ATTR_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/a/attr/$(PYTHON_ATTR_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/a/attr/$(PYTHON_ATTR_SOURCE)
 
 $(D)/python_attr: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_ATTR_SOURCE)
 	$(START_BUILD)
@@ -506,7 +506,7 @@ PYTHON_ATTRS_SOURCE = attrs-$(PYTHON_ATTRS_VER).tar.gz
 PYTHON_ATTRS_PARCH =
 
 $(ARCHIVE)/$(PYTHON_ATTRS_SOURCE):
-	$(WGET) https://pypi.io/packages/source/a/attrs/$(PYTHON_ATTRS_SOURCE)
+	$(DOWNLOAD) https://pypi.io/packages/source/a/attrs/$(PYTHON_ATTRS_SOURCE)
 
 $(D)/python_attrs: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_ATTRS_SOURCE)
 	$(START_BUILD)
@@ -525,7 +525,7 @@ PYTHON_ELEMENTTREE_VER = 1.2.6-20050316
 PYTHON_ELEMENTTREE_SOURCE = elementtree-$(PYTHON_ELEMENTTREE_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_ELEMENTTREE_SOURCE):
-	$(WGET) http://effbot.org/media/downloads/$(PYTHON_ELEMENTTREE_SOURCE)
+	$(DOWNLOAD) http://effbot.org/media/downloads/$(PYTHON_ELEMENTTREE_SOURCE)
 
 $(D)/python_elementtree: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_ELEMENTTREE_SOURCE)
 	$(START_BUILD)
@@ -544,7 +544,7 @@ PYTHON_WIFI_VER = 0.5.0
 PYTHON_WIFI_SOURCE = pythonwifi-$(PYTHON_WIFI_VER).tar.bz2
 
 $(ARCHIVE)/$(PYTHON_WIFI_SOURCE):
-	$(WGET) https://git.tuxfamily.org/pythonwifi/pythonwifi.git/snapshot/$(PYTHON_WIFI_SOURCE)
+	$(DOWNLOAD) https://git.tuxfamily.org/pythonwifi/pythonwifi.git/snapshot/$(PYTHON_WIFI_SOURCE)
 
 $(D)/python_wifi: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_WIFI_SOURCE)
 	$(START_BUILD)
@@ -563,7 +563,7 @@ PYTHON_CHEETAH_VER = 2.4.4
 PYTHON_CHEETAH_SOURCE = Cheetah-$(PYTHON_CHEETAH_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_CHEETAH_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/C/Cheetah/$(PYTHON_CHEETAH_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/C/Cheetah/$(PYTHON_CHEETAH_SOURCE)
 
 $(D)/python_cheetah: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_CHEETAH_SOURCE)
 	$(START_BUILD)
@@ -582,7 +582,7 @@ PYTHON_MECHANIZE_VER = 0.2.5
 PYTHON_MECHANIZE_SOURCE = mechanize-$(PYTHON_MECHANIZE_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_MECHANIZE_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/m/mechanize/$(PYTHON_MECHANIZE_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/m/mechanize/$(PYTHON_MECHANIZE_SOURCE)
 
 $(D)/python_mechanize: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_MECHANIZE_SOURCE)
 	$(START_BUILD)
@@ -601,7 +601,7 @@ PYTHON_GDATA_VER = 2.0.18
 PYTHON_GDATA_SOURCE = gdata-$(PYTHON_GDATA_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_GDATA_SOURCE):
-	$(WGET) https://gdata-python-client.googlecode.com/files/$(PYTHON_GDATA_SOURCE)
+	$(DOWNLOAD) https://gdata-python-client.googlecode.com/files/$(PYTHON_GDATA_SOURCE)
 
 $(D)/python_gdata: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_GDATA_SOURCE)
 	$(START_BUILD)
@@ -620,7 +620,7 @@ PYTHON_ZOPE_INTERFACE_VER = 4.1.1
 PYTHON_ZOPE_INTERFACE_SOURCE = zope.interface-$(PYTHON_ZOPE_INTERFACE_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_ZOPE_INTERFACE_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/z/zope.interface/$(PYTHON_ZOPE_INTERFACE_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/z/zope.interface/$(PYTHON_ZOPE_INTERFACE_SOURCE)
 
 $(D)/python_zope_interface: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_ZOPE_INTERFACE_SOURCE)
 	$(START_BUILD)
@@ -639,7 +639,7 @@ PYTHON_REQUESTS_VER = 2.7.0
 PYTHON_REQUESTS_SOURCE = requests-$(PYTHON_REQUESTS_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_REQUESTS_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/r/requests/$(PYTHON_REQUESTS_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/r/requests/$(PYTHON_REQUESTS_SOURCE)
 
 $(D)/python_requests: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_REQUESTS_SOURCE)
 	$(START_BUILD)
@@ -658,7 +658,7 @@ PYTHON_FUTURES_VER = 2.1.6
 PYTHON_FUTURES_SOURCE = futures-$(PYTHON_FUTURES_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_FUTURES_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/f/futures/$(PYTHON_FUTURES_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/f/futures/$(PYTHON_FUTURES_SOURCE)
 
 $(D)/python_futures: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_FUTURES_SOURCE)
 	$(START_BUILD)
@@ -677,7 +677,7 @@ PYTHON_SINGLEDISPATCH_VER = 3.4.0.3
 PYTHON_SINGLEDISPATCH_SOURCE = singledispatch-$(PYTHON_SINGLEDISPATCH_VER).tar.gz
 
 $(ARCHIVE)/$(PYTHON_SINGLEDISPATCH_SOURCE):
-	$(WGET) https://pypi.python.org/packages/source/s/singledispatch/$(PYTHON_SINGLEDISPATCH_SOURCE)
+	$(DOWNLOAD) https://pypi.python.org/packages/source/s/singledispatch/$(PYTHON_SINGLEDISPATCH_SOURCE)
 
 $(D)/python_singledispatch: $(D)/bootstrap $(D)/python $(D)/python_setuptools $(ARCHIVE)/$(PYTHON_SINGLEDISPATCH_SOURCE)
 	$(START_BUILD)

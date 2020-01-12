@@ -256,7 +256,7 @@ UBOOT_PATCH += u-boot-$(UBOOT_VER)-tf7700.patch
 endif
 
 $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2:
-	$(WGET) ftp://ftp.denx.de/pub/u-boot/u-boot-$(UBOOT_VER).tar.bz2
+	$(DOWNLOAD) ftp://ftp.denx.de/pub/u-boot/u-boot-$(UBOOT_VER).tar.bz2
 
 $(D)/uboot: bootstrap $(ARCHIVE)/u-boot-$(UBOOT_VER).tar.bz2
 	$(START_BUILD)

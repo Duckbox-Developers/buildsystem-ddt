@@ -7,7 +7,7 @@ STL_FTP_UPD_SRC  = $(STL_FTP)/updates/SRPMS
 STL_FTP_UPD_SH4  = $(STL_FTP)/updates/RPMS/sh4
 STL_FTP_UPD_HOST = $(STL_FTP)/updates/RPMS/host
 STL_ARCHIVE      = $(ARCHIVE)/stlinux
-STL_GET          = $(WGET)/stlinux
+STL_GET          = $(DOWNLOAD)/stlinux
 
 ## ordering is important here. The /host/ rule must stay before the less
 ## specific %.sh4/%.i386/%.noarch rule. No idea if this is portable or
@@ -106,7 +106,7 @@ CROSSTOOL_NG_VER = 1.22.0
 CROSSTOOL_NG_SOURCE = crosstool-ng-$(CROSSTOOL_NG_VER).tar.xz
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
-	$(WGET) http://crosstool-ng.org/download/crosstool-ng/$(CROSSTOOL_NG_SOURCE)
+	$(DOWNLOAD) http://crosstool-ng.org/download/crosstool-ng/$(CROSSTOOL_NG_SOURCE)
 
 crosstool-ng: $(D)/directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	make $(BUILD_TMP)

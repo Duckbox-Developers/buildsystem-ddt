@@ -12,7 +12,7 @@ LINKS_PATCH += links-$(LINKS_VER)-spark-input.patch
 endif
 
 $(ARCHIVE)/links-$(LINKS_VER).tar.bz2:
-	$(WGET) http://links.twibright.com/download/links-$(LINKS_VER).tar.bz2
+	$(DOWNLOAD) http://links.twibright.com/download/links-$(LINKS_VER).tar.bz2
 
 $(D)/links: $(D)/bootstrap $(D)/libpng $(D)/openssl $(ARCHIVE)/links-$(LINKS_VER).tar.bz2
 	$(START_BUILD)

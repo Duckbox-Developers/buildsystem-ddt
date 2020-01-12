@@ -36,7 +36,7 @@ NCURSES_SOURCE = ncurses-$(NCURSES_VER).tar.gz
 NCURSES_PATCH = ncurses-$(NCURSES_VER)-gcc-5.x-MKlib_gen.patch
 
 $(ARCHIVE)/$(NCURSES_SOURCE):
-	$(WGET) https://ftp.gnu.org/pub/gnu/ncurses/$(NCURSES_SOURCE)
+	$(DOWNLOAD) https://ftp.gnu.org/pub/gnu/ncurses/$(NCURSES_SOURCE)
 
 $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 	$(START_BUILD)
@@ -87,7 +87,7 @@ GMP_VER = 6.1.2
 GMP_SOURCE = gmp-$(GMP_VER).tar.xz
 
 $(ARCHIVE)/$(GMP_SOURCE):
-	$(WGET) https://gmplib.org/download/gmp/$(GMP_SOURCE)
+	$(DOWNLOAD) https://gmplib.org/download/gmp/$(GMP_SOURCE)
 
 $(D)/gmp: $(D)/bootstrap $(ARCHIVE)/$(GMP_SOURCE)
 	$(START_BUILD)
@@ -112,7 +112,7 @@ LIBFFI_SOURCE = libffi-$(LIBFFI_VER).tar.gz
 LIBFFI_PATCH = libffi-$(LIBFFI_VER).patch
 
 $(ARCHIVE)/$(LIBFFI_SOURCE):
-	$(WGET) ftp://sourceware.org/pub/libffi/$(LIBFFI_SOURCE)
+	$(DOWNLOAD) ftp://sourceware.org/pub/libffi/$(LIBFFI_SOURCE)
 
 $(D)/host_libffi: $(ARCHIVE)/$(LIBFFI_SOURCE)
 	$(START_BUILD)
@@ -162,7 +162,7 @@ LIBGLIB2_VER = $(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR).$(LIBGLIB2_VER_MICRO)
 LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VER).tar.xz
 
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
-	$(WGET) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR)/$(LIBGLIB2_SOURCE)
+	$(DOWNLOAD) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR)/$(LIBGLIB2_SOURCE)
 
 $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
 	$(START_BUILD)
@@ -246,7 +246,7 @@ LIBPCRE_VER = 8.39
 LIBPCRE_SOURCE = pcre-$(LIBPCRE_VER).tar.bz2
 
 $(ARCHIVE)/$(LIBPCRE_SOURCE):
-	$(WGET) https://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VER)/$(LIBPCRE_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VER)/$(LIBPCRE_SOURCE)
 
 $(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
 	$(START_BUILD)
@@ -281,7 +281,7 @@ LIBARCHIVE_VER = 3.4.0
 LIBARCHIVE_SOURCE = libarchive-$(LIBARCHIVE_VER).tar.gz
 
 $(ARCHIVE)/$(LIBARCHIVE_SOURCE):
-	$(WGET) https://www.libarchive.org/downloads/$(LIBARCHIVE_SOURCE)
+	$(DOWNLOAD) https://www.libarchive.org/downloads/$(LIBARCHIVE_SOURCE)
 
 $(D)/host_libarchive: $(D)/bootstrap $(ARCHIVE)/$(LIBARCHIVE_SOURCE)
 	$(START_BUILD)
@@ -334,7 +334,7 @@ READLINE_VER = 6.2
 READLINE_SOURCE = readline-$(READLINE_VER).tar.gz
 
 $(ARCHIVE)/$(READLINE_SOURCE):
-	$(WGET) https://ftp.gnu.org/gnu/readline/$(READLINE_SOURCE)
+	$(DOWNLOAD) https://ftp.gnu.org/gnu/readline/$(READLINE_SOURCE)
 
 $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 	$(START_BUILD)
@@ -377,7 +377,7 @@ OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_BASE)/b
 endif
 
 $(ARCHIVE)/$(OPENSSL_SOURCE):
-	$(WGET) https://www.openssl.org/source/$(OPENSSL_SOURCE)
+	$(DOWNLOAD) https://www.openssl.org/source/$(OPENSSL_SOURCE)
 
 $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	$(START_BUILD)
@@ -416,7 +416,7 @@ LIBBLURAY_SOURCE = libbluray-$(LIBBLURAY_VER).tar.bz2
 LIBBLURAY_PATCH = libbluray-$(LIBBLURAY_VER).patch
 
 $(ARCHIVE)/$(LIBBLURAY_SOURCE):
-	$(WGET) ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VER)/$(LIBBLURAY_SOURCE)
+	$(DOWNLOAD) ftp.videolan.org/pub/videolan/libbluray/$(LIBBLURAY_VER)/$(LIBBLURAY_SOURCE)
 
 $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 	$(START_BUILD)
@@ -457,7 +457,7 @@ BOOST_SOURCE = boost_$(BOOST_VER).tar.bz2
 BOOST_PATCH = boost-$(BOOST_VER).patch
 
 $(ARCHIVE)/$(BOOST_SOURCE):
-	$(WGET) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VER_ARCHIVE)/$(BOOST_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VER_ARCHIVE)/$(BOOST_SOURCE)
 
 $(D)/boost: $(D)/bootstrap $(ARCHIVE)/$(BOOST_SOURCE)
 	$(START_BUILD)
@@ -478,7 +478,7 @@ ZLIB_SOURCE = zlib-$(ZLIB_VER).tar.xz
 ZLIB_Patch = zlib-$(ZLIB_VER).patch
 
 $(ARCHIVE)/$(ZLIB_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VER)/$(ZLIB_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/zlib/$(ZLIB_VER)/$(ZLIB_SOURCE)
 
 $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	$(START_BUILD)
@@ -507,7 +507,7 @@ BZIP2_SOURCE = bzip2-$(BZIP2_VER).tar.gz
 BZIP2_Patch = bzip2-$(BZIP2_VER).patch
 
 $(ARCHIVE)/$(BZIP2_SOURCE):
-	$(WGET) https://sourceware.org/pub/bzip2/$(BZIP2_SOURCE)
+	$(DOWNLOAD) https://sourceware.org/pub/bzip2/$(BZIP2_SOURCE)
 
 $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 	$(START_BUILD)
@@ -534,7 +534,7 @@ DEFAULT_TIMEZONE ?= "CET"
 #ln -s /usr/share/zoneinfo/<country>/<city> /etc/localtime
 
 $(ARCHIVE)/$(TZDATA_SOURCE):
-	$(WGET) ftp://ftp.iana.org/tz/releases/$(TZDATA_SOURCE)
+	$(DOWNLOAD) ftp://ftp.iana.org/tz/releases/$(TZDATA_SOURCE)
 
 $(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
 	$(START_BUILD)
@@ -567,7 +567,7 @@ FREETYPE_SOURCE = freetype-$(FREETYPE_VER).tar.xz
 FREETYPE_PATCH = freetype-$(FREETYPE_VER).patch
 
 $(ARCHIVE)/$(FREETYPE_SOURCE):
-	$(WGET) https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/$(FREETYPE_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/freetype/files/freetype2/$(FREETYPE_VER)/$(FREETYPE_SOURCE)
 
 $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE)
 	$(START_BUILD)
@@ -616,7 +616,7 @@ LIRC_PATCH = lirc-$(LIRC_VER).patch
 LIRC = $(D)/lirc
 
 $(ARCHIVE)/$(LIRC_SOURCE):
-	$(WGET) https://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/$(LIRC_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/lirc/files/LIRC/$(LIRC_VER)/$(LIRC_SOURCE)
 
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
@@ -668,7 +668,7 @@ JPEG_SOURCE = jpegsrc.v$(JPEG_VER).tar.gz
 JPEG_PATCH = jpeg-$(JPEG_VER).patch
 
 $(ARCHIVE)/$(JPEG_SOURCE):
-	$(WGET) http://www.ijg.org/files/$(JPEG_SOURCE)
+	$(DOWNLOAD) http://www.ijg.org/files/$(JPEG_SOURCE)
 
 $(D)/jpeg: $(D)/bootstrap $(ARCHIVE)/$(JPEG_SOURCE)
 	$(START_BUILD)
@@ -706,7 +706,7 @@ LIBJPEG_TURBO2_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO2_VER).tar.gz
 LIBJPEG_TURBO2_PATCH = libjpeg-turbo-tiff-ojpeg.patch
 
 $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO2_VER)/$(LIBJPEG_TURBO2_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO2_VER)/$(LIBJPEG_TURBO2_SOURCE)
 
 $(D)/libjpeg_turbo2: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE)
 	$(START_BUILD)
@@ -738,7 +738,7 @@ LIBJPEG_TURBO_VER = 1.5.3
 LIBJPEG_TURBO_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO_VER).tar.gz
 
 $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO_VER)/$(LIBJPEG_TURBO_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO_VER)/$(LIBJPEG_TURBO_SOURCE)
 
 $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 	$(START_BUILD)
@@ -782,8 +782,8 @@ LIBPNG_SOURCE = libpng-$(LIBPNG_VER).tar.xz
 LIBPNG_PATCH = libpng-$(LIBPNG_VER)-disable-tools.patch
 
 $(ARCHIVE)/$(LIBPNG_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/$(LIBPNG_VER)/$(LIBPNG_SOURCE) || \
-	$(WGET) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/older-releases/$(LIBPNG_VER)/$(LIBPNG_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/$(LIBPNG_VER)/$(LIBPNG_SOURCE) || \
+	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/older-releases/$(LIBPNG_VER)/$(LIBPNG_SOURCE)
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 	$(START_BUILD)
@@ -814,7 +814,7 @@ PNGPP_VER = 0.2.9
 PNGPP_SOURCE = png++-$(PNGPP_VER).tar.gz
 
 $(ARCHIVE)/$(PNGPP_SOURCE):
-	$(WGET) https://download.savannah.gnu.org/releases/pngpp/$(PNGPP_SOURCE)
+	$(DOWNLOAD) https://download.savannah.gnu.org/releases/pngpp/$(PNGPP_SOURCE)
 
 $(D)/pngpp: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(PNGPP_SOURCE)
 	$(START_BUILD)
@@ -832,7 +832,7 @@ GIFLIB_VER = 5.1.4
 GIFLIB_SOURCE = giflib-$(GIFLIB_VER).tar.bz2
 
 $(ARCHIVE)/$(GIFLIB_SOURCE):
-	$(WGET) https://sourceforge.net/projects/giflib/files/$(GIFLIB_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/giflib/files/$(GIFLIB_SOURCE)
 
 $(D)/giflib: $(D)/bootstrap $(ARCHIVE)/$(GIFLIB_SOURCE)
 	$(START_BUILD)
@@ -858,7 +858,7 @@ LIBCONFIG_VER = 1.4.10
 LIBCONFIG_SOURCE = libconfig-$(LIBCONFIG_VER).tar.gz
 
 $(ARCHIVE)/$(LIBCONFIG_SOURCE):
-	$(WGET) http://www.hyperrealm.com/packages/$(LIBCONFIG_SOURCE)
+	$(DOWNLOAD) http://www.hyperrealm.com/packages/$(LIBCONFIG_SOURCE)
 
 $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 	$(START_BUILD)
@@ -885,7 +885,7 @@ CA-BUNDLE_SOURCE = cacert.pem
 CA-BUNDLE_URL = https://curl.haxx.se/ca/$(CA-BUNDLE_SOURCE)
 
 $(ARCHIVE)/$(CA-BUNDLE_SOURCE):
-	$(WGET) $(CA-BUNDLE_URL)
+	$(DOWNLOAD) $(CA-BUNDLE_URL)
 
 $(D)/ca-bundle: $(ARCHIVE)/$(CA-BUNDLE_SOURCE)
 	$(START_BUILD)
@@ -906,7 +906,7 @@ LIBCURL_SOURCE = curl-$(LIBCURL_VER).tar.bz2
 LIBCURL_PATCH = libcurl-$(LIBCURL_VER).patch
 
 $(ARCHIVE)/$(LIBCURL_SOURCE):
-	$(WGET) https://curl.haxx.se/download/$(LIBCURL_SOURCE)
+	$(DOWNLOAD) https://curl.haxx.se/download/$(LIBCURL_SOURCE)
 
 $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(LIBCURL_SOURCE)
 	$(START_BUILD)
@@ -957,7 +957,7 @@ LIBFRIBIDI_SOURCE = fribidi-$(LIBFRIBIDI_VER).tar.bz2
 LIBFRIBIDI_PATCH = libfribidi-$(LIBFRIBIDI_VER).patch
 
 $(ARCHIVE)/$(LIBFRIBIDI_SOURCE):
-	$(WGET) https://github.com/fribidi/fribidi/releases/download/v$(LIBFRIBIDI_VER)/$(LIBFRIBIDI_SOURCE)
+	$(DOWNLOAD) https://github.com/fribidi/fribidi/releases/download/v$(LIBFRIBIDI_VER)/$(LIBFRIBIDI_SOURCE)
 
 $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 	$(START_BUILD)
@@ -993,7 +993,7 @@ LIBSIGC_VER = $(LIBSIGC_VER_MAJOR).$(LIBSIGC_VER_MINOR).$(LIBSIGC_VER_MICRO)
 LIBSIGC_SOURCE = libsigc++-$(LIBSIGC_VER).tar.xz
 
 $(ARCHIVE)/$(LIBSIGC_SOURCE):
-	$(WGET) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_VER_MAJOR).$(LIBSIGC_VER_MINOR)/$(LIBSIGC_SOURCE)
+	$(DOWNLOAD) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_VER_MAJOR).$(LIBSIGC_VER_MINOR)/$(LIBSIGC_SOURCE)
 
 $(D)/libsigc: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_SOURCE)
 	$(START_BUILD)
@@ -1025,7 +1025,7 @@ LIBMAD_SOURCE = libmad-$(LIBMAD_VER).tar.gz
 LIBMAD_PATCH = libmad-$(LIBMAD_VER).patch
 
 $(ARCHIVE)/$(LIBMAD_SOURCE):
-	$(WGET) https://sourceforge.net/projects/mad/files/libmad/$(LIBMAD_VER)/$(LIBMAD_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/mad/files/libmad/$(LIBMAD_VER)/$(LIBMAD_SOURCE)
 
 $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(LIBMAD_SOURCE)
 	$(START_BUILD)
@@ -1057,7 +1057,7 @@ LIBID3TAG_SOURCE = libid3tag-$(LIBID3TAG_VER).tar.gz
 LIBID3TAG_PATCH = libid3tag-$(LIBID3TAG_VER).patch
 
 $(ARCHIVE)/$(LIBID3TAG_SOURCE):
-	$(WGET) https://sourceforge.net/projects/mad/files/libid3tag/$(LIBID3TAG_VER)/$(LIBID3TAG_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/mad/files/libid3tag/$(LIBID3TAG_VER)/$(LIBID3TAG_SOURCE)
 
 $(D)/libid3tag: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBID3TAG_SOURCE)
 	$(START_BUILD)
@@ -1086,7 +1086,7 @@ FLAC_SOURCE = flac-$(FLAC_VER).tar.xz
 FLAC_PATCH = flac-$(FLAC_VER).patch
 
 $(ARCHIVE)/$(FLAC_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/flac/$(FLAC_SOURCE)
+	$(DOWNLOAD) https://ftp.osuosl.org/pub/xiph/releases/flac/$(FLAC_SOURCE)
 
 $(D)/flac: $(D)/bootstrap $(ARCHIVE)/$(FLAC_SOURCE)
 	$(START_BUILD)
@@ -1128,7 +1128,7 @@ LIBOGG_VER = 1.3.3
 LIBOGG_SOURCE = libogg-$(LIBOGG_VER).tar.gz
 
 $(ARCHIVE)/$(LIBOGG_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ogg/$(LIBOGG_SOURCE)
+	$(DOWNLOAD) https://ftp.osuosl.org/pub/xiph/releases/ogg/$(LIBOGG_SOURCE)
 
 $(D)/libogg: $(D)/bootstrap $(ARCHIVE)/$(LIBOGG_SOURCE)
 	$(START_BUILD)
@@ -1155,7 +1155,7 @@ LIBVORBIS_VER = 1.3.6
 LIBVORBIS_SOURCE = libvorbis-$(LIBVORBIS_VER).tar.xz
 
 $(ARCHIVE)/$(LIBVORBIS_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/vorbis/$(LIBVORBIS_SOURCE)
+	$(DOWNLOAD) https://ftp.osuosl.org/pub/xiph/releases/vorbis/$(LIBVORBIS_SOURCE)
 
 $(D)/libvorbis: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBIS_SOURCE)
 	$(START_BUILD)
@@ -1192,7 +1192,7 @@ LIBVORBISIDEC_VER_APPEND = .orig
 LIBVORBISIDEC_SOURCE = libvorbisidec_$(LIBVORBISIDEC_VER)$(LIBVORBISIDEC_VER_APPEND).tar.gz
 
 $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE):
-	$(WGET) https://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/$(LIBVORBISIDEC_SOURCE)
+	$(DOWNLOAD) https://ftp.de.debian.org/debian/pool/main/libv/libvorbisidec/$(LIBVORBISIDEC_SOURCE)
 
 $(D)/libvorbisidec: $(D)/bootstrap $(D)/libogg $(ARCHIVE)/$(LIBVORBISIDEC_SOURCE)
 	$(START_BUILD)
@@ -1221,7 +1221,7 @@ LIBICONV_VER = 1.15
 LIBICONV_SOURCE = libiconv-$(LIBICONV_VER).tar.gz
 
 $(ARCHIVE)/$(LIBICONV_SOURCE):
-	$(WGET) https://ftp.gnu.org/gnu/libiconv/$(LIBICONV_SOURCE)
+	$(DOWNLOAD) https://ftp.gnu.org/gnu/libiconv/$(LIBICONV_SOURCE)
 
 $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 	$(START_BUILD)
@@ -1253,7 +1253,7 @@ EXPAT_SOURCE = expat-$(EXPAT_VER).tar.bz2
 EXPAT_PATCH  = expat-$(EXPAT_VER)-libtool-tag.patch
 
 $(ARCHIVE)/$(EXPAT_SOURCE):
-	$(WGET) https://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/$(EXPAT_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/$(EXPAT_SOURCE)
 
 $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(START_BUILD)
@@ -1281,7 +1281,7 @@ FONTCONFIG_VER = 2.11.93
 FONTCONFIG_SOURCE = fontconfig-$(FONTCONFIG_VER).tar.bz2
 
 $(ARCHIVE)/$(FONTCONFIG_SOURCE):
-	$(WGET) https://www.freedesktop.org/software/fontconfig/release/$(FONTCONFIG_SOURCE)
+	$(DOWNLOAD) https://www.freedesktop.org/software/fontconfig/release/$(FONTCONFIG_SOURCE)
 
 $(D)/fontconfig: $(D)/bootstrap $(D)/freetype $(D)/expat $(ARCHIVE)/$(FONTCONFIG_SOURCE)
 	$(START_BUILD)
@@ -1310,7 +1310,7 @@ LIBDVDCSS_VER = 1.2.13
 LIBDVDCSS_SOURCE = libdvdcss-$(LIBDVDCSS_VER).tar.bz2
 
 $(ARCHIVE)/$(LIBDVDCSS_SOURCE):
-	$(WGET) https://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VER)/$(LIBDVDCSS_SOURCE)
+	$(DOWNLOAD) https://download.videolan.org/pub/libdvdcss/$(LIBDVDCSS_VER)/$(LIBDVDCSS_SOURCE)
 
 $(D)/libdvdcss: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDCSS_SOURCE)
 	$(START_BUILD)
@@ -1336,7 +1336,7 @@ LIBDVDNAV_SOURCE = libdvdnav-$(LIBDVDNAV_VER).tar.xz
 LIBDVDNAV_PATCH = libdvdnav-$(LIBDVDNAV_VER).patch
 
 $(ARCHIVE)/$(LIBDVDNAV_SOURCE):
-	$(WGET) http://dvdnav.mplayerhq.hu/releases/$(LIBDVDNAV_SOURCE)
+	$(DOWNLOAD) http://dvdnav.mplayerhq.hu/releases/$(LIBDVDNAV_SOURCE)
 
 $(D)/libdvdnav: $(D)/bootstrap $(D)/libdvdread $(ARCHIVE)/$(LIBDVDNAV_SOURCE)
 	$(START_BUILD)
@@ -1370,7 +1370,7 @@ LIBDVDREAD_SOURCE = libdvdread-$(LIBDVDREAD_VER).tar.xz
 LIBDVDREAD_PATCH = libdvdread-$(LIBDVDREAD_VER).patch
 
 $(ARCHIVE)/$(LIBDVDREAD_SOURCE):
-	$(WGET) http://dvdnav.mplayerhq.hu/releases/$(LIBDVDREAD_SOURCE)
+	$(DOWNLOAD) http://dvdnav.mplayerhq.hu/releases/$(LIBDVDREAD_SOURCE)
 
 $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDREAD_SOURCE)
 	$(START_BUILD)
@@ -1428,7 +1428,7 @@ LIBASS_SOURCE = libass-$(LIBASS_VER).tar.xz
 LIBASS_PATCH = libass-$(LIBASS_VER).patch
 
 $(ARCHIVE)/$(LIBASS_SOURCE):
-	$(WGET) https://github.com/libass/libass/releases/download/$(LIBASS_VER)/$(LIBASS_SOURCE)
+	$(DOWNLOAD) https://github.com/libass/libass/releases/download/$(LIBASS_VER)/$(LIBASS_SOURCE)
 
 $(D)/libass: $(D)/bootstrap $(D)/freetype $(D)/libfribidi $(ARCHIVE)/$(LIBASS_SOURCE)
 	$(START_BUILD)
@@ -1458,7 +1458,7 @@ SQLITE_VER = 3160100
 SQLITE_SOURCE = sqlite-autoconf-$(SQLITE_VER).tar.gz
 
 $(ARCHIVE)/$(SQLITE_SOURCE):
-	$(WGET) http://www.sqlite.org/2017/$(SQLITE_SOURCE)
+	$(DOWNLOAD) http://www.sqlite.org/2017/$(SQLITE_SOURCE)
 
 $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/$(SQLITE_SOURCE)
 	$(START_BUILD)
@@ -1486,7 +1486,7 @@ LIBSOUP_VER = $(LIBSOUP_VER_MAJOR).$(LIBSOUP_VER_MINOR)
 LIBSOUP_SOURCE = libsoup-$(LIBSOUP_VER).tar.xz
 
 $(ARCHIVE)/$(LIBSOUP_SOURCE):
-	$(WGET) https://download.gnome.org/sources/libsoup/$(LIBSOUP_VER_MAJOR)/$(LIBSOUP_SOURCE)
+	$(DOWNLOAD) https://download.gnome.org/sources/libsoup/$(LIBSOUP_VER_MAJOR)/$(LIBSOUP_SOURCE)
 
 $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$(LIBSOUP_SOURCE)
 	$(START_BUILD)
@@ -1517,7 +1517,7 @@ LIBXML2_SOURCE = libxml2-$(LIBXML2_VER).tar.gz
 LIBXML2_PATCH = libxml2-$(LIBXML2_VER).patch
 
 $(ARCHIVE)/$(LIBXML2_SOURCE):
-	$(WGET) ftp://xmlsoft.org/libxml2/$(LIBXML2_SOURCE)
+	$(DOWNLOAD) ftp://xmlsoft.org/libxml2/$(LIBXML2_SOURCE)
 
 ifeq ($(BOXARCH), sh4)
 LIBXML2_CONF_OPTS += --without-iconv
@@ -1569,7 +1569,7 @@ LIBXSLT_VER = 1.1.32
 LIBXSLT_SOURCE = libxslt-$(LIBXSLT_VER).tar.gz
 
 $(ARCHIVE)/$(LIBXSLT_SOURCE):
-	$(WGET) ftp://xmlsoft.org/libxml2/$(LIBXSLT_SOURCE)
+	$(DOWNLOAD) ftp://xmlsoft.org/libxml2/$(LIBXSLT_SOURCE)
 
 $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(START_BUILD)
@@ -1611,7 +1611,7 @@ LIBPOPT_VER = 1.16
 LIBPOPT_SOURCE = popt-$(LIBPOPT_VER).tar.gz
 
 $(ARCHIVE)/$(LIBPOPT_SOURCE):
-	$(WGET) ftp://anduin.linuxfromscratch.org/BLFS/popt/$(LIBPOPT_SOURCE)
+	$(DOWNLOAD) ftp://anduin.linuxfromscratch.org/BLFS/popt/$(LIBPOPT_SOURCE)
 
 $(D)/libpopt: $(D)/bootstrap $(ARCHIVE)/$(LIBPOPT_SOURCE)
 	$(START_BUILD)
@@ -1636,7 +1636,7 @@ LIBROXML_VER = 3.0.2
 LIBROXML_SOURCE = libroxml-$(LIBROXML_VER).tar.gz
 
 $(ARCHIVE)/$(LIBROXML_SOURCE):
-	$(WGET) http://download.libroxml.net/pool/v3.x/$(LIBROXML_SOURCE)
+	$(DOWNLOAD) http://download.libroxml.net/pool/v3.x/$(LIBROXML_SOURCE)
 
 $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 	$(START_BUILD)
@@ -1665,7 +1665,7 @@ PUGIXML_SOURCE = pugixml-$(PUGIXML_VER).tar.gz
 PUGIXML_PATCH = pugixml-$(PUGIXML_VER)-config.patch
 
 $(ARCHIVE)/$(PUGIXML_SOURCE):
-	$(WGET) https://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VER)/$(PUGIXML_SOURCE)
+	$(DOWNLOAD) https://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VER)/$(PUGIXML_SOURCE)
 
 $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(START_BUILD)
@@ -1788,7 +1788,7 @@ GD_VER = 2.2.5
 GD_SOURCE = libgd-$(GD_VER).tar.xz
 
 $(ARCHIVE)/$(GD_SOURCE):
-	$(WGET) https://github.com/libgd/libgd/releases/download/gd-$(GD_VER)/$(GD_SOURCE)
+	$(DOWNLOAD) https://github.com/libgd/libgd/releases/download/gd-$(GD_VER)/$(GD_SOURCE)
 
 $(D)/gd: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/freetype $(ARCHIVE)/$(GD_SOURCE)
 	$(START_BUILD)
@@ -1821,7 +1821,7 @@ LIBUSB_PATCH += libusb-1.0.22-sh4-clock_gettime.patch
 endif
 
 $(ARCHIVE)/$(LIBUSB_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libusb/files/libusb-$(LIBUSB_VER_MAJOR)/libusb-$(LIBUSB_VER)/$(LIBUSB_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libusb/files/libusb-$(LIBUSB_VER_MAJOR)/libusb-$(LIBUSB_VER)/$(LIBUSB_SOURCE)
 
 $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 	$(START_BUILD)
@@ -1851,7 +1851,7 @@ LIBUSB_COMPAT_VER = 0.1.5
 LIBUSB_COMPAT_SOURCE = libusb-compat-$(LIBUSB_COMPAT_VER).tar.bz2
 
 $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(LIBUSB_COMPAT_VER)/$(LIBUSB_COMPAT_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libusb/files/libusb-compat-0.1/libusb-compat-$(LIBUSB_COMPAT_VER)/$(LIBUSB_COMPAT_SOURCE)
 
 $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE)
 	$(START_BUILD)
@@ -1882,7 +1882,7 @@ ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-link_fix.patch
 ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-header.patch
 
 $(ARCHIVE)/$(ALSA_LIB_SOURCE):
-	$(WGET) https://www.alsa-project.org/files/pub/lib/$(ALSA_LIB_SOURCE)
+	$(DOWNLOAD) https://www.alsa-project.org/files/pub/lib/$(ALSA_LIB_SOURCE)
 
 $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 	$(START_BUILD)
@@ -1923,7 +1923,7 @@ ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VER).tar.bz2
 ALSA_UTILS_PATCH = alsa-utils-$(ALSA_UTILS_VER).patch
 
 $(ARCHIVE)/$(ALSA_UTILS_SOURCE):
-	$(WGET) https://www.alsa-project.org/files/pub/utils/$(ALSA_UTILS_SOURCE)
+	$(DOWNLOAD) https://www.alsa-project.org/files/pub/utils/$(ALSA_UTILS_SOURCE)
 
 $(D)/alsa_utils: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(ALSA_UTILS_SOURCE)
 	$(START_BUILD)
@@ -1965,7 +1965,7 @@ LIBOPENTHREADS_SOURCE = OpenThreads-$(LIBOPENTHREADS_VER).tar.gz
 LIBOPENTHREADS_PATCH = libopenthreads-$(LIBOPENTHREADS_VER).patch
 
 $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/mxedeps/files/$(LIBOPENTHREADS_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/mxedeps/files/$(LIBOPENTHREADS_SOURCE)
 
 $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 	$(START_BUILD)
@@ -2048,7 +2048,7 @@ LIBMODPLUG_VER = 0.8.8.4
 LIBMODPLUG_SOURCE = libmodplug-$(LIBMODPLUG_VER).tar.gz
 
 $(ARCHIVE)/$(LIBMODPLUG_SOURCE):
-	$(WGET) https://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VER)/$(LIBMODPLUG_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VER)/$(LIBMODPLUG_SOURCE)
 
 $(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/$(LIBMODPLUG_SOURCE)
 	$(START_BUILD)
@@ -2072,7 +2072,7 @@ LZO_VER = 2.10
 LZO_SOURCE = lzo-$(LZO_VER).tar.gz
 
 $(ARCHIVE)/$(LZO_SOURCE):
-	$(WGET) https://www.oberhumer.com/opensource/lzo/download/$(LZO_SOURCE)
+	$(DOWNLOAD) https://www.oberhumer.com/opensource/lzo/download/$(LZO_SOURCE)
 
 $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 	$(START_BUILD)
@@ -2098,7 +2098,7 @@ MINIDLNA_SOURCE = minidlna-$(MINIDLNA_VER).tar.gz
 MINIDLNA_PATCH = minidlna-$(MINIDLNA_VER).patch
 
 $(ARCHIVE)/$(MINIDLNA_SOURCE):
-	$(WGET) https://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VER)/$(MINIDLNA_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/minidlna/files/minidlna/$(MINIDLNA_VER)/$(MINIDLNA_SOURCE)
 
 $(D)/minidlna: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/flac $(D)/ffmpeg $(ARCHIVE)/$(MINIDLNA_SOURCE)
 	$(START_BUILD)
@@ -2122,7 +2122,7 @@ LIBEXIF_VER = 0.6.21
 LIBEXIF_SOURCE = libexif-$(LIBEXIF_VER).tar.gz
 
 $(ARCHIVE)/$(LIBEXIF_SOURCE):
-	$(WGET) https://sourceforge.net/projects/libexif/files/libexif/$(LIBEXIF_VER)/$(LIBEXIF_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/libexif/files/libexif/$(LIBEXIF_VER)/$(LIBEXIF_SOURCE)
 
 $(D)/libexif: $(D)/bootstrap $(ARCHIVE)/$(LIBEXIF_SOURCE)
 	$(START_BUILD)
@@ -2153,7 +2153,7 @@ DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-support-fstab-mounting.patch
 DJMOUNT_PATCH += djmount-$(DJMOUNT_VER)-support-seeking-in-large-2gb-files.patch
 
 $(ARCHIVE)/$(DJMOUNT_SOURCE):
-	$(WGET) https://sourceforge.net/projects/djmount/files/djmount/$(DJMOUNT_VER)/$(DJMOUNT_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/djmount/files/djmount/$(DJMOUNT_VER)/$(DJMOUNT_SOURCE)
 
 $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(DJMOUNT_SOURCE)
 	$(START_BUILD)
@@ -2179,7 +2179,7 @@ LIBUPNP_VER = 1.6.22
 LIBUPNP_SOURCE = libupnp-$(LIBUPNP_VER).tar.bz2
 
 $(ARCHIVE)/$(LIBUPNP_SOURCE):
-	$(WGET) https://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/$(LIBUPNP_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/pupnp/files/pupnp/libUPnP\ $(LIBUPNP_VER)/$(LIBUPNP_SOURCE)
 
 $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 	$(START_BUILD)
@@ -2205,7 +2205,7 @@ RARFS_VER = 0.1.1
 RARFS_SOURCE = rarfs-$(RARFS_VER).tar.gz
 
 $(ARCHIVE)/$(RARFS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/rarfs/files/rarfs/$(RARFS_VER)/$(RARFS_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/rarfs/files/rarfs/$(RARFS_VER)/$(RARFS_SOURCE)
 
 $(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(RARFS_SOURCE)
 	$(START_BUILD)
@@ -2231,7 +2231,7 @@ SSHFS_VER = 2.9
 SSHFS_SOURCE = sshfs-$(SSHFS_VER).tar.gz
 
 $(ARCHIVE)/$(SSHFS_SOURCE):
-	$(WGET) https://github.com/libfuse/sshfs/releases/download/sshfs-$(SSHFS_VER)/$(SSHFS_SOURCE)
+	$(DOWNLOAD) https://github.com/libfuse/sshfs/releases/download/sshfs-$(SSHFS_VER)/$(SSHFS_SOURCE)
 
 $(D)/sshfs: $(D)/bootstrap $(D)/libglib2 $(D)/fuse $(ARCHIVE)/$(SSHFS_SOURCE)
 	$(START_BUILD)
@@ -2254,7 +2254,7 @@ HOWL_VER = 1.0.0
 HOWL_SOURCE = howl-$(HOWL_VER).tar.gz
 
 $(ARCHIVE)/$(HOWL_SOURCE):
-	$(WGET) https://sourceforge.net/projects/howl/files/howl/$(HOWL_VER)/$(HOWL_SOURCE)
+	$(DOWNLOAD) https://sourceforge.net/projects/howl/files/howl/$(HOWL_VER)/$(HOWL_SOURCE)
 
 $(D)/howl: $(D)/bootstrap $(ARCHIVE)/$(HOWL_SOURCE)
 	$(START_BUILD)
@@ -2279,7 +2279,7 @@ LIBDAEMON_VER = 0.14
 LIBDAEMON_SOURCE = libdaemon-$(LIBDAEMON_VER).tar.gz
 
 $(ARCHIVE)/$(LIBDAEMON_SOURCE):
-	$(WGET) http://0pointer.de/lennart/projects/libdaemon/$(LIBDAEMON_SOURCE)
+	$(DOWNLOAD) http://0pointer.de/lennart/projects/libdaemon/$(LIBDAEMON_SOURCE)
 
 $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/$(LIBDAEMON_SOURCE)
 	$(START_BUILD)
@@ -2306,7 +2306,7 @@ LIBPLIST_VER = 1.10
 LIBPLIST_SOURCE = libplist-$(LIBPLIST_VER).tar.gz
 
 $(ARCHIVE)/$(LIBPLIST_SOURCE):
-	$(WGET) https://cgit.sukimashita.com/libplist.git/snapshot/$(LIBPLIST_SOURCE)
+	$(DOWNLOAD) https://cgit.sukimashita.com/libplist.git/snapshot/$(LIBPLIST_SOURCE)
 
 $(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBPLIST_SOURCE)
 	$(START_BUILD)
@@ -2338,7 +2338,7 @@ LIBAO_VER = 1.1.0
 LIBAO_SOURCE = libao-$(LIBAO_VER).tar.gz
 
 $(ARCHIVE)/$(LIBAO_SOURCE):
-	$(WGET) https://ftp.osuosl.org/pub/xiph/releases/ao/$(LIBAO_SOURCE)
+	$(DOWNLOAD) https://ftp.osuosl.org/pub/xiph/releases/ao/$(LIBAO_SOURCE)
 
 $(D)/libao: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(LIBAO_SOURCE)
 	$(START_BUILD)
@@ -2367,7 +2367,7 @@ NETTLE_SOURCE = nettle-$(NETTLE_VER).tar.gz
 NETTLE_PATCH = nettle-$(NETTLE_VER).patch
 
 $(ARCHIVE)/$(NETTLE_SOURCE):
-	$(WGET) https://ftp.gnu.org/gnu/nettle/$(NETTLE_SOURCE)
+	$(DOWNLOAD) https://ftp.gnu.org/gnu/nettle/$(NETTLE_SOURCE)
 
 $(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/$(NETTLE_SOURCE)
 	$(START_BUILD)
@@ -2396,7 +2396,7 @@ GNUTLS_VER = $(GNUTLS_VER_MAJOR).$(GNUTLS_VER_MINOR)
 GNUTLS_SOURCE = gnutls-$(GNUTLS_VER).tar.xz
 
 $(ARCHIVE)/$(GNUTLS_SOURCE):
-	$(WGET) ftp://ftp.gnutls.org/gcrypt/gnutls/v$(GNUTLS_VER_MAJOR)/$(GNUTLS_SOURCE)
+	$(DOWNLOAD) ftp://ftp.gnutls.org/gcrypt/gnutls/v$(GNUTLS_VER_MAJOR)/$(GNUTLS_SOURCE)
 
 $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/$(GNUTLS_SOURCE)
 	$(START_BUILD)
@@ -2439,7 +2439,7 @@ GLIB_NETWORKING_VER = $(GLIB_NETWORKING_VER_MAJOR).$(GLIB_NETWORKING_VER_MINOR)
 GLIB_NETWORKING_SOURCE = glib-networking-$(GLIB_NETWORKING_VER).tar.xz
 
 $(ARCHIVE)/$(GLIB_NETWORKING_SOURCE):
-	$(WGET) https://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIB_NETWORKING_VER_MAJOR)/$(GLIB_NETWORKING_SOURCE)
+	$(DOWNLOAD) https://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIB_NETWORKING_VER_MAJOR)/$(GLIB_NETWORKING_SOURCE)
 
 $(D)/glib_networking: $(D)/bootstrap $(D)/gnutls $(D)/libglib2 $(ARCHIVE)/$(GLIB_NETWORKING_SOURCE)
 	$(START_BUILD)
