@@ -271,7 +271,7 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $8 in
-		[1-3]) REPLY=$8;;
+		[1-4]) REPLY=$8;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0 (default)"
 			echo "   2)  GCC version 7.5.0"
