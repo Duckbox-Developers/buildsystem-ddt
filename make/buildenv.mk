@@ -233,7 +233,7 @@ define apply_patches
 endef
 
 # wget tarballs into archive directory
-WGET = wget --no-check-certificate -t6 -T20 -c -P $(ARCHIVE)
+DOWNLOAD = wget --no-check-certificate -t6 -T20 -c -P $(ARCHIVE)
 
 TUXBOX_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && \
 	KERNEL_VER=$(KERNEL_VER) && \
