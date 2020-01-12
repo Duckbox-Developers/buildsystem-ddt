@@ -1345,20 +1345,19 @@ $(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBNFSIDMAP_SOURCE)
 VSFTPD_VER = 3.0.3
 VSFTPD_SOURCE = vsftpd-$(VSFTPD_VER).tar.gz
 VSFTPD_PATCH = vsftpd-$(VSFTPD_VER).patch
+VSFTPD_PATCH += vsftpd-$(VSFTPD_VER)-find_libs.patch
 
 $(ARCHIVE)/$(VSFTPD_SOURCE):
 	$(WGET) https://security.appspot.com/downloads/$(VSFTPD_SOURCE)
 
-$(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/$(VSFTPD_SOURCE)
+$(D)/vsftpd: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(VSFTPD_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/vsftpd-$(VSFTPD_VER)
 	$(UNTAR)/$(VSFTPD_SOURCE)
 	$(CHDIR)/vsftpd-$(VSFTPD_VER); \
 		$(call apply_patches, $(VSFTPD_PATCH)); \
-		sed -i -e 's/.*VSF_BUILD_PAM/#undef VSF_BUILD_PAM/' builddefs.h; \
-		sed -i -e 's/.*VSF_BUILD_SSL/#define VSF_BUILD_SSL/' builddefs.h; \
 		$(MAKE) clean; \
-		$(MAKE) $(BUILD_ENV) LIBS="-lcrypt -lcrypto -lssl"; \
+		$(MAKE) $(BUILDENV); \
 		$(MAKE) install PREFIX=$(TARGET_DIR)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/vsftpd $(TARGET_DIR)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/vsftpd.conf $(TARGET_DIR)/etc/
