@@ -11,24 +11,6 @@
  #endif /* VSF_BUILDDEFS_H */
 --- vsftpd-3.0.2-org/Makefile
 +++ vsftpd-3.0.2/Makefile
-@@ -3,14 +3,12 @@
- INSTALL	=	install
- IFLAGS  = -idirafter dummyinc
- #CFLAGS = -g
--CFLAGS	=	-O2 -fPIE -fstack-protector --param=ssp-buffer-size=4 \
--	-Wall -W -Wshadow -Werror -Wformat-security \
--	-D_FORTIFY_SOURCE=2 \
-+CFLAGS	=	-O2 -Wall -W -Wshadow
- 	#-pedantic -Wconversion
- 
--LIBS	=	`./vsf_findlibs.sh`
-+LIBS	=	-lcrypt -ldl -lnsl -lresolv -lutil
- LINK	=	-Wl,-s
--LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
-+#LDFLAGS	=	-fPIE -pie -Wl,-z,relro -Wl,-z,now
- 
- OBJS	=	main.o utility.o prelogin.o ftpcmdio.o postlogin.o privsock.o \
- 		tunables.o ftpdataio.o secbuf.o ls.o \
 @@ -29,21 +27,7 @@
  	$(CC) -o vsftpd $(OBJS) $(LINK) $(LDFLAGS) $(LIBS)
  
