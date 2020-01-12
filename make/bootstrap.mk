@@ -234,14 +234,16 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/nfs_utils
 endif
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+SYSTEM_TOOLS += $(D)/libnsl
+SYSTEM_TOOLS += $(D)/ofgwrite
+endif
 SYSTEM_TOOLS += $(D)/vsftpd
 SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/udpxy
 SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-SYSTEM_TOOLS += $(D)/ofgwrite
-endif
+
 SYSTEM_TOOLS += $(D)/driver
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
