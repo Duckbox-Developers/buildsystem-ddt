@@ -1,0 +1,47 @@
+diff --git a/include/linux/compiler.h b/include/linux/compiler.h
+index 80a5bc623c473..e905353f217a3 100644
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -50,6 +50,22 @@
+ 
+ #ifdef __KERNEL__
+ 
++/*
++ * Minimal backport of compiler_attributes.h to add support for __copy
++ * to v4.9.y so that we can use it in init/exit_module to avoid
++ * -Werror=missing-attributes errors on GCC 9.
++ */
++#ifndef __has_attribute
++# define __has_attribute(x) __GCC4_has_attribute_##x
++# define __GCC4_has_attribute___copy__                0
++#endif
++
++#if __has_attribute(__copy__)
++# define __copy(symbol)                 __attribute__((__copy__(symbol)))
++#else
++# define __copy(symbol)
++#endif
++
+ #ifdef __GNUC__
+ #include <linux/compiler-gcc.h>
+ #endif
+diff --git a/include/linux/init.h b/include/linux/init.h
+index fd9e121c7b3f3..99f330ae13da5 100644
+--- a/include/linux/init.h
++++ b/include/linux/init.h
+@@ -297,13 +297,13 @@
+ #define module_init(initfn)					\
+ 	static inline initcall_t __inittest(void)		\
+ 	{ return initfn; }					\
+-	int init_module(void) __attribute__((alias(#initfn)));
++	int init_module(void) __copy(initfn) __attribute__((alias(#initfn)));
+ 
+ /* This is only required if you want to be unloadable. */
+ #define module_exit(exitfn)					\
+ 	static inline exitcall_t __exittest(void)		\
+ 	{ return exitfn; }					\
+-	void cleanup_module(void) __attribute__((alias(#exitfn)));
++	void cleanup_module(void) __copy(exitfn) __attribute__((alias(#exitfn)));
+ 
+ #define __setup_param(str, unique_id, fn)	/* nothing */
+ #define __setup(str, func) 			/* nothing */

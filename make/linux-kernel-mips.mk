@@ -30,6 +30,7 @@ VUDUO_PATCHES = \
 		mipsbox/kernel-add-support-for-gcc7.patch \
 		mipsbox/kernel-add-support-for-gcc8.patch \
 		mipsbox/kernel-add-support-for-gcc9.patch \
+		mipsbox/gcc9_backport.patch \
 		mipsbox/rtl8712-fix-warnings.patch \
 		mipsbox/rtl8187se-fix-warnings.patch \
 		mipsbox/0001-Support-TBS-USB-drivers-3.9.patch \
