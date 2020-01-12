@@ -55,7 +55,7 @@ endif
 
 NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/flac
 
-N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
+N_CFLAGS       = -Wall -W -Wshadow -Wno-psabi -pipe -Os
 N_CFLAGS      += -D__KERNEL_STRICT_NAMES
 N_CFLAGS      += -D__STDC_FORMAT_MACROS
 N_CFLAGS      += -D__STDC_CONSTANT_MACROS
