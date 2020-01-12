@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.32.0.git
-# Sun Dec 15 14:30:00 2019
+# Sun Jan  12 09:35:00 2020
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -590,8 +590,8 @@ CONFIG_DEFAULT_DEPMOD_FILE=""
 # CONFIG_BLOCKDEV is not set
 # CONFIG_CAL is not set
 # CONFIG_CHRT is not set
-# CONFIG_DMESG is not set
-# CONFIG_FEATURE_DMESG_PRETTY is not set
+CONFIG_DMESG=y
+CONFIG_FEATURE_DMESG_PRETTY=y
 CONFIG_EJECT=y
 # CONFIG_FEATURE_EJECT_SCSI is not set
 # CONFIG_FALLOCATE is not set

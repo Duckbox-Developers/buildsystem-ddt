@@ -9,10 +9,6 @@ libstb-hal%-patch:
 # uncomment if needed
 #
 # Neutrino MP DDT
-NEUTRINO_MP_MAX_PATCHES =
-NEUTRINO_MP_LIBSTB_MAX_PATCHES =
-
-# Neutrino MP DDT
 NEUTRINO_MP_DDT_PATCHES =
 NEUTRINO_MP_LIBSTB_DDT_PATCHES =
 
