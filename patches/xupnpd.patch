@@ -1,9 +1,9 @@
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -1,10 +1,10 @@
- #LUA     = lua-5.1.4
--LUA     = lua-5.3.5
+-LUA     = lua-5.1.4
 +LUA     = lua-5.2.4
+ #LUA     = lua-5.2.0
  STATIC  = false
  OPENSSL = /home/user/src/openssl-0.9.8e
  
