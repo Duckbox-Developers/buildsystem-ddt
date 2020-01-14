@@ -1,16 +1,15 @@
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -1,10 +1,10 @@
--LUA     = lua-5.1.4
+ #LUA     = lua-5.1.4
+-LUA     = lua-5.3.5
 +LUA     = lua-5.2.4
- #LUA     = lua-5.2.0
  STATIC  = false
  OPENSSL = /home/user/src/openssl-0.9.8e
  
--CFLAGS  = -fno-exceptions -fno-rtti -O2 -I$(LUA) -L$(LUA)
+ CFLAGS  = -fno-exceptions -fno-rtti -O2 -I$(LUA) -L$(LUA)
 -CFLAGS+= -I$(OPENSSL)/include -L$(OPENSSL)/lib/openwrt
-+CFLAGS  = -fno-exceptions -fno-rtti -O2 -I$(LUA) -L$(LUA)
-+CFLAGS+= $(shell $(PKG_CONFIG) --cflags --libs openssl)
++CFLAGS += $(shell $(PKG_CONFIG) --cflags --libs openssl)
  SRC     = main.cpp soap.cpp mem.cpp mcast.cpp luaxlib.cpp luaxcore.cpp luajson.cpp luajson_parser.cpp
  LUAMYCFLAGS = -DLUA_USE_LINUX
  
@@ -33,8 +32,8 @@
 +	if ( test ! -d $(DESTDIR)/usr/share/xupnpd ) ; then mkdir -p $(DESTDIR)/usr/share/xupnpd ; fi
 +	cp -ap plugins profiles ui www *.lua $(DESTDIR)/usr/share/xupnpd/
  
- clean:
- 	$(MAKE) -C $(LUA) clean
+ test: x86
+ 	cd ../test; roundup plugins/*-test.sh	# https://github.com/samunders-core/roundup/tree/test_name_in_before_and_after
 --- a/src/plugins/xupnpd_coolstream.lua
 +++ b/src/plugins/xupnpd_coolstream.lua
 @@ -0,0 +1,177 @@
