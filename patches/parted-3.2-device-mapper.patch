@@ -1,5 +1,14 @@
 --- parted-3.2/libparted/arch/linux.c
 +++ parted-3.2/libparted/arch/linux.c
+@@ -45,6 +45,8 @@
+ #include <libdevmapper.h>
+ #endif
+ 
++#include <sys/sysmacros.h>
++
+ #include "../architecture.h"
+ #include "dirname.h"
+ #include "xstrtol.h"
 @@ -2307,6 +2307,7 @@ zasprintf (const char *format, ...)
  static char *
  dm_canonical_path (PedDevice const *dev)
@@ -32,7 +41,7 @@
                  add_partition = _blkpg_add_partition;
                  remove_partition = _blkpg_remove_partition;
  #ifdef BLKPG_RESIZE_PARTITION
-@@ -2959,7 +2962,9 @@ _disk_sync_part_table (PedDisk* disk)
+@@ -2959,7 +2958,9 @@ _disk_sync_part_table (PedDisk* disk)
                  resize_partition = NULL;
  #endif
                  get_partition_start_and_length = _kernel_get_partition_start_and_length;
