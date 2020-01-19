@@ -518,9 +518,9 @@ $(D)/gptfdisk: $(D)/bootstrap $(D)/e2fsprogs $(D)/ncurses $(D)/libpopt $(ARCHIVE
 #
 # parted
 #
-PARTED_VER = 3.3
+PARTED_VER = 3.2
 PARTED_SOURCE = parted-$(PARTED_VER).tar.xz
-#PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
+PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
 
 $(ARCHIVE)/$(PARTED_SOURCE):
 	$(DOWNLOAD) https://ftp.gnu.org/gnu/parted/$(PARTED_SOURCE)
