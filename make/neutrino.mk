@@ -92,9 +92,12 @@ endif
 N_CONFIG_OPTS  = $(LOCAL_NEUTRINO_BUILD_OPTIONS)
 ifeq ($(FLAVOUR), neutrino-mp-ni)
 N_CONFIG_OPTS += --with-boxtype=armbox
-N_CONFIG_OPTS += --with-boxmodel=hd51
+N_CONFIG_OPTS += --with-boxmodel=$(BOXTYPE)
+LH_CONFIG_OPTS += --with-boxtype=armbox
+LH_CONFIG_OPTS += --with-boxmodel=$(BOXTYPE)
 else
 N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
+LH_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 endif
 N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --enable-pip
@@ -144,10 +147,10 @@ NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
 ifeq  ($(FLAVOUR), neutrino-mp-ni)
-GIT_URL     ?= https://bitbucket.org/neutrino-images
-NEUTRINO_MP  = ni-neutrino-hd
-LIBSTB_HAL   = ni-libstb-hal-next
-NMP_BRANCH  ?= ni/mp/tuxbox
+GIT_URL     ?= https://github.com/neutrino-images
+NEUTRINO_MP  = ni-neutrino
+LIBSTB_HAL   = ni-libstb-hal
+NMP_BRANCH  ?= master
 HAL_BRANCH  ?= master
 NMP_PATCHES  = $(NEUTRINO_MP_NI_PATCHES)
 HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_NI_PATCHES)
@@ -210,7 +213,6 @@ $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
 			\
 			--with-target=cdk \
 			--with-targetprefix=/usr \
-			--with-boxtype=$(BOXTYPE) \
 			$(LH_CONFIG_OPTS) \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
