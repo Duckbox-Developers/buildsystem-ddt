@@ -281,6 +281,8 @@ PREQS += $(TOOLS_DIR)
 PREQS += $(FLASH_DIR)
 
 preqs: $(PREQS)
+	@mkdir -p $(OWN_BUILD)/neutrino-hd
+	@mkdir -p $(OWN_BUILD)/neutrino-hd.$(BOXTYPE)
 
 #
 # directories

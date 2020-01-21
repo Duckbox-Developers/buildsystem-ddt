@@ -825,7 +825,6 @@ $(D)/neutrino-mp-release: neutrino-mp-release-base neutrino-mp-release-$(BOXTYPE
 #	receiver specific (only if directory exist)
 	[ -d "$(OWN_BUILD)/neutrino-hd.$(BOXTYPE)" ] && find $(OWN_BUILD)/neutrino-hd.$(BOXTYPE)/ -mindepth 1 -maxdepth 1 -exec cp -at$(RELEASE_DIR)/ -- {} + || true
 	echo $(BOXTYPE) > $(RELEASE_DIR)/etc/model
-	rm -f $(RELEASE_DIR)/for_your_own_changes
 #
 # nicht die feine Art, aber funktioniert ;)
 #
