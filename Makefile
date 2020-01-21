@@ -53,6 +53,7 @@ printenv:
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+	@echo -e "LOCAL_LIBHAL_BUILD_OPTIONS   : $(TERM_GREEN)$(LOCAL_LIBHAL_BUILD_OPTIONS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_BUILD_OPTIONS : $(TERM_GREEN)$(LOCAL_NEUTRINO_BUILD_OPTIONS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_CFLAGS        : $(TERM_GREEN)$(LOCAL_NEUTRINO_CFLAGS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_PLUGINS       : $(TERM_GREEN)$(LOCAL_NEUTRINO_PLUGINS)$(TERM_NORMAL)"

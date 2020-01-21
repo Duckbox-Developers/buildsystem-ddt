@@ -79,7 +79,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
 N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 endif
 
-LH_CONFIG_OPTS =
+LH_CONFIG_OPTS = $(LOCAL_LIBHAL_BUILD_OPTIONS)
 ifeq ($(MEDIAFW), gstreamer)
 NEUTRINO_DEPS  += $(D)/gst_plugins_dvbmediasink
 N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
