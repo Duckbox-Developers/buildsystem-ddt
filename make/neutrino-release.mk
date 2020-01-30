@@ -275,6 +275,7 @@ else
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vuuno4kse
@@ -290,6 +291,7 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vuzero4k
@@ -305,6 +307,7 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vuultimo4k
@@ -320,6 +323,7 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vuuno4k
@@ -335,6 +339,7 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vusolo4k
@@ -350,6 +355,7 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
 # vuduo
