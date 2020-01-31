@@ -35,6 +35,7 @@ case $1 in
 		clear
 		echo "Target receivers:"
 		echo
+		echo "  sh4-based receivers"
 		echo "  Kathrein             Fortis"
 		echo "    1)  UFS-910          6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
 		echo "    2)  UFS-912          7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
@@ -177,7 +178,7 @@ case $3 in
 	[1-4]) REPLY=$3;;
 	*)	echo -e "\nOptimization:"
 		echo "   1)  optimization for size"
-		echo "   2)  optimization normal"
+		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
 		echo "   3)  Kernel debug"
 		echo "   4)  debug (includes Kernel debug)"
 		read -p "Select optimization (1-4)? ";;
