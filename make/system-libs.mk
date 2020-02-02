@@ -1522,6 +1522,7 @@ $(ARCHIVE)/$(LIBXML2_SOURCE):
 ifeq ($(BOXARCH), sh4)
 LIBXML2_CONF_OPTS += --without-iconv
 LIBXML2_CONF_OPTS += --with-minimum
+LIBXML2_CONF_OPTS += --with-schematron=yes
 endif
 
 $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
