@@ -3,7 +3,12 @@
 #
 ################################################################################
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+FFM = 1
+else ifeq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
+FFM = 1
+endif
 
+ifeq ($(FFM), 1)
 ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_VER = snapshot
 FFMPEG_SNAP =
@@ -70,7 +75,7 @@ endif
 ifeq ($(BOXARCH), arm)
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
-ifeq ($(BOXARCH), mips)
+ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 
@@ -246,6 +251,7 @@ endif
 			--enable-decoder=mlp \
 			--enable-decoder=movtext \
 			--enable-decoder=mp1 \
+			--enable-decoder=mp2 \
 			--enable-decoder=mp3 \
 			--enable-decoder=mp3adu \
 			--enable-decoder=mp3on4 \
@@ -415,6 +421,7 @@ endif
 ################################################################################
 
 ifeq ($(BOXARCH), sh4)
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
 
 FFMPEG_VER = 2.8.15
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
@@ -653,4 +660,5 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(TOUCH)
 
+endif
 endif
