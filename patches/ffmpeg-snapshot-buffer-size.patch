@@ -38,7 +38,7 @@ index e752d0e..108f089 100644
  
  /**
   * Do seeks within this distance ahead of the current buffer by skipping
-@@ -90,7 +90,6 @@ int ffio_init_context(AVIOContext *s,
+@@ -85,7 +85,6 @@ int ffio_init_context(AVIOContext *s,
      memset(s, 0, sizeof(AVIOContext));
  
      s->buffer      = buffer;
@@ -46,7 +46,7 @@ index e752d0e..108f089 100644
      s->buffer_size = buffer_size;
      s->buf_ptr     = buffer;
      s->buf_ptr_max = buffer;
-@@ -573,15 +572,15 @@
+@@ -568,15 +567,15 @@
      }
  
      /* make buffer smaller in case it ended up large after probing */
@@ -65,7 +65,7 @@ index e752d0e..108f089 100644
      }
  
      len = read_packet_wrapper(s, dst, len);
-@@ -1089,7 +1088,6 @@ int ffio_set_buf_size(AVIOContext *s, int buf_size)
+@@ -1037,7 +1036,6 @@ int ffio_set_buf_size(AVIOContext *s, int buf_size)
  
      av_free(s->buffer);
      s->buffer = buffer;
@@ -73,7 +73,7 @@ index e752d0e..108f089 100644
      s->buffer_size = buf_size;
      s->buf_ptr = s->buf_ptr_max = buffer;
      url_resetbuf(s, s->write_flag ? AVIO_FLAG_WRITE : AVIO_FLAG_READ);
-@@ -1116,7 +1116,6 @@
+@@ -1064,7 +1064,6 @@
          memcpy(buffer, s->write_flag ? s->buffer : s->buf_ptr, data_size);
      av_free(s->buffer);
      s->buffer = buffer;
