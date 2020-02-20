@@ -1,0 +1,16 @@
+#!/bin/sh
+
+blockdir=/dev/block/by-name
+blocks=/sys/block/mmcblk0/mmcblk0p*
+mkdir -p $blockdir
+
+for block in $blocks;
+do
+	if [ "$block" != "$blocks" ]; then
+		partname=$(cat $block/uevent | grep PARTNAME | cut -d '=' -f 2)
+		devname=$(cat $block/uevent | grep DEVNAME | cut -d '=' -f 2)
+		ln -sf /dev/$devname $blockdir/$partname
+	fi
+done
+echo "[$(basename $0)] $(date +'%H:%M:%S') mmc-blocks added in: $blockdir" >> /tmp/mdev.log
+exit 0

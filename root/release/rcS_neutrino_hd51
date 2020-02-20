@@ -24,6 +24,9 @@ if [ -e /var/backup_flash.tar.gz ]; then
 	rm -f /var/backup_flash.tar.gz
 fi
 
+echo "[rcS] add mmcblks in /dev/block"
+/etc/init.d/mmcblk-by-name
+
 # for start from power off
 /etc/mdev/ttyUSB-check.sh
 
