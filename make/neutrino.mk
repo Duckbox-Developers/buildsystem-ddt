@@ -170,6 +170,14 @@ NMP_BRANCH  ?= master
 HAL_BRANCH  ?= master
 NMP_PATCHES  = $(NEUTRINO_MP_DDT_PATCHES)
 HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_DDT_PATCHES)
+else ifeq  ($(FLAVOUR), neutrino-mp-ddt-youtube)
+GIT_URL     ?= https://github.com/Duckbox-Developers
+NEUTRINO_MP  = neutrino-mp-ddt
+LIBSTB_HAL   = libstb-hal-ddt
+NMP_BRANCH  ?= youtube
+HAL_BRANCH  ?= master
+NMP_PATCHES  = $(NEUTRINO_MP_DDT_PATCHES)
+HAL_PATCHES  = $(NEUTRINO_MP_LIBSTB_DDT_PATCHES)
 endif
 
 N_OBJDIR = $(BUILD_TMP)/$(NEUTRINO_MP)
