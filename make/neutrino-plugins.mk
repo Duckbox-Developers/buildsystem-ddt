@@ -54,6 +54,7 @@ NEUTRINO_PLUGINS  = $(D)/neutrino-mp-plugin
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-scripts-lua
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-mediathek
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-xupnpd
+NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-settings-update
 NEUTRINO_PLUGINS += $(LOCAL_NEUTRINO_PLUGINS)
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-mp-plugins
@@ -219,4 +220,19 @@ $(D)/neutrino-mp-plugin-iptvplayer: $(D)/librtmp $(D)/python_twisted_small
 		-d /usr/share/E2emulator -f -x badsyntax $(TARGET_DIR)/usr/share/E2emulator
 	cp -R $(BUILD_TMP)/iptvplayer/addon4neutrino/neutrinoIPTV/* $(TARGET_DIR)/var/tuxbox/plugins/
 	$(REMOVE)/iptvplayer
+	$(TOUCH)
+
+#
+# annie's settingsupdater
+#
+$(D)/neutrino-mp-plugin-settings-update:
+	$(START_BUILD)
+	$(REMOVE)/settings-update
+	set -e; if [ -d $(ARCHIVE)/settings-update.git ]; \
+		then cd $(ARCHIVE)/settings-update.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/horsti58/lua-data.git settings-update.git; \
+		fi
+	cp -ra $(ARCHIVE)/settings-update.git $(BUILD_TMP)/settings-update
+	cp -R $(BUILD_TMP)/settings-update/lua/* $(TARGET_DIR)/var/tuxbox/plugins/
+	$(REMOVE)/settings-update
 	$(TOUCH)
