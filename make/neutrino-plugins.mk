@@ -54,7 +54,7 @@ NEUTRINO_PLUGINS  = $(D)/neutrino-mp-plugin
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-scripts-lua
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-mediathek
 NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-xupnpd
-NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-settings-update
+#NEUTRINO_PLUGINS += $(D)/neutrino-mp-plugin-settings-update
 NEUTRINO_PLUGINS += $(LOCAL_NEUTRINO_PLUGINS)
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-mp-plugins
