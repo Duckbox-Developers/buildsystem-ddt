@@ -67,9 +67,11 @@ ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
+FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
 else
 FFMPEG_CONF_OPTS  += --disable-yasm
 FFMPEG_CONF_OPTS  += --disable-ffserver
+FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
 endif
 endif
 
@@ -290,7 +292,6 @@ endif
 			--enable-decoder=pcm_u32be \
 			--enable-decoder=pcm_u32le \
 			--enable-decoder=pcm_u8 \
-			--enable-decoder=pcm_zork \
 			--enable-decoder=pgssub \
 			--enable-decoder=png \
 			--enable-decoder=qcelp \
