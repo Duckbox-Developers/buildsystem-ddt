@@ -236,3 +236,37 @@ $(D)/neutrino-mp-plugin-settings-update:
 	cp -R $(BUILD_TMP)/settings-update/lua/* $(TARGET_DIR)/var/tuxbox/plugins/
 	$(REMOVE)/settings-update
 	$(TOUCH)
+
+#
+# spiegel-tv
+#
+$(D)/spiegel-tv:
+	$(START_BUILD)
+	$(REMOVE)/plugins-lua
+	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
+		fi
+	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
+	$(CHDIR)/plugins-lua; \
+		install -d $(TARGET_DIR)/var/tuxbox/plugins
+		cp -R $(BUILD_TMP)/plugins-lua/spiegel-tv-doc/* $(TARGET_DIR)/var/tuxbox/plugins/
+	$(REMOVE)/plugins-lua
+	$(TOUCH)
+
+#
+# tierwelt-tv
+#
+$(D)/tierwelt-tv:
+	$(START_BUILD)
+	$(REMOVE)/plugins-lua
+	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
+		fi
+	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
+	$(CHDIR)/plugins-lua; \
+		install -d $(TARGET_DIR)/var/tuxbox/plugins
+		cp -R $(BUILD_TMP)/plugins-lua/tierwelt-tv/* $(TARGET_DIR)/var/tuxbox/plugins/
+	$(REMOVE)/plugins-lua
+	$(TOUCH)
