@@ -377,7 +377,6 @@ neutrino-plugins-distclean:
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino-plugins*
 	make neutrino-plugin-distclean
-	make neutrino-plugin-distclean
 
 PHONY += $(TARGET_DIR)/.version
 PHONY += $(SOURCE_DIR)/$(NEUTRINO)/src/gui/version.h
