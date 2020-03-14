@@ -8,15 +8,15 @@ libstb-hal%-patch:
 # keeping all patches together in one file
 # uncomment if needed
 #
-# Neutrino MP DDT
+# Neutrino DDT
 NEUTRINO_DDT_PATCHES =
 NEUTRINO_LIBSTB_DDT_PATCHES =
 
-# Neutrino MP NI
+# Neutrino NI
 NEUTRINO_NI_PATCHES =
 NEUTRINO_LIBSTB_NI_PATCHES =
 
-# Neutrino MP Tango
+# Neutrino Tango
 NEUTRINO_TANGOS_PATCHES =
 NEUTRINO_LIBSTB_TANGOS_PATCHES =
 
