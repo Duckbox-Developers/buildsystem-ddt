@@ -232,19 +232,19 @@ echo "IMAGE=$IMAGE" >> config
 case $6 in
 	[1-4]) REPLY=$6;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
-		echo "   1)  neutrino-mp-ddt               [ arm/sh4 ]"
-		echo "   2)  neutrino-mp-ni                [ arm     ]"
-		echo "   3)  neutrino-mp-tangos            [ arm/sh4 ]"
-		echo "   4)  neutrino-mp-ddt with youtube  [ arm/sh4 ]"
+		echo "   1)  neutrino-ddt               [ arm/sh4 ]"
+		echo "   2)  neutrino-ni                [ arm     ]"
+		echo "   3)  neutrino-tangos            [ arm/sh4 ]"
+		echo "   4)  neutrino-ddt with youtube  [ arm/sh4 ]"
 		read -p "Select Image to build (1-4)? ";;
 esac
 
 case "$REPLY" in
-	1) FLAVOUR="neutrino-mp-ddt";;
-	2) FLAVOUR="neutrino-mp-ni";;
-	3) FLAVOUR="neutrino-mp-tangos";;
-	4) FLAVOUR="neutrino-mp-ddt-youtube";;
-	*) FLAVOUR="neutrino-mp-ddt";;
+	1) FLAVOUR="neutrino-ddt";;
+	2) FLAVOUR="neutrino-ni";;
+	3) FLAVOUR="neutrino-tangos";;
+	4) FLAVOUR="neutrino-ddt-youtube";;
+	*) FLAVOUR="neutrino-ddt";;
 esac
 echo "FLAVOUR=$FLAVOUR" >> config
 
@@ -320,9 +320,9 @@ make printenv
 ##############################################
 echo "Your next step could be:"
 case "$FLAVOUR" in
-	neutrino-mp*)
-		echo "  make neutrino-mp"
-		echo "  make neutrino-mp-plugins";;
+	neutrino*)
+		echo "  make neutrino"
+		echo "  make neutrino-plugins";;
 	*)
 		echo "  make flashimage"
 		echo "  make ofgimage";;
