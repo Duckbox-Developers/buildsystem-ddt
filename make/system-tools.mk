@@ -1184,6 +1184,7 @@ $(D)/avahi: $(D)/bootstrap $(D)/expat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/$(AVAH
 #
 WGET_VER = 1.20.3
 WGET_SOURCE = wget-$(WGET_VER).tar.gz
+WGET_PATCH = wget-$(WGET_VER).patch
 
 $(ARCHIVE)/$(WGET_SOURCE):
 	$(DOWNLOAD) https://ftp.gnu.org/gnu/wget/$(WGET_SOURCE)
@@ -1193,6 +1194,7 @@ $(D)/wget: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(WGET_SOURCE)
 	$(REMOVE)/wget-$(WGET_VER)
 	$(UNTAR)/$(WGET_SOURCE)
 	$(CHDIR)/wget-$(WGET_VER); \
+		$(call apply_patches, $(WGET_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
