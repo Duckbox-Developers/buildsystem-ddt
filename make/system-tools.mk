@@ -1441,7 +1441,7 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 #
 # ethtool
 #
-ETHTOOL_VER = 5.3
+ETHTOOL_VER = 5.4
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
