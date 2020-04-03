@@ -43,6 +43,13 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuu
 endif
 	$(TUXBOX_CUSTOMIZE)
 
+disk \
+diskimage:
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-disk-image
+endif
+	$(TUXBOX_CUSTOMIZE)
+
 flash-clean:
 	cd $(BASE_DIR)/flash/nor_flash && $(SUDOCMD) rm -rf ./tmp ./out
 	cd $(BASE_DIR)/flash/spark7162 && $(SUDOCMD) rm -rf ./tmp ./out
@@ -179,6 +186,18 @@ flash-image-$(BOXTYPE)-online:
 	echo $(BOXTYPE)_DDT_flash_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 kernel.bin imageversion
+	# cleanup
+	rm -rf $(IMAGE_BUILD_DIR)
+endif
+
+# disk image
+flash-image-$(BOXTYPE)-disk-image:
+	# Create final USB-image
+	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
+	cd $(RELEASE_DIR); \
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/imageversion
+	cd $(IMAGE_BUILD_DIR) && \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 endif
