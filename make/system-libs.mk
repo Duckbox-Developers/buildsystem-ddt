@@ -377,7 +377,7 @@ OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_BASE)/b
 endif
 
 $(ARCHIVE)/$(OPENSSL_SOURCE):
-	$(DOWNLOAD) https://www.openssl.org/source/$(OPENSSL_SOURCE)
+	$(DOWNLOAD) https://www.openssl.org/source/old/$(OPENSSL_MAJOR)/$(OPENSSL_SOURCE)
 
 $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	$(START_BUILD)
