@@ -188,7 +188,6 @@ flash-image-$(BOXTYPE)-online:
 	tar -cvzf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').tgz rootfs.tar.bz2 kernel.bin imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-endif
 
 # disk image
 flash-image-$(BOXTYPE)-disk-image:
