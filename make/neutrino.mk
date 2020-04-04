@@ -316,7 +316,7 @@ $(SOURCE_DIR)/$(NEUTRINO)/src/gui/version.h:
 		pushd $(BASE_DIR); \
 		BS_REV=$$(git log | grep "^commit" | wc -l); \
 		popd; \
-		echo '#define VCS "BS-rev'$$BS_REV'_HAL-rev'$$HAL_REV'_TN-rev'$$NMP_REV'"' >> $@; \
+		echo '#define VCS "BS-rev'$$BS_REV'_HAL-rev'$$HAL_REV'_N-rev'$$NMP_REV'"' >> $@; \
 	fi
 
 $(D)/neutrino-plugins.do_compile \
