@@ -1,0 +1,55 @@
+--- a/Makefile
++++ b/Makefile
+@@ -19,13 +19,13 @@
+ #
+ # $Id$
+ 
+-DESTDIR=
+-PREFIX=/usr/local
+-ETCDIR=/etc/vpnc
+-BINDIR=$(PREFIX)/bin
+-SBINDIR=$(PREFIX)/sbin
+-MANDIR=$(PREFIX)/share/man
+-DOCDIR=$(PREFIX)/share/doc/vpnc
++DESTDIR =
++PREFIX ?= /usr/local
++ETCDIR  = /etc/vpnc
++BINDIR  = $(PREFIX)/bin
++SBINDIR = $(PREFIX)/sbin
++MANDIR  = $(PREFIX)/share/man
++DOCDIR  = $(PREFIX)/share/doc/vpnc
+ 
+ # The license of vpnc (Gpl >= 2) is quite likely incompatible with the
+ # openssl license. Openssl is one possible library used to provide certificate
+@@ -39,11 +39,11 @@
+ 
+ # Comment this in to obtain a binary with certificate support which is
+ # GPL incompliant though.
+-#OPENSSL_GPL_VIOLATION=yes
++OPENSSL_GPL_VIOLATION=yes
+ 
+-CRYPTO_LDADD = $(shell pkg-config --libs gnutls)
+-CRYPTO_CFLAGS = $(shell pkg-config --cflags gnutls) -DCRYPTO_GNUTLS
+-CRYPTO_SRCS = crypto-gnutls.c
++#CRYPTO_LDADD = $(shell pkg-config --libs gnutls)
++#CRYPTO_CFLAGS = $(shell pkg-config --cflags gnutls) -DCRYPTO_GNUTLS
++#CRYPTO_SRCS = crypto-gnutls.c
+ 
+ ifeq ($(OPENSSL_GPL_VIOLATION), yes)
+ CRYPTO_LDADD = -lcrypto
+@@ -57,14 +57,12 @@
+ CRYPTO_OBJS = $(addsuffix .o,$(basename $(CRYPTO_SRCS)))
+ BINOBJS = $(addsuffix .o,$(BINS))
+ BINSRCS = $(addsuffix .c,$(BINS))
+-VERSION := $(shell sh mk-version)
+-RELEASE_VERSION := $(shell cat VERSION)
+ 
+ CC ?= gcc
+ CFLAGS ?= -O3 -g
+ CFLAGS += -W -Wall -Wmissing-declarations -Wwrite-strings
+ CFLAGS +=  $(shell libgcrypt-config --cflags) $(CRYPTO_CFLAGS)
+-CPPFLAGS += -DVERSION=\"$(VERSION)\"
++CPPFLAGS += $(OPENSSL_GPL_VIOLATION)
+ LDFLAGS ?= -g
+ LIBS += $(shell libgcrypt-config --libs) $(CRYPTO_LDADD)
+ 

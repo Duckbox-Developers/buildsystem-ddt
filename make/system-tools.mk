@@ -1811,7 +1811,7 @@ VPNC_DIR = vpnc-$(VPNC_VER)
 VPNC_SOURCE = vpnc-$(VPNC_VER).tar.gz
 VPNC_URL = https://github.com/ndpgroup/vpnc/archive
 
-VPNC_PATCH  = \
+VPNC_PATCH = \
 	vpnc-fix-build.patch \
 	vpnc-nomanual.patch \
 	vpnc-susv3-legacy.patch

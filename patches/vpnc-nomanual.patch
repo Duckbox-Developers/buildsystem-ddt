@@ -1,0 +1,13 @@
+--- a/Makefile
++++ b/Makefile
+@@ -80,7 +80,9 @@
+ 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+ 
+ vpnc.8 : vpnc.8.template makeman.pl vpnc
+-	./makeman.pl
++	@echo "Cannot make manual when cross compiling"
++	touch $@
++#	./makeman.pl
+ 
+ cisco-decrypt : cisco-decrypt.o decrypt-utils.o
+ 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
