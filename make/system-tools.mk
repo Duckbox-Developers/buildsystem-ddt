@@ -1804,6 +1804,42 @@ $(D)/openvpn: $(D)/bootstrap $(D)/openssl $(D)/lzo $(ARCHIVE)/$(OPENVPN_SOURCE)
 	$(TOUCH)
 
 #
+# vpnc
+#
+VPNC_VER = 0.5.3r550-2jnpr1
+VPNC_DIR = vpnc-$(VPNC_VER)
+VPNC_SOURCE = vpnc-$(VPNC_VER).tar.gz
+VPNC_URL = https://github.com/ndpgroup/vpnc/archive
+
+VPNC_PATCH  = \
+	vpnc-fix-build.patch \
+	vpnc-nomanual.patch \
+	vpnc-susv3-legacy.patch
+
+VPNC_CPPFLAGS = -DVERSION=\\\"$(VPNC_VER)\\\"
+
+$(ARCHIVE)/$(VPNC_SOURCE):
+	$(DOWNLOAD) $(VPNC_URL)/$(VPNC_VER).tar.gz -O $(@)
+
+$(D)/vpnc: $(D)/bootstrap $(D)/openssl $(D)/lzo $(D)/libgcrypt $(ARCHIVE)/$(VPNC_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/vpnc-$(VPNC_VER)
+	$(UNTAR)/$(VPNC_SOURCE)
+	$(CHDIR)/vpnc-$(VPNC_VER); \
+		$(call apply_patches, $(VPNC_PATCH)); \
+		$(BUILDENV) \
+		$(MAKE) \
+			CPPFLAGS="$(CPPFLAGS) $(VPNC_CPPFLAGS)"; \
+		$(MAKE) \
+			CPPFLAGS="$(CPPFLAGS) $(VPNC_CPPFLAGS)" \
+			install-strip DESTDIR=$(TARGET_DIR) \
+			PREFIX=/usr \
+			MANDIR=$(TARGET_DIR)/.remove \
+			DOCDIR=$(TARGET_DIR)/.remove
+	$(REMOVE)/vpnc-$(VPNC_VER)
+	$(TOUCH)
+
+#
 # openssh
 #
 OPENSSH_VER = 8.2p1
