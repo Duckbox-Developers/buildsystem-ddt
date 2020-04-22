@@ -1,0 +1,10 @@
+--- a/vpnc.conf
++++ b/vpnc.conf
+@@ -1,6 +1,6 @@
+ #IPSec gateway <gateway>
+ #IPSec ID <group-id>
+ #IPSec secret <group-psk>
+-#IKE Authmode hybrid
++#IKE Authmode psk
+ #Xauth username <username>
+ #Xauth password <password>

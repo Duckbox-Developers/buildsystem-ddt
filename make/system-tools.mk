@@ -1814,7 +1814,8 @@ VPNC_URL = https://github.com/ndpgroup/vpnc/archive
 VPNC_PATCH = \
 	vpnc-fix-build.patch \
 	vpnc-nomanual.patch \
-	vpnc-susv3-legacy.patch
+	vpnc-susv3-legacy.patch \
+	vpnc-conf.patch
 
 VPNC_CPPFLAGS = -DVERSION=\\\"$(VPNC_VER)\\\"
 
