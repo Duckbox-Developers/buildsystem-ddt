@@ -178,6 +178,7 @@ $(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBG
 			--disable-fam \
 			--disable-libmount \
 			--with-pcre=internal \
+			--disable-compile-warnings \
 		; \
 		$(MAKE) install; \
 		cp -a out/bin/glib-* $(HOST_DIR)/bin
@@ -1750,7 +1751,7 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 LCD4LINUX_VER = ca13a1d
 LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
 LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
-LCD4LINUX_PATCH = 
+LCD4LINUX_PATCH =
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuultimo4k vusolo4k))
 LCD4LINUX_DRV = ,VUPLUS4K
 endif
