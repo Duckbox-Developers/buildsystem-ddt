@@ -1,6 +1,6 @@
 --- a/libavformat/mpegts.c	2018-02-12 01:29:06.000000000 +0100
 +++ b/libavformat/mpegts.c	2018-02-14 19:36:28.175054407 +0100
-@@ -1018,10 +1018,12 @@
+@@ -1019,10 +1019,12 @@
      pes->buffer = NULL;
      reset_pes_packet_state(pes);
  
