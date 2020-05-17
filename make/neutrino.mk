@@ -80,6 +80,7 @@ N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 endif
 
 LH_CONFIG_OPTS = $(LOCAL_LIBHAL_BUILD_OPTIONS)
+LH_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 ifeq ($(MEDIAFW), gstreamer)
 NEUTRINO_DEPS  += $(D)/gst_plugins_dvbmediasink
 N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
@@ -90,15 +91,7 @@ LH_CONFIG_OPTS += --enable-gstreamer_10=yes
 endif
 
 N_CONFIG_OPTS  = $(LOCAL_NEUTRINO_BUILD_OPTIONS)
-ifeq ($(FLAVOUR), neutrino-ni)
-N_CONFIG_OPTS += --with-boxtype=armbox
-N_CONFIG_OPTS += --with-boxmodel=$(BOXTYPE)
-LH_CONFIG_OPTS += --with-boxtype=armbox
-LH_CONFIG_OPTS += --with-boxmodel=$(BOXTYPE)
-else
 N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
-LH_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
-endif
 N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --enable-pip
 #N_CONFIG_OPTS += --disable-webif
@@ -146,15 +139,7 @@ N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
-ifeq  ($(FLAVOUR), neutrino-ni)
-GIT_URL     ?= https://github.com/neutrino-images
-NEUTRINO  = ni-neutrino
-LIBSTB_HAL   = ni-libstb-hal
-NMP_BRANCH  ?= master
-HAL_BRANCH  ?= master
-NMP_PATCHES  = $(NEUTRINO_NI_PATCHES)
-HAL_PATCHES  = $(NEUTRINO_LIBSTB_NI_PATCHES)
-else ifeq  ($(FLAVOUR), neutrino-tangos)
+ifeq  ($(FLAVOUR), neutrino-tangos)
 GIT_URL     ?= https://github.com/TangoCash
 NEUTRINO  = neutrino-tangos
 LIBSTB_HAL   = libstb-hal-tangos
