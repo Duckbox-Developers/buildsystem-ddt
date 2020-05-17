@@ -1441,7 +1441,12 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 #
 # ethtool
 #
+ifeq ($(BOXARCH), sh4)
+ETHTOOL_VER = 5.4
+else
 ETHTOOL_VER = 5.6
+ETHTOOL_PARAM = --disable-netlink
+endif
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
@@ -1456,7 +1461,7 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 			--prefix=/usr \
 			--mandir=/.remove \
 			--disable-pretty-dump \
-			--disable-netlink \
+			$(ETHTOOL_PARAM) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
