@@ -426,14 +426,14 @@ endif
 ifeq ($(BOXARCH), sh4)
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
 
-FFMPEG_VER = 2.8.15
+FFMPEG_VER = 2.8.16
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-buffer-size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-kodi.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-tls.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
+#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
 
 FFMPEG_DEPS =
 FFMPEG_CONF_OPTS = 
