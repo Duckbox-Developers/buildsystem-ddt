@@ -1598,7 +1598,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 #
 # ntp
 #
-NTP_VER = 4.2.8p10
+NTP_VER = 4.2.8p14
 NTP_SOURCE = ntp-$(NTP_VER).tar.gz
 NTP_PATCH = ntp-$(NTP_VER).patch
 
@@ -1614,6 +1614,11 @@ $(D)/ntp: $(D)/bootstrap $(ARCHIVE)/$(NTP_SOURCE)
 		$(CONFIGURE) \
 			--target=$(TARGET) \
 			--prefix=/usr \
+			--mandir=/.remove \
+			--infodir=/.remove \
+			--docdir=/.remove \
+			--localedir=/.remove \
+			--htmldir=/.remove \
 			--disable-tick \
 			--disable-tickadj \
 			--with-yielding-select=yes \
