@@ -1381,7 +1381,7 @@ $(D)/vsftpd: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(VSFTPD_SOURCE)
 #
 # procps_ng
 #
-PROCPS_NG_VER = 3.3.12
+PROCPS_NG_VER = 3.3.16
 PROCPS_NG_SOURCE = procps-ng-$(PROCPS_NG_VER).tar.xz
 
 $(ARCHIVE)/$(PROCPS_NG_SOURCE):
