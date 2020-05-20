@@ -774,7 +774,7 @@ $(D)/rsync: $(D)/bootstrap $(ARCHIVE)/$(RSYNC_SOURCE)
 #
 # fuse
 #
-FUSE_VER = 2.9.7
+FUSE_VER = 2.9.9
 FUSE_SOURCE = fuse-$(FUSE_VER).tar.gz
 
 $(ARCHIVE)/$(FUSE_SOURCE):
