@@ -2185,7 +2185,7 @@ $(D)/djmount: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(DJMOUNT_SOURCE)
 #
 # libupnp
 #
-LIBUPNP_VER = 1.6.22
+LIBUPNP_VER = 1.6.25
 LIBUPNP_SOURCE = libupnp-$(LIBUPNP_VER).tar.bz2
 
 $(ARCHIVE)/$(LIBUPNP_SOURCE):
