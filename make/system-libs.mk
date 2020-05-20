@@ -2103,7 +2103,7 @@ $(D)/lzo: $(D)/bootstrap $(ARCHIVE)/$(LZO_SOURCE)
 #
 # minidlna
 #
-MINIDLNA_VER = 1.1.5
+MINIDLNA_VER = 1.2.1
 MINIDLNA_SOURCE = minidlna-$(MINIDLNA_VER).tar.gz
 MINIDLNA_PATCH = minidlna-$(MINIDLNA_VER).patch
 
