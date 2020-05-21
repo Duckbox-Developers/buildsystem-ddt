@@ -3,7 +3,7 @@ http://git.videolan.org/gitweb.cgi/ffmpeg.git/?p=ffmpeg.git;a=commitdiff;h=ca6ca
 
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -3614,8 +3614,10 @@
+@@ -3615,8 +3615,10 @@
  
              if (ctts_data_old && ctts_index_old < ctts_count_old) {
                  curr_ctts = ctts_data_old[ctts_index_old].duration;
