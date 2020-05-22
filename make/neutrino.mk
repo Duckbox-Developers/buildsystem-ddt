@@ -100,6 +100,7 @@ N_CONFIG_OPTS += --enable-freesatepg
 
 ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
+N_CONFIG_OPTS += --disable-arm-acc
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
