@@ -206,24 +206,46 @@ TOUCH                 = @touch $@; \
 #
 PATCH                 = patch -p1 -i $(PATCHES)
 APATCH                = patch -p1 -i
+PATCH_P0              = patch -p0 -i $(PATCHES)
+APATCH_P0             = patch -p0 -i
 define apply_patches
-    for i in $(1); do \
-        if [ -d $$i ]; then \
-            for p in $$i/*; do \
-                if [ $${p:0:1} == "/" ]; then \
-                    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \
-                else \
-                    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH)/$$p; \
-                fi; \
-            done; \
-        else \
-            if [ $${i:0:1} == "/" ]; then \
-                echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH) $$i; \
-            else \
-                echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH)/$$i; \
-            fi; \
-        fi; \
-    done; \
+    if [ $(2) == "p0" ]; then \
+	for i in $(1); do \
+	    if [ -d $$i ]; then \
+		for p in $$i/*; do \
+		    if [ $${p:0:1} == "/" ]; then \
+			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH_P0) $$p; \
+		    else \
+			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH_P0)/$$p; \
+		    fi; \
+		done; \
+	    else \
+		if [ $${i:0:1} == "/" ]; then \
+		    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH_P0) $$i; \
+		else \
+		    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH_P0)/$$i; \
+		fi; \
+	    fi; \
+	done; \
+    else \
+	for i in $(1); do \
+	    if [ -d $$i ]; then \
+		for p in $$i/*; do \
+		    if [ $${p:0:1} == "/" ]; then \
+			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(APATCH) $$p; \
+		    else \
+			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$p"; $(PATCH)/$$p; \
+		    fi; \
+		done; \
+	    else \
+		if [ $${i:0:1} == "/" ]; then \
+		    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(APATCH) $$i; \
+		else \
+		    echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; $(PATCH)/$$i; \
+		fi; \
+	    fi; \
+	done; \
+    fi; \
     if [ $(PKG_VER_HELPER) == "AA" ]; then \
         echo -e "Patching $(TERM_GREEN_BOLD)$(PKG_NAME)$(TERM_NORMAL) completed"; \
     else \

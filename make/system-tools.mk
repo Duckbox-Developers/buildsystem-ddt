@@ -58,6 +58,7 @@ endif
 #
 BASH_VER = 5.0
 BASH_SOURCE = bash-$(BASH_VER).tar.gz
+BASH_PATCH = $(PATCHES)/bash
 
 $(ARCHIVE)/$(BASH_SOURCE):
 	$(DOWNLOAD) https://ftp.gnu.org/gnu/bash/$(BASH_SOURCE)
@@ -67,6 +68,7 @@ $(D)/bash: $(D)/bootstrap $(ARCHIVE)/$(BASH_SOURCE)
 	$(REMOVE)/bash-$(BASH_VER)
 	$(UNTAR)/$(BASH_SOURCE)
 	$(CHDIR)/bash-$(BASH_VER); \
+		$(call apply_patches, $(BASH_PATCH), p0); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
