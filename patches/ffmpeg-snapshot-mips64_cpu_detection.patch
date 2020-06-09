@@ -17,7 +17,7 @@ Index: ffmpeg/configure
 ===================================================================
 --- a/configure
 +++ b/configure
-@@ -5846,12 +5846,9 @@ elif enabled mips; then
+@@ -5847,12 +5847,9 @@ elif enabled mips; then
  
      # Enable minimum ISA based on selected options
      if enabled mips64; then
