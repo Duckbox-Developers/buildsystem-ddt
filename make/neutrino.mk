@@ -97,12 +97,15 @@ N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --disable-upnp
 #N_CONFIG_OPTS += --disable-tangos
 
-ifeq ($(BOXARCH), arm)
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 N_CONFIG_OPTS += --enable-reschange
+endif
+
+#ifeq ($(BOXARCH), arm)
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4k vuuno4kse vuultimo4k vusolo4k vuzero4k))
 #N_CONFIG_OPTS += --disable-arm-acc
 #endif
-endif
+#endif
 
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
 #N_CONFIG_OPTS += --disable-mips-acc
