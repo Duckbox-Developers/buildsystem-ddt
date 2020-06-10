@@ -99,14 +99,14 @@ N_CONFIG_OPTS += --enable-freesatepg
 
 ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4k vuuno4kse vuultimo4k vusolo4k vuzero4k))
-N_CONFIG_OPTS += --disable-arm-acc
-endif
+#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4k vuuno4kse vuultimo4k vusolo4k vuzero4k))
+#N_CONFIG_OPTS += --disable-arm-acc
+#endif
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
-N_CONFIG_OPTS += --disable-mips-acc
-endif
+#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo))
+#N_CONFIG_OPTS += --disable-mips-acc
+#endif
 
 ifeq ($(AUDIODEC), ffmpeg)
 # enable ffmpeg audio decoder in neutrino
