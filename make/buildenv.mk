@@ -209,7 +209,7 @@ APATCH                = patch -p1 -i
 PATCH_P0              = patch -p0 -i $(PATCHES)
 APATCH_P0             = patch -p0 -i
 define apply_patches
-    if [ $(2) == "p0" ]; then \
+    if [ "$(2)" == "p0" ]; then \
 	for i in $(1); do \
 	    if [ -d $$i ]; then \
 		for p in $$i/*; do \

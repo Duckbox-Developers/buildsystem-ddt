@@ -68,7 +68,7 @@ $(D)/bash: $(D)/bootstrap $(ARCHIVE)/$(BASH_SOURCE)
 	$(REMOVE)/bash-$(BASH_VER)
 	$(UNTAR)/$(BASH_SOURCE)
 	$(CHDIR)/bash-$(BASH_VER); \
-		$(call apply_patches, $(BASH_PATCH), p0); \
+		$(call apply_patches, $(BASH_PATCH),p0); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
