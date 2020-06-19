@@ -10,8 +10,11 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
 	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
-	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
 	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
+	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
+endif
 ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
@@ -408,6 +411,21 @@ $(D)/tools-turnoff_power: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# tuxcal
+#
+$(D)/tools-tuxcal: $(D)/bootstrap $(D)/freetype
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/tuxcal; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # tuxcom
 #
 $(D)/tools-tuxcom: $(D)/bootstrap $(D)/freetype
@@ -483,6 +501,7 @@ TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+#TOOLS += $(D)/tools-tuxcal
 TOOLS += $(D)/tools-tuxcom
 endif
 ifeq ($(BOXARCH), sh4)
