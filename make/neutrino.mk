@@ -99,8 +99,8 @@ N_CONFIG_OPTS += --enable-freesatepg
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 N_CONFIG_OPTS += --enable-reschange
-N_CONFIG_OPTS += --disable-arm-acc
-N_CONFIG_OPTS += --disable-mips-acc
+#N_CONFIG_OPTS += --disable-arm-acc
+#N_CONFIG_OPTS += --disable-mips-acc
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
