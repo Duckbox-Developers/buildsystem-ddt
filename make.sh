@@ -235,7 +235,7 @@ case $6 in
 		echo "   1)  neutrino-ddt               [ arm/sh4 ]"
 		echo "   2)  neutrino-tangos            [ arm/sh4 ]"
 		echo "   3)  neutrino-ddt with youtube  [ arm/sh4 ]"
-		read -p "Select Image to build (1-4)? ";;
+		read -p "Select Image to build (1-3)? ";;
 esac
 
 case "$REPLY" in
