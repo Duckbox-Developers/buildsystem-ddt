@@ -1600,7 +1600,7 @@ $(D)/samba: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 #
 # ntp
 #
-NTP_VER = 4.2.8p14
+NTP_VER = 4.2.8p15
 NTP_SOURCE = ntp-$(NTP_VER).tar.gz
 NTP_PATCH = ntp-$(NTP_VER).patch
 
