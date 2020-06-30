@@ -39,6 +39,7 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
 #FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mpeg-quarter-sample.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 else
 FFMPEG_VER = 3.3
