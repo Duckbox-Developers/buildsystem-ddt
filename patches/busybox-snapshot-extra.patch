@@ -214,7 +214,7 @@
      echo "int main(int argc,char**argv){return argv?argc:0;}" >"$tempname".c
      # Can use "-o /dev/null", but older gcc tend to *unlink it* on failure! :(
      # Was using "-xc /dev/null", but we need a valid C program.
-@@ -60,7 +60,7 @@
+@@ -57,7 +57,7 @@
  }
  
  check_libc_is_glibc() {
