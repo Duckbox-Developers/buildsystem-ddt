@@ -712,6 +712,12 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 			--disable-doxygen-html \
 			--enable-charset \
 			--disable-nls \
+			--disable-maintainer-mode \
+			--disable-dependency-tracking \
+			AWK=awk \
+			--disable-rpath \
+			--disable-static \
+			--disable-silent-rules \
 			--with-screen=ncurses \
 			--without-x \
 		; \
