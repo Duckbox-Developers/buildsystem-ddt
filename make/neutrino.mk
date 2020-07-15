@@ -81,14 +81,6 @@ endif
 
 LH_CONFIG_OPTS = $(LOCAL_LIBHAL_BUILD_OPTIONS)
 LH_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
-ifeq ($(MEDIAFW), gstreamer)
-NEUTRINO_DEPS  += $(D)/gst_plugins_dvbmediasink
-N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
-N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
-N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
-N_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-LH_CONFIG_OPTS += --enable-gstreamer_10=yes
-endif
 
 N_CONFIG_OPTS  = $(LOCAL_NEUTRINO_BUILD_OPTIONS)
 N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)

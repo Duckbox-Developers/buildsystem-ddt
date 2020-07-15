@@ -18,12 +18,11 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 2 (ARM VU+) : Single/Multiboot (1-2)"
 	echo "Parameter 2 (MIPS/ARM): unused, use \"-\" as placeholder for batch mode"
 	echo "Parameter 3           : Optimization (1-4)"
-	echo "Parameter 4           : Media Framework (1-2)"
-	echo "Parameter 5           : Image Neutrino (1-2)"
-	echo "Parameter 6           : Neutrino variant (1-4)"
-	echo "Parameter 7           : External LCD support (1-4)"
-	echo "Parameter 8 (ARM/MIPS): GCC Version (1-4)"
-	echo "Parameter 9 (ARM VU+) : old/actual kernel modules (1-2)"
+	echo "Parameter 4           : Image Neutrino (1-2)"
+	echo "Parameter 5           : Neutrino variant (1-4)"
+	echo "Parameter 6           : External LCD support (1-4)"
+	echo "Parameter 7 (ARM/MIPS): GCC Version (1-4)"
+	echo "Parameter 8 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
 fi
 
@@ -197,23 +196,6 @@ echo "OPTIMIZATIONS=$OPTIMIZATIONS" >> config
 
 case $4 in
 	[1-2]) REPLY=$4;;
-	*)	echo -e "\nMedia Framework:"
-		echo "   1) libeplayer3"
-		echo "   2) gstreamer (not fully supported)"
-		read -p "Select media framework (1-2)? ";;
-esac
-
-case "$REPLY" in
-	1) MEDIAFW="buildinplayer";;
-	2) MEDIAFW="gstreamer";;
-	*) MEDIAFW="buildinplayer";;
-esac
-echo "MEDIAFW=$MEDIAFW" >> config
-
-##############################################
-
-case $5 in
-	[1-2]) REPLY=$5;;
 	*)	echo -e "\nWhich Image do you want to build:"
 		echo "   1)  Neutrino"
 		echo "   2)  Neutrino (includes WLAN drivers)"
@@ -229,8 +211,8 @@ echo "IMAGE=$IMAGE" >> config
 
 ##############################################
 
-case $6 in
-	[1-3]) REPLY=$6;;
+case $5 in
+	[1-3]) REPLY=$5;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo "   1)  neutrino-ddt               [ arm/sh4 ]"
 		echo "   2)  neutrino-tangos            [ arm/sh4 ]"
@@ -248,8 +230,8 @@ echo "FLAVOUR=$FLAVOUR" >> config
 
 ##############################################
 
-case $7 in
-	[1-4]) REPLY=$7;;
+case $6 in
+	[1-4]) REPLY=$6;;
 	*)	echo -e "\nExternal LCD support:"
 		echo "   1)  No external LCD"
 		echo "   2)  graphlcd for external LCD"
@@ -271,8 +253,8 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
-	case $8 in
-		[1-4]) REPLY=$8;;
+	case $7 in
+		[1-4]) REPLY=$7;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0 (default)"
 			echo "   2)  GCC version 7.5.0"
@@ -296,8 +278,8 @@ fi
 
 # old/actual kernel modules for VUPLUS_ARM
 if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
-	case $9 in
-		[1-2]) REPLY=$9;;
+	case $8 in
+		[1-2]) REPLY=$8;;
 		*)	echo -e "\nOld or actual kernel modules:"
 			echo "   1)  OLD kernel modules    (default)"
 			echo "   2)  ACTUAL kernel modules"
