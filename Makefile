@@ -109,7 +109,6 @@ endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 include make/crosstool.mk
 endif
-include make/gstreamer.mk
 include make/root-etc.mk
 include make/python.mk
 include make/tools.mk
