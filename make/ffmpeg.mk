@@ -25,7 +25,7 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_ty
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 4.3
+FFMPEG_VER = 4.3.1
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
@@ -69,7 +69,7 @@ ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
-FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
+#FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
 else
 FFMPEG_CONF_OPTS  += --disable-yasm
 FFMPEG_CONF_OPTS  += --disable-ffserver
