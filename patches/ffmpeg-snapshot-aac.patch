@@ -1,6 +1,6 @@
 --- a/libavcodec/aacdec_template.c
 +++ b/libavcodec/aacdec_template.c
-@@ -2485,7 +2485,7 @@
+@@ -2561,7 +2561,7 @@
   * @param   decode  1 if tool is used normally, 0 if tool is used in LTP.
   * @param   coef    spectral coefficients
   */
