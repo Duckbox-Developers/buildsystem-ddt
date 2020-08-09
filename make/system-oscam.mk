@@ -109,7 +109,7 @@ $(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb oscam.do_prepare oscam.do_co
 oscam-clean:
 	rm -f $(D)/oscam
 	rm -f $(D)/oscam.do_compile
-	$(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
+	cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 		$(MAKE) distclean
 
 # -----------------------------------------------------------------------------
