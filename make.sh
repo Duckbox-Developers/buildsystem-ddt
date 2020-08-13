@@ -159,7 +159,7 @@ if [ $BOXARCH == "sh4" ]; then
 		[1-2]) REPLY=$2;;
 		*)	echo -e "\nKernel:"
 			echo "   1)  STM 24 P0209 [2.6.32.46]"
-			echo "   2)  STM 24 P0217 [2.6.32.71]"
+			echo "   2)  STM 24 P0217 [2.6.32.71] (default) use this"
 			read -p "Select kernel (1-2)? ";;
 	esac
 
