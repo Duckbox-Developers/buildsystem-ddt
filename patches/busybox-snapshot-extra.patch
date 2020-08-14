@@ -64,7 +64,7 @@
  	Defaults to "/lib/modules"
 --- a/modutils/insmod.c
 +++ b/modutils/insmod.c
-@@ -45,11 +45,42 @@
+@@ -44,11 +44,42 @@
  //usage:	)
  //usage:#endif
  
@@ -107,7 +107,7 @@
  
  	/* Compat note:
  	 * 2.6 style insmod has no options and required filename
-@@ -68,9 +99,93 @@
+@@ -67,9 +98,93 @@
  	if (!filename)
  		bb_show_usage();
  
