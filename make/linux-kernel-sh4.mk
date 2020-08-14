@@ -24,15 +24,13 @@ COMMON_PATCHES_24 = \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0209),linux-sh4-dwmac_stm24_$(KERNEL_LABEL).patch)
+		linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch)
 
 TF7700_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-tf7700_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-usbwait123_stm24.patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-sata-v06_stm24_$(KERNEL_LABEL).patch)
+		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
 
 UFS910_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stx7100_fdma_fix_stm24_$(KERNEL_LABEL).patch \
@@ -75,7 +73,6 @@ SPARK_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-lmb_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-spark_setup_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-linux_yaffs2_stm24_0209.patch) \
 		linux-sh4-lirc_stm_stm24_$(KERNEL_LABEL).patch
 
 SPARK7162_PATCHES_24 = $(COMMON_PATCHES_24) \
@@ -87,8 +84,7 @@ FORTIS_HDBOX_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-fortis_hdbox_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-usbwait123_stm24.patch \
 		linux-sh4-stmmac_stm24_$(KERNEL_LABEL).patch \
-		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0209),linux-sh4-fortis_hdbox_i2c_st40_stm24_$(KERNEL_LABEL).patch)
+		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch
 
 IPBOX9900_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-ipbox9900_setup_stm24_$(KERNEL_LABEL).patch \
@@ -125,7 +121,7 @@ CUBEREVO_250HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_250hd_setup_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-i2c-st40-pio_stm24_$(KERNEL_LABEL).patch \
 		linux-sh4-cuberevo_rtl8201_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0217),linux-sh4-cuberevo_250hd_sound_stm24_$(KERNEL_LABEL).patch)
+		linux-sh4-cuberevo_250hd_sound_stm24_$(KERNEL_LABEL).patch
 
 CUBEREVO_2000HD_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_2000hd_setup_stm24_$(KERNEL_LABEL).patch \
