@@ -24,7 +24,7 @@ COMMON_PATCHES_24 = \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
-		linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch)
+		linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch
 
 TF7700_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-tf7700_setup_stm24_$(KERNEL_LABEL).patch \
