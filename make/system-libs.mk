@@ -2028,10 +2028,10 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
 #
 # libdvbsi++
 #
-LIBDVBSI_VER = 64efce6
+LIBDVBSI_VER = f3c40ea
 LIBDVBSI_SOURCE = libdvbsi-git-$(LIBDVBSI_VER).tar.bz2
-LIBDVBSI_URL = git://git.opendreambox.org/git/obi/libdvbsi++.git
-LIBDVBSI_PATCH = libdvbsi-git-$(LIBDVBSI_VER).patch
+LIBDVBSI_URL = git://github.com/OpenVisionE2/libdvbsi.git
+#LIBDVBSI_PATCH = libdvbsi-git-$(LIBDVBSI_VER).patch
 
 $(ARCHIVE)/$(LIBDVBSI_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBDVBSI_URL) $(LIBDVBSI_VER) $(notdir $@) $(ARCHIVE)
