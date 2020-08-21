@@ -42,17 +42,21 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_ty
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 else
-FFMPEG_VER = 3.3
+FFMPEG_VER = 4.3.1
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add_dash_demux.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-chunked_transfer_fix_eof.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
+#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
+#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mpeg-quarter-sample.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 endif
 endif
@@ -71,9 +75,10 @@ FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
 #FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
 else
-FFMPEG_CONF_OPTS  += --disable-yasm
-FFMPEG_CONF_OPTS  += --disable-ffserver
-FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
+FFMPEG_CONF_OPTS  += --enable-libxml2
+FFMPEG_CONF_OPTS  += --enable-libfreetype
+FFMPEG_CONF_OPTS  += --disable-x86asm
+#FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
 endif
 endif
 
