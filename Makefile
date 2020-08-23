@@ -47,7 +47,9 @@ printenv:
 	@echo "TARGET            : $(TARGET)"
 	@echo "BOXTYPE           : $(BOXTYPE)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
+ifneq ($(BOXARCH), sh4)
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
+endif
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"
