@@ -116,6 +116,8 @@ PACKAGES="\
 	${UBUNTU:+mtools}                                                                                             \
 	${UBUNTU:+u-boot-tools}                                                                                       \
 	${UBUNTU:+curl}                                                                                               \
+	${UBUNTU:+optipng}                                                                                            \
+	${UBUNTU:+jpegoptim}                                                                                          \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
