@@ -861,8 +861,10 @@ $(D)/neutrino-release: neutrino-release-base neutrino-release-$(BOXTYPE)
 #
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+ifeq ($(OPTIMIZE_PICS), 1)
 	find $(RELEASE_DIR)/ -iname '*.jpg' -exec jpegoptim --strip-all -q {} \;
 	find $(RELEASE_DIR)/ -iname '*.png' -exec optipng -nb -nc -o7 -quiet {} \;
+endif
 endif
 	@echo "***************************************************************"
 	@echo -e "\033[01;32m"
