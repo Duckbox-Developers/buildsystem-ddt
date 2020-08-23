@@ -51,7 +51,7 @@ printenv:
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"
-	@echo -e "FLAVOUR           : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
+	@echo -e "FLAVOUR        : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
