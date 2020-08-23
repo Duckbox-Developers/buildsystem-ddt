@@ -49,6 +49,8 @@ printenv:
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
+	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
+	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"
 	@echo -e "FLAVOUR           : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
