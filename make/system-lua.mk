@@ -77,6 +77,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	$(UNTAR)/$(LUAEXPAT_SOURCE)
 	$(CHDIR)/luaexpat-$(LUAEXPAT_VER); \
 		$(call apply_patches, $(LUAEXPAT_PATCH)); \
+		$(BUILDENV) \
 		$(MAKE) CC=$(TARGET)-gcc LDFLAGS="-L$(TARGET_DIR)/usr/lib" PREFIX=$(TARGET_DIR)/usr; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)/usr
 	$(REMOVE)/luaexpat-$(LUAEXPAT_VER)
@@ -119,7 +120,8 @@ $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHI
 	$(UNTAR)/$(LUAFEEDPARSER_SOURCE)
 	$(CHDIR)/luafeedparser-git-$(LUAFEEDPARSER_VER); \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
-		$(BUILDENV) $(MAKE) install  LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
+		$(BUILDENV) \
+		$(MAKE) install  LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luafeedparser-git-$(LUAFEEDPARSER_VER)
 	$(TOUCH)
 
