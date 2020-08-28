@@ -3,6 +3,7 @@
 #
 tools-clean:
 	rm -f $(D)/tools-*
+	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
 	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
@@ -47,6 +48,19 @@ endif
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
 endif
+
+#
+# asc2uni
+#
+$(D)/tools-asc2uni: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/asc2uni; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
 
 #
 # aio-grab
@@ -496,6 +510,7 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
+#TOOLS += $(D)/tools-asc2uni
 TOOLS  = $(D)/tools-aio-grab
 TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
