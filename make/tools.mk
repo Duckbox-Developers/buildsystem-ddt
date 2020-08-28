@@ -3,8 +3,8 @@
 #
 tools-clean:
 	rm -f $(D)/tools-*
-	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
+	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
 	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
 	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
@@ -50,12 +50,12 @@ ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 endif
 
 #
-# asc2uni
+# aio-grab
 #
-$(D)/tools-asc2uni: $(D)/bootstrap
+$(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/asc2uni; \
-		$(CONFIGURE_TOOLS) \
+	set -e; cd $(TOOLS_DIR)/aio-grab-$(BOXARCH); \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -63,12 +63,12 @@ $(D)/tools-asc2uni: $(D)/bootstrap
 	$(TOUCH)
 
 #
-# aio-grab
+# asc2uni
 #
-$(D)/tools-aio-grab: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
+$(D)/tools-asc2uni: $(D)/bootstrap
 	$(START_BUILD)
-	set -e; cd $(TOOLS_DIR)/aio-grab-$(BOXARCH); \
-		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
+	set -e; cd $(TOOLS_DIR)/asc2uni; \
+		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
 		$(MAKE); \
@@ -510,8 +510,8 @@ $(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
-#TOOLS += $(D)/tools-asc2uni
 TOOLS  = $(D)/tools-aio-grab
+#TOOLS += $(D)/tools-asc2uni
 TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
