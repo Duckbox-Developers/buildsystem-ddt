@@ -238,9 +238,9 @@ $(D)/neutrino-plugin-settings-update:
 	$(TOUCH)
 
 #
-# spiegel-tv
+# spiegel
 #
-$(D)/spiegel-tv:
+$(D)/spiegel:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
@@ -250,7 +250,8 @@ $(D)/spiegel-tv:
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
 	$(CHDIR)/plugins-lua; \
 		install -d $(TARGET_DIR)/var/tuxbox/plugins
-		cp -R $(BUILD_TMP)/plugins-lua/spiegel-tv-doc/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-lua/spiegel/* $(TARGET_DIR)/var/tuxbox/plugins/
+		rm -rf $(TARGET_DIR)/var/tuxbox/plugins/SpiegelTV.png
 	$(REMOVE)/plugins-lua
 	$(TOUCH)
 
