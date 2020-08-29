@@ -255,9 +255,9 @@ $(D)/spiegel-tv:
 	$(TOUCH)
 
 #
-# tierwelt-tv
+# tierwelt
 #
-$(D)/tierwelt-tv:
+$(D)/tierwelt:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
@@ -267,6 +267,7 @@ $(D)/tierwelt-tv:
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
 	$(CHDIR)/plugins-lua; \
 		install -d $(TARGET_DIR)/var/tuxbox/plugins
-		cp -R $(BUILD_TMP)/plugins-lua/tierwelt-tv/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/plugins-lua/tierwelt/* $(TARGET_DIR)/var/tuxbox/plugins/
+		rm -rf $(TARGET_DIR)/var/tuxbox/plugins/Tierwelt\ TV.png
 	$(REMOVE)/plugins-lua
 	$(TOUCH)
