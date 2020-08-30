@@ -763,7 +763,7 @@ RSYNC_VER = 3.1.3
 RSYNC_SOURCE = rsync-$(RSYNC_VER).tar.gz
 
 $(ARCHIVE)/$(RSYNC_SOURCE):
-	$(DOWNLOAD) https://ftp.samba.org/pub/rsync/$(RSYNC_SOURCE)
+	$(DOWNLOAD) https://rsync.samba.org/ftp/rsync/src/$(RSYNC_SOURCE)
 
 $(D)/rsync: $(D)/bootstrap $(ARCHIVE)/$(RSYNC_SOURCE)
 	$(START_BUILD)
