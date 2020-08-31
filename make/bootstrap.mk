@@ -179,9 +179,6 @@ HOST_PARTED_VER = 3.2
 HOST_PARTED_SOURCE = parted-$(HOST_PARTED_VER).tar.xz
 HOST_PARTED_PATCH = parted-$(HOST_PARTED_VER)-device-mapper.patch
 
-$(ARCHIVE)/$(HOST_PARTED_SOURCE):
-	$(DOWNLOAD) https://ftp.gnu.org/gnu/parted/$(HOST_PARTED_SOURCE)
-
 $(D)/host_parted: $(D)/directories $(ARCHIVE)/$(HOST_PARTED_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/parted-$(HOST_PARTED_VER)
