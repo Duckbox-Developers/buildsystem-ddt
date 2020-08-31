@@ -189,6 +189,7 @@ $(D)/host_parted: $(D)/directories $(ARCHIVE)/$(HOST_PARTED_SOURCE)
 			--prefix=$(HOST_DIR) \
 			--sbindir=$(HOST_DIR)/bin \
 			--disable-device-mapper \
+			--without-readline \
 		; \
 		$(MAKE) install
 	$(REMOVE)/parted-$(HOST_PARTED_VER)
