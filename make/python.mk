@@ -26,7 +26,7 @@ PYTHON_INSTALL = \
 # host_python
 #
 PYTHON_VER_MAJOR = 2.7
-PYTHON_VER_MINOR = 13
+PYTHON_VER_MINOR = 18
 PYTHON_VER = $(PYTHON_VER_MAJOR).$(PYTHON_VER_MINOR)
 PYTHON_SOURCE = Python-$(PYTHON_VER).tar.xz
 HOST_PYTHON_PATCH = python-$(PYTHON_VER).patch
@@ -71,7 +71,7 @@ PYTHON_PATCH += python-$(PYTHON_VER)-xcompile.patch
 PYTHON_PATCH += python-$(PYTHON_VER)-revert_use_of_sysconfigdata.patch
 PYTHON_PATCH += python-$(PYTHON_VER)-pgettext.patch
 
-$(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(D)/readline $(D)/sqlite $(ARCHIVE)/$(PYTHON_SOURCE)
+$(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(ARCHIVE)/$(PYTHON_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(UNTAR)/$(PYTHON_SOURCE)
