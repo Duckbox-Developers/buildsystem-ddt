@@ -177,7 +177,7 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 #
 HOST_PARTED_VER = 3.2
 HOST_PARTED_SOURCE = parted-$(HOST_PARTED_VER).tar.xz
-HOST_PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
+HOST_PARTED_PATCH = parted-$(HOST_PARTED_VER)-device-mapper.patch
 
 $(ARCHIVE)/$(HOST_PARTED_SOURCE):
 	$(DOWNLOAD) https://ftp.gnu.org/gnu/parted/$(HOST_PARTED_SOURCE)
