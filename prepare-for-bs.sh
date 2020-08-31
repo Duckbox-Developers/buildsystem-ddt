@@ -118,6 +118,7 @@ PACKAGES="\
 	${UBUNTU:+curl}                                                                                               \
 	${UBUNTU:+optipng}                                                                                            \
 	${UBUNTU:+jpegoptim}                                                                                          \
+	${UBUNTU:+libreadline-dev}                                                                                    \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
