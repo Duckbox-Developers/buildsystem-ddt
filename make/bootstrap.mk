@@ -173,29 +173,6 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(TOUCH)
 
 #
-# host_readline
-#
-HOST_READLINE_VER = $(READLINE_VER)
-HOST_READLINE_SOURCE = $(READLINE_SOURCE)
-
-$(D)/host_readline: $(D)/directories $(ARCHIVE)/$(HOST_READLINE_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/readline-$(HOST_READLINE_VER)
-	$(UNTAR)/$(READLINE_SOURCE)
-	$(CHDIR)/readline-$(HOST_READLINE_VER); \
-		./configure $(SILENT_OPT) \
-			--prefix=$(HOST_DIR) \
-			--sbindir=$(HOST_DIR)/bin \
-			bash_cv_must_reinstall_sighandlers=no \
-			bash_cv_func_sigsetjmp=present \
-			bash_cv_func_strcoll_broken=no \
-			bash_cv_have_mbstate_t=yes \
-		; \
-		$(MAKE) install
-	$(REMOVE)/readline-$(HOST_READLINE_VER)
-	$(TOUCH)
-
-#
 # host_parted
 #
 HOST_PARTED_VER = $(PARTED_VER)
@@ -212,6 +189,7 @@ $(D)/host_parted: $(D)/directories $(ARCHIVE)/$(HOST_PARTED_SOURCE)
 			--prefix=$(HOST_DIR) \
 			--sbindir=$(HOST_DIR)/bin \
 			--disable-device-mapper \
+			--without-readline \
 		; \
 		$(MAKE) install
 	$(REMOVE)/parted-$(HOST_PARTED_VER)
@@ -252,7 +230,6 @@ BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
 ifeq ($(BOXARCH), arm)
-BOOTSTRAP += $(D)/host_readline
 BOOTSTRAP += $(D)/host_parted
 BOOTSTRAP += $(D)/host_resize2fs
 BOOTSTRAP += $(D)/cortex_strings
