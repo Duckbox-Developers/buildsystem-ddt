@@ -173,6 +173,31 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 	$(TOUCH)
 
 #
+# host_parted
+#
+HOST_PARTED_VER = 3.2
+HOST_PARTED_SOURCE = parted-$(HOST_PARTED_VER).tar.xz
+HOST_PARTED_PATCH = parted-$(PARTED_VER)-device-mapper.patch
+
+$(ARCHIVE)/$(HOST_PARTED_SOURCE):
+	$(DOWNLOAD) https://ftp.gnu.org/gnu/parted/$(HOST_PARTED_SOURCE)
+
+$(D)/host_parted: $(D)/directories $(ARCHIVE)/$(HOST_PARTED_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/parted-$(HOST_PARTED_VER)
+	$(UNTAR)/$(HOST_PARTED_SOURCE)
+	$(CHDIR)/parted-$(HOST_PARTED_VER); \
+		$(call apply_patches,$(HOST_PARTED_PATCH)); \
+		./configure $(SILENT_OPT) \
+			--prefix=$(HOST_DIR) \
+			--sbindir=$(HOST_DIR)/bin \
+			--disable-device-mapper \
+		; \
+		$(MAKE) install
+	$(REMOVE)/parted-$(HOST_PARTED_VER)
+	$(TOUCH)
+
+#
 # host_resize2fs
 #
 HOST_E2FSPROGS_VER = $(E2FSPROGS_VER)
@@ -207,6 +232,7 @@ BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
 ifeq ($(BOXARCH), arm)
+BOOTSTRAP += $(D)/host_parted
 BOOTSTRAP += $(D)/host_resize2fs
 BOOTSTRAP += $(D)/cortex_strings
 endif
