@@ -195,8 +195,10 @@ case $4 in
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
+if [ $BOXARCH != 'sh4' ]; then
 		echo "   3)  neutrino-tangos"
 		echo "   4)  neutrino-tangos (includes WLAN drivers)"
+fi
 		echo "   5)  neutrino-ddt with youtube"
 		echo "   6)  neutrino-ddt with youtube (includes WLAN drivers)"
 		read -p "Select Image to build (1-6)? ";;
