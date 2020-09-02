@@ -1,10 +1,26 @@
 #!/bin/bash
 
-mkdir -p build_logfile
-
 if [ ! -z $1 ] ; then
-#	time make $* 2>&1 | tee build_logfile/make_$(date +%d.%m.%Y_%H%M).log
-	time make $* 2>&1 | tee build_logfile/make.log
+	mkdir -p build_logfile
+#	LOGFILE=build_logfile/make_$(date +%d.%m.%Y_%H%M).log
+	LOGFILE=build_logfile/make.log
+
+	echo "--- DISTRIBUTION ---" > $LOGFILE
+	cat /etc/*release >> $LOGFILE
+
+	echo >> $LOGFILE
+	echo "----- GIT  REV -----" >> $LOGFILE
+	echo "rev: "$(git log | grep "^commit" | wc -l) >> $LOGFILE
+	echo "commit: "$(git log -1 --pretty=format:%H) >> $LOGFILE
+	echo "url: "$(git config --get remote.origin.url) >> $LOGFILE
+
+	echo >> $LOGFILE
+	echo "--- MAKE TARGETS ---" >> $LOGFILE
+	echo $* >> $LOGFILE
+
+	echo >> $LOGFILE
+	echo "---- BUILD  LOG ----" >> $LOGFILE
+	time make V=1 $* 2>&1 | tee -a $LOGFILE
 else
 	echo "Usage: makelog some_commands"
 fi
