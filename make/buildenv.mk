@@ -132,6 +132,14 @@ ifeq ($(BS_GCC_VER), 9.2.0)
 CROSSTOOL_GCC_VER = gcc-9.2.0
 endif
 
+ifeq ($(BS_GCC_VER), 9.3.0)
+CROSSTOOL_GCC_VER = gcc-9.3.0
+endif
+
+ifeq ($(BS_GCC_VER), 10.2.0)
+CROSSTOOL_GCC_VER = gcc-10.2.0
+endif
+
 TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
 TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
 

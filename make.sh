@@ -195,10 +195,10 @@ case $4 in
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
-if [ $BOXARCH != 'sh4' ]; then
-		echo "   3)  neutrino-tangos"
-		echo "   4)  neutrino-tangos (includes WLAN drivers)"
-fi
+		if [ $BOXARCH != 'sh4' ]; then
+			echo "   3)  neutrino-tangos"
+			echo "   4)  neutrino-tangos (includes WLAN drivers)"
+		fi
 		echo "   5)  neutrino-ddt with youtube"
 		echo "   6)  neutrino-ddt with youtube (includes WLAN drivers)"
 		read -p "Select Image to build (1-6)? ";;
@@ -228,15 +228,16 @@ echo "IMAGE=$IMAGE" >> config
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $5 in
-		[1-5]) REPLY=$5;;
+		[1-7]) REPLY=$5;;
 		*)	echo -e "\nSelect GCC version:"
 			echo -e "   \033[01;32m1)  GCC version 6.5.0\033[00m"
 			echo "   2)  GCC version 7.5.0"
 			echo "   3)  GCC version 8.3.0"
 			echo "   4)  GCC version 9.2.0"
 			echo "   5)  GCC version 8.4.0"
-#			echo "   6)  GCC version 9.3.0"
-			read -p "Select GCC version (1-5)? "
+			echo "   6)  GCC version 9.3.0"
+#			echo "   7)  GCC version 10.2.0"
+			read -p "Select GCC version (1-7)? "
 			REPLY="${REPLY:-1}";;
 	esac
 
@@ -246,7 +247,8 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		3) BS_GCC_VER="8.3.0";;
 		4) BS_GCC_VER="9.2.0";;
 		5) BS_GCC_VER="8.4.0";;
-#		6) BS_GCC_VER="9.3.0";;
+		6) BS_GCC_VER="9.3.0";;
+		7) BS_GCC_VER="10.2.0";;
 		*) BS_GCC_VER="6.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
