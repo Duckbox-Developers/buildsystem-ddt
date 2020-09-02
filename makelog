@@ -15,6 +15,10 @@ if [ ! -z $1 ] ; then
 	echo "url: "$(git config --get remote.origin.url) >> $LOGFILE
 
 	echo >> $LOGFILE
+	echo "--- MAKE  CONFIG ---" >> $LOGFILE
+	cat config >> $LOGFILE
+
+	echo >> $LOGFILE
 	echo "--- MAKE TARGETS ---" >> $LOGFILE
 	echo $* >> $LOGFILE
 
