@@ -17,7 +17,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 2           : Optimization (1-6)"
 	echo "Parameter 3           : External LCD support (1-4)"
 	echo "Parameter 4           : Neutrino variant (1-6)"
-	echo "Parameter 5 (ARM/MIPS): GCC Version (1-6)"
+	echo "Parameter 5 (ARM/MIPS): GCC Version (1-7)"
 	echo "Parameter 6 (ARM VU+) : Single/Multiboot (1-2)"
 	echo "Parameter 7 (ARM VU+) : old/actual kernel modules (1-2)"
 	exit
