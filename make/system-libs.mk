@@ -1639,6 +1639,7 @@ $(D)/libpopt: $(D)/bootstrap $(ARCHIVE)/$(LIBPOPT_SOURCE)
 #
 LIBROXML_VER = 3.0.2
 LIBROXML_SOURCE = libroxml-$(LIBROXML_VER).tar.gz
+LIBROXML_PATCH = libroxml-$(LIBROXML_VER)-gcc10.patch
 
 $(ARCHIVE)/$(LIBROXML_SOURCE):
 	$(DOWNLOAD) http://download.libroxml.net/pool/v3.x/$(LIBROXML_SOURCE)
@@ -1648,6 +1649,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 	$(REMOVE)/libroxml-$(LIBROXML_VER)
 	$(UNTAR)/$(LIBROXML_SOURCE)
 	$(CHDIR)/libroxml-$(LIBROXML_VER); \
+		$(call apply_patches, $(LIBROXML_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-shared \
