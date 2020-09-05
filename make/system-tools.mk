@@ -624,6 +624,7 @@ $(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
 JFSUTILS_VER = 1.1.15
 JFSUTILS_SOURCE = jfsutils-$(JFSUTILS_VER).tar.gz
 JFSUTILS_PATCH = jfsutils-$(JFSUTILS_VER).patch
+JFSUTILS_PATCH += jfsutils-$(JFSUTILS_VER)-gcc10_fix.patch
 
 $(ARCHIVE)/$(JFSUTILS_SOURCE):
 	$(DOWNLOAD) http://jfs.sourceforge.net/project/pub/$(JFSUTILS_SOURCE)
