@@ -5,18 +5,7 @@
  #include "roxml_internal.h"
  
 -memory_cell_t head_cell;
-+static memory_cell_t head_cell;
++extern memory_cell_t head_cell;
  
  /** \brief alloc memory function
   *
---- a/src/roxml_mem.c_org	2019-06-22 11:51:25.000000000 +0200
-+++ b/src/roxml_mem.c	2020-09-06 01:15:23.335384261 +0200
-@@ -13,7 +13,7 @@
- #include "roxml_mem.h"
- 
- /** \brief head of memory manager */
--memory_cell_t head_cell = { PTR_NONE, 0, NULL, 0, NULL, NULL };
-+static memory_cell_t head_cell = { PTR_NONE, 0, NULL, 0, NULL, NULL };
- 
- ROXML_STATIC ROXML_INT inline void roxml_release_last(void *data)
- {
