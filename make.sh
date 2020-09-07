@@ -32,22 +32,22 @@ case $1 in
 		echo "Target receivers:"
 		echo
 		echo "  sh4-based receivers"
-		echo "  Kathrein             Fortis"
-		echo "    1)  UFS-910          6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
-		echo "    2)  UFS-912          7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
-		echo "    3)  UFS-913          8)  HS8200          (formerly Atevio AV7500)"
+		echo "  Kathrein               Fortis"
+		echo "    1)  UFS-910            6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
+		echo "    2)  UFS-912            7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
+		echo "    3)  UFS-913            8)  HS8200          (formerly Atevio AV7500)"
 		echo "    4)  UFS-922"
 		echo
 		echo "  Topfield"
 		echo "    5)  TF77X0 HDPVR"
 		echo
-		echo "  AB IPBox             Cuberevo"
-		echo "    9)  55HD            12)  id."
-		echo "   10)  99HD            13)  mini"
-		echo "   11)  9900HD          14)  mini2"
-		echo "   12)  9000HD          15)  250HD"
-		echo "   13)  900HD           16)  2000HD"
-		echo "   14)  910HD           17)  3000HD / Xsarius Alpha"
+		echo "  AB IPBox               Cuberevo"
+		echo "    9)  55HD              12)  id."
+		echo "   10)  99HD              13)  mini"
+		echo "   11)  9900HD            14)  mini2"
+		echo "   12)  9000HD            15)  250HD"
+		echo "   13)  900HD             16)  2000HD"
+		echo "   14)  910HD             17)  3000HD / Xsarius Alpha"
 		echo "   15)  91HD"
 		echo
 		echo "  Fulan"
@@ -55,15 +55,13 @@ case $1 in
 		echo "   28)  Spark7162"
 		echo
 		echo "  arm-based receivers"
-		echo "  AX/Mut@nt            VU+"
-		echo -e "   \033[01;32m51)  HD51\033[00m            50)  VU+ Solo 4K     54)  VU+ Ultimo 4K"
-		echo "                        52)  VU+ Duo 4K      55)  VU+ Uno 4K SE"
-		echo "                        53)  VU+ Zero 4K     56)  VU+ Uno 4K"
-		echo "  Air Digital"
-		echo "   57)  ZGEMMA H7"
+		echo "  VU+"
+		echo "   41)  VU+ Solo 4K       42)  VU+ Uno 4K          43)  VU+ Ultimo 4K"
+		echo "   44)  VU+ Zero 4K       45)  VU+ Uno 4K SE       46)  VU+ Duo 4K"
+#		echo "   47)  VU+ Duo 4K SE"
 		echo
-		echo "  WWIO"
-		echo "   58)  WWIO BRE2ZE 4K"
+		echo "  AX/Mut@nt              Air Digital              WWIO"
+		echo -e "   \033[01;32m51)  HD51\033[00m              57)  ZGEMMA H7           58)  WWIO BRE2ZE 4K"
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
@@ -96,13 +94,15 @@ case "$REPLY" in
 	27) BOXARCH="sh4";BOXTYPE="spark";;
 	28) BOXARCH="sh4";BOXTYPE="spark7162";;
 
-	50) BOXARCH="arm";BOXTYPE="vusolo4k";;
+	41) BOXARCH="arm";BOXTYPE="vusolo4k";;
+	42) BOXARCH="arm";BOXTYPE="vuuno4k";;
+	43) BOXARCH="arm";BOXTYPE="vuultimo4k";;
+	44) BOXARCH="arm";BOXTYPE="vuzero4k";;
+	45) BOXARCH="arm";BOXTYPE="vuuno4kse";;
+	46) BOXARCH="arm";BOXTYPE="vuduo4k";;
+	47) BOXARCH="arm";BOXTYPE="vuduo4kse";;
+
 	51) BOXARCH="arm";BOXTYPE="hd51";;
-	52) BOXARCH="arm";BOXTYPE="vuduo4k";;
-	53) BOXARCH="arm";BOXTYPE="vuzero4k";;
-	54) BOXARCH="arm";BOXTYPE="vuultimo4k";;
-	55) BOXARCH="arm";BOXTYPE="vuuno4kse";;
-	56) BOXARCH="arm";BOXTYPE="vuuno4k";;
 	57) BOXARCH="arm";BOXTYPE="h7";;
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
@@ -257,7 +257,7 @@ fi
 ##############################################
 
 # Multiboot for VUPLUS_ARM
-if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
+if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuduo4kse' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
 	case $6 in
 		[1-2]) REPLY=$6;;
 		*)	echo -e "\nNormal or MultiBoot:"
