@@ -85,7 +85,7 @@ diff --git a/libavformat/utils.c b/libavformat/utils.c
 index c25eab4..02ce5e2 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -133,6 +133,25 @@ FF_ENABLE_DEPRECATION_WARNINGS
+@@ -134,6 +134,25 @@ FF_ENABLE_DEPRECATION_WARNINGS
  #endif
  #endif
  

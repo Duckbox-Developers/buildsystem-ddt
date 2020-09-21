@@ -15,7 +15,7 @@
          if (strcmp(seg->key, pls->key_url)) {
 +            char *key_url = NULL;
              AVIOContext *pb = NULL;
--            if (open_url(pls->parent, &pb, seg->key, c->avio_opts, opts, NULL) == 0) {
+-            if (open_url(pls->parent, &pb, seg->key, &c->avio_opts, opts, NULL) == 0) {
 +            if (NULL != c->key_uri_replace_old && \
 +                NULL != c-> key_uri_replace_new && \
 +                '\0' != c->key_uri_replace_old[0]) {
