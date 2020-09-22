@@ -289,7 +289,7 @@ neutrino-release-vuduo4kse:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
 ifeq ($(VU_MULTIBOOT), 1)
-	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7445d0_vuduo4kse $(RELEASE_DIR)/boot/vmlinuz-initrd-7439b0
+	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7445d0_vuduo4kse $(RELEASE_DIR)/boot/vmlinuz-initrd-7445d0
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
 endif
