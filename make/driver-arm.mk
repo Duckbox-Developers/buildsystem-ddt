@@ -36,7 +36,7 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
 ifeq ($(VU_NEW_MODULES), 1)
@@ -46,6 +46,11 @@ else
 #DRIVER_DATE = 20191014
 DRIVER_DATE = 20190212
 endif
+DRIVER_REV = r0
+endif
+ifeq ($(BOXTYPE), vuduo4kse)
+DRIVER_VER = 4.1.45
+DRIVER_DATE = 20200903
 DRIVER_REV = r0
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
@@ -103,7 +108,7 @@ $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(TOUCH)
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
@@ -119,6 +124,11 @@ $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 #
 ifeq ($(BOXTYPE), vuduo4k)
 UTIL_VER = 18.1
+UTIL_DATE = $(DRIVER_DATE)
+UTIL_REV = r0
+endif
+ifeq ($(BOXTYPE), vuduo4kse)
+UTIL_VER = 17.1
 UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 endif
@@ -167,6 +177,11 @@ GLES_VER = 18.1
 GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 endif
+ifeq ($(BOXTYPE), vuduo4kse)
+GLES_VER = 17.1
+GLES_DATE = $(DRIVER_DATE)
+GLES_REV = r0
+endif
 ifeq ($(BOXTYPE), vuuno4kse)
 GLES_VER = 17.1
 GLES_DATE = $(DRIVER_DATE)
@@ -212,6 +227,9 @@ $(D)/libgles: $(D)/bootstrap $(ARCHIVE)/$(GLES_SRC)
 #
 ifeq ($(BOXTYPE), vuduo4k)
 INITRD_DATE = 20181030
+endif
+ifeq ($(BOXTYPE), vuduo4kse)
+INITRD_DATE = 20200326
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 INITRD_DATE = 20170627

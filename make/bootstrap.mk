@@ -248,7 +248,7 @@ $(D)/bootstrap: $(BOOTSTRAP)
 # system-tools
 #
 SYSTEM_TOOLS  = $(D)/busybox
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 SYSTEM_TOOLS += $(D)/bash
 endif
 SYSTEM_TOOLS += $(D)/zlib

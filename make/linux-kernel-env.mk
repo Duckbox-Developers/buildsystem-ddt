@@ -18,12 +18,17 @@ KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vuduo4k)
 KERNEL_VER             = 4.1.45-1.17
 KERNEL_SRC_VER         = 4.1-1.17
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
+endif
+ifeq ($(BOXTYPE), vuduo4kse)
+KERNEL_VER             = 4.1.45-1.17
+KERNEL_SRC_VER         = 4.1-1.17
+KERNEL_PATCHES_ARM     = $(VUDUO4KSE_PATCHES)
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 KERNEL_VER             = 4.1.20-1.9

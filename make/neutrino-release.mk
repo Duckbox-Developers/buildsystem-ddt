@@ -281,6 +281,23 @@ endif
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
+# vuduo4kse
+#
+neutrino-release-vuduo4kse:
+	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo4kse $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_vuduo4kse $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
+ifeq ($(VU_MULTIBOOT), 1)
+	cp $(SKEL_ROOT)/release/vmlinuz-initrd-7445d0_vuduo4kse $(RELEASE_DIR)/boot/vmlinuz-initrd-7439b0
+else
+	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
+endif
+	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
+	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
+
+#
 # vuuno4kse
 #
 neutrino-release-vuuno4kse:
@@ -671,7 +688,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif
