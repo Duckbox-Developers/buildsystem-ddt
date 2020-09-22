@@ -7,12 +7,15 @@ model=`cat /proc/stb/info/model`
 [ -e /proc/stb/info/vumodel ] && vumodel=`cat /proc/stb/info/vumodel`
 [ "$model" == "dm8000" ] && [ "$vumodel" == "solo4k" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "duo4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "duo4kse" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "ultimo4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "uno4k" ] && model=$vumodel
+[ "$model" == "dm8000" ] && [ "$vumodel" == "uno4kse" ] && model=$vumodel
 [ "$model" == "dm8000" ] && [ "$vumodel" == "zero4k" ] && model=$vumodel
 
 case $model in
 	zero4k) BOOTPART=mmcblk0p4;;
-	duo4k) BOOTPART=mmcblk0p6;;
+	duo4k|duo4kse) BOOTPART=mmcblk0p6;;
 	*) BOOTPART=mmcblk0p1;;
 esac
 
