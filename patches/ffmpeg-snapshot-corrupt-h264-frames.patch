@@ -1,6 +1,6 @@
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -1456,6 +1456,11 @@
+@@ -1476,6 +1476,11 @@
          h->avctx->has_b_frames = sps->num_reorder_frames;
      }
 
