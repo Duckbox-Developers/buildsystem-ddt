@@ -1,0 +1,771 @@
+--- b/archival/tar.c
++++ a/archival/tar.c
+@@ -491,11 +491,10 @@
+ #  define exclude_file(excluded_files, file) 0
+ # endif
+ 
++static int FAST_FUNC writeFileToTarball(const char *fileName, struct stat *statbuf,
++			void *userData, int depth UNUSED_PARAM)
+-static int FAST_FUNC writeFileToTarball(struct recursive_state *state,
+-		const char *fileName,
+-		struct stat *statbuf)
+ {
++	struct TarBallInfo *tbInfo = (struct TarBallInfo *) userData;
+-	struct TarBallInfo *tbInfo = (struct TarBallInfo *) state->userData;
+ 	const char *header_name;
+ 	int inputFileFd = -1;
+ 
+@@ -701,7 +700,7 @@
+ 	/* Read the directory/files and iterate over them one at a time */
+ 	while (filelist) {
+ 		if (!recursive_action(filelist->data, recurseFlags,
++				writeFileToTarball, writeFileToTarball, tbInfo, 0)
+-				writeFileToTarball, writeFileToTarball, tbInfo)
+ 		) {
+ 			errorFlag = TRUE;
+ 		}
+--- b/coreutils/chmod.c
++++ a/coreutils/chmod.c
+@@ -65,14 +65,12 @@
+  * symbolic links encountered during recursive directory traversals.
+  */
+ 
++static int FAST_FUNC fileAction(const char *fileName, struct stat *statbuf, void* param, int depth)
+-static int FAST_FUNC fileAction(struct recursive_state *state,
+-		const char *fileName,
+-		struct stat *statbuf)
+ {
+ 	mode_t newmode;
+ 
+ 	/* match coreutils behavior */
++	if (depth == 0) {
+-	if (state->depth == 0) {
+ 		/* statbuf holds lstat result, but we need stat (follow link) */
+ 		if (stat(fileName, statbuf))
+ 			goto err;
+@@ -81,9 +79,9 @@
+ 			return TRUE;
+ 	}
+ 
++	newmode = bb_parse_mode((char *)param, statbuf->st_mode);
+-	newmode = bb_parse_mode((char *)state->userData, statbuf->st_mode);
+ 	if (newmode == (mode_t)-1)
++		bb_error_msg_and_die("invalid mode '%s'", (char *)param);
+-		bb_error_msg_and_die("invalid mode '%s'", (char *)state->userData);
+ 
+ 	if (chmod(fileName, newmode) == 0) {
+ 		if (OPT_VERBOSE
+@@ -138,7 +136,8 @@
+ 			OPT_RECURSE,    // recurse
+ 			fileAction,     // file action
+ 			fileAction,     // dir action
++			smode,          // user data
++			0)              // depth
+-			smode)          // user data
+ 		) {
+ 			retval = EXIT_FAILURE;
+ 		}
+--- b/coreutils/chown.c
++++ a/coreutils/chown.c
+@@ -97,10 +97,10 @@
+ 	chown_fptr chown_func;
+ };
+ 
++static int FAST_FUNC fileAction(const char *fileName, struct stat *statbuf,
++		void *vparam, int depth UNUSED_PARAM)
+-static int FAST_FUNC fileAction(struct recursive_state *state UNUSED_PARAM,
+-		const char *fileName, struct stat *statbuf)
+ {
++#define param  (*(struct param_t*)vparam)
+-#define param  (*(struct param_t*)state->userData)
+ #define opt option_mask32
+ 	uid_t u = (param.ugid.uid == (uid_t)-1L) ? statbuf->st_uid : param.ugid.uid;
+ 	gid_t g = (param.ugid.gid == (gid_t)-1L) ? statbuf->st_gid : param.ugid.gid;
+@@ -159,7 +159,8 @@
+ 				flags,          /* flags */
+ 				fileAction,     /* file action */
+ 				fileAction,     /* dir action */
++				&param,         /* user data */
++				0)              /* depth */
+-				&param)         /* user data */
+ 		) {
+ 			retval = EXIT_FAILURE;
+ 		}
+--- b/debianutils/run_parts.c
++++ a/debianutils/run_parts.c
+@@ -131,13 +131,12 @@
+ 	return (option_mask32 & OPT_r) ? -r : r;
+ }
+ 
++static int FAST_FUNC act(const char *file, struct stat *statbuf, void *args UNUSED_PARAM, int depth)
+-static int FAST_FUNC act(struct recursive_state *state,
+-		const char *file, struct stat *statbuf)
+ {
++	if (depth == 0)
+-	if (state->depth == 0)
+ 		return TRUE;
+ 
++	if (depth == 1
+-	if (state->depth == 1
+ 	 && (  !(statbuf->st_mode & (S_IFREG | S_IFLNK))
+ 	    || invalid_name(file)
+ 	    || (!(option_mask32 & OPT_l) && access(file, X_OK) != 0))
+@@ -200,7 +199,8 @@
+ 			ACTION_RECURSE|ACTION_FOLLOWLINKS,
+ 			act,            /* file action */
+ 			act,            /* dir action */
++			NULL,           /* user data */
++			0               /* depth */
+-			NULL            /* user data */
+ 	);
+ 
+ 	if (!names)
+--- b/editors/diff.c
++++ a/editors/diff.c
+@@ -803,11 +803,11 @@
+ };
+ 
+ /* This function adds a filename to dl, the directory listing. */
++static int FAST_FUNC add_to_dirlist(const char *filename,
++		struct stat *sb UNUSED_PARAM,
++		void *userdata, int depth UNUSED_PARAM)
+-static int FAST_FUNC add_to_dirlist(struct recursive_state *state,
+-		const char *filename,
+-		struct stat *sb UNUSED_PARAM)
+ {
++	struct dlist *const l = userdata;
+-	struct dlist *const l = state->userData;
+ 	const char *file = filename + l->len;
+ 	while (*file == '/')
+ 		file++;
+@@ -820,12 +820,12 @@
+ /* If recursion is not set, this function adds the directory
+  * to the list and prevents recursive_action from recursing into it.
+  */
++static int FAST_FUNC skip_dir(const char *filename,
++		struct stat *sb, void *userdata,
++		int depth)
+-static int FAST_FUNC skip_dir(struct recursive_state *state,
+-		const char *filename,
+-		struct stat *sb)
+ {
++	if (!(option_mask32 & FLAG(r)) && depth) {
++		add_to_dirlist(filename, sb, userdata, depth);
+-	if (!(option_mask32 & FLAG(r)) && state->depth) {
+-		add_to_dirlist(state, filename, sb);
+ 		return SKIP;
+ 	}
+ 	if (!(option_mask32 & FLAG(N))) {
+@@ -833,7 +833,7 @@
+ 		 * which do not exist on the "other side".
+ 		 * Testcase: diff -r /tmp /
+ 		 * (it would recurse deep into /proc without this code) */
++		struct dlist *const l = userdata;
+-		struct dlist *const l = state->userData;
+ 		filename += l->len;
+ 		if (filename[0]) {
+ 			struct stat osb;
+@@ -868,7 +868,7 @@
+ 		 * add_to_dirlist will remove it. */
+ 		list[i].len = strlen(p[i]);
+ 		recursive_action(p[i], ACTION_RECURSE | ACTION_FOLLOWLINKS,
++				add_to_dirlist, skip_dir, &list[i], 0);
+-				add_to_dirlist, skip_dir, &list[i]);
+ 		/* Sort dl alphabetically.
+ 		 * GNU diff does this ignoring any number of trailing dots.
+ 		 * We don't, so for us dotted files almost always are
+--- b/findutils/find.c
++++ a/findutils/find.c
+@@ -889,10 +889,10 @@
+ }
+ #endif
+ 
++static int FAST_FUNC fileAction(const char *fileName,
++		struct stat *statbuf,
++		void *userData UNUSED_PARAM,
++		int depth IF_NOT_FEATURE_FIND_MAXDEPTH(UNUSED_PARAM))
+-static int FAST_FUNC fileAction(
+-		struct recursive_state *state IF_NOT_FEATURE_FIND_MAXDEPTH(UNUSED_PARAM),
+-		const char *fileName,
+-		struct stat *statbuf)
+ {
+ 	int r;
+ 	int same_fs = 1;
+@@ -911,12 +911,12 @@
+ #endif
+ 
+ #if ENABLE_FEATURE_FIND_MAXDEPTH
++	if (depth < G.minmaxdepth[0]) {
+-	if (state->depth < G.minmaxdepth[0]) {
+ 		if (same_fs)
+ 			return TRUE; /* skip this, continue recursing */
+ 		return SKIP; /* stop recursing */
+ 	}
++	if (depth > G.minmaxdepth[1])
+-	if (state->depth > G.minmaxdepth[1])
+ 		return SKIP; /* stop recursing */
+ #endif
+ 
+@@ -927,7 +927,7 @@
+ 
+ #if ENABLE_FEATURE_FIND_MAXDEPTH
+ 	if (S_ISDIR(statbuf->st_mode)) {
++		if (depth == G.minmaxdepth[1])
+-		if (state->depth == G.minmaxdepth[1])
+ 			return SKIP;
+ 	}
+ #endif
+@@ -1570,7 +1570,8 @@
+ 				G.recurse_flags,/* flags */
+ 				fileAction,     /* file action */
+ 				fileAction,     /* dir action */
++				NULL,           /* user data */
++				0)              /* depth */
+-				NULL)           /* user data */
+ 		) {
+ 			G.exitstatus |= EXIT_FAILURE;
+ 		}
+--- b/findutils/grep.c
++++ a/findutils/grep.c
+@@ -656,9 +656,10 @@
+ 		llist_add_to(lst, new_grep_list_data(p, 0));
+ }
+ 
++static int FAST_FUNC file_action_grep(const char *filename,
++			struct stat *statbuf,
++			void* matched,
++			int depth UNUSED_PARAM)
+-static int FAST_FUNC file_action_grep(struct recursive_state *state UNUSED_PARAM,
+-		const char *filename,
+-		struct stat *statbuf)
+ {
+ 	FILE *file;
+ 
+@@ -685,7 +686,7 @@
+ 		return 0;
+ 	}
+ 	cur_file = filename;
++	*(int*)matched |= grep_file(file);
+-	*(int*)state->userData |= grep_file(file);
+ 	fclose(file);
+ 	return 1;
+ }
+@@ -701,8 +702,8 @@
+ 		| 0,
+ 		/* fileAction= */ file_action_grep,
+ 		/* dirAction= */ NULL,
++		/* userData= */ &matched,
++		0);
+-		/* userData= */ &matched
+-	);
+ 	return matched;
+ }
+ 
+--- b/include/libbb.h
++++ a/include/libbb.h
+@@ -441,18 +441,10 @@
+ 	ACTION_DANGLING_OK    = (1 << 5),
+ };
+ typedef uint8_t recurse_flags_t;
++extern int recursive_action(const char *fileName, unsigned flags,
++	int FAST_FUNC (*fileAction)(const char *fileName, struct stat* statbuf, void* userData, int depth),
++	int FAST_FUNC (*dirAction)(const char *fileName, struct stat* statbuf, void* userData, int depth),
++	void* userData, unsigned depth) FAST_FUNC;
+-typedef struct recursive_state {
+-	unsigned flags;
+-	unsigned depth;
+-	void *userData;
+-	int FAST_FUNC (*fileAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf);
+-	int FAST_FUNC  (*dirAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf);
+-} recursive_state_t;
+-int recursive_action(const char *fileName, unsigned flags,
+-	int FAST_FUNC (*fileAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf),
+-	int FAST_FUNC  (*dirAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf),
+-	void *userData
+-) FAST_FUNC;
+ 
+ extern int device_open(const char *device, int mode) FAST_FUNC;
+ enum { GETPTY_BUFSIZE = 16 }; /* more than enough for "/dev/ttyXXX" */
+--- b/libbb/recursive_action.c
++++ a/libbb/recursive_action.c
+@@ -21,9 +21,10 @@
+  * is so stinking huge.
+  */
+ 
++static int FAST_FUNC true_action(const char *fileName UNUSED_PARAM,
++		struct stat *statbuf UNUSED_PARAM,
++		void* userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-static int FAST_FUNC true_action(struct recursive_state *state UNUSED_PARAM,
+-		const char *fileName UNUSED_PARAM,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	return TRUE;
+ }
+@@ -64,7 +65,12 @@
+  * 1: stat(statbuf). Calls dirAction and optionally recurse on link to dir.
+  */
+ 
++int FAST_FUNC recursive_action(const char *fileName,
++		unsigned flags,
++		int FAST_FUNC (*fileAction)(const char *fileName, struct stat *statbuf, void* userData, int depth),
++		int FAST_FUNC (*dirAction)(const char *fileName, struct stat *statbuf, void* userData, int depth),
++		void* userData,
++		unsigned depth)
+-static int recursive_action1(recursive_state_t *state, const char *fileName)
+ {
+ 	struct stat statbuf;
+ 	unsigned follow;
+@@ -72,21 +78,24 @@
+ 	DIR *dir;
+ 	struct dirent *next;
+ 
++	if (!fileAction) fileAction = true_action;
++	if (!dirAction) dirAction = true_action;
++
+ 	follow = ACTION_FOLLOWLINKS;
++	if (depth == 0)
+-	if (state->depth == 0)
+ 		follow = ACTION_FOLLOWLINKS | ACTION_FOLLOWLINKS_L0;
++	follow &= flags;
+-	follow &= state->flags;
+ 	status = (follow ? stat : lstat)(fileName, &statbuf);
+ 	if (status < 0) {
+ #ifdef DEBUG_RECURS_ACTION
++		bb_error_msg("status=%d flags=%x", status, flags);
+-		bb_error_msg("status=%d flags=%x", status, state->flags);
+ #endif
++		if ((flags & ACTION_DANGLING_OK)
+-		if ((state->flags & ACTION_DANGLING_OK)
+ 		 && errno == ENOENT
+ 		 && lstat(fileName, &statbuf) == 0
+ 		) {
+ 			/* Dangling link */
++			return fileAction(fileName, &statbuf, userData, depth);
+-			return state->fileAction(state, fileName, &statbuf);
+ 		}
+ 		goto done_nak_warn;
+ 	}
+@@ -94,20 +103,20 @@
+ 	/* If S_ISLNK(m), then we know that !S_ISDIR(m).
+ 	 * Then we can skip checking first part: if it is true, then
+ 	 * (!dir) is also true! */
++	if ( /* (!(flags & ACTION_FOLLOWLINKS) && S_ISLNK(statbuf.st_mode)) || */
+-	if ( /* (!(state->flags & ACTION_FOLLOWLINKS) && S_ISLNK(statbuf.st_mode)) || */
+ 	 !S_ISDIR(statbuf.st_mode)
+ 	) {
++		return fileAction(fileName, &statbuf, userData, depth);
+-		return state->fileAction(state, fileName, &statbuf);
+ 	}
+ 
+ 	/* It's a directory (or a link to one, and followLinks is set) */
+ 
++	if (!(flags & ACTION_RECURSE)) {
++		return dirAction(fileName, &statbuf, userData, depth);
+-	if (!(state->flags & ACTION_RECURSE)) {
+-		return state->dirAction(state, fileName, &statbuf);
+ 	}
+ 
++	if (!(flags & ACTION_DEPTHFIRST)) {
++		status = dirAction(fileName, &statbuf, userData, depth);
+-	if (!(state->flags & ACTION_DEPTHFIRST)) {
+-		status = state->dirAction(state, fileName, &statbuf);
+ 		if (status == FALSE)
+ 			goto done_nak_warn;
+ 		if (status == SKIP)
+@@ -131,13 +140,11 @@
+ 			continue;
+ 
+ 		/* process every file (NB: ACTION_RECURSE is set in flags) */
++		s = recursive_action(nextFile, flags, fileAction, dirAction,
++						userData, depth + 1);
+-		state->depth++;
+-		s = recursive_action1(state, nextFile);
+ 		if (s == FALSE)
+ 			status = FALSE;
+ 		free(nextFile);
+-		state->depth--;
+-
+ //#define RECURSE_RESULT_ABORT -1
+ //		if (s == RECURSE_RESULT_ABORT) {
+ //			closedir(dir);
+@@ -146,36 +153,15 @@
+ 	}
+ 	closedir(dir);
+ 
++	if (flags & ACTION_DEPTHFIRST) {
++		if (!dirAction(fileName, &statbuf, userData, depth))
+-	if (state->flags & ACTION_DEPTHFIRST) {
+-		if (!state->dirAction(state, fileName, &statbuf))
+ 			goto done_nak_warn;
+ 	}
+ 
+ 	return status;
+ 
+  done_nak_warn:
++	if (!(flags & ACTION_QUIET))
+-	if (!(state->flags & ACTION_QUIET))
+ 		bb_simple_perror_msg(fileName);
+ 	return FALSE;
+ }
+-
+-int FAST_FUNC recursive_action(const char *fileName,
+-		unsigned flags,
+-		int FAST_FUNC (*fileAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf),
+-		int FAST_FUNC  (*dirAction)(struct recursive_state *state, const char *fileName, struct stat* statbuf),
+-		void *userData)
+-{
+-	/* Keeping a part of variables of recusive descent in a "state structure"
+-	 * instead of passing ALL of them down as parameters of recursive_action1()
+-	 * relieves register pressure, both in recursive_action1()
+-	 * and in every file/dirAction().
+-	 */
+-	recursive_state_t state;
+-	state.flags = flags;
+-	state.depth = 0;
+-	state.userData = userData;
+-	state.fileAction = fileAction ? fileAction : true_action;
+-	state.dirAction  =  dirAction ?  dirAction : true_action;
+-
+-	return recursive_action1(&state, fileName);
+-}
+--- b/modutils/depmod.c
++++ a/modutils/depmod.c
+@@ -32,11 +32,10 @@
+  *   for each depends, look through our list of full paths and emit if found
+  */
+ 
++static int FAST_FUNC parse_module(const char *fname, struct stat *sb UNUSED_PARAM,
++				void *data, int depth UNUSED_PARAM)
+-static int FAST_FUNC parse_module(struct recursive_state *state,
+-		const char *fname,
+-		struct stat *sb UNUSED_PARAM)
+ {
++	module_db *modules = data;
+-	module_db *modules = state->userData;
+ 	char *image, *ptr;
+ 	module_entry *e;
+ 
+@@ -202,12 +201,11 @@
+ 	memset(&modules, 0, sizeof(modules));
+ 	if (*argv) {
+ 		do {
++			parse_module(*argv, /*sb (unused):*/ NULL, &modules, 0);
+-			recursive_action(*argv, 0 /* no ACTION_RECURSE! */,
+-				parse_module, NULL, &modules);
+ 		} while (*++argv);
+ 	} else {
+ 		recursive_action(".", ACTION_RECURSE,
++				parse_module, NULL, &modules, 0);
+-				parse_module, NULL, &modules);
+ 	}
+ 
+ 	/* Generate dependency and alias files */
+--- b/modutils/modprobe-small.c
++++ a/modutils/modprobe-small.c
+@@ -751,7 +751,8 @@
+ 			ACTION_RECURSE, /* flags */
+ 			fileAction, /* file action */
+ 			NULL, /* dir action */
++			name, /* user data */
++			0 /* depth */
+-			name /* user data */
+ 		);
+ 		dbg1_error_msg("dirscan complete");
+ 		/* Module was not found, or load failed, or is_remove */
+--- b/modutils/modprobe.c
++++ a/modutils/modprobe.c
+@@ -235,9 +235,10 @@
+ 	}
+ }
+ 
++static int FAST_FUNC config_file_action(const char *filename,
++					struct stat *statbuf UNUSED_PARAM,
++					void *userdata UNUSED_PARAM,
++					int depth)
+-static int FAST_FUNC config_file_action(struct recursive_state *state,
+-		const char *filename,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	char *tokens[3];
+ 	parser_t *p;
+@@ -254,7 +255,7 @@
+ 	 * that we shouldn't recurse into /etc/modprobe.d/dir/
+ 	 * _subdirectories_:
+ 	 */
++	if (depth > 1)
+-	if (state->depth > 1)
+ 		return SKIP; /* stop recursing */
+ //TODO: instead, can use dirAction in recursive_action() to SKIP dirs
+ //on depth == 1 level. But that's more code...
+@@ -263,7 +264,7 @@
+ 	 * depth==0: read_config("modules.{symbols,alias}") must work,
+ 	 * "include FILE_NOT_ENDING_IN_CONF" must work too.
+ 	 */
++	if (depth != 0) {
+-	if (state->depth != 0) {
+ 		if (!is_suffixed_with(base, ".conf"))
+ 			goto error;
+ 	}
+@@ -328,7 +329,8 @@
+ static int read_config(const char *path)
+ {
+ 	return recursive_action(path, ACTION_RECURSE | ACTION_QUIET,
++				config_file_action, NULL, NULL,
++				/*depth:*/ 0);
+-				config_file_action, NULL, NULL);
+ }
+ 
+ static const char *humanly_readable_name(struct module_entry *m)
+--- b/networking/netstat.c
++++ a/networking/netstat.c
+@@ -272,9 +272,10 @@
+ 	return inode;
+ }
+ 
++static int FAST_FUNC add_to_prg_cache_if_socket(const char *fileName,
++		struct stat *statbuf UNUSED_PARAM,
++		void *pid_slash_progname,
++		int depth UNUSED_PARAM)
+-static int FAST_FUNC add_to_prg_cache_if_socket(struct recursive_state *state,
+-		const char *fileName,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	char *linkname;
+ 	long inode;
+@@ -283,17 +284,16 @@
+ 	if (linkname != NULL) {
+ 		inode = extract_socket_inode(linkname);
+ 		free(linkname);
++		if (inode >= 0)
++			prg_cache_add(inode, (char *)pid_slash_progname);
+-		if (inode >= 0) {
+-			char *pid_slash_progname = state->userData;
+-			prg_cache_add(inode, pid_slash_progname);
+-		}
+ 	}
+ 	return TRUE;
+ }
+ 
++static int FAST_FUNC dir_act(const char *fileName,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userData UNUSED_PARAM,
++		int depth)
+-static int FAST_FUNC dir_act(struct recursive_state *state,
+-		const char *fileName,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	const char *pid;
+ 	char *pid_slash_progname;
+@@ -301,7 +301,7 @@
+ 	char cmdline_buf[512];
+ 	int n, len;
+ 
++	if (depth == 0) /* "/proc" itself */
+-	if (state->depth == 0) /* "/proc" itself */
+ 		return TRUE; /* continue looking one level below /proc */
+ 
+ 	pid = fileName + sizeof("/proc/")-1; /* point after "/proc/" */
+@@ -321,8 +321,8 @@
+ 			ACTION_RECURSE | ACTION_QUIET,
+ 			add_to_prg_cache_if_socket,
+ 			NULL,
++			(void *)pid_slash_progname,
++			0);
+-			(void *)pid_slash_progname
+-	);
+ 	free(pid_slash_progname);
+ 
+ 	if (!n)
+@@ -337,7 +337,7 @@
+ 
+ 	prg_cache_loaded = 1;
+ 	load_ok = recursive_action("/proc", ACTION_RECURSE | ACTION_QUIET,
++				NULL, dir_act, NULL, 0);
+-				NULL, dir_act, NULL);
+ 	if (load_ok)
+ 		return;
+ 
+--- b/selinux/chcon.c
++++ a/selinux/chcon.c
+@@ -62,9 +62,11 @@
+ static char *range = NULL;
+ static char *specified_context = NULL;
+ 
++static int FAST_FUNC change_filedir_context(
+-static int FAST_FUNC change_filedir_context(struct recursive_state *state UNUSED_PARAM,
+ 		const char *fname,
++		struct stat *stbuf UNUSED_PARAM,
++		void *userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-		struct stat *stbuf UNUSED_PARAM)
+ {
+ 	context_t context = NULL;
+ 	security_context_t file_context = NULL;
+@@ -205,7 +207,7 @@
+ 					((option_mask32 & OPT_RECURSIVE) ? ACTION_RECURSE : 0),
+ 					change_filedir_context,
+ 					change_filedir_context,
++					NULL, 0) != TRUE)
+-					NULL) != TRUE)
+ 			errors = 1;
+ 	}
+ 	return errors;
+--- b/selinux/setfiles.c
++++ a/selinux/setfiles.c
+@@ -463,9 +463,11 @@
+  * This function is called by recursive_action on each file during
+  * the directory traversal.
+  */
++static int FAST_FUNC apply_spec(
+-static int FAST_FUNC apply_spec(struct recursive_state *state UNUSED_PARAM,
+ 		const char *file,
++		struct stat *sb,
++		void *userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-		struct stat *sb)
+ {
+ 	if (!follow_mounts) {
+ 		/* setfiles does not process across different mount points */
+@@ -533,7 +535,7 @@
+ 				ACTION_RECURSE,
+ 				apply_spec,
+ 				apply_spec,
++				NULL, 0) != TRUE
+-				NULL) != TRUE
+ 		) {
+ 			bb_error_msg("error while labeling %s", name);
+ 			goto err;
+--- b/util-linux/lspci.c
++++ a/util-linux/lspci.c
+@@ -37,9 +37,11 @@
+ /*
+  * PCI_SLOT_NAME PCI_CLASS: PCI_VID:PCI_DID [PCI_SUBSYS_VID:PCI_SUBSYS_DID] [DRIVER]
+  */
++static int FAST_FUNC fileAction(
+-static int FAST_FUNC fileAction(struct recursive_state *state UNUSED_PARAM,
+ 		const char *fileName,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	parser_t *parser;
+ 	char *tokens[3];
+@@ -115,7 +117,8 @@
+ 			ACTION_RECURSE,
+ 			fileAction,
+ 			NULL, /* dirAction */
++			NULL, /* userData */
++			0 /* depth */);
++
+-			NULL /* userData */
+-	);
+ 	return EXIT_SUCCESS;
+ }
+--- b/util-linux/lsusb.c
++++ a/util-linux/lsusb.c
+@@ -24,9 +24,11 @@
+ 
+ #include "libbb.h"
+ 
++static int FAST_FUNC fileAction(
+-static int FAST_FUNC fileAction(struct recursive_state *state UNUSED_PARAM,
+ 		const char *fileName,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	parser_t *parser;
+ 	char *tokens[4];
+@@ -78,8 +80,8 @@
+ 			ACTION_RECURSE,
+ 			fileAction,
+ 			NULL, /* dirAction */
++			NULL, /* userData */
++			0 /* depth */);
+-			NULL /* userData */
+-	);
+ 
+ 	return EXIT_SUCCESS;
+ }
+--- b/util-linux/mdev.c
++++ a/util-linux/mdev.c
+@@ -845,12 +845,13 @@
+ /* File callback for /sys/ traversal.
+  * We act only on "/sys/.../dev" (pseudo)file
+  */
++static int FAST_FUNC fileAction(const char *fileName,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userData,
++		int depth UNUSED_PARAM)
+-static int FAST_FUNC fileAction(struct recursive_state *state,
+-		const char *fileName,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
+ 	size_t len = strlen(fileName) - 4; /* can't underflow */
++	char *path = userData;	/* char array[PATH_MAX + SCRATCH_SIZE] */
+-	char *path = state->userData;	/* char array[PATH_MAX + SCRATCH_SIZE] */
+ 	char subsys[PATH_MAX];
+ 	int res;
+ 
+@@ -887,11 +888,12 @@
+ }
+ 
+ /* Directory callback for /sys/ traversal */
++static int FAST_FUNC dirAction(const char *fileName UNUSED_PARAM,
++		struct stat *statbuf UNUSED_PARAM,
++		void *userData UNUSED_PARAM,
++		int depth)
+-static int FAST_FUNC dirAction(struct recursive_state *state,
+-		const char *fileName UNUSED_PARAM,
+-		struct stat *statbuf UNUSED_PARAM)
+ {
++	return (depth >= MAX_SYSFS_DEPTH ? SKIP : TRUE);
+-	return (state->depth >= MAX_SYSFS_DEPTH ? SKIP : TRUE);
+ }
+ 
+ /* For the full gory details, see linux/Documentation/firmware_class/README
+@@ -1147,7 +1149,7 @@
+ 	/* Create all devices from /sys/dev hierarchy */
+ 	recursive_action("/sys/dev",
+ 			 ACTION_RECURSE | ACTION_FOLLOWLINKS,
++			 fileAction, dirAction, temp, 0);
+-			 fileAction, dirAction, temp);
+ }
+ 
+ #if ENABLE_FEATURE_MDEV_DAEMON
+--- b/util-linux/volume_id/get_devname.c
++++ a/util-linux/volume_id/get_devname.c
+@@ -102,9 +102,10 @@
+  * add a cache entry for this device.
+  * If device node does not exist, it will be temporarily created. */
+ static int FAST_FUNC
++uuidcache_check_device(const char *device,
++		struct stat *statbuf,
++		void *userData UNUSED_PARAM,
++		int depth UNUSED_PARAM)
+-uuidcache_check_device(struct recursive_state *state UNUSED_PARAM,
+-		const char *device,
+-		struct stat *statbuf)
+ {
+ 	/* note: this check rejects links to devices, among other nodes */
+ 	if (!S_ISBLK(statbuf->st_mode)
+@@ -144,13 +145,12 @@
+ 	 * This is unacceptably complex. Let's just scan /dev.
+ 	 * (Maybe add scanning of /sys/block/XXX/dev for devices
+ 	 * somehow not having their /dev/XXX entries created?) */
++	if (scan_devices)
+-	if (scan_devices) {
+ 		recursive_action("/dev", ACTION_RECURSE,
+ 			uuidcache_check_device, /* file_action */
+ 			NULL, /* dir_action */
++			NULL, /* userData */
++			0 /* depth */);
+-			NULL /* userData */
+-		);
+-	}
+ 
+ 	return uuidCache;
+ }
