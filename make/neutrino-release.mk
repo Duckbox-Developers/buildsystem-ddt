@@ -294,7 +294,6 @@ else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
 endif
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
-	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #

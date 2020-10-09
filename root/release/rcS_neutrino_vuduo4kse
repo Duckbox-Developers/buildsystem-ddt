@@ -72,13 +72,13 @@ fi
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 
 if [ ! -e /dev/brcm0 ]; then
-	/usr/bin/bp3flash.sh 2>/dev/null
 	insmod /lib/modules/procmk.ko
 	insmod /lib/modules/bcm_event.ko
 	insmod /lib/modules/dvb_base.ko
 	start-stop-daemon --start --quiet --exec /usr/bin/dvb_server -- &
 	mknod -m a=rw /dev/brcm0 c 30 0
-	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7444.ko /lib/modules/brcmfb.ko /lib/modules/wakeup_drv.ko -- &
+#	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7444.ko /lib/modules/brcmfb.ko /lib/modules/wakeup_drv.ko -- &
+	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7444.ko /lib/modules/brcmfb.ko -- &
 fi
 
 #insmod /lib/modules/fpga_directc.ko

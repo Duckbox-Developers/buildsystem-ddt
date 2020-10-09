@@ -58,7 +58,7 @@ case $1 in
 		echo "  VU+"
 		echo "   41)  VU+ Solo 4K       42)  VU+ Uno 4K          43)  VU+ Ultimo 4K"
 		echo "   44)  VU+ Zero 4K       45)  VU+ Uno 4K SE       46)  VU+ Duo 4K"
-#		echo "   47)  VU+ Duo 4K SE"
+		echo "   47)  VU+ Duo 4K SE"
 		echo
 		echo "  AX/Mut@nt              Air Digital              WWIO"
 		echo -e "   \033[01;32m51)  HD51\033[00m              57)  ZGEMMA H7           58)  WWIO BRE2ZE 4K"
