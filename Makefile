@@ -48,6 +48,7 @@ printenv:
 	@echo "BOXTYPE           : $(BOXTYPE)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
 ifneq ($(BOXARCH), sh4)
+	@echo "SWAPDATA          : $(shell [ $(SWAPDATA) == on ] && echo -e enabled || echo -e disabled)"
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 endif
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
