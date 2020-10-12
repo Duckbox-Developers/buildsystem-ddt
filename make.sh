@@ -228,7 +228,7 @@ echo "IMAGE=$IMAGE" >> config
 
 # dataswap linuxswap hd51/h7/bre2ze4k
 
-if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k']; then
+if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' ]; then
 	case $5 in
 		[1-2]) REPLY=$5;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
