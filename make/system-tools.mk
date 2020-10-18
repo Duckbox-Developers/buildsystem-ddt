@@ -34,7 +34,7 @@ $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
 	$(REMOVE)/busybox$(BB_SNAPSHOT)
 	set -e; if [ -d $(ARCHIVE)/busybox.git ]; \
-		then cd $(ARCHIVE)/busybox.git; git pull; \
+		then cd $(ARCHIVE)/busybox.git; git pull || true; \
 		else cd $(ARCHIVE); git clone git://git.busybox.net/busybox.git busybox.git; \
 		fi
 	cp -ra $(ARCHIVE)/busybox.git $(BUILD_TMP)/busybox$(BB_SNAPSHOT)
