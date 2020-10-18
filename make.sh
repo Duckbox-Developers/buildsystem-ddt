@@ -20,7 +20,6 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 5 (HD51/H7/BRE2ZE4K): Swap Data and Linux Swap (1-2)"
 	echo "Parameter 6 (ARM/MIPS)        : GCC Version (1-7)"
 	echo "Parameter 7 (ARM VU+)         : Single/Multiboot (1-2)"
-	echo "Parameter 8 (ARM VU+)         : old/actual kernel modules (1-2)"
 	exit
 fi
 
@@ -297,25 +296,6 @@ fi
 
 ##############################################
 
-# old/actual kernel modules for VUPLUS_ARM
-if [ $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' ]; then
-	case $8 in
-		[1-2]) REPLY=$8;;
-		*)	echo -e "\nOld or actual kernel modules:"
-			echo -e "   \033[01;32m1)  OLD kernel modules\033[00m"
-			echo "   2)  ACTUAL kernel modules"
-			read -p "Select modul version (1-2)? ";;
-	esac
-
-	case "$REPLY" in
-		1) VU_NEW_MODULES="0";;
-		2) VU_NEW_MODULES="1";;
-		*) VU_NEW_MODULES="0";;
-	esac
-	echo "VU_NEW_MODULES=$VU_NEW_MODULES" >> config
-fi
-
-##############################################
 echo " "
 make printenv
 ##############################################
