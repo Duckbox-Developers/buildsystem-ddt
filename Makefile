@@ -8,8 +8,6 @@ warn:
 	@echo "Aborting the build. Log in as a regular user and retry."
 else
 include make/buildenv.mk
-ifeq ($(MAINTAINER), $(MAIN_ID))
-else
 LC_ALL:=C
 LANG:=C
 export TOPDIR LC_ALL LANG
@@ -60,6 +58,7 @@ endif
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
+	@echo -e "LOCAL_OSCAM_FLAVOUR          : $(TERM_GREEN)$(OSCAM_FLAVOUR)$(TERM_NORMAL)"
 	@echo -e "LOCAL_LIBHAL_BUILD_OPTIONS   : $(TERM_GREEN)$(LOCAL_LIBHAL_BUILD_OPTIONS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_BUILD_OPTIONS : $(TERM_GREEN)$(LOCAL_NEUTRINO_BUILD_OPTIONS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_CFLAGS        : $(TERM_GREEN)$(LOCAL_NEUTRINO_CFLAGS)$(TERM_NORMAL)"
@@ -84,6 +83,10 @@ help:
 	@echo "* make crosstool           - build cross toolchain"
 	@echo "* make bootstrap           - prepares for building"
 	@echo "* make print-targets       - print out all available targets"
+	@echo ""
+	@echo "later, you might find these useful:"
+	@echo "* make check-self          - checkout the build system include Overwrite local changes"
+	@echo "* make check               - checkout the build system, tools, driver and flash include Overwrite local changes"
 	@echo ""
 	@echo "later, you might find these useful:"
 	@echo "* make update-self         - update the build system"
@@ -185,6 +188,43 @@ update:
 	fi
 	@echo;
 
+check-self:
+	git checkout -f
+
+check:
+	@if test -d $(BASE_DIR); then \
+		cd $(BASE_DIR)/; \
+		echo '==================================================================='; \
+		echo '      check $(GIT_NAME)-buildsystem git repository'; \
+		echo '==================================================================='; \
+		echo; \
+		$(GIT_CHECK); fi
+		@echo;
+	@if test -d $(DRIVER_DIR); then \
+		cd $(DRIVER_DIR)/; \
+		echo '==================================================================='; \
+		echo '      check $(GIT_NAME_DRIVER)-driver git repository'; \
+		echo '==================================================================='; \
+		echo; \
+		$(GIT_CHECK); fi
+		@echo;
+	@if test -d $(TOOLS_DIR); then \
+		cd $(TOOLS_DIR)/; \
+		echo '==================================================================='; \
+		echo '      check $(GIT_NAME_TOOLS)-tools git repository'; \
+		echo '==================================================================='; \
+		echo; \
+		$(GIT_CHECK); fi
+		@echo;
+	@if test -d $(FLASH_DIR); then \
+		cd $(FLASH_DIR)/; \
+		echo '==================================================================='; \
+		echo '      check $(GIT_NAME_FLASH)-flash git repository'; \
+		echo '==================================================================='; \
+		echo; \
+		$(GIT_CHECK); fi
+		@echo;
+
 all:
 	@echo "'make all' is not a valid target. Please read the documentation."
 
@@ -209,6 +249,7 @@ print-targets:
 PHONY += everything print-targets
 PHONY += all printenv .print-phony
 PHONY += update update-self
+PHONY += check check-self
 .PHONY: $(PHONY)
 
 # this makes sure we do not build top-level dependencies in parallel
@@ -217,5 +258,4 @@ PHONY += update update-self
 # parallel, which is useful on multi-processor / multi-core machines
 .NOTPARALLEL:
 
-endif
 endif

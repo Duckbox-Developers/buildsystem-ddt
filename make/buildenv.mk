@@ -34,6 +34,8 @@ GIT_NAME_DRIVER      ?= Duckbox-Developers
 GIT_NAME_TOOLS       ?= Duckbox-Developers
 GIT_NAME_FLASH       ?= Duckbox-Developers
 
+GIT_CHECK             = git checkout -f
+
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
 CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)-$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
 
