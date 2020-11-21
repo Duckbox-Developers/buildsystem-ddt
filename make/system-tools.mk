@@ -1277,7 +1277,7 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE)
 #
 # nfs_utils
 #
-NFS_UTILS_VER = 2.5.1
+NFS_UTILS_VER = 2.5.2
 NFS_UTILS_SOURCE = nfs-utils-$(NFS_UTILS_VER).tar.bz2
 NFS_UTILS_PATCH = nfs-utils-$(NFS_UTILS_VER).patch
 
