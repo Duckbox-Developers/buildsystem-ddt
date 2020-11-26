@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.33.0.git
-# Thu Nov 19 08:08:08 2020
+# Thu Nov 26 14:14:14 2020
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -330,6 +330,7 @@ CONFIG_UNIQ=y
 # CONFIG_UNLINK is not set
 CONFIG_USLEEP=y
 # CONFIG_UUDECODE is not set
+CONFIG_BASE32=y
 CONFIG_BASE64=y
 # CONFIG_UUENCODE is not set
 CONFIG_WC=y
