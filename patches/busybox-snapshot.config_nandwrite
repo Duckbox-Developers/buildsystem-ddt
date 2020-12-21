@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.33.0.git
-# Thu Nov 26 14:14:14 2020
+# Mon Dec 21 07:00:00 2020
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -54,6 +54,7 @@ CONFIG_EXTRA_LDFLAGS=""
 CONFIG_EXTRA_LDLIBS=""
 # CONFIG_USE_PORTABLE_CODE is not set
 # CONFIG_STACK_OPTIMIZATION_386 is not set
+CONFIG_STATIC_LIBGCC=y
 
 #
 # Installation Options ("make install" behavior)
