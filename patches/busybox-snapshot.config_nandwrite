@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
-# Busybox version: 1.33.0.git
-# Mon Dec 21 07:00:00 2020
+# Busybox version: 1.34.0.git
+# Fri Jan  1 21:33:33 2021
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -997,6 +997,7 @@ CONFIG_UDHCPC_DEFAULT_SCRIPT="/usr/share/udhcpc/default.script"
 #
 # Common options for DHCP applets
 #
+CONFIG_UDHCPC_DEFAULT_INTERFACE="eth0"
 CONFIG_FEATURE_UDHCP_PORT=y
 CONFIG_UDHCP_DEBUG=0
 CONFIG_UDHCPC_SLACK_FOR_BUGGY_SERVERS=80
