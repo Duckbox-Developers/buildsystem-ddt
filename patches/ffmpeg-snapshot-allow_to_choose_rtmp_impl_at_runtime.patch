@@ -1,6 +1,6 @@
 --- a/configure	2018-08-17 11:51:31.066805453 +0200
 +++ b/configure	2018-08-17 12:03:19.617555506 +0200
-@@ -3441,10 +3441,8 @@
+@@ -3443,10 +3443,8 @@
  # protocols
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="network"
-@@ -3457,20 +3456,18 @@
+@@ -3459,20 +3458,18 @@
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
