@@ -268,6 +268,7 @@ SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 SYSTEM_TOOLS += $(D)/ofgwrite
+SYSTEM_TOOLS += $(D)/f2fs-tools
 endif
 SYSTEM_TOOLS += $(D)/driver
 

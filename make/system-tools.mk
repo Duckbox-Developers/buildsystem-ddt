@@ -651,6 +651,33 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 	$(TOUCH)
 
 #
+# f2fs-tools
+#
+
+F2FS-TOOLS_VER = 1.14.0
+F2FS-TOOLS_SOURCE = f2fs-tools-$(F2FS-TOOLS_VER).tar.gz
+
+$(ARCHIVE)/$(F2FS-TOOLS_SOURCE):
+	$(DOWNLOAD) https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/$(F2FS-TOOLS_SOURCE)
+
+$(D)/f2fs-tools: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(F2FS-TOOLS_SOURCE)
+	$(REMOVE)/f2fs-tools-$(F2FS-TOOLS_VER)
+	$(UNTAR)/$(F2FS-TOOLS_SOURCE)
+	$(CHDIR)/f2fs-tools-$(F2FS-TOOLS_VER); \
+		autoreconf -fi; \
+		ac_cv_file__git=no \
+		$(CONFIGURE) \
+			--prefix= \
+			--mandir=/.remove \
+			--without-selinux \
+			--without-blkid \
+			; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REMOVE)/f2fs-tools-$(F2FS-TOOLS_VER)
+	$(TOUCH)
+
+#
 # ntfs-3g
 #
 NTFS_3G_VER = 2017.3.23
