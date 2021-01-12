@@ -2068,7 +2068,9 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 #
 # minisatip
 #
-$(D)/minisatip: $(D)/bootstrap $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISATIP_SOURCE)
+MINISATIP_PATCH = minisatip.patch
+
+$(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISATIP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/minisatip
 	set -e; if [ -d $(ARCHIVE)/minisatip.git ]; \
@@ -2077,6 +2079,7 @@ $(D)/minisatip: $(D)/bootstrap $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISAT
 		fi
 	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
 	$(CHDIR)/minisatip; \
+		$(call apply_patches,$(MINISATIP_PATCH)); \
 		$(BUILDENV) \
 		export CFLAGS="-pipe -Os -Wall -g0 -I$(TARGET_DIR)/usr/include"; \
 		export CPPFLAGS="-I$(TARGET_DIR)/usr/include"; \
