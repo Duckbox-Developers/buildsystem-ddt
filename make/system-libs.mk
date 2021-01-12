@@ -2055,6 +2055,28 @@ $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 	$(TOUCH)
 
 #
+# libdvbcsa
+#
+$(D)/libdvbcsa: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBCSA_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libdvbcsa
+	set -e; if [ -d $(ARCHIVE)/libdvbcsa.git ]; \
+		then cd $(ARCHIVE)/libdvbcsa.git; git pull; \
+		else cd $(ARCHIVE); git clone https://code.videolan.org/videolan/libdvbcsa.git libdvbcsa.git; \
+		fi
+	cp -ra $(ARCHIVE)/libdvbcsa.git $(BUILD_TMP)/libdvbcsa
+	$(CHDIR)/libdvbcsa; \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_LIBTOOL)/libdvbcsa.la
+	$(REMOVE)/libdvbcsa
+	$(TOUCH)
+
+#
 # libmodplug
 #
 LIBMODPLUG_VER = 0.8.8.4

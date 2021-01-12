@@ -2045,6 +2045,56 @@ $(D)/usb_modeswitch: $(D)/bootstrap $(D)/libusb $(D)/usb_modeswitch_data $(ARCHI
 	$(TOUCH)
 
 #
+# dvb-apps
+#
+DVB_APPS_PATCH = dvb-apps.patch
+
+$(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/dvb-apps
+	set -e; if [ -d $(ARCHIVE)/dvb-apps.git ]; \
+		then cd $(ARCHIVE)/dvb-apps.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/openpli-arm/dvb-apps.git dvb-apps.git; \
+		fi
+	cp -ra $(ARCHIVE)/dvb-apps.git $(BUILD_TMP)/dvb-apps
+	$(CHDIR)/dvb-apps; \
+		$(call apply_patches,$(DVB_APPS_PATCH)); \
+		$(BUILDENV) \
+		$(BUILDENV) $(MAKE) DESTDIR=$(TARGET_DIR); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REMOVE)/dvb-apps
+	$(TOUCH)
+
+#
+# minisatip
+#
+$(D)/minisatip: $(D)/bootstrap $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISATIP_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/minisatip
+	set -e; if [ -d $(ARCHIVE)/minisatip.git ]; \
+		then cd $(ARCHIVE)/minisatip.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/catalinii/minisatip.git minisatip.git; \
+		fi
+	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
+	$(CHDIR)/minisatip; \
+		$(BUILDENV) \
+		export CFLAGS="-pipe -Os -Wall -g0 -I$(TARGET_DIR)/usr/include"; \
+		export CPPFLAGS="-I$(TARGET_DIR)/usr/include"; \
+		export LDFLAGS="-L$(TARGET_DIR)/usr/lib"; \
+		./configure \
+			--host=$(TARGET) \
+			--build=$(BUILD) \
+			--enable-enigma \
+			--enable-static \
+		; \
+		$(MAKE); \
+	install -m 755 $(BUILD_TMP)/minisatip/minisatip $(TARGET_DIR)/usr/bin
+	install -d $(TARGET_DIR)/usr/share/minisatip
+	cp -a $(BUILD_TMP)/minisatip/html $(TARGET_DIR)/usr/share/minisatip
+	$(REMOVE)/minisatip
+	$(TOUCH)
+
+#
 # ofgwrite
 #
 #OFGWRITE_PATCH = ofgwrite.patch

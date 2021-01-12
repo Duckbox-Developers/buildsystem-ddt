@@ -1,0 +1,11 @@
+--- a/Makefile_org	2021-01-12 09:13:48.169234900 +0100
++++ b/Makefile	2021-01-12 10:59:31.449590959 +0100
+@@ -10,8 +10,6 @@
+ 
+ all clean install:
+ 	$(MAKE) -C lib $@
+-	$(MAKE) -C test $@
+-	$(MAKE) -C util $@
+ 
+ update:
+ 	@echo "Pulling changes & updating from master repository"
