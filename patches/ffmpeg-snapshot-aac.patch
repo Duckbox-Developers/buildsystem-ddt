@@ -22,7 +22,7 @@
      const uint16_t *revtab = s->revtab;
 --- a/libavcodec/aacps.c
 +++ b/libavcodec/aacps.c
-@@ -395,7 +395,7 @@
+@@ -396,7 +396,7 @@
      par[ 1] = AAC_HALF_SUM(par[ 0], par[ 1]);
  }
  
