@@ -2518,6 +2518,7 @@ $(D)/libgcrypt: $(D)/bootstrap $(D)/libgpg-error $(ARCHIVE)/$(LIBGCRYPT_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	mv $(TARGET_DIR)/usr/bin/libgcrypt-config $(HOST_DIR)/bin
 	$(REWRITE_LIBTOOL)/libgcrypt.la
 	$(REMOVE)/$(LIBGCRYPT_DIR)
 	$(TOUCH)
