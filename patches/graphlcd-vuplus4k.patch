@@ -80,7 +80,7 @@ new file mode 100644
 index 0000000..826843c
 --- /dev/null
 +++ b/glcddrivers/vuplus4k.c
-@@ -0,0 +1,268 @@
+@@ -0,0 +1,262 @@
 +/*
 + * GraphLCD driver library
 + *
@@ -137,8 +137,6 @@ index 0000000..826843c
 +
 +int cDriverVUPLUS4K::Init()
 +{
-+	int x;
-+
 +	width = config->width;
 +	if (width <= 0)
 +		width = lcd_read_value(XRES);
@@ -298,10 +296,6 @@ index 0000000..826843c
 +void cDriverVUPLUS4K::Refresh(bool refreshAll)
 +{
 +	int i;
-+	char fileName[256];
-+	char str[32];
-+	FILE * fp;
-+	unsigned char c;
 +
 +	if (CheckSetup() > 0)
 +		refreshAll = true;
