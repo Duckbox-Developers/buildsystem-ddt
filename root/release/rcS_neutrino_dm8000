@@ -74,7 +74,7 @@ echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 insmod /lib/modules/stb-core.ko
 insmod /lib/modules/helper.ko
 insmod /lib/modules/lcd.ko
-#/etc/init.d/usbtftdisplay.sh
+/etc/init.d/usbtftdisplay.sh
 insmod /lib/modules/tu1216.ko
 insmod /lib/modules/cxd1981.ko
 insmod /lib/modules/cu1216mk3.ko
