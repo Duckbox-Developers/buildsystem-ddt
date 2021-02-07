@@ -1440,7 +1440,7 @@ $(D)/procps_ng: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(PROCPS_NG_SOURCE)
 			--prefix= \
 		; \
 		$(MAKE); \
-		install -D -m 755 top/.libs/top $(TARGET_DIR)/bin/top; \
+		install -D -m 755 top/.libs/top $(TARGET_DIR)/usr/bin/top; \
 		install -D -m 755 ps/.libs/pscommand $(TARGET_DIR)/bin/ps; \
 		cp -a proc/.libs/libprocps.so* $(TARGET_LIB_DIR)
 	$(REMOVE)/procps-ng-$(PROCPS_NG_VER)
