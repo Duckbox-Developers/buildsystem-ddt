@@ -222,6 +222,41 @@ $(D)/host_resize2fs: $(D)/directories $(ARCHIVE)/$(HOST_E2FSPROGS_SOURCE)
 	$(TOUCH)
 
 #
+# host dm buildimage
+#
+BUILDIMAGE_PATCH = buildimage.patch
+
+$(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/buildimage
+	set -e; if [ -d $(ARCHIVE)/buildimage.git ]; \
+		then cd $(ARCHIVE)/buildimage.git; git pull; \
+		else cd $(ARCHIVE); git clone git://git.opendreambox.org/git/buildimage.git buildimage.git; \
+		fi
+	cp -ra $(ARCHIVE)/buildimage.git $(BUILD_TMP)/buildimage
+	$(CHDIR)/buildimage; \
+		$(call apply_patches,$(BUILDIMAGE_PATCH)); \
+		autoreconf -fi; \
+		./configure; \
+		$(MAKE); \
+	install -m 755 $(BUILD_TMP)/buildimage/src/buildimage $(HOST_DIR)/bin
+	$(REMOVE)/buildimage
+	$(TOUCH)
+
+#
+# dm8000 second stage loader #84
+#
+DM8000_2ND_SOURCE = secondstage-dm8000-84.bin
+DM8000_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM8000_2ND_SOURCE):
+	$(DOWNLOAD) $(DM8000_2ND_URL)
+
+$(D)/dm8000_2nd: $(ARCHIVE)/$(DM8000_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
 # bootstrap
 #
 BOOTSTRAP  = $(D)/directories

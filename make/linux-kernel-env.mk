@@ -81,6 +81,17 @@ KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), dm8000)
+KERNEL_VER             = 3.2
+KERNEL_TYPE            = dm8000
+KERNEL_SRC_VER         = 3.2.68
+KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
+KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
+KERNEL_CONFIG          = dm8000/dm8000_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+KERNEL_PATCHES_MIPS    = $(DM8000_PATCHES)
+endif
+
 # -----------------------------------------------------------------------------
 
 #

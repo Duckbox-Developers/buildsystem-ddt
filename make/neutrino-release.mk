@@ -397,6 +397,14 @@ neutrino-release-vuduo:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
 
+#
+# dm8000
+#
+neutrino-release-dm8000:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm8000 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm8000 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm8000/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
 python-iptv-install:
 	install -d $(RELEASE_DIR)/usr/bin; \
 	install -d $(RELEASE_DIR)/usr/include; \
@@ -699,7 +707,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm8000))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif

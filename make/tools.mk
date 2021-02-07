@@ -38,7 +38,7 @@ endif
 	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000))
 	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
@@ -544,7 +544,7 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000))
 TOOLS += $(D)/tools-oled_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))

@@ -49,6 +49,46 @@ VUDUO_PATCHES = \
 		mipsbox/dvbsky-t330.patch
 #		mipsbox/fixed_mtd.patch
 
+DM8000_PATCHES = \
+		mipsbox/dm8000/kernel-fake-3.2.patch \
+		mipsbox/dm8000/linux-dreambox-3.2-3c7230bc0819495db75407c365f4d1db70008044.patch \
+		mipsbox/dm8000/unionfs-2.6_for_3.2.62.patch \
+		mipsbox/dm8000/0001-correctly-initiate-nand-flash-ecc-config-when-old-2n.patch \
+		mipsbox/dm8000/0001-Revert-MIPS-Fix-potencial-corruption.patch \
+		mipsbox/dm8000/fadvise_dontneed_change.patch \
+		mipsbox/dm8000/fix-proc-cputype.patch \
+		mipsbox/dm8000/rtl8712-backport-b.patch \
+		mipsbox/dm8000/rtl8712-backport-c.patch \
+		mipsbox/dm8000/rtl8712-backport-d.patch \
+		mipsbox/dm8000/0007-CHROMIUM-make-3.82-hack-to-fix-differing-behaviour-b.patch \
+		mipsbox/dm8000/0008-MIPS-Fix-build-with-binutils-2.24.51.patch \
+		mipsbox/dm8000/0009-MIPS-Refactor-clear_page-and-copy_page-functions.patch \
+		mipsbox/dm8000/0010-BRCMSTB-Fix-build-with-binutils-2.24.51.patch \
+		mipsbox/dm8000/0011-staging-rtl8712-rtl8712-avoid-lots-of-build-warnings.patch \
+		mipsbox/dm8000/0001-brmcnand_base-disable-flash-BBT-on-64MB-nand.patch \
+		mipsbox/dm8000/0002-ubifs-add-config-option-to-use-zlib-as-default-compr.patch \
+		mipsbox/dm8000/em28xx_fix_terratec_entries.patch \
+		mipsbox/dm8000/em28xx_add_terratec_h5_rev3.patch \
+		mipsbox/dm8000/dvb-usb-siano-always-load-smsdvb.patch \
+		mipsbox/dm8000/dvb-usb-af9035.patch \
+		mipsbox/dm8000/dvb-usb-a867.patch \
+		mipsbox/dm8000/dvb-usb-rtl2832.patch \
+		mipsbox/dm8000/dvb_usb_disable_rc_polling.patch \
+		mipsbox/dm8000/dvb-usb-smsdvb_fix_frontend.patch \
+		mipsbox/dm8000/0001-it913x-backport-changes-to-3.2-kernel.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc6.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc7.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc8.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc9.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc10.patch \
+		mipsbox/dm8000/misc_latin1_to_utf8_conversions.patch \
+		mipsbox/dm8000/0001-dvb_frontend-backport-multistream-support.patch \
+		mipsbox/dm8000/genksyms_fix_typeof_handling.patch \
+		mipsbox/dm8000/0012-log2-give-up-on-gcc-constant-optimizations.patch \
+		mipsbox/dm8000/0013-cp1emu-do-not-use-bools-for-arithmetic.patch \
+		mipsbox/dm8000/0014-makefile-silence-packed-not-aligned-warn.patch \
+		mipsbox/dm8000/0015-fcrypt-fix-bitoperation-for-gcc.patch
+
 #
 # KERNEL
 #
@@ -77,7 +117,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), vuduo)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo dm8000))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux modules
@@ -93,6 +133,14 @@ ifeq ($(BOXTYPE), vuduo)
 	ln -s $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(TARGET_DIR)/boot/vmlinux
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), dm8000)
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-dm8000.gz"
+	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-dm8000.gz $(TARGET_DIR)/boot/
+	ln -sf vmlinux-3.2-dm8000.gz $(TARGET_DIR)/boot/vmlinux
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/source || true
 	$(TOUCH)
 endif
 
