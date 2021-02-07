@@ -26,7 +26,7 @@ fi
 ##############################################
 
 case $1 in
-	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9] | 6[0-9] | 7[0-9]) REPLY=$1;;
+	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9] | 6[0-9] | 7[0-9] | 8[0-9]) REPLY=$1;;
 	*)
 		clear
 		echo "Target receivers:"
@@ -65,8 +65,9 @@ case $1 in
 		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
+		echo "   80)  DM8000"
 		echo
-		read -p "Select target (1-70)? ";;
+		read -p "Select target (1-80)? ";;
 esac
 
 case "$REPLY" in
@@ -107,6 +108,7 @@ case "$REPLY" in
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
+	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
