@@ -66,17 +66,18 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 			--enable-echo \
 			--enable-const \
 			--enable-overwrite \
+			--enable-widec \
 		; \
 		$(MAKE) libs \
 			HOSTCC=gcc \
 			HOSTCCFLAGS="$(CFLAGS) -DHAVE_CONFIG_H -I../ncurses -DNDEBUG -D_GNU_SOURCE -I../include" \
 			HOSTLDFLAGS="$(LDFLAGS)"; \
 		$(MAKE) install.libs DESTDIR=$(TARGET_DIR)
-	mv $(TARGET_DIR)/usr/bin/ncurses6-config $(HOST_DIR)/bin
+	mv $(TARGET_DIR)/usr/bin/ncursesw6-config $(HOST_DIR)/bin
 	rm -f $(addprefix $(TARGET_LIB_DIR)/,libform* libmenu* libpanel*)
 	rm -f $(addprefix $(PKG_CONFIG_PATH)/,form.pc menu.pc panel.pc)
-	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncurses6-config
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ncurses.pc
+	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/ncursesw6-config
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ncursesw.pc
 	$(REMOVE)/ncurses-$(NCURSES_VER)
 	$(TOUCH)
 
