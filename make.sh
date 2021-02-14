@@ -252,11 +252,11 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $6 in
 		[1-7]) REPLY=$6;;
 		*)	echo -e "\nSelect GCC version:"
-			echo -e "   \033[01;32m1)  GCC version 6.5.0\033[00m"
+			echo "   1)  GCC version 6.5.0"
 			echo "   2)  GCC version 7.5.0"
 			echo "   3)  GCC version 8.3.0"
 			echo "   4)  GCC version 9.2.0"
-			echo "   5)  GCC version 8.4.0"
+			echo -e "   \033[01;32m5)  GCC version 8.4.0\033[00m"
 			echo "   6)  GCC version 9.3.0"
 			echo "   7)  GCC version 10.2.0"
 			read -p "Select GCC version (1-7)? "
@@ -271,7 +271,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		5) BS_GCC_VER="8.4.0";;
 		6) BS_GCC_VER="9.3.0";;
 		7) BS_GCC_VER="10.2.0";;
-		*) BS_GCC_VER="6.5.0";;
+		*) BS_GCC_VER="8.4.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
 fi
