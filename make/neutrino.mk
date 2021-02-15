@@ -96,7 +96,7 @@ N_CONFIG_OPTS += --enable-reschange
 endif
 
 ifeq ($(BOXTYPE), dm8000)
-N_CONFIG_OPTS += --disable-mips-acc
+N_CONFIG_OPTS += --disable-mips-acc --enable-lcd
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
