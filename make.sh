@@ -11,6 +11,16 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 ##############################################
+# check for link sh to bash instead of dash on Ubuntu (and possibly others)
+/bin/sh --version 2>/dev/null | grep bash -s -q
+if [ ! "$?" -eq "0" ]; then
+	echo -e "\033[00;31m=========================================================="
+	echo -e "===> ERROR - prepare_for_bs.sh not executet -> EXIT ! <==="
+	echo -e "==========================================================\033[0m"
+	exit
+fi
+
+##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                   : Target system (1-70)"
