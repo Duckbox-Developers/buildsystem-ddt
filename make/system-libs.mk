@@ -887,7 +887,7 @@ $(D)/libconfig: $(D)/bootstrap $(ARCHIVE)/$(LIBCONFIG_SOURCE)
 # ca-bundle
 #
 CA-BUNDLE_SOURCE = cacert.pem
-CA-BUNDLE_URL = https://curl.haxx.se/ca/$(CA-BUNDLE_SOURCE)
+CA-BUNDLE_URL = https://curl.se/ca/$(CA-BUNDLE_SOURCE)
 
 $(ARCHIVE)/$(CA-BUNDLE_SOURCE):
 	$(DOWNLOAD) $(CA-BUNDLE_URL)
@@ -895,7 +895,7 @@ $(ARCHIVE)/$(CA-BUNDLE_SOURCE):
 $(D)/ca-bundle: $(ARCHIVE)/$(CA-BUNDLE_SOURCE)
 	$(START_BUILD)
 	cd $(ARCHIVE); \
-		curl -s --remote-name --time-cond $(CA-BUNDLE_SOURCE) $(CA-BUNDLE_URL)
+		curl -s --remote-name --remote-time -z $(CA-BUNDLE_SOURCE) $(CA-BUNDLE_URL)
 	install -D -m 644 $(ARCHIVE)/$(CA-BUNDLE_SOURCE) $(TARGET_DIR)/$(CA_BUNDLE_DIR)/$(CA_BUNDLE)
 	$(TOUCH)
 
