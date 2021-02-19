@@ -14,7 +14,7 @@ fi
 # check for link sh to bash instead of dash on Ubuntu (and possibly others)
 /bin/sh --version 2>/dev/null | grep bash -s -q
 if [ ! "$?" -eq "0" ]; then
-	echo -e "\033[00;31m=========================================================="
+	echo -e "\033[01;31m=========================================================="
 	echo -e "===> ERROR - prepare-for-bs.sh not executet -> EXIT ! <==="
 	echo -e "==========================================================\033[0m"
 	exit
