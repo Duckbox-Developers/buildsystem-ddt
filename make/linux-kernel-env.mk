@@ -56,7 +56,7 @@ KERNEL_SRC_VER         = 3.14-1.8
 KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
 endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
+KERNEL_URL             = http://code.vuplus.com/download/release/kernel
 ifeq ($(VU_MULTIBOOT), 1)
 KERNEL_CONFIG          = $(BOXTYPE)_defconfig_multi
 else
@@ -75,7 +75,7 @@ KERNEL_VER             = 3.9.6
 KERNEL_TYPE            = vuduo
 KERNEL_SRC_VER         = 3.9.6
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
+KERNEL_URL             = http://code.vuplus.com/download/release/kernel
 KERNEL_CONFIG          = vuduo_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)

@@ -4,7 +4,7 @@ DRIVER_DATE = 20151124
 DRIVER_SRC = vuplus-dvb-modules-bm750-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://archive.vuplus.com/download/drivers/$(DRIVER_SRC)
+	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), dm8000)
