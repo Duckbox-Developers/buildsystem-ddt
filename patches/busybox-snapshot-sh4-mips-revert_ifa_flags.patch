@@ -11,7 +11,7 @@
  #endif
 --- b/networking/libiproute/ipaddress.c
 +++ a/networking/libiproute/ipaddress.c
-@@ -603,14 +603,6 @@
+@@ -601,14 +601,6 @@
  	return 0;
  }
  
@@ -26,7 +26,7 @@
  static int default_scope(inet_prefix *lcl)
  {
  	if (lcl->family == AF_INET) {
-@@ -626,13 +618,10 @@
+@@ -624,13 +616,10 @@
  	/* If you add stuff here, update ipaddr_full_usage */
  	static const char option[] ALIGN1 =
  		"peer\0""remote\0""broadcast\0""brd\0"
@@ -41,7 +41,7 @@
  	struct rtnl_handle rth;
  	struct {
  		struct nlmsghdr  n;
-@@ -641,8 +630,6 @@
+@@ -639,8 +628,6 @@
  	} req;
  	char *d = NULL;
  	char *l = NULL;
@@ -50,7 +50,7 @@
  	inet_prefix lcl;
  	inet_prefix peer;
  	int local_len = 0;
-@@ -650,8 +637,6 @@
+@@ -648,8 +635,6 @@
  	int brd_len = 0;
  	int any_len = 0;
  	bool scoped = 0;
@@ -59,7 +59,7 @@
  	unsigned int ifa_flags = 0;
  
  	memset(&req, 0, sizeof(req));
-@@ -664,9 +649,10 @@
+@@ -662,9 +647,10 @@
  	while (*argv) {
  		unsigned arg = index_in_strings(option, *argv);
  		/* if search fails, "local" is assumed */
@@ -71,7 +71,7 @@
  			if (peer_len) {
  				duparg(option_peer, *argv);
  			}
-@@ -679,7 +665,6 @@
+@@ -677,7 +663,6 @@
  			req.ifa.ifa_prefixlen = peer.bitlen;
  		} else if (arg <= 3) { /* broadcast, brd */
  			inet_prefix addr;
@@ -79,7 +79,7 @@
  			if (brd_len) {
  				duparg(option_broadcast, *argv);
  			}
-@@ -696,7 +681,6 @@
+@@ -694,7 +679,6 @@
  			}
  		} else if (arg == 4) { /* anycast */
  			inet_prefix addr;
@@ -87,7 +87,7 @@
  			if (any_len) {
  				duparg(option_anycast, *argv);
  			}
-@@ -706,39 +690,22 @@
+@@ -704,39 +687,22 @@
  			}
  			addattr_l(&req.n, sizeof(req), IFA_ANYCAST, &addr.data, addr.bytelen);
  			any_len = addr.bytelen;
@@ -131,7 +131,7 @@
  			if (local_len) {
  				duparg2("local", *argv);
  			}
-@@ -799,24 +766,6 @@
+@@ -797,24 +764,6 @@
  
  	req.ifa.ifa_index = xll_name_to_index(d);
  
@@ -201,41 +201,38 @@
  		return 0;
  	if (G_filter.label) {
  		const char *label;
-@@ -336,32 +333,28 @@
+@@ -334,32 +331,28 @@ static int FAST_FUNC print_addrinfo(const struct sockaddr_nl *who UNUSED_PARAM,
  		);
  	}
  	printf("scope %s ", rtnl_rtscope_n2a(ifa->ifa_scope));
-+	if (ifa->ifa_flags & IFA_F_SECONDARY) {
-+		ifa->ifa_flags &= ~IFA_F_SECONDARY;
 -	if (ifa_flags & IFA_F_SECONDARY) {
 -		ifa_flags &= ~IFA_F_SECONDARY;
++	if (ifa->ifa_flags & IFA_F_SECONDARY) {
++		ifa->ifa_flags &= ~IFA_F_SECONDARY;
  		printf("secondary ");
  	}
-+	if (ifa->ifa_flags & IFA_F_TENTATIVE) {
-+		ifa->ifa_flags &= ~IFA_F_TENTATIVE;
 -	if (ifa_flags & IFA_F_TENTATIVE) {
 -		ifa_flags &= ~IFA_F_TENTATIVE;
++	if (ifa->ifa_flags & IFA_F_TENTATIVE) {
++		ifa->ifa_flags &= ~IFA_F_TENTATIVE;
  		printf("tentative ");
  	}
-+	if (ifa->ifa_flags & IFA_F_DADFAILED) {
-+		ifa->ifa_flags &= ~IFA_F_DADFAILED;
 -	if (ifa_flags & IFA_F_DADFAILED) {
 -		ifa_flags &= ~IFA_F_DADFAILED;
++	if (ifa->ifa_flags & IFA_F_DADFAILED) {
++		ifa->ifa_flags &= ~IFA_F_DADFAILED;
  		printf("dadfailed ");
  	}
-+	if (ifa->ifa_flags & IFA_F_DEPRECATED) {
-+		ifa->ifa_flags &= ~IFA_F_DEPRECATED;
 -	if (ifa_flags & IFA_F_DEPRECATED) {
 -		ifa_flags &= ~IFA_F_DEPRECATED;
++	if (ifa->ifa_flags & IFA_F_DEPRECATED) {
++		ifa->ifa_flags &= ~IFA_F_DEPRECATED;
  		printf("deprecated ");
  	}
-+	if (!(ifa->ifa_flags & IFA_F_PERMANENT)) {
 -	if (!(ifa_flags & IFA_F_PERMANENT)) {
++	if (!(ifa->ifa_flags & IFA_F_PERMANENT)) {
  		printf("dynamic ");
  	} else
-+		ifa->ifa_flags &= ~IFA_F_PERMANENT;
-+	if (ifa->ifa_flags)
-+		printf("flags %02x ", ifa->ifa_flags);
 -		ifa_flags &= ~IFA_F_PERMANENT;
 -	if (ifa_flags & IFA_F_NOPREFIXROUTE) {
 -		ifa_flags &= ~IFA_F_NOPREFIXROUTE;
@@ -243,10 +240,13 @@
 -	}
 -	if (ifa_flags)
 -		printf("flags %02x ", ifa_flags);
++		ifa->ifa_flags &= ~IFA_F_PERMANENT;
++	if (ifa->ifa_flags)
++		printf("flags %02x ", ifa->ifa_flags);
  	if (rta_tb[IFA_LABEL])
- 		fputs((char*)RTA_DATA(rta_tb[IFA_LABEL]), stdout);
+ 		fputs_stdout((char*)RTA_DATA(rta_tb[IFA_LABEL]));
  	if (rta_tb[IFA_CACHEINFO]) {
-@@ -618,7 +611,7 @@
+@@ -616,7 +609,7 @@
  	/* If you add stuff here, update ipaddr_full_usage */
  	static const char option[] ALIGN1 =
  		"peer\0""remote\0""broadcast\0""brd\0"
@@ -255,7 +255,7 @@
  #define option_peer      option
  #define option_broadcast (option           + sizeof("peer") + sizeof("remote"))
  #define option_anycast   (option_broadcast + sizeof("broadcast") + sizeof("brd"))
-@@ -637,7 +630,6 @@
+@@ -635,7 +628,6 @@
  	int brd_len = 0;
  	int any_len = 0;
  	bool scoped = 0;
@@ -263,7 +263,7 @@
  
  	memset(&req, 0, sizeof(req));
  
-@@ -649,7 +641,7 @@
+@@ -647,7 +639,7 @@
  	while (*argv) {
  		unsigned arg = index_in_strings(option, *argv);
  		/* if search fails, "local" is assumed */
@@ -272,7 +272,7 @@
  			NEXT_ARG();
  
  		if (arg <= 1) { /* peer, remote */
-@@ -702,8 +694,6 @@
+@@ -700,8 +692,6 @@
  		} else if (arg == 7) { /* label */
  			l = *argv;
  			addattr_l(&req.n, sizeof(req), IFA_LABEL, l, strlen(l) + 1);
@@ -281,7 +281,7 @@
  		} else {
  			/* local (specified or assumed) */
  			if (local_len) {
-@@ -719,11 +709,6 @@
+@@ -717,11 +707,6 @@
  		argv++;
  	}
  
