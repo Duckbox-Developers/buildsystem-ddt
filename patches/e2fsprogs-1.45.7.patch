@@ -45,7 +45,7 @@
  	$(RM) -rf elfshared
 --- a/misc/Makefile.in
 +++ b/misc/Makefile.in
-@@ -164,10 +164,10 @@
+@@ -165,10 +165,10 @@
  	$(E) "	LD $@"
  	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o $(LIBCOM_ERR)
  
@@ -58,7 +58,7 @@
  
  tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
  		$(DEPLIBUUID) $(LIBEXT2FS)
-@@ -343,10 +343,10 @@
+@@ -344,10 +344,10 @@
  		$(STATIC_LIBS) $(STATIC_LIBE2P) $(STATIC_LIBUUID) \
  		$(LIBINTL) $(SYSLIBS) $(STATIC_LIBBLKID) $(LIBMAGIC)
  
@@ -73,7 +73,7 @@
  	$(E) "	LD $@"
 --- a/lib/et/Makefile.in
 +++ b/lib/et/Makefile.in
-@@ -25,8 +25,8 @@ SHARE_FILES= et_c.awk et_h.awk
+@@ -26,8 +26,8 @@ SHARE_FILES= et_c.awk et_h.awk
  LIBRARY= libcom_err
  LIBDIR= et
  
