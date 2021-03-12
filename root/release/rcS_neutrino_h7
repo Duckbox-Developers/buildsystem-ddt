@@ -62,11 +62,16 @@ fi
 # rpc.statd for nfs
 /etc/init.d/nfs-common start
 
+echo "[rcS] check boxmode"
+cat /proc/cmdline | grep -q 'boxmode=12'
+[ "$?" == "0" ] && BOXMODE=12 || BOXMODE=1
+echo "[rcS] boxmode=$BOXMODE"
+
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 insmod /lib/modules/h7_1.ko
 insmod /lib/modules/h7_2.ko
 insmod /lib/modules/h7_3.ko
-insmod /lib/modules/h7_4.ko
+insmod /lib/modules/h7_4.ko boxmode=$BOXMODE
 
 echo "Booting... DDT" > /dev/dbox/oled0
 
