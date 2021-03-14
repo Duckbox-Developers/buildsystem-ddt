@@ -1,6 +1,6 @@
 --- a/configure	2018-08-17 11:51:31.066805453 +0200
 +++ b/configure	2018-08-17 12:03:19.617555506 +0200
-@@ -3443,10 +3443,8 @@
+@@ -3445,10 +3445,8 @@
  # protocols
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -10,8 +10,8 @@
 -ffrtmphttp_protocol_conflict="librtmp_protocol"
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
- gopher_protocol_select="network"
-@@ -3459,20 +3458,18 @@
+ gopher_protocol_select="tcp_protocol"
+@@ -3462,20 +3461,18 @@
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
@@ -46,7 +46,7 @@
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
 --- a/libavformat/Makefile	2018-07-18 15:52:01.000000000 +0200
 +++ b/libavformat/Makefile	2018-08-17 12:06:16.348291303 +0200
-@@ -631,12 +631,12 @@
+@@ -632,12 +632,12 @@
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o
@@ -67,7 +67,7 @@
  OBJS-$(CONFIG_SRTP_PROTOCOL)             += srtpproto.o srtp.o
 --- a/libavformat/protocols.c	2018-08-17 12:07:59.489872867 +0200
 +++ b/libavformat/protocols.c	2018-08-17 12:08:24.450255607 +0200
-@@ -44,12 +44,12 @@
+@@ -45,12 +45,12 @@
  extern const URLProtocol ff_md5_protocol;
  extern const URLProtocol ff_pipe_protocol;
  extern const URLProtocol ff_prompeg_protocol;
