@@ -1,6 +1,6 @@
 --- a/libavformat/hls.c	2018-08-17 13:06:01.428702126 +0200
 +++ b/libavformat/hls.c	2018-08-17 13:06:15.077944569 +0200
-@@ -2146,8 +2146,10 @@
+@@ -2153,8 +2153,10 @@
      HLSContext *c = s->priv_data;
      int ret, i, minplaylist = -1;
  
