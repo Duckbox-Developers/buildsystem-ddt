@@ -6,7 +6,7 @@ PATH="/bin:/sbin:/usr/bin:/usr/sbin:/var/bin"
 TERM=xterm
 
 if [ ! -e /etc/localtime ]; then
-	TZ="UTC"		# Time Zone. Look at http://theory.uwinnipeg.ca/gnu/glibc/libc_303.html 
+	TZ="UTC"		# Time Zone. Look at http://theory.uwinnipeg.ca/gnu/glibc/libc_303.html
 				# for an explanation of how to set this to your local timezone.
 	export TZ
 fi
@@ -26,10 +26,11 @@ umask 022
 
 # aliase
 #BEGIN
-alias l='ls -al'
-alias ll='ls -l'
-alias dir='ls -lA'
 alias ..='cd ..'
+alias cmdl='cat /proc/cmdline'
+alias dir='ls -lA'
+alias ll='ls -l'
+alias l='ls -al'
 alias mc='mc -u'
 alias sc='setconsole'
 alias sr='setconsole -r'
