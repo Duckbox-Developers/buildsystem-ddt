@@ -100,9 +100,9 @@ $(D)/oscam.do_compile:
 	@touch $@
 
 $(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb oscam.do_prepare oscam.do_compile
-	rm -rf $(TARGET_DIR)/../OScam
-	mkdir $(TARGET_DIR)/../OScam
-	cp -pR $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR)/Distribution/* $(TARGET_DIR)/../OScam/
+	rm -rf $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
+	mkdir $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
+	cp -pR $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR)/Distribution/* $(TARGET_DIR)/../$(OSCAM_FLAVOUR)/
 	$(REMOVE)/oscam
 	$(TOUCH)
 
