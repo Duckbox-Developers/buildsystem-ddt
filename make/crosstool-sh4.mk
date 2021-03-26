@@ -68,14 +68,14 @@ $(TARGET_DIR)/lib/libc.so.6:
 	fi
 	if test -e $(CROSS_DIR)/target/usr/lib/libstdc++.so; then \
 		cp -a $(CROSS_DIR)/target/usr/lib/libstdc++.s*[!y] $(TARGET_DIR)/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGET_DIR)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGET_DIR)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGET_DIR)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGET_DIR)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGET_DIR)/usr/lib; \
-		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGET_DIR)/usr/lib; \
-		ln -sf $(CROSS_DIR)/target/usr/lib/libc.so $(TARGET_DIR)/usr/lib/libc.so; \
-		ln -sf $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGET_DIR)/usr/lib/libc_nonshared.a; \
+		cp -a $(CROSS_DIR)/target/usr/lib/libdl.so $(TARGET_LIB_DIR); \
+		cp -a $(CROSS_DIR)/target/usr/lib/libm.so $(TARGET_LIB_DIR); \
+		cp -a $(CROSS_DIR)/target/usr/lib/librt.so $(TARGET_LIB_DIR); \
+		cp -a $(CROSS_DIR)/target/usr/lib/libutil.so $(TARGET_LIB_DIR); \
+		cp -a $(CROSS_DIR)/target/usr/lib/libpthread.so $(TARGET_LIB_DIR); \
+		cp -a $(CROSS_DIR)/target/usr/lib/libresolv.so $(TARGET_LIB_DIR); \
+		ln -sf $(CROSS_DIR)/target/usr/lib/libc.so $(TARGET_LIB_DIR)/libc.so; \
+		ln -sf $(CROSS_DIR)/target/usr/lib/libc_nonshared.a $(TARGET_LIB_DIR)/libc_nonshared.a; \
 	fi
 	if test -e $(CROSS_DIR)/target/lib; then \
 		cp -a $(CROSS_DIR)/target/lib/*so* $(TARGET_DIR)/lib; \

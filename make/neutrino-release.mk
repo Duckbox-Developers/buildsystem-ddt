@@ -412,7 +412,7 @@ python-iptv-install:
 	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
 	install -d $(RELEASE_DIR)/$(PYTHON_DIR); \
 	cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR); \
-	cp -P $(TARGET_DIR)/usr/lib/libpython* $(RELEASE_DIR)/usr/lib; \
+	cp -P $(TARGET_LIB_DIR)/libpython* $(RELEASE_DIR)/usr/lib; \
 	cp -P $(TARGET_DIR)/usr/bin/python* $(RELEASE_DIR)/usr/bin; \
 	cp -a $(TARGET_DIR)/$(PYTHON_DIR)/* $(RELEASE_DIR)/$(PYTHON_DIR)/; \
 	cp -af $(TARGET_DIR)/usr/share/E2emulator $(RELEASE_DIR)/usr/share/; \
@@ -679,7 +679,7 @@ endif
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
 #	ln -s /var/tuxbox/plugins/libfx2.so $(RELEASE_DIR)/lib/libfx2.so
-	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
+	cp -R $(TARGET_LIB_DIR)/* $(RELEASE_DIR)/usr/lib/
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python$(PYTHON_VER),sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
@@ -815,8 +815,8 @@ endif
 		cp -f $(TARGET_DIR)/usr/bin/mDNSResponder $(RELEASE_DIR)/usr/bin; \
 		cp -f $(SKEL_ROOT)/etc/init.d/shairport $(RELEASE_DIR)/etc/init.d/shairport; \
 		chmod 755 $(RELEASE_DIR)/etc/init.d/shairport; \
-		cp -f $(TARGET_DIR)/usr/lib/libhowl.so* $(RELEASE_DIR)/usr/lib; \
-		cp -f $(TARGET_DIR)/usr/lib/libmDNSResponder.so* $(RELEASE_DIR)/usr/lib; \
+		cp -f $(TARGET_LIB_DIR)/libhowl.so* $(RELEASE_DIR)/usr/lib; \
+		cp -f $(TARGET_LIB_DIR)/libmDNSResponder.so* $(RELEASE_DIR)/usr/lib; \
 	fi
 
 #

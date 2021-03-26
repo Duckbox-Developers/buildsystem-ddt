@@ -6,8 +6,8 @@ driver-clean:
 	rm -f $(D)/driver
 
 driver-symlink:
-	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_DIR)/usr/include/linux
-	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_DIR)/usr/include/linux/dvb
+	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_INCLUDE_DIR)/linux
+	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_INCLUDE_DIR)/linux/dvb
 	touch $(D)/$(notdir $@)
 
 driver: $(D)/driver

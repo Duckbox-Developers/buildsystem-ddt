@@ -111,8 +111,8 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl
 			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
 		; \
 		$(MAKE) $(MAKE_OPTS) \
-			PYTHON_MODULES_INCLUDE="$(TARGET_DIR)/usr/include" \
-			PYTHON_MODULES_LIB="$(TARGET_DIR)/usr/lib" \
+			PYTHON_MODULES_INCLUDE="$(TARGET_INCLUDE_DIR)" \
+			PYTHON_MODULES_LIB="$(TARGET_LIB_DIR)" \
 			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(TARGET_DIR)" \
 			CROSS_COMPILE_TARGET=yes \
 			CROSS_COMPILE=$(TARGET) \
@@ -127,7 +127,7 @@ $(D)/python: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl
 		; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	ln -sf ../../libpython$(PYTHON_VER_MAJOR).so.1.0 $(TARGET_DIR)/$(PYTHON_DIR)/config/libpython$(PYTHON_VER_MAJOR).so; \
-	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
+	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_INCLUDE_DIR)/python
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(TOUCH)
@@ -768,8 +768,8 @@ $(D)/python_small: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/o
 			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
 		; \
 		$(MAKE) $(MAKE_OPTS) \
-			PYTHON_MODULES_INCLUDE="$(TARGET_DIR)/usr/include" \
-			PYTHON_MODULES_LIB="$(TARGET_DIR)/usr/lib" \
+			PYTHON_MODULES_INCLUDE="$(TARGET_INCLUDE_DIR)" \
+			PYTHON_MODULES_LIB="$(TARGET_LIB_DIR)" \
 			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(TARGET_DIR)" \
 			CROSS_COMPILE_TARGET=yes \
 			CROSS_COMPILE=$(TARGET) \
@@ -784,7 +784,7 @@ $(D)/python_small: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/o
 		; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	ln -sf ../../libpython$(PYTHON_VER_MAJOR).so.1.0 $(TARGET_DIR)/$(PYTHON_DIR)/config/libpython$(PYTHON_VER_MAJOR).so; \
-	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
+	ln -sf $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR) $(TARGET_INCLUDE_DIR)/python
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/python-2.7.pc
 	$(REMOVE)/Python-$(PYTHON_VER)
 	$(TOUCH)

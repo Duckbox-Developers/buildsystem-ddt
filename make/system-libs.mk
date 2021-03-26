@@ -403,13 +403,13 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 		$(MAKE) depend; \
 		$(MAKE) all; \
 		$(MAKE) install_sw INSTALL_PREFIX=$(TARGET_DIR)
-	chmod 0755 $(TARGET_DIR)/usr/lib/lib{crypto,ssl}.so.*
+	chmod 0755 $(TARGET_LIB_DIR)/lib{crypto,ssl}.so.*
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/openssl.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcrypto.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libssl.pc
 	cd $(TARGET_DIR) && rm -rf etc/ssl/man usr/bin/openssl usr/lib/engines
-	ln -sf libcrypto.so.1.0.0 $(TARGET_DIR)/usr/lib/libcrypto.so.0.9.8
-	ln -sf libssl.so.1.0.0 $(TARGET_DIR)/usr/lib/libssl.so.0.9.8
+	ln -sf libcrypto.so.1.0.0 $(TARGET_LIB_DIR)/libcrypto.so.0.9.8
+	ln -sf libssl.so.1.0.0 $(TARGET_LIB_DIR)/libssl.so.0.9.8
 	$(REMOVE)/openssl-$(OPENSSL_VER)
 	$(TOUCH)
 
@@ -470,8 +470,8 @@ $(D)/boost: $(D)/bootstrap $(ARCHIVE)/$(BOOST_SOURCE)
 	$(UNTAR)/$(BOOST_SOURCE)
 	$(CHDIR)/boost_$(BOOST_VER); \
 		$(call apply_patches, $(BOOST_PATCH)); \
-		rm -rf $(TARGET_DIR)/usr/include/boost; \
-		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGET_DIR)/usr/include/boost
+		rm -rf $(TARGET_INCLUDE_DIR)/boost; \
+		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGET_INCLUDE_DIR)/boost
 	$(REMOVE)/boost_$(BOOST_VER)
 	$(TOUCH)
 
@@ -596,8 +596,8 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		if [ ! -e $(TARGET_DIR)/usr/include/freetype ] ; then \
-			ln -sf freetype2 $(TARGET_DIR)/usr/include/freetype; \
+		if [ ! -e $(TARGET_INCLUDE_DIR)/freetype ] ; then \
+			ln -sf freetype2 $(TARGET_INCLUDE_DIR)/freetype; \
 		fi; \
 		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' \
 		    -e 's:^exec_prefix=.*:exec_prefix="$${prefix}":' \
@@ -774,7 +774,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 	$(REWRITE_LIBTOOL)/libjpeg.la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libjpeg.pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cjpeg djpeg jpegtran rdjpgcom wrjpgcom tjbench)
-	rm -f $(TARGET_DIR)/usr/lib/libturbojpeg* $(TARGET_DIR)/usr/include/turbojpeg.h $(PKG_CONFIG_PATH)/libturbojpeg.pc
+	rm -f $(TARGET_LIB_DIR)/libturbojpeg* $(TARGET_INCLUDE_DIR)/turbojpeg.h $(PKG_CONFIG_PATH)/libturbojpeg.pc
 	$(REMOVE)/libjpeg-turbo-$(LIBJPEG_TURBO_VER)
 	$(TOUCH)
 
@@ -1012,11 +1012,11 @@ $(D)/libsigc: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR); \
-		if [ -d $(TARGET_DIR)/usr/include/sigc++-2.0/sigc++ ] ; then \
-			ln -sf ./sigc++-2.0/sigc++ $(TARGET_DIR)/usr/include/sigc++; \
+		if [ -d $(TARGET_INCLUDE_DIR)/sigc++-2.0/sigc++ ] ; then \
+			ln -sf ./sigc++-2.0/sigc++ $(TARGET_INCLUDE_DIR)/sigc++; \
 		fi;
-		mv $(TARGET_DIR)/usr/lib/sigc++-2.0/include/sigc++config.h $(TARGET_DIR)/usr/include; \
-		rm -fr $(TARGET_DIR)/usr/lib/sigc++-2.0
+		mv $(TARGET_LIB_DIR)/sigc++-2.0/include/sigc++config.h $(TARGET_INCLUDE_DIR); \
+		rm -fr $(TARGET_LIB_DIR)/sigc++-2.0
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sigc++-2.0.pc
 	$(REWRITE_LIBTOOL)/libsigc-2.0.la
 	$(REMOVE)/libsigc++-$(LIBSIGC_VER)
@@ -1246,7 +1246,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libcharset.la
 	$(REWRITE_LIBTOOL)/libiconv.la
-	rm -f $(addprefix $(TARGET_DIR)/usr/lib/,preloadable_libiconv.so)
+	rm -f $(addprefix $(TARGET_LIB_DIR)/,preloadable_libiconv.so)
 	$(REMOVE)/libiconv-$(LIBICONV_VER)
 	$(TOUCH)
 
@@ -1296,8 +1296,8 @@ $(D)/fontconfig: $(D)/bootstrap $(D)/freetype $(D)/expat $(ARCHIVE)/$(FONTCONFIG
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--with-freetype-config=$(HOST_DIR)/bin/freetype-config \
-			--with-expat-includes=$(TARGET_DIR)/usr/include \
-			--with-expat-lib=$(TARGET_DIR)/usr/lib \
+			--with-expat-includes=$(TARGET_INCLUDE_DIR) \
+			--with-expat-lib=$(TARGET_LIB_DIR) \
 			--sysconfdir=/etc \
 			--disable-docs \
 		; \
@@ -1555,8 +1555,8 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR); \
-		if [ -d $(TARGET_DIR)/usr/include/libxml2/libxml ] ; then \
-			ln -sf ./libxml2/libxml $(TARGET_DIR)/usr/include/libxml; \
+		if [ -d $(TARGET_INCLUDE_DIR)/libxml2/libxml ] ; then \
+			ln -sf ./libxml2/libxml $(TARGET_INCLUDE_DIR)/libxml; \
 		fi;
 	mv $(TARGET_DIR)/usr/bin/xml2-config $(HOST_DIR)/bin
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libxml-2.0.pc
@@ -1583,7 +1583,7 @@ $(D)/libxslt: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBXSLT_SOURCE)
 	$(UNTAR)/$(LIBXSLT_SOURCE)
 	$(CHDIR)/libxslt-$(LIBXSLT_VER); \
 		$(CONFIGURE) \
-			CPPFLAGS="$(CPPFLAGS) -I$(TARGET_DIR)/usr/include/libxml2" \
+			CPPFLAGS="$(CPPFLAGS) -I$(TARGET_INCLUDE_DIR)/libxml2" \
 			--prefix=/usr \
 			--datarootdir=/.remove \
 			--enable-shared \
@@ -2235,7 +2235,7 @@ $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--libdir=$(TARGET_LIB_DIR) \
-			--includedir=$(TARGET_DIR)/usr/include \
+			--includedir=$(TARGET_INCLUDE_DIR) \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install
@@ -2368,7 +2368,7 @@ $(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBPLIST_SOURCE)
 			-DCMAKE_INSTALL_PREFIX="/usr" \
 			-DCMAKE_C_COMPILER="$(TARGET)-gcc" \
 			-DCMAKE_CXX_COMPILER="$(TARGET)-g++" \
-			-DCMAKE_INCLUDE_PATH="$(TARGET_DIR)/usr/include" \
+			-DCMAKE_INCLUDE_PATH="$(TARGET_INCLUDE_DIR)" \
 		; \
 		find . -name cmake_install.cmake -print0 | xargs -0 \
 		sed -i 's@SET(CMAKE_INSTALL_PREFIX "/usr/local")@SET(CMAKE_INSTALL_PREFIX "")@'; \
@@ -2559,6 +2559,6 @@ $(D)/glib_networking: $(D)/bootstrap $(D)/gnutls $(D)/libglib2 $(ARCHIVE)/$(GLIB
 			--localedir=/.remove \
 		; \
 		$(MAKE); \
-		$(MAKE) install prefix=$(TARGET_DIR) giomoduledir=$(TARGET_DIR)/usr/lib/gio/modules itlocaledir=$(TARGET_DIR)/.remove
+		$(MAKE) install prefix=$(TARGET_DIR) giomoduledir=$(TARGET_LIB_DIR)/gio/modules itlocaledir=$(TARGET_DIR)/.remove
 	$(REMOVE)/glib-networking-$(GLIB_NETWORKING_VER)
 	$(TOUCH)

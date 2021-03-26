@@ -369,9 +369,9 @@ $(D)/directories:
 	ln -sf ../init.d $(TARGET_DIR)/etc/rc.d/init.d
 	install -d $(TARGET_DIR)/lib/{lsb,firmware}
 	install -d $(TARGET_DIR)/usr/{bin,lib,sbin,share}
-	install -d $(TARGET_DIR)/usr/lib/pkgconfig
-	install -d $(TARGET_DIR)/usr/include/linux
-	install -d $(TARGET_DIR)/usr/include/linux/dvb
+	install -d $(TARGET_LIB_DIR)/pkgconfig
+	install -d $(TARGET_INCLUDE_DIR)/linux
+	install -d $(TARGET_INCLUDE_DIR)/linux/dvb
 	install -d $(TARGET_DIR)/var/{etc,lib,run}
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	install -d $(TARGET_DIR)/var/lib/{misc,nfs,opkg}
