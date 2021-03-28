@@ -56,6 +56,7 @@ NEUTRINO_PLUGINS += $(D)/neutrino-plugin-mediathek
 NEUTRINO_PLUGINS += $(D)/neutrino-plugin-xupnpd
 #NEUTRINO_PLUGINS += $(D)/neutrino-plugin-settings-update
 NEUTRINO_PLUGINS += $(LOCAL_NEUTRINO_PLUGINS)
+NMPP_PATCHES  = $(NEUTRINO_PLUGINS_PATCHES)
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-plugins
 
@@ -76,6 +77,8 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	sed -i -e 's#shellexec fx2#shellexec#g' $(SOURCE_DIR)/neutrino-plugins/Makefile.am
 endif
 	cp -ra $(SOURCE_DIR)/neutrino-plugins $(SOURCE_DIR)/neutrino-plugins.org
+	set -e; cd $(SOURCE_DIR)/neutrino-plugins; \
+		$(call apply_patches, $(NMPP_PATCHES))
 	@touch $@
 
 $(D)/neutrino-plugin.config.status: $(D)/bootstrap
