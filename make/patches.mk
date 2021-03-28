@@ -7,17 +7,17 @@ patch:
 	@make neutrino-plugins-patch
 
 neutrino-patch:
-	@printf "$(TERM_YELLOW)---> create $(NEUTRINO)-$(DATE).patch ... $(TERM_NORMAL)"
+	@printf "$(TERM_YELLOW)---> create $(NEUTRINO).patch ... $(TERM_NORMAL)"
 	$(shell cd $(SOURCE_DIR)/$(NEUTRINO) && git diff > $(BASE_DIR)/$(NEUTRINO).patch)
 	@printf "$(TERM_YELLOW)done\n$(TERM_NORMAL)"
 
 libstb-hal-patch:
-	@printf "$(TERM_YELLOW)---> create $(LIBSTB_HAL)-$(DATE).patch ... $(TERM_NORMAL)"
+	@printf "$(TERM_YELLOW)---> create $(LIBSTB_HAL).patch ... $(TERM_NORMAL)"
 	$(shell cd $(SOURCE_DIR)/$(LIBSTB_HAL) && git diff > $(BASE_DIR)/$(LIBSTB_HAL).patch)
 	@printf "$(TERM_YELLOW)done\n$(TERM_NORMAL)"
 
 neutrino-plugins-patch:
-	@printf "$(TERM_YELLOW)---> create $(LIBSTB_HAL)-$(DATE).patch ... $(TERM_NORMAL)"
+	@printf "$(TERM_YELLOW)---> create neutrino-plugins.patch ... $(TERM_NORMAL)"
 	$(shell cd $(SOURCE_DIR)/neutrino-plugins && git diff > $(BASE_DIR)/neutrino-plugins.patch)
 	@printf "$(TERM_YELLOW)done\n$(TERM_NORMAL)"
 
