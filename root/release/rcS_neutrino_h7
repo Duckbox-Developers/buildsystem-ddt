@@ -65,6 +65,9 @@ fi
 echo "[rcS] check boxmode"
 cat /proc/cmdline | grep -q 'boxmode=12'
 [ "$?" == "0" ] && BOXMODE=12 || BOXMODE=1
+if [ ! -e /var/tuxbox/plugins/stb-startup.conf ]; then
+	[ -a "$BOXMODE" == "12" ] && echo "boxmode_12=1" > /var/tuxbox/plugins/stb-startup.conf || echo "boxmode_12=0" > /var/tuxbox/plugins/stb-startup.conf
+fi
 echo "[rcS] boxmode=$BOXMODE"
 
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
