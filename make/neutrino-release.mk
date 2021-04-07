@@ -821,6 +821,15 @@ endif
 	fi
 
 #
+# dropbear
+#
+	if [ -d $(RELEASE_DIR)/etc/dropbear ]; then \
+		mkdir -p $(RELEASE_DIR)/.ssh; \
+		chmod 700 $(RELEASE_DIR)/.ssh; \
+		ln -s /etc/dropbear/authorized_keys $(RELEASE_DIR)/.ssh/authorized_keys; \
+	fi
+
+#
 # delete unnecessary files
 #
 ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4 mips))
