@@ -2,7 +2,7 @@ diff --git a/src/minisatip.c b/src/minisatip.c
 index 626cd27..1eee479 100644
 --- a/src/minisatip.c
 +++ b/src/minisatip.c
-@@ -1863,7 +1863,7 @@ int main(int argc, char *argv[]) {
+@@ -1872,7 +1872,7 @@ int main(int argc, char *argv[]) {
  int readBootID() {
      int did = 0;
      opts.bootid = 0;
@@ -11,7 +11,7 @@ index 626cd27..1eee479 100644
      __attribute__((unused)) int rv;
      if (f) {
          rv = fscanf(f, "%d %d", &opts.bootid, &did);
-@@ -1874,7 +1874,7 @@ int readBootID() {
+@@ -1883,7 +1883,7 @@ int readBootID() {
      opts.bootid++;
      if (opts.device_id < 1)
          opts.device_id = 1;
@@ -20,3 +20,17 @@ index 626cd27..1eee479 100644
      if (f) {
          fprintf(f, "%d %d", opts.bootid, opts.device_id);
          fclose(f);
+diff --git a/src/pmt.c b/src/pmt.c
+index 3ac7e00..afaf5c7 100644
+--- a/src/pmt.c
++++ b/src/pmt.c
+@@ -1951,8 +1951,8 @@ void emulate_add_all_pids(adapter *ad) {
+                             updated = 1;
+                         }
+ 
+-            int *forced_pids;
+             int forced_pids[] = {EMU_PIDS_ALL_ENFORCED_PIDS_LIST};
++            int i_forced = sizeof(forced_pids) / sizeof (int);
+             for (j = 0; j < i_forced; j++) {
+                 int fpid = forced_pids[j];
+                 LOG("%s: adding (enforced) pid %d to emulate all pids",
