@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.34.0.git
-# Sun Apr 11 18:33:33 2021
+# Fri Apr 16 08:20:00 2021
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -835,6 +835,7 @@ CONFIG_TIME=y
 # CONFIG_UBIRENAME is not set
 # CONFIG_VOLNAME is not set
 CONFIG_WATCHDOG=y
+# CONFIG_FEATURE_WATCHDOG_OPEN_TWICE is not set
 
 #
 # Networking Utilities
