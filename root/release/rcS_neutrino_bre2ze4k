@@ -14,8 +14,6 @@ EOF
   rm /var/etc/.firstboot
 fi
 
-echo "[rcS] init /dev"
-mount -t devtmpfs devtmpfs /dev
 mkdir -p /dev/pts
 
 echo "[rcS] starting mountall"
