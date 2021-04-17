@@ -8,8 +8,9 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.4.0 9.3.0 10.2.0))
-CROSSTOOL_NG_VER     = 4e5bc436
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.4.0 9.3.0 10.3.0))
+#CROSSTOOL_NG_VER     = 4e5bc436 # 10.2.0
+CROSSTOOL_NG_VER     = f582f1c2
 else
 CROSSTOOL_NG_VER     = 7bd6bb00
 endif
@@ -51,12 +52,14 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
 		chmod 0755 ct-ng; \
-		./ct-ng oldconfig; \
+		\
 		./ct-ng build
 	test -e $(CROSS_BASE)/$(TARGET)/lib || ln -sf sys-root/lib $(CROSS_BASE)/$(TARGET)/
 	rm -f $(CROSS_BASE)/$(TARGET)/sys-root/lib/libstdc++.so.6.0.*-gdb.py
 	$(REMOVE)/$(CROSSTOOL_NG_DIR)
 endif
+#		./ct-ng oldconfig; \
+
 
 # -----------------------------------------------------------------------------
 
