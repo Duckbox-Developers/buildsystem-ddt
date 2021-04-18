@@ -838,6 +838,8 @@ endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4))
 	rm -f $(RELEASE_DIR)/etc/mdev/mdev-mount-mmc-boot.sh
 	rm -f $(RELEASE_DIR)/etc/mdev/mdev-mount-mmc.sh
+	rm -f $(RELEASE_DIR)/sbin/fsck.ext4
+	rm -f $(RELEASE_DIR)/sbin/mkfs.ext4
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/jfs_fsck
