@@ -12,10 +12,9 @@ rt5370sta          # Ralink RT5370 USB WLAN
 8192cu             # Realtek RTL8192CU USB WLAN
 8712u              # Realtek RTL8712U USB WLAN
 #zd1201             # ZYDAS 1201 USB WLAN
-usbserial pl2303   # Prolific PL-2303 USB-to-serial
-usbserial ftdi_sio # FTDI_SIO USB-to-serial
-tun                # TUN network device
-cifs               # CIFS network driver
-jfs                # JFS file system driver
-ntfs               # NTFS file system driver (ro)
-
+pl2303             # Prolific PL-2303 USB-to-serial
+ftdi_sio           # FTDI_SIO USB-to-serial
+#tun                # TUN network device
+#cifs               # CIFS network driver
+#jfs                # JFS file system driver
+#ntfs               # NTFS file system driver (ro)
