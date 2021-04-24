@@ -8,7 +8,7 @@ rfkill cfg80211 r8188eu							# Realtek RTL8188EU USB WLAN
 rfkill cfg80211 mac80211 rtlwifi rtl8192c-common rtl_usb rtl8192cu	# Realtek RTL8192CU USB WLAN
 r8192u_usb								# Realtek RTL8192U USB WLAN
 r8712u									# Realtek RTL8712U USB WLAN
-pch341									# CH 341 USB-to-serial
+ch341									# CH 341 USB-to-serial
 cp210x									# CPX 210 USB-to-serial
 ftdi_sio								# FTDI_SIO USB-to-serial
 pl2303									# Prolific PL-2303 USB-to-serial
