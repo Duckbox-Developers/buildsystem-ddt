@@ -13,6 +13,6 @@ rt5370sta						# Ralink RT5370 USB WLAN
 8712u							# Realtek RTL8712U USB WLAN
 #zd1201							# ZYDAS 1201 USB WLAN
 #ch341							# CH 341 USB-to-serial
-#cp210x							# CPX 210 USB-to-serial
+#cp210x							# CP 210X USB-to-Network
 ftdi_sio						# FTDI_SIO USB-to-serial
 pl2303							# Prolific PL-2303 USB-to-serial
