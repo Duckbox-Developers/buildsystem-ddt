@@ -110,11 +110,11 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
+	cd $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP) && git checkout f0c7fa2c484e197dae05fbda70a15b5e2ce81e9a
 else
 	$(UNTAR)/$(FFMPEG_SOURCE)
 endif
 	$(CHDIR)/ffmpeg$(FFMPEG_SNAP); \
-		git checkout f0c7fa2c484e197dae05fbda70a15b5e2ce81e9a; \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffplay \
