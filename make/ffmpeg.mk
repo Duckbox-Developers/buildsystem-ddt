@@ -114,6 +114,7 @@ else
 	$(UNTAR)/$(FFMPEG_SOURCE)
 endif
 	$(CHDIR)/ffmpeg$(FFMPEG_SNAP); \
+		git checkout f0c7fa2c484e197dae05fbda70a15b5e2ce81e9a; \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
 			--disable-ffplay \
