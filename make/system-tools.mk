@@ -447,7 +447,7 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 ifeq ($(BOXARCH), sh4)
 UTIL_LINUX_MAJOR = 2.36
-UTIL_LINUX_MINOR = 2
+UTIL_LINUX_MINOR = .2
 else
 UTIL_LINUX_MAJOR = 2.37
 UTIL_LINUX_MINOR = -rc1
