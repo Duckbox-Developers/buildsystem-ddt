@@ -1,7 +1,13 @@
 #!/bin/sh
 while [ -z "$(mount | grep '/dev')" ]; do sleep 1; done
-LOG="logger -p user.info -t mdev-mount"
-WARN="logger -p user.warn -t mdev-mount"
+
+if [ ! -z "$(which logger)" ]; then
+	LOG="logger -p user.info -t mdev-mount"
+	WARN="logger -p user.warn -t mdev-mount"
+else
+	LOG="echo "
+	WARN="echo "
+fi
 
 model=`cat /proc/stb/info/model`
 [ -e /proc/stb/info/vumodel ] && vumodel=`cat /proc/stb/info/vumodel`
