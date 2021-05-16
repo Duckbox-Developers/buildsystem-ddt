@@ -28,7 +28,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 3                   : External LCD support (1-4)"
 	echo "Parameter 4                   : Neutrino variant (1-6)"
 	echo "Parameter 5 (HD51/H7/BRE2ZE4K): Swap Data and Linux Swap (1-2)"
-	echo "Parameter 6 (ARM/MIPS)        : GCC Version (1-7)"
+	echo "Parameter 6 (ARM/MIPS)        : GCC Version (1-8)"
 	echo "Parameter 7 (ARM VU+)         : Single/Multiboot (1-2)"
 	exit
 fi
@@ -260,7 +260,7 @@ fi
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $6 in
-		[1-7]) REPLY=$6;;
+		[1-8]) REPLY=$6;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0"
 			echo "   2)  GCC version 7.5.0"
@@ -269,7 +269,8 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 			echo -e "   \033[01;32m5)  GCC version 8.4.0\033[00m"
 			echo "   6)  GCC version 9.3.0"
 			echo "   7)  GCC version 10.3.0"
-			read -p "Select GCC version (1-7)? "
+			echo "   8)  GCC version 11.1.0"
+			read -p "Select GCC version (1-8)? "
 			REPLY="${REPLY:-1}";;
 	esac
 
@@ -281,6 +282,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		5) BS_GCC_VER="8.4.0";;
 		6) BS_GCC_VER="9.3.0";;
 		7) BS_GCC_VER="10.3.0";;
+		8) BS_GCC_VER="11.1.0";;
 		*) BS_GCC_VER="8.4.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config

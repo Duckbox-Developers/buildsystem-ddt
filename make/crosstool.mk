@@ -8,9 +8,10 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.4.0 9.3.0 10.3.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.4.0 9.3.0 10.3.0 11.1.0))
 #CROSSTOOL_NG_VER     = 4e5bc436 # 10.2.0
-CROSSTOOL_NG_VER     = f582f1c2
+#CROSSTOOL_NG_VER     = f582f1c2 # 10.3.0
+CROSSTOOL_NG_VER     =  f284f414
 else
 CROSSTOOL_NG_VER     = 7bd6bb00
 endif
