@@ -1,0 +1,11 @@
+--- a/libbb/xfuncs.c_org	2021-06-05 06:46:10.500970241 +0200
++++ b/libbb/xfuncs.c		2021-06-05 08:02:30.897212312 +0200
+@@ -303,7 +303,7 @@
+ 	return width;
+ }
+ 
+-int FAST_FUNC is_dumb_term(void)
++int FAST_FUNC is_TERM_dumb(void)
+ {
+ 	char *term = getenv("TERM");
+ 	return term && strcmp(term, "dumb") == 0;
