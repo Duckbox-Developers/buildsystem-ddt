@@ -379,7 +379,7 @@ $(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/po
 #
 # e2fsprogs
 #
-E2FSPROGS_VER = 1.45.7
+E2FSPROGS_VER = 1.46.2
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
 E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
 
@@ -420,6 +420,8 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 			--disable-tdb \
 			--disable-bmap-stats \
 			--disable-fuse2fs \
+			--disable-bmap-stats \
+			--disable-bmap-stats-ops \
 			--enable-elf-shlibs \
 			--enable-fsck \
 			--enable-libblkid \

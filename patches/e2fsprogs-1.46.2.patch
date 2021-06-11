@@ -1,0 +1,108 @@
+--- a/lib/blkid/blkid.pc.in
++++ b/lib/blkid/blkid.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: blkid
+ Description: Block device id library
+--- a/lib/uuid/uuid.pc.in
++++ b/lib/uuid/uuid.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: uuid
+ Description: Universally unique id library
+--- a/lib/Makefile.elf-lib
++++ b/lib/Makefile.elf-lib
+@@ -50,8 +50,6 @@ install-shlibs install:: $(ELF_LIB) installdirs-elf-lib $(DEP_INSTALL_SYMLINK)
+ 	$(E) "	SYMLINK $(libdir)/$(ELF_IMAGE).so"
+ 	$(Q) $(INSTALL_SYMLINK) $(ELF_INSTALL_DIR)/$(ELF_SONAME) \
+ 		$(libdir)/$(ELF_IMAGE).so $(DESTDIR)
+-	$(E) "	LDCONFIG"
+-	$(Q) -$(LDCONFIG)
+ 
+ install-strip: install
+ 	$(E) "	STRIP-LIB $(ELF_INSTALL_DIR)/$(ELF_LIB)"
+@@ -67,7 +65,6 @@ uninstall-shlibs uninstall::
+ 	$(RM) -f $(DESTDIR)$(ELF_INSTALL_DIR)/$(ELF_LIB) \
+ 		$(DESTDIR)$(ELF_INSTALL_DIR)/$(ELF_SONAME) \
+ 		$(DESTDIR)$(libdir)/$(ELF_IMAGE).so
+-	-$(LDCONFIG)
+ 
+ clean::
+ 	$(RM) -rf elfshared
+--- a/misc/Makefile.in
++++ b/misc/Makefile.in
+@@ -171,10 +171,10 @@
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o $(LIBCOM_ERR)
+ 
+-e2initrd_helper: e2initrd_helper.o $(DEPLIBS) $(DEPLIBBLKID) $(LIBEXT2FS)
++e2initrd_helper: e2initrd_helper.o $(DEPLIBS) $(DEPLIBBLKID) $(DEPLIBUUID) $(LIBEXT2FS)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o e2initrd_helper e2initrd_helper.o $(LIBS) \
+-		$(LIBBLKID) $(LIBEXT2FS) $(LIBINTL) $(SYSLIBS)
++		$(LIBBLKID) $(LIBUUID) $(LIBEXT2FS) $(LIBINTL) $(SYSLIBS)
+ 
+ tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
+ 		$(DEPLIBUUID) $(LIBEXT2FS)
+@@ -360,10 +360,10 @@
+ 		$(STATIC_LIBS) $(STATIC_LIBE2P) $(STATIC_LIBUUID) \
+ 		$(LIBINTL) $(SYSLIBS) $(STATIC_LIBBLKID) $(LIBMAGIC)
+ 
+-fsck: $(FSCK_OBJS) $(DEPLIBBLKID)
++fsck: $(FSCK_OBJS) $(DEPLIBBLKID) $(DEPLIBUUID)
+ 	$(E) "	LD $@"
+ 	$(Q) $(CC) $(ALL_LDFLAGS) -o fsck $(FSCK_OBJS) $(LIBBLKID) \
+-		$(LIBINTL) $(SYSLIBS)
++		$(LIBUUID) $(LIBINTL) $(SYSLIBS)
+ 
+ fsck.profiled: $(FSCK_OBJS) $(PROFILED_DEPLIBBLKID)
+ 	$(E) "	LD $@"
+--- a/lib/et/Makefile.in
++++ b/lib/et/Makefile.in
+@@ -26,8 +26,8 @@ SHARE_FILES= et_c.awk et_h.awk
+ LIBRARY= libcom_err
+ LIBDIR= et
+ 
+-ELF_VERSION = 2.1
+-ELF_SO_VERSION = 2
++ELF_VERSION = 0.0
++ELF_SO_VERSION = 0
+ ELF_IMAGE = libcom_err
+ ELF_MYDIR = et
+ ELF_INSTALL_DIR = $(root_libdir)
+--- a/lib/blkid/blkidP.h.org
++++ b/lib/blkid/blkidP.h
+@@ -110,7 +110,7 @@
+ extern char *blkid_strdup(const char *s);
+ extern char *blkid_strndup(const char *s, const int length);
+ 
+-#define BLKID_CACHE_FILE "/etc/blkid.tab"
++#define BLKID_CACHE_FILE "/dev/blkid.tab"
+ 
+ #define BLKID_ERR_IO	 5
+ #define BLKID_ERR_PROC	 9
+--- a/misc/blkid.c.org
++++ b/misc/blkid.c
+@@ -53,7 +53,7 @@
+ 	fprintf(out,
+ 		"usage:\t%s [-c <file>] [-ghlLv] [-o format] "
+ 		"[-s <tag>] [-t <token>]\n    [-w <file>] [dev ...]\n"
+-		"\t-c\tcache file (default: /etc/blkid.tab, /dev/null = none)\n"
++		"\t-c\tcache file (default: /dev/blkid.tab, /dev/null = none)\n"
+ 		"\t-h\tprint this usage message and exit\n"
+ 		"\t-g\tgarbage collect the blkid cache\n"
+ 		"\t-s\tshow specified tag(s) (default show all tags)\n"
