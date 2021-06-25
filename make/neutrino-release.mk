@@ -724,9 +724,12 @@ endif
 #		cp $(TARGET_DIR)/usr/local/bin/udpstreampes $(RELEASE_DIR)/usr/local/bin/; \
 #	fi
 #
-# channellist / tuxtxt
+# channellist / tuxtxt / controlscripts
 #
 	cp -aR $(TARGET_DIR)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
+ifeq ($(FLAVOUR), $(filter $(FLAVOUR),neutrino-dd-test neutrino-ddt-youtube))
+	cp -aR $(TARGET_DIR)/var/tuxbox/control/* $(RELEASE_DIR)/var/tuxbox/control
+endif
 #
 # copy root_neutrino
 #
