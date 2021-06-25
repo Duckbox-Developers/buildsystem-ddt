@@ -469,7 +469,7 @@ else
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 endif
 	install -d $(RELEASE_DIR)/var/net/epg
-	install -d $(RELEASE_DIR)/var/tuxbox/{config,locale,plugins,themes}
+	install -d $(RELEASE_DIR)/var/tuxbox/{config,control,locale,plugins,themes}
 	install -d $(RELEASE_DIR)/var/tuxbox/webtv
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
