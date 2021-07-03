@@ -14,7 +14,7 @@ diff --git a/networking/telnetd.c b/networking/telnetd.c
 index f06e958..27e6c93 100644
 --- a/networking/telnetd.c
 +++ b/networking/telnetd.c
-@@ -649,6 +649,161 @@
+@@ -650,6 +650,161 @@
  
  	errno = save_errno;
  }
@@ -176,7 +176,7 @@ index f06e958..27e6c93 100644
  
  int telnetd_main(int argc, char **argv) MAIN_EXTERNALLY_VISIBLE;
  int telnetd_main(int argc UNUSED_PARAM, char **argv)
-@@ -810,6 +965,13 @@
+@@ -811,6 +966,13 @@
  			goto again;
  		close_on_exec_on(fd);
  
