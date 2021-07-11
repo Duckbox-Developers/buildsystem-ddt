@@ -1796,8 +1796,6 @@ else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf
 #endif
 endif
-	install -d -m 0755 $(TARGET_DIR)/var/tuxbox
-	cp -r $(SKEL_ROOT)/var/tuxbox/lcd $(TARGET_DIR)/var/tuxbox
 	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
 	$(TOUCH)
 
