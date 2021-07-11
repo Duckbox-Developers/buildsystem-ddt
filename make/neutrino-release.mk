@@ -839,7 +839,7 @@ endif
 #
 # lcd4linux
 #
-ifeq ($(EXTERNAL_LCD), lcd4linux)
+ifeq ($(EXTERNAL_LCD), $(filter $(EXTERNAL_LCD), lcd4linux both))
 	if [ -d $(TARGET_DIR)/var/tuxbox/lcd ]; then \
 		cp -af $(TARGET_DIR)/var/tuxbox/lcd $(RELEASE_DIR)/var/tuxbox/; \
 		ln -s /usr/share/tuxbox/lcd $(TARGET_DIR)/var/tuxbox/lcd; \
