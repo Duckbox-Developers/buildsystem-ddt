@@ -768,6 +768,37 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 	$(TOUCH)
 
 #
+# socat
+#
+SOCAT_VER = 1.7.4.1
+SOCAT_SOURCE = socat-$(SOCAT_VER).tar.gz
+SOCAT_PATCH = socat-$(SOCAT_VER).patch
+
+$(ARCHIVE)/$(SOCAT_SOURCE):
+	$(DOWNLOAD) http://www.dest-unreach.org/socat/download/$(SOCAT_SOURCE)
+
+$(D)/socat: $(D)/bootstrap $(ARCHIVE)/$(SOCAT_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/socat-$(SOCAT_VER)
+	$(UNTAR)/$(SOCAT_SOURCE)
+	$(CHDIR)/socat-$(SOCAT_VER); \
+		$(call apply_patches, $(SOCAT_PATCH)); \
+		$(CONFIGURE) \
+			--target=$(TARGET) \
+			--prefix=/usr \
+			--disable-ip6 \
+			--disable-openssl \
+			--disable-tun \
+			--disable-libwrap \
+			--disable-filan \
+			--disable-sycls \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REMOVE)/socat-$(SOCAT_VER)
+	$(TOUCH)
+
+#
 # nano
 #
 NANO_VER = 2.2.6
