@@ -1520,9 +1520,9 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 #
 # ethtool
 #
-ETHTOOL_VER = 5.12
-ETHTOOL_PATCH = ethtool-$(ETHTOOL_VER).patch
+ETHTOOL_VER = 5.13
 ETHTOOL_SOURCE = ethtool-$(ETHTOOL_VER).tar.xz
+ETHTOOL_PATCH = ethtool-$(ETHTOOL_VER).patch
 
 $(ARCHIVE)/$(ETHTOOL_SOURCE):
 	$(DOWNLOAD) https://www.kernel.org/pub/software/network/ethtool/$(ETHTOOL_SOURCE)
