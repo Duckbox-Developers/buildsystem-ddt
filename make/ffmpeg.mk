@@ -11,35 +11,33 @@ endif
 ifeq ($(FFM), 1)
 ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_VER = snapshot
-FFMPEG_SNAP =
-FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-revert-proto.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
+FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-dxva2.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_edit_list_parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-increase_buffer_size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-libavutil-include-assembly-with-full-path-from-sourc.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-optimize_aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-recheck_discard_flags.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-rtsp.patch
+FFMPEG_SNAP =
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_VER = 4.4
 FFMPEG_SNAP = -$(FFMPEG_VER)
-FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-revert-proto.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
+FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-dxva2.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_edit_list_parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-increase_buffer_size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-libavutil-include-assembly-with-full-path-from-sourc.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-optimize_aac.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-recheck_discard_flags.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-rtsp.patch
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 else
 FFMPEG_VER = 4.3.2

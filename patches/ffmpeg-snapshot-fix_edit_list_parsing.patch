@@ -1,6 +1,3 @@
-Taapat: disable log to fix freezing on edit list parsing intruduced in:
-http://git.videolan.org/gitweb.cgi/ffmpeg.git/?p=ffmpeg.git;a=commitdiff;h=ca6cae73db207f17a0d5507609de12842d8f0ca3
-
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
 @@ -3621,8 +3621,10 @@
