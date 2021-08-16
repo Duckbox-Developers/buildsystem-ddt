@@ -1434,7 +1434,7 @@ $(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBNFSIDMAP_SOURCE)
 #
 # vsftpd
 #
-VSFTPD_VER = 3.0.3
+VSFTPD_VER = 3.0.5
 VSFTPD_SOURCE = vsftpd-$(VSFTPD_VER).tar.gz
 VSFTPD_PATCH = vsftpd-$(VSFTPD_VER).patch
 VSFTPD_PATCH += vsftpd-$(VSFTPD_VER)-find_libs.patch
