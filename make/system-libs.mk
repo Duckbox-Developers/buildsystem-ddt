@@ -1517,7 +1517,7 @@ $(D)/libsoup: $(D)/bootstrap $(D)/sqlite $(D)/libxml2 $(D)/libglib2 $(ARCHIVE)/$
 #
 # libxml2
 #
-LIBXML2_VER = 2.9.10
+LIBXML2_VER = 2.9.12
 LIBXML2_SOURCE = libxml2-$(LIBXML2_VER).tar.gz
 LIBXML2_PATCH = libxml2-$(LIBXML2_VER).patch
 
