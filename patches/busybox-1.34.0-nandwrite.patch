@@ -1,6 +1,6 @@
 --- a/miscutils/nandwrite.c
 +++ b/miscutils/nandwrite.c
-@@ -28,18 +28,16 @@
+@@ -26,18 +26,16 @@
  //kbuild:lib-$(CONFIG_NANDDUMP) += nandwrite.o
  
  //usage:#define nandwrite_trivial_usage
@@ -21,7 +21,7 @@
  //usage:     "\n	-o	Dump oob data"
  //usage:     "\n	-s ADDR	Start address"
  //usage:     "\n	-l LEN	Length"
-@@ -67,11 +65,10 @@
+@@ -65,11 +63,10 @@
  
  #define OPT_p  (1 << 0) /* nandwrite only */
  #define OPT_o  (1 << 0) /* nanddump only */
@@ -37,7 +37,7 @@
  
  #define BB_PADBAD (1 << 0)
  #define BB_SKIPBAD (1 << 1)
-@@ -131,12 +128,12 @@
+@@ -129,12 +126,12 @@
  	const char *opt_s = "0", *opt_f = "-", *opt_l, *opt_bb;
  
  	if (IS_NANDDUMP) {
@@ -52,7 +52,7 @@
  	}
  	argv += optind;
  
-@@ -152,9 +149,6 @@
+@@ -150,9 +147,6 @@
  	fd = xopen(argv[0], IS_NANDWRITE ? O_RDWR : O_RDONLY);
  	xioctl(fd, MEMGETINFO, &meminfo);
  

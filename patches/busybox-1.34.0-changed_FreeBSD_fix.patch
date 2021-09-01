@@ -1,0 +1,16 @@
+--- a/networking/traceroute.c
++++ b/networking/traceroute.c
+@@ -716,8 +716,13 @@
+ // Off: since we do not form the entire IP packet,
+ // but defer it to kernel, we can't set source port,
+ // and thus can't check it here in the reply
++#if defined(__FreeBSD__)
+ 			/* && up->uh_sport == ident */
+ 			 && up->uh_dport == htons(port + seq)
++#else
++			/* && up->source == ident */
++			 && up->dest == htons(port + seq)
++#endif
+ 			) {
+ 				return (type == ICMP_TIMXCEED ? -1 : code + 1);
+ 			}
