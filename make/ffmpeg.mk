@@ -601,13 +601,10 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-demuxer=vc1 \
 			--enable-demuxer=wav \
 			\
-			--disable-protocol=cache \
 			--disable-protocol=concat \
-			--disable-protocol=crypto \
 			--disable-protocol=data \
 			--disable-protocol=ftp \
 			--disable-protocol=gopher \
-			--disable-protocol=hls \
 			--disable-protocol=httpproxy \
 			--disable-protocol=md5 \
 			--disable-protocol=pipe \
