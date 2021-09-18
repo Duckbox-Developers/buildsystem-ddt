@@ -105,7 +105,6 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
-	cd $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP) && git checkout af581cf79d317e798482a095faae781142633f49
 else
 	$(UNTAR)/$(FFMPEG_SOURCE)
 endif
