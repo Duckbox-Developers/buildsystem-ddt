@@ -51,6 +51,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k))
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 endif
+	@echo "FFMPEG            : `([ "$(FFMPEG_EXPERIMENTAL)" == "1" ] && echo "EXPERIMENTAL" ) || ([ "$(FFMPEG_SNAPSHOT)" == "1" ] && echo "SNAPSHOT" ) || echo "STANDARD"`"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"

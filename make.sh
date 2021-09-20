@@ -23,13 +23,14 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                   : Target system (1-70)"
-	echo "Parameter 2                   : Optimization (1-6)"
-	echo "Parameter 3                   : External LCD support (1-4)"
-	echo "Parameter 4                   : Neutrino variant (1-6)"
-	echo "Parameter 5 (HD51/H7/BRE2ZE4K): Swap Data and Linux Swap (1-2)"
-	echo "Parameter 6 (ARM/MIPS)        : GCC Version (1-7)"
-	echo "Parameter 7 (ARM VU+)         : Single/Multiboot (1-2)"
+	echo "Parameter 1                     : Target system (1-70)"
+	echo "Parameter 2 (not UFS910/UFS922) : FFMPEG Version (1-3)"
+	echo "Parameter 3                     : Optimization (1-6)"
+	echo "Parameter 4                     : External LCD support (1-4)"
+	echo "Parameter 5                     : Neutrino variant (1-6)"
+	echo "Parameter 6 (HD51/H7/BRE2ZE4K)  : Swap Data and Linux Swap (1-2)"
+	echo "Parameter 7 (ARM/MIPS)          : GCC Version (1-7)"
+	echo "Parameter 8 (ARM VU+)           : Single/Multiboot (1-2)"
 	exit
 fi
 
@@ -148,8 +149,44 @@ fi
 
 ##############################################
 
-case $2 in
-	[1-6]) REPLY=$2;;
+if [ "$BOXARCH" == "sh4" ]; then
+	LOCAL_FFMPEG_BOXTYPE_LIST='octagon1008 fortis_hdbox cuberevo cuberevo_3000hd cuberevo_mini cuberevo_mini2 ufs912 ufs913 spark atevio7500'
+	for i in $LOCAL_FFMPEG_BOXTYPE_LIST; do
+		if [ "$BOXTYPE" == "$i" ]; then
+			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE
+			echo "LOCAL_FFMPEG_BOXTYPE_LIST=$LOCAL_FFMPEG_BOXTYPE_LIST" >> config
+		fi
+	done
+fi
+
+if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
+	case $2 in
+		[1-3]) REPLY=$2;;
+		*)	echo -e "\nFFMPEG version:"
+			echo -e "   \033[01;32m1)  FFMPEG 4.3.2\033[00m"
+			echo "   2)  FFMPEG 4.4 [experimental]"
+			echo "   3)  FFMPEG 4.5 [git snapshot]"
+			read -p "Select optimization (1-3)? ";;
+	esac
+
+	case "$REPLY" in
+		1)  FFMPEG_EXPERIMENTAL="0"
+		    FFMPEG_SNAPSHOT="0";;
+		2)  FFMPEG_EXPERIMENTAL="1"
+		    FFMPEG_SNAPSHOT="0";;
+		3)  FFMPEG_EXPERIMENTAL="0"
+		    FFMPEG_SNAPSHOT="1";;
+		*)  FFMPEG_EXPERIMENTAL="0"
+		    FFMPEG_SNAPSHOT="0";;
+	esac
+	echo "FFMPEG_EXPERIMENTAL=$FFMPEG_EXPERIMENTAL" >> config
+	echo "FFMPEG_SNAPSHOT=$FFMPEG_SNAPSHOT" >> config
+fi
+
+##############################################
+
+case $3 in
+	[1-6]) REPLY=$3;;
 	*)	echo -e "\nOptimization:"
 		echo -e "   \033[01;32m1)  optimization for size\033[00m"
 		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
@@ -181,8 +218,8 @@ echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 
 ##############################################
 
-case $3 in
-	[1-4]) REPLY=$3;;
+case $4 in
+	[1-4]) REPLY=$4;;
 	*)	echo -e "\nExternal LCD support:"
 		echo -e "   \033[01;32m1)  No external LCD\033[00m"
 		echo "   2)  graphlcd for external LCD"
@@ -202,8 +239,8 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 ##############################################
 
-case $4 in
-	[1-6]) REPLY=$4;;
+case $5 in
+	[1-6]) REPLY=$5;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
@@ -240,8 +277,8 @@ echo "IMAGE=$IMAGE" >> config
 # dataswap linuxswap hd51/h7/bre2ze4k
 
 if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' ]; then
-	case $5 in
-		[1-2]) REPLY=$5;;
+	case $6 in
+		[1-2]) REPLY=$6;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
 			echo -e "   \033[01;32m1)  Swap OFF\033[00m"
 			echo -e "   2)  Swap ON"
@@ -259,8 +296,8 @@ fi
 
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
-	case $6 in
-		[1-7]) REPLY=$6;;
+	case $7 in
+		[1-7]) REPLY=$7;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0"
 			echo "   2)  GCC version 7.5.0"
@@ -269,8 +306,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 			echo "   5)  GCC version 10.3.0"
 			echo "   6)  GCC version 11.2.0"
 #			echo "   7)  GCC version 12.0.0"
-			read -p "Select GCC version (1-7)? "
-			REPLY="${REPLY:-1}";;
+			read -p "Select GCC version (1-7)? ";;
 	esac
 
 	case "$REPLY" in
@@ -290,8 +326,8 @@ fi
 
 # Multiboot for VUPLUS_ARM
 if [ $BOXTYPE == 'vusolo4k' -o $BOXTYPE == 'vuduo4k' -o $BOXTYPE == 'vuduo4kse' -o $BOXTYPE == 'vuultimo4k' -o $BOXTYPE == 'vuuno4k' -o $BOXTYPE == 'vuuno4kse' -o $BOXTYPE == 'vuzero4k' ]; then
-	case $7 in
-		[1-2]) REPLY=$7;;
+	case $8 in
+		[1-2]) REPLY=$8;;
 		*)	echo -e "\nNormal or MultiBoot:"
 			echo -e "   \033[01;32m1)  Normal\033[00m"
 			echo "   2)  Multiboot"
