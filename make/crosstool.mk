@@ -27,7 +27,7 @@ crosstool:
 	make MAKEFLAGS=--no-print-directory crosstool-ng
 	if [ ! -e $(CROSSTOOL_NG_BACKUP) ]; then \
 		make crosstool-backup; \
-	fi;
+	fi
 
 crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 	$(START_BUILD)
@@ -35,30 +35,25 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 	$(GET-GIT-SOURCE) $(CROSSTOOL_NG_URL) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 	$(CPDIR)/$(CROSSTOOL_NG_DIR)
 	unset CONFIG_SITE LIBRARY_PATH CPATH C_INCLUDE_PATH PKG_CONFIG_PATH CPLUS_INCLUDE_PATH INCLUDE; \
+	ulimit -n 2048; \
 	$(CHDIR)/$(CROSSTOOL_NG_DIR); \
 		git checkout -q $(CROSSTOOL_NG_VER); \
 		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG).config .config; \
-		NUM_CPUS=$$(expr `getconf _NPROCESSORS_ONLN` \* 2); \
-		MEM_512M=$$(awk '/MemTotal/ {M=int($$2/1024/512); print M==0?1:M}' /proc/meminfo); \
-		test $$NUM_CPUS -gt $$MEM_512M && NUM_CPUS=$$MEM_512M; \
-		test $$NUM_CPUS = 0 && NUM_CPUS=1; \
-		sed -i "s@^CT_PARALLEL_JOBS=.*@CT_PARALLEL_JOBS=$$NUM_CPUS@" .config; \
+		sed -i "s|^CT_PARALLEL_JOBS=.*|CT_PARALLEL_JOBS=$(PARALLEL_JOBS)|" .config; \
 		\
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
 		export CT_NG_BASE_DIR=$(CROSS_BASE); \
 		export CT_NG_CUSTOM_KERNEL=$(KERNEL_DIR); \
-		test -f ./configure || ./bootstrap && \
+		test -f ./configure || ./bootstrap; \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
 		chmod 0755 ct-ng; \
-		\
+		./ct-ng oldconfig; \
 		./ct-ng build
 	test -e $(CROSS_BASE)/$(TARGET)/lib || ln -sf sys-root/lib $(CROSS_BASE)/$(TARGET)/
 	rm -f $(CROSS_BASE)/$(TARGET)/sys-root/lib/libstdc++.so.6.0.*-gdb.py
 	$(REMOVE)/$(CROSSTOOL_NG_DIR)
 endif
-#		./ct-ng oldconfig; \
-
 
 # -----------------------------------------------------------------------------
 
