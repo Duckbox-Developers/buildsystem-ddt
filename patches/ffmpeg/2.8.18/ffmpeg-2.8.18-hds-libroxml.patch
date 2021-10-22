@@ -1256,7 +1256,7 @@ diff --git a/libavformat/flvdec.c b/libavformat/flvdec.c
 index 07f7b68..afe7e51 100644
 --- a/libavformat/flvdec.c
 +++ b/libavformat/flvdec.c
-@@ -298,6 +298,11 @@ static int amf_get_string(AVIOContext *ioc, char *buffer, int buffsize)
+@@ -305,6 +305,11 @@ static int amf_get_string(AVIOContext *ioc, char *buffer, int buffsize)
      return length;
  }
  
