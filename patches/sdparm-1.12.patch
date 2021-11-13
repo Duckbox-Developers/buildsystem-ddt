@@ -1,0 +1,19 @@
+--- a/lib/sg_pt_linux_nvme.c_org	2021-01-04 07:17:04.000000000 +0100
++++ b/lib/sg_pt_linux_nvme.c	2021-11-13 13:44:49.383568790 +0100
+@@ -1910,7 +1910,7 @@
+ int
+ do_nvm_pt(struct sg_pt_base * vp, int submq, int timeout_secs, int verbose)
+ {
+-    if (vb) {
++    if (verbose) {
+         pr2ws("%s: not supported, ", __func__);
+ #ifdef HAVE_NVME
+         pr2ws("HAVE_NVME, ");
+@@ -1923,6 +1923,7 @@
+ #else
+         pr2ws("don't IGNORE_NVME");
+ #endif
++    }
+     if (vp) { }
+     if (submq) { }
+     if (timeout_secs) { }
