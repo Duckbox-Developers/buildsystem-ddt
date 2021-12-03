@@ -2158,3 +2158,43 @@ $(D)/ofgwrite: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite $(TARGET_DIR)/usr/bin
 	$(REMOVE)/ofgwrite-ddt
 	$(TOUCH)
+
+#
+# iptables
+#
+IPTABLES_VER = 1.8.7
+IPTABLES_SOURCE = iptables-$(IPTABLES_VER).tar.bz2
+
+$(ARCHIVE)/$(IPTABLES_SOURCE):
+	$(DOWNLOAD) https://netfilter.org/pub/iptables/$(IPTABLES_SOURCE)
+
+$(D)/iptables: $(D)/bootstrap $(ARCHIVE)/$(IPTABLES_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/iptables-$(IPTABLES_VER)
+	$(UNTAR)/$(IPTABLES_SOURCE)
+	$(CHDIR)/iptables-$(IPTABLES_VER); \
+		$(BUILDENV) \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--infodir=/.remove \
+			--localedir=/.remove \
+			--mandir=/.remove \
+			--docdir=/.remove \
+			--htmldir=/.remove \
+			--dvidir=/.remove \
+			--pdfdir=/.remove \
+			--psdir=/.remove \
+			--disable-nftables \
+			--disable-devel \
+			--disable-connlabel \
+			--disable-ipv6 \
+			--enable-shared=no \
+			--without-pkgconfigdir \
+			--without-xtlibdir \
+			--without-xt-lock-name \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REMOVE)/iptables-$(IPTABLES_VER)
+	$(TOUCH)
