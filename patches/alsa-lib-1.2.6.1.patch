@@ -1,0 +1,113 @@
+--- a/utils/alsa.pc.in
++++ b/utils/alsa.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@prefix@
+-exec_prefix=@exec_prefix@
+-libdir=@libdir@
+-includedir=@includedir@
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
+ 
+ Name: alsa
+ Description: Advanced Linux Sound Architecture (ALSA) - Library
+diff --git a/src/control/control.c b/src/control/control.c
+index 91415b51..ca302df6 100644
+--- a/src/control/control.c
++++ b/src/control/control.c
+@@ -1569,11 +1569,14 @@ int snd_ctl_open(snd_ctl_t **ctlp, const char *name, int mode)
+ 	int err;
+ 
+ 	assert(ctlp && name);
++#ifdef BUILD_UCM
+ 	if (_snd_is_ucm_device(name)) {
+ 		name = uc_mgr_alibcfg_by_device(&top, name);
+ 		if (name == NULL)
+ 			return -ENODEV;
+-	} else {
++	} else
++#endif
++	{
+ 		err = snd_config_update_ref(&top);
+ 		if (err < 0)
+ 			return err;
+diff --git a/src/pcm/pcm.c b/src/pcm/pcm.c
+index 892abf98..67912794 100644
+--- a/src/pcm/pcm.c
++++ b/src/pcm/pcm.c
+@@ -2690,11 +2690,14 @@ int snd_pcm_open(snd_pcm_t **pcmp, const char *name,
+ 	int err;
+ 
+ 	assert(pcmp && name);
++#ifdef BUILD_UCM
+ 	if (_snd_is_ucm_device(name)) {
+ 		name = uc_mgr_alibcfg_by_device(&top, name);
+ 		if (name == NULL)
+ 			return -ENODEV;
+-	} else {
++	} else
++#endif
++	{
+ 		err = snd_config_update_ref(&top);
+ 		if (err < 0)
+ 			return err;
+diff --git a/src/rawmidi/rawmidi.c b/src/rawmidi/rawmidi.c
+index 55f44821..f6a60611 100644
+--- a/src/rawmidi/rawmidi.c
++++ b/src/rawmidi/rawmidi.c
+@@ -315,11 +315,14 @@ int snd_rawmidi_open(snd_rawmidi_t **inputp, snd_rawmidi_t **outputp,
+ 	int err;
+ 
+ 	assert((inputp || outputp) && name);
++#ifdef BUILD_UCM
+ 	if (_snd_is_ucm_device(name)) {
+ 		name = uc_mgr_alibcfg_by_device(&top, name);
+ 		if (name == NULL)
+ 			return -ENODEV;
+-	} else {
++	} else
++#endif
++	{
+ 		err = snd_config_update_ref(&top);
+ 		if (err < 0)
+ 			return err;
+diff --git a/src/seq/seq.c b/src/seq/seq.c
+index f051426f..3330e770 100644
+--- a/src/seq/seq.c
++++ b/src/seq/seq.c
+@@ -978,11 +978,14 @@ int snd_seq_open(snd_seq_t **seqp, const char *name,
+ 	int err;
+ 
+ 	assert(seqp && name);
++#if BUILD_UCM
+ 	if (_snd_is_ucm_device(name)) {
+ 		name = uc_mgr_alibcfg_by_device(&top, name);
+ 		if (name == NULL)
+ 			return -ENODEV;
+-	} else {
++	} else
++#endif
++	{
+ 		err = snd_config_update_ref(&top);
+ 		if (err < 0)
+ 			return err;
+diff --git a/src/timer/timer.c b/src/timer/timer.c
+index 6fc710b9..52400058 100644
+--- a/src/timer/timer.c
++++ b/src/timer/timer.c
+@@ -205,11 +205,14 @@ int snd_timer_open(snd_timer_t **timer, const char *name, int mode)
+ 	int err;
+ 
+ 	assert(timer && name);
++#ifdef BUILD_UCM
+ 	if (_snd_is_ucm_device(name)) {
+ 		name = uc_mgr_alibcfg_by_device(&top, name);
+ 		if (name == NULL)
+ 			return -ENODEV;
+-	} else {
++	} else
++#endif
++	{
+ 		err = snd_config_update_ref(&top);
+ 		if (err < 0)
+ 			return err;
