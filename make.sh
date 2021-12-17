@@ -320,6 +320,8 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		*) BS_GCC_VER="8.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
+else
+	echo "BS_GCC_VER=4.8.4" >> config
 fi
 
 ##############################################
