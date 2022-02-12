@@ -155,6 +155,7 @@ SYSVINIT_VER = 3.01
 SYSVINIT_SOURCE = sysvinit-$(SYSVINIT_VER).tar.xz
 SYSVINIT_PATCH  = sysvinit-$(SYSVINIT_VER)-crypt-lib.patch
 SYSVINIT_PATCH += sysvinit-$(SYSVINIT_VER)-change-INIT_FIFO.patch
+SYSVINIT_PATCH += sysvinit-$(SYSVINIT_VER)-remove-killall5.patch
 
 $(ARCHIVE)/$(SYSVINIT_SOURCE):
 	$(DOWNLOAD) https://download.savannah.gnu.org/releases/sysvinit/$(SYSVINIT_SOURCE)
