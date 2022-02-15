@@ -12,11 +12,8 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
 	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
-endif
-ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/devinit distclean
 	-$(MAKE) -C $(TOOLS_DIR)/evremote2 distclean
 	-$(MAKE) -C $(TOOLS_DIR)/fp_control distclean
@@ -25,29 +22,18 @@ ifeq ($(BOXARCH), sh4)
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool_mup distclean
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-pad distclean
 	-$(MAKE) -C $(TOOLS_DIR)/hotplug distclean
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 	-$(MAKE) -C $(TOOLS_DIR)/ipbox_eeprom distclean
-endif
 	-$(MAKE) -C $(TOOLS_DIR)/stfbcontrol distclean
 	-$(MAKE) -C $(TOOLS_DIR)/streamproxy distclean
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tffpctl distclean
-endif
 	-$(MAKE) -C $(TOOLS_DIR)/ustslave distclean
 	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000))
 	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
 	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
-endif
-ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
-endif
 
 #
 # aio-grab
