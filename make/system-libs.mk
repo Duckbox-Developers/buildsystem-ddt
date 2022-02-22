@@ -1757,10 +1757,10 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 #
 # lcd4linux
 #
-LCD4LINUX_VER = e2cfdc5
+LCD4LINUX_VER = 98c6d20
 LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
 LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
-LCD4LINUX_PATCH =
+LCD4LINUX_PATCH = lcd4linux.patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 LCD4LINUX_DRV = ,VUPLUS4K
 endif
