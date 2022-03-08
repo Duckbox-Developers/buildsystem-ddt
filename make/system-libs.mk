@@ -1757,9 +1757,6 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 #
 # lcd4linux
 #
-LCD4LINUX_VER = 3cd4dce
-LCD4LINUX_SOURCE = lcd4linux-git-$(LCD4LINUX_VER).tar.bz2
-LCD4LINUX_URL = https://github.com/TangoCash/lcd4linux.git
 LCD4LINUX_PATCH = lcd4linux.patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 LCD4LINUX_DRV = ,VUPLUS4K
@@ -1768,14 +1765,15 @@ endif
 #LCD4LINUX_DRV = ,DM8000
 #endif
 
-$(ARCHIVE)/$(LCD4LINUX_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(LCD4LINUX_URL) $(LCD4LINUX_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(ARCHIVE)/$(LCD4LINUX_SOURCE)
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
 	$(START_BUILD)
-	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
-	$(UNTAR)/$(LCD4LINUX_SOURCE)
-	$(CHDIR)/lcd4linux-git-$(LCD4LINUX_VER); \
+	$(REMOVE)/lcd4linux
+	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
+		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
+		else cd $(ARCHIVE); git clone git://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
+		fi
+	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
+	$(CHDIR)/lcd4linux; \
 		$(call apply_patches, $(LCD4LINUX_PATCH)); \
 		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
@@ -1796,7 +1794,7 @@ else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf
 #endif
 endif
-	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
+	$(REMOVE)/lcd4linux
 	$(TOUCH)
 
 #
