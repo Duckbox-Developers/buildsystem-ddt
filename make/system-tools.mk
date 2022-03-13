@@ -601,8 +601,8 @@ $(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 #
 # dosfstools
 #
-DOSFSTOOLS_VER = 4.1
-DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VER).tar.xz
+DOSFSTOOLS_VER = 4.2
+DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VER).tar.gz
 
 $(ARCHIVE)/$(DOSFSTOOLS_SOURCE):
 	$(DOWNLOAD) https://github.com/dosfstools/dosfstools/releases/download/v$(DOSFSTOOLS_VER)/$(DOSFSTOOLS_SOURCE)
