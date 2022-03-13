@@ -914,7 +914,7 @@ $(D)/curlftpfs: $(D)/bootstrap $(D)/libcurl $(D)/fuse $(D)/libglib2 $(ARCHIVE)/$
 #
 # sdparm
 #
-SDPARM_VER = 1.11
+SDPARM_VER = 1.12
 SDPARM_SOURCE = sdparm-$(SDPARM_VER).tgz
 SDPARM_PATCH = sdparm-$(SDPARM_VER).patch
 
