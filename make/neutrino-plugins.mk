@@ -137,7 +137,7 @@ $(D)/neutrino-plugin-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-
 	$(REMOVE)/xupnpd
 	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
 		then cd $(ARCHIVE)/xupnpd.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/clark15b/xupnpd.git xupnpd.git; \
+		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
 	($(CHDIR)/xupnpd; git checkout -q $(XUPNPD_BRANCH);)

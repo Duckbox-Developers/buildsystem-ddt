@@ -1811,7 +1811,7 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel
 	$(REMOVE)/dvbsnoop
 	set -e; if [ -d $(ARCHIVE)/dvbsnoop.git ]; \
 		then cd $(ARCHIVE)/dvbsnoop.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/Duckbox-Developers/dvbsnoop.git dvbsnoop.git; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/dvbsnoop.git dvbsnoop.git; \
 		fi
 	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop
 	$(CHDIR)/dvbsnoop; \
