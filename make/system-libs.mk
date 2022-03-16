@@ -2016,7 +2016,7 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 LIBRTMP_VER = ad70c64
 LIBRTMP_SOURCE = rtmpdump-git-$(LIBRTMP_VER).tar.bz2
-LIBRTMP_URL = git://github.com/oe-alliance/rtmpdump.git
+LIBRTMP_URL = https://github.com/oe-alliance/rtmpdump.git
 LIBRTMP_PATCH = rtmpdump-git-$(LIBRTMP_VER).patch
 
 $(ARCHIVE)/$(LIBRTMP_SOURCE):
@@ -2041,7 +2041,7 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
 #
 LIBDVBSI_VER = f3c40ea
 LIBDVBSI_SOURCE = libdvbsi-git-$(LIBDVBSI_VER).tar.bz2
-LIBDVBSI_URL = git://github.com/OpenVisionE2/libdvbsi.git
+LIBDVBSI_URL = https://github.com/OpenVisionE2/libdvbsi.git
 #LIBDVBSI_PATCH = libdvbsi-git-$(LIBDVBSI_VER).patch
 
 $(ARCHIVE)/$(LIBDVBSI_SOURCE):

@@ -7,7 +7,7 @@ LUA_SOURCE = lua-$(LUA_VER).tar.gz
 
 LUAPOSIX_VER = 31
 LUAPOSIX_SOURCE = luaposix-git-$(LUAPOSIX_VER).tar.bz2
-LUAPOSIX_URL = git://github.com/luaposix/luaposix.git
+LUAPOSIX_URL = https://github.com/luaposix/luaposix.git
 LUAPOSIX_PATCH = lua-$(LUA_VER)-luaposix-$(LUAPOSIX_VER).patch
 
 $(ARCHIVE)/$(LUA_SOURCE):
@@ -44,7 +44,7 @@ else
 LUACURL_VER = e0b1d2e
 endif
 LUACURL_SOURCE = luacurl-git-$(LUACURL_VER).tar.bz2
-LUACURL_URL = git://github.com/Lua-cURL/Lua-cURLv3.git
+LUACURL_URL = https://github.com/Lua-cURL/Lua-cURLv3.git
 
 $(ARCHIVE)/$(LUACURL_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LUACURL_URL) $(LUACURL_VER) $(notdir $@) $(ARCHIVE)
@@ -88,7 +88,7 @@ $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 #
 LUASOCKET_VER = 5a17f79
 LUASOCKET_SOURCE = luasocket-git-$(LUASOCKET_VER).tar.bz2
-LUASOCKET_URL = git://github.com/diegonehab/luasocket.git
+LUASOCKET_URL = https://github.com/diegonehab/luasocket.git
 
 $(ARCHIVE)/$(LUASOCKET_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LUASOCKET_URL) $(LUASOCKET_VER) $(notdir $@) $(ARCHIVE)
@@ -109,7 +109,7 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 #
 LUAFEEDPARSER_VER = 9b284bc
 LUAFEEDPARSER_SOURCE = luafeedparser-git-$(LUAFEEDPARSER_VER).tar.bz2
-LUAFEEDPARSER_URL = git://github.com/slact/lua-feedparser.git
+LUAFEEDPARSER_URL = https://github.com/slact/lua-feedparser.git
 
 $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAFEEDPARSER_URL) $(LUAFEEDPARSER_VER) $(notdir $@) $(ARCHIVE)

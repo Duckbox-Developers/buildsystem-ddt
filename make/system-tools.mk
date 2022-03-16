@@ -1120,7 +1120,7 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 	$(REMOVE)/shairport
 	set -e; if [ -d $(ARCHIVE)/shairport.git ]; \
 		then cd $(ARCHIVE)/shairport.git; git pull; \
-		else cd $(ARCHIVE); git clone -b 1.0-dev git://github.com/abrasive/shairport.git shairport.git; \
+		else cd $(ARCHIVE); git clone -b 1.0-dev https://github.com/abrasive/shairport.git shairport.git; \
 		fi
 	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport
 	$(CHDIR)/shairport; \
