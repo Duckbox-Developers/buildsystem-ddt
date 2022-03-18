@@ -86,7 +86,7 @@ $(D)/bash: $(D)/bootstrap $(ARCHIVE)/$(BASH_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		cd $(TARGET_DIR)/bin && rm bash && ln -sf /usr/bin/bash bash
+		cd $(TARGET_DIR)/bin && rm -f bash && ln -sf /usr/bin/bash bash
 		rm -f $(TARGET_DIR)/usr/bin/bashbug
 		rm -f $(TARGET_LIB_DIR)/bash/{loadables.h,Makefile.inc}
 	$(REMOVE)/bash-$(BASH_VER)
