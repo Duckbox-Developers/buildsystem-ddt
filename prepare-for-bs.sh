@@ -116,6 +116,7 @@ PACKAGES="\
 	${UBUNTU:+mtools}                                                                                             \
 	${UBUNTU:+u-boot-tools}                                                                                       \
 	${UBUNTU:+curl}                                                                                               \
+	${UBUNTU:+libpng-dev}           ${SUSE:+libpng-devel}        ${FEDORA:+libpng-devel}   ${GENTOO:+libpng}      \
 	${UBUNTU:+optipng}                                                                                            \
 	${UBUNTU:+jpegoptim}                                                                                          \
 	${UBUNTU:+libreadline-dev}                                                                                    \
