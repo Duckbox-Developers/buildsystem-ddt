@@ -30,3 +30,15 @@
      }
      else if (r != 0)
      {
+--- a/lib/mcconfig/paths.c.org	2021-08-01 18:45:58.000000000 +0200
++++ b/lib/mcconfig/paths.c	2021-09-26 21:39:00.362865032 +0200
+@@ -152,7 +152,8 @@
+     if (xdg_vars_initialized)
+         return;
+ 
+-    profile_root = mc_get_profile_root ();
++    //profile_root = mc_get_profile_root ();
++    profile_root = "/tmp/";
+ 
+     if (strcmp (profile_root, mc_config_get_home_dir ()) != 0)
+     {

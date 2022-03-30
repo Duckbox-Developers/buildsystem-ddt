@@ -726,9 +726,12 @@ $(D)/ntfs_3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 #
 # mc
 #
-MC_VER = 4.8.27
+MC_VER = 4.8.28
 MC_SOURCE = mc-$(MC_VER).tar.xz
 MC_PATCH  = mc-$(MC_VER).patch
+ifeq ($(BOXARCH), sh4)
+MC_PATCH += mc-$(MC_VER)_sh4.patch
+endif
 
 $(ARCHIVE)/$(MC_SOURCE):
 	$(DOWNLOAD) ftp.midnight-commander.org/$(MC_SOURCE)
