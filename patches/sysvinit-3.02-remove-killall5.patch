@@ -15,7 +15,7 @@
  MAN8	+= shutdown.8 telinit.8 fstab-decode.8 logsave.8
  
  ifeq ($(DISTRO),)
-@@ -208,7 +208,6 @@
+@@ -214,7 +214,6 @@
  		ln -sf halt $(ROOT)/sbin/reboot
  		ln -sf halt $(ROOT)/sbin/poweroff
  		ln -sf init $(ROOT)/sbin/telinit
