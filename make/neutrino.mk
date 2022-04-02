@@ -347,6 +347,7 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	make e2-multiboot
 endif
 	touch $(D)/$(notdir $@)
+	$(HOST_DIR)/bin/qrencode -o $(TARGET_DIR)/usr/share/tuxbox/neutrino/icons/qr.png "$(GIT_URL)" -m 1 -s 5
 	make neutrino-release
 	$(TUXBOX_CUSTOMIZE)
 
