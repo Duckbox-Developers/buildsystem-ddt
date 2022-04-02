@@ -23,12 +23,7 @@ include make/linux-kernel-env.mk
 
 # default platform...
 MAKEFLAGS            += --no-print-directory
-GIT_PROTOCOL         ?= http
-ifneq ($(GIT_PROTOCOL), http)
-GITHUB               ?= git://github.com
-else
 GITHUB               ?= https://github.com
-endif
 GIT_NAME             ?= Duckbox-Developers
 GIT_NAME_DRIVER      ?= Duckbox-Developers
 GIT_NAME_TOOLS       ?= Duckbox-Developers
