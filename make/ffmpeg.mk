@@ -59,12 +59,12 @@ endif
 FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_INCLUDE_DIR)/libxml2
 
 ifeq ($(FFMPEG_SNAPSHOT), 1)
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS)
 else
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(DOWNLOAD) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
 endif
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
