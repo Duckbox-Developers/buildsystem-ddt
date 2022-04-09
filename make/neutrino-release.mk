@@ -762,11 +762,14 @@ endif
 	if [ -e $(TARGET_DIR)/usr/share/alsa ]; then \
 		mkdir -p $(RELEASE_DIR)/usr/share/alsa/; \
 		mkdir $(RELEASE_DIR)/usr/share/alsa/cards/; \
+		mkdir $(RELEASE_DIR)/usr/share/alsa/ctl/; \
 		mkdir $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp -dp $(TARGET_DIR)/usr/share/alsa/alsa.conf $(RELEASE_DIR)/usr/share/alsa/alsa.conf; \
 		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
+		cp $(TARGET_DIR)/usr/share/alsa/ctl/default.conf $(RELEASE_DIR)/usr/share/alsa/ctl/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
+		cp $(TARGET_DIR)/usr/share/alsa/pcm/dsnoop.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 	fi
 #
 # xupnpd
