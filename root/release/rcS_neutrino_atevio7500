@@ -134,6 +134,8 @@ if [ ! -e /var/etc/.firstboot ]; then
       fi
    fi
 
+   /etc/init.d/amixer start
+
    until false
    do
       echo "starting neutrino ->"

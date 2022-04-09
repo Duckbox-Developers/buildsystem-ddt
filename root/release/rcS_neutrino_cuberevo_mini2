@@ -138,9 +138,11 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    stfbcontrol a 255
 
-    /bin/evremote2 10 140 &
+   /bin/evremote2 10 140 &
 
-    /bin/fp_control -l 0 1
+   /bin/fp_control -l 0 1
+
+   /etc/init.d/amixer start
 
    until false
 do

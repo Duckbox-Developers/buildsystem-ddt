@@ -130,6 +130,8 @@ if [ ! -e /var/etc/.firstboot ]; then
    #tuner workaround
    export FE_OFFSET=1
 
+   /etc/init.d/amixer start
+
    echo "run" > /dev/vfd
    echo "LOADING neutrino"
 

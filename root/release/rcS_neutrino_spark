@@ -121,6 +121,8 @@ if [ ! -e /var/etc/.firstboot ]; then
    #timefix
    date -s "200901011200"
 
+   /etc/init.d/amixer start
+
    echo "run" > /dev/vfd
    echo "LOADING neutrino"
 

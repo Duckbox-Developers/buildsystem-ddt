@@ -125,11 +125,14 @@ if [ ! -e /var/etc/.firstboot ]; then
       fi
    fi
 
+   /etc/init.d/amixer start
+
    echo "    " > /dev/fpsmall
    echo "NEUTRINO" > /dev/fplarge
    echo "LOADING Neutrino"
 
    stfbcontrol a 255
+
    until false
    do
       echo "starting neutrino ->"

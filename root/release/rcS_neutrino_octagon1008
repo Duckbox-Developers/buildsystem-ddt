@@ -97,6 +97,8 @@ if [ ! -e /var/etc/.firstboot ]; then
 
 #   stfbcontrol a 255
 
+   /etc/init.d/amixer start
+
    echo "LOADING neutrino" > /dev/vfd
    echo "LOADING neutrino"
 

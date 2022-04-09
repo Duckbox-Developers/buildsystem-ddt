@@ -106,6 +106,9 @@ if [ ! -e /var/etc/.firstboot ]; then
    date -s "200901011200"
 
    stfbcontrol a 255
+
+   /etc/init.d/amixer start
+
    until false
    do
       echo "starting neutrino->"

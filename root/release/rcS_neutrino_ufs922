@@ -101,6 +101,8 @@ if [ ! -e /var/etc/.firstboot ]; then
    fp_control -t "LOADING neutrino"
    echo "LOADING neutrino"
 
+   /etc/init.d/amixer start
+
    until false
    do
       echo "starting neutrino ->"
