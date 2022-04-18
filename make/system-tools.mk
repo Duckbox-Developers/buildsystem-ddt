@@ -1059,11 +1059,11 @@ $(D)/sysstat: $(D)/bootstrap $(ARCHIVE)/$(SYSSTAT_SOURCE)
 #
 # libnsl
 #
-LIBNSL_VER    = 1.2.0
+LIBNSL_VER    = 2.0.0
 LIBNSL_SOURCE = libnsl-$(LIBNSL_VER).tar.gz
 
 $(ARCHIVE)/$(LIBNSL_SOURCE):
-	$(DOWNLOAD) https://github.com/thkukuk/libnsl/archive/v1.2.0/$(LIBNSL_SOURCE)
+	$(DOWNLOAD) https://github.com/thkukuk/libnsl/archive/v2.0.0/$(LIBNSL_SOURCE)
 
 $(D)/libnsl: $(D)/bootstrap $(ARCHIVE)/$(LIBNSL_SOURCE)
 	$(START_BUILD)
