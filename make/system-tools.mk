@@ -1063,7 +1063,7 @@ LIBNSL_VER    = 2.0.0
 LIBNSL_SOURCE = libnsl-$(LIBNSL_VER).tar.gz
 
 $(ARCHIVE)/$(LIBNSL_SOURCE):
-	$(DOWNLOAD) https://github.com/thkukuk/libnsl/archive/v2.0.0/$(LIBNSL_SOURCE)
+	$(DOWNLOAD) https://github.com/thkukuk/libnsl/archive/v$(LIBNSL_VER)/$(LIBNSL_SOURCE)
 
 $(D)/libnsl: $(D)/bootstrap $(ARCHIVE)/$(LIBNSL_SOURCE)
 	$(START_BUILD)
