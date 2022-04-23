@@ -69,7 +69,7 @@ LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VER).tar.gz
 LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
 
 $(ARCHIVE)/$(LUAEXPAT_SOURCE):
-	$(DOWNLOAD) https://matthewwild.co.uk/projects/luaexpat/$(LUAEXPAT_SOURCE)
+	$(DOWNLOAD) https://sources.voidlinux-ppc.org/luaexpat-1.3.0/$(LUAEXPAT_SOURCE)
 
 $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	$(START_BUILD)
