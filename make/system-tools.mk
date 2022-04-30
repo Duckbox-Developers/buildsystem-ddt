@@ -2110,7 +2110,7 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 #
 MINISATIP_PATCH = minisatip.patch
 
-$(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISATIP_SOURCE)
+$(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATIP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/minisatip
 	set -e; if [ -d $(ARCHIVE)/minisatip.git ]; \
@@ -2121,13 +2121,12 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHI
 	$(CHDIR)/minisatip; \
 		$(call apply_patches,$(MINISATIP_PATCH)); \
 		$(BUILDENV) \
-		export CFLAGS="-pipe -Os -Wall -g0 -I$(TARGET_INCLUDE_DIR)"; \
+		export CFLAGS="-pipe -Os -Wall -g0 -ldl -I$(TARGET_INCLUDE_DIR)"; \
 		export CPPFLAGS="-I$(TARGET_INCLUDE_DIR)"; \
 		export LDFLAGS="-L$(TARGET_LIB_DIR)"; \
 		./configure \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
-			--enable-enigma \
 			--enable-static \
 		; \
 		$(MAKE); \
