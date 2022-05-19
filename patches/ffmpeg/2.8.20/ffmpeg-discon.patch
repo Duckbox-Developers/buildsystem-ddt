@@ -105,7 +105,7 @@
      f->nb_streams = ic->nb_streams;
      f->rate_emu   = o->rate_emu;
      f->accurate_seek = o->accurate_seek;
-@@ -3107,6 +3111,10 @@
+@@ -3108,6 +3112,10 @@
      { "apad",           OPT_STRING | HAS_ARG | OPT_SPEC |
                          OPT_OUTPUT,                                  { .off = OFFSET(apad) },
          "audio pad", "" },
