@@ -32,6 +32,7 @@ VUDUO_PATCHES = \
 		mipsbox/kernel-add-support-for-gcc9.patch \
 		mipsbox/kernel-add-support-for-gcc10.patch \
 		mipsbox/kernel-add-support-for-gcc11.patch \
+		mipsbox/kernel-add-support-for-gcc12.patch \
 		mipsbox/gcc9_backport.patch \
 		mipsbox/rtl8712-fix-warnings.patch \
 		mipsbox/rtl8187se-fix-warnings.patch \
@@ -83,6 +84,7 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-add-support-for-gcc9.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc10.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc11.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc12.patch \
 		mipsbox/dm8000/misc_latin1_to_utf8_conversions.patch \
 		mipsbox/dm8000/0001-dvb_frontend-backport-multistream-support.patch \
 		mipsbox/dm8000/genksyms_fix_typeof_handling.patch \
