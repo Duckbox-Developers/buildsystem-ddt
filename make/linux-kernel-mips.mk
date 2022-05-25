@@ -48,7 +48,8 @@ VUDUO_PATCHES = \
 		mipsbox/01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
 		mipsbox/02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
 		mipsbox/CONFIG_DVB_SP2.patch \
-		mipsbox/dvbsky-t330.patch
+		mipsbox/dvbsky-t330.patch \
+		mipsbox/fix-multiple-defs-yyloc.patch
 #		mipsbox/fixed_mtd.patch
 
 DM8000_PATCHES = \
@@ -91,7 +92,8 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/0012-log2-give-up-on-gcc-constant-optimizations.patch \
 		mipsbox/dm8000/0013-cp1emu-do-not-use-bools-for-arithmetic.patch \
 		mipsbox/dm8000/0014-makefile-silence-packed-not-aligned-warn.patch \
-		mipsbox/dm8000/0015-fcrypt-fix-bitoperation-for-gcc.patch
+		mipsbox/dm8000/0015-fcrypt-fix-bitoperation-for-gcc.patch \
+		mipsbox/dm8000/fix-multiple-defs-yyloc.patch
 
 #
 # KERNEL
