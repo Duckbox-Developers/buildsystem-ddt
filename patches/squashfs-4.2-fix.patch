@@ -1,0 +1,11 @@
+--- a/squashfs-tools/mksquashfs.c.orig	2022-05-25 12:44:46.430175981 +0200
++++ b/squashfs-tools/mksquashfs.c	2022-05-25 12:48:02.764621238 +0200
+@@ -3341,7 +3341,7 @@
+ }
+ 
+ 
+-inline void add_dir_entry(char *name, char *pathname, struct dir_info *sub_dir,
++static inline void add_dir_entry(char *name, char *pathname, struct dir_info *sub_dir,
+ 	struct inode_info *inode_info, struct dir_info *dir)
+ {
+ 	if((dir->count % DIR_ENTRIES) == 0) {
