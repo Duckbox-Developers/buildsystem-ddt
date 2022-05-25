@@ -164,7 +164,7 @@ TERM_YELLOW_BOLD     := \033[01;33m
 TERM_NORMAL          := \033[0m
 
 AUTOCONF_VER          = $(shell autoconf --version | head -1 | awk '{print $$4}')
-AUTOCONF_NEW          = $(shell echo $(AUTOCONF_VER)\>=2.69 | bc )
+AUTOCONF_NEW          = $(shell echo $(AUTOCONF_VER)\>=2.70 | bc )
 
 # certificates
 CA_BUNDLE             = ca-certificates.crt
