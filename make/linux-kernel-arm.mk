@@ -16,7 +16,8 @@ HD51_PATCHES = \
 		armbox/hd51_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/hd51_reserve_dvb_adapter_0.patch \
 		armbox/hd51_blacklist_mmc0.patch \
-		armbox/hd51_export_pmpoweroffprepare.patch
+		armbox/hd51_export_pmpoweroffprepare.patch \
+		armbox/4_10_fix-multiple-defs-yyloc.patch
 
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
@@ -49,7 +50,8 @@ COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_0004-log2-give-up-on-gcc-constant-optimizations.patch \
 		armbox/vuplus_common/3_14_0005-uaccess-dont-mark-register-as-const.patch \
 		armbox/vuplus_common/3_14_0006-makefile-disable-warnings.patch \
-		armbox/vuplus_common/3_14_linux_dvb_adapter.patch
+		armbox/vuplus_common/3_14_linux_dvb_adapter.patch \
+		armbox/vuplus_common/3_14_fix-multiple-defs-yyloc.patch
 
 COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_linux_dvb_adapter.patch \
@@ -90,7 +92,8 @@ COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_blindscan2.patch \
 		armbox/vuplus_common/4_1_0001-stv090x-optimized-TS-sync-control.patch \
 		armbox/vuplus_common/4_1_0002-log2-give-up-on-gcc-constant-optimizations.patch \
-		armbox/vuplus_common/4_1_0003-uaccess-dont-mark-register-as-const.patch
+		armbox/vuplus_common/4_1_0003-uaccess-dont-mark-register-as-const.patch \
+		armbox/vuplus_common/4_1_fix-multiple-defs-yyloc.patch
 
 VUDUO4K_PATCHES = $(COMMON_PATCHES_4_1) \
 
