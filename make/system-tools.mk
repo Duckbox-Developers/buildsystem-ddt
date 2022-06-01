@@ -664,6 +664,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 
 F2FS-TOOLS_VER = 1.15.0
 F2FS-TOOLS_SOURCE = f2fs-tools-$(F2FS-TOOLS_VER).tar.gz
+F2FS-TOOLS_PATCH = f2fs-tools-$(F2FS-TOOLS_VER).patch
 
 $(ARCHIVE)/$(F2FS-TOOLS_SOURCE):
 	$(DOWNLOAD) https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/$(F2FS-TOOLS_SOURCE)
@@ -672,6 +673,7 @@ $(D)/f2fs-tools: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(F2FS-TOOLS_SOURCE)
 	$(REMOVE)/f2fs-tools-$(F2FS-TOOLS_VER)
 	$(UNTAR)/$(F2FS-TOOLS_SOURCE)
 	$(CHDIR)/f2fs-tools-$(F2FS-TOOLS_VER); \
+		$(call apply_patches, $(F2FS-TOOLS_PATCH)); \
 		autoreconf -fi; \
 		ac_cv_file__git=no \
 		$(CONFIGURE) \
