@@ -14,7 +14,7 @@ diff -Naur a/configure.ac b/configure.ac
 --- a/configure.ac	2019-01-07 15:30:31.000000000 +0100
 +++ b/configure.ac	2019-03-13 00:06:53.523463715 +0100
 @@ -3,7 +3,7 @@
- AC_INIT(alsa-utils, 1.2.6)
+ AC_INIT(alsa-utils, 1.2.7)
  AC_CONFIG_SRCDIR([aplay/aplay.c])
  AC_PREFIX_DEFAULT(/usr)
 -AM_INIT_AUTOMAKE
