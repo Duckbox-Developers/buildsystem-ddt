@@ -1,0 +1,13 @@
+diff --git a/rparse.c b/rparse.c
+index 8cbdda5..560e50d 100644
+--- a/rparse.c
++++ b/rparse.c
+@@ -173,7 +173,7 @@ parse_udprelay( const char*  opt, size_t optlen,
+ 
+     assert( opt && addr && addrlen && port );
+ 
+-    (void) strncpy( s, opt, MAX_OPTLEN );
++    (void) snprintf(s, MAX_OPTLEN, "%s", opt);
+     s[ MAX_OPTLEN - 1 ] = '\0';
+     do {
+         n = strcspn( s, SEP );

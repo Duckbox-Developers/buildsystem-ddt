@@ -1841,6 +1841,7 @@ UDPXY_SOURCE = udpxy-git-$(UDPXY_VER).tar.bz2
 UDPXY_URL    = https://github.com/pcherenkov/udpxy.git
 UDPXY_PATCH  = udpxy-git-$(UDPXY_VER).patch
 UDPXY_PATCH += udpxy-git-$(UDPXY_VER)-fix-build-with-gcc8.patch
+UDPXY_PATCH += udpxy-git-$(UDPXY_VER)-fix-build-with-gcc9.patch
 
 $(ARCHIVE)/$(UDPXY_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(UDPXY_URL) $(UDPXY_VER) $(notdir $@) $(ARCHIVE)
