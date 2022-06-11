@@ -121,8 +121,8 @@ ifeq ($(BS_GCC_VER), 8.5.0)
 CROSSTOOL_GCC_VER = gcc-8.5.0
 endif
 
-ifeq ($(BS_GCC_VER), 9.4.0)
-CROSSTOOL_GCC_VER = gcc-9.4.0
+ifeq ($(BS_GCC_VER), 9.5.0)
+CROSSTOOL_GCC_VER = gcc-9.5.0
 endif
 
 ifeq ($(BS_GCC_VER), 10.3.0)
