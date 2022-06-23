@@ -2,7 +2,7 @@
 STM_RELOCATE     = /opt/STM/STLinux-2.4
 
 # updates / downloads
-STL_FTP          = $(GITHUB)/BPanther/stlinux/raw/master
+STL_FTP          = $(GITHUB)/Duckbox-Developers/stlinux/raw/master
 STL_ARCHIVE      = $(ARCHIVE)/stlinux
 STL_GET          = $(DOWNLOAD)/stlinux
 

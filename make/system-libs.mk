@@ -2014,8 +2014,6 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 # librtmp
 #
-LIBRTMP_URL = https://github.com/Duckbox-Developers/rtmpdump.git
-
 $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl
 	$(START_BUILD)
 	$(REMOVE)/rtmpdump
