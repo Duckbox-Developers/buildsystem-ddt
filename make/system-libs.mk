@@ -2014,26 +2014,23 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 # librtmp
 #
-LIBRTMP_VER = ad70c64
-LIBRTMP_SOURCE = rtmpdump-git-$(LIBRTMP_VER).tar.bz2
-LIBRTMP_URL = https://github.com/oe-alliance/rtmpdump.git
-LIBRTMP_PATCH = rtmpdump-git-$(LIBRTMP_VER).patch
+LIBRTMP_URL = https://github.com/Duckbox-Developers/rtmpdump.git
 
-$(ARCHIVE)/$(LIBRTMP_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBRTMP_URL) $(LIBRTMP_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMP_SOURCE)
+$(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl
 	$(START_BUILD)
-	$(REMOVE)/rtmpdump-git-$(LIBRTMP_VER)
-	$(UNTAR)/$(LIBRTMP_SOURCE)
-	$(CHDIR)/rtmpdump-git-$(LIBRTMP_VER); \
-		$(call apply_patches, $(LIBRTMP_PATCH)); \
+	$(REMOVE)/rtmpdump
+	set -e; if [ -d $(ARCHIVE)/rtmpdump.git ]; \
+		then cd $(ARCHIVE)/rtmpdump.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/rtmpdump.git rtmpdump.git; \
+		fi
+	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/rtmpdump
+	$(CHDIR)/rtmpdump; \
 		$(MAKE) CROSS_COMPILE=$(TARGET)- XCFLAGS="-I$(TARGET_INCLUDE_DIR) -L$(TARGET_LIB_DIR)" LDFLAGS="-L$(TARGET_LIB_DIR)"; \
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR) MANDIR=$(TARGET_DIR)/.remove
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/librtmp.pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,rtmpgw rtmpsrv rtmpsuck)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,rtmpdump)
-	$(REMOVE)/rtmpdump-git-$(LIBRTMP_VER)
+	$(REMOVE)/rtmpdump
 	$(TOUCH)
 
 #
