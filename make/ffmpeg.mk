@@ -27,8 +27,8 @@ FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 endif
 endif
 
-FFMPEG_DEPS = $(D)/librtmp
-FFMPEG_CONF_OPTS  = --enable-librtmp
+#FFMPEG_DEPS = $(D)/librtmp
+#FFMPEG_CONF_OPTS  = --enable-librtmp
 ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
