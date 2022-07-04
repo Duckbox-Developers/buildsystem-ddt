@@ -121,6 +121,8 @@ PACKAGES="\
 	${UBUNTU:+jpegoptim}                                                                                          \
 	${UBUNTU:+libreadline-dev}                                                                                    \
 	${UBUNTU:+autoconf-archive}                                                                                   \
+	${UBUNTU:+cpio}                                                                                               \
+	${UBUNTU:+bc}                                                                                                 \
 ";
 
 if [ "$UBUNTU" == 1 ]; then
