@@ -124,7 +124,11 @@ PACKAGES="\
 ";
 
 if [ "$UBUNTU" == 1 ]; then
-	UBUNTU_VERSION=`lsb_release -r | grep "Release" | cut -f2 | cut -d . -f1`
+	if `which lsb_release > /dev/null 2>&1`; then 
+		UBUNTU_VERSION=`lsb_release -r | grep "Release" | cut -f2 | cut -d . -f1`
+	else
+		UBUNTU_VERSION=`grep VERSION_ID= /etc/os-release | sed 's/VERSION_ID="\([0-9]*\).*/\1/g'`
+	fi
 elif [ "$UBUNTU" == 2 ]; then
 	MINT_VERSION=`lsb_release -r | grep "Release" | cut -f2 | cut -d . -f1`
 fi
