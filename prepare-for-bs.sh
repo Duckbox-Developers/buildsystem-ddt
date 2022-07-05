@@ -23,7 +23,7 @@ if `which lsb_release > /dev/null 2>&1`; then
 		CentOS*) FEDORA=1; INSTALL="yum install -y";;
 		SUSE*)   SUSE=1;   INSTALL="zypper install -y";;
 		Ubuntu*) UBUNTU=1; INSTALL="apt-get -y install";;
-		LinuxM*) UBUNTU=2; INSTALL="apt-get --force-yes install";;
+		LinuxM*) UBUNTU=2; INSTALL="apt-get -y install";;
 		Gentoo)  GENTOO=1; INSTALL="emerge -uN";;
 	esac
 fi
@@ -34,7 +34,7 @@ if [ -z "$FEDORA$GENTOO$SUSE$UBUNTU" ]; then
 	elif [ -f /etc/fedora-release ]; then FEDORA=1; INSTALL="yum install -y"; 
 	elif [ -f /etc/centos-release ]; then FEDORA=1; INSTALL="yum install -y"; 
 	elif [ -f /etc/SuSE-release ];   then SUSE=1;   INSTALL="zypper install -n";
-	elif [ -f /etc/debian_version ]; then UBUNTU=1; INSTALL="apt-get --force-yes install";
+	elif [ -f /etc/debian_version ]; then UBUNTU=1; INSTALL="apt-get -y install";
 	elif [ -f /etc/gentoo-release ]; then GENTOO=1; INSTALL="emerge -uN"
 	fi
 fi
