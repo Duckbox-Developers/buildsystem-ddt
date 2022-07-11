@@ -3,7 +3,7 @@
 #
 CORTEX_STRINGS_VER = 48fd30c
 CORTEX_STRINGS_SOURCE = cortex-strings-git-$(CORTEX_STRINGS_VER).tar.bz2
-CORTEX_STRINGS_URL = http://git.linaro.org/git-ro/toolchain/cortex-strings.git
+CORTEX_STRINGS_URL = https://github.com/Duckbox-Developers/cortex-strings.git
 
 $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CORTEX_STRINGS_URL) $(CORTEX_STRINGS_VER) $(notdir $@) $(ARCHIVE)
