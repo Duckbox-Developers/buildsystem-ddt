@@ -22,7 +22,7 @@ $(D)/cortex_strings: $(D)/directories
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libcortex-strings.la
-	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
+	$(REMOVE)/cortex-strings
 	$(TOUCH)
 
 #
