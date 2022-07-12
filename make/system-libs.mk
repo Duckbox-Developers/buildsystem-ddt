@@ -1,18 +1,15 @@
 #
 # cortex-strings
 #
-CORTEX_STRINGS_VER = 48fd30c
-CORTEX_STRINGS_SOURCE = cortex-strings-git-$(CORTEX_STRINGS_VER).tar.bz2
-CORTEX_STRINGS_URL = https://github.com/Duckbox-Developers/cortex-strings.git
-
-$(ARCHIVE)/$(CORTEX_STRINGS_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(CORTEX_STRINGS_URL) $(CORTEX_STRINGS_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/cortex_strings: $(D)/directories $(ARCHIVE)/$(CORTEX_STRINGS_SOURCE)
+$(D)/cortex_strings: $(D)/directories
 	$(START_BUILD)
-	$(REMOVE)/cortex-strings-git-$(CORTEX_STRINGS_VER)
-	$(UNTAR)/$(CORTEX_STRINGS_SOURCE)
-	$(CHDIR)/cortex-strings-git-$(CORTEX_STRINGS_VER); \
+	$(REMOVE)/cortex-strings
+	set -e; if [ -d $(ARCHIVE)/cortex-strings.git ]; \
+		then cd $(ARCHIVE)/cortex-strings.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/cortex-strings.git cortex-strings.git; \
+		fi
+	cp -ra $(ARCHIVE)/cortex-strings.git $(BUILD_TMP)/cortex-strings
+	$(CHDIR)/cortex-strings; \
 		./autogen.sh  $(SILENT_OPT); \
 		$(MAKE_OPTS) \
 		./configure $(SILENT_OPT)\
