@@ -125,8 +125,8 @@ ifeq ($(BS_GCC_VER), 9.5.0)
 CROSSTOOL_GCC_VER = gcc-9.5.0
 endif
 
-ifeq ($(BS_GCC_VER), 10.3.0)
-CROSSTOOL_GCC_VER = gcc-10.3.0
+ifeq ($(BS_GCC_VER), 10.4.0)
+CROSSTOOL_GCC_VER = gcc-10.4.0
 endif
 
 ifeq ($(BS_GCC_VER), 11.3.0)
@@ -141,7 +141,7 @@ TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
 TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
 
 TARGET_CFLAGS         = -pipe $(TARGET_O_CFLAGS) $(TARGET_MARCH_CFLAGS) $(TARGET_EXTRA_CFLAGS) -I$(TARGET_INCLUDE_DIR)
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 10.3.0 11.3.0 12.1.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 10.4.0 11.3.0 12.1.0))
 TARGET_CFLAGS         +=-fcommon
 endif
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)

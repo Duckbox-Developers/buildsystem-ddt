@@ -8,7 +8,8 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-CROSSTOOL_NG_VER     = b88d338
+#CROSSTOOL_NG_VER     = b88d338
+CROSSTOOL_NG_VER     = ee635cd
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
