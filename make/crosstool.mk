@@ -8,13 +8,14 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-#CROSSTOOL_NG_VER     = b88d338
-CROSSTOOL_NG_VER     = ee635cd
+#CROSSTOOL_NG_VER     = ee635cd
+CROSSTOOL_NG_VER     = 04b0c0f
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
 CROSSTOOL_NG_CONFIG  = crosstool-ng-$(BOXARCH)-$(CROSSTOOL_GCC_VER)
 CROSSTOOL_NG_BACKUP  = $(ARCHIVE)/$(CROSSTOOL_NG_CONFIG)-kernel-$(KERNEL_VER)-backup.tar.gz
+CROSSTOOL_NG_PATCH   = $(PATCHES)/ct-ng/crosstool-ng-autoconf.patch
 
 # -----------------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 	ulimit -n 2048; \
 	$(CHDIR)/$(CROSSTOOL_NG_DIR); \
 		git checkout -q $(CROSSTOOL_NG_VER); \
+		$(call apply_patches, $(CROSSTOOL_NG_PATCH)); \
 		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG).config .config; \
 		sed -i "s|^CT_PARALLEL_JOBS=.*|CT_PARALLEL_JOBS=$(PARALLEL_JOBS)|" .config; \
 		\
