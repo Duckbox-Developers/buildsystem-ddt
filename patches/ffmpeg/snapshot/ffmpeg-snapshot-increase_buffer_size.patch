@@ -1,6 +1,6 @@
 --- a/libavformat/aviobuf.c
 +++ b/libavformat/aviobuf.c
-@@ -33,7 +33,7 @@
+@@ -34,7 +34,7 @@
  #include "url.h"
  #include <stdarg.h>
  
@@ -9,7 +9,7 @@
  
  /**
   * Do seeks within this distance ahead of the current buffer by skipping
-@@ -547,16 +547,15 @@
+@@ -562,16 +562,15 @@
      }
  
      /* make buffer smaller in case it ended up large after probing */

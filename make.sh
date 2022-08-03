@@ -165,7 +165,7 @@ if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" -o "$BOXA
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4\033[00m"
 			echo "   2)  FFMPEG 4.4.2 [experimental]"
-			echo "   3)  FFMPEG 4.5   [git snapshot]"
+			echo "   3)  FFMPEG 5.1   [git snapshot]"
 			read -p "Select optimization (1-3)? ";;
 	esac
 

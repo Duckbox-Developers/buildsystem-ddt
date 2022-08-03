@@ -25,7 +25,7 @@
  
 --- a/libavcodec/dxva2_h264.c
 +++ b/libavcodec/dxva2_h264.c
-@@ -504,6 +504,14 @@
+@@ -506,6 +506,14 @@
  
      if (ctx_pic->slice_count <= 0 || ctx_pic->bitstream_size <= 0)
          return -1;
@@ -42,7 +42,7 @@
                                      &ctx_pic->qm, sizeof(ctx_pic->qm),
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -965,6 +965,7 @@
+@@ -971,6 +971,7 @@
  
      h->first_field           = 0;
      h->prev_interlaced_frame = 1;
@@ -52,7 +52,7 @@
      ret = ff_h264_alloc_tables(h);
 --- a/libavcodec/h264dec.c
 +++ b/libavcodec/h264dec.c
-@@ -456,6 +456,7 @@
+@@ -448,6 +448,7 @@
  
      h->next_outputed_poc = INT_MIN;
      h->prev_interlaced_frame = 1;
@@ -62,7 +62,7 @@
      h->poc.prev_frame_num = -1;
 --- a/libavcodec/h264dec.h
 +++ b/libavcodec/h264dec.h
-@@ -553,6 +553,8 @@
+@@ -532,6 +532,8 @@
       * slices) anymore */
      int setup_finished;
  
@@ -96,7 +96,7 @@
              return 0;
          calculate_height(&par, p->buf_size);
          if (par.height <= 0)
-@@ -195,8 +195,6 @@
+@@ -189,8 +189,6 @@
              next_tag_read(s, &bin->fsize);
          if (!bin->width) {
              predict_width(st->codecpar, bin->fsize, got_width);
