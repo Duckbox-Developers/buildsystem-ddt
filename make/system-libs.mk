@@ -668,6 +668,7 @@ endif
 JPEG_VER = 8d
 JPEG_SOURCE = jpegsrc.v$(JPEG_VER).tar.gz
 JPEG_PATCH = jpeg-$(JPEG_VER).patch
+JPEG_PATCH += jpeg-$(JPEG_VER)-fix-unknown-type-name-FILE.patch
 
 $(ARCHIVE)/$(JPEG_SOURCE):
 	$(DOWNLOAD) http://www.ijg.org/files/$(JPEG_SOURCE)
@@ -706,6 +707,7 @@ endif
 LIBJPEG_TURBO2_VER = 2.1.3
 LIBJPEG_TURBO2_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO2_VER).tar.gz
 LIBJPEG_TURBO2_PATCH = libjpeg-turbo-tiff-ojpeg.patch
+LIBJPEG_TURBO2_PATCH += libjpeg-turbo-fix-unknown-type-name-FILE.patch
 
 $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE):
 	$(DOWNLOAD) https://sourceforge.net/projects/libjpeg-turbo/files/$(LIBJPEG_TURBO2_VER)/$(LIBJPEG_TURBO2_SOURCE)
