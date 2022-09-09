@@ -1667,18 +1667,19 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 #
 # pugixml
 #
-PUGIXML_VER = 1.12
-PUGIXML_SOURCE = pugixml-$(PUGIXML_VER).tar.gz
-PUGIXML_PATCH = pugixml-$(PUGIXML_VER)-config.patch
-
-$(ARCHIVE)/$(PUGIXML_SOURCE):
-	$(DOWNLOAD) https://github.com/zeux/pugixml/releases/download/v$(PUGIXML_VER)/$(PUGIXML_SOURCE)
+PUGIXML_VER = 521b2cd
+PUGIXML_PATCH = pugixml-config.patch
 
 $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/pugixml-$(PUGIXML_VER)
-	$(UNTAR)/$(PUGIXML_SOURCE)
-	$(CHDIR)/pugixml-$(PUGIXML_VER); \
+	$(REMOVE)/pugixml
+	set -e; if [ -d $(ARCHIVE)/pugixml.git ]; \
+		then cd $(ARCHIVE)/pugixml.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/zeux/pugixml.git pugixml.git; \
+		fi
+	cp -ra $(ARCHIVE)/pugixml.git $(BUILD_TMP)/pugixml
+	(cd $(BUILD_TMP)/pugixml; git checkout $(PUGIXML_VER);); \
+	$(CHDIR)/pugixml; \
 		$(call apply_patches, $(PUGIXML_PATCH)); \
 		cmake  --no-warn-unused-cli \
 			-DCMAKE_INSTALL_PREFIX=/usr \
@@ -1692,7 +1693,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/pugixml-$(PUGIXML_VER)
+	$(REMOVE)/pugixml
 	cd $(TARGET_DIR) && rm -rf usr/lib/cmake
 	$(TOUCH)
 
