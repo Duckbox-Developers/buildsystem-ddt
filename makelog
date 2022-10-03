@@ -1,9 +1,10 @@
 #!/bin/bash
 
 if [ ! -z $1 ] ; then
-	mkdir -p build_logfile
-#	LOGFILE=build_logfile/make_$(date +%d.%m.%Y_%H:%M).log
-	LOGFILE=build_logfile/make.log
+	mkdir -p buildlogs
+	BOXTYPE=$(cat config | grep "BOXTYPE=" | awk -F "=" '{print $2}')
+#	LOGFILE=buildlogs/make_$(echo $BOXTYPE)_$(date +%d.%m.%Y_%H%M).log
+	LOGFILE=buildlogs/make_$(echo $BOXTYPE).log
 
 	echo "--- DISTRIBUTION ---" > $LOGFILE
 	cat /etc/*release >> $LOGFILE
