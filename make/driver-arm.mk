@@ -36,6 +36,16 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), e4hdultra)
+DRIVER_DATE = 20191101
+DRIVER_VER = 4.10.12-$(DRIVER_DATE)
+DRIVER_SRC = e4hd-drivers-$(DRIVER_VER).zip
+DRIVER_URL = http://source.mynonpublic.com/ceryon
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
@@ -91,7 +101,7 @@ endif
 driver-clean:
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)

@@ -74,6 +74,9 @@ case $1 in
 		echo "  AX/Mut@nt              Air Digital              WWIO"
 		echo -e "   \033[01;32m51)  HD51\033[00m              57)  ZGEMMA H7           58)  WWIO BRE2ZE 4K"
 		echo
+		echo "  AXAS"
+		echo "   66)  AXAS E4HD 4K Ultra"
+		echo
 		echo "  mips-based receivers"
 		echo "   70)  VU+ Duo"
 		echo "   80)  DM8000"
@@ -117,6 +120,8 @@ case "$REPLY" in
 	51) BOXARCH="arm";BOXTYPE="hd51";;
 	57) BOXARCH="arm";BOXTYPE="h7";;
 	58) BOXARCH="arm";BOXTYPE="bre2ze4k";;
+
+	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
@@ -274,9 +279,9 @@ echo "IMAGE=$IMAGE" >> config
 
 ##############################################
 
-# dataswap linuxswap hd51/h7/bre2ze4k
+# dataswap linuxswap hd51/h7/bre2ze4k/e4hdultra
 
-if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' ]; then
+if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hdultra' ]; then
 	case $6 in
 		[1-2]) REPLY=$6;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
