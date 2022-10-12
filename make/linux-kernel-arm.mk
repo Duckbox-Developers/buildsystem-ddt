@@ -198,16 +198,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
-	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
-	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
-	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
-	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
-	$(TOUCH)
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k e4hdultra))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
