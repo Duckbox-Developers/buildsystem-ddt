@@ -65,7 +65,8 @@ insmod /lib/modules/e4hd_2.ko
 insmod /lib/modules/e4hd_3.ko
 insmod /lib/modules/e4hd_4.ko
 
-echo "Booting... DDT" > /dev/dbox/oled0
+echo 100 > /proc/stb/fp/oled_brightness
+oled -tc "Booting... DDT"
 
 echo "[rcS] starting mdev"
 mdev -s
@@ -98,32 +99,31 @@ do
 	case "$rtv" in
 		0) echo "$rtv"
 			echo "SHUTDOWN"
-			echo "SHUTDOWN" > /dev/dbox/oled0
+			oled -tc "SHUTDOWN"
 			init 0
 			sleep 20
 			;;
 		1) echo "$rtv"
 			echo "REBOOT"
-			echo "REBOOT" > /dev/dbox/oled0
+			oled -tc "REBOOT"
 			init 6
 			sleep 20
 			;;
 		3) echo "$rtv"
 			echo "RESTART"
-			echo "RESTART" > /dev/dbox/oled0
+			oled -tc "RESTART"
 			sync
 			;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			echo "ERROR: $rtv" > /dev/dbox/oled0
+			oled -tc "ERROR: $rtv"
 			#init 6
 			#sleep 20
 			;;
 	esac
 done
-echo "      *-*       " > /dev/dbox/oled0
 
 #never reached
-echo "REBOOT $model" > /dev/dbox/oled0
+oled -tc "REBOOT $model"
 echo "REBOOT $model"
 reboot -f
