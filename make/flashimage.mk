@@ -124,6 +124,10 @@ endif
 flash-image-$(BOXTYPE)-multi-disk: $(D)/host_resize2fs $(D)/host_parted
 	rm -rf $(IMAGE_BUILD_DIR)
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
+	# lcd flashlogo for e4hdultra
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
+		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
+	fi
 	# move kernel files from $(RELEASE_DIR)/boot to $(IMAGE_BUILD_DIR)
 	mv -f $(RELEASE_DIR)/boot/zImage* $(IMAGE_BUILD_DIR)/
 	# Create a sparse image block
@@ -195,6 +199,7 @@ flash-image-$(BOXTYPE)-multi-rootfs:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
 	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
+		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
 		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/kernel.bin; \
 	else \
 		cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/kernel.bin; \
@@ -203,8 +208,13 @@ flash-image-$(BOXTYPE)-multi-rootfs:
 	tar -cvf $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
 	bzip2 $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/rootfs.tar
 	echo $(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/imageversion
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/rootfs.tar.bz2 $(IMAGEDIR)/kernel.bin $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
+		cd $(IMAGE_BUILD_DIR) && \
+		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/rootfs.tar.bz2 $(IMAGEDIR)/kernel.bin $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion $(IMAGEDIR)/lcdflashing.bmp; \
+	else \
+		cd $(IMAGE_BUILD_DIR) && \
+		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/rootfs.tar.bz2 $(IMAGEDIR)/kernel.bin $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion; \
+	fi
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
@@ -212,9 +222,9 @@ flash-image-$(BOXTYPE)-online:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
-		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/kernel.bin; \
+		cp $(RELEASE_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin; \
 	else \
-		cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/kernel.bin; \
+		cp $(RELEASE_DIR)/boot/zImage.dtb $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin; \
 	fi
 	cd $(RELEASE_DIR); \
 	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
@@ -231,8 +241,14 @@ flash-image-$(BOXTYPE)-disk-image:
 	mkdir -p $(IMAGE_BUILD_DIR)/$(IMAGEDIR)
 	cd $(RELEASE_DIR); \
 	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/imageversion
-	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion
+	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
+		cp $(SKEL_ROOT)/release/lcdflashing.bmp $(IMAGE_BUILD_DIR)/$(IMAGEDIR)/; \
+		cd $(IMAGE_BUILD_DIR) && \
+		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion $(IMAGEDIR)/lcdflashing.bmp; \
+	else \
+		cd $(IMAGE_BUILD_DIR) && \
+		zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_multi_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGEDIR)/disk.img $(IMAGEDIR)/imageversion; \
+	fi
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 endif
