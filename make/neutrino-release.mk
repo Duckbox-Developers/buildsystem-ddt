@@ -286,6 +286,7 @@ else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
 endif
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
 
 #
 # vuduo4k
