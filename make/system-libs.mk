@@ -1697,6 +1697,38 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(TOUCH)
 
 #
+# serdisplib
+#
+SERDISPLIB_PATCH =
+
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
+SERDISPLIB_E4HD = $(D)/serdisplib
+endif
+
+$(D)/serdisplib: $(D)/bootstrap $(D)/libusb_compat $(D)/libusb
+	$(START_BUILD)
+	$(REMOVE)/serdisplib
+	set -e; if [ -d $(ARCHIVE)/serdisplib.svn ]; \
+		then cd $(ARCHIVE)/serdisplib.svn; svn up; \
+		else cd $(ARCHIVE); svn checkout https://svn.code.sf.net/p/serdisplib/code/ serdisplib.svn; \
+		fi
+	cp -ra $(ARCHIVE)/serdisplib.svn $(BUILD_TMP)/serdisplib
+	$(CHDIR)/serdisplib/serdisplib/trunk; \
+		$(call apply_patches, $(SERDISPLIB_PATCH)); \
+		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
+			--prefix=/usr \
+			--disable-libSDL \
+			--disable-libusb \
+			--disable-libdlo \
+			--disable-tools \
+			--with-drivers='framebuffer' \
+		; \
+		$(MAKE)
+		cp -a $(BUILD_TMP)/serdisplib/serdisplib/trunk/lib/*.so* $(TARGET_DIR)/usr/lib
+	$(REMOVE)/serdisplib
+	$(TOUCH)
+
+#
 # graphlcd
 #
 GRAPHLCD_VER = 55d4bd8
@@ -1713,7 +1745,7 @@ endif
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(GRAPHLCD_URL) $(GRAPHLCD_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
+$(D)/graphlcd: $(D)/bootstrap $(D)/freetype $(D)/libusb $(SERDISPLIB_E4HD) $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
 	$(UNTAR)/$(GRAPHLCD_SOURCE)
@@ -1763,8 +1795,11 @@ endif
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 #LCD4LINUX_DRV = ,DM8000
 #endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
+SERDISPLIB_DRV = ,serdisplib
+endif
 
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(SERDISPLIB_E4HD)
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
@@ -1777,7 +1812,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
 		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
 			--prefix=/usr \
-			--with-drivers='DPF,SamsungSPF$(LCD4LINUX_DRV),PNG' \
+			--with-drivers='DPF,SamsungSPF$(LCD4LINUX_DRV),PNG$(SERDISPLIB_DRV)' \
 			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
 			--without-ncurses \
 		; \
