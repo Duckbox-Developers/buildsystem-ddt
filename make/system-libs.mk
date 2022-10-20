@@ -1741,6 +1741,9 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
+GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
+endif
 
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(GRAPHLCD_URL) $(GRAPHLCD_VER) $(notdir $@) $(ARCHIVE)
