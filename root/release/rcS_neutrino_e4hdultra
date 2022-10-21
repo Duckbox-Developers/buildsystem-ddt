@@ -65,6 +65,8 @@ insmod /lib/modules/e4hd_2.ko
 insmod /lib/modules/e4hd_3.ko
 insmod /lib/modules/e4hd_4.ko
 
+/bin/initfb
+
 echo 100 > /proc/stb/fp/oled_brightness
 oled -tc "Booting... DDT"
 
