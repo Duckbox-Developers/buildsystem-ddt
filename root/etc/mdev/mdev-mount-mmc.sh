@@ -20,7 +20,7 @@ model=`cat /proc/stb/info/model`
 [ "$model" == "dm8000" ] && [ "$vumodel" == "zero4k" ] && model=$vumodel
 
 case $model in
-	bre2ze4k|hd51|h7) KRNLPARTS="2 4 6 8";;
+	bre2ze4k|hd51|h7|e4hd) KRNLPARTS="2 4 6 8";;
 	solo4k|ultimo4k|uno4k|uno4kse) KRNLPARTS="4 6 8 10";;
 	duo4k|duo4kse) KRNLPARTS="9 11 13 15";;
 	*) KRNLPARTS="2 4 6 8";;
