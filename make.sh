@@ -23,14 +23,14 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                     : Target system (1-70)"
-	echo "Parameter 2 (not UFS910/UFS922) : FFMPEG Version (1-3)"
-	echo "Parameter 3                     : Optimization (1-6)"
-	echo "Parameter 4                     : External LCD support (1-4)"
-	echo "Parameter 5                     : Neutrino variant (1-6)"
-	echo "Parameter 6 (HD51/H7/BRE2ZE4K)  : Swap Data and Linux Swap (1-2)"
-	echo "Parameter 7 (ARM/MIPS)          : GCC Version (1-7)"
-	echo "Parameter 8 (ARM VU+)           : Single/Multiboot (1-2)"
+	echo "Parameter 1                             : Target system (1-70)"
+	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
+	echo "Parameter 3                             : Optimization (1-6)"
+	echo "Parameter 4                             : External LCD support (1-4)"
+	echo "Parameter 5                             : Neutrino variant (1-6)"
+	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-2)"
+	echo "Parameter 7 (ARM/MIPS)                  : GCC Version (1-7)"
+	echo "Parameter 8 (ARM VU+)                   : Single/Multiboot (1-2)"
 	exit
 fi
 
