@@ -23,7 +23,7 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                             : Target system (1-70)"
+	echo "Parameter 1                             : Target system (1-80)"
 	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : External LCD support (1-4)"
@@ -32,6 +32,40 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 7 (ARM/MIPS)                  : GCC Version (1-7)"
 	echo "Parameter 8 (ARM VU+)                   : Normal/Multiboot (1-2)"
 	exit
+fi
+
+##############################################
+
+if [ "$1" != "" ]; then
+	# defaults
+	echo "FFMPEG_EXPERIMENTAL=1" > config
+	echo "FFMPEG_SNAPSHOT=0" >> config
+	echo "OPTIMIZATIONS=size" >> config
+	echo "OPTIMIZE_PICS=1" >> config
+	echo "EXTERNAL_LCD=none" >> config
+	echo "FLAVOUR=neutrino-ddt" >> config
+	echo "IMAGE=neutrino" >> config
+	echo "SWAPDATA=0" >> config
+	echo "BS_GCC_VER=8.5.0" >> config
+	echo "VU_MULTIBOOT=1" >> config
+	echo "BOXTYPE=$1" >> config
+	case $1 in
+		ufs910|ufs912|ufs913|ufs922|tf7700|fortis_hdbox|octagon1008|atevio7500|ipbox55|ipbox99|ipbox9900|cuberevo|cuberevo_mini|cuberevo_mini2|cuberevo_250hd|cuberevo_2000hd|cuberevo_3000hd|spark|spark7162)
+			echo "BOXARCH=sh4" >> config
+			make printenv
+			exit
+		;;
+		hd51|h7|bre2ze4k|e4hd|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse)
+			echo "BOXARCH=arm" >> config
+			make printenv
+			exit
+		;;
+		vuduo|dm8000)
+			echo "BOXARCH=mips" >> config
+			make printenv
+			exit
+		;;
+	esac
 fi
 
 ##############################################
