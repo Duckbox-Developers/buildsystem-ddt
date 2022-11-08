@@ -55,7 +55,7 @@ if [ "$1" != "" ]; then
 			make printenv
 			exit
 		;;
-		hd51|h7|bre2ze4k|e4hd|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse)
+		hd51|h7|bre2ze4k|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse)
 			echo "BOXARCH=arm" >> config
 			make printenv
 			exit
