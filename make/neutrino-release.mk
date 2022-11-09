@@ -287,6 +287,7 @@ else
 endif
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	install -m 0644 $(SKEL_ROOT)/release/lcdsplash.bmp $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
 
 #
 # vuduo4k

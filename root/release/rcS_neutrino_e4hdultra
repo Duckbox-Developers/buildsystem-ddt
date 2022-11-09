@@ -71,6 +71,8 @@ echo 200 > /proc/stb/lcd/oled_brightness
 echo on > /proc/stb/power/standbyled
 oled -tc "Booting... DDT"
 
+[ ! -e /boot/lcdsplash.bmp ] && cp /usr/share/tuxbox/neutrino/icons/lcdsplash.bmp /boot
+
 echo "[rcS] starting mdev"
 mdev -s
 
