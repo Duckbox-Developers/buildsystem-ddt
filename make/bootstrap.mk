@@ -347,7 +347,7 @@ $(DRIVER_DIR):
 	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repository'
 	@echo '===================================================================='
 	if [ ! -e $(DRIVER_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
+		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver-ddt.git driver; \
 	fi
 
 $(TOOLS_DIR):
@@ -355,7 +355,7 @@ $(TOOLS_DIR):
 	@echo '      Cloning $(GIT_NAME_TOOLS)-tools git repository'
 	@echo '===================================================================='
 	if [ ! -e $(TOOLS_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_TOOLS)/tools.git tools; \
+		git clone $(GITHUB)/$(GIT_NAME_TOOLS)/tools-ddt.git tools; \
 	fi
 
 $(FLASH_DIR):
@@ -363,7 +363,7 @@ $(FLASH_DIR):
 	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repository'
 	@echo '===================================================================='
 	if [ ! -e $(FLASH_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash; \
+		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash-ddt.git flash; \
 	fi
 	@echo ''
 
