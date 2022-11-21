@@ -64,12 +64,13 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 #
 # luaexpat
 #
-LUAEXPAT_VER = 1.3.0
-LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VER).tar.gz
+LUAEXPAT_VER = 33744ae
+LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VER).tar.bz2
 LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
+LUAEXPAT_URL = https://github.com/lunarmodules/luaexpat.git
 
 $(ARCHIVE)/$(LUAEXPAT_SOURCE):
-	$(DOWNLOAD) https://sources.voidlinux-ppc.org/luaexpat-1.3.0/$(LUAEXPAT_SOURCE)
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAEXPAT_URL) $(LUAEXPAT_VER) $(notdir $@) $(ARCHIVE)
 
 $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	$(START_BUILD)
