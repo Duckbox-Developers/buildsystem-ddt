@@ -882,6 +882,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 	rm -f $(RELEASE_DIR)/usr/share/tuxbox/neutrino/httpd/images/rc_913.jpg
 endif
+	rm -f $(RELEASE_DIR)/etc/ssl/misc/*
 	rm -f $(RELEASE_DIR)/usr/lib/lua/5.2/*.la
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
