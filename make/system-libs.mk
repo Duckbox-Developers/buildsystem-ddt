@@ -1711,6 +1711,7 @@ GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
+GRAPHLCD_PATCH += graphlcd-framebuffer.patch
 endif
 
 $(ARCHIVE)/$(GRAPHLCD_SOURCE):
