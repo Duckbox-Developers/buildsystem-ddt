@@ -72,7 +72,7 @@ $(BOXTYPE)_IMAGE_ROOTFS_SIZE = 294912
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 e4hdultra))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
-HD5X_DRIVER = e4hd
+HD5X_DRIVER = 8100s
 else
 HD5X_DRIVER = $(BOXTYPE)
 endif
