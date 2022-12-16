@@ -63,7 +63,7 @@ flash-clean:
 IMAGE_BUILD_DIR = $(BUILD_TMP)/image-build
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
-### armbox bre2ze4k hd51 h7
+### armbox bre2ze4k hd51 h7 e4hdultra
 # general
 $(BOXTYPE)_IMAGE_NAME = disk
 $(BOXTYPE)_BOOT_IMAGE = boot.img
