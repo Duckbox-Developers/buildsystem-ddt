@@ -70,14 +70,6 @@ $(BOXTYPE)_BOOT_IMAGE = boot.img
 $(BOXTYPE)_IMAGE_LINK = $($(BOXTYPE)_IMAGE_NAME).ext4
 $(BOXTYPE)_IMAGE_ROOTFS_SIZE = 294912
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 e4hdultra))
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
-HD5X_DRIVER = 8100s
-else
-HD5X_DRIVER = $(BOXTYPE)
-endif
-endif
-
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51))
 	IMAGEDIR = $(BOXTYPE)
 endif
@@ -165,18 +157,18 @@ endif
 	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) bs=$(BLOCK_SIZE) count=$(shell expr $(BOOT_PARTITION_SIZE) \* $(BLOCK_SECTOR))
 	mkfs.msdos -S 512 $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE)
 	@if [ "$(BOXTYPE)" == "e4hdultra" ]; then \
-		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait $(HD5X_DRIVER)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP; \
-		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait $(HD5X_DRIVER)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_1; \
-		echo "boot emmcflash0.kernel2 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p5 rw rootwait $(HD5X_DRIVER)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_2; \
-		echo "boot emmcflash0.kernel3 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p7 rw rootwait $(HD5X_DRIVER)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_3; \
-		echo "boot emmcflash0.kernel4 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p9 rw rootwait $(HD5X_DRIVER)_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_4; \
+		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait 8100s_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP; \
+		echo "boot emmcflash0.kernel1 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p3 rw rootwait 8100s_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_1; \
+		echo "boot emmcflash0.kernel2 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p5 rw rootwait 8100s_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_2; \
+		echo "boot emmcflash0.kernel3 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p7 rw rootwait 8100s_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_3; \
+		echo "boot emmcflash0.kernel4 'brcm_cma=504M@264M brcm_cma=192M@768M brcm_cma=1024M@2048M root=/dev/mmcblk0p9 rw rootwait 8100s_4.boxmode=5'" > $(IMAGE_BUILD_DIR)/STARTUP_4; \
 		cp $(SKEL_ROOT)/release/lcdsplash.bmp $(IMAGE_BUILD_DIR)/; \
 	else \
-		echo "boot emmcflash0.kernel1 'root=/dev/mmcblk0p3 rw rootwait $(HD5X_DRIVER)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP; \
-		echo "boot emmcflash0.kernel1 'root=/dev/mmcblk0p3 rw rootwait $(HD5X_DRIVER)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_1; \
-		echo "boot emmcflash0.kernel2 'root=/dev/mmcblk0p5 rw rootwait $(HD5X_DRIVER)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_2; \
-		echo "boot emmcflash0.kernel3 'root=/dev/mmcblk0p7 rw rootwait $(HD5X_DRIVER)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_3; \
-		echo "boot emmcflash0.kernel4 'root=/dev/mmcblk0p9 rw rootwait $(HD5X_DRIVER)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_4; \
+		echo "boot emmcflash0.kernel1 'root=/dev/mmcblk0p3 rw rootwait $(BOXTYPE)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP; \
+		echo "boot emmcflash0.kernel1 'root=/dev/mmcblk0p3 rw rootwait $(BOXTYPE)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_1; \
+		echo "boot emmcflash0.kernel2 'root=/dev/mmcblk0p5 rw rootwait $(BOXTYPE)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_2; \
+		echo "boot emmcflash0.kernel3 'root=/dev/mmcblk0p7 rw rootwait $(BOXTYPE)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_3; \
+		echo "boot emmcflash0.kernel4 'root=/dev/mmcblk0p9 rw rootwait $(BOXTYPE)_4.boxmode=1'" > $(IMAGE_BUILD_DIR)/STARTUP_4; \
 	fi
 	mcopy -i $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP ::
 	mcopy -i $(IMAGE_BUILD_DIR)/$($(BOXTYPE)_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_1 ::
