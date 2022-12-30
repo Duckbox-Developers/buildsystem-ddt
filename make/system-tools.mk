@@ -1038,8 +1038,8 @@ $(D)/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 #
 # sysstat
 #
-SYSSTAT_VER = 12.6.0
-SYSSTAT_SOURCE = sysstat-$(SYSSTAT_VER).tar.bz2
+SYSSTAT_VER = 12.6.1
+SYSSTAT_SOURCE = sysstat-$(SYSSTAT_VER).tar.xz
 
 $(ARCHIVE)/$(SYSSTAT_SOURCE):
 	$(DOWNLOAD) http://pagesperso-orange.fr/sebastien.godard/$(SYSSTAT_SOURCE)
