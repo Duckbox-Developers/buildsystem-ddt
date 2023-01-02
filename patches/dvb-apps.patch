@@ -30,6 +30,22 @@ index 74385de..bfe2895 100644
  static int dst_comms(int cafd, uint32_t tag, uint32_t function, struct ca_msg *msg)
  {
  	if (tag) {
+diff --git a/util/dvbdate/dvbdate.c b/util/dvbdate/dvbdate.c
+index f0df437..a808416 100644
+--- a/util/dvbdate/dvbdate.c
++++ b/util/dvbdate/dvbdate.c
+@@ -309,7 +309,10 @@ int atsc_scan_date(time_t *rx_time, unsigned int to)
+  */
+ int set_time(time_t * new_time)
+ {
+-	if (stime(new_time)) {
++	struct timespec s = {0};
++	s.tv_sec = new_time;
++
++	if (clock_settime(CLOCK_REALTIME, &s)) {
+ 		perror("Unable to set time");
+ 		return -1;
+ 	}
 diff --git a/util/scan/Makefile b/util/scan/Makefile
 index 32d1f1c..51b3777 100644
 --- a/util/scan/Makefile
