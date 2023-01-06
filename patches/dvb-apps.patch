@@ -50,10 +50,10 @@ index f0df437..6b5f4d4 100644
  		return -1;
  	}
 diff --git a/util/femon/femon.c b/util/femon/femon.c
-index a50fe17..f0dc817 100644
+index a50fe17..672a088 100644
 --- a/util/femon/femon.c
 +++ b/util/femon/femon.c
-@@ -42,16 +42,20 @@
+@@ -42,17 +42,23 @@
  static char *usage_str =
      "\nusage: femon [options]\n"
      "     -H        : human readable output\n"
@@ -62,6 +62,7 @@ index a50fe17..f0dc817 100644
      "     -r        : If 'Acoustical mode' is active it tells the application\n"
      "                 is called remotely via ssh. The sound is heard on the 'real'\n"
      "                 machine but. The user has to be root.\n"
++    "     -d        : show only different values\n"
 +    "     -t number : use given cycle time (default 1.00)\n"
      "     -a number : use given adapter (default 0)\n"
      "     -f number : use given frontend (default 0)\n"
@@ -72,83 +73,195 @@ index a50fe17..f0dc817 100644
  int acoustical_mode=0;
 +int minimalized=0;
  int remote=0;
++int onlydiff=0;
  
  static void usage(void)
-@@ -67,7 +71,8 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+ {
+@@ -65,81 +71,119 @@ static
+ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int count)
+ {
  	struct dvbfe_info fe_info;
++	struct dvbfe_info fe_info_tmp;
  	unsigned int samples = 0;
  	FILE *ttyFile=NULL;
 -	
 +	struct timeval now;
++	int diff = 1;
 +
  	// We dont write the "beep"-codes to stdout but to /dev/tty1.
  	// This is neccessary for Thin-Client-Systems or Streaming-Boxes
  	// where the computer does not have a monitor and femon is called via ssh.
-@@ -90,12 +95,25 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
+-	if(acoustical_mode)
++	if (acoustical_mode)
+ 	{
+-	    if(remote)
+-	    {
+-		ttyFile=fopen("/dev/tty1","w");
+-	        if(!ttyFile)
++		if (remote)
++		{
++			ttyFile=fopen("/dev/tty1","w");
++			if (!ttyFile)
++			{
++				fprintf(stderr, "Could not open /dev/tty1. No access rights?\n");
++				exit(-1);
++			}
++		}
++		else
+ 		{
+-		    fprintf(stderr, "Could not open /dev/tty1. No access rights?\n");
+-		    exit(-1);
++			ttyFile=stdout;
+ 		}
+-	    }
+-	    else
+-	    {
+-		ttyFile=stdout;
+-	    }
+ 	}
  
  	do {
  		if (dvbfe_get_info(fe, FE_STATUS_PARAMS, &fe_info, DVBFE_INFO_QUERYTYPE_IMMEDIATE, 0) != FE_STATUS_PARAMS) {
-+		    if (!minimalized)
- 			fprintf(stderr, "Problem retrieving frontend information: %m\n");
+-			fprintf(stderr, "Problem retrieving frontend information: %m\n");
++			if (!minimalized)
++				fprintf(stderr, "Problem retrieving frontend information: %m\n");
  		}
  
--
-+		gettimeofday(&now, NULL);
-+		int milli = now.tv_usec / 1000;
-+		char buffer[80] = "";
-+		strftime(buffer, 80, "%a %b %d %Y - %H:%M:%S", localtime(&now.tv_sec));
-+		char ntime[84] = "";
-+		sprintf(ntime, "%s.%03d", buffer, milli);
++		if (onlydiff == 1 && (fe_info_tmp.signal != fe_info.signal || fe_info_tmp.carrier != fe_info.carrier || fe_info_tmp.ber != fe_info.ber))
++		{
++			fe_info_tmp.signal = fe_info.signal;
++			fe_info_tmp.carrier = fe_info.carrier;
++			fe_info_tmp.ber = fe_info.ber;
++			diff = 1;
++		}
++		else
++			diff = 0;
  
- 		if (human_readable) {
-+		    if (minimalized) {
-+                       printf ("%s | sig %3u%% | snr %3u%% | ber %d",
-+				ntime,
-+				(fe_info.signal_strength * 100) / 0xffff,
-+				(fe_info.snr * 100) / 0xffff,
-+				fe_info.ber);
-+		    } else {
-                        printf ("status %c%c%c%c%c | signal %3u%% | snr %3u%% | ber %d | unc %d | ",
- 				fe_info.signal ? 'S' : ' ',
- 				fe_info.carrier ? 'C' : ' ',
-@@ -106,7 +124,15 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
- 				(fe_info.snr * 100) / 0xffff,
- 				fe_info.ber,
- 				fe_info.ucblocks);
-+		    }
- 		} else {
-+		    if (minimalized) {
-+			printf ("%s | sig %04x | snr %04x | ber %08x",
-+				ntime,
-+				fe_info.signal_strength,
-+				fe_info.snr,
-+				fe_info.ber);
-+		    } else {
- 			printf ("status %c%c%c%c%c | signal %04x | snr %04x | ber %08x | unc %08x | ",
- 				fe_info.signal ? 'S' : ' ',
- 				fe_info.carrier ? 'C' : ' ',
-@@ -117,9 +143,11 @@ int check_frontend (struct dvbfe_handle *fe, int human_readable, unsigned int co
- 				fe_info.snr,
- 				fe_info.ber,
- 				fe_info.ucblocks);
-+		    }
- 		}
++		if (diff) {
++			gettimeofday(&now, NULL);
++			int milli = now.tv_usec / 1000;
++			char buffer[80] = "";
++			strftime(buffer, 80, "%a %b %d %Y - %H:%M:%S", localtime(&now.tv_sec));
++			char ntime[84] = "";
++			sprintf(ntime, "%s.%03d", buffer, milli);
  
- 		if (fe_info.lock)
-+		    if (!minimalized)
- 			printf("FE_HAS_LOCK");
+-		if (human_readable) {
+-                       printf ("status %c%c%c%c%c | signal %3u%% | snr %3u%% | ber %d | unc %d | ",
+-				fe_info.signal ? 'S' : ' ',
+-				fe_info.carrier ? 'C' : ' ',
+-				fe_info.viterbi ? 'V' : ' ',
+-				fe_info.sync ? 'Y' : ' ',
+-				fe_info.lock ? 'L' : ' ',
+-				(fe_info.signal_strength * 100) / 0xffff,
+-				(fe_info.snr * 100) / 0xffff,
+-				fe_info.ber,
+-				fe_info.ucblocks);
+-		} else {
+-			printf ("status %c%c%c%c%c | signal %04x | snr %04x | ber %08x | unc %08x | ",
+-				fe_info.signal ? 'S' : ' ',
+-				fe_info.carrier ? 'C' : ' ',
+-				fe_info.viterbi ? 'V' : ' ',
+-				fe_info.sync ? 'Y' : ' ',
+-				fe_info.lock ? 'L' : ' ',
+-				fe_info.signal_strength,
+-				fe_info.snr,
+-				fe_info.ber,
+-				fe_info.ucblocks);
+-		}
++			if (human_readable) {
++				if (minimalized) {
++					printf ("%s | sig %3u%% | snr %3u%% | ber %d",
++					ntime,
++					(fe_info.signal_strength * 100) / 0xffff,
++					(fe_info.snr * 100) / 0xffff,
++					fe_info.ber);
++				} else {
++					printf ("status %c%c%c%c%c | signal %3u%% | snr %3u%% | ber %d | unc %d | ",
++					fe_info.signal ? 'S' : ' ',
++					fe_info.carrier ? 'C' : ' ',
++					fe_info.viterbi ? 'V' : ' ',
++					fe_info.sync ? 'Y' : ' ',
++					fe_info.lock ? 'L' : ' ',
++					(fe_info.signal_strength * 100) / 0xffff,
++					(fe_info.snr * 100) / 0xffff,
++					fe_info.ber,
++					fe_info.ucblocks);
++				}
++			} else {
++				if (minimalized) {
++					printf ("%s | sig %04x | snr %04x | ber %08x",
++					ntime,
++					fe_info.signal_strength,
++					fe_info.snr,
++					fe_info.ber);
++				} else {
++					printf ("status %c%c%c%c%c | signal %04x | snr %04x | ber %08x | unc %08x | ",
++					fe_info.signal ? 'S' : ' ',
++					fe_info.carrier ? 'C' : ' ',
++					fe_info.viterbi ? 'V' : ' ',
++					fe_info.sync ? 'Y' : ' ',
++					fe_info.lock ? 'L' : ' ',
++					fe_info.signal_strength,
++					fe_info.snr,
++					fe_info.ber,
++					fe_info.ucblocks);
++				}
++			}
  
- 		// create beep if acoustical_mode enabled
-@@ -188,7 +216,7 @@ int main(int argc, char *argv[])
+-		if (fe_info.lock)
+-			printf("FE_HAS_LOCK");
++			if (fe_info.lock)
++				if (!minimalized)
++					printf("FE_HAS_LOCK");
+ 
+-		// create beep if acoustical_mode enabled
+-		if(acoustical_mode)
+-		{
+-		    int signal=(fe_info.signal_strength * 100) / 0xffff;
+-		    fprintf( ttyFile, "\033[10;%d]\a", 500+(signal*2));
+-		    // printf("Variable : %d\n", signal);
+-		    fflush(ttyFile);
+-		}
++			// create beep if acoustical_mode enabled
++			if (acoustical_mode)
++			{
++				int signal=(fe_info.signal_strength * 100) / 0xffff;
++				fprintf( ttyFile, "\033[10;%d]\a", 500+(signal*2));
++				// printf("Variable : %d\n", signal);
++				fflush(ttyFile);
++			}
+ 
+-		printf("\n");
+-		fflush(stdout);
+-		usleep(sleep_time);
+-		samples++;
++			printf("\n");
++			fflush(stdout);
++			usleep(sleep_time);
++			samples++;
++		}
+ 	} while ((!count) || (count-samples));
+-	
+-	if(ttyFile)
+-	    fclose(ttyFile);
+-	
++
++	if (ttyFile)
++		fclose(ttyFile);
++
+ 	return 0;
+ }
+ 
+@@ -188,7 +232,7 @@ int main(int argc, char *argv[])
  	int human_readable = 0;
  	int opt;
  
 -       while ((opt = getopt(argc, argv, "rAHa:f:c:")) != -1) {
-+       while ((opt = getopt(argc, argv, "rAMHa:f:c:t:")) != -1) {
++       while ((opt = getopt(argc, argv, "drAMHa:f:c:t:")) != -1) {
  		switch (opt)
  		{
  		default:
-@@ -200,12 +228,19 @@ int main(int argc, char *argv[])
+@@ -200,12 +244,19 @@ int main(int argc, char *argv[])
  		case 'c':
  			count = strtoul(optarg, NULL, 0);
  			break;
@@ -168,6 +281,16 @@ index a50fe17..f0dc817 100644
  		case 'A':
  			// Acoustical mode: we have to reduce the delay between
  			// checks in order to hear nice sound
+@@ -215,6 +266,9 @@ int main(int argc, char *argv[])
+ 		case 'r':
+ 			remote=1;
+ 			break;
++		case 'd':
++			onlydiff=1;
++			break;
+ 		}
+ 	}
+ 
 diff --git a/util/scan/Makefile b/util/scan/Makefile
 index 32d1f1c..51b3777 100644
 --- a/util/scan/Makefile
