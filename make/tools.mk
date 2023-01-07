@@ -5,6 +5,7 @@ tools-clean:
 	rm -f $(D)/tools-*
 	-$(MAKE) -C $(TOOLS_DIR)/aio-grab-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/asc2uni distclean
+	-$(MAKE) -C $(TOOLS_DIR)/femon distclean
 	-$(MAKE) -C $(TOOLS_DIR)/gitVCInfo distclean
 	-$(MAKE) -C $(TOOLS_DIR)/minimon-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/msgbox distclean
@@ -153,6 +154,19 @@ $(D)/tools-flashtool-pad: $(D)/directories
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(HOST_DIR)
+	$(TOUCH)
+
+#
+# femon
+#
+$(D)/tools-femon: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/femon; \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS)" \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
 #
@@ -504,6 +518,7 @@ TOOLS += $(D)/tools-msgbox
 TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+TOOLS += $(D)/tools-femon
 #TOOLS += $(D)/tools-tuxcal
 TOOLS += $(D)/tools-tuxcom
 endif
