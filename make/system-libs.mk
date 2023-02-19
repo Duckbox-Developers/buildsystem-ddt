@@ -1,31 +1,4 @@
 #
-# cortex-strings
-#
-$(D)/cortex_strings: $(D)/directories
-	$(START_BUILD)
-	$(REMOVE)/cortex-strings
-	set -e; if [ -d $(ARCHIVE)/cortex-strings.git ]; \
-		then cd $(ARCHIVE)/cortex-strings.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/cortex-strings.git cortex-strings.git; \
-		fi
-	cp -ra $(ARCHIVE)/cortex-strings.git $(BUILD_TMP)/cortex-strings
-	$(CHDIR)/cortex-strings; \
-		./autogen.sh  $(SILENT_OPT); \
-		$(MAKE_OPTS) \
-		./configure $(SILENT_OPT)\
-			--build=$(BUILD) \
-			--host=$(TARGET) \
-			--prefix=/usr \
-			--disable-shared \
-			--enable-static \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_LIBTOOL)/libcortex-strings.la
-	$(REMOVE)/cortex-strings
-	$(TOUCH)
-
-#
 # ncurses
 #
 NCURSES_VER = 6.0
