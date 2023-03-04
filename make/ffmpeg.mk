@@ -503,6 +503,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			\
 			--disable-encoders \
 			--enable-encoder=aac \
+			--enable-encoder=eac3 \
 			--enable-encoder=h261 \
 			--enable-encoder=h263 \
 			--enable-encoder=h263p \
@@ -518,6 +519,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-decoder=dca \
 			--enable-decoder=dvbsub \
 			--enable-decoder=dvdsub \
+			--enable-decoder=eac3 \
 			--enable-decoder=flac \
 			--enable-decoder=h261 \
 			--enable-decoder=h263 \
@@ -552,6 +554,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-demuxer=ac3 \
 			--enable-demuxer=avi \
 			--enable-demuxer=dts \
+			--enable-demuxer=eac3 \
 			--enable-demuxer=flac \
 			--enable-demuxer=flv \
 			--enable-demuxer=hds \
