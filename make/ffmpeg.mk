@@ -169,6 +169,7 @@ endif
 			\
 			--disable-encoders \
 			--enable-encoder=aac \
+			--enable-encoder=eac3 \
 			--enable-encoder=h261 \
 			--enable-encoder=h263 \
 			--enable-encoder=h263p \
@@ -311,6 +312,7 @@ endif
 			--enable-demuxer=avi \
 			--enable-demuxer=dts \
 			--enable-demuxer=dash \
+			--enable-demuxer=eac3 \
 			--enable-demuxer=ffmetadata \
 			--enable-demuxer=flac \
 			--enable-demuxer=flv \
