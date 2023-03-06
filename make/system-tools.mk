@@ -1039,7 +1039,7 @@ $(D)/fbshot: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 #
 # sysstat
 #
-SYSSTAT_VER = 12.6.1
+SYSSTAT_VER = 12.6.2
 SYSSTAT_SOURCE = sysstat-$(SYSSTAT_VER).tar.xz
 
 $(ARCHIVE)/$(SYSSTAT_SOURCE):
