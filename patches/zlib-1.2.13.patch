@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -138,6 +138,7 @@
+@@ -141,6 +141,7 @@
      -c* | --const) zconst=1; shift ;;
      -w* | --warn) warn=1; shift ;;
      -d* | --debug) debug=1; shift ;;
@@ -10,7 +10,7 @@
        echo "unknown option: $1" | tee -a configure.log
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -322,7 +322,6 @@
+@@ -318,7 +318,6 @@
  	  rm -f $(DESTDIR)$(sharedlibdir)/$(SHAREDLIB) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIBM); \
  	  ln -s $(SHAREDLIBV) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIB); \
  	  ln -s $(SHAREDLIBV) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIBM); \
