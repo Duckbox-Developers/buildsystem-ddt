@@ -419,6 +419,7 @@ neutrino-release-vuduo2:
 	cp -f $(SKEL_ROOT)/release/fstab_vuduo2 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
+	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
 
 #
 # dm8000
