@@ -61,6 +61,7 @@ VUDUO2_PATCHES = \
 		mipsbox/vuduo2/kernel-add-support-for-gcc10.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc11.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc12.patch \
+		mipsbox/vuduo2/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo2/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/vuduo2/add-dmx-source-timecode.patch \
 		mipsbox/vuduo2/af9015-output-full-range-SNR.patch \
