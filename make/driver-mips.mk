@@ -26,7 +26,7 @@ $(ARCHIVE)/$(DRIVER_SRC):
 endif
 
 driver-clean:
-ifeq ($(BOXTYPE), vuduo)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 endif
 ifeq ($(BOXTYPE), dm8000)
