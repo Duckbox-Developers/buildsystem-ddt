@@ -60,7 +60,7 @@ if [ "$1" != "" ]; then
 			make printenv
 			exit
 		;;
-		vuduo|dm8000)
+		vuduo|vuduo2|dm8000)
 			echo "BOXARCH=mips" >> config
 			make printenv
 			exit
@@ -112,7 +112,7 @@ case $1 in
 		echo "   66)  AXAS E4HD 4K Ultra"
 		echo
 		echo "  mips-based receivers"
-		echo "   70)  VU+ Duo"
+		echo "   70)  VU+ Duo           71)  VU+ Duo2"
 		echo "   80)  DM8000"
 		echo
 		read -p "Select target (1-80)? ";;
@@ -158,6 +158,7 @@ case "$REPLY" in
 	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
 	70) BOXARCH="mips";BOXTYPE="vuduo";;
+	71) BOXARCH="mips";BOXTYPE="vuduo2";;
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac

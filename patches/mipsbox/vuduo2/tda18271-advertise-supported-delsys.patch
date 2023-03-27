@@ -1,0 +1,29 @@
+From 1c5ddf76d25362fd5a1ffca65373a718df9b26a3 Mon Sep 17 00:00:00 2001
+From: OpenEmbedded <oe.patch@oe>
+Date: Fri, 23 Mar 2018 14:01:51 +0100
+
+---
+ drivers/media/tuners/tda18271-fe.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/media/tuners/tda18271-fe.c b/drivers/media/tuners/tda18271-fe.c
+index 4995b890..c9149f9b 100644
+--- a/drivers/media/tuners/tda18271-fe.c
++++ b/drivers/media/tuners/tda18271-fe.c
+@@ -1340,6 +1340,16 @@ struct dvb_frontend *tda18271_attach(struct dvb_frontend *fe, u8 addr,
+ 	memcpy(&fe->ops.tuner_ops, &tda18271_tuner_ops,
+ 	       sizeof(struct dvb_tuner_ops));
+ 
++	if (fe->ops.delsys[0] == SYS_UNDEFINED) {
++		fe->ops.delsys[0] = SYS_DVBC_ANNEX_A;
++		fe->ops.delsys[1] = SYS_DVBC_ANNEX_B;
++		fe->ops.delsys[2] = SYS_DVBC_ANNEX_C;
++		fe->ops.delsys[3] = SYS_ATSC;
++		fe->ops.delsys[4] = SYS_ISDBT;
++		fe->ops.delsys[5] = SYS_DVBT;
++		fe->ops.delsys[6] = SYS_DVBT2;
++	}
++
+ 	if (tda18271_debug & (DBG_MAP | DBG_ADV))
+ 		tda18271_dump_std_map(fe);
+ 

@@ -1,0 +1,68 @@
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index c23156a..9ae22a9 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3115,6 +3115,34 @@ static int bcmgenet_set_wol(struct net_device *dev,
+ 		umac->mpd_pw_ls = get_unaligned_be32(&wol->sopass[2]);
+ 		umac->mpd_ctrl |= MPD_PW_EN;
+ 	}
++        if (pDevCtrl->phyType == BRCM_PHY_TYPE_EXT_RGMII)
++        {
++                if(wol->wolopts & WAKE_MAGIC)
++                {
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1f, 0x0007);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1e, 0x006e);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x15, dev->dev_addr[1]<<8 | dev->dev_addr[0]);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x16, dev->dev_addr[3]<<8 | dev->dev_addr[2]);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x17, dev->dev_addr[5]<<8 | dev->dev_addr[4]);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1f, 0x0007);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1e, 0x006d);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x16, 0x9fff);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x15, 0x1000);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1e, 0x006d);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x19, 0x0001);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1f, 0x0000);
++
++                }
++                else
++                {
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1f, 0x0007);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1e, 0x006d);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x16, 0x9fff);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x15, 0x0000);
++                        pDevCtrl->mii.mdio_write(dev, pDevCtrl->phyAddr, 0x1f, 0x0000);
++                }
++        }
++
+ 
+ 	device_set_wakeup_enable(&dev->dev, wol->wolopts);
+ 	pDevCtrl->wolopts = wol->wolopts;
+diff --git a/drivers/brcmstb/setup.c b/drivers/brcmstb/setup.c
+index 21a6e42..954b902 100644
+--- a/drivers/brcmstb/setup.c
++++ b/drivers/brcmstb/setup.c
+@@ -932,6 +932,15 @@ void brcm_machine_restart(const char *command)
+                ;
+ }
+
++void (*brcm_s3_cb)(void);
++
++
++void register_brcm_s3_cb(void (*cb)(void))
++{
++        brcm_s3_cb = cb;
++}
++EXPORT_SYMBOL(register_brcm_s3_cb);
++
+ void brcm_machine_halt(void)
+ {
+ #ifdef CONFIG_BRCM_IRW_HALT
+@@ -939,6 +948,7 @@ void brcm_machine_halt(void)
+        BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 0);
+        BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 1);
+ #endif
++       if(brcm_s3_cb) brcm_s3_cb();
+ #ifdef CONFIG_BRCM_HAS_AON
+        /* may be S3 cold boot */
+        brcm_pm_s3_cold_boot();
+

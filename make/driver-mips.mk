@@ -7,6 +7,15 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), vuduo2)
+DRIVER_VER = 3.13.5
+DRIVER_DATE = 20190429
+DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), dm8000)
 DRIVER_VER = 3.2
 DRIVER_DATE = 20140604a
