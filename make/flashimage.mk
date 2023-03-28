@@ -19,7 +19,7 @@ else
 	$(MAKE) flash-image-vu-rootfs
 endif
 endif
-ifeq ($(BOXTYPE), vuduo)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
 	$(MAKE) flash-image-vuduo
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -351,7 +351,11 @@ flash-image-vu-online:
 
 ### mipsbox vuduo
 # general
+ifeq ($(BOXTYPE), vuduo2)
+VUDUO_PREFIX = vuplus/duo2
+else
 VUDUO_PREFIX = vuplus/duo
+endif
 
 flash-image-vuduo:
 	# Create final USB-image
