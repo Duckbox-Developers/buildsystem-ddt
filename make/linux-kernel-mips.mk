@@ -87,6 +87,7 @@ VUDUO2_PATCHES = \
 		mipsbox/vuduo2/linux_dvb_adapter.patch \
 		mipsbox/vuduo2/genksyms_fix_typeof_handling.patch \
 		mipsbox/vuduo2/test.patch \
+		mipsbox/vuduo2/disable-attribute-alias.patch \
 		mipsbox/vuduo2/0001-tuners-tda18273-silicon-tuner-driver.patch \
 		mipsbox/vuduo2/T220-kern-13.patch \
 		mipsbox/vuduo2/01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
