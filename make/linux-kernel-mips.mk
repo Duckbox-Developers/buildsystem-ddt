@@ -50,7 +50,7 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/CONFIG_DVB_SP2.patch \
 		mipsbox/vuduo/dvbsky-t330.patch \
 		mipsbox/vuduo/fix-multiple-defs-yyloc.patch
-#		mipsbox/vuduomipsbox/fixed_mtd.patch
+#		mipsbox/vuduo/fixed_mtd.patch
 
 VUDUO2_PATCHES = \
 		mipsbox/vuduo2/kernel-add-support-for-gcc5.patch \
