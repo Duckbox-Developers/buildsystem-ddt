@@ -71,6 +71,13 @@ fi
 
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 
+#if [ ! -e /dev/brcm0 ]; then
+#	insmod /lib/modules/procmk.ko
+#	start-stop-daemon --start --quiet --exec /usr/bin/dvb_server -- &
+#	mknod -m a=rw /dev/brcm0 c 30 0
+#	start-stop-daemon --start --quiet --exec /usr/bin/init_client /lib/modules/dvb-bcm7424.ko /lib/modules/brcmfb.ko -- &
+#fi
+
 if [ ! -e /dev/brcm0 ]; then
 	insmod /lib/modules/procmk.ko
 	mknod -m a=rw /dev/brcm0 c 30 0
