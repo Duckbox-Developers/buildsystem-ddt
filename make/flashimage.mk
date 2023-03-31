@@ -354,10 +354,12 @@ flash-image-vu-online:
 ifeq ($(BOXTYPE), vuduo2)
 VUDUO_PREFIX = vuplus/duo2
 VUDUO_ROOT_EXT = bin
+VUDUO_UBIFS = 8192
 VUDUO2_INITRD = cp $(SKEL_ROOT)/release/vmlinuz-initrd-7425b0 $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/initrd_cfe_auto.bin
 else
 VUDUO_PREFIX = vuplus/duo
 VUDUO_ROOT_EXT = jffs2
+VUDUO_UBIFS = 4096
 endif
 
 flash-image-vuduo:
@@ -366,7 +368,7 @@ flash-image-vuduo:
 	touch $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/reboot.update
 	cp $(RELEASE_DIR)/boot/kernel_cfe_auto.bin $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
 	$(VUDUO2_INITRD)
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c 4096 -F
+	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c $(VUDUO_UBIFS) -F
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'image=$(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
