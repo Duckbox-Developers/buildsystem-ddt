@@ -80,7 +80,7 @@ new file mode 100644
 index 0000000..826843c
 --- /dev/null
 +++ b/glcddrivers/vuplus4k.c
-@@ -0,0 +1,262 @@
+@@ -0,0 +1,264 @@
 +/*
 + * GraphLCD driver library
 + *
@@ -145,7 +145,9 @@ index 0000000..826843c
 +	if (height <= 0)
 +		height = lcd_read_value(YRES);
 +
-+	bpp = lcd_read_value(BPP);
++	bpp = config->bpp;
++	if (bpp <= 0)
++		bpp = lcd_read_value(BPP);
 +
 +	switch (bpp)
 +	{

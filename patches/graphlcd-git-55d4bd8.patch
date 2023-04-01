@@ -497,6 +497,53 @@
  int sgdev_open(const char *portname, int *fd);
  
  #ifdef __cplusplus
+--- a/glcddrivers/config.c
++++ b/glcddrivers/config.c
+@@ -31,6 +31,7 @@
+     port(0),
+     width(0),
+     height(0),
++    bpp(0),
+     upsideDown(false),
+     invert(false),
+     brightness(100),
+@@ -50,6 +51,7 @@
+     port = rhs.port;
+     width = rhs.width;
+     height = rhs.height;
++    bpp = rhs.bpp;
+     upsideDown = rhs.upsideDown;
+     invert = rhs.invert;
+     brightness = rhs.brightness;
+@@ -77,6 +79,7 @@
+     port = rhs.port;
+     width = rhs.width;
+     height = rhs.height;
++    bpp = rhs.bpp;
+     upsideDown = rhs.upsideDown;
+     invert = rhs.invert;
+     brightness = rhs.brightness;
+@@ -133,6 +136,10 @@
+     {
+         height = GetInt(option.value);
+     }
++    else if (option.name == "Bpp")
++    {
++        bpp = GetInt(option.value);
++    }
+     else if (option.name == "UpsideDown")
+     {
+         upsideDown = GetBool(option.value);
+--- a/glcddrivers/config.h
++++ b/glcddrivers/config.h
+@@ -42,6 +42,7 @@
+     int port;
+     int width;
+     int height;
++    int bpp;
+     bool upsideDown;
+     bool invert;
+     int brightness;
 --- a/glcddrivers/Makefile
 +++ b/glcddrivers/Makefile
 @@ -26,18 +26,18 @@
