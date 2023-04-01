@@ -1,0 +1,23 @@
+diff --git a/graphlcd.conf b/graphlcd.conf
+index 270cae8..d256e4b 100644
+--- a/graphlcd.conf
++++ b/graphlcd.conf
+@@ -117,6 +117,18 @@
+ 
+ ########################################################################
+ 
++[vuduo2_vfd]
++# Driver setting for the VFD
++Driver=vuplus4k
++
++[vuduo2_lcd]
++# Driver setting for the LCD
++Driver=vuplus4k
++Device=/dev/lcd2
++Width=400
++Height=240
++Bpp=16
++
+ [ax206dpf]
+ #  THIS IS AN EXPERIMENTAL DRIVER!
+ #  You have to uncomment the variable HAVE_DRIVER_AX206DPF

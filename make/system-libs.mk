@@ -1676,11 +1676,16 @@ GRAPHLCD_VER = 55d4bd8
 GRAPHLCD_SOURCE = graphlcd-git-$(GRAPHLCD_VER).tar.bz2
 GRAPHLCD_URL = https://github.com/Duckbox-Developers/graphlcd.git
 GRAPHLCD_PATCH = graphlcd-git-$(GRAPHLCD_VER).patch
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k vuduo2))
-GRAPHLCD_PATCH += graphlcd-vuplus4k.patch
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
+GRAPHLCD_PATCH += graphlcd-vuplus4k_2.patch
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
+GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
+GRAPHLCD_PATCH += graphlcd-vuduo2.patch
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
@@ -1734,11 +1739,11 @@ $(D)/libdpf: $(D)/bootstrap $(D)/libusb_compat $(ARCHIVE)/$(LIBDPF_SOURCE)
 # lcd4linux
 #
 LCD4LINUX_PATCH = lcd4linux.patch
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k vuduo2))
 LCD4LINUX_DRV = ,VUPLUS4K
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
-LCD4LINUX_DRV = ,VUDUO2
+LCD4LINUX_DRV += ,VUDUO2
 endif
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 #LCD4LINUX_DRV = ,DM8000
@@ -1767,11 +1772,15 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_vu.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
+	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_vuduo2.conf $(TARGET_DIR)/etc/lcd4linux.conf
+else
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 #	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_dm8000.conf $(TARGET_DIR)/etc/lcd4linux.conf
 #else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf
 #endif
+endif
 endif
 	$(REMOVE)/lcd4linux
 	$(TOUCH)
