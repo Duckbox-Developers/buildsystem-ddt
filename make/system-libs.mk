@@ -1737,6 +1737,9 @@ LCD4LINUX_PATCH = lcd4linux.patch
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 LCD4LINUX_DRV = ,VUPLUS4K
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
+LCD4LINUX_DRV = ,VUDUO2
+endif
 #ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 #LCD4LINUX_DRV = ,DM8000
 #endif

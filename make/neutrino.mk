@@ -135,6 +135,11 @@ N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
+N_CONFIG_OPTS += --enable-lcd4linux
+NEUTRINO_DEPS += $(D)/lcd4linux
+endif
+
 ifeq ($(EXTERNAL_LCD), lcd4linux)
 N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
