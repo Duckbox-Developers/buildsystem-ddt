@@ -113,6 +113,10 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 		$(MAKE) PREFIX= CC=$(TARGET)-gcc LD=$(TARGET)-ld STRIP=$(TARGET)-strip WITHOUT_XATTR=1 DESTDIR=$(TARGET_DIR); \
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/mkfs.jffs2 $(TARGET_DIR)/usr/sbin
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/sumtool $(TARGET_DIR)/usr/sbin
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
+		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/mkfs.ubifs/mkfs.ubifs $(TARGET_DIR)/usr/sbin
+		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/ubi-utils/ubinize $(TARGET_DIR)/usr/sbin
+endif
 #		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REMOVE)/mtd-utils-$(MTD_UTILS_VER)
 	$(TOUCH)
