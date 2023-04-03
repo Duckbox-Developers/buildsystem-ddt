@@ -355,7 +355,7 @@ ifeq ($(BOXTYPE), vuduo2)
 VUDUO_PREFIX = vuplus/duo2
 VUDUO_ROOT_EXT = bin
 VUDUO_UBIFS = 8192
-VUDUO2_INITRD = cp $(SKEL_ROOT)/release/vmlinuz-initrd-7425b0 $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/initrd_cfe_auto.bin
+VUDUO2_INITRD = cp $(TARGET_DIR)/boot/vmlinuz-initrd-7425b0 $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/initrd_cfe_auto.bin
 else
 VUDUO_PREFIX = vuplus/duo
 VUDUO_ROOT_EXT = jffs2

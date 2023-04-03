@@ -42,10 +42,11 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
-#ifeq ($(BOXTYPE), vuduo2)
+ifeq ($(BOXTYPE), vuduo2)
 #	$(MAKE) platform_util
 #	$(MAKE) libgles
-#endif
+	$(MAKE) vmlinuz_initrd
+endif
 endif
 ifeq ($(BOXTYPE), dm8000)
 	$(START_BUILD)
@@ -96,4 +97,21 @@ $(D)/libgles: $(D)/bootstrap $(ARCHIVE)/$(GLES_SRC)
 	ln -sf libv3ddriver.so $(TARGET_LIB_DIR)/libGLESv2.so
 	cp -a $(BUILD_TMP)/libgles-$(KERNEL_TYPE)/include/* $(TARGET_INCLUDE_DIR)
 	$(REMOVE)/libgles-$(KERNEL_TYPE)
+	$(TOUCH)
+
+#
+# vmlinuz initrd
+#
+ifeq ($(BOXTYPE), vuduo2)
+INITRD_DATE = 20130220
+endif
+INITRD_SRC = vmlinuz-initrd_$(KERNEL_TYPE)_$(INITRD_DATE).tar.gz
+
+$(ARCHIVE)/$(INITRD_SRC):
+	$(DOWNLOAD) http://code.vuplus.com/download/release/kernel/$(INITRD_SRC)
+
+$(D)/vmlinuz_initrd: $(D)/bootstrap $(ARCHIVE)/$(INITRD_SRC)
+	$(START_BUILD)
+	tar -xf $(ARCHIVE)/$(INITRD_SRC) -C $(TARGET_DIR)/boot
+	install -d $(TARGET_DIR)/boot
 	$(TOUCH)
