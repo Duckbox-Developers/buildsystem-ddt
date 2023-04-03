@@ -24,6 +24,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/flashtool-pad distclean
 	-$(MAKE) -C $(TOOLS_DIR)/hotplug distclean
 	-$(MAKE) -C $(TOOLS_DIR)/ipbox_eeprom distclean
+	-$(MAKE) -C $(TOOLS_DIR)/png_util distclean
 	-$(MAKE) -C $(TOOLS_DIR)/stfbcontrol distclean
 	-$(MAKE) -C $(TOOLS_DIR)/streamproxy distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tfd2mtd distclean
@@ -306,6 +307,19 @@ $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
 	$(TOUCH)
 
 #
+# png_util
+#
+$(D)/tools-png_util: $(D)/bootstrap $(D)/libpng
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/png_util; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # read-edid
 #
 $(D)/tools-read-edid: $(D)/bootstrap
@@ -549,6 +563,9 @@ TOOLS += $(D)/tools-wait4button
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000 e4hdultra vuduo2))
 TOOLS += $(D)/tools-oled_ctrl
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+TOOLS += $(D)/tools-png_util
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 TOOLS += $(D)/tools-initfb

@@ -1,0 +1,62 @@
+#!/bin/sh
+
+lcd4l_dpf_type="$(sed -n 's/lcd4l_dpf_type=//p' /var/tuxbox/config/neutrino.conf)"
+
+configfile() {
+	read layout < /tmp/lcd/layout
+	test $layout = user && CONF_DIR=/var/etc || CONF_DIR=/etc
+
+	chmod 600 ${CONF_DIR}/lcd4linux.conf
+	chown 0:0 ${CONF_DIR}/lcd4linux.conf
+
+	[ "$lcd4l_dpf_type" == "3" ] && L4LADD='-o /tmp/lcd4linux.png'
+
+	printf "${CONF_DIR}/lcd4linux.conf $L4LADD"
+}
+
+doStart() {
+	( # do always run in background
+		while [ ! -e /tmp/.lcd4linux ]; do sleep 2; done
+		if [ "$lcd4l_dpf_type" == "3" ]; then
+			lcd4linux -f $(configfile)
+			[ $(which png_util) > /dev/null 2>&1 ] && png_util /tmp/lcd4linux.png
+		else
+			lcd4linux -f $(configfile)
+		fi
+	) &
+}
+
+doStop() {
+	if [ -e /tmp/lcd4linux.pid ]; then
+		# read pid from pidfile
+		read PID < /tmp/lcd4linux.pid
+
+		# terminate main process
+		kill -TERM $PID > /dev/null 2>&1 &
+	fi
+}
+
+doOff() {
+	echo "LCD::backlight(0)" | lcd4linux -i > /dev/null 2>&1
+}
+
+case "$1" in
+	start)
+		doStart
+	;;
+	stop)
+		doStop
+	;;
+	off)
+		doStop
+		doOff
+	;;
+	restart|reload)
+		doStop
+		doStart
+	;;
+	*)
+		echo "[${0##*/}] Usage: $0 {start|stop|off|restart|reload}"
+		exit
+	;;
+esac
