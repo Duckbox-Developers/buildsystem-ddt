@@ -135,7 +135,7 @@ N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
 N_CONFIG_OPTS += --enable-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
 endif
