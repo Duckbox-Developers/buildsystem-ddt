@@ -314,6 +314,8 @@ $(D)/tools-png_util: $(D)/bootstrap $(D)/libpng
 	set -e; cd $(TOOLS_DIR)/png_util; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
