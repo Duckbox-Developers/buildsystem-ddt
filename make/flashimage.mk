@@ -366,7 +366,7 @@ flash-image-vuduo:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
 	touch $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/reboot.update
-	cp $(RELEASE_DIR)/boot/kernel_cfe_auto.bin $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
+	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
 	$(VUDUO2_INITRD)
 	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c $(VUDUO_UBIFS) -F
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
