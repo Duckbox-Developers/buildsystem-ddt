@@ -409,7 +409,7 @@ neutrino-release-vuduo:
 	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_vuduo $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
+#	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
 
 #
 # vuduo2
@@ -418,7 +418,7 @@ neutrino-release-vuduo2:
 	install -m 0755 $(SKEL_ROOT)/release/halt_vuduo2 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_vuduo2 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
+#	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(RELEASE_DIR)/boot/
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
 
 #
