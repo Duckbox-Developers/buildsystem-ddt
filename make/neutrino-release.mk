@@ -239,7 +239,7 @@ neutrino-release-tf7700:
 neutrino-release-bre2ze4k:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/mmcblk-by-name_hd51 $(RELEASE_DIR)/etc/init.d/mmcblk-by-name
-ifeq ($(SWAPDATA), 1)
+ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 2))
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
 else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
@@ -253,7 +253,7 @@ endif
 neutrino-release-hd51:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/mmcblk-by-name_hd51 $(RELEASE_DIR)/etc/init.d/mmcblk-by-name
-ifeq ($(SWAPDATA), 1)
+ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 2))
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
 else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
@@ -267,7 +267,7 @@ endif
 neutrino-release-h7:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/mmcblk-by-name_hd51 $(RELEASE_DIR)/etc/init.d/mmcblk-by-name
-ifeq ($(SWAPDATA), 1)
+ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 2))
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
 else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
@@ -280,7 +280,7 @@ endif
 #
 neutrino-release-e4hdultra:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
-ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 81))
+ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 2 81 82))
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
 else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab

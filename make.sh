@@ -28,7 +28,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : External LCD support (1-4)"
 	echo "Parameter 5                             : Neutrino variant (1-6)"
-	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-2, 81-82)"
+	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
 	echo "Parameter 7 (ARM/MIPS)                  : GCC Version (1-8)"
 	echo "Parameter 8 (ARM VU+)                   : Normal/Multiboot (1-2)"
 	exit
@@ -318,21 +318,25 @@ echo "IMAGE=$IMAGE" >> config
 
 if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hdultra' ]; then
 	case $6 in
-		[1-2] | 8[1-2]) REPLY=$6;;
+		[1-3] | 8[1-3]) REPLY=$6;;
 		*)	echo -e "\nSelect Swap Data and Linux Swap:"
-			echo -e "   \033[01;32m1)  Swap OFF\033[00m"
-			echo -e "   2)  Swap ON"
+			echo -e "   \033[01;32m 1)  Swap OFF\033[00m"
+			echo -e "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
+			echo -e "    3)  Swap ON (1x linux swap)"
 			echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
 			echo -e "   81)  Swap OFF\033[00m"
-			echo -e "   82)  Swap ON"
-			read -p "Select SWAP support (1-2, 81-82)? ";;
+			echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
+			echo -e "   83)  Swap ON (1x linux swap)"
+			read -p "Select SWAP support (1-3, 81-83)? ";;
 	esac
 
 case "$REPLY" in
 	1)  SWAPDATA="0";;
 	2)  SWAPDATA="1";;
+	3)  SWAPDATA="2";;
 	81) SWAPDATA="80";;
 	82) SWAPDATA="81";;
+	83) SWAPDATA="82";;
 	*)  SWAPDATA="0";;
 esac
 echo "SWAPDATA=$SWAPDATA" >> config
