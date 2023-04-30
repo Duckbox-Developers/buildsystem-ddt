@@ -280,7 +280,7 @@ endif
 #
 neutrino-release-e4hdultra:
 	install -m 0755 $(SKEL_ROOT)/release/halt_hd51 $(RELEASE_DIR)/etc/init.d/halt
-ifeq ($(SWAPDATA), 1)
+ifeq ($(SWAPDATA), $(filter $(SWAPDATA), 1 81))
 	cp -f $(SKEL_ROOT)/release/fstab_hd51 $(RELEASE_DIR)/etc/fstab
 else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
