@@ -330,16 +330,16 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 			read -p "Select SWAP support (1-3, 81-83)? ";;
 	esac
 
-case "$REPLY" in
-	1)  SWAPDATA="0";;
-	2)  SWAPDATA="1";;
-	3)  SWAPDATA="2";;
-	81) SWAPDATA="80";;
-	82) SWAPDATA="81";;
-	83) SWAPDATA="82";;
-	*)  SWAPDATA="0";;
-esac
-echo "SWAPDATA=$SWAPDATA" >> config
+	case "$REPLY" in
+		1)  SWAPDATA="0";;
+		2)  SWAPDATA="1";;
+		3)  SWAPDATA="2";;
+		81) SWAPDATA="80";;
+		82) SWAPDATA="81";;
+		83) SWAPDATA="82";;
+		*)  SWAPDATA="0";;
+	esac
+	echo "SWAPDATA=$SWAPDATA" >> config
 fi
 ##############################################
 
