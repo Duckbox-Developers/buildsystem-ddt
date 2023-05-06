@@ -385,14 +385,14 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 	echo "ROOTFS_PARTITION_SIZE_MULTI=$ROOTFS_PARTITION_SIZE_MULTI" >> config
 
 	echo ""
-	echo "-------------------------------------------------"
-	echo "Using flashsize              : $EMMC_IMAGE_SIZE	($(($EMMC_IMAGE_SIZE/1024)) MB)"
-	echo "-------------------------------------------------"
-	echo "BOOT_PARTITION_SIZE (fix)    : $BOOT_PARTITION_SIZE	($(($BOOT_PARTITION_SIZE/1024)) MB)"
-	echo "KERNEL_PARTITION_SIZE        : $KERNEL_PARTITION_SIZE	($(($KERNEL_PARTITION_SIZE/1024)) MB)"
-	[ $SWPCNT -gt 0 ] && echo "SWAP_DATA_PARTITION_SIZE (${SWPCNT}x): $SWAP_DATA_PARTITION_SIZE	($(($SWAP_DATA_PARTITION_SIZE/1024)) MB)"
-	echo "ROOTFS_PARTITION_SIZE_MULTI  : $ROOTFS_PARTITION_SIZE_MULTI	($(($ROOTFS_PARTITION_SIZE_MULTI/1024)) MB)"
-	echo "-------------------------------------------------"
+	echo "---------------------------------------------------------"
+	echo "Using flashsize                 : $EMMC_IMAGE_SIZE	($(($EMMC_IMAGE_SIZE/1024)) MB)"
+	echo "---------------------------------------------------------"
+	echo "BOOT_PARTITION_SIZE         (1x): $BOOT_PARTITION_SIZE		($(($BOOT_PARTITION_SIZE/1024)) MB)"
+	echo "KERNEL_PARTITION_SIZE       (4x): $KERNEL_PARTITION_SIZE		($(($KERNEL_PARTITION_SIZE/1024)) MB)"
+	[ $SWPCNT -gt 0 ] && echo "SWAP_DATA_PARTITION_SIZE    (${SWPCNT}x): $SWAP_DATA_PARTITION_SIZE	($(($SWAP_DATA_PARTITION_SIZE/1024)) MB)"
+	echo "ROOTFS_PARTITION_SIZE_MULTI (4x): $ROOTFS_PARTITION_SIZE_MULTI	($(($ROOTFS_PARTITION_SIZE_MULTI/1024)) MB)"
+	echo "---------------------------------------------------------"
 fi
 ##############################################
 
