@@ -9,4 +9,4 @@ diff -Naur a/axfer/container.h b/axfer/container.h
 +
  #include <alsa/asoundlib.h>
  
- enum container_type {
+ #include "os_compat.h"

@@ -15,7 +15,7 @@ diff --git a/src/control/control.c b/src/control/control.c
 index 91415b51..ca302df6 100644
 --- a/src/control/control.c
 +++ b/src/control/control.c
-@@ -1569,11 +1569,14 @@ int snd_ctl_open(snd_ctl_t **ctlp, const char *name, int mode)
+@@ -1570,11 +1570,14 @@ int snd_ctl_open(snd_ctl_t **ctlp, const char *name, int mode)
  	int err;
  
  	assert(ctlp && name);

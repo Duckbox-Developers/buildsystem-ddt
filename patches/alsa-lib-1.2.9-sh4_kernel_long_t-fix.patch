@@ -1,6 +1,6 @@
 --- a/include/sound/uapi/asound.h_org
 +++ b/include/sound/uapi/asound.h
-@@ -903,13 +903,7 @@
+@@ -907,13 +907,7 @@
  #define SNDRV_TIMER_IOCTL_PAUSE		_IO('T', 0xa3)
  #define SNDRV_TIMER_IOCTL_TREAD64	_IOW('T', 0xa4, int)
  
