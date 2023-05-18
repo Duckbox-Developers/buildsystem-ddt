@@ -33,6 +33,7 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/kernel-add-support-for-gcc10.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc11.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc12.patch \
+		mipsbox/vuduo/kernel-add-support-for-gcc13.patch \
 		mipsbox/vuduo/gcc9_backport.patch \
 		mipsbox/vuduo/rtl8712-fix-warnings.patch \
 		mipsbox/vuduo/rtl8187se-fix-warnings.patch \
@@ -61,6 +62,7 @@ VUDUO2_PATCHES = \
 		mipsbox/vuduo2/kernel-add-support-for-gcc10.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc11.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc12.patch \
+		mipsbox/vuduo2/kernel-add-support-for-gcc13.patch \
 		mipsbox/vuduo2/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo2/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/vuduo2/add-dmx-source-timecode.patch \
@@ -131,6 +133,7 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-add-support-for-gcc10.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc11.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc12.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc13.patch \
 		mipsbox/dm8000/misc_latin1_to_utf8_conversions.patch \
 		mipsbox/dm8000/0001-dvb_frontend-backport-multistream-support.patch \
 		mipsbox/dm8000/genksyms_fix_typeof_handling.patch \

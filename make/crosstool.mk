@@ -8,15 +8,14 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-#CROSSTOOL_NG_VER     = 7feb97f
-CROSSTOOL_NG_VER     = 3020aca
+#CROSSTOOL_NG_VER     = 3020aca
+CROSSTOOL_NG_VER     = d3e77cd
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
 CROSSTOOL_NG_CONFIG  = crosstool-ng-$(BOXARCH)-$(CROSSTOOL_GCC_VER)
 CROSSTOOL_NG_BACKUP  = $(ARCHIVE)/$(CROSSTOOL_NG_CONFIG)-kernel-$(KERNEL_VER)-backup.tar.gz
-CROSSTOOL_NG_PATCH   = $(PATCHES)/ct-ng/crosstool-ng-autoconf.patch
-CROSSTOOL_NG_PATCH  += $(PATCHES)/ct-ng/crosstool-ng-zlib.patch
+CROSSTOOL_NG_PATCH   = $(PATCHES)/ct-ng/crosstool-ng-revert-autoconf-2.71.patch
 
 # -----------------------------------------------------------------------------
 
