@@ -143,7 +143,8 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/0013-cp1emu-do-not-use-bools-for-arithmetic.patch \
 		mipsbox/dm8000/0014-makefile-silence-packed-not-aligned-warn.patch \
 		mipsbox/dm8000/0015-fcrypt-fix-bitoperation-for-gcc.patch \
-		mipsbox/dm8000/fix-multiple-defs-yyloc.patch
+		mipsbox/dm8000/fix-multiple-defs-yyloc.patch \
+		mipsbox/dm8000/devinitdata-gcc11.patch
 
 #
 # KERNEL
