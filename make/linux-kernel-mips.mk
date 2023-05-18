@@ -34,6 +34,7 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/kernel-add-support-for-gcc11.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc12.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc13.patch \
+		mipsbox/vuduo/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo/gcc9_backport.patch \
 		mipsbox/vuduo/rtl8712-fix-warnings.patch \
 		mipsbox/vuduo/rtl8187se-fix-warnings.patch \
