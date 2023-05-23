@@ -12,6 +12,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/satfind distclean
 	-$(MAKE) -C $(TOOLS_DIR)/showiframe-$(BOXARCH) distclean
 	-$(MAKE) -C $(TOOLS_DIR)/spf_tool distclean
+	-$(MAKE) -C $(TOOLS_DIR)/sysinfo distclean
 	-$(MAKE) -C $(TOOLS_DIR)/read-edid distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcal distclean
 	-$(MAKE) -C $(TOOLS_DIR)/tuxcom distclean
@@ -402,6 +403,21 @@ $(D)/tools-streamproxy: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# sysinfo
+#
+$(D)/tools-sysinfo: $(D)/bootstrap $(D)/libpng $(D)/freetype
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/sysinfo; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # tfd2mtd
 #
 $(D)/tools-tfd2mtd: $(D)/bootstrap
@@ -535,6 +551,7 @@ TOOLS += $(D)/tools-satfind
 TOOLS += $(D)/tools-showiframe
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 TOOLS += $(D)/tools-femon
+TOOLS += $(D)/tools-sysinfo
 #TOOLS += $(D)/tools-tuxcal
 TOOLS += $(D)/tools-tuxcom
 endif
