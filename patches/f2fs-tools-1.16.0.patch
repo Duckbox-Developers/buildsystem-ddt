@@ -1,0 +1,21 @@
+--- a/configure.ac.org
++++ b/configure.ac
+@@ -71,18 +71,6 @@
+        [$PATH:/sbin])
+ 
+ # Checks for libraries.
+-AS_IF([test "x$with_blkid" != xno],
+-	[AC_CHECK_LIB([blkid], [blkid_probe_all],
+-		[AC_SUBST([libblkid_LIBS], ["-lblkid"])
+-			AC_DEFINE([HAVE_LIBBLKID], [1],
+-			[Define if you have libblkid])
+-		],
+-		[if test "x$with_blkid" != xcheck; then
+-			AC_MSG_FAILURE(
+-                [--with-blkid was given, but test for blkid failed])
+-        fi
+-	], -lblkid)])
+-
+ AS_IF([test "x$with_lzo2" != xno],
+ 	[AC_CHECK_LIB([lzo2], [main],
+ 		[AC_SUBST([liblzo2_LIBS], ["-llzo2"])

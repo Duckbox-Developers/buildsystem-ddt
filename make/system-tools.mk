@@ -668,7 +668,7 @@ $(D)/jfsutils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(JFSUTILS_SOURCE)
 # f2fs-tools
 #
 
-F2FS-TOOLS_VER = 1.15.0
+F2FS-TOOLS_VER = 1.16.0
 F2FS-TOOLS_SOURCE = f2fs-tools-$(F2FS-TOOLS_VER).tar.gz
 F2FS-TOOLS_PATCH = f2fs-tools-$(F2FS-TOOLS_VER).patch
 
