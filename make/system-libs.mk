@@ -562,7 +562,8 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 			--with-bzip2=no \
 			--with-zlib=yes \
 			--with-png=yes \
-			--without-harfbuzz \
+			--with-harfbuzz=no \
+			--with-brotli=no \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
