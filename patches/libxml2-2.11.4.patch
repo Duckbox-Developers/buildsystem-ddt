@@ -1,0 +1,31 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -39,7 +39,7 @@
+ 
+ VERSION=${LIBXML_VERSION}
+ 
+-AM_INIT_AUTOMAKE([1.16.3 foreign no-dist-gzip dist-xz])
++AM_INIT_AUTOMAKE([1.15.1 foreign no-dist-gzip dist-xz])
+ AM_MAINTAINER_MODE([enable])
+ AM_SILENT_RULES([yes])
+ 
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,7 +2,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-SUBDIRS = include . doc example xstc
++SUBDIRS = include .
+ if WITH_PYTHON
+ SUBDIRS += python
+ endif
+@@ -10,7 +10,7 @@
+ SUBDIRS += fuzz
+ endif
+ 
+-DIST_SUBDIRS = include . doc example fuzz python xstc
++DIST_SUBDIRS = include . python
+ 
+ AM_CPPFLAGS = -I$(top_builddir)/include -I$(srcdir)/include -DSYSCONFDIR='"$(sysconfdir)"'
+ 
