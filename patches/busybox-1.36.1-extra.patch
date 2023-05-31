@@ -9,7 +9,7 @@
 
 --- a/archival/libarchive/get_header_tar.c
 +++ b/archival/libarchive/get_header_tar.c
-@@ -335,6 +335,8 @@
+@@ -337,6 +337,8 @@
  			file_header->name = concat_path_file(tar.prefix, tar.name);
  		} else
  			file_header->name = xstrdup(tar.name);
