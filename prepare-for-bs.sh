@@ -134,12 +134,15 @@ if [ "$UBUNTU" == 1 ]; then
 elif [ "$UBUNTU" == 2 ]; then
 	MINT_VERSION=`lsb_release -r | grep "Release" | cut -f2 | cut -d . -f1`
 fi
-if ([ "$UBUNTU" == 1  ] &&  [ "$UBUNTU_VERSION" -ge "16" ]) || ([ "$UBUNTU" == 2 ] && [ "$MINT_VERSION" -ge "18" ]); then
+
+if ([ "$UBUNTU" == 1  ] && [ "$UBUNTU_VERSION" -ge "16" ]) || ([ "$UBUNTU" == 2 ] && [ "$MINT_VERSION" -ge "18" ]); then
 	PACKAGES="$PACKAGES \
 	${UBUNTU:+libtool-bin} \
 	";
 fi
-if ([ "$UBUNTU" == 1 ] &&  [ "$UBUNTU_VERSION" -ge "22" ]); then
+
+if ([ "$UBUNTU" == 1 ] && [ "$UBUNTU_VERSION" -ge "22" ]) || \
+   ([ "$UBUNTU" == 2 ] && [ "$MINT_VERSION" -ge "21" ]); then
 	PACKAGES="$PACKAGES \
 	${UBUNTU:+gtk-doc-tools} \
 	";
