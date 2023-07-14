@@ -19,6 +19,24 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), vuuno)
+DRIVER_VER = 3.9.6
+DRIVER_DATE = 20171204
+DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+endif
+
+ifeq ($(BOXTYPE), vuultimo)
+DRIVER_VER = 3.9.6
+DRIVER_DATE = 20171204
+DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), dm8000)
 DRIVER_VER = 3.2
 DRIVER_DATE = 20140604a
@@ -29,7 +47,7 @@ $(ARCHIVE)/$(DRIVER_SRC):
 endif
 
 driver-clean:
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 endif
 ifeq ($(BOXTYPE), dm8000)
@@ -38,7 +56,7 @@ endif
 
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra

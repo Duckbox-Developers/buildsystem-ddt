@@ -19,7 +19,7 @@ else
 	$(MAKE) flash-image-vu-rootfs
 endif
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	$(MAKE) flash-image-vuduo
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -340,15 +340,26 @@ flash-image-vu-online:
 
 ### mipsbox vuduo
 # general
+ifeq ($(BOXTYPE), vuduo)
+VUDUO_PREFIX = vuplus/duo
+VUDUO_ROOT_EXT = jffs2
+VUDUO_UBIFS = 4096
+endif
+ifeq ($(BOXTYPE), vuuno)
+VUDUO_PREFIX = vuplus/uno
+VUDUO_ROOT_EXT = jffs2
+VUDUO_UBIFS = 4096
+endif
+ifeq ($(BOXTYPE), vuultimo)
+VUDUO_PREFIX = vuplus/ultimo
+VUDUO_ROOT_EXT = jffs2
+VUDUO_UBIFS = 3894
+endif
 ifeq ($(BOXTYPE), vuduo2)
 VUDUO_PREFIX = vuplus/duo2
 VUDUO_ROOT_EXT = bin
 VUDUO_UBIFS = 8192
 VUDUO2_INITRD = cp $(TARGET_DIR)/boot/vmlinuz-initrd-7425b0 $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/initrd_cfe_auto.bin
-else
-VUDUO_PREFIX = vuplus/duo
-VUDUO_ROOT_EXT = jffs2
-VUDUO_UBIFS = 4096
 endif
 
 flash-image-vuduo:

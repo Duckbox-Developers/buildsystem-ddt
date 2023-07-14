@@ -103,6 +103,28 @@ KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUDUO2_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), vuuno)
+KERNEL_VER             = 3.9.6
+KERNEL_TYPE            = vuuno
+KERNEL_SRC_VER         = 3.9.6
+KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
+KERNEL_URL             = http://code.vuplus.com/download/release/kernel
+KERNEL_CONFIG          = vuduo/vuduo_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux
+KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
+endif
+
+ifeq ($(BOXTYPE), vuultimo)
+KERNEL_VER             = 3.9.6
+KERNEL_TYPE            = vuultimo
+KERNEL_SRC_VER         = 3.9.6
+KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
+KERNEL_URL             = http://code.vuplus.com/download/release/kernel
+KERNEL_CONFIG          = vuduo/vuduo_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux
+KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
+endif
+
 ifeq ($(BOXTYPE), dm8000)
 KERNEL_VER             = 3.2
 KERNEL_TYPE            = dm8000

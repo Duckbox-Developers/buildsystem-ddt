@@ -580,13 +580,13 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000 e4hdultra vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000 e4hdultra vuduo2 vuultimo))
 TOOLS += $(D)/tools-oled_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
 TOOLS += $(D)/tools-png_util
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 TOOLS += $(D)/tools-initfb
 TOOLS += $(D)/tools-turnoff_power
 endif
