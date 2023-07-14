@@ -193,7 +193,7 @@ VUULTIMO_PATCHES = \
 		mipsbox/vuduo/02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
 		mipsbox/vuduo/CONFIG_DVB_SP2.patch \
 		mipsbox/vuduo/dvbsky-t330.patch \
-		mipsbox/vuduo/fix-multiple-defs-yyloc.patch
+		mipsbox/vuduo/fix-multiple-defs-yyloc.patch \
 		mipsbox/vuultimo/fixed_mtd.patch
 
 DM8000_PATCHES = \
