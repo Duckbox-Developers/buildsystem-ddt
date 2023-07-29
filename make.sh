@@ -163,7 +163,31 @@ case "$REPLY" in
 	71) BOXARCH="mips";BOXTYPE="vuduo2";;
 	72) BOXARCH="mips";BOXTYPE="vuuno";;
 	73) BOXARCH="mips";BOXTYPE="vuultimo";;
-	80) BOXARCH="mips";BOXTYPE="dm8000";;
+	80) BOXARCH="mips"
+	    BOXTYPE="dm8000"
+	    echo -e "\n\033[01;33m=====================\033[00m"
+	    echo -e "\033[01;33m===    WARNING    ===\033[00m"
+	    echo -e "\033[01;33m=====================\033[00m"
+	    echo -e "\033[01;33mdreamboxupdate.com is OFFLINE. Checking local files at $HOME/Archive/...\033[00m"
+	    ERROR=0
+	    if [ ! -e "$HOME/Archive/dreambox-dvb-modules-dm8000-3.2-dm8000-20140604a.tar.bz2" -o ! -e "$HOME/Archive/secondstage-dm8000-84.bin" ]; then
+		if [ ! -e "$HOME/Archive/dreambox-dvb-modules-dm8000-3.2-dm8000-20140604a.tar.bz2" ]; then
+		    echo -e "\033[01;31mFile: '$HOME/Archive/dreambox-dvb-modules-dm8000-3.2-dm8000-20140604a.tar.bz2' not found!\033[00m"
+		    ERROR=1
+		else
+		    echo -e "\033[01;32mFile: '$HOME/Archive/dreambox-dvb-modules-dm8000-3.2-dm8000-20140604a.tar.bz2' found.\033[00m"
+		fi
+		if [ ! -e "$HOME/Archive/secondstage-dm8000-84.bin" ]; then
+		    echo -e "\033[01;31mFile: '$HOME/Archive/secondstage-dm8000-84.bin' not found!\033[00m"
+		    ERROR=1
+		else
+		    echo -e "\033[01;32mFile: '$HOME/Archive/secondstage-dm8000-84.bin' found.\033[00m"
+		fi
+	    else
+		    echo -e "\033[01;32mFiles '$HOME/Archive/dreambox-dvb-modules-dm8000-3.2-dm8000-20140604a.tar.bz2' and '$HOME/Archive/secondstage-dm8000-84.bin' found.\033[00m"
+	    fi
+	    [ "$ERROR" == "1" ] && echo -e "\n\033[01;31mBuild not possible!\033[00m\n" && exit
+	    ;;
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
