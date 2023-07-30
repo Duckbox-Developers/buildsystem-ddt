@@ -57,7 +57,7 @@ CCACHE                = /usr/bin/ccache
 
 BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess 2>/dev/null || /usr/share/misc/config.guess 2>/dev/null)
 
-CCACHE_DIR            = $(HOME)/.ccache-bs-$(BOXARCH)-$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)-ddt
+CCACHE_DIR            = $(HOME)/.ccache-bs-$(BOXARCH)-ddt/$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
 export CCACHE_DIR
 
 HOST_CCACHE_BIN       = /usr/bin/ccache
