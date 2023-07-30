@@ -287,8 +287,8 @@ $(D)/host_qrencode: $(D)/directories $(ARCHIVE)/$(HOST_QRENCODE_SOURCE)
 # bootstrap
 #
 BOOTSTRAP  = $(D)/directories
-BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(CROSSTOOL)
+BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
 ifeq ($(BOXARCH), arm)
@@ -414,15 +414,22 @@ endif
 CCACHE_BINDIR = $(HOST_DIR)/bin
 CCACHE_BIN = $(CCACHE)
 
-CCACHE_LINKS = \
+CCACHE_DIR = $(HOME)/.ccache-bs-$(BOXARCH)-ddt/$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
+export CCACHE_DIR
+
+HOST_CCACHE_LINKS = \
 	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/cc; \
 	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/gcc; \
-	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/g++; \
+	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/g++
+
+TARGET_CCACHE_LINKS = \
 	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/$(TARGET)-gcc; \
 	ln -sf $(CCACHE_BIN) $(CCACHE_BINDIR)/$(TARGET)-g++
 
-CCACHE_ENV = install -d $(CCACHE_BINDIR); \
-	$(CCACHE_LINKS)
+CCACHE_ENV = \
+	install -d $(CCACHE_BINDIR); \
+	$(HOST_CCACHE_LINKS); \
+	$(TARGET_CCACHE_LINKS)
 
 $(D)/ccache:
 	$(CCACHE_ENV)
