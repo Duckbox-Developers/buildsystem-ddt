@@ -13,7 +13,7 @@ CROSSTOOL_NG_VER     = e63c408
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
-CROSSTOOL_NG_CONFIG  = crosstool-ng-$(BOXARCH)-$(CROSSTOOL_GCC_VER)
+CROSSTOOL_NG_CONFIG  = crosstool-ng-$(BOXARCH)-gcc-$(BS_GCC_VER)
 CROSSTOOL_NG_BACKUP  = $(ARCHIVE)/$(CROSSTOOL_NG_CONFIG)-kernel-$(KERNEL_VER)-backup.tar.gz
 #CROSSTOOL_NG_PATCH   = $(PATCHES)/ct-ng/crosstool-ng-revert-autoconf-2.71.patch
 

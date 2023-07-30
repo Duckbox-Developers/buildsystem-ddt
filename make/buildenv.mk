@@ -32,7 +32,7 @@ GIT_NAME_FLASH       ?= Duckbox-Developers
 GIT_CHECK             = git checkout -f
 
 TUFSBOX_DIR           = $(BASE_DIR)/tufsbox
-CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)-$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
+CROSS_BASE            = $(BASE_DIR)/cross/$(BOXARCH)-gcc-$(BS_GCC_VER)-kernel-$(KERNEL_VER)
 
 TARGET_DIR            = $(TUFSBOX_DIR)/cdkroot
 BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
@@ -98,42 +98,6 @@ ifeq ($(OPTIMIZATIONS), debug)
 TARGET_O_CFLAGS       = -O0 -g
 TARGET_EXTRA_CFLAGS   =
 TARGET_EXTRA_LDFLAGS  =
-endif
-
-ifeq ($(BS_GCC_VER), 4.8.4)
-CROSSTOOL_GCC_VER = gcc-4.8.4
-endif
-
-ifeq ($(BS_GCC_VER), 6.5.0)
-CROSSTOOL_GCC_VER = gcc-6.5.0
-endif
-
-ifeq ($(BS_GCC_VER), 7.5.0)
-CROSSTOOL_GCC_VER = gcc-7.5.0
-endif
-
-ifeq ($(BS_GCC_VER), 8.5.0)
-CROSSTOOL_GCC_VER = gcc-8.5.0
-endif
-
-ifeq ($(BS_GCC_VER), 9.5.0)
-CROSSTOOL_GCC_VER = gcc-9.5.0
-endif
-
-ifeq ($(BS_GCC_VER), 10.5.0)
-CROSSTOOL_GCC_VER = gcc-10.5.0
-endif
-
-ifeq ($(BS_GCC_VER), 11.4.0)
-CROSSTOOL_GCC_VER = gcc-11.4.0
-endif
-
-ifeq ($(BS_GCC_VER), 12.3.0)
-CROSSTOOL_GCC_VER = gcc-12.3.0
-endif
-
-ifeq ($(BS_GCC_VER), 13.1.0)
-CROSSTOOL_GCC_VER = gcc-13.1.0
 endif
 
 TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib

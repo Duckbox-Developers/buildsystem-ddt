@@ -414,7 +414,7 @@ endif
 CCACHE_BINDIR = $(HOST_DIR)/bin
 CCACHE_BIN = $(CCACHE)
 
-CCACHE_DIR = $(HOME)/.ccache-bs-$(BOXARCH)-ddt/$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)
+CCACHE_DIR = $(HOME)/.ccache-bs-$(BOXARCH)-ddt/gcc-$(BS_GCC_VER)-kernel-$(KERNEL_VER)
 export CCACHE_DIR
 
 HOST_CCACHE_LINKS = \
