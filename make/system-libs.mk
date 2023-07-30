@@ -698,6 +698,7 @@ $(D)/libjpeg_turbo2: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO2_SOURCE)
 			-DCMAKE_C_FLAGS="-pipe -Os" \
 			-DCMAKE_CXX_FLAGS="-pipe -Os" \
 			-DWITH_SIMD=False \
+			-DWITH_TURBOJPEG=OFF \
 			-DCMAKE_INSTALL_DOCDIR=/.remove \
 			-DCMAKE_INSTALL_MANDIR=/.remove \
 			-DCMAKE_INSTALL_DEFAULT_LIBDIR=lib \
