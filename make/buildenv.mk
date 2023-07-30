@@ -57,9 +57,10 @@ CCACHE                = /usr/bin/ccache
 
 BUILD                ?= $(shell /usr/share/libtool/config.guess 2>/dev/null || /usr/share/libtool/config/config.guess 2>/dev/null || /usr/share/misc/config.guess 2>/dev/null)
 
-ifeq ($(BOXARCH), sh4)
-CCACHE_DIR            = $(HOME)/.ccache-bs-sh4
+CCACHE_DIR            = $(HOME)/.ccache-bs-$(BOXARCH)-$(CROSSTOOL_GCC_VER)-kernel-$(KERNEL_VER)-ddt
 export CCACHE_DIR
+
+ifeq ($(BOXARCH), sh4)
 TARGET               ?= sh4-linux
 BOXARCH              ?= sh4
 KERNELNAME            = uImage
@@ -67,8 +68,6 @@ TARGET_MARCH_CFLAGS   =
 endif
 
 ifeq ($(BOXARCH), arm)
-CCACHE_DIR            = $(HOME)/.ccache-bs-arm
-export CCACHE_DIR
 TARGET               ?= arm-cortex-linux-gnueabihf
 BOXARCH              ?= arm
 KERNELNAME            = zImage
@@ -76,8 +75,6 @@ TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloa
 endif
 
 ifeq ($(BOXARCH), mips)
-CCACHE_DIR            = $(HOME)/.ccache-bs-mips
-export CCACHE_DIR
 TARGET               ?= mipsel-unknown-linux-gnu
 BOXARCH              ?= mips
 KERNELNAME            = vmlinux
