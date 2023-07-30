@@ -129,12 +129,13 @@ $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHI
 #
 # luasoap
 #
-LUASOAP_VER = 3.0
+LUASOAP_VER = 3_0_1
 LUASOAP_SOURCE = luasoap-$(LUASOAP_VER).tar.gz
-LUASOAP_PATCH = luasoap-$(LUASOAP_VER).patch
+#LUASOAP_PATCH = luasoap-$(LUASOAP_VER).patch
 
 $(ARCHIVE)/$(LUASOAP_SOURCE):
-	$(DOWNLOAD) https://github.com/downloads/tomasguisasola/luasoap/$(LUASOAP_SOURCE)
+#	$(DOWNLOAD) https://github.com/downloads/tomasguisasola/luasoap/$(LUASOAP_SOURCE)
+	$(DOWNLOAD) https://github.com/tomasguisasola/luasoap/archive/refs/tags/v$(LUASOAP_VER).tar.gz -O $(ARCHIVE)/$(LUASOAP_SOURCE)
 
 $(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUASOAP_SOURCE)
 	$(START_BUILD)
