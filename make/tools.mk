@@ -267,7 +267,7 @@ $(D)/tools-libmme_image: $(D)/bootstrap
 #
 # minimon
 #
-$(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg_turbo
+$(D)/tools-minimon: $(D)/bootstrap $(D)/libjpeg
 	$(START_BUILD)
 	set -e; cd $(TOOLS_DIR)/minimon-$(BOXARCH); \
 		$(CONFIGURE_TOOLS) \
