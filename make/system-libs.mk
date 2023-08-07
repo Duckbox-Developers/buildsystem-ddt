@@ -1693,6 +1693,10 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
 GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
 GRAPHLCD_PATCH += graphlcd-vuduo2.patch
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuultimo))
+GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
+GRAPHLCD_PATCH += graphlcd-vuultimo.patch
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 GRAPHLCD_PATCH += graphlcd-e4hdultra.patch
 GRAPHLCD_PATCH += graphlcd-framebuffer.patch
