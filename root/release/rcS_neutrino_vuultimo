@@ -2,8 +2,6 @@
 
 . /etc/profile
 
-mkswap /dev/mtdblock8
-
 echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` start"
 SYSDATE=`date +"%Y%m%d"`
 
