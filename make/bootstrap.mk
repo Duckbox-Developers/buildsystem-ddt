@@ -250,7 +250,8 @@ $(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
 # dm8000 second stage loader #84
 #
 DM8000_2ND_SOURCE = secondstage-dm8000-84.bin
-DM8000_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
+#DM8000_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
+DM8000_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM8000_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM8000_2ND_SOURCE):
 	$(DOWNLOAD) $(DM8000_2ND_URL)
