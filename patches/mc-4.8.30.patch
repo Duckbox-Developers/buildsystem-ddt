@@ -1,6 +1,6 @@
 --- a/src/vfs/extfs/extfs.c
 +++ b/src/vfs/extfs/extfs.c
-@@ -1554,8 +1554,6 @@
+@@ -1545,8 +1545,6 @@
       * appear on screen. */
      if (dir == NULL)
      {
@@ -11,7 +11,7 @@
      }
 --- a/src/vfs/sfs/sfs.c
 +++ b/src/vfs/sfs/sfs.c
-@@ -458,7 +458,6 @@
+@@ -459,7 +459,6 @@
  
      if (cfg == NULL)
      {
@@ -21,7 +21,7 @@
      }
 --- a/src/editor/syntax.c
 +++ b/src/editor/syntax.c
-@@ -1525,8 +1525,6 @@
+@@ -1528,8 +1528,6 @@
      if (r == -1)
      {
          edit_free_syntax_rules (edit);
@@ -29,4 +29,16 @@
 -                 _("Cannot open file %s\n%s"), f, unix_error_string (errno));
      }
      else if (r != 0)
+     {
+--- a/lib/mcconfig/paths.c.org	2021-08-01 18:45:58.000000000 +0200
++++ b/lib/mcconfig/paths.c	2021-09-26 21:39:00.362865032 +0200
+@@ -154,7 +154,8 @@
+     if (xdg_vars_initialized)
+         return;
+ 
+-    profile_root = mc_get_profile_root ();
++    //profile_root = mc_get_profile_root ();
++    profile_root = "/tmp/";
+ 
+     if (strcmp (profile_root, mc_config_get_home_dir ()) != 0)
      {
