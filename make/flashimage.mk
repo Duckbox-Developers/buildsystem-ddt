@@ -348,7 +348,7 @@ endif
 ifeq ($(BOXTYPE), vuuno)
 VUDUO_PREFIX = vuplus/uno
 VUDUO_ROOT_EXT = jffs2
-VUDUO_UBIFS = 4096 -x favor_lzo -X 1
+VUDUO_UBIFS = 4096
 endif
 ifeq ($(BOXTYPE), vuultimo)
 VUDUO_PREFIX = vuplus/ultimo
