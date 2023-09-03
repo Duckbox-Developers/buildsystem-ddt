@@ -1,13 +1,13 @@
 --- a/configure
 +++ b/configure
-@@ -141,6 +141,7 @@
+@@ -140,6 +140,7 @@
      -c* | --const) zconst=1; shift ;;
      -w* | --warn) warn=1; shift ;;
      -d* | --debug) debug=1; shift ;;
 +    --quiet) shift ;;
-     --sanitize) sanitize=1; shift ;;
-     *)
-       echo "unknown option: $1" | tee -a configure.log
+     --sanitize) address=1; shift ;;
+     --address) address=1; shift ;;
+     --memory) memory=1; shift ;;
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -318,7 +318,6 @@
