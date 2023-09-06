@@ -2008,8 +2008,8 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 #
 # dropbearmulti
 #
-#DROPBEARMULTI_VER = 5040f21
-DROPBEARMULTI_VER = 66abae8
+#DROPBEARMULTI_VER = 66abae8
+DROPBEARMULTI_VER = 9925b00
 DROPBEARMULTI_SOURCE = dropbearmulti-git-$(DROPBEARMULTI_VER).tar.bz2
 DROPBEARMULTI_URL = https://github.com/mkj/dropbear.git
 
