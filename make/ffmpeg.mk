@@ -33,8 +33,7 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
-FFMPEG_CONF_OPTS  += --enable-decoder=adpcm_zork
-FFMPEG_CONF_OPTS  += --enable-encoder=speedhq
+#FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
@@ -182,6 +181,7 @@ endif
 			--enable-encoder=mpeg4 \
 			--enable-encoder=png \
 			--enable-encoder=rawvideo \
+			--enable-encoder=speedhq \
 			\
 			--disable-decoders \
 			--enable-decoder=aac \
@@ -201,6 +201,7 @@ endif
 			--enable-decoder=adpcm_sbpro_4 \
 			--enable-decoder=adpcm_swf \
 			--enable-decoder=adpcm_yamaha \
+			--enable-decoder=adpcm_zork \
 			--enable-decoder=alac \
 			--enable-decoder=ape \
 			--enable-decoder=atrac1 \
