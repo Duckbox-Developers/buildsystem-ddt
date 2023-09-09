@@ -40,12 +40,12 @@ ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
-#FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
+#FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
-#FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
+#FFMPEG_CONF_OPTS  += --enable-filter=overlay
 endif
 endif
 
@@ -350,7 +350,6 @@ endif
 			--disable-filters \
 			--enable-filter=scale \
 			--enable-filter=drawtext \
-			--enable-filter=overlay \
 			\
 			--enable-zlib \
 			--enable-bzlib \
