@@ -211,9 +211,9 @@ if [ "$LOCAL_FFMPEG_BOXTYPE_LIST" == "$BOXTYPE" -o "$BOXARCH" == "arm" -o "$BOXA
 			echo "   2)  FFMPEG 4.4.4 [experimental]"
 			if [ "$BOXARCH" != "sh4" ]; then
 				echo "   3)  FFMPEG 6.x   [git snapshot]"
-				read -p "Select optimization (1-3)? "
+				read -p "Select FFMPEG version (1-3)? "
 			else
-				read -p "Select optimization (1-2)? "
+				read -p "Select FFMPEG version (1-2)? "
 			fi
 			;;
 	esac
