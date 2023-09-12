@@ -341,35 +341,44 @@ $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 #
 # preqs
 #
-#
-$(DRIVER_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repository'
-	@echo '===================================================================='
-	if [ ! -e $(DRIVER_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
-	fi
-
-$(TOOLS_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_TOOLS)-tools git repository'
-	@echo '===================================================================='
+tools_cp:
+	@echo '============================================================='
+	@echo '     Cloning/Pull $(GIT_NAME_TOOLS)-tools git repository'
+	@echo '============================================================='
 	if [ ! -e $(TOOLS_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_TOOLS)/tools.git tools; \
-	fi
-
-$(FLASH_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_FLASH)-flash git repository'
-	@echo '===================================================================='
-	if [ ! -e $(FLASH_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash; \
+	else \
+		cd $(TOOLS_DIR); git pull; \
 	fi
 	@echo ''
 
-PREQS  = $(DRIVER_DIR)
-PREQS += $(TOOLS_DIR)
-PREQS += $(FLASH_DIR)
+driver_cp:
+	@echo '==============================================================='
+	@echo '     Cloning/Pull $(GIT_NAME_DRIVER)-driver git repository'
+	@echo '==============================================================='
+	if [ ! -e $(DRIVER_DIR)/.git ]; then \
+		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
+	else \
+		cd $(DRIVER_DIR); git pull; \
+	fi
+	@echo ''
+
+flash_cp:
+	@echo '============================================================='
+	@echo '     Cloning/Pull $(GIT_NAME_FLASH)-flash git repository'
+	@echo '============================================================='
+	if [ ! -e $(FLASH_DIR)/.git ]; then \
+		git clone $(GITHUB)/$(GIT_NAME_FLASH)/flash.git flash; \
+	else \
+		cd $(FLASH_DIR); git pull; \
+	fi
+	@echo ''
+
+PREQS  = tools_cp
+ifeq ($(BOXARCH), sh4)
+PREQS += driver_cp
+PREQS += flash_cp
+endif
 
 preqs: $(PREQS)
 	@mkdir -p $(OWN_BUILD)/neutrino-hd
