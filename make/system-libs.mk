@@ -678,7 +678,7 @@ endif
 #
 # libjpeg_turbo2
 #
-LIBJPEG_TURBO2_VER = 3.0.0
+LIBJPEG_TURBO2_VER = 3.0.1
 LIBJPEG_TURBO2_SOURCE = libjpeg-turbo-$(LIBJPEG_TURBO2_VER).tar.gz
 LIBJPEG_TURBO2_PATCH = libjpeg-turbo-tiff-ojpeg.patch
 LIBJPEG_TURBO2_PATCH += libjpeg-turbo-fix-unknown-type-name-FILE.patch
