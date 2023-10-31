@@ -377,7 +377,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 4ce4e2d..2c364ac 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -4724,8 +4724,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
+@@ -4731,8 +4731,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
              if (!sample || (!s->pb->seekable && current_sample->pos < sample->pos) ||
                  (s->pb->seekable &&
                   ((msc->pb != s->pb && dts < best_dts) || (msc->pb == s->pb &&
