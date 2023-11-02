@@ -2,7 +2,7 @@ diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
 index 2670f9a..d799ce2 100644
 --- a/libkmod/libkmod.c
 +++ b/libkmod/libkmod.c
-@@ -221,7 +221,7 @@ static char *get_kernel_release(const char *dirname)
+@@ -223,7 +223,7 @@ static char *get_kernel_release(const char *dirname)
  	if (uname(&u) < 0)
  		return NULL;
  
@@ -15,7 +15,7 @@ diff --git a/tools/depmod.c b/tools/depmod.c
 index a2c39b3..9ff9d0b 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3022,13 +3022,9 @@ static int do_depmod(int argc, char *argv[])
+@@ -3023,13 +3023,9 @@ static int do_depmod(int argc, char *argv[])
  		cfg.kversion = un.release;
  	}
  
