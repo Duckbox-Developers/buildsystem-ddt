@@ -1,0 +1,20 @@
+--- a/Makefile.in.org
++++ b/Makefile.in
+@@ -130,16 +130,7 @@
+ 
+ install: progs $(srcdir)/doc/socat.1
+ 	mkdir -p $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 755 socat $(DESTDIR)$(BINDEST)/socat1
+-	ln -sf socat1 $(DESTDIR)$(BINDEST)/socat
+-	$(INSTALL) -m 755 socat-chain.sh  $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 755 socat-mux.sh    $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 755 socat-broker.sh $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 755 procan $(DESTDIR)$(BINDEST)
+-	$(INSTALL) -m 755 filan $(DESTDIR)$(BINDEST)
+-	mkdir -p $(DESTDIR)$(MANDEST)/man1
+-	$(INSTALL) -m 644 $(srcdir)/doc/socat.1 $(DESTDIR)$(MANDEST)/man1/socat1.1
+-	ln -sf socat1.1 $(DESTDIR)$(MANDEST)/man1/socat.1
++	$(INSTALL) -m 755 socat $(DESTDIR)$(BINDEST)
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(BINDEST)/socat
