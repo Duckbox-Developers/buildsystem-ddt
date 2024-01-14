@@ -2243,3 +2243,21 @@ $(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
 	done
 	$(REMOVE)/kmod
 	$(TOUCH)
+
+#
+# node (ARM only)
+#
+NODE_VER = 12.22.12
+NODE_SOURCE = node-v$(NODE_VER)-linux-armv7l.tar.xz
+
+$(ARCHIVE)/$(NODE_SOURCE):
+	$(DOWNLOAD) https://nodejs.org/dist/v$(NODE_VER)/$(NODE_SOURCE)
+
+$(D)/node: $(D)/bootstrap $(ARCHIVE)/$(NODE_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/node-v$(NODE_VER)-linux-armv7l
+	$(UNTAR)/$(NODE_SOURCE)
+	$(CHDIR)/node-v$(NODE_VER)-linux-armv7l; \
+		cp bin/node $(TARGET_DIR)/usr/bin
+	$(REMOVE)/node-v$(NODE_VER)-linux-armv7l
+	$(TOUCH)
