@@ -757,10 +757,9 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 #
 # libpng
 #
-LIBPNG_VER = 1.6.40
+LIBPNG_VER = 1.6.42
 LIBPNG_VER_X = 16
 LIBPNG_SOURCE = libpng-$(LIBPNG_VER).tar.xz
-LIBPNG_PATCH = libpng-$(LIBPNG_VER)-disable-tools.patch
 
 $(ARCHIVE)/$(LIBPNG_SOURCE):
 	$(DOWNLOAD) https://sourceforge.net/projects/libpng/files/libpng$(LIBPNG_VER_X)/$(LIBPNG_VER)/$(LIBPNG_SOURCE) || \
@@ -776,6 +775,8 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 			--prefix=/usr \
 			--disable-powerpc-vsx \
 			--mandir=/.remove \
+			--disable-tests \
+			--disable-tools \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
