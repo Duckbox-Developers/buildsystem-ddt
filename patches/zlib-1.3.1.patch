@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -140,6 +140,7 @@
+@@ -141,6 +141,7 @@
      -c* | --const) zconst=1; shift ;;
      -w* | --warn) warn=1; shift ;;
      -d* | --debug) debug=1; shift ;;
