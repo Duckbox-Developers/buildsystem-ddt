@@ -1,6 +1,6 @@
 --- a/src/vfs/extfs/extfs.c
 +++ b/src/vfs/extfs/extfs.c
-@@ -1545,8 +1545,6 @@
+@@ -1573,8 +1573,6 @@
       * appear on screen. */
      if (dir == NULL)
      {
@@ -21,7 +21,7 @@
      }
 --- a/src/editor/syntax.c
 +++ b/src/editor/syntax.c
-@@ -1528,8 +1528,6 @@
+@@ -1540,8 +1540,6 @@
      if (r == -1)
      {
          edit_free_syntax_rules (edit);
