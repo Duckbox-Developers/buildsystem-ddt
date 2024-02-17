@@ -1,6 +1,6 @@
 --- a/libavcodec/dxva2.c
 +++ b/libavcodec/dxva2.c
-@@ -777,16 +777,18 @@ unsigned ff_dxva2_get_surface_index(const AVCodecContext *avctx,
+@@ -782,16 +782,18 @@ unsigned ff_dxva2_get_surface_index(const AVCodecContext *avctx,
  #if CONFIG_D3D11VA
      if (avctx->pix_fmt == AV_PIX_FMT_D3D11)
          return (intptr_t)frame->data[1];
@@ -25,7 +25,7 @@
  
 --- a/libavcodec/dxva2_h264.c
 +++ b/libavcodec/dxva2_h264.c
-@@ -507,6 +507,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
+@@ -509,6 +509,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
  
      if (ctx_pic->slice_count <= 0 || ctx_pic->bitstream_size <= 0)
          return -1;
@@ -42,7 +42,7 @@
                                      &ctx_pic->qm, sizeof(ctx_pic->qm),
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -992,6 +992,7 @@ static int h264_slice_header_init(H264Context *h)
+@@ -981,6 +981,7 @@ static int h264_slice_header_init(H264Context *h)
  
      h->first_field           = 0;
      h->prev_interlaced_frame = 1;
@@ -52,7 +52,7 @@
      ret = ff_h264_alloc_tables(h);
 --- a/libavcodec/h264dec.c
 +++ b/libavcodec/h264dec.c
-@@ -448,6 +448,7 @@ void ff_h264_flush_change(H264Context *h)
+@@ -457,6 +457,7 @@ void ff_h264_flush_change(H264Context *h)
  
      h->next_outputed_poc = INT_MIN;
      h->prev_interlaced_frame = 1;
@@ -62,7 +62,7 @@
      h->poc.prev_frame_num = -1;
 --- a/libavcodec/h264dec.h
 +++ b/libavcodec/h264dec.h
-@@ -530,6 +530,8 @@ typedef struct H264Context {
+@@ -548,6 +548,8 @@ typedef struct H264Context {
       * slices) anymore */
      int setup_finished;
  

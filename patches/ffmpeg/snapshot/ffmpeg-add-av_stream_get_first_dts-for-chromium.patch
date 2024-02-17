@@ -9,7 +9,7 @@ diff --git a/libavformat/avformat.h b/libavformat/avformat.h
 index f12fa7d..0b9fd1f 100644
 --- a/libavformat/avformat.h
 +++ b/libavformat/avformat.h
-@@ -1020,6 +1020,10 @@
+@@ -1117,6 +1117,10 @@
  int64_t    av_stream_get_end_pts(const AVStream *st);
  #endif
  
