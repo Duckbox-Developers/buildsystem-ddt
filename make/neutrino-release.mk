@@ -953,6 +953,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/bin/mk_cmds
 	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
+	rm -f $(RELEASE_DIR)/usr/bin/nhlt-dmic-info
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
