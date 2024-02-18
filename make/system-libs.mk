@@ -582,6 +582,49 @@ $(D)/freetype: $(D)/bootstrap $(D)/zlib $(D)/libpng $(ARCHIVE)/$(FREETYPE_SOURCE
 	$(TOUCH)
 
 #
+# harfbuzz
+#
+HARFBUZZ_VER = 1.8.8
+HARFBUZZ_SOURCE = harfbuzz-$(HARFBUZZ_VER).tar.bz2
+
+$(ARCHIVE)/$(HARFBUZZ_SOURCE):
+	$(DOWNLOAD) https://www.freedesktop.org/software/harfbuzz/release/$(HARFBUZZ_SOURCE)
+
+$(D)/harfbuzz: $(D)/bootstrap $(D)/freetype $(D)/libglib2 $(ARCHIVE)/$(HARFBUZZ_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/harfbuzz-$(HARFBUZZ_VER)
+	$(UNTAR)/$(HARFBUZZ_SOURCE)
+	$(CHDIR)/harfbuzz-$(HARFBUZZ_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--infodir=/.remove \
+			--localedir=/.remove \
+			--mandir=/.remove \
+			--docdir=/.remove \
+			--htmldir=/.remove \
+			--dvidir=/.remove \
+			--pdfdir=/.remove \
+			--psdir=/.remove \
+			--with-freetype \
+			--with-glib \
+			--without-cairo \
+			--without-fontconfig \
+			--without-graphite2 \
+			--without-icu \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		if [ -d $(TARGET_INCLUDE_DIR)/harfbuzz ]; then \
+			cp $(TARGET_INCLUDE_DIR)/harfbuzz/* $(TARGET_INCLUDE_DIR)/glib-2.0; \
+		fi;
+	$(REWRITE_LIBTOOL)/libharfbuzz.la
+	$(REWRITE_LIBTOOL)/libharfbuzz-subset.la
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/harfbuzz.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/harfbuzz-subset.pc
+	$(REMOVE)/harfbuzz-$(HARFBUZZ_VER)
+	$(TOUCH)
+
+#
 # lirc
 #
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd spark spark7162 ufs910))

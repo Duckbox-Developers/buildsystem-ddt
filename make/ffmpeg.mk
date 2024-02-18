@@ -33,6 +33,8 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
+FFMPEG_DEPS = $(D)/harfbuzz
+FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
