@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -6197,17 +6198,10 @@ elif enabled mips; then
+@@ -6201,17 +6201,10 @@ elif enabled mips; then
  
      # Check toolchain ISA level
      if enabled mips64; then
