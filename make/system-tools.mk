@@ -1307,6 +1307,32 @@ $(D)/wget: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(WGET_SOURCE)
 	$(TOUCH)
 
 #
+# sed
+#
+SED_VER = 4.9
+SED_SOURCE = sed-$(SED_VER).tar.gz
+
+$(ARCHIVE)/$(SED_SOURCE):
+	$(DOWNLOAD) https://ftp.gnu.org/gnu/sed/$(SED_SOURCE)
+
+$(D)/sed: $(D)/bootstrap $(ARCHIVE)/$(SED_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/sed-$(SED_VER)
+	$(UNTAR)/$(SED_SOURCE)
+	$(CHDIR)/sed-$(SED_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--infodir=/.remove \
+			--disable-bold-man-page-references \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+		cd $(TARGET_DIR)/bin && rm -f sed && ln -sf /usr/bin/sed sed
+	$(REMOVE)/sed-$(SED_VER)
+	$(TOUCH)
+
+#
 # coreutils
 #
 COREUTILS_VER = 8.23
