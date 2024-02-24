@@ -1,6 +1,6 @@
 --- a/libavformat/mpegts.c
 +++ b/libavformat/mpegts.c
-@@ -1018,10 +1018,12 @@
+@@ -1041,10 +1041,12 @@ static int new_pes_packet(PESContext *pes, AVPacket *pkt)
      pes->buffer = NULL;
      reset_pes_packet_state(pes);
  
