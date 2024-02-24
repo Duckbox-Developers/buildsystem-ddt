@@ -954,6 +954,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/bin/mk_cmds
 	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
 	rm -f $(RELEASE_DIR)/usr/bin/nhlt-dmic-info
+	rm -f $(RELEASE_DIR)/usr/bin/hb-*
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
