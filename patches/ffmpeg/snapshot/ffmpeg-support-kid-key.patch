@@ -63,7 +63,7 @@ diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
 +++ b/libavformat/isom.h
-@@ -332,8 +332,8 @@ typedef struct MOVContext {
+@@ -340,8 +340,8 @@ typedef struct MOVContext {
      void *audible_iv;
      int audible_iv_size;
      struct AVAES *aes_decrypt;
@@ -74,9 +74,9 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -344,6 +344,7 @@
-     HEIFItem *heif_item;
-     int nb_heif_item;
+@@ -356,6 +356,7 @@
+     int thmb_item_id;
+     int64_t idat_offset;
      int interleaved_read;
 +    AVDictionary* decryption_keys;
  } MOVContext;
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7347,19 +7347,62 @@
+@@ -7375,19 +7375,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7405,15 +7448,21 @@
+@@ -7433,15 +7476,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7464,15 +7513,21 @@
+@@ -7492,15 +7541,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7530,15 +7585,21 @@
+@@ -7558,15 +7613,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7681,7 +7742,7 @@
+@@ -7709,7 +7770,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -9103,12 +9164,6 @@
+@@ -9487,12 +9548,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -240,8 +240,8 @@ index 34ca8095c2..550bce86f5 100644
 -
      mov->fc = s;
      mov->trak_index = -1;
-     /* .mov and .mp4 aren't streamable anyway (only progressive download if moov is before mdat) */
-@@ -9874,7 +9929,8 @@
+     mov->thmb_item_id = -1;
+@@ -10283,7 +10338,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

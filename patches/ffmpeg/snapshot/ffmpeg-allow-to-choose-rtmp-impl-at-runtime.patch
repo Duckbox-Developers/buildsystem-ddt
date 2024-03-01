@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -3657,10 +3657,8 @@ xv_outdev_deps="xlib_xv xlib_x11 xlib_xext"
+@@ -3658,10 +3658,8 @@ xv_outdev_deps="xlib_xv xlib_x11 xlib_xext"
  # protocols
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="tcp_protocol"
-@@ -3674,20 +3672,18 @@ https_protocol_suggest="zlib"
+@@ -3675,20 +3673,18 @@ https_protocol_suggest="zlib"
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
