@@ -35,12 +35,12 @@ index 43fc354..a03ff8c 100644
 -	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX,
 -				  "%s" MODULE_DIRECTORY "/%s",
 -				  root ?: "", cfg.kversion);
-+	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s" MODULE_DIRECTORY "/%s", root ?: "");
++	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", root ?: "");
  
 -	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX,
 -				     "%s" MODULE_DIRECTORY "/%s",
 -				     out_root ?: (root ?: ""), cfg.kversion);
-+	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s" MODULE_DIRECTORY "/%s", out_root ?: (root ?: ""));
++	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", out_root ?: (root ?: ""));
  
  	if (optind == argc)
  		all = 1;
@@ -54,7 +54,7 @@ index cacc32d..4a8b003 100644
  		}
 -		snprintf(dirname_buf, sizeof(dirname_buf), "%s" MODULE_DIRECTORY "/%s",
 -			 root, kversion);
-+		snprintf(dirname_buf, sizeof(dirname_buf), "%s" MODULE_DIRECTORY "/%s", root);
++		snprintf(dirname_buf, sizeof(dirname_buf), "%s" MODULE_DIRECTORY "/", root);
  		dirname = dirname_buf;
  	}
  
@@ -69,7 +69,7 @@ index 5306bef..76686ef 100644
 -		snprintf(dirname_buf, sizeof(dirname_buf),
 -				"%s" MODULE_DIRECTORY "/%s", root,
 -				kversion);
-+		snprintf(dirname_buf, sizeof(dirname_buf), "%s" MODULE_DIRECTORY "/%s", root);
++		snprintf(dirname_buf, sizeof(dirname_buf), "%s" MODULE_DIRECTORY "/", root);
  		dirname = dirname_buf;
  	}
  
@@ -82,18 +82,18 @@ index 5ef3743..73fba47 100644
  	}
  
 -	snprintf(modules, sizeof(modules), MODULE_DIRECTORY "/%s/modules.devname", kernel.release);
-+	snprintf(modules, sizeof(modules), MODULE_DIRECTORY "/%s/modules.devname");
++	snprintf(modules, sizeof(modules), MODULE_DIRECTORY "/modules.devname");
  	in = fopen(modules, "re");
  	if (in == NULL) {
  		if (errno == ENOENT) {
 -			fprintf(stderr, "Warning: " MODULE_DIRECTORY "/%s/modules.devname not found - ignoring\n",
 -				kernel.release);
-+			fprintf(stderr, "Warning: " MODULE_DIRECTORY "/%s/modules.devname not found - ignoring\n");
++			fprintf(stderr, "Warning: " MODULE_DIRECTORY "/modules.devname not found - ignoring\n");
  			ret = EXIT_SUCCESS;
  		} else {
 -			fprintf(stderr, "Error: could not open " MODULE_DIRECTORY "/%s/modules.devname - %m\n",
 -				kernel.release);
-+			fprintf(stderr, "Error: could not open " MODULE_DIRECTORY "/%s/modules.devname - %m\n");
++			fprintf(stderr, "Error: could not open " MODULE_DIRECTORY "/modules.devname - %m\n");
  			ret = EXIT_FAILURE;
  		}
  		goto finish;
