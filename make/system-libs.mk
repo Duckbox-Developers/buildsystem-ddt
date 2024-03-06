@@ -800,7 +800,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 #
 # libpng
 #
-LIBPNG_VER = 1.6.42
+LIBPNG_VER = 1.6.43
 LIBPNG_VER_X = 16
 LIBPNG_SOURCE = libpng-$(LIBPNG_VER).tar.xz
 
