@@ -459,7 +459,7 @@ UTIL_LINUX_MAJOR = 2.36
 UTIL_LINUX_MINOR = .2
 else
 UTIL_LINUX_MAJOR = 2.40
-UTIL_LINUX_MINOR = -rc1
+UTIL_LINUX_MINOR = -rc2
 endif
 UTIL_LINUX_VER = $(UTIL_LINUX_MAJOR)$(UTIL_LINUX_MINOR)
 UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VER).tar.xz
@@ -542,6 +542,7 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 			--disable-makeinstall-chown \
 			--without-systemdsystemunitdir \
 			--disable-year2038 \
+			--disable-liblastlog2 \
 		; \
 		$(MAKE) sfdisk mkfs; \
 		install -D -m 755 sfdisk $(TARGET_DIR)/sbin/sfdisk; \
