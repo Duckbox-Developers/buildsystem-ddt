@@ -2269,6 +2269,7 @@ $(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
 	cd $(TARGET_DIR)/usr/bin && for target in depmod insmod lsmod modinfo modprobe rmmod; do \
 	ln -sf /usr/bin/kmod $$target; \
 	done
+	$(REWRITE_LIBTOOL)/libkmod.la
 	$(REMOVE)/kmod
 	$(TOUCH)
 
