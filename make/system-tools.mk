@@ -609,31 +609,29 @@ $(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 #
 # dosfstools
 #
-DOSFSTOOLS_VER = 4.2
-DOSFSTOOLS_SOURCE = dosfstools-$(DOSFSTOOLS_VER).tar.gz
-
-$(ARCHIVE)/$(DOSFSTOOLS_SOURCE):
-	$(DOWNLOAD) https://github.com/dosfstools/dosfstools/releases/download/v$(DOSFSTOOLS_VER)/$(DOSFSTOOLS_SOURCE)
-
 DOSFSTOOLS_CFLAGS = $(TARGET_CFLAGS) -D_GNU_SOURCE -fomit-frame-pointer -D_FILE_OFFSET_BITS=64
 
-$(D)/dosfstools: bootstrap $(ARCHIVE)/$(DOSFSTOOLS_SOURCE)
+$(D)/dosfstools: bootstrap
 	$(START_BUILD)
-	$(REMOVE)/dosfstools-$(DOSFSTOOLS_VER)
-	$(UNTAR)/$(DOSFSTOOLS_SOURCE)
-	$(CHDIR)/dosfstools-$(DOSFSTOOLS_VER); \
-		autoreconf -fi $(SILENT_OPT); \
+	$(REMOVE)/dosfstools
+	set -e; if [ -d $(ARCHIVE)/dosfstools.git ]; \
+		then cd $(ARCHIVE)/dosfstools.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/dosfstools/dosfstools.git dosfstools.git; \
+		fi
+	cp -ra $(ARCHIVE)/dosfstools.git $(BUILD_TMP)/dosfstools
+	$(CHDIR)/dosfstools; \
+		./autogen.sh $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix= \
 			--mandir=/.remove \
 			--docdir=/.remove \
-			--without-udev \
 			--enable-compat-symlinks \
+			--without-iconv \
 			CFLAGS="$(DOSFSTOOLS_CFLAGS)" \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/dosfstools-$(DOSFSTOOLS_VER)
+	$(REMOVE)/dosfstools
 	$(TOUCH)
 
 #
