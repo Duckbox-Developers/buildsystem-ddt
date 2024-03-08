@@ -15,7 +15,7 @@ index ca1563abb0..9d0ab6025c 100644
  
  @end table
  
-@@ -769,7 +773,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
+@@ -902,7 +906,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
  specify.
  
  @item decryption_key
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7375,19 +7375,62 @@
+@@ -7378,19 +7378,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7433,15 +7476,21 @@
+@@ -7436,15 +7479,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7492,15 +7541,21 @@
+@@ -7495,15 +7544,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7558,15 +7613,21 @@
+@@ -7561,15 +7616,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7709,7 +7770,7 @@
+@@ -7712,7 +7773,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -9487,12 +9548,6 @@
+@@ -9492,12 +9553,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->thmb_item_id = -1;
-@@ -10283,7 +10338,8 @@
+@@ -10288,7 +10343,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

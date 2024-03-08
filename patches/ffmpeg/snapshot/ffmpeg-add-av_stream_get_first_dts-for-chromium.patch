@@ -9,9 +9,9 @@ diff --git a/libavformat/avformat.h b/libavformat/avformat.h
 index f12fa7d..0b9fd1f 100644
 --- a/libavformat/avformat.h
 +++ b/libavformat/avformat.h
-@@ -1278,6 +1278,10 @@
- int64_t    av_stream_get_end_pts(const AVStream *st);
- #endif
+@@ -1170,6 +1170,10 @@
+ 
+ struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
  
 +// Chromium: We use the internal field first_dts vvv
 +int64_t    av_stream_get_first_dts(const AVStream *st);
