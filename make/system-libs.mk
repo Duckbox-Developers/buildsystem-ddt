@@ -2103,18 +2103,22 @@ $(D)/libdvbsi: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBSI_SOURCE)
 #
 # libdvbcsa
 #
+ifeq ($(BOXARCH), arm)
+LIBDVBCSA_CONF_OPTS = $(if $(findstring neon,$(TARGET_MARCH_CFLAGS)),--enable-neon,--disable-neon)
+endif
 $(D)/libdvbcsa: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBCSA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvbcsa
 	set -e; if [ -d $(ARCHIVE)/libdvbcsa.git ]; \
 		then cd $(ARCHIVE)/libdvbcsa.git; git pull; \
-		else cd $(ARCHIVE); git clone https://code.videolan.org/videolan/libdvbcsa.git libdvbcsa.git; \
+		else cd $(ARCHIVE); git clone https://github.com/oe-mirrors/libdvbcsa.git libdvbcsa.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdvbcsa.git $(BUILD_TMP)/libdvbcsa
 	$(CHDIR)/libdvbcsa; \
 		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
+			$(LIBDVBCSA_CONF_OPTS) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
