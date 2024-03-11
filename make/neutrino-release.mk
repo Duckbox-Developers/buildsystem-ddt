@@ -868,12 +868,30 @@ endif
 	fi
 
 #
+# oscam
+#
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libusb ]; then \
+		cp -f $(TARGET_DIR)/../oscam-svn/oscam*libusb $(RELEASE_DIR)/var/emu/oscam; \
+	fi
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa ]; then \
+		cp -f $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa $(RELEASE_DIR)/var/emu/oscam; \
+	fi
+ifeq ($(BOXARCH), sh4)
+	if [ -e $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa ]; then \
+		mv -f $(RELEASE_DIR)/usr/lib/libdvbcsa* $(RELEASE_DIR)/var/lib/; \
+		ln -s /var/lib/libdvbcsa.so $(RELEASE_DIR)/usr/lib/libdvbcsa.so; \
+		ln -s /var/lib/libdvbcsa.so.1 $(RELEASE_DIR)/usr/lib/libdvbcsa.so.1; \
+		ln -s /var/lib/libdvbcsa.so.1.0.1 $(RELEASE_DIR)/usr/lib/libdvbcsa.so.1.0.1; \
+	fi
+endif
+
+#
 # minisatip
 #
 	if [ -e $(TARGET_DIR)/usr/bin/minisatip -a -d $(TARGET_DIR)/usr/share/minisatip/html ]; then \
 		mkdir -p $(RELEASE_DIR)/usr/share/minisatip; \
 		cp -aR $(TARGET_DIR)/usr/share/minisatip/html $(RELEASE_DIR)/usr/share/minisatip; \
-		rm -f $(RELEASE_DIR)/usr/lib/libdvbcsa*; \
+		[ ! -e $(TARGET_DIR)/../oscam-svn/oscam*libdvbcsa ] && rm -f $(RELEASE_DIR)/{usr,var}/lib/libdvbcsa* || true; \
 	fi
 
 #

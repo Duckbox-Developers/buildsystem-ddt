@@ -54,6 +54,7 @@ OSCAM_CONFIG ?= --enable WEBIF \
 		MODULE_CONSTCW \
 		MODULE_GBOX \
 		MODULE_NEWCAMD \
+		MODULE_STREAMRELAY \
 		\
 		READER_CONAX \
 		READER_CRYPTOWORKS \
@@ -99,7 +100,7 @@ $(D)/oscam.do_compile:
 		CC_OPTS=" -Os -pipe "
 	@touch $@
 
-$(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb oscam.do_prepare oscam.do_compile
+$(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb $(D)/libdvbcsa oscam.do_prepare oscam.do_compile
 	rm -rf $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
 	mkdir $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
 	cp -pR $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR)/Distribution/* $(TARGET_DIR)/../$(OSCAM_FLAVOUR)/
