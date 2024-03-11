@@ -956,6 +956,7 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdnav*
 	rm -f $(RELEASE_DIR)/usr/lib/libdvdread*
 	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
+	rm -f $(RELEASE_DIR)/usr/lib/libss.so*
 	[ ! -e $(RELEASE_DIR)/usr/bin/mc ] && rm -f $(RELEASE_DIR)/usr/lib/libncurses* || true
 	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
