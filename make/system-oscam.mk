@@ -93,7 +93,7 @@ $(D)/oscam.do_prepare:
 $(D)/oscam.do_compile:
 	cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 		$(BUILDENV) \
-		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 USE_LIBUSB=1 \
+		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 USE_LIBUSB=1 USE_LIBDVBCSA=1 LIBDVBCSA_LIB=$(TARGET_LIB_DIR)/libdvbcsa.a \
 		PLUS_TARGET="-rezap" \
 		CONF_DIR=/var/keys \
 		EXTRA_LDFLAGS="$(TARGET_LDFLAGS)" \
