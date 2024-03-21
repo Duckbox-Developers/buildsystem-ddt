@@ -2,15 +2,15 @@ diff --git a/Makefile.am b/Makefile.am
 index d37b56d..0d576ce 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -94,7 +94,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
+@@ -94,7 +94,7 @@
  libkmod_libkmod_internal_la_LDFLAGS = $(AM_LDFLAGS) \
  	-Wl,--version-script=$(top_srcdir)/libkmod/libkmod.sym
  libkmod_libkmod_internal_la_DEPENDENCIES  = $(libkmod_libkmod_la_DEPENDENCIES)
 -libkmod_libkmod_internal_la_LIBADD = $(libkmod_libkmod_la_LIBADD)
 +libkmod_libkmod_internal_la_LIBADD = $(libkmod_libkmod_la_LIBADD) -lrt
  
- pkgconfigdir = $(libdir)/pkgconfig
- pkgconfig_DATA = libkmod/libkmod.pc tools/kmod.pc
+ pkgconfig_DATA = libkmod/libkmod.pc
+ noarch_pkgconfig_DATA = tools/kmod.pc
 diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
 index 213b424..56114a2 100644
 --- a/libkmod/libkmod.c
