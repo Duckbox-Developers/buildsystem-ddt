@@ -935,6 +935,8 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
 	rm -f $(RELEASE_DIR)/lib/libmemusage.so
+	rm -f $(RELEASE_DIR)/lib/libBrokenLocale*
+	rm -f $(RELEASE_DIR)/lib/libpcprofile.so
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)
 	rm -rf $(RELEASE_DIR)/usr/lib/alsa
