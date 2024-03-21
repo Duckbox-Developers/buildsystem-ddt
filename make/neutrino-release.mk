@@ -935,6 +935,7 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
 	rm -f $(RELEASE_DIR)/lib/libatomic*
+	rm -f $(RELEASE_DIR)/lib/libitm*
 	rm -f $(RELEASE_DIR)/lib/libmemusage.so
 	rm -f $(RELEASE_DIR)/lib/libBrokenLocale*
 	rm -f $(RELEASE_DIR)/lib/libpcprofile.so
