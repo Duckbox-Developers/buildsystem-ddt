@@ -104,18 +104,10 @@ include make/system-tools.mk
 include make/system-lua.mk
 include make/system-oscam.mk
 include make/ffmpeg.mk
+include make/linux-kernel-$(BOXARCH).mk
+include make/driver-$(BOXARCH).mk
 ifeq ($(BOXARCH), sh4)
-include make/linux-kernel-sh4.mk
 include make/crosstool-sh4.mk
-include make/driver-sh4.mk
-endif
-ifeq ($(BOXARCH), arm)
-include make/linux-kernel-arm.mk
-include make/driver-arm.mk
-endif
-ifeq ($(BOXARCH), mips)
-include make/linux-kernel-mips.mk
-include make/driver-mips.mk
 endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 include make/crosstool.mk
