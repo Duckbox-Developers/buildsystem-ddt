@@ -35,7 +35,7 @@ diff --git a/drivers/staging/rtl8712/usb_intf.c b/drivers/staging/rtl8712/usb_in
 index f8fbb57..b0c4cdb 100644
 --- a/drivers/staging/rtl8712/usb_intf.c
 +++ b/drivers/staging/rtl8712/usb_intf.c
-@@ -106,6 +106,7 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
+@@ -110,6 +110,7 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
  /* RTL8191SU */
  	/* Realtek */
  	{USB_DEVICE(0x0BDA, 0x8172)},

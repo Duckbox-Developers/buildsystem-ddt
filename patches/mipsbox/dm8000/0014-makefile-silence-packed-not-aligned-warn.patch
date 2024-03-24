@@ -8,7 +8,7 @@ diff --git a/Makefile b/Makefile
 index 3e711514..73b49c98 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -577,6 +577,7 @@ endif
+@@ -578,6 +578,7 @@ endif
  # This warning generated too much noise in a regular build.
  # Use make W=1 to enable this warning (see scripts/Makefile.build)
  KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)

@@ -1,6 +1,6 @@
 --- a/drivers/media/dvb/siano/smsdvb.c.orig	2011-02-25 13:08:07.000000000 +0200
 +++ b/drivers/media/dvb/siano/smsdvb.c	2011-02-26 15:11:46.000000000 +0200
-@@ -753,12 +753,111 @@
+@@ -748,12 +748,111 @@
  	struct smsdvb_client_t *client =
  		container_of(fe, struct smsdvb_client_t, frontend);
  

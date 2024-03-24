@@ -17,7 +17,7 @@ diff --git a/drivers/media/dvb/dvb-core/dvb_frontend.c b/drivers/media/dvb/dvb-c
 index 2c0acdb..d5c0a29 100644
 --- a/drivers/media/dvb/dvb-core/dvb_frontend.c
 +++ b/drivers/media/dvb/dvb-core/dvb_frontend.c
-@@ -890,6 +890,8 @@ static int dvb_frontend_clear_cache(struct dvb_frontend *fe)
+@@ -898,6 +898,8 @@ static int dvb_frontend_clear_cache(struct dvb_frontend *fe)
  		c->layer[i].segment_count = -1;
  	}
  
@@ -26,7 +26,7 @@ index 2c0acdb..d5c0a29 100644
  	return 0;
  }
  
-@@ -962,8 +964,8 @@ static struct dtv_cmds_h dtv_cmds[DTV_MAX_COMMAND + 1] = {
+@@ -970,8 +972,8 @@ static struct dtv_cmds_h dtv_cmds[DTV_MAX_COMMAND + 1] = {
  	_DTV_CMD(DTV_ISDBT_LAYERC_SEGMENT_COUNT, 0, 0),
  	_DTV_CMD(DTV_ISDBT_LAYERC_TIME_INTERLEAVING, 0, 0),
  
@@ -37,7 +37,7 @@ index 2c0acdb..d5c0a29 100644
  
  	/* Get */
  	_DTV_CMD(DTV_DISEQC_SLAVE_REPLY, 0, 1),
-@@ -1334,11 +1336,11 @@ static int dtv_property_process_get(struct dvb_frontend *fe,
+@@ -1342,11 +1344,11 @@ static int dtv_property_process_get(struct dvb_frontend *fe,
  	case DTV_ISDBT_LAYERC_TIME_INTERLEAVING:
  		tvp->u.data = c->layer[2].interleaving;
  		break;
@@ -54,7 +54,7 @@ index 2c0acdb..d5c0a29 100644
  		break;
  	default:
  		return -EINVAL;
-@@ -1500,11 +1502,11 @@ static int dtv_property_process_set(struct dvb_frontend *fe,
+@@ -1508,11 +1510,11 @@ static int dtv_property_process_set(struct dvb_frontend *fe,
  	case DTV_ISDBT_LAYERC_TIME_INTERLEAVING:
  		c->layer[2].interleaving = tvp->u.data;
  		break;

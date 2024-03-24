@@ -17,7 +17,7 @@ diff --git a/drivers/staging/rtl8712/usb_intf.c b/drivers/staging/rtl8712/usb_in
 index e01fe14..f8fbb57 100644
 --- a/drivers/staging/rtl8712/usb_intf.c
 +++ b/drivers/staging/rtl8712/usb_intf.c
-@@ -109,7 +109,6 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
+@@ -113,7 +113,6 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
  	/* Amigo */
  	{USB_DEVICE(0x0EB0, 0x9061)},
  	/* ASUS/EKB */
@@ -25,7 +25,7 @@ index e01fe14..f8fbb57 100644
  	{USB_DEVICE(0x13D3, 0x3323)},
  	{USB_DEVICE(0x13D3, 0x3311)}, /* 11n mode disable */
  	{USB_DEVICE(0x13D3, 0x3342)},
-@@ -161,7 +160,6 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
+@@ -165,7 +164,6 @@ static struct usb_device_id rtl871x_usb_id_tbl[] = {
  /* RTL8192SU */
  	/* Realtek */
  	{USB_DEVICE(0x0BDA, 0x8174)},

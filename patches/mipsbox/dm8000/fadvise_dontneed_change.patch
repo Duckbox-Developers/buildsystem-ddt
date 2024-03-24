@@ -2,7 +2,7 @@ Index: linux-3.2/include/linux/fs.h
 ===================================================================
 --- linux-3.2.orig/include/linux/fs.h
 +++ linux-3.2/include/linux/fs.h
-@@ -2224,8 +2224,12 @@ extern int check_disk_change(struct bloc
+@@ -2230,8 +2230,12 @@ extern int check_disk_change(struct bloc
  extern int __invalidate_device(struct block_device *, bool);
  extern int invalidate_partition(struct gendisk *, int);
  #endif
@@ -64,7 +64,7 @@ Index: linux-3.2/mm/swap.c
 ===================================================================
 --- linux-3.2.orig/mm/swap.c
 +++ linux-3.2/mm/swap.c
-@@ -436,7 +436,7 @@ void add_page_to_unevictable_list(struct
+@@ -512,7 +512,7 @@ void add_page_to_unevictable_list(struct
   * 2. active, dirty/writeback page -> inactive, head, PG_reclaim
   * 3. inactive, mapped page -> none
   * 4. inactive, dirty/writeback page -> inactive, head, PG_reclaim
@@ -77,7 +77,7 @@ Index: linux-3.2/mm/truncate.c
 ===================================================================
 --- linux-3.2.orig/mm/truncate.c
 +++ linux-3.2/mm/truncate.c
-@@ -315,20 +315,27 @@ void truncate_inode_pages(struct address
+@@ -316,20 +316,27 @@ void truncate_inode_pages(struct address
  EXPORT_SYMBOL(truncate_inode_pages);
  
  /**
@@ -111,7 +111,7 @@ Index: linux-3.2/mm/truncate.c
  {
  	struct pagevec pvec;
  	pgoff_t index = start;
-@@ -359,12 +366,26 @@ unsigned long invalidate_mapping_pages(s
+@@ -360,12 +367,26 @@ unsigned long invalidate_mapping_pages(s
  			if (!trylock_page(page))
  				continue;
  			WARN_ON(page->index != index);
@@ -142,7 +142,7 @@ Index: linux-3.2/mm/truncate.c
  			if (!ret)
  				deactivate_page(page);
  			count += ret;
-@@ -376,7 +397,7 @@ unsigned long invalidate_mapping_pages(s
+@@ -377,7 +398,7 @@ unsigned long invalidate_mapping_pages(s
  	}
  	return count;
  }

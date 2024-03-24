@@ -585,7 +585,7 @@ index 9680cef..46b6904b 100644
  
  static inline int d_revalidate(struct dentry *dentry, struct nameidata *nd)
  {
-@@ -1805,6 +1806,42 @@ struct dentry *lookup_one_len(const char *name, struct dentry *base, int len)
+@@ -1813,6 +1814,42 @@ struct dentry *lookup_one_len(const char *name, struct dentry *base, int len)
  	return __lookup_hash(&this, base, NULL);
  }
  
@@ -628,7 +628,7 @@ index 9680cef..46b6904b 100644
  int user_path_at_empty(int dfd, const char __user *name, unsigned flags,
  		 struct path *path, int *empty)
  {
-@@ -3385,6 +3422,7 @@ EXPORT_SYMBOL(get_write_access); /* binfmt_aout */
+@@ -3393,6 +3430,7 @@ EXPORT_SYMBOL(get_write_access); /* binfmt_aout */
  EXPORT_SYMBOL(getname);
  EXPORT_SYMBOL(lock_rename);
  EXPORT_SYMBOL(lookup_one_len);
@@ -640,7 +640,7 @@ diff --git a/fs/splice.c b/fs/splice.c
 index 714471d..78dbb4c 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1112,8 +1112,8 @@ EXPORT_SYMBOL(generic_splice_sendpage);
+@@ -1116,8 +1116,8 @@ EXPORT_SYMBOL(generic_splice_sendpage);
  /*
   * Attempt to initiate a splice from pipe to file.
   */
@@ -651,7 +651,7 @@ index 714471d..78dbb4c 100644
  {
  	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *,
  				loff_t *, size_t, unsigned int);
-@@ -1136,13 +1136,14 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+@@ -1140,13 +1140,14 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
  
  	return splice_write(pipe, out, ppos, len, flags);
  }
@@ -669,7 +669,7 @@ index 714471d..78dbb4c 100644
  {
  	ssize_t (*splice_read)(struct file *, loff_t *,
  			       struct pipe_inode_info *, size_t, unsigned int);
-@@ -1162,6 +1163,7 @@ static long do_splice_to(struct file *in, loff_t *ppos,
+@@ -1166,6 +1167,7 @@ static long do_splice_to(struct file *in, loff_t *ppos,
  
  	return splice_read(in, ppos, pipe, len, flags);
  }
@@ -677,7 +677,7 @@ index 714471d..78dbb4c 100644
  
  /**
   * splice_direct_to_actor - splices data directly between two non-pipes
-@@ -1231,7 +1233,7 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
+@@ -1235,7 +1237,7 @@ ssize_t splice_direct_to_actor(struct file *in, struct splice_desc *sd,
  		size_t read_len;
  		loff_t pos = sd->pos, prev_pos = pos;
  
@@ -686,7 +686,7 @@ index 714471d..78dbb4c 100644
  		if (unlikely(ret <= 0))
  			goto out_release;
  
-@@ -1290,8 +1292,8 @@ static int direct_splice_actor(struct pipe_inode_info *pipe,
+@@ -1294,8 +1296,8 @@ static int direct_splice_actor(struct pipe_inode_info *pipe,
  {
  	struct file *file = sd->u.file;
  
@@ -697,7 +697,7 @@ index 714471d..78dbb4c 100644
  }
  
  /**
-@@ -1376,7 +1378,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
+@@ -1380,7 +1382,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
  		} else
  			off = &out->f_pos;
  
@@ -706,7 +706,7 @@ index 714471d..78dbb4c 100644
  
  		if (off_out && copy_to_user(off_out, off, sizeof(loff_t)))
  			ret = -EFAULT;
-@@ -1396,7 +1398,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
+@@ -1400,7 +1402,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
  		} else
  			off = &in->f_pos;
  

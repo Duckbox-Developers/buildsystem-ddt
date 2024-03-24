@@ -2,7 +2,7 @@ diff --git a/drivers/media/dvb/dvb-usb/Kconfig b/drivers/media/dvb/dvb-usb/Kconf
 index 385ffa5..0701bad 100644
 --- a/drivers/media/dvb/dvb-usb/Kconfig
 +++ b/drivers/media/dvb/dvb-usb/Kconfig
-@@ -348,6 +348,14 @@ config DVB_USB_AF9035
+@@ -350,6 +350,14 @@ config DVB_USB_AF9035
  	help
  	  Say Y here to support the Afatech AF9035 based DVB-T USB2.0 receiver
  
