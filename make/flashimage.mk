@@ -365,13 +365,13 @@ VUDUO_UBIFS = 8192
 VUDUO2_INITRD = cp $(TARGET_DIR)/boot/vmlinuz-initrd-7425b0 $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/initrd_cfe_auto.bin
 endif
 
-flash-image-vuduo:
+flash-image-vuduo: $(D)/host_mtd_utils
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
 	touch $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/reboot.update
 	cp $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)
 	$(VUDUO2_INITRD)
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c $(VUDUO_UBIFS) -F
+	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi -m 2048 -e 126976 -c $(VUDUO_UBIFS) -F
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'image=$(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
@@ -379,7 +379,7 @@ flash-image-vuduo:
 	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	ubinize -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.$(VUDUO_ROOT_EXT) -m 2048 -p 128KiB $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
+	$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.$(VUDUO_ROOT_EXT) -m 2048 -p 128KiB $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	rm -f $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/root_cfe_auto.ubi
 	rm -f $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
 	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/imageversion
@@ -388,7 +388,7 @@ flash-image-vuduo:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
-flash-image-dm8000: $(D)/buildimage $(D)/dm8000_2nd
+flash-image-dm8000: $(D)/buildimage $(D)/host_mtd_utils $(D)/dm8000_2nd
 	@echo -e "$(TERM_YELLOW_BOLD)=========================================="
 	@echo -e "===> Creating FLASH Image for DM8000. <==="
 	@echo -e "==========================================$(TERM_NORMAL)"
@@ -402,8 +402,8 @@ flash-image-dm8000: $(D)/buildimage $(D)/dm8000_2nd
 	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_dm8000.bat
 	cp $(SKEL_ROOT)/release/bootlogo-dm8000.elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-dm8000.jpg $(RELEASE_DIR)/boot/
-	mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=131072 --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
+	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=131072 --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
+	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'image=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
@@ -411,7 +411,7 @@ flash-image-dm8000: $(D)/buildimage $(D)/dm8000_2nd
 	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi -m 2048 -p 128KiB -s 512 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi -m 2048 -p 128KiB -s 512 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
