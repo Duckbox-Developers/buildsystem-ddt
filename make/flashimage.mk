@@ -389,9 +389,9 @@ flash-image-vuduo:
 	rm -rf $(IMAGE_BUILD_DIR)
 
 flash-image-dm8000: $(D)/buildimage $(D)/dm8000_2nd
-	@echo -e "$(TERM_YELLOW_BOLD)========================================================"
-	@echo -e "===> Sorry, dm8000 flash image not implementet yet! <==="
-	@echo -e "========================================================$(TERM_NORMAL)"
+	@echo -e "$(TERM_YELLOW_BOLD)=========================================="
+	@echo -e "===> Creating FLASH Image for DM8000. <==="
+	@echo -e "==========================================$(TERM_NORMAL)"
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	rm -f $(RELEASE_DIR)/boot/*
 	cp $(TARGET_DIR)/boot/vmlinux-3.2-dm8000.gz $(RELEASE_DIR)/boot/
