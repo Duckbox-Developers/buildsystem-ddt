@@ -22,6 +22,9 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	$(MAKE) flash-image-vuduo
 endif
+ifeq ($(BOXTYPE), dm8000)
+	$(MAKE) flash-image-dm8000 flash-image-dm8000-usb
+endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofgimage:
@@ -383,4 +386,69 @@ flash-image-vuduo:
 	cd $(IMAGE_BUILD_DIR)/ && \
 	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(VUDUO_PREFIX)*
 	# cleanup
+	rm -rf $(IMAGE_BUILD_DIR)
+
+flash-image-dm8000: $(D)/buildimage $(D)/dm8000_2nd
+	@echo -e "$(TERM_YELLOW_BOLD)========================================================"
+	@echo -e "===> Sorry, dm8000 flash image not implementet yet! <==="
+	@echo -e "========================================================$(TERM_NORMAL)"
+	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	rm -f $(RELEASE_DIR)/boot/*
+	cp $(TARGET_DIR)/boot/vmlinux-3.2-dm8000.gz $(RELEASE_DIR)/boot/
+	cp $(ARCHIVE)/secondstage-dm8000-84.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/
+	ln -sf vmlinux-3.2-dm8000.gz $(RELEASE_DIR)/boot/vmlinux
+	echo "/boot/bootlogo-dm8000.elf.gz filename=/boot/bootlogo-dm8000.jpg" > $(RELEASE_DIR)/boot/autoexec.bat
+	echo "/boot/vmlinux-3.2-dm8000.gz ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8" >> $(RELEASE_DIR)/boot/autoexec.bat
+	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_dm8000.bat
+	cp $(SKEL_ROOT)/release/bootlogo-dm8000.elf.gz $(RELEASE_DIR)/boot/
+	cp $(SKEL_ROOT)/release/bootlogo-dm8000.jpg $(RELEASE_DIR)/boot/
+	mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=131072 --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
+	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
+	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'image=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi -m 2048 -p 128KiB -s 512 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs
+	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
+	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
+	buildimage -a dm8000 -e 0x20000 -f 0x4000000 -s 2048 -b 0x100000:secondstage-dm8000-84.bin -d 0x700000:boot.jffs2 -d 0xF800000:rootfs.ubi > $(BOXTYPE).nfi && \
+	echo "Neutrino: Release" > $(BOXTYPE).nfo && \
+	echo "Machine: Dreambox dm8000" >> $(BOXTYPE).nfo && \
+	echo "Date: `date '+%Y%m%d'`" >> $(BOXTYPE).nfo && \
+	echo "Issuer: $(MAINTAINER)" >> $(BOXTYPE).nfo && \
+	echo "Link: https://github.com/Duckbox-Developers" >> $(BOXTYPE).nfo && \
+	echo -n "MD5: " >> $(BOXTYPE).nfo && \
+	md5sum -b $(BOXTYPE).nfi | awk -F " " '{print $$1}' >> $(BOXTYPE).nfo; \
+	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(BOXTYPE).{nfi,nfo}
+	# cleanup
+	rm -rf $(IMAGE_BUILD_DIR)
+
+flash-image-dm8000-usb:
+	@echo -e "$(TERM_YELLOW_BOLD)========================================================"
+	@echo -e "===> Creating USB Image for sda1 FAT and sda2 EXT4. <==="
+	@echo -e "========================================================$(TERM_NORMAL)"
+	rm -f $(RELEASE_DIR)/boot/*
+	cp $(TARGET_DIR)/boot/vmlinux-3.2-dm8000.gz $(RELEASE_DIR)/boot/
+	ln -sf vmlinux-3.2-dm8000.gz $(RELEASE_DIR)/boot/vmlinux
+	echo "/boot/bootlogo-dm8000.elf.gz filename=/boot/bootlogo-dm8000.jpg" > $(RELEASE_DIR)/boot/autoexec.bat
+	echo "/boot/vmlinux-3.2-dm8000.gz ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8" >> $(RELEASE_DIR)/boot/autoexec.bat
+	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_dm8000.bat
+	cp $(SKEL_ROOT)/release/bootlogo-dm8000.elf.gz $(RELEASE_DIR)/boot/
+	cp $(SKEL_ROOT)/release/bootlogo-dm8000.jpg $(RELEASE_DIR)/boot/
+	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	cp $(RELEASE_DIR)/boot/vmlinux-3.2-dm8000.gz $(IMAGE_BUILD_DIR)/$(BOXTYPE)/vmlinux.gz
+	echo "/usb/vmlinux.gz console=ttyS0,115200n8 rootdelay=10 root=/dev/sda2 rootfstype=ext3 rw" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/autoexec.bat
+	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
+	tar cvzf $(IMAGE_BUILD_DIR)/$(BOXTYPE)_usb_boot_$(shell date '+%d.%m.%Y-%H.%M').tar.gz . > /dev/null 2>&1
+	rm -fr $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	cd $(RELEASE_DIR) && \
+	tar cvzf $(IMAGE_BUILD_DIR)/$(BOXTYPE)_usb_root_$(shell date '+%d.%m.%Y-%H.%M').tar.gz . > /dev/null 2>&1; \
+	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)_usb_{boot,root}_$(shell date '+%d.%m.%Y-%H.%M').tar.gz*
+	# cleanup
+	rm -f $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tar.gz*
 	rm -rf $(IMAGE_BUILD_DIR)
