@@ -416,7 +416,7 @@ flash-image-dm8000: $(D)/buildimage $(D)/host_mtd_utils $(D)/dm8000_2nd
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	buildimage -a dm8000 -e 0x20000 -f 0x4000000 -s 2048 -b 0x100000:secondstage-dm8000-84.bin -d 0x700000:boot.jffs2 -d 0xF800000:rootfs.ubi > $(BOXTYPE).nfi && \
+	$(HOST_DIR)/bin/buildimage -a dm8000 -e 0x20000 -f 0x4000000 -s 2048 -b 0x100000:secondstage-dm8000-84.bin -d 0x700000:boot.jffs2 -d 0xF800000:rootfs.ubi > $(BOXTYPE).nfi && \
 	echo "Neutrino: Release" > $(BOXTYPE).nfo && \
 	echo "Machine: Dreambox dm8000" >> $(BOXTYPE).nfo && \
 	echo "Date: `date '+%Y%m%d'`" >> $(BOXTYPE).nfo && \
