@@ -391,7 +391,7 @@ flash-image-vuduo: $(D)/host_mtd_utils
 flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
-	@echo -e "================================$(TERM_NORMAL)"
+	@echo -e "===============================$(TERM_NORMAL)"
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	rm -f $(RELEASE_DIR)/boot/*
 	cp $(TARGET_DIR)/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/
