@@ -388,6 +388,18 @@ flash-image-vuduo: $(D)/host_mtd_utils
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
+ifeq ($(BOXTYPE), dm8000)
+DM_ERASE_BLOCK_SIZE = "0x20000"
+DM_SECTOR_SIZE = "2048"
+MKUBIFS_ARGS = "-m 2048 -e 126KiB -c 1961 -x favor_lzo -F"
+UBINIZE_ARGS = "-m 2048 -p 128KiB -s 512"
+BUILDIMAGE_EXTRA = ""
+FLASH_SIZE = "0x4000000"
+LOADER_SIZE = "0x100000"
+BOOT_SIZE = "0x700000"
+ROOT_SIZE = "0xF800000"
+endif
+
 flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
@@ -402,8 +414,8 @@ flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_$(BOXTYPE).bat
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
-	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=131072 --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
-	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
+	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
+	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs $(MKUBIFS_ARGS)
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'image=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
@@ -411,12 +423,12 @@ flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi -m 2048 -p 128KiB -s 512 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi $(UBINIZE_ARGS) $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	$(HOST_DIR)/bin/buildimage -a $(BOXTYPE) -e 0x20000 -f 0x4000000 -s 2048 -b 0x100000:secondstage-$(BOXTYPE)-84.bin -d 0x700000:boot.jffs2 -d 0xF800000:rootfs.ubi > $(BOXTYPE).nfi && \
+	$(HOST_DIR)/bin/buildimage -a $(BOXTYPE) $(BUILDIMAGE_EXTRA) -e $(DM_ERASE_BLOCK_SIZE) -f $(FLASH_SIZE) -s $(DM_SECTOR_SIZE) -b $(LOADER_SIZE):secondstage-$(BOXTYPE)-84.bin -d $(BOOT_SIZE):boot.jffs2 -d $(ROOT_SIZE):rootfs.ubi > $(BOXTYPE).nfi && \
 	echo "Neutrino: Release" > $(BOXTYPE).nfo && \
 	echo "Machine: Dreambox $(BOXTYPE)" >> $(BOXTYPE).nfo && \
 	echo "Date: `date '+%Y%m%d'`" >> $(BOXTYPE).nfo && \
