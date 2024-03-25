@@ -389,15 +389,15 @@ flash-image-vuduo: $(D)/host_mtd_utils
 	rm -rf $(IMAGE_BUILD_DIR)
 
 ifeq ($(BOXTYPE), dm8000)
-DM_ERASE_BLOCK_SIZE = "0x20000"
-DM_SECTOR_SIZE = "2048"
-MKUBIFS_ARGS = "-m 2048 -e 126KiB -c 1961 -x favor_lzo -F"
-UBINIZE_ARGS = "-m 2048 -p 128KiB -s 512"
-BUILDIMAGE_EXTRA = ""
-FLASH_SIZE = "0x4000000"
-LOADER_SIZE = "0x100000"
-BOOT_SIZE = "0x700000"
-ROOT_SIZE = "0xF800000"
+DM_ERASE_BLOCK_SIZE = 0x20000
+DM_SECTOR_SIZE = 2048
+MKUBIFS_ARGS = -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
+UBINIZE_ARGS = -m 2048 -p 128KiB -s 512
+BUILDIMAGE_EXTRA = 
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0xF800000
 endif
 
 flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
