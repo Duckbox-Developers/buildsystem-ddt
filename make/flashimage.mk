@@ -23,7 +23,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	$(MAKE) flash-image-vuduo
 endif
 ifeq ($(BOXTYPE), dm8000)
-	$(MAKE) flash-image-dm_old flash-image-dm_old-usb
+	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -400,7 +400,7 @@ BOOT_SIZE = 0x700000
 ROOT_SIZE = 0xF800000
 endif
 
-flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
+flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
 	@echo -e "===============================$(TERM_NORMAL)"
@@ -440,7 +440,7 @@ flash-image-dm_old: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
-flash-image-dm_old-usb:
+flash-image-dm_nfi-usb:
 	@echo -e "$(TERM_YELLOW_BOLD)========================================================"
 	@echo -e "===> Creating USB Image for sda1 FAT and sda2 EXT4. <==="
 	@echo -e "========================================================$(TERM_NORMAL)"
