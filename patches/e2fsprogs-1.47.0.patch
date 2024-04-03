@@ -1,3 +1,13 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,6 +1,6 @@
+ AC_INIT
+ AC_CONFIG_SRCDIR([version.h])
+-AC_PREREQ([2.71])
++AC_PREREQ([2.69])
+ AC_CONFIG_AUX_DIR(config)
+ AC_CONFIG_HEADERS([lib/config.h])
+ AH_BOTTOM([#include <dirpaths.h>])
 --- a/lib/blkid/blkid.pc.in
 +++ b/lib/blkid/blkid.pc.in
 @@ -1,7 +1,7 @@
@@ -45,7 +55,7 @@
  	$(RM) -rf elfshared
 --- a/misc/Makefile.in
 +++ b/misc/Makefile.in
-@@ -165,10 +165,10 @@
+@@ -171,10 +171,10 @@
  	$(E) "	LD $@"
  	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o $(LIBCOM_ERR)
  
@@ -58,18 +68,18 @@
  
  tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
  		$(DEPLIBUUID) $(LIBEXT2FS)
-@@ -344,10 +344,10 @@
+@@ -360,10 +360,10 @@
  		$(STATIC_LIBS) $(STATIC_LIBE2P) $(STATIC_LIBUUID) \
  		$(LIBINTL) $(SYSLIBS) $(STATIC_LIBBLKID) $(LIBMAGIC)
  
--fsck: $(FSCK_OBJS) $(DEPLIBBLKID)
-+fsck: $(FSCK_OBJS) $(DEPLIBBLKID) $(DEPLIBUUID)
+-fsck: $(FSCK_OBJS) $(DEPLIBBLKID) $(DEPLIBS)
++fsck: $(FSCK_OBJS) $(DEPLIBBLKID) $(DEPLIBS) $(DEPLIBUUID)
  	$(E) "	LD $@"
  	$(Q) $(CC) $(ALL_LDFLAGS) -o fsck $(FSCK_OBJS) $(LIBBLKID) \
--		$(LIBINTL) $(SYSLIBS)
-+		$(LIBUUID) $(LIBINTL) $(SYSLIBS)
+-		$(LIBINTL) $(SYSLIBS) $(LIBS)
++		$(LIBUUID) $(LIBINTL) $(SYSLIBS) $(LIBS)
  
- fsck.profiled: $(FSCK_OBJS) $(PROFILED_DEPLIBBLKID)
+ fsck.profiled: $(FSCK_OBJS) $(PROFILED_DEPLIBBLKID) $(PROFILED_DEPLIBS)
  	$(E) "	LD $@"
 --- a/lib/et/Makefile.in
 +++ b/lib/et/Makefile.in
