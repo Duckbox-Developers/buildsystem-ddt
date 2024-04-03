@@ -2521,7 +2521,7 @@ $(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/$(GNUTLS_SOURCE)
 #
 # libgpg-error
 #
-LIBGPG_ERROR_VER    = 1.45
+LIBGPG_ERROR_VER    = 1.48
 LIBGPG_ERROR_DIR    = libgpg-error-$(LIBGPG_ERROR_VER)
 LIBGPG_ERROR_SOURCE = libgpg-error-$(LIBGPG_ERROR_VER).tar.bz2
 LIBGPG_ERROR_URL    = https://www.gnupg.org/ftp/gcrypt/libgpg-error
@@ -2543,6 +2543,7 @@ $(D)/libgpg-error: $(D)/bootstrap $(ARCHIVE)/$(LIBGPG_ERROR_SOURCE)
 			; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	cd $(TARGET_DIR)/usr/bin && ln -sf gpgrt-config gpg-error-config
 	$(REWRITE_LIBTOOL)/libgpg-error.la
 	$(REMOVE)/$(LIBGPG_ERROR_DIR)
 	$(TOUCH)
