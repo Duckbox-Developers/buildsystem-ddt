@@ -11,12 +11,12 @@ OSCAM_FLAVOUR_DIR = oscam.git
 OSCAM_SOURCE_DIR  = oscam
 OSCAM_PULL        = git pull
 OSCAM_CLONE       = git clone
-else ifeq ($(OSCAM_FLAVOUR), oscam-svn)
-OSCAM_FLAVOUR_URL = http://www.streamboard.tv/svn/oscam/trunk
-OSCAM_FLAVOUR_DIR = oscam-svn
-OSCAM_SOURCE_DIR  = oscam-svn
-OSCAM_PULL        = svn up
-OSCAM_CLONE       = svn checkout
+else ifeq ($(OSCAM_FLAVOUR), oscam-git)
+OSCAM_FLAVOUR_URL = https://git.streamboard.tv/common/oscam.git
+OSCAM_FLAVOUR_DIR = oscam.git
+OSCAM_SOURCE_DIR  = oscam
+OSCAM_PULL        = git pull
+OSCAM_CLONE       = git clone
 else ifeq ($(OSCAM_FLAVOUR), oscam-smod)
 OSCAM_FLAVOUR_URL = https://github.com/Schimmelreiter/oscam-smod.git
 OSCAM_FLAVOUR_DIR = oscam-smod.git
