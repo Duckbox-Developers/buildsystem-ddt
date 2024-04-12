@@ -25,6 +25,24 @@ OSCAM_PULL        = git pull
 OSCAM_CLONE       = git clone
 endif
 
+ST_LIBCRYPTO ?= 0
+ST_LIBDVBCSA ?= 1
+ST_LIBSSL ?= 0
+ST_LIBUSB ?= 0
+
+ifeq ($(ST_LIBCRYPTO), 1)
+	ST_CRYPTO = LIBCRYPTO_LIB=$(TARGET_LIB_DIR)/libcrypto.a
+endif
+ifeq ($(ST_LIBDVBCSA), 1)
+	ST_DVBCSA = LIBDVBCSA_LIB=$(TARGET_LIB_DIR)/libdvbcsa.a
+endif
+ifeq ($(ST_LIBSSL), 1)
+	ST_SSL = SSL_LIB=$(TARGET_LIB_DIR)/libssl.a
+endif
+ifeq ($(ST_LIBUSB), 1)
+	ST_USB = LIBUSB_LIB=$(TARGET_LIB_DIR)/libusb-1.0.a
+endif
+
 # -----------------------------------------------------------------------------
 
 #OSCAM_VER = $(OSCAM_FLAVOUR)
@@ -38,7 +56,6 @@ OSCAM_CONFIG ?= --enable WEBIF \
 		IRDETO_GUESSING \
 		MODULE_MONITOR \
 		READ_SDT_CHARSETS \
-		TOUCH \
 		WEBIF_JQUERY \
 		WEBIF_LIVELOG \
 		WITH_DEBUG \
@@ -93,7 +110,7 @@ $(D)/oscam.do_prepare:
 $(D)/oscam.do_compile:
 	cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 		$(BUILDENV) \
-		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 USE_LIBUSB=1 USE_LIBDVBCSA=1 LIBDVBCSA_LIB=$(TARGET_LIB_DIR)/libdvbcsa.a \
+		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 $(ST_CRYPTO) USE_LIBDVBCSA=1 $(ST_DVBCSA) USE_LIBSSL=1 $(ST_SSL) USE_LIBUSB=1 $(ST_USB) \
 		PLUS_TARGET="-rezap" \
 		CONF_DIR=/var/keys \
 		EXTRA_LDFLAGS="$(TARGET_LDFLAGS)" \
