@@ -416,41 +416,6 @@ endif
 	$(TOUCH)
 
 #
-# timezone
-#
-TZDATA_VER = 2016a
-TZDATA_SOURCE = tzdata$(TZDATA_VER).tar.gz
-TZDATA_ZONELIST = africa antarctica asia australasia europe northamerica southamerica pacificnew etcetera backward
-DEFAULT_TIMEZONE ?= "CET"
-#ln -s /usr/share/zoneinfo/<country>/<city> /etc/localtime
-
-$(ARCHIVE)/$(TZDATA_SOURCE):
-	$(DOWNLOAD) ftp://ftp.iana.org/tz/releases/$(TZDATA_SOURCE)
-
-$(D)/timezone: $(D)/bootstrap find-zic $(ARCHIVE)/$(TZDATA_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/timezone
-	mkdir $(BUILD_TMP)/timezone
-	tar -C $(BUILD_TMP)/timezone -xf $(ARCHIVE)/$(TZDATA_SOURCE)
-	$(CHDIR)/timezone; \
-		unset ${!LC_*}; LANG=POSIX; LC_ALL=POSIX; export LANG LC_ALL; \
-		for zone in $(TZDATA_ZONELIST); do \
-			zic -d zoneinfo -L /dev/null -y yearistype.sh $$zone ; \
-			: zic -d zoneinfo/posix -L /dev/null -y yearistype.sh $$zone ; \
-			: zic -d zoneinfo/right -L leapseconds -y yearistype.sh $$zone ; \
-		done; \
-		install -d -m 0755 $(TARGET_DIR)/usr/share $(TARGET_DIR)/etc; \
-		cp -a zoneinfo $(TARGET_DIR)/usr/share/; \
-		cp -v zone.tab iso3166.tab $(TARGET_DIR)/usr/share/zoneinfo/; \
-		# Install default timezone
-		if [ -e $(TARGET_DIR)/usr/share/zoneinfo/$(DEFAULT_TIMEZONE) ]; then \
-			echo ${DEFAULT_TIMEZONE} > $(TARGET_DIR)/etc/timezone; \
-		fi; \
-	install -m 0644 $(SKEL_ROOT)/etc/timezone.xml $(TARGET_DIR)/etc/
-	$(REMOVE)/timezone
-	$(TOUCH)
-
-#
 # freetype
 #
 FREETYPE_VER = 2.11.0
