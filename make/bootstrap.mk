@@ -318,9 +318,9 @@ SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
 SYSTEM_TOOLS += $(D)/diverse-tools
 SYSTEM_TOOLS += $(D)/e2fsprogs
-SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/portmap
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/jfsutils
 SYSTEM_TOOLS += $(D)/nfs_utils
 endif
