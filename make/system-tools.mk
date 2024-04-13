@@ -192,90 +192,6 @@ endif
 	$(TOUCH)
 
 #
-# gdb-remote
-#
-GDB_VER = 7.8
-GDB_SOURCE = gdb-$(GDB_VER).tar.xz
-GDB_PATCH = gdb-$(GDB_VER)-remove-builddate.patch
-
-$(ARCHIVE)/$(GDB_SOURCE):
-	$(DOWNLOAD) ftp://sourceware.org/pub/gdb/releases/$(GDB_SOURCE)
-
-# gdb-remote built for local-PC or target
-$(D)/gdb-remote: $(ARCHIVE)/$(GDB_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/gdb-$(GDB_VER)
-	$(UNTAR)/$(GDB_SOURCE)
-	$(CHDIR)/gdb-$(GDB_VER); \
-		./configure \
-			--nfp --disable-werror \
-			--prefix=$(HOST_DIR) \
-			--build=$(BUILD) \
-			--host=$(BUILD) \
-			--target=$(TARGET) \
-		; \
-		$(MAKE) all-gdb; \
-		$(MAKE) install-gdb
-	$(REMOVE)/gdb-$(GDB_VER)
-	$(TOUCH)
-
-#
-# gdb
-#
-# gdb built for target or local-PC
-$(D)/gdb: $(D)/bootstrap $(D)/ncurses $(D)/zlib $(ARCHIVE)/$(GDB_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/gdb-$(GDB_VER)
-	$(UNTAR)/$(GDB_SOURCE)
-	$(CHDIR)/gdb-$(GDB_VER); \
-		$(call apply_patches, $(GDB_PATCH)); \
-		./configure \
-			--host=$(BUILD) \
-			--build=$(BUILD) \
-			--target=$(TARGET) \
-			--prefix=/usr \
-			--includedir=$(TARGET_INCLUDE_DIR) \
-			--mandir=$(TARGET_DIR)/.remove \
-			--infodir=$(TARGET_DIR)/.remove \
-			--datarootdir=$(TARGET_DIR)/.remove \
-			--nfp \
-			--disable-werror \
-		; \
-		$(MAKE) all-gdb; \
-		$(MAKE) install-gdb prefix=$(TARGET_DIR)
-	$(REMOVE)/gdb-$(GDB_VER)
-	$(TOUCH)
-
-#
-# valgrind
-#
-VALGRIND_VER = 3.13.0
-VALGRIND_SOURCE = valgrind-$(VALGRIND_VER).tar.bz2
-
-$(ARCHIVE)/$(VALGRIND_SOURCE):
-	$(DOWNLOAD) ftp://sourceware.org/pub/valgrind/$(VALGRIND_SOURCE)
-
-$(D)/valgrind: $(D)/bootstrap $(ARCHIVE)/$(VALGRIND_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/valgrind-$(VALGRIND_VER)
-	$(UNTAR)/$(VALGRIND_SOURCE)
-	$(CHDIR)/valgrind-$(VALGRIND_VER); \
-		sed -i -e "s#armv7#arm#g" configure; \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--datadir=/.remove \
-			-enable-only32bit \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	rm -f $(addprefix $(TARGET_LIB_DIR)/valgrind/,*.a *.xml)
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,cg_* callgrind_* ms_print)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/valgrind.pc
-	$(REMOVE)/valgrind-$(VALGRIND_VER)
-	$(TOUCH)
-
-#
 # host_opkg
 #
 OPKG_VER = 0.3.3
@@ -836,32 +752,6 @@ $(D)/nano: $(D)/bootstrap $(ARCHIVE)/$(NANO_SOURCE)
 	$(TOUCH)
 
 #
-# rsync
-#
-RSYNC_VER = 3.1.3
-RSYNC_SOURCE = rsync-$(RSYNC_VER).tar.gz
-
-$(ARCHIVE)/$(RSYNC_SOURCE):
-	$(DOWNLOAD) https://rsync.samba.org/ftp/rsync/src/$(RSYNC_SOURCE)
-
-$(D)/rsync: $(D)/bootstrap $(ARCHIVE)/$(RSYNC_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/rsync-$(RSYNC_VER)
-	$(UNTAR)/$(RSYNC_SOURCE)
-	$(CHDIR)/rsync-$(RSYNC_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--sysconfdir=/etc \
-			--disable-debug \
-			--disable-locale \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install-all DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/rsync-$(RSYNC_VER)
-	$(TOUCH)
-
-#
 # fuse
 #
 FUSE_VER = 2.9.9
@@ -947,33 +837,6 @@ $(D)/sdparm: $(D)/bootstrap $(ARCHIVE)/$(SDPARM_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,sas_disk_blink scsi_ch_swp)
 	$(REMOVE)/sdparm-$(SDPARM_VER)
-	$(TOUCH)
-
-#
-# hddtemp
-#
-HDDTEMP_VER = 0.3-beta15
-HDDTEMP_SOURCE = hddtemp-$(HDDTEMP_VER).tar.bz2
-
-$(ARCHIVE)/$(HDDTEMP_SOURCE):
-	$(DOWNLOAD) http://savannah.c3sl.ufpr.br/hddtemp/$(HDDTEMP_SOURCE)
-
-$(D)/hddtemp: $(D)/bootstrap $(ARCHIVE)/$(HDDTEMP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
-	$(UNTAR)/$(HDDTEMP_SOURCE)
-	$(CHDIR)/hddtemp-$(HDDTEMP_VER); \
-		$(CONFIGURE) \
-			--prefix= \
-			--mandir=/.remove \
-			--datadir=/.remove \
-			--with-db_path=/var/hddtemp.db \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		install -d $(TARGET_DIR)/var/tuxbox/config
-		install -m 644 $(SKEL_ROOT)/release/hddtemp.db $(TARGET_DIR)/var
-	$(REMOVE)/hddtemp-$(HDDTEMP_VER)
 	$(TOUCH)
 
 #
@@ -1173,105 +1036,6 @@ $(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $
 	$(TOUCH)
 
 #
-# dbus
-#
-DBUS_VER = 1.12.6
-DBUS_SOURCE = dbus-$(DBUS_VER).tar.gz
-
-$(ARCHIVE)/$(DBUS_SOURCE):
-	$(DOWNLOAD) https://dbus.freedesktop.org/releases/dbus/$(DBUS_SOURCE)
-
-$(D)/dbus: $(D)/bootstrap $(D)/expat $(ARCHIVE)/$(DBUS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/dbus-$(DBUS_VER)
-	$(UNTAR)/$(DBUS_SOURCE)
-	$(CHDIR)/dbus-$(DBUS_VER); \
-		$(CONFIGURE) \
-		CFLAGS="$(TARGET_CFLAGS) -Wno-cast-align" \
-			--without-x \
-			--prefix=/usr \
-			--sysconfdir=/etc \
-			--localstatedir=/var \
-			--with-console-auth-dir=/run/console/ \
-			--without-systemdsystemunitdir \
-			--disable-systemd \
-			--disable-static \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/dbus-1.pc
-	$(REWRITE_LIBTOOL)/libdbus-1.la
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,dbus-cleanup-sockets dbus-daemon dbus-launch dbus-monitor)
-	$(REMOVE)/dbus-$(DBUS_VER)
-	$(TOUCH)
-
-#
-# avahi
-#
-AVAHI_VER = 0.7
-AVAHI_SOURCE = avahi-$(AVAHI_VER).tar.gz
-
-$(ARCHIVE)/$(AVAHI_SOURCE):
-	$(DOWNLOAD) https://github.com/lathiat/avahi/releases/download/v$(AVAHI_VER)/$(AVAHI_SOURCE)
-
-$(D)/avahi: $(D)/bootstrap $(D)/expat $(D)/libdaemon $(D)/dbus $(ARCHIVE)/$(AVAHI_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/avahi-$(AVAHI_VER)
-	$(UNTAR)/$(AVAHI_SOURCE)
-	$(CHDIR)/avahi-$(AVAHI_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--target=$(TARGET) \
-			--sysconfdir=/etc \
-			--localstatedir=/var \
-			--with-distro=none \
-			--with-avahi-user=nobody \
-			--with-avahi-group=nogroup \
-			--with-autoipd-user=nobody \
-			--with-autoipd-group=nogroup \
-			--with-xml=expat \
-			--enable-libdaemon \
-			--disable-nls \
-			--disable-glib \
-			--disable-gobject \
-			--disable-qt3 \
-			--disable-qt4 \
-			--disable-gtk \
-			--disable-gtk3 \
-			--disable-dbm \
-			--disable-gdbm \
-			--disable-python \
-			--disable-pygtk \
-			--disable-python-dbus \
-			--disable-mono \
-			--disable-monodoc \
-			--disable-autoipd \
-			--disable-doxygen-doc \
-			--disable-doxygen-dot \
-			--disable-doxygen-man \
-			--disable-doxygen-rtf \
-			--disable-doxygen-xml \
-			--disable-doxygen-chm \
-			--disable-doxygen-chi \
-			--disable-doxygen-html \
-			--disable-doxygen-ps \
-			--disable-doxygen-pdf \
-			--disable-core-docs \
-			--disable-manpages \
-			--disable-xmltoman \
-			--disable-tests \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/avahi-core.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/avahi-client.pc
-	$(REWRITE_LIBTOOL)/libavahi-common.la
-	$(REWRITE_LIBTOOL)/libavahi-core.la
-	$(REWRITE_LIBTOOL)/libavahi-client.la
-	$(REMOVE)/avahi-$(AVAHI_VER)
-	$(TOUCH)
-
-#
 # wget
 #
 WGET_VER = 1.24.5
@@ -1414,61 +1178,6 @@ $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFS_UTILS_SOURCE)
 	rm -f $(addprefix $(TARGET_DIR)/sbin/,mount.nfs mount.nfs4 umount.nfs umount.nfs4 osd_login)
 	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,mountstats nfsiostat sm-notify start-statd)
 	$(REMOVE)/nfs-utils-$(NFS_UTILS_VER)
-	$(TOUCH)
-
-#
-# libevent
-#
-LIBEVENT_VER = 2.0.21-stable
-LIBEVENT_SOURCE = libevent-$(LIBEVENT_VER).tar.gz
-
-$(ARCHIVE)/$(LIBEVENT_SOURCE):
-	$(DOWNLOAD) https://github.com/downloads/libevent/libevent/$(LIBEVENT_SOURCE)
-
-$(D)/libevent: $(D)/bootstrap $(ARCHIVE)/$(LIBEVENT_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libevent-$(LIBEVENT_VER)
-	$(UNTAR)/$(LIBEVENT_SOURCE)
-	$(CHDIR)/libevent-$(LIBEVENT_VER);\
-		$(CONFIGURE) \
-			--prefix=/usr \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent_openssl.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libevent_pthreads.pc
-	$(REWRITE_LIBTOOL)/libevent_core.la
-	$(REWRITE_LIBTOOL)/libevent_extra.la
-	$(REWRITE_LIBTOOL)/libevent.la
-	$(REWRITE_LIBTOOL)/libevent_openssl.la
-	$(REWRITE_LIBTOOL)/libevent_pthreads.la
-	$(REMOVE)/libevent-$(LIBEVENT_VER)
-	$(TOUCH)
-
-#
-# libnfsidmap
-#
-LIBNFSIDMAP_VER = 0.25
-LIBNFSIDMAP_SOURCE = libnfsidmap-$(LIBNFSIDMAP_VER).tar.gz
-
-$(ARCHIVE)/$(LIBNFSIDMAP_SOURCE):
-	$(DOWNLOAD) http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/$(LIBNFSIDMAP_SOURCE)
-
-$(D)/libnfsidmap: $(D)/bootstrap $(ARCHIVE)/$(LIBNFSIDMAP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libnfsidmap-$(LIBNFSIDMAP_VER)
-	$(UNTAR)/$(LIBNFSIDMAP_SOURCE)
-	$(CHDIR)/libnfsidmap-$(LIBNFSIDMAP_VER);\
-		$(CONFIGURE) \
-		ac_cv_func_malloc_0_nonnull=yes \
-			--prefix=/usr \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnfsidmap.pc
-	$(REWRITE_LIBTOOL)/libnfsidmap.la
-	$(REMOVE)/libnfsidmap-$(LIBNFSIDMAP_VER)
 	$(TOUCH)
 
 #
@@ -1774,42 +1483,6 @@ $(D)/wireless_tools: $(D)/bootstrap $(ARCHIVE)/$(WIRELESS_TOOLS_SOURCE)
 	$(TOUCH)
 
 #
-# libnl
-#
-LIBNL_VER = 3.2.25
-LIBNL_SOURCE = libnl-$(LIBNL_VER).tar.gz
-
-$(ARCHIVE)/$(LIBNL_SOURCE):
-	$(DOWNLOAD) https://www.infradead.org/~tgr/libnl/files/$(LIBNL_SOURCE)
-
-$(D)/libnl: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(LIBNL_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libnl-$(LIBNL_VER)
-	$(UNTAR)/$(LIBNL_SOURCE)
-	$(CHDIR)/libnl-$(LIBNL_VER); \
-		$(CONFIGURE) \
-			--target=$(TARGET) \
-			--prefix=/usr \
-			--bindir=/.remove \
-			--mandir=/.remove \
-			--infodir=/.remove \
-		make; \
-		make install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-3.0.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-cli-3.0.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-genl-3.0.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-nf-3.0.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libnl-route-3.0.pc
-	$(REWRITE_LIBTOOL)/libnl-3.la
-	$(REWRITE_LIBTOOL)/libnl-cli-3.la
-	$(REWRITE_LIBTOOL)/libnl-genl-3.la
-	$(REWRITE_LIBTOOL)/libnl-idiag-3.la
-	$(REWRITE_LIBTOOL)/libnl-nf-3.la
-	$(REWRITE_LIBTOOL)/libnl-route-3.la
-	$(REMOVE)/libnl-$(LIBNL_VER)
-	$(TOUCH)
-
-#
 # wpa_supplicant
 #
 WPA_SUPPLICANT_VER = 0.7.3
@@ -1865,31 +1538,6 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REMOVE)/dvbsnoop
-	$(TOUCH)
-
-#
-# udpxy
-#
-UDPXY_VER    = 612d227
-UDPXY_SOURCE = udpxy-git-$(UDPXY_VER).tar.bz2
-UDPXY_URL    = https://github.com/pcherenkov/udpxy.git
-UDPXY_PATCH  = udpxy-git-$(UDPXY_VER).patch
-UDPXY_PATCH += udpxy-git-$(UDPXY_VER)-fix-build-with-gcc8.patch
-UDPXY_PATCH += udpxy-git-$(UDPXY_VER)-fix-build-with-gcc9.patch
-
-$(ARCHIVE)/$(UDPXY_SOURCE):
-	$(SCRIPTS_DIR)/get-git-archive.sh $(UDPXY_URL) $(UDPXY_VER) $(notdir $@) $(ARCHIVE)
-
-$(D)/udpxy: $(D)/bootstrap $(ARCHIVE)/$(UDPXY_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/udpxy-git-$(UDPXY_VER)
-	$(UNTAR)/$(UDPXY_SOURCE)
-	$(CHDIR)/udpxy-git-$(UDPXY_VER)/chipmunk; \
-		$(call apply_patches, $(UDPXY_PATCH)); \
-		$(BUILDENV) \
-		$(MAKE) CC=$(TARGET)-gcc CCKIND=gcc; \
-		$(MAKE) install INSTALLROOT=$(TARGET_DIR)/usr MANPAGE_DIR=$(TARGET_DIR)/.remove
-	$(REMOVE)/udpxy-git-$(UDPXY_VER)
 	$(TOUCH)
 
 #

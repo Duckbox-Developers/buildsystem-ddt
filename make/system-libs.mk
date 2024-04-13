@@ -52,30 +52,6 @@ $(D)/ncurses: $(D)/bootstrap $(ARCHIVE)/$(NCURSES_SOURCE)
 	$(TOUCH)
 
 #
-# gmp
-#
-GMP_VER = 6.1.2
-GMP_SOURCE = gmp-$(GMP_VER).tar.xz
-
-$(ARCHIVE)/$(GMP_SOURCE):
-	$(DOWNLOAD) https://gmplib.org/download/gmp/$(GMP_SOURCE)
-
-$(D)/gmp: $(D)/bootstrap $(ARCHIVE)/$(GMP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/gmp-$(GMP_VER)
-	$(UNTAR)/$(GMP_SOURCE)
-	$(CHDIR)/gmp-$(GMP_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--infodir=/.remove \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_LIBTOOL)/libgmp.la
-	$(REMOVE)/gmp-$(GMP_VER)
-	$(TOUCH)
-
-#
 # host_libffi
 #
 LIBFFI_VER = 3.2.1
@@ -212,41 +188,6 @@ $(D)/libglib2: $(D)/bootstrap $(D)/host_libglib2_genmarshal $(D)/zlib $(D)/libff
 	$(REWRITE_LIBTOOLDEP)/libgthread-2.0.la
 	rm -rf $(addprefix $(TARGET_DIR)/usr/share/,bash-completion gettext gdb glib-2.0)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
-	$(TOUCH)
-
-#
-# libpcre
-#
-LIBPCRE_VER = 8.39
-LIBPCRE_SOURCE = pcre-$(LIBPCRE_VER).tar.bz2
-
-$(ARCHIVE)/$(LIBPCRE_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/pcre/files/pcre/$(LIBPCRE_VER)/$(LIBPCRE_SOURCE)
-
-$(D)/libpcre: $(D)/bootstrap $(ARCHIVE)/$(LIBPCRE_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/pcre-$(LIBPCRE_VER)
-	$(UNTAR)/$(LIBPCRE_SOURCE)
-	$(CHDIR)/pcre-$(LIBPCRE_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--enable-utf8 \
-			--enable-unicode-properties \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	mv $(TARGET_DIR)/usr/bin/pcre-config $(HOST_DIR)/bin/pcre-config
-	$(REWRITE_PKGCONF) $(HOST_DIR)/bin/pcre-config
-	$(REWRITE_LIBTOOL)/libpcre.la
-	$(REWRITE_LIBTOOL)/libpcrecpp.la
-	$(REWRITE_LIBTOOL)/libpcreposix.la
-	$(REWRITE_LIBTOOLDEP)/libpcrecpp.la
-	$(REWRITE_LIBTOOLDEP)/libpcreposix.la
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcre.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcrecpp.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpcreposix.pc
-	$(REMOVE)/pcre-$(LIBPCRE_VER)
 	$(TOUCH)
 
 #
@@ -418,31 +359,6 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libbluray.pc
 	$(REWRITE_LIBTOOL)/libbluray.la
 	$(REMOVE)/libbluray-$(LIBBLURAY_VER)
-	$(TOUCH)
-
-#
-# boost
-#
-BOOST_VER_MAJOR = 1
-BOOST_VER_MINOR = 61
-BOOST_VER_MICRO = 0
-BOOST_VER_ARCHIVE = $(BOOST_VER_MAJOR).$(BOOST_VER_MINOR).$(BOOST_VER_MICRO)
-BOOST_VER = $(BOOST_VER_MAJOR)_$(BOOST_VER_MINOR)_$(BOOST_VER_MICRO)
-BOOST_SOURCE = boost_$(BOOST_VER).tar.bz2
-BOOST_PATCH = boost-$(BOOST_VER).patch
-
-$(ARCHIVE)/$(BOOST_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VER_ARCHIVE)/$(BOOST_SOURCE)
-
-$(D)/boost: $(D)/bootstrap $(ARCHIVE)/$(BOOST_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/boost_$(BOOST_VER)
-	$(UNTAR)/$(BOOST_SOURCE)
-	$(CHDIR)/boost_$(BOOST_VER); \
-		$(call apply_patches, $(BOOST_PATCH)); \
-		rm -rf $(TARGET_INCLUDE_DIR)/boost; \
-		mv $(BUILD_TMP)/boost_$(BOOST_VER)/boost $(TARGET_INCLUDE_DIR)/boost
-	$(REMOVE)/boost_$(BOOST_VER)
 	$(TOUCH)
 
 #
@@ -829,24 +745,6 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBPNG_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(LIBPNG_VER_X).pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,pngfix png-fix-itxt)
 	$(REMOVE)/libpng-$(LIBPNG_VER)
-	$(TOUCH)
-
-#
-# png++
-#
-PNGPP_VER = 0.2.9
-PNGPP_SOURCE = png++-$(PNGPP_VER).tar.gz
-
-$(ARCHIVE)/$(PNGPP_SOURCE):
-	$(DOWNLOAD) https://download.savannah.gnu.org/releases/pngpp/$(PNGPP_SOURCE)
-
-$(D)/pngpp: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(PNGPP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/png++-$(PNGPP_VER)
-	$(UNTAR)/$(PNGPP_SOURCE)
-	$(CHDIR)/png++-$(PNGPP_VER); \
-		$(MAKE) install-headers PREFIX=$(TARGET_DIR)/usr
-	$(REMOVE)/png++-$(PNGPP_VER)
 	$(TOUCH)
 
 #
@@ -2128,30 +2026,6 @@ $(D)/libdvbcsa: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBCSA_SOURCE)
 	$(TOUCH)
 
 #
-# libmodplug
-#
-LIBMODPLUG_VER = 0.8.8.4
-LIBMODPLUG_SOURCE = libmodplug-$(LIBMODPLUG_VER).tar.gz
-
-$(ARCHIVE)/$(LIBMODPLUG_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/modplug-xmms/files/libmodplug/$(LIBMODPLUG_VER)/$(LIBMODPLUG_SOURCE)
-
-$(D)/libmodplug: $(D)/bootstrap $(ARCHIVE)/$(LIBMODPLUG_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
-	$(UNTAR)/$(LIBMODPLUG_SOURCE)
-	$(CHDIR)/libmodplug-$(LIBMODPLUG_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libmodplug.pc
-	$(REWRITE_LIBTOOL)/libmodplug.la
-	$(REMOVE)/libmodplug-$(LIBMODPLUG_VER)
-	$(TOUCH)
-
-#
 # lzo
 #
 LZO_VER = 2.10
@@ -2287,55 +2161,6 @@ $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 	$(TOUCH)
 
 #
-# rarfs
-#
-RARFS_VER = 0.1.1
-RARFS_SOURCE = rarfs-$(RARFS_VER).tar.gz
-
-$(ARCHIVE)/$(RARFS_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/rarfs/files/rarfs/$(RARFS_VER)/$(RARFS_SOURCE)
-
-$(D)/rarfs: $(D)/bootstrap $(D)/fuse $(ARCHIVE)/$(RARFS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/rarfs-$(RARFS_VER)
-	$(UNTAR)/$(RARFS_SOURCE)
-	$(CHDIR)/rarfs-$(RARFS_VER); \
-		export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
-		$(CONFIGURE) \
-			CFLAGS="$(TARGET_CFLAGS) -D_FILE_OFFSET_BITS=64" \
-			--prefix=/usr \
-			--disable-option-checking \
-			--includedir=/usr/include/fuse \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/rarfs-$(RARFS_VER)
-	$(TOUCH)
-
-#
-# sshfs
-#
-SSHFS_VER = 2.9
-SSHFS_SOURCE = sshfs-$(SSHFS_VER).tar.gz
-
-$(ARCHIVE)/$(SSHFS_SOURCE):
-	$(DOWNLOAD) https://github.com/libfuse/sshfs/releases/download/sshfs-$(SSHFS_VER)/$(SSHFS_SOURCE)
-
-$(D)/sshfs: $(D)/bootstrap $(D)/libglib2 $(D)/fuse $(ARCHIVE)/$(SSHFS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/sshfs-$(SSHFS_VER)
-	$(UNTAR)/$(SSHFS_SOURCE)
-	$(CHDIR)/sshfs-$(SSHFS_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REMOVE)/sshfs-$(SSHFS_VER)
-	$(TOUCH)
-
-#
 # howl
 #
 HOWL_VER = 1.0.0
@@ -2385,137 +2210,6 @@ $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/$(LIBDAEMON_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdaemon.pc
 	$(REWRITE_LIBTOOL)/libdaemon.la
 	$(REMOVE)/libdaemon-$(LIBDAEMON_VER)
-	$(TOUCH)
-
-#
-# libplist
-#
-LIBPLIST_VER = 1.10
-LIBPLIST_SOURCE = libplist-$(LIBPLIST_VER).tar.gz
-
-$(ARCHIVE)/$(LIBPLIST_SOURCE):
-	$(DOWNLOAD) https://cgit.sukimashita.com/libplist.git/snapshot/$(LIBPLIST_SOURCE)
-
-$(D)/libplist: $(D)/bootstrap $(D)/libxml2 $(ARCHIVE)/$(LIBPLIST_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libplist-$(LIBPLIST_VER)
-	$(UNTAR)/$(LIBPLIST_SOURCE)
-	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH); \
-	$(CHDIR)/libplist-$(LIBPLIST_VER); \
-		rm CMakeFiles/* -rf CMakeCache.txt cmake_install.cmake; \
-		cmake . -DCMAKE_BUILD_TYPE=Release \
-			-DCMAKE_SYSTEM_NAME="Linux" \
-			-DCMAKE_INSTALL_PREFIX="/usr" \
-			-DCMAKE_C_COMPILER="$(TARGET)-gcc" \
-			-DCMAKE_CXX_COMPILER="$(TARGET)-g++" \
-			-DCMAKE_INCLUDE_PATH="$(TARGET_INCLUDE_DIR)" \
-		; \
-		find . -name cmake_install.cmake -print0 | xargs -0 \
-		sed -i 's@SET(CMAKE_INSTALL_PREFIX "/usr/local")@SET(CMAKE_INSTALL_PREFIX "")@'; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libplist.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libplist++.pc
-	$(REMOVE)/libplist-$(LIBPLIST_VER)
-	$(TOUCH)
-
-#
-# libao
-#
-LIBAO_VER = 1.1.0
-LIBAO_SOURCE = libao-$(LIBAO_VER).tar.gz
-
-$(ARCHIVE)/$(LIBAO_SOURCE):
-	$(DOWNLOAD) https://ftp.osuosl.org/pub/xiph/releases/ao/$(LIBAO_SOURCE)
-
-$(D)/libao: $(D)/bootstrap $(D)/alsa_lib $(ARCHIVE)/$(LIBAO_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libao-$(LIBAO_VER)
-	$(UNTAR)/$(LIBAO_SOURCE)
-	$(CHDIR)/libao-$(LIBAO_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--enable-shared \
-			--disable-static \
-			--enable-alsa \
-			--enable-alsa-mmap \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/ao.pc
-	$(REWRITE_LIBTOOL)/libao.la
-	$(REMOVE)/libao-$(LIBAO_VER)
-	$(TOUCH)
-
-#
-# nettle
-#
-NETTLE_VER = 3.3
-NETTLE_SOURCE = nettle-$(NETTLE_VER).tar.gz
-NETTLE_PATCH = nettle-$(NETTLE_VER).patch
-
-$(ARCHIVE)/$(NETTLE_SOURCE):
-	$(DOWNLOAD) https://ftp.gnu.org/gnu/nettle/$(NETTLE_SOURCE)
-
-$(D)/nettle: $(D)/bootstrap $(D)/gmp $(ARCHIVE)/$(NETTLE_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/nettle-$(NETTLE_VER)
-	$(UNTAR)/$(NETTLE_SOURCE)
-	$(CHDIR)/nettle-$(NETTLE_VER); \
-		$(call apply_patches, $(NETTLE_PATCH)); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--disable-documentation \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/hogweed.pc
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/nettle.pc
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,sexp-conv nettle-hash nettle-pbkdf2 nettle-lfib-stream pkcs1-conv)
-	$(REMOVE)/nettle-$(NETTLE_VER)
-	$(TOUCH)
-
-#
-# gnutls
-#
-GNUTLS_VER_MAJOR = 3.6
-GNUTLS_VER_MINOR = 1
-GNUTLS_VER = $(GNUTLS_VER_MAJOR).$(GNUTLS_VER_MINOR)
-GNUTLS_SOURCE = gnutls-$(GNUTLS_VER).tar.xz
-
-$(ARCHIVE)/$(GNUTLS_SOURCE):
-	$(DOWNLOAD) ftp://ftp.gnutls.org/gcrypt/gnutls/v$(GNUTLS_VER_MAJOR)/$(GNUTLS_SOURCE)
-
-$(D)/gnutls: $(D)/bootstrap $(D)/nettle $(ARCHIVE)/$(GNUTLS_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/gnutls-$(GNUTLS_VER)
-	$(UNTAR)/$(GNUTLS_SOURCE)
-	$(CHDIR)/gnutls-$(GNUTLS_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--mandir=/.remove \
-			--infodir=/.remove \
-			--datarootdir=/.remove \
-			--with-included-libtasn1 \
-			--enable-local-libopts \
-			--with-libpthread-prefix=$(TARGET_DIR)/usr \
-			--with-libz-prefix=$(TARGET_DIR)/usr \
-			--with-included-unistring \
-			--with-default-trust-store-dir=$(CA_BUNDLE_DIR)/ \
-			--disable-guile \
-			--without-p11-kit \
-			--without-idn \
-			--disable-libdane \
-			--without-tpm \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/gnutls.pc
-	$(REWRITE_LIBTOOL)/libgnutls.la
-	$(REWRITE_LIBTOOL)/libgnutlsxx.la
-	$(REWRITE_LIBTOOLDEP)/libgnutlsxx.la
-	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,psktool gnutls-cli-debug certtool srptool ocsptool gnutls-serv gnutls-cli)
-	$(REMOVE)/gnutls-$(GNUTLS_VER)
 	$(TOUCH)
 
 #
@@ -2575,31 +2269,4 @@ $(D)/libgcrypt: $(D)/bootstrap $(D)/libgpg-error $(ARCHIVE)/$(LIBGCRYPT_SOURCE)
 	mv $(TARGET_DIR)/usr/bin/libgcrypt-config $(HOST_DIR)/bin
 	$(REWRITE_LIBTOOL)/libgcrypt.la
 	$(REMOVE)/$(LIBGCRYPT_DIR)
-	$(TOUCH)
-
-#
-# glib-networking
-#
-GLIB_NETWORKING_VER_MAJOR = 2.50
-GLIB_NETWORKING_VER_MINOR = 0
-GLIB_NETWORKING_VER = $(GLIB_NETWORKING_VER_MAJOR).$(GLIB_NETWORKING_VER_MINOR)
-GLIB_NETWORKING_SOURCE = glib-networking-$(GLIB_NETWORKING_VER).tar.xz
-
-$(ARCHIVE)/$(GLIB_NETWORKING_SOURCE):
-	$(DOWNLOAD) https://ftp.acc.umu.se/pub/GNOME/sources/glib-networking/$(GLIB_NETWORKING_VER_MAJOR)/$(GLIB_NETWORKING_SOURCE)
-
-$(D)/glib_networking: $(D)/bootstrap $(D)/gnutls $(D)/libglib2 $(ARCHIVE)/$(GLIB_NETWORKING_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/glib-networking-$(GLIB_NETWORKING_VER)
-	$(UNTAR)/$(GLIB_NETWORKING_SOURCE)
-	$(CHDIR)/glib-networking-$(GLIB_NETWORKING_VER); \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--datadir=/.remove \
-			--datarootdir=/.remove \
-			--localedir=/.remove \
-		; \
-		$(MAKE); \
-		$(MAKE) install prefix=$(TARGET_DIR) giomoduledir=$(TARGET_LIB_DIR)/gio/modules itlocaledir=$(TARGET_DIR)/.remove
-	$(REMOVE)/glib-networking-$(GLIB_NETWORKING_VER)
 	$(TOUCH)
