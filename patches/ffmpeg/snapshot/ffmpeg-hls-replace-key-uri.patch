@@ -1,6 +1,6 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -223,6 +223,8 @@
+@@ -224,6 +224,8 @@
      AVDictionary *seg_format_opts;
      char *allowed_extensions;
      int max_reload;
@@ -9,7 +9,7 @@
      int http_persistent;
      int http_multiple;
      int http_seekable;
-@@ -1300,8 +1302,16 @@
+@@ -1301,8 +1303,16 @@
  
      if (seg->key_type == KEY_AES_128 || seg->key_type == KEY_SAMPLE_AES) {
          if (strcmp(seg->key, pls->key_url)) {
@@ -27,7 +27,7 @@
                  ret = avio_read(pb, pls->key, sizeof(pls->key));
                  if (ret != sizeof(pls->key)) {
                      av_log(pls->parent, AV_LOG_ERROR, "Unable to read key file %s\n",
-@@ -1313,6 +1323,8 @@
+@@ -1314,6 +1324,8 @@
                         seg->key);
              }
              av_strlcpy(pls->key_url, seg->key, sizeof(pls->key_url));
@@ -36,7 +36,7 @@
          }
      }
  
-@@ -2572,6 +2584,8 @@
+@@ -2575,6 +2587,8 @@
          INT_MIN, INT_MAX, FLAGS},
      {"max_reload", "Maximum number of times a insufficient list is attempted to be reloaded",
          OFFSET(max_reload), AV_OPT_TYPE_INT, {.i64 = 3}, 0, INT_MAX, FLAGS},

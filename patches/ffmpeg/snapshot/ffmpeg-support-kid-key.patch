@@ -15,7 +15,7 @@ index ca1563abb0..9d0ab6025c 100644
  
  @end table
  
-@@ -902,7 +906,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
+@@ -931,7 +935,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
  specify.
  
  @item decryption_key
@@ -32,7 +32,7 @@ diff --git a/libavformat/dashdec.c b/libavformat/dashdec.c
 index 1215407f3c..091deac854 100644
 --- a/libavformat/dashdec.c
 +++ b/libavformat/dashdec.c
-@@ -153,6 +153,7 @@ typedef struct DASHContext {
+@@ -154,6 +154,7 @@ typedef struct DASHContext {
      AVDictionary *avio_opts;
      int max_url_size;
      char *cenc_decryption_key;
@@ -40,7 +40,7 @@ index 1215407f3c..091deac854 100644
  
      /* Flags for init section*/
      int is_init_section_common_video;
-@@ -1903,6 +1904,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
+@@ -1904,6 +1905,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
  
      if (c->cenc_decryption_key)
          av_dict_set(&in_fmt_opts, "decryption_key", c->cenc_decryption_key, 0);
@@ -49,7 +49,7 @@ index 1215407f3c..091deac854 100644
  
      // provide additional information from mpd if available
      ret = avformat_open_input(&pls->ctx, "", in_fmt, &in_fmt_opts); //pls->init_section->url
-@@ -2344,7 +2347,8 @@ static const AVOption dash_options[] = {
+@@ -2345,7 +2348,8 @@ static const AVOption dash_options[] = {
          OFFSET(allowed_extensions), AV_OPT_TYPE_STRING,
          {.str = "aac,m4a,m4s,m4v,mov,mp4,webm,ts"},
          INT_MIN, INT_MAX, FLAGS},
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7378,19 +7378,62 @@
+@@ -7380,19 +7380,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7436,15 +7479,21 @@
+@@ -7438,15 +7481,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7495,15 +7544,21 @@
+@@ -7497,15 +7546,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7561,15 +7616,21 @@
+@@ -7563,15 +7618,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7712,7 +7773,7 @@
+@@ -7714,7 +7775,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -9492,12 +9553,6 @@
+@@ -9487,12 +9548,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -255,7 +255,7 @@ diff --git a/tests/fate/mov.mak b/tests/fate/mov.mak
 index 6cb493ceab..c420d8ab10 100644
 --- a/tests/fate/mov.mak
 +++ b/tests/fate/mov.mak
-@@ -8,6 +8,9 @@ FATE_MOV = fate-mov-3elist \
+@@ -8,6 +8,9 @@
             fate-mov-3elist-encrypted \
             fate-mov-frag-encrypted \
             fate-mov-tenc-only-encrypted \
@@ -264,8 +264,8 @@ index 6cb493ceab..c420d8ab10 100644
 +           fate-mov-tenc-only-encrypted-kid \
             fate-mov-invalid-elst-entry-count \
             fate-mov-gpmf-remux \
-            fate-mov-440hz-10ms \
-@@ -54,6 +57,15 @@ fate-mov-frag-encrypted: CMD = framemd5 -decryption_key 123456789012345678901234
+            fate-mov-ibi-elst-starts-b \
+@@ -52,6 +55,15 @@
  # Full-sample encryption and constant IV using only tenc atom (no senc/saio/saiz).
  fate-mov-tenc-only-encrypted: CMD = framemd5 -decryption_key 12345678901234567890123456789012 -i $(TARGET_SAMPLES)/mov/mov-tenc-only-encrypted.mp4
  

@@ -24,7 +24,7 @@ diff --git a/libavformat/utils.c b/libavformat/utils.c
 index cf4d68b..d3e7488 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -100,6 +100,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
+@@ -101,6 +101,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
      return pkt->size > orig_size ? pkt->size - orig_size : ret;
  }
  
