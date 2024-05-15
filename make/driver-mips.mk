@@ -47,11 +47,21 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), dm820)
+DRIVER_VER = 3.4-4.0
+DRIVER_DATE = 20181018
+DRIVER_SRC = dreambox-dvb-modules_$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE)_$(BOXTYPE).tar.xz
+
+$(ARCHIVE)/$(DRIVER_SRC):
+#	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+endif
+
 driver-clean:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 endif
-ifeq ($(BOXTYPE), dm8000)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm8000))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra/$(KERNEL_TYPE)*
 endif
 
@@ -67,11 +77,18 @@ ifeq ($(BOXTYPE), vuduo2)
 	$(MAKE) vmlinuz_initrd
 endif
 endif
-ifeq ($(BOXTYPE), dm8000)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm8000))
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
+ifeq ($(BOXTYPE), dm820)
+	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra --transform='s/.*\///'
+	find $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra -type d -empty -delete
+else
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
+endif
+ifeq ($(BOXTYPE), dm8000)
 	tar -xf $(SKEL_ROOT)/release/grautec.tar.gz -C $(TARGET_DIR)/
+endif
 endif
 	$(TOUCH)
 

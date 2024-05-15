@@ -25,6 +25,10 @@ endif
 ifeq ($(BOXTYPE), dm8000)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820))
+#	$(MAKE) flash-image-dm820 flash-image-dm820-usb
+	$(MAKE) flash-image-dm820
+endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofgimage:
@@ -464,3 +468,15 @@ flash-image-dm_nfi-usb:
 	# cleanup
 	rm -f $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tar.gz*
 	rm -rf $(IMAGE_BUILD_DIR)
+
+flash-image-dm820:
+	@echo -e "$(TERM_YELLOW_BOLD)==============================="
+	@echo -e "===> Creating FLASH Image. <==="
+	@echo -e "===============================$(TERM_NORMAL)"
+	cd $(RELEASE_DIR) && \
+	tar cvJf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').tar.xz . > /dev/null 2>&1
+
+#flash-image-dm820-usb:
+#	@echo -e "$(TERM_YELLOW_BOLD)============================="
+#	@echo -e "===> Creating USB Image. <==="
+#	@echo -e "=============================$(TERM_NORMAL)"

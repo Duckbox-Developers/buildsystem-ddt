@@ -108,6 +108,26 @@ VUULTIMO_PATCHES = \
 		$(VUDUO_PATCHES) \
 		mipsbox/vuultimo/fixed_mtd.patch
 
+DM820_PATCHES = \
+		mipsbox/dm820/linux-dreambox-3.4-30070c78a23d461935d9db0b6ce03afc70a10c51.patch \
+		mipsbox/dm820/kernel-fake-3.4.patch \
+		mipsbox/dm820/dvb_frontend-Multistream-support-3.4.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc6.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc7.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc8.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc9.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc10.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc11.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc12.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc13.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
+		mipsbox/dm820/build-with-gcc12-fixes.patch \
+		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
+		mipsbox/dm820/0001-log2-give-up-on-gcc-constant-optimizations.patch \
+		mipsbox/dm820/0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
+		mipsbox/dm820/0003-makefile-silence-packed-not-aligned-warn.patch \
+		mipsbox/dm820/0004-fcrypt-fix-bitoperation-for-gcc.patch
+
 DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-fake-3.2.patch \
 		mipsbox/dm8000/linux-dreambox-3.2-3c7230bc0819495db75407c365f4d1db70008044.patch \
@@ -183,7 +203,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm8000))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux modules
@@ -197,6 +217,16 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/kernel_cfe_auto.bin"
 	install -m 644 $(KERNEL_DIR)/kernel_cfe_auto.bin $(TARGET_DIR)/boot/
 	ln -sf $(TARGET_DIR)/boot/kernel_cfe_auto.bin $(TARGET_DIR)/boot/vmlinux
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), dm820)
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux.gz-3.4-4.0-dm820"
+	install -m 644 $(KERNEL_DIR)/vmlinux.gz-3.4-4.0-dm820 $(TARGET_DIR)/boot/
+	ln -sf vmlinux.gz-3.4-4.0-dm820 $(TARGET_DIR)/boot/vmlinux.gz
+	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux.bin-3.4-4.0-dm820
+	ln -sf vmlinux.bin-3.4-4.0-dm820 $(TARGET_DIR)/boot/vmlinux.bin
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)

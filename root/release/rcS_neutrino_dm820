@@ -1,0 +1,157 @@
+#!/bin/sh
+
+. /etc/profile
+echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` start"
+SYSDATE=`date +"%Y%m%d"`
+
+read model < /etc/model
+
+if [ -e /var/etc/.firstboot ]; then
+/usr/bin/passwd root <<EOF
+root
+root
+EOF
+  rm /var/etc/.firstboot
+fi
+
+mkdir -p /dev/pts
+
+echo "[rcS] starting mountall"
+/etc/init.d/mountall start
+
+if [ -e /var/backup_flash.tar.gz ]; then
+	tar xvf /var/backup_flash.tar.gz -C /
+	rm -f /var/backup_flash.tar.gz
+fi
+
+if [ -e /sys/class/net/lo ]; then
+	/sbin/ifconfig lo up
+fi
+if [ -e /sys/class/net/eth0 ]; then
+	/sbin/ifconfig eth0 up
+fi
+if [ -e /sys/class/net/eth1 ]; then
+	/sbin/ifconfig eth1 up
+fi
+if [ -e /sys/class/net/sys0 ]; then
+	/sbin/ifconfig sys0 up
+fi
+
+# load moduls from modules.extra ( kerneloptions )
+[ -f /var/etc/modules.extra ] && eval `awk '{ if ($1) print "insmod /lib/modules/" $1 ".ko " $2,$3,$4,$5,$6,$7,$8,$9 "; "}' < /var/etc/modules.extra`
+
+echo "[rcS] setup network"
+NFS=$(grep -c nfs /proc/cmdline)
+if [ "$NFS" -eq "1" ]; then
+	echo "Booting from nfs, don't set network"
+elif [ -e /var/tuxbox/config/.bootargs ]; then
+	echo "using ip set via bootargs, don't reset network"
+else
+	if [ -e /etc/network/interfaces ]; then
+		ip addr flush eth0
+		/etc/init.d/networking stop
+		#DHCP=$(grep -c dhcp /etc/network/interfaces)
+		#if [ "$DHCP" -eq "1" ]; then
+		#	echo "Starting dhcp"
+		#	/etc/init.d/udhcpc start
+		#fi
+		/etc/init.d/networking start
+	fi
+fi
+/sbin/ifconfig lo 127.0.0.1 up
+
+# get net-time
+(ntpd -n -q -p time.fu-berlin.de) &
+
+/etc/init.d/hostname start
+/etc/init.d/portmap start
+/usr/sbin/inetd
+# rpc.statd for nfs
+/etc/init.d/nfs-common start
+
+echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
+
+insmod /lib/modules/fp_hwmon.ko
+insmod /lib/modules/tu1216.ko
+insmod /lib/modules/stb-core.ko
+insmod /lib/modules/lcd.ko
+insmod /lib/modules/cxd1981.ko
+insmod /lib/modules/cu1216mk3.ko
+insmod /lib/modules/lnb_ctrl.ko
+insmod /lib/modules/si2166b.ko
+insmod /lib/modules/si2183.ko
+insmod /lib/modules/bcm4501.ko
+insmod /lib/modules/bcm4506.ko
+insmod /lib/modules/alps_bsbe1.ko
+insmod /lib/modules/alps_bsbe1_c01a.ko
+insmod /lib/modules/alps_bsbe2.ko
+insmod /lib/modules/bcm7435.ko
+insmod /lib/modules/ble.ko
+insmod /lib/modules/dreambox_rc2.ko
+insmod /lib/modules/dreambox_keyboard.ko
+
+echo 255 > /proc/stb/fp/oled_brightness
+echo "Booting... DDT" > /dev/dbox/oled0
+
+/bin/initfb $(sed -n 's/osd_resolution=//p' /var/tuxbox/config/neutrino.conf)
+
+echo "[rcS] starting mdev"
+mdev -s
+
+# set dummy time
+NTPDATE=`date +"%Y%m%d"`
+if [ "$SYSDATE" == "$NTPDATE" ];then
+	date -s "2017-01-01 00:00"
+	#date -s "200901011200"
+	echo "no ntp-date"
+	killall -9 ntpd
+	rm -f /tmp/ntpd.pid
+else
+	echo "[rcS] ntp-date is set > `date +'%d.%m.%Y %H:%M'`"
+	rm -f /tmp/ntpd.pid
+fi
+
+
+until false
+do
+	echo "[rcS] starting GUI ->"
+	if [ -e /tmp/neutrino ]; then
+		chmod 755 /tmp/neutrino
+		/tmp/neutrino
+	else
+		/usr/bin/neutrino -v 0
+	fi
+	rtv=$?
+	echo "GUI ended <- RTV: " $rtv
+	case "$rtv" in
+		0) echo "$rtv"
+			echo "SHUTDOWN"
+			echo "SHUTDOWN" > /dev/dbox/oled0
+			init 0
+			sleep 20
+			;;
+		1) echo "$rtv"
+			echo "REBOOT"
+			echo "REBOOT" > /dev/dbox/oled0
+			init 6
+			sleep 20
+			;;
+		3) echo "$rtv"
+			echo "RESTART"
+			echo "RESTART" > /dev/dbox/oled0
+			sync
+			;;
+		*) echo "*"
+			echo -e "\033[01;31mERROR: $rtv\033[00m"
+			echo "ERROR: $rtv" > /dev/dbox/oled0
+			#init 6
+			#sleep 20
+			;;
+	esac
+done
+echo "      *-*       " > /dev/dbox/oled0
+
+#never reached
+echo "REBOOT $model" > /dev/dbox/oled0
+echo "REBOOT $model"
+reboot -f
