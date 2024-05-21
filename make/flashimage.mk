@@ -474,7 +474,7 @@ flash-image-dm820:
 	@echo -e "===> Creating FLASH Image. <==="
 	@echo -e "===============================$(TERM_NORMAL)"
 	cd $(RELEASE_DIR) && \
-	tar cvJf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').tar.xz . > /dev/null 2>&1
+	tar cvJf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').tar.xz --exclude=vmlinux.gz* . > /dev/null 2>&1
 
 #flash-image-dm820-usb:
 #	@echo -e "$(TERM_YELLOW_BOLD)============================="
