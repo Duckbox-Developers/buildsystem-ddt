@@ -51,6 +51,13 @@ NEUTRINO_DEPS += $(D)/ntfs_3g
 NEUTRINO_DEPS += $(D)/gptfdisk
 NEUTRINO_DEPS += $(D)/mc
 NEUTRINO_DEPS += $(D)/parted
+else
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820))
+NEUTRINO_DEPS += $(D)/ntfs_3g
+NEUTRINO_DEPS += $(D)/gptfdisk
+NEUTRINO_DEPS += $(D)/mc
+NEUTRINO_DEPS += $(D)/parted
+endif
 endif
 
 ifeq ($(IMAGE), neutrino-wlandriver)
