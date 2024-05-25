@@ -71,7 +71,7 @@ N_CFLAGS      += -D__KERNEL_STRICT_NAMES
 N_CFLAGS      += -D__STDC_FORMAT_MACROS
 N_CFLAGS      += -D__STDC_CONSTANT_MACROS
 N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.5.0 9.5.0 10.5.0 11.4.0 12.3.0 13.2.0 14.1.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 8.5.0 9.5.0 10.5.0 11.4.0 12.3.0 13.3.0 14.1.0))
 N_CFLAGS      += -Wno-cast-function-type
 endif
 #N_CFLAGS      += -DCPU_FREQ

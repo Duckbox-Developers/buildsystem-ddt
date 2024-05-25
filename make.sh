@@ -421,7 +421,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 			echo "   5)  GCC version 10.5.0"
 			echo "   6)  GCC version 11.4.0"
 #			echo "   7)  GCC version 12.3.0 (not yet ready)"
-#			echo "   8)  GCC version 13.2.0 (not yet ready)"
+#			echo "   8)  GCC version 13.3.0 (not yet ready)"
 #			echo "   9)  GCC version 14.1.0 (not yet ready)"
 			read -p "Select GCC version (1-9)? ";;
 	esac
@@ -434,7 +434,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		5) BS_GCC_VER="10.5.0";;
 		6) BS_GCC_VER="11.4.0";;
 		7) BS_GCC_VER="12.3.0";;
-		8) BS_GCC_VER="13.2.0";;
+		8) BS_GCC_VER="13.3.0";;
 		9) BS_GCC_VER="14.1.0";;
 		*) BS_GCC_VER="8.5.0";;
 	esac
