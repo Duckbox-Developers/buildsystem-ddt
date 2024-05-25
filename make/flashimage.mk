@@ -26,11 +26,9 @@ ifeq ($(BOXTYPE), dm8000)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820))
-#	$(MAKE) flash-image-dm820 flash-image-dm820-usb
 	$(MAKE) flash-image-dm820
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
-#	$(MAKE) flash-image-dm900 flash-image-dm900-usb
 	$(MAKE) flash-image-dm900
 endif
 	$(TUXBOX_CUSTOMIZE)
@@ -480,11 +478,6 @@ flash-image-dm820:
 	cd $(RELEASE_DIR) && \
 	tar cvJf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').tar.xz --exclude=vmlinux.gz* . > /dev/null 2>&1
 
-#flash-image-dm820-usb:
-#	@echo -e "$(TERM_YELLOW_BOLD)============================="
-#	@echo -e "===> Creating USB Image. <==="
-#	@echo -e "=============================$(TERM_NORMAL)"
-
 flash-image-dm900:
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
@@ -499,8 +492,3 @@ flash-image-dm900:
 	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-
-#flash-image-dm900-usb:
-#	@echo -e "$(TERM_YELLOW_BOLD)============================="
-#	@echo -e "===> Creating USB Image. <==="
-#	@echo -e "=============================$(TERM_NORMAL)"
