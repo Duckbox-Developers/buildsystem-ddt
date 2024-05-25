@@ -43,6 +43,31 @@ E4HDULTRA_PATCHES = \
 		armbox/e4hdultra_0005-xbox-one-tuner-4.10.patch \
 		armbox/e4hdultra_0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
 
+DM900_PATCHES = \
+		armbox/dm900/linux-dreambox-3.14-6fa88d2001194cbff63ad94cb713b6cd5ea02739.patch \
+		armbox/dm900/kernel-fake-3.14.patch \
+		armbox/dm900/dvbs2x.patch \
+		armbox/dm900/0001-Support-TBS-USB-drivers.patch \
+		armbox/dm900/0001-STV-Add-PLS-support.patch \
+		armbox/dm900/0001-STV-Add-SNR-Signal-report-parameters.patch \
+		armbox/dm900/0001-stv090x-optimized-TS-sync-control.patch \
+		armbox/dm900/genksyms_fix_typeof_handling.patch \
+		armbox/dm900/blindscan2.patch \
+		armbox/dm900/0001-tuners-tda18273-silicon-tuner-driver.patch \
+		armbox/dm900/01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		armbox/dm900/02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		armbox/dm900/0003-cxusb-Geniatech-T230-support.patch \
+		armbox/dm900/CONFIG_DVB_SP2.patch \
+		armbox/dm900/dvbsky.patch \
+		armbox/dm900/rtl2832u-2.patch \
+		armbox/dm900/0004-log2-give-up-on-gcc-constant-optimizations.patch \
+		armbox/dm900/0005-uaccess-dont-mark-register-as-const.patch \
+		armbox/dm900/0006-makefile-silence-packed-not-aligned-warn.patch \
+		armbox/dm900/0007-overlayfs.patch \
+		armbox/dm900/move-default-dialect-to-SMB3.patch \
+		armbox/dm900/fix-multiple-defs-yyloc.patch \
+		armbox/dm900/fix-build-with-binutils-2.41.patch
+
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
 		armbox/vuplus_common/3_14_linux_dvb-core.patch \
@@ -176,7 +201,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules
@@ -193,12 +218,15 @@ endif
 
 KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
 	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
 	cat $(KERNEL_DIR)/arch/arm/boot/zImage $(KERNEL_DIR)/arch/arm/boot/dts/$(KERNEL_DTB_VER) > $(TARGET_DIR)/boot/zImage.dtb
+ifeq ($(BOXTYPE), dm900)
+	cp $(KERNEL_DIR)/arch/arm/boot/dts/$(KERNEL_DTB_VER) $(TARGET_DIR)/boot/
+endif
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)

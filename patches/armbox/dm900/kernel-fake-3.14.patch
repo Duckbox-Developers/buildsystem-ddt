@@ -1,0 +1,12 @@
+diff --git a/Makefile b/Makefile
+index adddd11c3b3b..2e7cbda24969 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ VERSION = 3
+ PATCHLEVEL = 14
+-SUBLEVEL = 79
++SUBLEVEL = 
+ EXTRAVERSION = -1.17
+ NAME = Remembering Coco
+ 

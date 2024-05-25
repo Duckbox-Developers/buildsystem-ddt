@@ -459,6 +459,25 @@ neutrino-release-dm820:
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm820/kernel/drivers/usb/serial/cp210x.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm820/kernel/drivers/usb/serial/cp210x.ko $(RELEASE_DIR)/lib/modules/ || true
 
 #
+# dm900
+#
+neutrino-release-dm900:
+	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/zImage-3.14-1.17-dm900
+	ln -sf zImage-3.14-1.17-dm900 $(RELEASE_DIR)/boot/zImage
+	cp $(TARGET_DIR)/boot/dreambox-dm900.dtb $(RELEASE_DIR)/boot/
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm900 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm900 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/fs/autofs4/autofs4.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/fs/autofs4/autofs4.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/fs/nfsd/nfsd.ko ] && mkdir -p $(RELEASE_DIR)/var/lib/ && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/fs/nfsd/nfsd.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/fs/exportfs/exportfs.ko ] && mkdir -p $(RELEASE_DIR)/var/lib/ && cp $(TARGET_DIR)-dm900/lib/modules/$(KERNEL_VER)/kernel/fs/exportfs/exportfs.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/usbserial.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/usbserial.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/ftdi_sio.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/ftdi_sio.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/pl2303.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/pl2303.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/ch341.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/ch341.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/cp210x.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/kernel/drivers/usb/serial/cp210x.ko $(RELEASE_DIR)/lib/modules/ || true
+
+#
 # dm8000
 #
 neutrino-release-dm8000:
@@ -551,7 +570,7 @@ endif
 	cp -a $(TARGET_DIR)/usr/sbin/* $(RELEASE_DIR)/usr/sbin/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	ln -sf /.version $(RELEASE_DIR)/var/etc/.version
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm900))
 	cp -a $(TARGET_DIR)/boot/$(KERNELNAME) $(RELEASE_DIR)/boot/
 endif
 	ln -sf /proc/mounts $(RELEASE_DIR)/etc/mtab
@@ -795,7 +814,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm8000 vuduo2 vuultimo vuuno))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm900 dm8000 vuduo2 vuultimo vuuno))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif

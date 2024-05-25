@@ -29,6 +29,18 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNEL_PATCHES_ARM     = $(E4HDULTRA_PATCHES)
 endif
 
+ifeq ($(BOXTYPE), dm900)
+KERNEL_VER             = 3.14-1.17
+KERNEL_TYPE            = $(BOXTYPE)
+KERNEL_SRC_VER         = 3.14.79
+KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
+KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
+KERNEL_CONFIG          = $(BOXTYPE)/$(BOXTYPE)_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+KERNEL_PATCHES_ARM     = $(DM900_PATCHES)
+KERNEL_DTB_VER         = dreambox-dm900.dtb
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vuduo4k)
