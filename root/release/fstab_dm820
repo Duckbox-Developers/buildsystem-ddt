@@ -9,6 +9,7 @@ tmpfs		/tmp			tmpfs	defaults					0	0
 tmpfs		/media			tmpfs	defaults					0	0
 tmpfs		/mnt			tmpfs	defaults					0	0
 devpts		/dev/pts		devpts	defaults					0	0
+/dev/mmcblk0p2	/swap			auto	defaults					0	0
 #
 #/dev/sda1	/hdd			auto	defaults,noatime,nodiratime			0	2
 #/dev/sdb1	/hdd			auto	defaults,noatime,nodiratime			0	2
