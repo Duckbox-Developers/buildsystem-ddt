@@ -28,7 +28,7 @@ diff --git a/tools/depmod.c b/tools/depmod.c
 index 43fc354..a03ff8c 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3023,13 +3023,9 @@ static int do_depmod(int argc, char *argv[])
+@@ -3048,13 +3048,9 @@ static int do_depmod(int argc, char *argv[])
  		cfg.kversion = un.release;
  	}
  
@@ -62,7 +62,7 @@ diff --git a/tools/modprobe.c b/tools/modprobe.c
 index 5306bef..76686ef 100644
 --- a/tools/modprobe.c
 +++ b/tools/modprobe.c
-@@ -998,9 +998,7 @@ static int do_modprobe(int argc, char **orig_argv)
+@@ -999,9 +999,7 @@ static int do_modprobe(int argc, char **orig_argv)
  			}
  			kversion = u.release;
  		}
