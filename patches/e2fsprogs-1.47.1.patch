@@ -55,7 +55,7 @@
  	$(RM) -rf elfshared
 --- a/misc/Makefile.in
 +++ b/misc/Makefile.in
-@@ -171,10 +171,10 @@
+@@ -173,10 +173,10 @@
  	$(E) "	LD $@"
  	$(Q) $(CC) $(ALL_LDFLAGS) -o partinfo partinfo.o $(LIBCOM_ERR)
  
@@ -68,7 +68,7 @@
  
  tune2fs: $(TUNE2FS_OBJS) $(DEPLIBS) $(DEPLIBS_E2P) $(DEPLIBBLKID) \
  		$(DEPLIBUUID) $(LIBEXT2FS)
-@@ -360,10 +360,10 @@
+@@ -362,10 +362,10 @@
  		$(STATIC_LIBS) $(STATIC_LIBE2P) $(STATIC_LIBUUID) \
  		$(LIBINTL) $(SYSLIBS) $(STATIC_LIBBLKID) $(LIBMAGIC)
  
