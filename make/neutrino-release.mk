@@ -937,7 +937,7 @@ ifeq ($(EXTERNAL_LCD), $(filter $(EXTERNAL_LCD), lcd4linux both))
 	cp -aR $(SKEL_ROOT)/var/tuxbox/lcd $(RELEASE_DIR)/var/tuxbox/
 	ln -s /var/tuxbox/lcd $(RELEASE_DIR)/usr/share/tuxbox/lcd
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm900 vuduo2))
 	cp -aR $(SKEL_ROOT)/var/tuxbox/lcd $(RELEASE_DIR)/var/tuxbox/
 	ln -s /var/tuxbox/lcd $(RELEASE_DIR)/usr/share/tuxbox/lcd
 endif

@@ -1654,7 +1654,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		; \
 		$(MAKE) vcs_version all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm900 vuduo2))
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux_png $(TARGET_DIR)/etc/init.d/lcd4linux
 else
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(TARGET_DIR)/etc/init.d/
@@ -1662,7 +1662,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_vu.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm900 vuduo2))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_png.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf
