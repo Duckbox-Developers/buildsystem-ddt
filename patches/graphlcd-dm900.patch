@@ -2,21 +2,15 @@ diff --git a/graphlcd.conf b/graphlcd.conf
 index 270cae8..d256e4b 100644
 --- a/graphlcd.conf
 +++ b/graphlcd.conf
-@@ -117,6 +117,18 @@
+@@ -117,6 +117,12 @@
  
  ########################################################################
  
-+[dm8000]
-+# Driver setting for DM8000
-+Driver=dm8000
-+#Width=128
-+#Height=64
-+
-+[dm8000_color]
-+# Driver setting for DM8000 (color display)
-+Driver=dm8000
-+#Width=400
-+#Height=240
++[dm900]
++# Driver setting for DM900
++Driver=dreambox
++Width=400
++Height=240
 +
  [ax206dpf]
  #  THIS IS AN EXPERIMENTAL DRIVER!
