@@ -6,6 +6,9 @@ SYSDATE=`date +"%Y%m%d"`
 
 read model < /etc/model
 
+# r/o fix
+/bin/mount -o remount,rw /dev/root /
+
 if [ -e /var/etc/.firstboot ]; then
 /usr/bin/passwd root <<EOF
 root
@@ -85,10 +88,10 @@ insmod /lib/modules/bcm4506.ko
 insmod /lib/modules/alps_bsbe1.ko
 insmod /lib/modules/alps_bsbe1_c01a.ko
 insmod /lib/modules/alps_bsbe2.ko
-insmod /lib/modules/bcm7439.ko
-insmod /lib/modules/ble.ko
 insmod /lib/modules/dreambox_rc2.ko
 insmod /lib/modules/dreambox_keyboard.ko
+insmod /lib/modules/bcm7439.ko
+insmod /lib/modules/ble.ko
 
 echo 255 > /proc/stb/fp/oled_brightness
 echo "Booting... DDT" > /dev/dbox/oled0
