@@ -580,7 +580,7 @@ TOOLS += $(D)/tools-ustslave
 TOOLS += $(D)/tools-vfdctl
 TOOLS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm900 dm8000 e4hdultra vuduo2 vuultimo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm8000 e4hdultra vuduo2 vuultimo))
 TOOLS += $(D)/tools-oled_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm900 vuduo2))

@@ -25,8 +25,8 @@ endif
 ifeq ($(BOXTYPE), dm8000)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820))
-	$(MAKE) flash-image-dm820
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
+	$(MAKE) flash-image-dm820_dm7080
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
 	$(MAKE) flash-image-dm900
@@ -471,7 +471,7 @@ flash-image-dm_nfi-usb:
 	rm -f $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').tar.gz*
 	rm -rf $(IMAGE_BUILD_DIR)
 
-flash-image-dm820:
+flash-image-dm820_dm7080:
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
 	@echo -e "===============================$(TERM_NORMAL)"

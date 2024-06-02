@@ -261,6 +261,20 @@ $(D)/dm820_2nd: $(ARCHIVE)/$(DM820_2ND_SOURCE)
 	$(TOUCH)
 
 #
+# dm7080 second stage loader #14
+#
+DM7080_2ND_SOURCE = dreambox-secondstage_14_dm7080.tar.xz
+#DM7080_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM7080_2ND_SOURCE)
+DM7080_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM7080_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM7080_2ND_SOURCE):
+	$(DOWNLOAD) $(DM7080_2ND_URL)
+
+$(D)/dm7080_2nd: $(ARCHIVE)/$(DM7080_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
 # dm8000 second stage loader #84
 #
 DM8000_2ND_SOURCE = secondstage-dm8000-84.bin

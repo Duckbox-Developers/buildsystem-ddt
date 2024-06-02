@@ -128,6 +128,9 @@ DM820_PATCHES = \
 		mipsbox/dm820/0003-makefile-silence-packed-not-aligned-warn.patch \
 		mipsbox/dm820/0004-fcrypt-fix-bitoperation-for-gcc.patch
 
+DM7080_PATCHES = \
+		$(DM820_PATCHES)
+
 DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-fake-3.2.patch \
 		mipsbox/dm8000/linux-dreambox-3.2-3c7230bc0819495db75407c365f4d1db70008044.patch \
@@ -203,10 +206,10 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
-ifeq ($(BOXTYPE), dm820)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux.bin modules
 else
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux modules
@@ -225,12 +228,12 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), dm820)
-	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux.gz-3.4-4.0-dm820"
-	install -m 644 $(KERNEL_DIR)/vmlinux.gz-3.4-4.0-dm820 $(TARGET_DIR)/boot/
-	ln -sf vmlinux.gz-3.4-4.0-dm820 $(TARGET_DIR)/boot/vmlinux.gz
-	install -m 644 $(KERNEL_DIR)/arch/mips/boot/vmlinux.bin $(TARGET_DIR)/boot/vmlinux.bin-3.4-4.0-dm820
-	ln -sf vmlinux.bin-3.4-4.0-dm820 $(TARGET_DIR)/boot/vmlinux.bin
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux.gz-3.4-4.0-$(BOXTYPE)"
+	install -m 644 $(KERNEL_DIR)/vmlinux.gz-3.4-4.0-$(BOXTYPE) $(TARGET_DIR)/boot/
+	ln -sf vmlinux.gz-3.4-4.0-$(BOXTYPE) $(TARGET_DIR)/boot/vmlinux.gz
+	install -m 644 $(KERNEL_DIR)/arch/mips/boot/vmlinux.bin $(TARGET_DIR)/boot/vmlinux.bin-3.4-4.0-$(BOXTYPE)
+	ln -sf vmlinux.bin-3.4-4.0-$(BOXTYPE) $(TARGET_DIR)/boot/vmlinux.bin
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)

@@ -86,9 +86,9 @@ insmod /lib/modules/alps_bsbe1_c01a.ko
 insmod /lib/modules/alps_bsbe2.ko
 insmod /lib/modules/bcm4501.ko
 insmod /lib/modules/fpga.ko
-insmod /lib/modules/bcm7400.ko
 insmod /lib/modules/dreambox_rc2.ko
 insmod /lib/modules/dreambox_keyboard.ko
+insmod /lib/modules/bcm7400.ko
 
 echo 255 > /proc/stb/fp/oled_brightness
 echo "Booting... DDT" > /dev/dbox/oled0
