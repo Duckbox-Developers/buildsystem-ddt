@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.37.0.git
-# Wed Feb 28 05:05:05 2024
+# Mon Jun  3 02:02:02 2024
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -320,9 +320,9 @@ CONFIG_FEATURE_SORT_BIG=y
 # CONFIG_FEATURE_SORT_OPTIMIZE_MEMORY is not set
 # CONFIG_SPLIT is not set
 # CONFIG_FEATURE_SPLIT_FANCY is not set
-# CONFIG_STAT is not set
-# CONFIG_FEATURE_STAT_FORMAT is not set
-# CONFIG_FEATURE_STAT_FILESYSTEM is not set
+CONFIG_STAT=y
+CONFIG_FEATURE_STAT_FORMAT=y
+CONFIG_FEATURE_STAT_FILESYSTEM=y
 CONFIG_STTY=y
 # CONFIG_SUM is not set
 CONFIG_SYNC=y
