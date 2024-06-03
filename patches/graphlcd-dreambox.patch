@@ -80,7 +80,7 @@ new file mode 100644
 index 0000000..826843c
 --- /dev/null
 +++ b/glcddrivers/dreambox.c
-@@ -0,0 +1,262 @@
+@@ -0,0 +1,252 @@
 +/*
 + * GraphLCD driver library
 + *
@@ -262,6 +262,9 @@ index 0000000..826843c
 +	memset(newLCD, 0, width * height);
 +}
 +
++#define _RGB565_0(p) (((p >> 16) & 0xf8) | (((p >> 8) & 0xe0) >> 5))
++#define _RGB565_1(p) ((((p >> 8) & 0x1c) << 3 ) | (((p) & 0xf8) >> 3))
++
 +void cDriverDREAMBOX::SetPixel(int x, int y, uint32_t data)
 +{
 +	if (x >= width || y >= height)
@@ -273,24 +276,11 @@ index 0000000..826843c
 +		y = height - 1 - y;
 +	}
 +
-+	uint32_t red, green, blue;
-+	blue = (data & 0x000000FF) >> 0;
-+	green = (data & 0x0000FF00) >> 8;
-+	red = (data & 0x00FF0000) >> 16;
-+
 +	unsigned char* row_pointers_bit_shift = (unsigned char*) &newLCD[0];
 +	int row_pointers_2_ptr = (y * width + x) * stride_bpp_value;
 +
-+	if (config->invert) {
-+		blue = 255 - blue;
-+		green = 255 - green;
-+		red = 255 - red;
-+	}
-+
-+	row_pointers_bit_shift[row_pointers_2_ptr+0]=blue;
-+	row_pointers_bit_shift[row_pointers_2_ptr+1]=green;
-+	row_pointers_bit_shift[row_pointers_2_ptr+2]=red;
-+	row_pointers_bit_shift[row_pointers_2_ptr+3]=0xff;
++	row_pointers_bit_shift[row_pointers_2_ptr+0]=_RGB565_1(data);
++	row_pointers_bit_shift[row_pointers_2_ptr+1]=_RGB565_0(data);
 +}
 +
 +void cDriverDREAMBOX::Refresh(bool refreshAll)
