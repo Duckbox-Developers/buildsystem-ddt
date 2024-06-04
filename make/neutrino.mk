@@ -105,13 +105,18 @@ N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --disable-tangos
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm900 dm8000))
 N_CONFIG_OPTS += --enable-reschange
-#N_CONFIG_OPTS += --disable-arm-acc
-#N_CONFIG_OPTS += --disable-mips-acc
+endif
+endif
+
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
+N_CONFIG_OPTS += --disable-arm-acc
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm8000))
-N_CONFIG_OPTS += --disable-mips-acc --enable-lcd
+N_CONFIG_OPTS += --disable-mips-acc
+N_CONFIG_OPTS += --enable-lcd
 endif
 
 ifeq ($(AUDIODEC), ffmpeg)
