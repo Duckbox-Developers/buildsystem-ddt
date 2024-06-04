@@ -33,7 +33,7 @@ alias ll='ls -l'
 alias l='ls -al'
 alias mc='mc -u'
 alias sc='setconsole'
-alias sr='setconsole -r'
+alias sr='setconsole -r || setconsole -r /dev/tty0'
 #END
 
 # export
