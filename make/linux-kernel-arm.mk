@@ -68,6 +68,9 @@ DM900_PATCHES = \
 		armbox/dm900/fix-multiple-defs-yyloc.patch \
 		armbox/dm900/fix-build-with-binutils-2.41.patch
 
+DM920_PATCHES = \
+		$(DM900_PATCHES)
+
 COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
 		armbox/vuplus_common/3_14_linux_dvb-core.patch \
@@ -201,7 +204,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900 dm920))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm oldconfig
 		$(MAKE) -C $(KERNEL_DIR) ARCH=arm CROSS_COMPILE=$(TARGET)- $(KERNEL_DTB_VER) zImage modules
@@ -218,13 +221,13 @@ endif
 
 KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 dm900 dm920))
 	install -m 644 $(KERNEL_DIR)/arch/arm/boot/zImage $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-arm-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-arm-$(KERNEL_VER)
 	cp $(KERNEL_DIR)/arch/arm/boot/zImage $(TARGET_DIR)/boot/
 	cat $(KERNEL_DIR)/arch/arm/boot/zImage $(KERNEL_DIR)/arch/arm/boot/dts/$(KERNEL_DTB_VER) > $(TARGET_DIR)/boot/zImage.dtb
-ifeq ($(BOXTYPE), dm900)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
 	cp $(KERNEL_DIR)/arch/arm/boot/dts/$(KERNEL_DTB_VER) $(TARGET_DIR)/boot/
 endif
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true

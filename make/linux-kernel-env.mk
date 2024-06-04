@@ -35,9 +35,21 @@ KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.14.79
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(BOXTYPE)/$(BOXTYPE)_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 KERNEL_PATCHES_ARM     = $(DM900_PATCHES)
+KERNEL_DTB_VER         = dreambox-dm900.dtb
+endif
+
+ifeq ($(BOXTYPE), dm920)
+KERNEL_VER             = 3.14-1.17
+KERNEL_TYPE            = dm900
+KERNEL_SRC_VER         = 3.14.79
+KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
+KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+KERNEL_PATCHES_ARM     = $(DM920_PATCHES)
 KERNEL_DTB_VER         = dreambox-dm900.dtb
 endif
 
@@ -95,55 +107,55 @@ endif
 #
 ifeq ($(BOXTYPE), vuduo)
 KERNEL_VER             = 3.9.6
-KERNEL_TYPE            = vuduo
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.9.6
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-KERNEL_CONFIG          = vuduo/vuduo_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUDUO_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), vuduo2)
 KERNEL_VER             = 3.13.5
-KERNEL_TYPE            = vuduo2
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.13.5
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-KERNEL_CONFIG          = vuduo2/vuduo2_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUDUO2_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), vuuno)
 KERNEL_VER             = 3.9.6
-KERNEL_TYPE            = vuuno
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.9.6
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-KERNEL_CONFIG          = vuuno/vuuno_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUUNO_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), vuultimo)
 KERNEL_VER             = 3.9.6
-KERNEL_TYPE            = vuultimo
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.9.6
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-KERNEL_CONFIG          = vuultimo/vuultimo_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUULTIMO_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), dm820)
 KERNEL_VER             = 3.4-4.0
-KERNEL_TYPE            = dm820
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.4.113
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = dm820/dm820_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 KERNEL_PATCHES_MIPS    = $(DM820_PATCHES)
 endif
@@ -154,18 +166,18 @@ KERNEL_TYPE            = dm820
 KERNEL_SRC_VER         = 3.4.113
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = dm820/dm7080_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 KERNEL_PATCHES_MIPS    = $(DM7080_PATCHES)
 endif
 
 ifeq ($(BOXTYPE), dm8000)
 KERNEL_VER             = 3.2
-KERNEL_TYPE            = dm8000
+KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.2.68
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = dm8000/dm8000_defconfig
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 KERNEL_PATCHES_MIPS    = $(DM8000_PATCHES)
 endif

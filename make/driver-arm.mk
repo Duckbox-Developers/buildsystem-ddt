@@ -56,6 +56,17 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), dm920)
+DRIVER_VER = 3.14-1.17
+DRIVER_DATE = 20200321
+DRIVER_SRC = dreambox-dvb-modules_$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE)_$(BOXTYPE).tar.xz
+
+$(ARCHIVE)/$(DRIVER_SRC):
+#	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.5.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+	$(DOWNLOAD) https://source.mynonpublic.com/dreambox/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 ifeq ($(BOXTYPE), vuduo4k)
 DRIVER_VER = 4.1.45
@@ -111,11 +122,11 @@ endif
 driver-clean:
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra dm900))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra dm900 dm920))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
-ifeq ($(BOXTYPE), dm900)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra --transform='s/.*\///'
 	find $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra -type d -empty -delete

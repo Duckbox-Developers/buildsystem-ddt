@@ -37,7 +37,7 @@ NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm900 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm900 dm920 dm8000))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
@@ -105,12 +105,12 @@ N_CONFIG_OPTS += --enable-freesatepg
 #N_CONFIG_OPTS += --disable-tangos
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm900 dm8000))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm900 dm920 dm8000))
 N_CONFIG_OPTS += --enable-reschange
 endif
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
 N_CONFIG_OPTS += --disable-arm-acc
 endif
 
@@ -137,7 +137,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 N_CONFIG_OPTS += --with-lcddev=/dev/fb1
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm8000 e4hdultra vuduo2 vuultimo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm920 dm8000 e4hdultra vuduo2 vuultimo))
 N_CONFIG_OPTS += --enable-graphlcd
 NEUTRINO_DEPS += $(D)/graphlcd
 endif

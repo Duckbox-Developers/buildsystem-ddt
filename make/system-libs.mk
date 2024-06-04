@@ -409,7 +409,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 		mv Makefile-libbz2_so Makefile; \
 		$(MAKE) all CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib; \
 		$(MAKE) install PREFIX=$(TARGET_DIR)/usr
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm8000))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000))
 	cd $(TARGET_DIR) && rm -f usr/bin/bzip2
 endif
 	$(REMOVE)/bzip2-$(BZIP2_VER)
@@ -1566,7 +1566,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
 GRAPHLCD_PATCH += graphlcd-dreambox.patch
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
 GRAPHLCD_PATCH += graphlcd-dreambox.patch
 GRAPHLCD_PATCH += graphlcd-dm900.patch
 endif

@@ -28,8 +28,8 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 	$(MAKE) flash-image-dm820_dm7080
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900))
-	$(MAKE) flash-image-dm900
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
+	$(MAKE) flash-image-dm900_dm920
 endif
 	$(TUXBOX_CUSTOMIZE)
 
@@ -478,7 +478,7 @@ flash-image-dm820_dm7080:
 	cd $(RELEASE_DIR) && \
 	tar cvJf $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').tar.xz --exclude=vmlinux.gz* . > /dev/null 2>&1
 
-flash-image-dm900:
+flash-image-dm900_dm920:
 	@echo -e "$(TERM_YELLOW_BOLD)==============================="
 	@echo -e "===> Creating FLASH Image. <==="
 	@echo -e "===============================$(TERM_NORMAL)"
