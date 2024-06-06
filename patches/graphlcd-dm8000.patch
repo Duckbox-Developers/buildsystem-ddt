@@ -6,15 +6,15 @@ index 270cae8..d256e4b 100644
  
  ########################################################################
  
-+[dm8000]
-+# Driver setting for DM8000
-+Driver=dm8000
-+#Width=128
++[dm8000/dm7080]
++# Driver setting for DM8000/DM7080
++Driver=dreambox
++#Width=132
 +#Height=64
 +
-+[dm8000_color]
-+# Driver setting for DM8000 (color display)
-+Driver=dm8000
++[dm8000/dm7080_color]
++# Driver setting for DM8000/DM7080 (color display)
++Driver=dreambox
 +#Width=400
 +#Height=240
 +

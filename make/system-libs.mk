@@ -1562,7 +1562,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vu
 GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
 GRAPHLCD_PATCH += graphlcd-vuplus4k_2.patch
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7080))
 GRAPHLCD_PATCH += graphlcd-dreambox.patch
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif

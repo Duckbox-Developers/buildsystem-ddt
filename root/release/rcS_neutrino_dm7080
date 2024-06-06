@@ -75,7 +75,6 @@ insmod /lib/modules/fp_hwmon.ko
 insmod /lib/modules/tu1216.ko
 insmod /lib/modules/stb-core.ko
 insmod /lib/modules/lcd.ko
-/etc/init.d/usbtftdisplay.sh
 insmod /lib/modules/cxd1981.ko
 insmod /lib/modules/cu1216mk3.ko
 insmod /lib/modules/lnb_ctrl.ko
@@ -90,6 +89,7 @@ insmod /lib/modules/dreambox_rc2.ko
 insmod /lib/modules/dreambox_keyboard.ko
 insmod /lib/modules/bcm7435.ko
 insmod /lib/modules/ble.ko
+/etc/init.d/usbtftdisplay.sh
 
 echo 255 > /proc/stb/fp/oled_brightness
 echo "Booting... DDT" > /dev/dbox/oled0

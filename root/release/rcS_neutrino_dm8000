@@ -74,7 +74,6 @@ echo "[rcS] `date +'%d.%m.%Y %H:%M:%S'` load modules"
 insmod /lib/modules/stb-core.ko
 insmod /lib/modules/helper.ko
 insmod /lib/modules/lcd.ko
-/etc/init.d/usbtftdisplay.sh
 insmod /lib/modules/tu1216.ko
 insmod /lib/modules/cxd1981.ko
 insmod /lib/modules/cu1216mk3.ko
@@ -89,6 +88,7 @@ insmod /lib/modules/fpga.ko
 insmod /lib/modules/dreambox_rc2.ko
 insmod /lib/modules/dreambox_keyboard.ko
 insmod /lib/modules/bcm7400.ko
+/etc/init.d/usbtftdisplay.sh
 
 echo 255 > /proc/stb/fp/oled_brightness
 echo "Booting... DDT" > /dev/dbox/oled0
