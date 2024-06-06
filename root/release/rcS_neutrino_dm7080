@@ -75,6 +75,7 @@ insmod /lib/modules/fp_hwmon.ko
 insmod /lib/modules/tu1216.ko
 insmod /lib/modules/stb-core.ko
 insmod /lib/modules/lcd.ko
+/etc/init.d/usbtftdisplay.sh
 insmod /lib/modules/cxd1981.ko
 insmod /lib/modules/cu1216mk3.ko
 insmod /lib/modules/lnb_ctrl.ko
