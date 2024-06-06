@@ -16,7 +16,7 @@ model=`cat /proc/stb/info/model`
 case $model in
 	zero4k) BOOTPART=mmcblk0p4;;
 	duo4k|duo4kse) BOOTPART=mmcblk0p6;;
-	dm820|dm7080) BOOTPART=-;;
+	dm820|dm7080|dm900|dm920) BOOTPART=-;;
 	*) BOOTPART=mmcblk0p1;;
 esac
 
