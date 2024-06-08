@@ -6,8 +6,8 @@ index 270cae8..d256e4b 100644
  
  ########################################################################
  
-+[dm900]
-+# Driver setting for DM900
++[dm900/dm920]
++# Driver setting for DM900/DM920
 +Driver=dreambox
 +Width=400
 +Height=240

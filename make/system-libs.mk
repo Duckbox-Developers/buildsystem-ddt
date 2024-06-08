@@ -1563,7 +1563,7 @@ GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
 GRAPHLCD_PATCH += graphlcd-vuplus4k_2.patch
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7080))
-GRAPHLCD_PATCH += graphlcd-dreambox.patch
+GRAPHLCD_PATCH += graphlcd-dreambox_grautec.patch
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
