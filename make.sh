@@ -23,7 +23,7 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                             : Target system (1-80)"
+	echo "Parameter 1                             : Target system (1-87)"
 	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : External LCD support (1-4)"
@@ -31,7 +31,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
 	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
 	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
-	echo "Parameter 9 (ARM/MIPS)                  : GCC Version (1-8)"
+	echo "Parameter 9 (ARM/MIPS)                  : GCC Version (1-9)"
 	echo "Parameter 10 (ARM VU+)                  : Normal/Multiboot (1-2)"
 	exit
 fi
@@ -73,55 +73,55 @@ fi
 ##############################################
 
 case $1 in
-	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9] | 6[0-9] | 7[0-9] | 8[0-9]) REPLY=$1;;
+	[1-9] | 1[0-9] | 2[0-9] | 3[0-9] | 4[0-9] | 5[0-9] | 6[0-9] | 7[0-9] | 8[0-9] | 9[0-9]) REPLY=$1;;
 	*)
 		clear
 		echo "Target receivers:"
 		echo
 		echo "  sh4-based receivers"
 		echo "  Kathrein               Fortis"
-		echo "    1)  UFS-910            6)  FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
-		echo "    2)  UFS-912            7)  HS9510          (formerly Octagon SF1008P / Atevio AV700)"
-		echo "    3)  UFS-913            8)  HS8200          (formerly Atevio AV7500)"
-		echo "    4)  UFS-922"
+		echo "    1) UFS-910            6) FS9000 / FS9200 (formerly Fortis HDBox / Atevio AV7000)"
+		echo "    2) UFS-912            7) HS9510          (formerly Octagon SF1008P / Atevio AV700)"
+		echo "    3) UFS-913            8) HS8200          (formerly Atevio AV7500)"
+		echo "    4) UFS-922"
 		echo
 		echo "  Topfield"
-		echo "    5)  TF77X0 HDPVR"
+		echo "    5) TF77X0 HDPVR"
 		echo
-		echo "  AB IPBox               Cuberevo"
-		echo "    9)  55HD              12)  id."
-		echo "   10)  99HD              13)  mini"
-		echo "   11)  9900HD            14)  mini2"
-		echo "   12)  9000HD            15)  250HD"
-		echo "   13)  900HD             16)  2000HD"
-		echo "   14)  910HD             17)  3000HD / Xsarius Alpha"
-		echo "   15)  91HD"
+		echo "  AB IPBox              Cuberevo"
+		echo "    9) 55HD              12) id."
+		echo "   10) 99HD              13) mini"
+		echo "   11) 9900HD            14) mini2"
+		echo "   12) 9000HD            15) 250HD"
+		echo "   13) 900HD             16) 2000HD"
+		echo "   14) 910HD             17) 3000HD / Xsarius Alpha"
+		echo "   15) 91HD"
 		echo
 		echo "  Fulan"
-		echo "   27)  Spark"
-		echo "   28)  Spark7162"
+		echo "   27) Spark"
+		echo "   28) Spark7162"
 		echo
-		echo "  arm-based receivers"
-		echo "  VU+"
-		echo "   41)  VU+ Solo 4K       42)  VU+ Uno 4K          43)  VU+ Ultimo 4K"
-		echo "   44)  VU+ Zero 4K       45)  VU+ Uno 4K SE       46)  VU+ Duo 4K"
-		echo "   47)  VU+ Duo 4K SE"
+		echo "  VU+ mips-based receivers"
+		echo "   31) VU+ Duo           32) VU+ Duo2           33) VU+ Uno            34) VU+ Ultimo"
 		echo
-		echo "  AX/Mut@nt              Air Digital              WWIO"
-		echo -e "   \033[01;32m51)  HD51\033[00m              57)  ZGEMMA H7           58)  WWIO BRE2ZE 4K"
+		echo "  VU+ arm-based receivers"
+		echo "   41) VU+ Solo 4K       42) VU+ Uno 4K         43) VU+ Ultimo 4K"
+		echo "   44) VU+ Zero 4K       45) VU+ Uno 4K SE      46) VU+ Duo 4K"
+		echo "   47) VU+ Duo 4K SE"
+		echo
+		echo "  other arm-based receivers"
+		echo "  AX/Mut@nt             Air Digital            WWIO"
+		echo -e "   \033[01;32m51) HD51\033[00m              57) ZGEMMA H7          58) WWIO BRE2ZE 4K"
 		echo
 		echo "  AXAS"
-		echo "   66)  AXAS E4HD 4K Ultra"
-		echo
-		echo "  mips-based receivers"
-		echo "   70)  VU+ Duo           71)  VU+ Duo2            72)  VU+ Uno             73)  VU+ Ultimo"
+		echo "   66) AXAS E4HD 4K Ultra"
 		echo
 		echo "  Dreambox mips-based"
-		echo "   80)  DM 8000 HD"
-		echo "   84)  DM 820 HD         85)  DM 7080 HD"
+		echo "   80) DM 8000 HD"
+		echo "   84) DM 820 HD         85) DM 7080 HD"
 		echo
 		echo "  Dreambox arm-based"
-		echo "   86)  DM 900 UHD        87)  DM 920 UHD"
+		echo "   86) DM 900 UHD        87) DM 920 UHD"
 		echo
 		read -p "Select target (1-87)? ";;
 esac
@@ -151,6 +151,11 @@ case "$REPLY" in
 	27) BOXARCH="sh4";BOXTYPE="spark";;
 	28) BOXARCH="sh4";BOXTYPE="spark7162";;
 
+	31) BOXARCH="mips";BOXTYPE="vuduo";;
+	32) BOXARCH="mips";BOXTYPE="vuduo2";;
+	33) BOXARCH="mips";BOXTYPE="vuuno";;
+	34) BOXARCH="mips";BOXTYPE="vuultimo";;
+
 	41) BOXARCH="arm";BOXTYPE="vusolo4k";;
 	42) BOXARCH="arm";BOXTYPE="vuuno4k";;
 	43) BOXARCH="arm";BOXTYPE="vuultimo4k";;
@@ -165,10 +170,6 @@ case "$REPLY" in
 
 	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
-	70) BOXARCH="mips";BOXTYPE="vuduo";;
-	71) BOXARCH="mips";BOXTYPE="vuduo2";;
-	72) BOXARCH="mips";BOXTYPE="vuuno";;
-	73) BOXARCH="mips";BOXTYPE="vuultimo";;
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	84) BOXARCH="mips";BOXTYPE="dm820";;
 	85) BOXARCH="mips";BOXTYPE="dm7080";;
