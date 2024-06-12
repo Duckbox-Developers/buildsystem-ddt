@@ -1513,7 +1513,7 @@ CONFIG_I2C_CHARDEV=y
 # Other I2C/SMBus bus drivers
 #
 # CONFIG_I2C_STUB is not set
-CONFIG_I2C_BRCMSTB=m
+# CONFIG_I2C_BRCMSTB is not set
 # CONFIG_I2C_DEBUG_CORE is not set
 # CONFIG_I2C_DEBUG_ALGO is not set
 # CONFIG_I2C_DEBUG_BUS is not set
