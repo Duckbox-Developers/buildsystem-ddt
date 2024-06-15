@@ -480,7 +480,7 @@ neutrino-release-dm7080:
 #
 neutrino-release-dm900:
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/zImage-3.14-1.17-dm900
-	ln -sf zImage-3.14-1.17-dm900 $(RELEASE_DIR)/boot/zImage.dtb
+	ln -sf zImage-3.14-1.17-dm900 $(RELEASE_DIR)/boot/zImage
 #	cp $(TARGET_DIR)/boot/dreambox-dm900.dtb $(RELEASE_DIR)/boot/
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm900 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm900 $(RELEASE_DIR)/etc/fstab
@@ -499,7 +499,7 @@ neutrino-release-dm900:
 #
 neutrino-release-dm920:
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/zImage-3.14-1.17-dm920
-	ln -sf zImage-3.14-1.17-dm920 $(RELEASE_DIR)/boot/zImage.dtb
+	ln -sf zImage-3.14-1.17-dm920 $(RELEASE_DIR)/boot/zImage
 #	cp $(TARGET_DIR)/boot/dreambox-dm900.dtb $(RELEASE_DIR)/boot/
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm920 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm920 $(RELEASE_DIR)/etc/fstab
