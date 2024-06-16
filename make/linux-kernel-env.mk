@@ -28,7 +28,7 @@ KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.14.79
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
+KERNEL_CONFIG          = dm900/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 ifeq ($(BOXTYPE), dm900)
 KERNEL_PATCHES_ARM     = $(DM900_PATCHES)
