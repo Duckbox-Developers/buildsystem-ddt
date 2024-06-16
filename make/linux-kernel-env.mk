@@ -141,26 +141,19 @@ KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNEL_PATCHES_MIPS    = $(VUULTIMO_PATCHES)
 endif
 
-ifeq ($(BOXTYPE), dm820)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 KERNEL_VER             = 3.4-4.0
 KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.4.113
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
+KERNEL_CONFIG          = dm820/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+ifeq ($(BOXTYPE), dm820)
 KERNEL_PATCHES_MIPS    = $(DM820_PATCHES)
-endif
-
-ifeq ($(BOXTYPE), dm7080)
-KERNEL_VER             = 3.4-4.0
-KERNEL_TYPE            = dm820
-KERNEL_SRC_VER         = 3.4.113
-KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
-KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+else
 KERNEL_PATCHES_MIPS    = $(DM7080_PATCHES)
+endif
 endif
 
 ifeq ($(BOXTYPE), dm8000)
