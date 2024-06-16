@@ -42,7 +42,7 @@ index 12fd3d0..396e0ab 100644
  	switch (state->delsys) {
  	case STV090x_DVBS1:
  	case STV090x_DSS:
-@@ -4365,10 +4387,6 @@ static int stv0900_set_tspath(struct stv090x_state *state)
+@@ -4351,10 +4373,6 @@ static int stv0900_set_tspath(struct stv090x_state *state)
  			case STV090x_TSMODE_DVBCI:
  				if (stv090x_write_reg(state, STV090x_TSGENERAL, 0x06) < 0) /* Mux'd stream mode */
  					goto err;

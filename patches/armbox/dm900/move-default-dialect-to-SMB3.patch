@@ -21,7 +21,7 @@ Reviewed-by: Pavel Shilovsky <pshilov@microsoft.com>
 
 --- a/fs/cifs/connect.c	2019-10-19 09:34:13.448215659 +0200
 +++ b/fs/cifs/connect.c	2019-10-19 09:41:22.938494534 +0200
-@@ -1245,9 +1245,9 @@
+@@ -1247,9 +1247,9 @@
  
  	vol->actimeo = CIFS_DEF_ACTIMEO;
  

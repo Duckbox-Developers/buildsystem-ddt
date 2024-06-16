@@ -2,7 +2,7 @@ diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_
 index 1f925e8..57ed889 100644
 --- a/drivers/media/dvb-core/dvb_frontend.c
 +++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -170,6 +170,7 @@ static enum dvbv3_emulation_type dvbv3_type(u32 delivery_system)
+@@ -169,6 +169,7 @@ static enum dvbv3_emulation_type dvbv3_type(u32 delivery_system)
  		return DVBV3_QAM;
  	case SYS_DVBS:
  	case SYS_DVBS2:
@@ -10,7 +10,7 @@ index 1f925e8..57ed889 100644
  	case SYS_TURBO:
  	case SYS_ISDBS:
  	case SYS_DSS:
-@@ -893,6 +894,7 @@ static int dvb_frontend_check_parameters(struct dvb_frontend *fe)
+@@ -895,6 +896,7 @@ static int dvb_frontend_check_parameters(struct dvb_frontend *fe)
  	switch (c->delivery_system) {
  	case SYS_DVBS:
  	case SYS_DVBS2:
@@ -18,7 +18,7 @@ index 1f925e8..57ed889 100644
  	case SYS_TURBO:
  	case SYS_DVBC_ANNEX_A:
  	case SYS_DVBC_ANNEX_C:
-@@ -959,6 +961,7 @@ static int dvb_frontend_clear_cache(struct dvb_frontend *fe)
+@@ -961,6 +963,7 @@ static int dvb_frontend_clear_cache(struct dvb_frontend *fe)
  	switch (c->delivery_system) {
  	case SYS_DVBS:
  	case SYS_DVBS2:

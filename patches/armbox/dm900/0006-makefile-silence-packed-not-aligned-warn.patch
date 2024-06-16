@@ -8,7 +8,7 @@ diff --git a/Makefile b/Makefile
 index f99c3b41..61d6a791 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -627,6 +627,7 @@ KBUILD_CFLAGS += $(stackp-flag)
+@@ -628,6 +628,7 @@ KBUILD_CFLAGS += $(stackp-flag)
  # This warning generated too much noise in a regular build.
  # Use make W=1 to enable this warning (see scripts/Makefile.build)
  KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)

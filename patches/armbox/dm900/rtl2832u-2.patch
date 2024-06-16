@@ -8,7 +8,7 @@ diff --git a/drivers/media/usb/Kconfig b/drivers/media/usb/Kconfig
 index 94d51e0..57ee616 100644
 --- a/drivers/media/usb/Kconfig
 +++ b/drivers/media/usb/Kconfig
-@@ -46,6 +46,7 @@ source "drivers/media/usb/ttusb-budget/Kconfig"
+@@ -45,6 +45,7 @@ source "drivers/media/usb/ttusb-budget/Kconfig"
  source "drivers/media/usb/ttusb-dec/Kconfig"
  source "drivers/media/usb/siano/Kconfig"
  source "drivers/media/usb/b2c2/Kconfig"
@@ -31,8 +31,8 @@ index f438eff..44af0bb 100644
  obj-$(CONFIG_USB_GSPCA)         += gspca/
 --- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
 +++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
-@@ -1430,6 +1430,8 @@
- 
+@@ -1445,6 +1445,8 @@
+ 	/* RTL2832P devices: */
  	{ DVB_USB_DEVICE(USB_VID_HANFTEK, 0x0131,
  		&rtl2832u_props, "Astrometa DVB-T2", NULL) },
 +	{ DVB_USB_DEVICE(USB_PID_GOTVIEW_CA42, 0x5654,
