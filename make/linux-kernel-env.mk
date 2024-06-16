@@ -6,7 +6,7 @@
 #
 # arm
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra))
 KERNEL_VER             = 4.10.12
 KERNEL_DATE            = 20180424
 KERNEL_TYPE            = $(BOXTYPE)
@@ -14,42 +14,27 @@ KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
 KERNEL_URL             = http://source.mynonpublic.com/gfutures
 KERNEL_CONFIG          = $(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
+ifeq ($(BOXTYPE), e4hdultra)
+KERNEL_PATCHES_ARM     = $(E4HDULTRA_PATCHES)
+else
 KERNEL_PATCHES_ARM     = $(HD51_PATCHES)
+endif
 KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 
-ifeq ($(BOXTYPE), e4hdultra)
-KERNEL_VER             = 4.10.12
-KERNEL_DATE            = 20180424
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
+KERNEL_VER             = 3.14-1.17
 KERNEL_TYPE            = $(BOXTYPE)
-KERNEL_SRC             = linux-$(KERNEL_VER)-arm.tar.gz
-KERNEL_URL             = http://source.mynonpublic.com/gfutures
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
-KERNEL_PATCHES_ARM     = $(E4HDULTRA_PATCHES)
-endif
-
+KERNEL_SRC_VER         = 3.14.79
+KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
+KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
+KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 ifeq ($(BOXTYPE), dm900)
-KERNEL_VER             = 3.14-1.17
-KERNEL_TYPE            = $(BOXTYPE)
-KERNEL_SRC_VER         = 3.14.79
-KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
-KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 KERNEL_PATCHES_ARM     = $(DM900_PATCHES)
-KERNEL_DTB_VER         = dreambox-dm900.dtb
-endif
-
-ifeq ($(BOXTYPE), dm920)
-KERNEL_VER             = 3.14-1.17
-KERNEL_TYPE            = dm900
-KERNEL_SRC_VER         = 3.14.79
-KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
-KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
-KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+else
 KERNEL_PATCHES_ARM     = $(DM920_PATCHES)
+endif
 KERNEL_DTB_VER         = dreambox-dm900.dtb
 endif
 
@@ -59,36 +44,43 @@ ifeq ($(BOXTYPE), vuduo4k)
 KERNEL_VER             = 4.1.45-1.17
 KERNEL_SRC_VER         = 4.1-1.17
 KERNEL_PATCHES_ARM     = $(VUDUO4K_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vuduo4kse)
 KERNEL_VER             = 4.1.45-1.17
 KERNEL_SRC_VER         = 4.1-1.17
 KERNEL_PATCHES_ARM     = $(VUDUO4KSE_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vuuno4kse)
 KERNEL_VER             = 4.1.20-1.9
 KERNEL_SRC_VER         = 4.1-1.9
 KERNEL_PATCHES_ARM     = $(VUUNO4KSE_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vuzero4k)
 KERNEL_VER             = 4.1.20-1.9
 KERNEL_SRC_VER         = 4.1-1.9
 KERNEL_PATCHES_ARM     = $(VUZERO4K_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vuultimo4k)
 KERNEL_VER             = 3.14.28-1.12
 KERNEL_SRC_VER         = 3.14-1.12
 KERNEL_PATCHES_ARM     = $(VUULTIMO4K_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vuuno4k)
 KERNEL_VER             = 3.14.28-1.12
 KERNEL_SRC_VER         = 3.14-1.12
 KERNEL_PATCHES_ARM     = $(VUUNO4K_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 ifeq ($(BOXTYPE), vusolo4k)
 KERNEL_VER             = 3.14.28-1.8
 KERNEL_SRC_VER         = 3.14-1.8
 KERNEL_PATCHES_ARM     = $(VUSOLO4K_PATCHES)
+KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel

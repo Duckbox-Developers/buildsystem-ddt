@@ -286,7 +286,7 @@ else
 	cp -f $(SKEL_ROOT)/release/fstab_hd51_swap_off $(RELEASE_DIR)/etc/fstab
 endif
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	install -m 0644 $(SKEL_ROOT)/release/lcdsplash.bmp $(RELEASE_DIR)/usr/share/tuxbox/neutrino/icons/
 
 #
@@ -302,7 +302,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7278b1 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/bp3flash.sh $(RELEASE_DIR)/usr/bin/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
@@ -319,7 +319,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -335,7 +335,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -351,7 +351,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7260a0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -367,7 +367,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7445d0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -383,7 +383,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7439b0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -399,7 +399,7 @@ ifeq ($(VU_MULTIBOOT), 1)
 else
 	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(RELEASE_DIR)/boot/
 endif
-	cp $(TARGET_DIR)/boot/zImage $(RELEASE_DIR)/boot/
+	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/
 	cp -f $(SKEL_ROOT)/release/nvram $(RELEASE_DIR)/usr/bin/
 
 #
@@ -481,7 +481,6 @@ neutrino-release-dm7080:
 neutrino-release-dm900:
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/zImage-3.14-1.17-dm900
 	ln -sf zImage-3.14-1.17-dm900 $(RELEASE_DIR)/boot/zImage
-#	cp $(TARGET_DIR)/boot/dreambox-dm900.dtb $(RELEASE_DIR)/boot/
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm900 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm900 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/extra/*.ko $(RELEASE_DIR)/lib/modules/
@@ -500,7 +499,6 @@ neutrino-release-dm900:
 neutrino-release-dm920:
 	cp $(TARGET_DIR)/boot/zImage.dtb $(RELEASE_DIR)/boot/zImage-3.14-1.17-dm920
 	ln -sf zImage-3.14-1.17-dm920 $(RELEASE_DIR)/boot/zImage
-#	cp $(TARGET_DIR)/boot/dreambox-dm900.dtb $(RELEASE_DIR)/boot/
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm920 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm920 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm920/extra/*.ko $(RELEASE_DIR)/lib/modules/
