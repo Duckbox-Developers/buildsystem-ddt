@@ -112,6 +112,13 @@ DM820_PATCHES = \
 		mipsbox/dm820/linux-dreambox-3.4-30070c78a23d461935d9db0b6ce03afc70a10c51.patch \
 		mipsbox/dm820/kernel-fake-3.4.patch \
 		mipsbox/dm820/dvb_frontend-Multistream-support-3.4.patch \
+		mipsbox/dm820/0001-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		mipsbox/dm820/0001-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		mipsbox/dm820/0001-STV-Add-PLS-support.patch \
+		mipsbox/dm820/0001-tuners-tda18273-silicon-tuner-driver.patch \
+		mipsbox/dm820/0001-blindscan2.patch \
+		mipsbox/dm820/0001-dvbs2x.patch \
+		mipsbox/dm820/0001-0003-cxusb-Geniatech-T230-support.patch \
 		mipsbox/dm820/kernel-add-support-for-gcc6.patch \
 		mipsbox/dm820/kernel-add-support-for-gcc7.patch \
 		mipsbox/dm820/kernel-add-support-for-gcc8.patch \
