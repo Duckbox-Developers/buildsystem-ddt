@@ -1,6 +1,6 @@
 --- a/drivers/media/dvb-frontends/Kconfig
 +++ b/drivers/media/dvb-frontends/Kconfig
-@@ -679,6 +679,13 @@
+@@ -687,6 +687,13 @@
  	depends on DVB_CORE && I2C
  	default m if !MEDIA_SUBDRV_AUTOSELECT
  
@@ -16,7 +16,7 @@
  	depends on DVB_CORE && I2C
 --- a/drivers/media/dvb-frontends/Makefile
 +++ b/drivers/media/dvb-frontends/Makefile
-@@ -98,6 +98,7 @@
+@@ -99,6 +99,7 @@
  obj-$(CONFIG_DVB_TDA18271C2DD) += tda18271c2dd.o
  obj-$(CONFIG_DVB_IT913X_FE) += it913x-fe.o
  obj-$(CONFIG_DVB_A8293) += a8293.o

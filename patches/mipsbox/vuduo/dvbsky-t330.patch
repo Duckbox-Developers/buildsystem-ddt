@@ -4378,7 +4378,7 @@ diff -urN a/drivers/media/dvb-frontends/m88ds3103_priv.h b/drivers/media/dvb-fro
 diff -urN a/drivers/media/dvb-frontends/Makefile b/drivers/media/dvb-frontends/Makefile
 --- a/drivers/media/dvb-frontends/Makefile	2013-04-29 08:36:01.000000000 +0800
 +++ b/drivers/media/dvb-frontends/Makefile	2013-05-03 17:04:31.000000000 +0800
-@@ -103,4 +103,5 @@
+@@ -105,4 +105,5 @@
  obj-$(CONFIG_DVB_RTL2832) += rtl2832.o
  obj-$(CONFIG_DVB_M88RS2000) += m88rs2000.o
  obj-$(CONFIG_DVB_AF9033) += af9033.o
@@ -6525,4 +6525,4 @@ diff -urN a/include/media/rc-map.h b/include/media/rc-map.h
 +#define RC_MAP_DVBSKY                    "rc-dvbsky"
  #define RC_MAP_EMPTY                     "rc-empty"
  #define RC_MAP_EM_TERRATEC               "rc-em-terratec"
-#define RC_MAP_ENCORE_ENLTV2 "rc-encore-enltv2"
+ #define RC_MAP_ENCORE_ENLTV2             "rc-encore-enltv2"

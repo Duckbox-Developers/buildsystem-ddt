@@ -13,7 +13,7 @@ index 464ad87..28ec763 100644
  struct af9033_state {
  	struct i2c_adapter *i2c;
  	struct dvb_frontend fe;
-@@ -754,6 +758,9 @@ static int af9033_read_snr(struct dvb_frontend *fe, u16 *snr)
+@@ -772,6 +776,9 @@ static int af9033_read_snr(struct dvb_frontend *fe, u16 *snr)
  
  	*snr = tmp * 10; /* dB/10 */
  

@@ -2,7 +2,7 @@ diff --git a/drivers/staging/rtl8187se/ieee80211/ieee80211_rx.c b/drivers/stagin
 index 446f15e..6b89bf0 100644
 --- a/drivers/staging/rtl8187se/ieee80211/ieee80211_rx.c
 +++ b/drivers/staging/rtl8187se/ieee80211/ieee80211_rx.c
-@@ -873,7 +873,7 @@ ieee80211_TranslateToDbm(
+@@ -871,7 +871,7 @@ ieee80211_TranslateToDbm(
  
  	return SignalPower;
  }
@@ -11,7 +11,7 @@ index 446f15e..6b89bf0 100644
  	struct ieee80211_device *ieee,
  	struct ieee80211_probe_response *beacon,
  	struct ieee80211_network *network,
-@@ -1283,7 +1283,7 @@ inline void update_network(struct ieee80211_network *dst,
+@@ -1281,7 +1281,7 @@ inline void update_network(struct ieee80211_network *dst,
  }
  
  

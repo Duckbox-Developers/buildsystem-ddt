@@ -13,7 +13,7 @@ diff --git a/drivers/staging/rtl8187se/ieee80211/ieee80211.h b/drivers/staging/r
 index 09ffd9b..6ebdd3f 100644
 --- a/drivers/staging/rtl8187se/ieee80211/ieee80211.h
 +++ b/drivers/staging/rtl8187se/ieee80211/ieee80211.h
-@@ -1460,12 +1460,12 @@ extern void ieee80211_sta_ps_send_null_frame(struct ieee80211_device *ieee,
+@@ -1447,12 +1447,12 @@ extern void ieee80211_sta_ps_send_null_frame(struct ieee80211_device *ieee,
  
  extern const long ieee80211_wlan_frequencies[];
  
