@@ -27,7 +27,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
 	echo "Parameter 3                             : Optimization (1-6)"
 	echo "Parameter 4                             : External LCD support (1-4)"
-	echo "Parameter 5                             : Neutrino variant (1-6)"
+	echo "Parameter 5                             : Neutrino variant (1-4)"
 	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
 	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
 	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
@@ -302,13 +302,13 @@ case $5 in
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
-		if [ $BOXARCH != 'sh4' ]; then
+		if [ "$BOXARCH" != "sh4" -a "$BOXTYPE" != "vuuno" -a "$BOXTYPE" != "vuultimo" -a "$BOXTYPE" != "dm8000" -a "$BOXTYPE" != "dm820" -a "$BOXTYPE" != "dm7080" -a "$BOXTYPE" != "dm900" -a "$BOXTYPE" != "dm920" ]; then
 			echo "   3)  neutrino-tangos"
 			echo "   4)  neutrino-tangos (includes WLAN drivers)"
 		fi
-		echo "   5)  neutrino-ddt with youtube"
-		echo "   6)  neutrino-ddt with youtube (includes WLAN drivers)"
-		read -p "Select Image to build (1-6)? ";;
+#		echo "   5)  neutrino-ddt with youtube"
+#		echo "   6)  neutrino-ddt with youtube (includes WLAN drivers)"
+		read -p "Select Image to build (1-4)? ";;
 esac
 
 case "$REPLY" in
@@ -320,10 +320,10 @@ case "$REPLY" in
 	    IMAGE="neutrino";;
 	4)  FLAVOUR="neutrino-tangos"
 	    IMAGE="neutrino-wlandriver";;
-	5)  FLAVOUR="neutrino-ddt-youtube"
-	    IMAGE="neutrino";;
-	6)  FLAVOUR="neutrino-ddt-youtube"
-	    IMAGE="neutrino-wlandriver";;
+#	5)  FLAVOUR="neutrino-ddt-youtube"
+#	    IMAGE="neutrino";;
+#	6)  FLAVOUR="neutrino-ddt-youtube"
+#	    IMAGE="neutrino-wlandriver";;
 	*)  FLAVOUR="neutrino-ddt"
 	    IMAGE="neutrino";;
 esac
