@@ -41,10 +41,10 @@ diff --git a/drivers/brcmstb/setup.c b/drivers/brcmstb/setup.c
 index 21a6e42..954b902 100644
 --- a/drivers/brcmstb/setup.c
 +++ b/drivers/brcmstb/setup.c
-@@ -932,6 +932,15 @@ void brcm_machine_restart(const char *command)
-                ;
+@@ -932,6 +932,15 @@
+ 		;
  }
-
+ 
 +void (*brcm_s3_cb)(void);
 +
 +
@@ -57,12 +57,11 @@ index 21a6e42..954b902 100644
  void brcm_machine_halt(void)
  {
  #ifdef CONFIG_BRCM_IRW_HALT
-@@ -939,6 +948,7 @@ void brcm_machine_halt(void)
-        BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 0);
-        BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 1);
+@@ -939,6 +948,7 @@
+ 	BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 0);
+ 	BDEV_WR_F_RB(SUN_TOP_CTRL_GENERAL_CTRL_1, irw_top_sw_pwroff, 1);
  #endif
 +       if(brcm_s3_cb) brcm_s3_cb();
  #ifdef CONFIG_BRCM_HAS_AON
-        /* may be S3 cold boot */
-        brcm_pm_s3_cold_boot();
-
+ 	/* may be S3 cold boot */
+ 	brcm_pm_s3_cold_boot();
