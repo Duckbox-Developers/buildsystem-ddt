@@ -35,7 +35,7 @@ diff --git a/src/pcm/pcm.c b/src/pcm/pcm.c
 index 892abf98..67912794 100644
 --- a/src/pcm/pcm.c
 +++ b/src/pcm/pcm.c
-@@ -2747,11 +2747,14 @@ int snd_pcm_open(snd_pcm_t **pcmp, const char *name,
+@@ -2748,11 +2748,14 @@ int snd_pcm_open(snd_pcm_t **pcmp, const char *name,
  	int err;
  
  	assert(pcmp && name);
