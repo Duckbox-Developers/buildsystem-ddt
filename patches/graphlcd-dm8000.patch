@@ -2,18 +2,12 @@ diff --git a/graphlcd.conf b/graphlcd.conf
 index 270cae8..d256e4b 100644
 --- a/graphlcd.conf
 +++ b/graphlcd.conf
-@@ -117,6 +117,18 @@
+@@ -117,6 +117,12 @@
  
  ########################################################################
  
-+[dm8000/dm7080]
-+# Driver setting for DM8000/DM7080
-+Driver=dreambox
-+#Width=132
-+#Height=64
-+
 +[dm8000/dm7080_color]
-+# Driver setting for DM8000/DM7080 (color display)
++# Driver setting for DM8000/DM7080 (Grautec color display)
 +Driver=dreambox
 +#Width=400
 +#Height=240
