@@ -98,16 +98,14 @@ case $1 in
 		echo "   15) 91HD"
 		echo
 		echo "  Fulan"
-		echo "   27) Spark"
-		echo "   28) Spark7162"
+		echo "   27) Spark             28) Spark7162"
 		echo
 		echo "  VU+ mips-based receivers"
 		echo "   31) VU+ Duo           32) VU+ Duo2           33) VU+ Uno            34) VU+ Ultimo"
 		echo
 		echo "  VU+ arm-based receivers"
-		echo "   41) VU+ Solo 4K       42) VU+ Uno 4K         43) VU+ Ultimo 4K"
-		echo "   44) VU+ Zero 4K       45) VU+ Uno 4K SE      46) VU+ Duo 4K"
-		echo "   47) VU+ Duo 4K SE"
+		echo "   41) VU+ Solo 4K       42) VU+ Uno 4K         43) VU+ Ultimo 4K      44) VU+ Zero 4K"
+		echo "   45) VU+ Uno 4K SE     46) VU+ Duo 4K         47) VU+ Duo 4K SE"
 		echo
 		echo "  other arm-based receivers"
 		echo "  AX/Mut@nt             Air Digital            WWIO"
