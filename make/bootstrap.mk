@@ -247,6 +247,20 @@ $(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
 	$(TOUCH)
 
 #
+# dm7020hd second stage loader #89
+#
+DM7020HD_2ND_SOURCE = secondstage-dm7020-89.bin
+#DM7020HD_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM7020HD_2ND_SOURCE)
+DM7020HD_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM7020HD_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM7020HD_2ND_SOURCE):
+	$(DOWNLOAD) $(DM7020HD_2ND_URL)
+
+$(D)/dm7020hd_2nd: $(ARCHIVE)/$(DM7020HD_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
 # dm820 second stage loader #18
 #
 DM820_2ND_SOURCE = dreambox-secondstage_18_dm820.tar.xz

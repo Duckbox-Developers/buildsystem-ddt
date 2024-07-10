@@ -185,6 +185,9 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/fix-multiple-defs-yyloc.patch \
 		mipsbox/dm8000/devinitdata-gcc11.patch
 
+DM7020HD_PATCHES = \
+		$(DM8000_PATCHES)
+
 #
 # KERNEL
 #
@@ -213,7 +216,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000 dm7020hd))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -245,10 +248,10 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), dm8000)
-	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-dm8000.gz"
-	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-dm8000.gz $(TARGET_DIR)/boot/
-	ln -sf vmlinux-3.2-dm8000.gz $(TARGET_DIR)/boot/vmlinux
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd))
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz"
+	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/
+	ln -sf vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/vmlinux
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/source || true
 	$(TOUCH)

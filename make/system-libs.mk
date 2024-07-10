@@ -409,7 +409,7 @@ $(D)/bzip2: $(D)/bootstrap $(ARCHIVE)/$(BZIP2_SOURCE)
 		mv Makefile-libbz2_so Makefile; \
 		$(MAKE) all CC=$(TARGET)-gcc AR=$(TARGET)-ar RANLIB=$(TARGET)-ranlib; \
 		$(MAKE) install PREFIX=$(TARGET_DIR)/usr
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000 dm7020hd))
 	cd $(TARGET_DIR) && rm -f usr/bin/bzip2
 endif
 	$(REMOVE)/bzip2-$(BZIP2_VER)
@@ -1562,7 +1562,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vu
 GRAPHLCD_PATCH += graphlcd-vuplus4k_1.patch
 GRAPHLCD_PATCH += graphlcd-vuplus4k_2.patch
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7080))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd dm7080))
 GRAPHLCD_PATCH += graphlcd-dreambox_grautec.patch
 GRAPHLCD_PATCH += graphlcd-dm8000.patch
 endif
@@ -1659,7 +1659,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 		; \
 		$(MAKE) vcs_version all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux_png $(TARGET_DIR)/etc/init.d/lcd4linux
 else
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(TARGET_DIR)/etc/init.d/
@@ -1667,7 +1667,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_vu.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux_png.conf $(TARGET_DIR)/etc/lcd4linux.conf
 else
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(TARGET_DIR)/etc/lcd4linux.conf

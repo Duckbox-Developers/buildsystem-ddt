@@ -37,6 +37,16 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), dm7020hd)
+DRIVER_VER = 3.2
+DRIVER_DATE = 20161019
+DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE).tar.bz2
+
+$(ARCHIVE)/$(DRIVER_SRC):
+#	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), dm8000)
 DRIVER_VER = 3.2
 DRIVER_DATE = 20140604a
@@ -71,7 +81,7 @@ driver-clean:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra/$(KERNEL_TYPE)*
 endif
 
@@ -87,7 +97,7 @@ ifeq ($(BOXTYPE), vuduo2)
 	$(MAKE) vmlinuz_initrd
 endif
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000))
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -96,7 +106,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 else
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm7080 dm8000))
 	tar -xf $(SKEL_ROOT)/release/grautec.tar.gz -C $(TARGET_DIR)/
 endif
 endif

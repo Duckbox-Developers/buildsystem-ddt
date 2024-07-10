@@ -156,15 +156,19 @@ KERNEL_PATCHES_MIPS    = $(DM7080_PATCHES)
 endif
 endif
 
-ifeq ($(BOXTYPE), dm8000)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm8000))
 KERNEL_VER             = 3.2
 KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.2.68
 KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
 KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v3.x
-KERNEL_CONFIG          = $(KERNEL_TYPE)/$(BOXTYPE)_defconfig
+KERNEL_CONFIG          = dm8000/$(BOXTYPE)_defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+ifeq ($(BOXTYPE), dm8000)
 KERNEL_PATCHES_MIPS    = $(DM8000_PATCHES)
+else
+KERNEL_PATCHES_MIPS    = $(DM7020HD_PATCHES)
+endif
 endif
 
 # -----------------------------------------------------------------------------
