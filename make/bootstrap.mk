@@ -249,7 +249,7 @@ $(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
 #
 # dm7020hd second stage loader #89
 #
-DM7020HD_2ND_SOURCE = secondstage-dm7020-89.bin
+DM7020HD_2ND_SOURCE = secondstage-dm7020hd-89.bin
 #DM7020HD_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM7020HD_2ND_SOURCE)
 DM7020HD_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM7020HD_2ND_SOURCE)
 
