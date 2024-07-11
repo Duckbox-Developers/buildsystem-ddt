@@ -22,6 +22,10 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	$(MAKE) flash-image-vuduo
 endif
+ifeq ($(BOXTYPE), dm7020hd)
+	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
+	DM720HDV2=1 $(MAKE) flash-image-dm_nfi
+endif
 ifeq ($(BOXTYPE), dm8000)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
@@ -384,6 +388,37 @@ flash-image-vuduo: $(D)/host_mtd_utils
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
+# NFI2
+ifeq ($(BOXTYPE), dm7020hd)
+DM_ERASE_BLOCK_SIZE = 0x40000
+DM_SECTOR_SIZE = 4096
+MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F
+UBINIZE_ARGS = -m 4096 -p 256KiB -s 4096
+BUILDIMAGE_EXTRA = -B
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0x3F800000
+SSBL = 89
+V2 = 
+endif
+
+# NFI3
+ifeq ($(DM720HDV2), 1)
+DM_ERASE_BLOCK_SIZE = 0x20000
+DM_SECTOR_SIZE = 2048
+MKUBIFS_ARGS = -m 2048 -e 124KiB -c 3320 -x favor_lzo -F
+UBINIZE_ARGS = -m 2048 -p 128KiB -s 2048
+BUILDIMAGE_EXTRA = -B
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0x3F800000
+SSBL = 89
+V2 = v2
+endif
+
+# NFI1
 ifeq ($(BOXTYPE), dm8000)
 DM_ERASE_BLOCK_SIZE = 0x20000
 DM_SECTOR_SIZE = 2048
@@ -394,6 +429,8 @@ FLASH_SIZE = 0x4000000
 LOADER_SIZE = 0x100000
 BOOT_SIZE = 0x700000
 ROOT_SIZE = 0xF800000
+SSBL = 84
+V2 = 
 endif
 
 flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
@@ -403,7 +440,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	rm -f $(RELEASE_DIR)/boot/*
 	cp $(TARGET_DIR)/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/
-	cp $(ARCHIVE)/secondstage-$(BOXTYPE)-84.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/
+	cp $(ARCHIVE)/secondstage-$(BOXTYPE)-$(SSBL).bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/
 	ln -sf vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/vmlinux
 	echo "/boot/bootlogo-$(BOXTYPE).elf.gz filename=/boot/bootlogo-$(BOXTYPE).jpg" > $(RELEASE_DIR)/boot/autoexec.bat
 	echo "/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8" >> $(RELEASE_DIR)/boot/autoexec.bat
@@ -424,7 +461,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	$(HOST_DIR)/bin/buildimage -a $(BOXTYPE) $(BUILDIMAGE_EXTRA) -e $(DM_ERASE_BLOCK_SIZE) -f $(FLASH_SIZE) -s $(DM_SECTOR_SIZE) -b $(LOADER_SIZE):secondstage-$(BOXTYPE)-84.bin -d $(BOOT_SIZE):boot.jffs2 -d $(ROOT_SIZE):rootfs.ubi > $(BOXTYPE).nfi && \
+	$(HOST_DIR)/bin/buildimage -a $(BOXTYPE) $(BUILDIMAGE_EXTRA) -e $(DM_ERASE_BLOCK_SIZE) -f $(FLASH_SIZE) -s $(DM_SECTOR_SIZE) -b $(LOADER_SIZE):secondstage-$(BOXTYPE)-$(SSBL).bin -d $(BOOT_SIZE):boot.jffs2 -d $(ROOT_SIZE):rootfs.ubi > $(BOXTYPE).nfi && \
 	echo "Neutrino: Release" > $(BOXTYPE).nfo && \
 	echo "Machine: Dreambox $(BOXTYPE)" >> $(BOXTYPE).nfo && \
 	echo "Date: `date '+%Y%m%d'`" >> $(BOXTYPE).nfo && \
@@ -432,7 +469,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	echo "Link: https://github.com/Duckbox-Developers" >> $(BOXTYPE).nfo && \
 	echo -n "MD5: " >> $(BOXTYPE).nfo && \
 	md5sum -b $(BOXTYPE).nfi | awk -F " " '{print $$1}' >> $(BOXTYPE).nfo; \
-	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(BOXTYPE).{nfi,nfo}
+	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)$(V2)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(BOXTYPE).{nfi,nfo}
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
