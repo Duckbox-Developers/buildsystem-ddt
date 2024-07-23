@@ -16,7 +16,7 @@ BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-extra2.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-flashcp-small-output.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-block-telnet-internet.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-recursive_action-fix.patch
-BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-fix_hash_md5_sha.patch
+
 ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4 mips))
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-mips-revert_ifa_flags.patch
 endif
@@ -30,6 +30,7 @@ BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
+BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-fix_hash_md5_sha.patch
 #BUSYBOX_PATCH += busybox-snapshot-tar-fix.patch
 #BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-changed_FreeBSD_fix.patch
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
