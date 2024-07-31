@@ -115,7 +115,7 @@ case $1 in
 		echo "   66) AXAS E4HD 4K Ultra"
 		echo
 		echo "  Dreambox mips-based"
-		echo "   80) DM 8000 HD        83) DM 7020 HD"
+		echo "   80) DM 8000 HD        81) DM 7020 HD"
 		echo "   84) DM 820 HD         85) DM 7080 HD"
 		echo
 		echo "  Dreambox arm-based"
@@ -169,7 +169,7 @@ case "$REPLY" in
 	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
-	83) BOXARCH="mips";BOXTYPE="dm7020hd";;
+	81) BOXARCH="mips";BOXTYPE="dm7020hd";;
 	84) BOXARCH="mips";BOXTYPE="dm820";;
 	85) BOXARCH="mips";BOXTYPE="dm7080";;
 	86) BOXARCH="arm";BOXTYPE="dm900";;
