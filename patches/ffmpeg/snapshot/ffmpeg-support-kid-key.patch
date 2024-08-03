@@ -63,7 +63,7 @@ diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
 +++ b/libavformat/isom.h
-@@ -340,8 +340,8 @@ typedef struct MOVContext {
+@@ -344,8 +344,8 @@ typedef struct MOVContext {
      void *audible_iv;
      int audible_iv_size;
      struct AVAES *aes_decrypt;
@@ -74,7 +74,7 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -356,6 +356,7 @@
+@@ -360,6 +360,7 @@
      int thmb_item_id;
      int64_t idat_offset;
      int interleaved_read;
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7380,19 +7380,62 @@
+@@ -7824,19 +7824,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7438,15 +7481,21 @@
+@@ -7882,15 +7925,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7497,15 +7546,21 @@
+@@ -7941,15 +7990,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7563,15 +7618,21 @@
+@@ -8007,15 +8062,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7714,7 +7775,7 @@
+@@ -8158,7 +8219,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -9487,12 +9548,6 @@
+@@ -10035,12 +10096,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->thmb_item_id = -1;
-@@ -10288,7 +10343,8 @@
+@@ -10835,7 +10890,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },
