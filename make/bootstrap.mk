@@ -372,7 +372,9 @@ SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 SYSTEM_TOOLS += $(D)/ofgwrite
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd))
 SYSTEM_TOOLS += $(D)/f2fs-tools
+endif
 endif
 SYSTEM_TOOLS += $(D)/driver
 
