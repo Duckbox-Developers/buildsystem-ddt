@@ -303,6 +303,34 @@ $(D)/dm8000_2nd: $(ARCHIVE)/$(DM8000_2ND_SOURCE)
 	$(TOUCH)
 
 #
+# dm800se second stage loader #84
+#
+DM800SE_2ND_SOURCE = secondstage-dm800se-84.bin
+#DM800SE_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SE_2ND_SOURCE)
+DM800SE_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SE_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM800SE_2ND_SOURCE):
+	$(DOWNLOAD) $(DM800SE_2ND_URL)
+
+$(D)/dm800se_2nd: $(ARCHIVE)/$(DM800SE_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
+# dm800sev2 second stage loader #89
+#
+DM800SEV2_2ND_SOURCE = secondstage-dm800sev2-89.bin
+#DM800SEV2_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SEV2_2ND_SOURCE)
+DM800SEV2_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SEV2_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM800SEV2_2ND_SOURCE):
+	$(DOWNLOAD) $(DM800SEV2_2ND_URL)
+
+$(D)/dm800sev2_2nd: $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
 # qrencode
 #
 HOST_QRENCODE_VER = 4.1.1

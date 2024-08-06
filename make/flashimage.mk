@@ -26,7 +26,7 @@ ifeq ($(BOXTYPE), dm7020hd)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 	DM720HDV2=1 $(MAKE) flash-image-dm_nfi
 endif
-ifeq ($(BOXTYPE), dm8000)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm800se dm800sev2))
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -390,6 +390,34 @@ flash-image-vuduo: $(D)/host_mtd_utils
 
 # NFI2
 ifeq ($(BOXTYPE), dm7020hd)
+DM_ERASE_BLOCK_SIZE = 0x40000
+DM_SECTOR_SIZE = 4096
+MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F
+UBINIZE_ARGS = -m 4096 -p 256KiB -s 4096
+BUILDIMAGE_EXTRA = -B
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0x3F800000
+SSBL = 89
+V2 = 
+endif
+
+ifeq ($(BOXTYPE), dm800se)
+DM_ERASE_BLOCK_SIZE = 0x4000
+DM_SECTOR_SIZE = 512
+MKUBIFS_ARGS = -m 512 -e 15KiB -c 3735 -x favor_lzo -X 1 -F -j 4MiB
+UBINIZE_ARGS = -m 512 -p 16KiB -s 512
+BUILDIMAGE_EXTRA = -B
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x40000
+BOOT_SIZE = 0x3C0000
+ROOT_SIZE = 0x3C00000
+SSBL = 84
+V2 = 
+endif
+
+ifeq ($(BOXTYPE), dm800sev2)
 DM_ERASE_BLOCK_SIZE = 0x40000
 DM_SECTOR_SIZE = 4096
 MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F

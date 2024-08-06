@@ -62,7 +62,7 @@ if [ "$1" != "" ]; then
 			make printenv
 			exit
 		;;
-		vuduo|vuduo2|vuuno|vuultimo|dm7020hd|dm820|dm7080|dm8000)
+		vuduo|vuduo2|vuuno|vuultimo|dm7020hd|dm820|dm7080|dm8000|dm800se|dm800sev2)
 			echo "BOXARCH=mips" >> config
 			make printenv
 			exit
@@ -115,7 +115,7 @@ case $1 in
 		echo "   66) AXAS E4HD 4K Ultra"
 		echo
 		echo "  Dreambox mips-based"
-		echo "   80) DM 8000 HD        81) DM 7020 HD"
+		echo "   80) DM 8000 HD        81) DM 7020 HD         82) DM800 HD SE        83) DM800 HD SE v2"
 		echo "   84) DM 820 HD         85) DM 7080 HD"
 		echo
 		echo "  Dreambox arm-based"
@@ -170,6 +170,8 @@ case "$REPLY" in
 
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	81) BOXARCH="mips";BOXTYPE="dm7020hd";;
+	82) BOXARCH="mips";BOXTYPE="dm800se";;
+	83) BOXARCH="mips";BOXTYPE="dm800sev2";;
 	84) BOXARCH="mips";BOXTYPE="dm820";;
 	85) BOXARCH="mips";BOXTYPE="dm7080";;
 	86) BOXARCH="arm";BOXTYPE="dm900";;

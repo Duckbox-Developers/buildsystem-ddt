@@ -188,6 +188,12 @@ DM8000_PATCHES = \
 DM7020HD_PATCHES = \
 		$(DM8000_PATCHES)
 
+DM800SE_PATCHES = \
+		$(DM8000_PATCHES)
+
+DM800SEV2_PATCHES = \
+		$(DM8000_PATCHES)
+
 #
 # KERNEL
 #
@@ -216,7 +222,7 @@ endif
 	@touch $@
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000 dm7020hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000 dm7020hd dm800se dm800sev2))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -248,7 +254,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd dm800se dm800sev2))
 	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz"
 	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/
 	ln -sf vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/vmlinux

@@ -156,7 +156,7 @@ KERNEL_PATCHES_MIPS    = $(DM7080_PATCHES)
 endif
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm8000 dm800se dm800sev2))
 KERNEL_VER             = 3.2
 KERNEL_TYPE            = $(BOXTYPE)
 KERNEL_SRC_VER         = 3.2.68
@@ -167,7 +167,15 @@ KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
 ifeq ($(BOXTYPE), dm8000)
 KERNEL_PATCHES_MIPS    = $(DM8000_PATCHES)
 else
+ifeq ($(BOXTYPE), dm800se)
+KERNEL_PATCHES_MIPS    = $(DM800SE_PATCHES)
+else
+ifeq ($(BOXTYPE), dm800sev2)
+KERNEL_PATCHES_MIPS    = $(DM800SEV2_PATCHES)
+else
 KERNEL_PATCHES_MIPS    = $(DM7020HD_PATCHES)
+endif
+endif
 endif
 endif
 

@@ -77,11 +77,31 @@ $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
+ifeq ($(BOXTYPE), dm800se)
+DRIVER_VER = 3.2
+DRIVER_DATE = 20151201
+DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE).tar.bz2
+
+$(ARCHIVE)/$(DRIVER_SRC):
+#	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+endif
+
+ifeq ($(BOXTYPE), dm800sev2)
+DRIVER_VER = 3.2
+DRIVER_DATE = 20151201
+DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE).tar.bz2
+
+$(ARCHIVE)/$(DRIVER_SRC):
+#	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+endif
+
 driver-clean:
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000 dm800se dm800sev2))
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra/$(KERNEL_TYPE)*
 endif
 
@@ -97,7 +117,7 @@ ifeq ($(BOXTYPE), vuduo2)
 	$(MAKE) vmlinuz_initrd
 endif
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm820 dm7080 dm8000 dm800se dm800sev2))
 	$(START_BUILD)
 	install -d $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
