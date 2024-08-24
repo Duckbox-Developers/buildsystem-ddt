@@ -221,7 +221,7 @@ if [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 	case $2 in
 		[1-3]) REPLY=$2;;
 		*)	echo -e "\nFFMPEG version:"
-			echo -e "   \033[01;32m1)  FFMPEG 4.4.4\033[00m"
+			echo -e "   \033[01;32m1)  FFMPEG 4.4.5\033[00m"
 			echo "   2)  FFMPEG 6.1.2 [experimental]"
 			echo "   3)  FFMPEG 7.x.x [git snapshot]"
 			read -p "Select FFMPEG version (1-3)? "
