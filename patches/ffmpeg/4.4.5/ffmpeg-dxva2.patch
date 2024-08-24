@@ -87,7 +87,7 @@
          goto finish;
 --- a/libavformat/bintext.c
 +++ b/libavformat/bintext.c
-@@ -149,7 +149,7 @@
+@@ -152,7 +152,7 @@
              return AVPROBE_SCORE_EXTENSION + 1;
  
          predict_width(&par, p->buf_size, got_width);
@@ -96,7 +96,7 @@
              return 0;
          calculate_height(&par, p->buf_size);
          if (par.height <= 0)
-@@ -195,8 +195,6 @@
+@@ -198,8 +198,6 @@
              next_tag_read(s, &bin->fsize);
          if (!bin->width) {
              predict_width(st->codecpar, bin->fsize, got_width);
