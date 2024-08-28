@@ -2153,7 +2153,7 @@ $(D)/libdaemon: $(D)/bootstrap $(ARCHIVE)/$(LIBDAEMON_SOURCE)
 #
 # libgpg-error
 #
-LIBGPG_ERROR_VER    = 1.48
+LIBGPG_ERROR_VER    = 1.50
 LIBGPG_ERROR_DIR    = libgpg-error-$(LIBGPG_ERROR_VER)
 LIBGPG_ERROR_SOURCE = libgpg-error-$(LIBGPG_ERROR_VER).tar.bz2
 LIBGPG_ERROR_URL    = https://www.gnupg.org/ftp/gcrypt/libgpg-error
