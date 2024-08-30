@@ -84,11 +84,7 @@ KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 endif
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
 KERNEL_URL             = http://code.vuplus.com/download/release/kernel
-ifeq ($(VU_MULTIBOOT), 1)
-KERNEL_CONFIG          = $(BOXTYPE)_defconfig_multi
-else
 KERNEL_CONFIG          = $(BOXTYPE)_defconfig
-endif
 KERNEL_DIR             = $(BUILD_TMP)/linux
 endif
 
