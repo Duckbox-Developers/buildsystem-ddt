@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -3749,10 +3749,8 @@
+@@ -3759,10 +3759,8 @@
  android_content_protocol_select="file_protocol"
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="tcp_protocol"
-@@ -3766,20 +3764,18 @@
+@@ -3776,20 +3774,18 @@
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"

@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -6285,17 +6285,10 @@
+@@ -6295,17 +6295,10 @@
  
      # Check toolchain ISA level
      if enabled mips64; then
