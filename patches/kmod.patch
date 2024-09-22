@@ -1,8 +1,8 @@
 diff --git a/Makefile.am b/Makefile.am
-index d37b56d..0d576ce 100644
+index 6bbe23d..7774009 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -107,7 +107,7 @@
+@@ -118,7 +118,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
  libkmod_libkmod_internal_la_LDFLAGS = $(AM_LDFLAGS) \
  	-Wl,--version-script=$(top_srcdir)/libkmod/libkmod.sym
  libkmod_libkmod_internal_la_DEPENDENCIES  = $(libkmod_libkmod_la_DEPENDENCIES)
@@ -12,10 +12,10 @@ index d37b56d..0d576ce 100644
  pkgconfig_DATA = libkmod/libkmod.pc
  noarch_pkgconfig_DATA = tools/kmod.pc
 diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
-index 213b424..56114a2 100644
+index 8c71d8a..b693fcf 100644
 --- a/libkmod/libkmod.c
 +++ b/libkmod/libkmod.c
-@@ -209,7 +209,7 @@ static char *get_kernel_release(const char *dirname)
+@@ -179,7 +179,7 @@ static char *get_kernel_release(const char *dirname)
  	if (uname(&u) < 0)
  		return NULL;
  
@@ -25,30 +25,30 @@ index 213b424..56114a2 100644
  
  	return p;
 diff --git a/tools/depmod.c b/tools/depmod.c
-index 43fc354..a03ff8c 100644
+index 847b4cb..f95ee56 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3029,13 +3029,9 @@ static int do_depmod(int argc, char *argv[])
+@@ -3051,13 +3051,9 @@ static int do_depmod(int argc, char *argv[])
  		cfg.kversion = un.release;
  	}
  
 -	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX,
--				  "%s" MODULE_DIRECTORY "/%s",
--				  root ?: "", cfg.kversion);
+-				  "%s%s/%s",
+-				  root ?: "", module_directory, cfg.kversion);
 +	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", root ?: "");
  
 -	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX,
--				     "%s" MODULE_DIRECTORY "/%s",
--				     out_root ?: (root ?: ""), cfg.kversion);
+-				     "%s%s/%s",
+-				     out_root ?: (root ?: ""), module_directory, cfg.kversion);
 +	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", out_root ?: (root ?: ""));
  
  	if (optind == argc)
  		all = 1;
 diff --git a/tools/modinfo.c b/tools/modinfo.c
-index cacc32d..4a8b003 100644
+index 59ecb17..80f9b77 100644
 --- a/tools/modinfo.c
 +++ b/tools/modinfo.c
-@@ -450,8 +450,7 @@ static int do_modinfo(int argc, char *argv[])
+@@ -449,8 +449,7 @@ static int do_modinfo(int argc, char *argv[])
  			}
  			kversion = u.release;
  		}
@@ -59,10 +59,10 @@ index cacc32d..4a8b003 100644
  	}
  
 diff --git a/tools/modprobe.c b/tools/modprobe.c
-index 5306bef..76686ef 100644
+index 3c085e8..16708c4 100644
 --- a/tools/modprobe.c
 +++ b/tools/modprobe.c
-@@ -987,9 +987,7 @@ static int do_modprobe(int argc, char **orig_argv)
+@@ -986,9 +986,7 @@ static int do_modprobe(int argc, char **orig_argv)
  			}
  			kversion = u.release;
  		}
@@ -74,7 +74,7 @@ index 5306bef..76686ef 100644
  	}
  
 diff --git a/tools/static-nodes.c b/tools/static-nodes.c
-index 5ef3743..73fba47 100644
+index 435e0dc..39e74ef 100644
 --- a/tools/static-nodes.c
 +++ b/tools/static-nodes.c
 @@ -200,16 +200,14 @@ static int do_static_nodes(int argc, char *argv[])
