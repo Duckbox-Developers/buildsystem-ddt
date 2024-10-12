@@ -28,7 +28,7 @@ diff --git a/tools/depmod.c b/tools/depmod.c
 index 91bd191..a14e5d2 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3008,17 +3008,14 @@ static int do_depmod(int argc, char *argv[])
+@@ -3004,17 +3004,14 @@ static int do_depmod(int argc, char *argv[])
  		cfg.kversion = un.release;
  	}
  
