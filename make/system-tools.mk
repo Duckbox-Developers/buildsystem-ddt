@@ -30,9 +30,6 @@ BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
-BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-fix_hash_md5_sha.patch
-#BUSYBOX_PATCH += busybox-snapshot-tar-fix.patch
-#BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-changed_FreeBSD_fix.patch
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
 	$(REMOVE)/busybox$(BB_SNAPSHOT)
