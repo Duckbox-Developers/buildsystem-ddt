@@ -15,7 +15,7 @@ diff --git a/libkmod/libkmod.c b/libkmod/libkmod.c
 index d1e5a82..19434b3 100644
 --- a/libkmod/libkmod.c
 +++ b/libkmod/libkmod.c
-@@ -176,7 +176,7 @@ static char *get_kernel_release(const char *dirname)
+@@ -175,7 +175,7 @@ static char *get_kernel_release(const char *dirname)
  	if (uname(&u) < 0)
  		return NULL;
  
@@ -28,7 +28,7 @@ diff --git a/tools/depmod.c b/tools/depmod.c
 index 91bd191..a14e5d2 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3004,17 +3004,14 @@ static int do_depmod(int argc, char *argv[])
+@@ -2982,17 +2982,14 @@ static int do_depmod(int argc, char *argv[])
  		cfg.kversion = un.release;
  	}
  
@@ -52,7 +52,7 @@ diff --git a/tools/modinfo.c b/tools/modinfo.c
 index f1323c5..876d6cd 100644
 --- a/tools/modinfo.c
 +++ b/tools/modinfo.c
-@@ -436,8 +436,7 @@ static int do_modinfo(int argc, char *argv[])
+@@ -443,8 +443,7 @@ static int do_modinfo(int argc, char *argv[])
  			kversion = u.release;
  		}
  
@@ -66,7 +66,7 @@ diff --git a/tools/modprobe.c b/tools/modprobe.c
 index 26b252c..b11aed5 100644
 --- a/tools/modprobe.c
 +++ b/tools/modprobe.c
-@@ -975,8 +975,7 @@ static int do_modprobe(int argc, char **orig_argv)
+@@ -919,8 +919,7 @@ static int do_modprobe(int argc, char **orig_argv)
  			}
  			kversion = u.release;
  		}
