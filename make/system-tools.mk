@@ -1659,7 +1659,7 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 #
 # dropbearmulti
 #
-DROPBEARMULTI_VER = bdc5b57
+DROPBEARMULTI_VER = 155639d
 
 $(D)/dropbearmulti: $(D)/bootstrap
 	$(START_BUILD)
