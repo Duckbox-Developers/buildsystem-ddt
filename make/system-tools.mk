@@ -1863,7 +1863,7 @@ $(D)/iptables: $(D)/bootstrap $(ARCHIVE)/$(IPTABLES_SOURCE)
 	$(TOUCH)
 
 #
-# kmod
+# kmod (ARM/MIPS only)
 #
 #KMOD_VER = 
 KMOD_PATCH = kmod.patch
@@ -1883,7 +1883,6 @@ $(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-manpages \
-			--disable-test-modules \
 			--disable-logging \
 		; \
 		$(MAKE); \
