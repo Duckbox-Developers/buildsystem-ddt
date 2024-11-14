@@ -15,7 +15,7 @@ diff --git a/src/control/control.c b/src/control/control.c
 index 91415b51..ca302df6 100644
 --- a/src/control/control.c
 +++ b/src/control/control.c
-@@ -1611,11 +1611,14 @@ int snd_ctl_open(snd_ctl_t **ctlp, const char *name, int mode)
+@@ -1616,11 +1616,14 @@ int snd_ctl_open(snd_ctl_t **ctlp, const char *name, int mode)
  	int err;
  
  	assert(ctlp && name);
@@ -75,7 +75,7 @@ diff --git a/src/seq/seq.c b/src/seq/seq.c
 index f051426f..3330e770 100644
 --- a/src/seq/seq.c
 +++ b/src/seq/seq.c
-@@ -978,11 +978,14 @@ int snd_seq_open(snd_seq_t **seqp, const char *name,
+@@ -1054,11 +1054,14 @@ int snd_seq_open(snd_seq_t **seqp, const char *name,
  	int err;
  
  	assert(seqp && name);
