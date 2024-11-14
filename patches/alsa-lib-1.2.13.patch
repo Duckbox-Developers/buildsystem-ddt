@@ -31,6 +31,24 @@ index 91415b51..ca302df6 100644
  		err = snd_config_update_ref(&top);
  		if (err < 0)
  			return err;
+diff --git a/include/seqmid.h b/include/seqmid.h
+--- a/include/seqmid.h
++++ b/include/seqmid.h
+@@ -520,12 +520,14 @@
+ 	((ev)->type = SND_SEQ_EVENT_SYSEX,\
+ 	 snd_seq_ev_set_variable(ev, datalen, dataptr))
+ 
++#ifdef __ALSA_RAWMIDI_H
+ /* Helper API functions for UMP endpoint and block creations */
+ int snd_seq_create_ump_endpoint(snd_seq_t *seq,
+ 				const snd_ump_endpoint_info_t *info,
+ 				unsigned int num_groups);
+ int snd_seq_create_ump_block(snd_seq_t *seq, int blkid,
+ 			     const snd_ump_block_info_t *info);
++#endif
+ 
+ /** \} */
+ 
 diff --git a/src/pcm/pcm.c b/src/pcm/pcm.c
 index 892abf98..67912794 100644
 --- a/src/pcm/pcm.c
