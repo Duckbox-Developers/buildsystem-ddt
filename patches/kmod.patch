@@ -2,7 +2,7 @@ diff --git a/Makefile.am b/Makefile.am
 index 213a1fe..5934c60 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -118,7 +118,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
+@@ -116,7 +116,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
  libkmod_libkmod_internal_la_LDFLAGS = $(AM_LDFLAGS) \
  	-Wl,--version-script=$(top_srcdir)/libkmod/libkmod.sym
  libkmod_libkmod_internal_la_DEPENDENCIES  = $(libkmod_libkmod_la_DEPENDENCIES)
@@ -28,26 +28,25 @@ diff --git a/tools/depmod.c b/tools/depmod.c
 index 91bd191..a14e5d2 100644
 --- a/tools/depmod.c
 +++ b/tools/depmod.c
-@@ -3040,17 +3040,14 @@ static int do_depmod(int argc, char *argv[])
- 		cfg.kversion = un.release;
- 	}
+@@ -3037,16 +3037,14 @@
+ 	while (module_directory[0] == '/')
+ 		module_directory++;
  
--	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s%s/%s", root ?: "",
+-	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s/%s/%s", root,
 -				  module_directory, cfg.kversion);
-+	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", root ?: "");
++	cfg.dirnamelen = snprintf(cfg.dirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", root);
  	if (cfg.dirnamelen >= PATH_MAX) {
- 		ERR("Bad directory %s" MODULE_DIRECTORY "/%s: path too long\n",
- 		    root ?: "", cfg.kversion);
+ 		ERR("Bad directory %s/%s/%s: path too long\n", root, module_directory,
+ 		    cfg.kversion);
  		goto cmdline_failed;
  	}
  
--	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s%s/%s",
--				     out_root ?: (root ?: ""), module_directory,
--				     cfg.kversion);
-+	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", out_root ?: (root ?: ""));
+-	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s/%s/%s",
+-				     out_root ?: root, module_directory, cfg.kversion);
++	cfg.outdirnamelen = snprintf(cfg.outdirname, PATH_MAX, "%s" MODULE_DIRECTORY "/", out_root ?: root);
  	if (cfg.outdirnamelen >= PATH_MAX) {
- 		ERR("Bad directory %s" MODULE_DIRECTORY "/%s: path too long\n",
- 		    out_root ?: (root ?: ""), cfg.kversion);
+ 		ERR("Bad directory %s/%s/%s: path too long\n", out_root ?: root,
+ 		    module_directory, cfg.kversion);
 diff --git a/tools/modinfo.c b/tools/modinfo.c
 index f1323c5..876d6cd 100644
 --- a/tools/modinfo.c
