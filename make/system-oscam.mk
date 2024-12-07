@@ -33,14 +33,20 @@ ST_LIBUSB ?= 0
 ifeq ($(ST_LIBCRYPTO), 1)
 	ST_CRYPTO = LIBCRYPTO_LIB=$(TARGET_LIB_DIR)/libcrypto.a
 endif
+ifneq ($(BOXARCH), sh4)
 ifeq ($(ST_LIBDVBCSA), 1)
-	ST_DVBCSA = LIBDVBCSA_LIB=$(TARGET_LIB_DIR)/libdvbcsa.a
+	ST_DVBCSA = USE_LIBDVBCSA=1 LIBDVBCSA_LIB=$(TARGET_LIB_DIR)/libdvbcsa.a
+endif
 endif
 ifeq ($(ST_LIBSSL), 1)
 	ST_SSL = SSL_LIB=$(TARGET_LIB_DIR)/libssl.a
 endif
 ifeq ($(ST_LIBUSB), 1)
 	ST_USB = LIBUSB_LIB=$(TARGET_LIB_DIR)/libusb-1.0.a
+endif
+
+ifneq ($(BOXARCH), sh4)
+	STREAMRELAY = MODULE_STREAMRELAY
 endif
 
 # -----------------------------------------------------------------------------
@@ -71,7 +77,7 @@ OSCAM_CONFIG ?= --enable \
 		MODULE_MONITOR \
 		MODULE_NEWCAMD \
 		MODULE_SCAM \
-		MODULE_STREAMRELAY \
+		$(STREAMRELAY) \
 		\
 		READER_CONAX \
 		READER_CRYPTOWORKS \
@@ -117,14 +123,18 @@ $(D)/oscam.do_prepare:
 $(D)/oscam.do_compile:
 	cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 		$(BUILDENV) \
-		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 $(ST_CRYPTO) USE_LIBDVBCSA=1 $(ST_DVBCSA) USE_LIBSSL=1 $(ST_SSL) USE_LIBUSB=1 $(ST_USB) \
+		$(MAKE) CROSS=$(TARGET)- USE_LIBCRYPTO=1 $(ST_CRYPTO) $(ST_DVBCSA) USE_LIBSSL=1 $(ST_SSL) USE_LIBUSB=1 $(ST_USB) \
 		PLUS_TARGET="-rezap" \
 		CONF_DIR=/var/keys \
 		EXTRA_LDFLAGS="$(TARGET_LDFLAGS)" \
 		CC_OPTS=" -Os -pipe "
 	@touch $@
 
+ifneq ($(BOXARCH), sh4)
 $(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb $(D)/libdvbcsa oscam.do_prepare oscam.do_compile
+else
+$(D)/oscam: $(D)/bootstrap $(D)/openssl $(D)/libusb oscam.do_prepare oscam.do_compile
+endif
 	rm -rf $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
 	mkdir $(TARGET_DIR)/../$(OSCAM_FLAVOUR)
 	cp -pR $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR)/Distribution/* $(TARGET_DIR)/../$(OSCAM_FLAVOUR)/
