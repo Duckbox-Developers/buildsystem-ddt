@@ -2,7 +2,7 @@ diff --git a/Makefile.am b/Makefile.am
 index 213a1fe..5934c60 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -116,7 +116,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
+@@ -117,7 +117,7 @@ libkmod_libkmod_internal_la_SOURCES = $(libkmod_libkmod_la_SOURCES)
  libkmod_libkmod_internal_la_LDFLAGS = $(AM_LDFLAGS) \
  	-Wl,--version-script=$(top_srcdir)/libkmod/libkmod.sym
  libkmod_libkmod_internal_la_DEPENDENCIES  = $(libkmod_libkmod_la_DEPENDENCIES)
