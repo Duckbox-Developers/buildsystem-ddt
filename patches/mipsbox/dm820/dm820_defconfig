@@ -1196,7 +1196,13 @@ CONFIG_I2C=y
 CONFIG_I2C_BOARDINFO=y
 # CONFIG_I2C_COMPAT is not set
 CONFIG_I2C_CHARDEV=y
-# CONFIG_I2C_MUX is not set
+CONFIG_I2C_MUX=y
+
+#
+# Multiplexer I2C Chip support
+#
+# CONFIG_I2C_MUX_PCA9541 is not set
+# CONFIG_I2C_MUX_PCA954x is not set
 # CONFIG_I2C_HELPER_AUTO is not set
 # CONFIG_I2C_SMBUS is not set
 
@@ -1706,6 +1712,7 @@ CONFIG_DVB_STV0299=y
 # CONFIG_DVB_STV0367 is not set
 # CONFIG_DVB_CXD2820R is not set
 # CONFIG_DVB_RTL2830 is not set
+# CONFIG_DVB_SI2168 is not set
 
 #
 # DVB-C (cable) frontends
@@ -1758,6 +1765,7 @@ CONFIG_DVB_STV0299=y
 # CONFIG_DVB_IX2505V is not set
 # CONFIG_DVB_IT913X_FE is not set
 # CONFIG_DVB_M88RS2000 is not set
+CONFIG_DVB_SI2183=y
 
 #
 # Tools to develop new frontends

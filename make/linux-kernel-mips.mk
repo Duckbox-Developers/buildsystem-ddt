@@ -116,6 +116,7 @@ DM820_PATCHES = \
 		mipsbox/dm820/0001-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
 		mipsbox/dm820/0001-STV-Add-PLS-support.patch \
 		mipsbox/dm820/0001-tuners-tda18273-silicon-tuner-driver.patch \
+		mipsbox/dm820/0001-linux-dreambox-3.4-add-support-for-si2183.patch \
 		mipsbox/dm820/0001-blindscan2.patch \
 		mipsbox/dm820/0001-dvbs2x.patch \
 		mipsbox/dm820/0001-0003-cxusb-Geniatech-T230-support.patch \
