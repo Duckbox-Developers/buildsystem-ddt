@@ -15,11 +15,11 @@
  MAN8	+= shutdown.8 telinit.8 fstab-decode.8 logsave.8
  
  ifeq ($(DISTRO),)
-@@ -219,7 +219,6 @@
- 		ln -sf halt $(ROOT)/sbin/reboot
- 		ln -sf halt $(ROOT)/sbin/poweroff
- 		ln -sf init $(ROOT)/sbin/telinit
--		ln -sf ../sbin/killall5 $(ROOT)/bin/pidof
- 		if [ ! -f $(ROOT)/usr/bin/lastb ]; then \
- 			ln -sf last $(ROOT)/usr/bin/lastb; \
+@@ -222,7 +222,6 @@
+ 		ln -sf halt $(ROOT)$(base_sbindir)/reboot
+ 		ln -sf halt $(ROOT)$(base_sbindir)/poweroff
+ 		ln -sf init $(ROOT)$(base_sbindir)/telinit
+-		ln -sf $(base_sbindir)/killall5 $(ROOT)$(base_bindir)/pidof
+ 		if [ ! -f $(ROOT)$(bindir)/lastb ]; then \
+ 			ln -sf last $(ROOT)$(bindir)/lastb; \
  		fi

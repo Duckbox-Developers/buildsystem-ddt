@@ -11,18 +11,18 @@ diff --git a/src/Makefile b/src/Makefile
 index 9f9f09e..9ae35df 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -94,6 +94,10 @@
- 
- ROOT	?= $(DESTDIR)
+@@ -97,6 +84,10 @@
+   SULOGINLIBS	=
+ endif
  
 +ifneq ($(LCRYPT),)
 +  SULOGINLIBS	+= $(LCRYPT)
 +else
 +
  # Additional libs for GNU libc.
- ifneq ($(wildcard $(ROOT)/usr/lib*/libcrypt.*),)
+ ifneq ($(wildcard $(ROOT)/$(usrdir)/lib*/libcrypt.*),)
    SULOGINLIBS	+= -lcrypt
-@@ -106,6 +110,8 @@
+@@ -109,6 +113,8 @@
  endif
  endif
  
