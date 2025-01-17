@@ -1867,6 +1867,9 @@ $(D)/iptables: $(D)/bootstrap $(ARCHIVE)/$(IPTABLES_SOURCE)
 #
 #KMOD_VER = 
 KMOD_PATCH = kmod.patch
+ifeq ($(BOXARCH), sh4)
+KMOD_PATCH += kmod-sh4.patch
+endif
 
 $(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
 	$(START_BUILD)
