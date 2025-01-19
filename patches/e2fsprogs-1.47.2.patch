@@ -94,25 +94,3 @@
  ELF_IMAGE = libcom_err
  ELF_MYDIR = et
  ELF_INSTALL_DIR = $(root_libdir)
---- a/lib/blkid/blkidP.h.org
-+++ b/lib/blkid/blkidP.h
-@@ -113,7 +113,7 @@
- extern char *blkid_strdup(const char *s);
- extern char *blkid_strndup(const char *s, const int length);
- 
--#define BLKID_CACHE_FILE "/etc/blkid.tab"
-+#define BLKID_CACHE_FILE "/dev/blkid.tab"
- 
- #define BLKID_ERR_IO	 5
- #define BLKID_ERR_PROC	 9
---- a/misc/blkid.c.org
-+++ b/misc/blkid.c
-@@ -53,7 +53,7 @@
- 	fprintf(out,
- 		"usage:\t%s [-c <file>] [-ghlLv] [-o format] "
- 		"[-s <tag>] [-t <token>]\n    [-w <file>] [dev ...]\n"
--		"\t-c\tcache file (default: /etc/blkid.tab, /dev/null = none)\n"
-+		"\t-c\tcache file (default: /dev/blkid.tab, /dev/null = none)\n"
- 		"\t-h\tprint this usage message and exit\n"
- 		"\t-g\tgarbage collect the blkid cache\n"
- 		"\t-s\tshow specified tag(s) (default show all tags)\n"
