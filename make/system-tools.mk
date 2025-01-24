@@ -653,7 +653,7 @@ $(D)/ntfs_3g: $(D)/bootstrap $(ARCHIVE)/$(NTFS_3G_SOURCE)
 #
 # mc
 #
-MC_VER = 4.8.32
+MC_VER = 4.8.33
 MC_SOURCE = mc-$(MC_VER).tar.xz
 MC_PATCH  = mc-$(MC_VER).patch
 ifeq ($(BOXARCH), sh4)
