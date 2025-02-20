@@ -1,6 +1,6 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -39,7 +39,7 @@
+@@ -40,7 +40,7 @@
  
  VERSION=${LIBXML_VERSION}
  
