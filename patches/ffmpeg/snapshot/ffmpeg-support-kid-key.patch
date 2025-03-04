@@ -15,7 +15,7 @@ index ca1563abb0..9d0ab6025c 100644
  
  @end table
  
-@@ -931,7 +935,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
+@@ -935,7 +939,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
  specify.
  
  @item decryption_key
@@ -63,7 +63,7 @@ diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
 +++ b/libavformat/isom.h
-@@ -351,8 +351,8 @@ typedef struct MOVContext {
+@@ -363,8 +363,8 @@ typedef struct MOVContext {
      void *audible_iv;
      int audible_iv_size;
      struct AVAES *aes_decrypt;
@@ -74,7 +74,7 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -367,6 +367,7 @@
+@@ -379,6 +379,7 @@
      int thmb_item_id;
      int64_t idat_offset;
      int interleaved_read;
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7911,19 +7911,62 @@
+@@ -7946,19 +7946,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7969,15 +8012,21 @@
+@@ -8004,15 +8047,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8028,15 +8077,21 @@
+@@ -8063,15 +8112,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8094,15 +8149,21 @@
+@@ -8129,15 +8184,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8249,7 +8310,7 @@
+@@ -8284,7 +8345,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -10361,12 +10422,6 @@
+@@ -10459,12 +10520,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->thmb_item_id = -1;
-@@ -11126,7 +11181,8 @@
+@@ -11332,7 +11387,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

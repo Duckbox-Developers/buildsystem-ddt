@@ -42,7 +42,7 @@
                                      &ctx_pic->qm, sizeof(ctx_pic->qm),
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -976,6 +976,7 @@ static int h264_slice_header_init(H264Context *h)
+@@ -980,6 +980,7 @@ static int h264_slice_header_init(H264Context *h)
  
      h->first_field           = 0;
      h->prev_interlaced_frame = 1;
