@@ -1521,7 +1521,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 #
 # pugixml
 #
-PUGIXML_VER = a305d01
+PUGIXML_VER = caade5a
 PUGIXML_PATCH = pugixml-config.patch
 
 $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
