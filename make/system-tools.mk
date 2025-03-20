@@ -1867,41 +1867,6 @@ $(D)/iptables: $(D)/bootstrap $(ARCHIVE)/$(IPTABLES_SOURCE)
 	$(TOUCH)
 
 #
-# kmod (ARM/MIPS only)
-#
-#KMOD_VER = 
-KMOD_PATCH = kmod.patch
-ifeq ($(BOXARCH), sh4)
-KMOD_PATCH += kmod-sh4.patch
-endif
-
-$(D)/kmod: $(D)/bootstrap $(ARCHIVE)/$(KMOD_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/kmod
-	set -e; if [ -d $(ARCHIVE)/kmod.git ]; \
-		then cd $(ARCHIVE)/kmod.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/kmod-project/kmod.git kmod.git; \
-		fi
-	cp -ra $(ARCHIVE)/kmod.git $(BUILD_TMP)/kmod
-	(cd $(BUILD_TMP)/kmod; git checkout $(KMOD_VER);); \
-	$(CHDIR)/kmod; \
-		$(call apply_patches, $(KMOD_PATCH)); \
-		$(BUILDENV) \
-		$(CONFIGURE) \
-			--prefix=/usr \
-			--disable-manpages \
-			--disable-logging \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	cd $(TARGET_DIR)/usr/bin && for target in depmod insmod lsmod modinfo modprobe rmmod; do \
-	ln -sf /usr/bin/kmod $$target; \
-	done
-	$(REWRITE_LIBTOOL)/libkmod.la
-	$(REMOVE)/kmod
-	$(TOUCH)
-
-#
 # node (ARM only)
 #
 NODE_VER = 12.22.12
