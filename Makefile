@@ -25,7 +25,7 @@ printenv:
 	@echo
 	@echo '================================================================================'
 	@echo "Build Environment Variables:"
-	@echo "PATH              : `type -p fmt>/dev/null&&echo $(PATH)|sed 's/:/ /g' |fmt -65|sed 's/ /:/g; 2,$$s/^/                  : /;'||echo $(PATH)`"
+	@echo "PATH              : `type -p fmt > /dev/null && echo $(PATH) | sed 's/:/ /g' | fmt -65 | sed 's/ /:/g; 2,$$s/^/                    /;' || echo $(PATH)`"
 	@echo "ARCHIVE_DIR       : $(ARCHIVE)"
 	@echo "BASE_DIR          : $(BASE_DIR)"
 	@echo "CUSTOM_DIR        : $(CUSTOM_DIR)"
@@ -47,14 +47,14 @@ printenv:
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
 ifneq ($(BOXARCH), sh4)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
-	@echo "SWAPDATA          : $(shell [ $(SWAPDATA) == 1 -o $(SWAPDATA) == 81 ] && echo -e enabled || echo -e disabled)"
+	@echo "SWAPDATA          : $(shell [ "$(SWAPDATA)" == "1" -o "$(SWAPDATA)" == "81" ] && echo -e enabled || echo -e disabled)"
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 endif
 	@echo "FFMPEG            : `([ "$(FFMPEG_EXPERIMENTAL)" == "1" ] && echo "EXPERIMENTAL" ) || ([ "$(FFMPEG_SNAPSHOT)" == "1" ] && echo "SNAPSHOT" ) || echo "STANDARD"`"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
-	@echo "OPTIMIZE_PICS     : $(shell [ $(OPTIMIZE_PICS) == 1 ] && echo -e enabled || echo -e disabled)"
+	@echo "OPTIMIZE_PICS     : $(shell [ "$(OPTIMIZE_PICS)" == "1" ] && echo -e enabled || echo -e disabled)"
 	@echo -e "FLAVOUR           : $(TERM_YELLOW)$(FLAVOUR)$(TERM_NORMAL)"
 	@echo "PARALLEL_JOBS     : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
@@ -64,7 +64,7 @@ ifeq ($(IMAGE), $(filter $(IMAGE), neutrino neutrino-wlandriver))
 	@echo -e "LOCAL_NEUTRINO_BUILD_OPTIONS : $(TERM_GREEN)$(LOCAL_NEUTRINO_BUILD_OPTIONS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_CFLAGS        : $(TERM_GREEN)$(LOCAL_NEUTRINO_CFLAGS)$(TERM_NORMAL)"
 	@echo -e "LOCAL_NEUTRINO_PLUGINS       : $(TERM_GREEN)$(LOCAL_NEUTRINO_PLUGINS)$(TERM_NORMAL)"
-	@echo -e "LOCAL_NEUTRINO_DEPS          : $(TERM_GREEN)$(LOCAL_NEUTRINO_DEPS)$(TERM_NORMAL)"
+	@echo -e "LOCAL_NEUTRINO_DEPS          : $(TERM_GREEN)`type -p fmt > /dev/null && echo $(LOCAL_NEUTRINO_DEPS) | sed 's/:/ /g' | fmt -65 | sed 's/ /:/g; 2,$$s/^/                               /;' || echo $(LOCAL_NEUTRINO_DEPS)`$(TERM_NORMAL)"
 endif
 	@echo '================================================================================'
 	@make --no-print-directory toolcheck
