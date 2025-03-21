@@ -46,8 +46,8 @@ printenv:
 	@echo "BOXTYPE           : $(BOXTYPE)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
 ifneq ($(BOXARCH), sh4)
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k))
-	@echo "SWAPDATA          : $(shell [ $(SWAPDATA) == 1 ] && echo -e enabled || echo -e disabled)"
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
+	@echo "SWAPDATA          : $(shell [ $(SWAPDATA) == 1 -o $(SWAPDATA) == 81 ] && echo -e enabled || echo -e disabled)"
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 endif
