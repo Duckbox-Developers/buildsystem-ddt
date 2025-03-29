@@ -1,11 +1,11 @@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -40,7 +40,7 @@
+@@ -41,7 +41,7 @@
+ AC_SUBST(LIBXML_VERSION_NUMBER)
+ AC_SUBST(LIBXML_VERSION_EXTRA)
  
- VERSION=${LIBXML_VERSION}
- 
--AM_INIT_AUTOMAKE([1.16.3 foreign no-dist-gzip dist-xz])
-+AM_INIT_AUTOMAKE([1.15.1 foreign no-dist-gzip dist-xz])
+-AM_INIT_AUTOMAKE([1.16.3 foreign subdir-objects no-dist-gzip dist-xz])
++AM_INIT_AUTOMAKE([1.15.1 foreign subdir-objects no-dist-gzip dist-xz])
  AM_MAINTAINER_MODE([enable])
  AM_SILENT_RULES([yes])
  
@@ -25,7 +25,7 @@
  endif
  
 -DIST_SUBDIRS = include . doc example fuzz python xstc
-+DIST_SUBDIRS = include . python
++DIST_SUBDIRS = include .
  
  AM_CPPFLAGS = -I$(top_builddir)/include -I$(srcdir)/include -DSYSCONFDIR='"$(sysconfdir)"'
  
