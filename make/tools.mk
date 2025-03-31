@@ -34,6 +34,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/vfdctl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/wait4button distclean
 	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
+	-$(MAKE) -C $(TOOLS_DIR)/lcd_ctrl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
 	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
 	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
@@ -298,6 +299,21 @@ $(D)/tools-msgbox: $(D)/bootstrap $(D)/libpng $(D)/freetype
 $(D)/tools-oled_ctrl: $(D)/bootstrap $(D)/freetype
 	$(START_BUILD)
 	set -e; cd $(TOOLS_DIR)/oled_ctrl; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
+# lcd_ctrl
+#
+$(D)/tools-lcd_ctrl: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/lcd_ctrl; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 			--with-boxmodel=$(BOXTYPE) \
@@ -584,6 +600,9 @@ endif
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm920 dm7020hd dm8000 e4hdultra vuduo2 vuultimo))
 TOOLS += $(D)/tools-oled_ctrl
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7080 dm7020hd dm8000))
+TOOLS += $(D)/tools-lcd_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
 TOOLS += $(D)/tools-png_util
