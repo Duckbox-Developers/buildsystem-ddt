@@ -86,6 +86,8 @@ $(D)/tools-evremote2: $(D)/bootstrap
 	set -e; cd $(TOOLS_DIR)/evremote2; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
