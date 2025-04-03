@@ -299,7 +299,7 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 ##############################################
 
 case $5 in
-	[1-6]) REPLY=$5;;
+	[1-4]) REPLY=$5;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
@@ -307,8 +307,6 @@ case $5 in
 			echo "   3)  neutrino-tangos"
 			echo "   4)  neutrino-tangos (includes WLAN drivers)"
 		fi
-#		echo "   5)  neutrino-ddt with youtube"
-#		echo "   6)  neutrino-ddt with youtube (includes WLAN drivers)"
 		read -p "Select Image to build (1-4)? ";;
 esac
 
@@ -321,10 +319,6 @@ case "$REPLY" in
 	    IMAGE="neutrino";;
 	4)  FLAVOUR="neutrino-tangos"
 	    IMAGE="neutrino-wlandriver";;
-#	5)  FLAVOUR="neutrino-ddt-youtube"
-#	    IMAGE="neutrino";;
-#	6)  FLAVOUR="neutrino-ddt-youtube"
-#	    IMAGE="neutrino-wlandriver";;
 	*)  FLAVOUR="neutrino-ddt"
 	    IMAGE="neutrino";;
 esac
