@@ -101,6 +101,8 @@ $(D)/tools-fp_control: $(D)/bootstrap
 	set -e; cd $(TOOLS_DIR)/fp_control; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
+			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(BOXTYPE) \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
