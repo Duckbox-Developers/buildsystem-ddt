@@ -1029,6 +1029,7 @@ endif
 	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
 	rm -f $(RELEASE_DIR)/usr/bin/axfer
+	rm -f $(RELEASE_DIR)/usr/bin/bmp2arr
 	rm -f $(RELEASE_DIR)/usr/bin/compile_et
 	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/bin/mk_cmds
