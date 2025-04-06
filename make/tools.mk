@@ -605,7 +605,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm920 dm7020hd dm8000 e4hdultra vuduo2 vuultimo))
 TOOLS += $(D)/tools-oled_ctrl
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7080 dm7020hd dm8000))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7080 dm7020hd dm8000 dm800se dm800sev2))
 TOOLS += $(D)/tools-lcd_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))
