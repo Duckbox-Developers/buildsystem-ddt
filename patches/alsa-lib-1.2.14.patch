@@ -34,7 +34,7 @@ index 91415b51..ca302df6 100644
 diff --git a/include/seqmid.h b/include/seqmid.h
 --- a/include/seqmid.h
 +++ b/include/seqmid.h
-@@ -520,12 +520,14 @@
+@@ -526,12 +526,14 @@
  	((ev)->type = SND_SEQ_EVENT_SYSEX,\
  	 snd_seq_ev_set_variable(ev, datalen, dataptr))
  

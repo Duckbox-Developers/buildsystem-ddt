@@ -1771,7 +1771,7 @@ $(D)/libusb_compat: $(D)/bootstrap $(D)/libusb $(ARCHIVE)/$(LIBUSB_COMPAT_SOURCE
 #
 # alsa-lib
 #
-ALSA_LIB_VER = 1.2.13
+ALSA_LIB_VER = 1.2.14
 ALSA_LIB_SOURCE = alsa-lib-$(ALSA_LIB_VER).tar.bz2
 ALSA_LIB_PATCH  = alsa-lib-$(ALSA_LIB_VER).patch
 ALSA_LIB_PATCH += alsa-lib-$(ALSA_LIB_VER)-link_fix.patch
@@ -1800,6 +1800,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 			--enable-silent-rules \
 			--disable-aload \
 			--disable-rawmidi \
+			--disable-seq \
 			--disable-resmgr \
 			--disable-old-symbols \
 			--disable-alisp \
@@ -1818,7 +1819,7 @@ $(D)/alsa_lib: $(D)/bootstrap $(ARCHIVE)/$(ALSA_LIB_SOURCE)
 #
 # alsa-utils
 #
-ALSA_UTILS_VER = 1.2.13
+ALSA_UTILS_VER = 1.2.14
 ALSA_UTILS_SOURCE = alsa-utils-$(ALSA_UTILS_VER).tar.bz2
 ALSA_UTILS_PATCH = alsa-utils-$(ALSA_UTILS_VER).patch
 

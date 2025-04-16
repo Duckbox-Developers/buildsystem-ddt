@@ -1,0 +1,24 @@
+diff -Naur a/configure.ac b/configure.ac
+--- a/configure.ac	2025-04-14 10:56:57.000000000 +0200
++++ b/configure.ac	2025-04-16 13:09:59.467429959 +0200
+@@ -8,7 +8,7 @@
+ AM_MAINTAINER_MODE([enable])
+ 
+ AM_GNU_GETTEXT([external])
+-AM_GNU_GETTEXT_VERSION([0.22.5])
++AM_GNU_GETTEXT_VERSION([0.19.8])
+ 
+ dnl Checks for programs.
+ 
+diff -Naur a/axfer/container.h b/axfer/container.h
+--- a/axfer/container.h	2019-01-07 15:01:46.000000000 +0100
++++ b/axfer/container.h	2019-03-12 23:49:23.467430212 +0100
+@@ -17,6 +17,8 @@
+ #include <stdbool.h>
+ #include <stdint.h>
+ 
++#include <assert.h>
++
+ #include <alsa/asoundlib.h>
+ 
+ #include "os_compat.h"

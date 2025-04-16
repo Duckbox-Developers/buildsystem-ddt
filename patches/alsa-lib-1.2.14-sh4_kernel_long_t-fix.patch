@@ -1,6 +1,6 @@
 --- a/include/sound/uapi/asound.h_org
 +++ b/include/sound/uapi/asound.h
-@@ -994,13 +994,7 @@
+@@ -998,13 +998,7 @@
  #define SNDRV_TIMER_IOCTL_CREATE	_IOWR('T', 0xa5, struct snd_timer_uinfo)
  #define SNDRV_TIMER_IOCTL_TRIGGER	_IO('T', 0xa6)
  
