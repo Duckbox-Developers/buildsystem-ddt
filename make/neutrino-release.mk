@@ -457,6 +457,8 @@ neutrino-release-dm7080:
 	cp -a $(TARGET_DIR)/boot/* $(RELEASE_DIR)/boot/
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm7080 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm7080 $(RELEASE_DIR)/etc/fstab
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm7080/extra/*.ko $(RELEASE_DIR)/lib/modules/
 
 #
@@ -485,6 +487,8 @@ neutrino-release-dm920:
 neutrino-release-dm8000:
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm8000 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm8000 $(RELEASE_DIR)/etc/fstab
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm8000/extra/*.ko $(RELEASE_DIR)/lib/modules/
 
 #
@@ -493,6 +497,8 @@ neutrino-release-dm8000:
 neutrino-release-dm7020hd:
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm7020hd $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm7020hd $(RELEASE_DIR)/etc/fstab
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm7020hd/extra/*.ko $(RELEASE_DIR)/lib/modules/
 
 #
