@@ -31,7 +31,7 @@ if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
 	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
 	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
-	echo "Parameter 9 (ARM/MIPS)                  : GCC Version (1-9)"
+	echo "Parameter 9 (ARM/MIPS)                  : GCC Version (1-10)"
 	echo "Parameter 10 (ARM VU+)                  : Normal/Multiboot (1-2)"
 	exit
 fi
@@ -410,7 +410,7 @@ fi
 # gcc version for ARM/MIPS
 if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $9 in
-		[1-9]) REPLY=$9;;
+		[1-9] | 1[0]) REPLY=$9;;
 		*)	echo -e "\nSelect GCC version:"
 			echo "   1)  GCC version 6.5.0"
 			echo "   2)  GCC version 7.5.0"
@@ -421,20 +421,22 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 #			echo "   7)  GCC version 12.4.0 (not yet ready)"
 #			echo "   8)  GCC version 13.3.0 (not yet ready)"
 #			echo "   9)  GCC version 14.2.0 (not yet ready)"
-			read -p "Select GCC version (1-9)? ";;
+#			echo "  10)  GCC version 15.1.0 (not yet ready)"
+			read -p "Select GCC version (1-10)? ";;
 	esac
 
 	case "$REPLY" in
-		1) BS_GCC_VER="6.5.0";;
-		2) BS_GCC_VER="7.5.0";;
-		3) BS_GCC_VER="8.5.0";;
-		4) BS_GCC_VER="9.5.0";;
-		5) BS_GCC_VER="10.5.0";;
-		6) BS_GCC_VER="11.5.0";;
-		7) BS_GCC_VER="12.4.0";;
-		8) BS_GCC_VER="13.3.0";;
-		9) BS_GCC_VER="14.2.0";;
-		*) BS_GCC_VER="8.5.0";;
+		 1) BS_GCC_VER="6.5.0";;
+		 2) BS_GCC_VER="7.5.0";;
+		 3) BS_GCC_VER="8.5.0";;
+		 4) BS_GCC_VER="9.5.0";;
+		 5) BS_GCC_VER="10.5.0";;
+		 6) BS_GCC_VER="11.5.0";;
+		 7) BS_GCC_VER="12.4.0";;
+		 8) BS_GCC_VER="13.3.0";;
+		 9) BS_GCC_VER="14.2.0";;
+		10) BS_GCC_VER="15.1.0";;
+		 *) BS_GCC_VER="8.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
 else
