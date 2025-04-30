@@ -1,0 +1,290 @@
+From ff77ddc39a52d99daf340b113e520e25c4fd3c7e Mon Sep 17 00:00:00 2001
+From: Matt Robinson <git@nerdoftheherd.com>
+Date: Fri, 7 Mar 2025 17:02:00 +0000
+Subject: [PATCH] Fix build when htole64 macro is in (sys/)endian.h
+
+Currently, if htole64 is available on a platform as a macro in endian.h
+or sys/endian.h the AC_CHECK_DECL check does not detect them as these
+files are not included in the test.  As those two headers are however
+included in the build this causes the declarations of the compat
+functions to be mangled by the undetected macros and fail to compile.
+
+Resolve this by passing conditional includes of endian.h and
+sys/endian.h to the includes parameter of the AC_CHECK_DECL macro so
+that the htole64 macro is detected correctly.
+---
+ configure    | 10 +++++++++-
+ configure.ac |  9 ++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 30164e57..1dbb9aa5 100755
+--- a/configure
++++ b/configure
+@@ -7620,7 +7620,15 @@ then :
+ 
+ fi
+ 
+-ac_fn_check_decl "$LINENO" "htole64" "ac_cv_have_decl_htole64" "$ac_includes_default" "$ac_c_undeclared_builtin_options" "CFLAGS"
++ac_fn_check_decl "$LINENO" "htole64" "ac_cv_have_decl_htole64" "
++	#ifdef HAVE_ENDIAN_H
++		#include <endian.h>
++	#endif
++	#ifdef HAVE_SYS_ENDIAN_H
++		#include <sys/endian.h>
++	#endif
++
++" "$ac_c_undeclared_builtin_options" "CFLAGS"
+ if test "x$ac_cv_have_decl_htole64" = xyes
+ then :
+ 
+diff --git a/configure.ac b/configure.ac
+index f71a2efa..69f50cf1 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -553,7 +553,14 @@ AC_CHECK_FUNCS(htole64)
+ AC_CHECK_DECL(htole64,
+ 	[
+ 	AC_DEFINE(HAVE_DECL_HTOLE64,1,htole64 is a macro)
+-	],,)
++	],,[
++	#ifdef HAVE_ENDIAN_H
++		#include <endian.h>
++	#endif
++	#ifdef HAVE_SYS_ENDIAN_H
++		#include <sys/endian.h>
++	#endif
++	])
+ 
+ # POSIX monotonic time
+ AC_CHECK_FUNCS(clock_gettime)
+
+
+From cb13e8836ee145832181f825fc568e7ab6cfe2b0 Mon Sep 17 00:00:00 2001
+From: Matt Johnston <matt@ucc.asn.au>
+Date: Tue, 11 Mar 2025 09:58:02 +0100
+Subject: [PATCH] Test for static_assert
+
+Older uClibc (< ~1.0.42) or older compilers don't support static_assert
+
+Fixes #351
+---
+ configure       | 78 +++++++++++++++++++++++++++++++++++++++++++++++++
+ configure.ac    | 26 +++++++++++++++++
+ src/config.h.in |  6 ++++
+ src/includes.h  | 13 +++++++++
+ 4 files changed, 123 insertions(+)
+
+diff --git a/configure b/configure
+index 1dbb9aa5..1836e83a 100755
+--- a/configure
++++ b/configure
+@@ -8729,6 +8729,84 @@ printf "%s\n" "$as_me: Not checking for /dev/ptc & /dev/pts since we're cross-co
+ 	fi
+ fi
+ 
++{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for static_assert" >&5
++printf %s "checking for static_assert... " >&6; }
++if test ${ac_cv_have_static_assert+y}
++then :
++  printf %s "(cached) " >&6
++else $as_nop
++
++	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++
++#include <assert.h>
++
++int
++main (void)
++{
++ static_assert(1 == 1, "bad ram?");
++  ;
++  return 0;
++}
++_ACEOF
++if ac_fn_c_try_link "$LINENO"
++then :
++   ac_cv_have_static_assert="yes"
++else $as_nop
++   ac_cv_have_static_assert="no"
++
++fi
++rm -f core conftest.err conftest.$ac_objext conftest.beam \
++    conftest$ac_exeext conftest.$ac_ext
++
++fi
++{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_static_assert" >&5
++printf "%s\n" "$ac_cv_have_static_assert" >&6; }
++if test "$ac_cv_have_static_assert" = "yes" ; then
++
++printf "%s\n" "#define HAVE_STATIC_ASSERT 1" >>confdefs.h
++
++fi
++
++{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for _Static_assert" >&5
++printf %s "checking for _Static_assert... " >&6; }
++if test ${ac_cv_have_underscore_static_assert+y}
++then :
++  printf %s "(cached) " >&6
++else $as_nop
++
++	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++
++#include <assert.h>
++
++int
++main (void)
++{
++ _Static_assert(1 == 1, "cosmic rays?");
++  ;
++  return 0;
++}
++_ACEOF
++if ac_fn_c_try_link "$LINENO"
++then :
++   ac_cv_have_underscore_static_assert="yes"
++else $as_nop
++   ac_cv_have_underscore_static_assert="no"
++
++fi
++rm -f core conftest.err conftest.$ac_objext conftest.beam \
++    conftest$ac_exeext conftest.$ac_ext
++
++fi
++{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_underscore_static_assert" >&5
++printf "%s\n" "$ac_cv_have_underscore_static_assert" >&6; }
++if test "$ac_cv_have_underscore_static_assert" = "yes" ; then
++
++printf "%s\n" "#define HAVE_UNDERSCORE_STATIC_ASSERT 1" >>confdefs.h
++
++fi
++
+ 
+ 
+ if test $BUNDLED_LIBTOM = 1 ; then
+diff --git a/configure.ac b/configure.ac
+index 69f50cf1..83fe68c3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -895,6 +895,32 @@ if test -z "$no_ptc_check" ; then
+ 	fi
+ fi
+ 
++AC_CACHE_CHECK([for static_assert], ac_cv_have_static_assert, [
++	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
++#include <assert.h>
++		]],
++		[[ static_assert(1 == 1, "bad ram?"); ]])],
++		[ ac_cv_have_static_assert="yes" ],
++		[ ac_cv_have_static_assert="no" ]
++	)
++])
++if test "$ac_cv_have_static_assert" = "yes" ; then
++	AC_DEFINE(HAVE_STATIC_ASSERT,1,Have static_assert)
++fi
++
++AC_CACHE_CHECK([for _Static_assert], ac_cv_have_underscore_static_assert, [
++	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
++#include <assert.h>
++		]],
++		[[ _Static_assert(1 == 1, "cosmic rays?"); ]])],
++		[ ac_cv_have_underscore_static_assert="yes" ],
++		[ ac_cv_have_underscore_static_assert="no" ]
++	)
++])
++if test "$ac_cv_have_underscore_static_assert" = "yes" ; then
++	AC_DEFINE(HAVE_UNDERSCORE_STATIC_ASSERT,1,Have _Static_assert)
++fi
++
+ AC_EXEEXT
+ 
+ if test $BUNDLED_LIBTOM = 1 ; then
+diff --git a/src/config.h.in b/src/config.h.in
+index d498eafe..0590e0c6 100644
+--- a/src/config.h.in
++++ b/src/config.h.in
+@@ -240,6 +240,9 @@
+ /* Define to 1 if you have the <shadow.h> header file. */
+ #undef HAVE_SHADOW_H
+ 
++/* Have static_assert */
++#undef HAVE_STATIC_ASSERT
++
+ /* Define to 1 if you have the <stdint.h> header file. */
+ #undef HAVE_STDINT_H
+ 
+@@ -366,6 +369,9 @@
+ /* Define to 1 if the system has the type `uint8_t'. */
+ #undef HAVE_UINT8_T
+ 
++/* Have _Static_assert */
++#undef HAVE_UNDERSCORE_STATIC_ASSERT
++
+ /* Define to 1 if you have the <unistd.h> header file. */
+ #undef HAVE_UNISTD_H
+ 
+diff --git a/src/includes.h b/src/includes.h
+index b84d26f7..9f386247 100644
+--- a/src/includes.h
++++ b/src/includes.h
+@@ -56,6 +56,7 @@
+ #include <dirent.h>
+ #include <time.h>
+ #include <setjmp.h>
++#include <assert.h>
+ 
+ #ifdef HAVE_UTMP_H
+ #include <utmp.h>
+@@ -203,4 +204,16 @@ extern char** environ;
+ # define UNUSED(x) x 
+ #endif
+ 
++/* static_assert() is a keyword in c23, earlier libc often supports
++ * it as a macro in assert.h.
++ * _Static_assert() is a keyword supported since c11.
++ * If neither are available, do nothing */
++#ifndef HAVE_STATIC_ASSERT
++#ifdef HAVE_UNDERSCORE_STATIC_ASSERT
++#define static_assert(condition, message) _Static_assert(condition, message)
++#else
++#define static_assert(condition, message)
++#endif
++#endif
++
+ #endif /* DROPBEAR_INCLUDES_H_ */
+
+
+From bd12a8611b3c838f1ed1d1c2cbaff2da1072a315 Mon Sep 17 00:00:00 2001
+From: "Peter Fichtner (pfichtner)" <pfichtner@users.noreply.github.com>
+Date: Wed, 12 Mar 2025 20:26:07 -0700
+Subject: [PATCH] Fix type incompatibility in htole64 and htole32 with older
+ GCC versions
+
+---
+ src/compat.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/compat.c b/src/compat.c
+index 5a54e9bb..4d6f78a0 100644
+--- a/src/compat.c
++++ b/src/compat.c
+@@ -288,7 +288,7 @@ uint64_t htole64(uint64_t inp) {
+ 		uint64_t v;
+ 		uint8_t bytes[8];
+ 	} out;
+-	STORE64L(inp, &out.bytes);
++	STORE64L(inp, out.bytes);
+ 	return out.v;
+ }
+ 
+@@ -301,7 +301,7 @@ uint32_t htole32(uint32_t inp) {
+ 		uint32_t v;
+ 		uint8_t bytes[4];
+ 	} out;
+-	STORE32L(inp, &out.bytes);
++	STORE32L(inp, out.bytes);
+ 	return out.v;
+ }
+ 

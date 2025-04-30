@@ -1628,8 +1628,9 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 #
 # dropbear
 #
-DROPBEAR_VER = 2024.86
+DROPBEAR_VER = 2025.87
 DROPBEAR_SOURCE = dropbear-$(DROPBEAR_VER).tar.bz2
+DROPBEAR_PATCH = dropbear-$(DROPBEAR_VER).patch
 
 $(ARCHIVE)/$(DROPBEAR_SOURCE):
 	$(DOWNLOAD) http://matt.ucc.asn.au/dropbear/releases/$(DROPBEAR_SOURCE)
@@ -1639,6 +1640,7 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 	$(REMOVE)/dropbear-$(DROPBEAR_VER)
 	$(UNTAR)/$(DROPBEAR_SOURCE)
 	$(CHDIR)/dropbear-$(DROPBEAR_VER); \
+		$(call apply_patches, $(DROPBEAR_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
