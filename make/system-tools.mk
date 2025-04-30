@@ -1101,7 +1101,7 @@ $(D)/sed: $(D)/bootstrap $(ARCHIVE)/$(SED_SOURCE)
 #
 # smartmontools
 #
-SMARTMONTOOLS_VER = 7.4
+SMARTMONTOOLS_VER = 7.5
 SMARTMONTOOLS_SOURCE = smartmontools-$(SMARTMONTOOLS_VER).tar.gz
 
 $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE):
