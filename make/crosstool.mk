@@ -5,6 +5,10 @@ $(TARGET_DIR)/lib/libc.so.6:
 		cp -a $(CROSS_BASE)/$(TARGET)/lib/*so* $(TARGET_DIR)/lib; \
 	fi
 
+ifeq ($(BOXTYPE), dcube)
+BXTP = _$(BOXTYPE)
+endif
+
 #
 # crosstool-ng
 #
@@ -14,7 +18,7 @@ CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
 CROSSTOOL_NG_CONFIG  = crosstool-ng-$(BOXARCH)-gcc-$(BS_GCC_VER)
-CROSSTOOL_NG_BACKUP  = $(ARCHIVE)/$(CROSSTOOL_NG_CONFIG)-kernel-$(KERNEL_VER)-backup.tar.gz
+CROSSTOOL_NG_BACKUP  = $(ARCHIVE)/$(CROSSTOOL_NG_CONFIG)-kernel-$(KERNEL_VER)$(BXTP)-backup.tar.gz
 #CROSSTOOL_NG_PATCH   = $(PATCHES)/ct-ng/crosstool-ng-revert-autoconf-2.71.patch
 
 # -----------------------------------------------------------------------------
@@ -38,7 +42,7 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 	$(CHDIR)/$(CROSSTOOL_NG_DIR); \
 		git checkout -q $(CROSSTOOL_NG_VER); \
 		$(call apply_patches, $(CROSSTOOL_NG_PATCH)); \
-		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG).config .config; \
+		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG)$(BXTP).config .config; \
 		sed -i "s|^CT_PARALLEL_JOBS=.*|CT_PARALLEL_JOBS=$(PARALLEL_JOBS)|" .config; \
 		\
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
@@ -67,7 +71,7 @@ crosstool-ng-config: directories
 	unset CONFIG_SITE; \
 	$(CHDIR)/$(CROSSTOOL_NG_DIR); \
 		git checkout -q $(CROSSTOOL_NG_VER); \
-		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG).config .config; \
+		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG)$(BXTP).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
@@ -86,7 +90,7 @@ crosstool-ng-upgradeconfig: directories
 	unset CONFIG_SITE; \
 	$(CHDIR)/$(CROSSTOOL_NG_DIR); \
 		git checkout -q $(CROSSTOOL_NG_VER); \
-		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG).config .config; \
+		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG)$(BXTP).config .config; \
 		test -f ./configure || ./bootstrap && \
 		./configure --enable-local; \
 		MAKELEVEL=0 make; \
