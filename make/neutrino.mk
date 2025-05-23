@@ -37,7 +37,7 @@ NEUTRINO_DEPS += $(D)/pugixml $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm800se dm800sev2 dm900 dm920 dm8000 dm7020hd))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm800se dm800sev2 dm900 dm920 dm8000 dm7020hd dcube))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils
@@ -80,6 +80,12 @@ N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 N_CPPFLAGS     = -I$(TARGET_INCLUDE_DIR)
 N_CPPFLAGS    += -ffunction-sections -fdata-sections
 
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dcube))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 4.9.4 5.5.0))
+N_CPPFLAGS    += -std=gnu++11
+endif
+endif
+
 ifeq ($(BOXARCH), arm)
 N_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
 endif
@@ -111,7 +117,7 @@ N_CONFIG_OPTS += --enable-reschange
 endif
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920 dcube))
 N_CONFIG_OPTS += --disable-arm-acc
 endif
 
@@ -216,6 +222,7 @@ $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
 		$(SOURCE_DIR)/$(LIBSTB_HAL)/autogen.sh $(SILENT_OPT); \
 		$(BUILDENV) \
 		$(SOURCE_DIR)/$(LIBSTB_HAL)/configure $(SILENT_OPT) \
+			MANIFEST_TOOL=: \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix=/usr \
@@ -284,6 +291,7 @@ $(D)/neutrino-plugins.config.status:
 		$(SOURCE_DIR)/$(NEUTRINO)/autogen.sh $(SILENT_OPT); \
 		$(BUILDENV) \
 		$(SOURCE_DIR)/$(NEUTRINO)/configure $(SILENT_OPT) \
+			MANIFEST_TOOL=: \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix=/usr \

@@ -784,7 +784,7 @@ $(D)/ca-bundle: $(ARCHIVE)/$(CA-BUNDLE_SOURCE)
 #
 # libcurl
 #
-ifeq ($(BOXARCH), sh4)
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 4.8.4 4.9.4))
 LIBCURL_VER = 7.61.1
 else
 LIBCURL_VER = 8.13.0

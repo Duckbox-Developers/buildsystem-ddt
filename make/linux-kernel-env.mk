@@ -38,6 +38,17 @@ endif
 KERNEL_DTB_VER         = dreambox-dm900.dtb
 endif
 
+ifeq ($(BOXTYPE), dcube)
+KERNEL_VER             = 2.6.34
+KERNEL_TYPE            = $(BOXTYPE)
+KERNEL_SRC_VER         = 2.6.34
+KERNEL_SRC             = linux-${KERNEL_SRC_VER}.tar.xz
+KERNEL_URL             = https://cdn.kernel.org/pub/linux/kernel/v2.6
+KERNEL_CONFIG          = dcube/$(BOXTYPE)_defconfig
+KERNEL_PATCHES_ARM     = $(DCUBE_PATCHES)
+KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_SRC_VER)
+endif
+
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k))
 KERNEL_TYPE            = $(BOXTYPE)
 ifeq ($(BOXTYPE), vuduo4k)

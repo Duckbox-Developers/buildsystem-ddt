@@ -49,8 +49,8 @@ ifneq ($(BOXARCH), sh4)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
 	@echo "SWAPDATA          : $(shell [ "$(SWAPDATA)" == "1" -o "$(SWAPDATA)" == "81" ] && echo -e enabled || echo -e disabled)"
 endif
-	@echo "GCC VERSION       : $(BS_GCC_VER)"
 endif
+	@echo "GCC VERSION       : $(BS_GCC_VER)"
 	@echo "FFMPEG            : `([ "$(FFMPEG_EXPERIMENTAL)" == "1" ] && echo "EXPERIMENTAL" ) || ([ "$(FFMPEG_SNAPSHOT)" == "1" ] && echo "SNAPSHOT" ) || echo "STANDARD"`"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"

@@ -24,14 +24,14 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-87)"
-	echo "Parameter 2 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
-	echo "Parameter 3                             : Optimization (1-6)"
-	echo "Parameter 4                             : External LCD support (1-4)"
-	echo "Parameter 5                             : Neutrino variant (1-4)"
-	echo "Parameter 6 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
-	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
-	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
-	echo "Parameter 9 (ARM/MIPS)                  : GCC Version (1-10)"
+	echo "Parameter 2 (ARM/MIPS)                  : GCC Version (1-12)"
+	echo "Parameter 3 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
+	echo "Parameter 4                             : Optimization (1-6)"
+	echo "Parameter 5                             : External LCD support (1-4)"
+	echo "Parameter 6                             : Neutrino variant (1-4)"
+	echo "Parameter 7 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap Data and Linux Swap (1-3, 81-83)"
+	echo "Parameter 8 (HD51/H7/BRE2ZE4K/E4HDULTRA): Kernel size in MB (default: 8)"
+	echo "Parameter 9 (HD51/H7/BRE2ZE4K/E4HDULTRA): Swap size in MB (default: 128)"
 	echo "Parameter 10 (ARM VU+)                  : Normal/Multiboot (1-2)"
 	exit
 fi
@@ -40,7 +40,8 @@ fi
 
 if [ "$1" != "" ]; then
 	# defaults
-	echo "FFMPEG_EXPERIMENTAL=1" > config
+	echo "BOXTYPE=$1" > config
+	echo "FFMPEG_EXPERIMENTAL=0" >> config
 	echo "FFMPEG_SNAPSHOT=0" >> config
 	echo "OPTIMIZATIONS=size" >> config
 	echo "OPTIMIZE_PICS=1" >> config
@@ -48,22 +49,29 @@ if [ "$1" != "" ]; then
 	echo "FLAVOUR=neutrino-ddt" >> config
 	echo "IMAGE=neutrino" >> config
 	echo "SWAPDATA=0" >> config
-	echo "BS_GCC_VER=8.5.0" >> config
 	echo "VU_MULTIBOOT=1" >> config
-	echo "BOXTYPE=$1" >> config
 	case $1 in
 		ufs910|ufs912|ufs913|ufs922|tf7700|fortis_hdbox|octagon1008|atevio7500|ipbox55|ipbox99|ipbox9900|cuberevo|cuberevo_mini|cuberevo_mini2|cuberevo_250hd|cuberevo_2000hd|cuberevo_3000hd|spark|spark7162)
 			echo "BOXARCH=sh4" >> config
+			echo "BS_GCC_VER=4.8.4" >> config
+			make printenv
+			exit
+		;;
+		dcube)
+			echo "BOXARCH=arm" >> config
+			echo "BS_GCC_VER=4.9.4" >> config
 			make printenv
 			exit
 		;;
 		hd51|h7|bre2ze4k|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse|dm900|dm920)
 			echo "BOXARCH=arm" >> config
+			echo "BS_GCC_VER=8.5.0" >> config
 			make printenv
 			exit
 		;;
 		vuduo|vuduo2|vuuno|vuultimo|dm7020hd|dm820|dm7080|dm8000|dm800se|dm800sev2)
 			echo "BOXARCH=mips" >> config
+			echo "BS_GCC_VER=8.5.0" >> config
 			make printenv
 			exit
 		;;
@@ -114,11 +122,14 @@ case $1 in
 		echo "  AXAS"
 		echo "   66) AXAS E4HD 4K Ultra"
 		echo
-		echo "  Dreambox mips-based"
+		echo "  other old arm-based receivers"
+		echo "   71) D-Cube R2"
+		echo
+		echo "  Dreambox mips-based receivers"
 		echo "   80) DM 8000 HD        81) DM 7020 HD         82) DM800 HD SE        83) DM800 HD SE v2"
 		echo "   84) DM 820 HD         85) DM 7080 HD"
 		echo
-		echo "  Dreambox arm-based"
+		echo "  Dreambox arm-based receivers"
 		echo "   86) DM 900 UHD        87) DM 920 UHD"
 		echo
 		read -p "Select target (1-87)? ";;
@@ -168,6 +179,8 @@ case "$REPLY" in
 
 	66) BOXARCH="arm";BOXTYPE="e4hdultra";;
 
+	71) BOXARCH="arm";BOXTYPE="dcube";;
+
 	80) BOXARCH="mips";BOXTYPE="dm8000";;
 	81) BOXARCH="mips";BOXTYPE="dm7020hd";;
 	82) BOXARCH="mips";BOXTYPE="dm800se";;
@@ -205,6 +218,52 @@ fi
 
 ##############################################
 
+if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
+	case $2 in
+		[1-9] | 1[0-2]) REPLY=$2;;
+		*)	echo -e "\nSelect GCC version:"
+			if [ $BOXTYPE == 'dcube' ]; then
+				echo -e "   \033[01;32m1)  GCC version 4.9.4\033[00m"
+				echo "   2)  GCC version 5.5.0"
+				echo "   3)  GCC version 6.5.0"
+				read -p "Select GCC version (1-3)? "
+			else
+				echo "   3)  GCC version 6.5.0"
+				echo "   4)  GCC version 7.5.0"
+				echo -e "   \033[01;32m5)  GCC version 8.5.0\033[00m"
+				echo "   6)  GCC version 9.5.0"
+				echo "   7)  GCC version 10.5.0"
+				echo "   8)  GCC version 11.5.0"
+#				echo "   9)  GCC version 12.4.0 (not yet ready)"
+#				echo "  10)  GCC version 13.3.0 (not yet ready)"
+#				echo "  11)  GCC version 14.2.0 (not yet ready)"
+#				echo "  12)  GCC version 15.1.0 (not yet ready)"
+				read -p "Select GCC version (3-12)? "
+			fi;;
+	esac
+
+	case "$REPLY" in
+		 1) BS_GCC_VER="4.9.4";;
+		 2) BS_GCC_VER="5.5.0";;
+		 3) BS_GCC_VER="6.5.0";;
+		 4) BS_GCC_VER="7.5.0";;
+		 5) BS_GCC_VER="8.5.0";;
+		 6) BS_GCC_VER="9.5.0";;
+		 7) BS_GCC_VER="10.5.0";;
+		 8) BS_GCC_VER="11.5.0";;
+		 9) BS_GCC_VER="12.4.0";;
+		10) BS_GCC_VER="13.3.0";;
+		11) BS_GCC_VER="14.2.0";;
+		12) BS_GCC_VER="15.1.0";;
+		 *) [ $BOXTYPE == 'dcube' ] && BS_GCC_VER="6.5.0" || BS_GCC_VER="8.5.0";;
+	esac
+	echo "BS_GCC_VER=$BS_GCC_VER" >> config
+else
+	echo "BS_GCC_VER=4.8.4" >> config
+fi
+
+##############################################
+
 if [ "$BOXARCH" == "sh4" ]; then
 	LOCAL_FFMPEG_BOXTYPE_LIST='octagon1008 fortis_hdbox cuberevo cuberevo_3000hd cuberevo_mini cuberevo_mini2 ufs912 ufs913 spark atevio7500'
 	for i in $LOCAL_FFMPEG_BOXTYPE_LIST; do
@@ -215,11 +274,12 @@ if [ "$BOXARCH" == "sh4" ]; then
 			echo "FFMPEG_SNAPSHOT=0" >> config
 		fi
 	done
-fi
-
-if [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
-	case $2 in
-		[1-3]) REPLY=$2;;
+elif [ $BS_GCC_VER == '4.9.4' -o $BS_GCC_VER == '5.5.0' ]; then
+	echo "FFMPEG_EXPERIMENTAL=0" >> config
+	echo "FFMPEG_SNAPSHOT=0" >> config
+elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
+	case $3 in
+		[1-3]) REPLY=$3;;
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4.5\033[00m"
 			echo "   2)  FFMPEG 6.1.2 [experimental]"
@@ -244,8 +304,8 @@ fi
 
 ##############################################
 
-case $3 in
-	[1-6]) REPLY=$3;;
+case $4 in
+	[1-6]) REPLY=$4;;
 	*)	echo -e "\nOptimization:"
 		echo -e "   \033[01;32m1)  optimization for size\033[00m"
 		echo "   2)  optimization normal (current only SH4 or ARM/MIPS with GCC 6)"
@@ -277,8 +337,8 @@ echo "OPTIMIZE_PICS=$OPTIMIZE_PICS" >> config
 
 ##############################################
 
-case $4 in
-	[1-4]) REPLY=$4;;
+case $5 in
+	[1-4]) REPLY=$5;;
 	*)	echo -e "\nExternal LCD support:"
 		echo -e "   \033[01;32m1)  No external LCD\033[00m"
 		echo "   2)  graphlcd for external LCD"
@@ -298,12 +358,12 @@ echo "EXTERNAL_LCD=$EXTERNAL_LCD" >> config
 
 ##############################################
 
-case $5 in
-	[1-4]) REPLY=$5;;
+case $6 in
+	[1-4]) REPLY=$6;;
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
-		if [ "$BOXARCH" != "sh4" -a "$BOXTYPE" != "vuuno" -a "$BOXTYPE" != "vuultimo" -a "$BOXTYPE" != "dm7020hd" -a "$BOXTYPE" != "dm8000" -a "$BOXTYPE" != "dm820" -a "$BOXTYPE" != "dm7080" -a "$BOXTYPE" != "dm900" -a "$BOXTYPE" != "dm920" ]; then
+		if [ "$BOXARCH" != "sh4" -a "$BOXTYPE" != "vuuno" -a "$BOXTYPE" != "vuultimo" -a "$BOXTYPE" != "dm7020hd" -a "$BOXTYPE" != "dm8000" -a "$BOXTYPE" != "dm820" -a "$BOXTYPE" != "dm7080" -a "$BOXTYPE" != "dm900" -a "$BOXTYPE" != "dm920" -a "$BOXTYPE" != "dcube" ]; then
 			echo "   3)  neutrino-tangos"
 			echo "   4)  neutrino-tangos (includes WLAN drivers)"
 		fi
@@ -330,8 +390,8 @@ echo "IMAGE=$IMAGE" >> config
 # dataswap linuxswap hd51/h7/bre2ze4k/e4hdultra
 
 if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYPE == 'e4hdultra' ]; then
-	case $6 in
-		[1-3] | 8[1-3]) REPLY=$6;;
+	case $7 in
+		[1-3] | 8[1-3]) REPLY=$7;;
 		*)	echo -e "\nSwap Data and Linux Swap:"
 			echo -e "   \033[01;32m 1)  Swap OFF\033[00m"
 			echo -e "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
@@ -369,8 +429,8 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 	[ $SWAPDATA -gt 79 -a $SWAPDATA -lt 83 ] && EMMC_IMAGE_SIZE=7634944 || EMMC_IMAGE_SIZE=3817472
 	echo "EMMC_IMAGE_SIZE=$EMMC_IMAGE_SIZE" >> config
 
-	case $7 in
-		[6-9]|1[0-9]) REPLY=$7;;
+	case $8 in
+		[6-9]|1[0-9]) REPLY=$8;;
 		*)	echo ""
 			read -p $'Kernelsize in MB, 6..19 \033[01;32m(default: 8)\033[00m? ' REPLY;;
 	esac
@@ -378,8 +438,8 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 	echo "KERNEL_PARTITION_SIZE=$KERNEL_PARTITION_SIZE" >> config
 
 	if [ $SWPCNT -gt 0 ]; then
-		case $8 in
-			[1-9][0-9]|[1-9][0-9][0-9]|10[0-2][0-4]) REPLY=$8;;
+		case $9 in
+			[1-9][0-9]|[1-9][0-9][0-9]|10[0-2][0-4]) REPLY=$9;;
 			*)	echo ""
 				read -p $'Swapsize in MB, 10..1024 \033[01;32m(default: 128)\033[00m? ' REPLY;;
 		esac
@@ -404,43 +464,6 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 	[ $SWPCNT -gt 0 ] && echo "SWAP_DATA_PARTITION_SIZE    (${SWPCNT}x): $SWAP_DATA_PARTITION_SIZE	($(($SWAP_DATA_PARTITION_SIZE/1024)) MB)"
 	echo "ROOTFS_PARTITION_SIZE_MULTI (4x): $ROOTFS_PARTITION_SIZE_MULTI	($(($ROOTFS_PARTITION_SIZE_MULTI/1024)) MB)"
 	echo "---------------------------------------------------------"
-fi
-##############################################
-
-# gcc version for ARM/MIPS
-if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
-	case $9 in
-		[1-9] | 1[0]) REPLY=$9;;
-		*)	echo -e "\nSelect GCC version:"
-			echo "   1)  GCC version 6.5.0"
-			echo "   2)  GCC version 7.5.0"
-			echo -e "   \033[01;32m3)  GCC version 8.5.0\033[00m"
-			echo "   4)  GCC version 9.5.0"
-			echo "   5)  GCC version 10.5.0"
-			echo "   6)  GCC version 11.5.0"
-#			echo "   7)  GCC version 12.4.0 (not yet ready)"
-#			echo "   8)  GCC version 13.3.0 (not yet ready)"
-#			echo "   9)  GCC version 14.2.0 (not yet ready)"
-#			echo "  10)  GCC version 15.1.0 (not yet ready)"
-			read -p "Select GCC version (1-10)? ";;
-	esac
-
-	case "$REPLY" in
-		 1) BS_GCC_VER="6.5.0";;
-		 2) BS_GCC_VER="7.5.0";;
-		 3) BS_GCC_VER="8.5.0";;
-		 4) BS_GCC_VER="9.5.0";;
-		 5) BS_GCC_VER="10.5.0";;
-		 6) BS_GCC_VER="11.5.0";;
-		 7) BS_GCC_VER="12.4.0";;
-		 8) BS_GCC_VER="13.3.0";;
-		 9) BS_GCC_VER="14.2.0";;
-		10) BS_GCC_VER="15.1.0";;
-		 *) BS_GCC_VER="8.5.0";;
-	esac
-	echo "BS_GCC_VER=$BS_GCC_VER" >> config
-else
-	echo "BS_GCC_VER=4.8.4" >> config
 fi
 
 ##############################################

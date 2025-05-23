@@ -35,6 +35,9 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm900 dm920))
 	$(MAKE) flash-image-dm900_dm920
 endif
+ifeq ($(BOXTYPE), dcube)
+	$(MAKE) flash-image-dcube_img
+endif
 	$(TUXBOX_CUSTOMIZE)
 
 ofgimage:
@@ -497,7 +500,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	echo "Link: https://github.com/Duckbox-Developers" >> $(BOXTYPE).nfo && \
 	echo -n "MD5: " >> $(BOXTYPE).nfo && \
 	md5sum -b $(BOXTYPE).nfi | awk -F " " '{print $$1}' >> $(BOXTYPE).nfo; \
-	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)$(V2)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(BOXTYPE).{nfi,nfo}
+	zip -jr $(RELEASE_IMAGE_DIR)/$(BOXTYPE)$(V2)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(BOXTYPE).{nfi,nfo} $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
@@ -546,5 +549,25 @@ flash-image-dm900_dm920:
 	echo $(BOXTYPE)_$(FLAVOUR)_flash_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
 	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_$(FLAVOUR)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/imageversion
+	# cleanup
+	rm -rf $(IMAGE_BUILD_DIR)
+
+flash-image-dcube_img: $(D)/host_mtd_utils $(D)/createimage
+	@echo -e "$(TERM_YELLOW_BOLD)==============================="
+	@echo -e "===> Creating FLASH Image. <==="
+	@echo -e "===============================$(TERM_NORMAL)"
+	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)/flash-image-256
+	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/flash-image-256/rootfs.ubifs -m 2048 -e 126976 -c 4096
+	echo $(BOXTYPE)_$(FLAVOUR)_flash_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/flash-image-256/imageversion
+	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
+	$(HOST_DIR)/bin/createimage 126976 neutrino-ddt kernel $(TARGET_DIR)/boot/zImage 0 0 rootfs ./flash-image-256/rootfs.ubifs 0xC000000 1 > ./flash-image-256/flashimage.img; \
+	echo "Neutrino: Release" > ./flash-image-256/flashimage.nfo && \
+	echo "Machine: D-Cube R2" >> ./flash-image-256/flashimage.nfo && \
+	echo "Date: `date '+%Y%m%d'`" >> ./flash-image-256/flashimage.nfo && \
+	echo "Issuer: $(MAINTAINER)" >> ./flash-image-256/flashimage.nfo && \
+	echo "Link: https://github.com/Duckbox-Developers" >> ./flash-image-256/flashimage.nfo && \
+	echo -n "MD5: " >> ./flash-image-256/flashimage.nfo && \
+	md5sum -b ./flash-image-256/flashimage.img | awk -F " " '{print $$1}' >> ./flash-image-256/flashimage.nfo; \
+	zip -r $(RELEASE_IMAGE_DIR)/$(BOXTYPE)_flash_$(shell date '+%d.%m.%Y-%H.%M').zip ./flash-image-256/flashimage.{img,nfo} ./flash-image-256/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)

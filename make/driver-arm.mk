@@ -1,6 +1,16 @@
 #
 # driver
 #
+ifeq ($(BOXTYPE), dcube)
+DRIVER_DATE = 20141203
+DRIVER_VER = 2.6.34-$(DRIVER_DATE)
+DRIVER_SRC = cube-drivers-$(DRIVER_VER).zip
+DRIVER_URL = http://source.mynonpublic.com/cube
+
+$(ARCHIVE)/$(DRIVER_SRC):
+	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
+endif
+
 ifeq ($(BOXTYPE), bre2ze4k)
 DRIVER_DATE = 20191120
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
@@ -122,7 +132,7 @@ endif
 driver-clean:
 	rm -f $(D)/driver $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/$(KERNEL_TYPE)*
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra dm900 dm920))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra dm900 dm920 dcube))
 driver: $(D)/driver
 $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)

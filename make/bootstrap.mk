@@ -246,6 +246,10 @@ $(D)/buildimage: $(D)/bootstrap $(ARCHIVE)/$(BUILDIMAGE_SOURCE)
 	$(REMOVE)/buildimage
 	$(TOUCH)
 
+$(D)/createimage: $(D)/bootstrap $(ARCHIVE)/$(CREATEIMAGE_SOURCE)
+	gcc -DMAGIC=0x00109500 -o $(HOST_DIR)/bin/createimage $(PATCHES)/armbox/$(BOXTYPE)/createimage.c
+	$(TOUCH)
+
 #
 # dm7020hd second stage loader #89
 #
@@ -400,7 +404,7 @@ SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 SYSTEM_TOOLS += $(D)/ofgwrite
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd dcube))
 SYSTEM_TOOLS += $(D)/f2fs-tools
 endif
 endif

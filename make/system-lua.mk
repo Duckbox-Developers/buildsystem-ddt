@@ -38,7 +38,7 @@ $(D)/lua: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$
 #
 # luacurl
 #
-ifeq ($(BOXARCH), sh4)
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 4.8.4 4.9.4))
 LUACURL_VER = 9ac72c7
 else
 LUACURL_VER = e0b1d2e

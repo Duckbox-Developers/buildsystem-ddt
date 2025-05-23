@@ -112,7 +112,7 @@ $(D)/mtd_utils: $(D)/bootstrap $(D)/zlib $(D)/lzo $(D)/e2fsprogs $(ARCHIVE)/$(MT
 		$(MAKE) PREFIX= CC=$(TARGET)-gcc LD=$(TARGET)-ld STRIP=$(TARGET)-strip WITHOUT_XATTR=1 DESTDIR=$(TARGET_DIR); \
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/mkfs.jffs2 $(TARGET_DIR)/usr/sbin
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/sumtool $(TARGET_DIR)/usr/sbin
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dcube))
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/mkfs.ubifs/mkfs.ubifs $(TARGET_DIR)/usr/sbin
 		cp -a $(BUILD_TMP)/mtd-utils-$(MTD_UTILS_VER)/ubi-utils/ubinize $(TARGET_DIR)/usr/sbin
 endif
@@ -181,11 +181,15 @@ $(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 cuberevo cuberevo_mini2 cuberevo_2000hd cuberevo_3000hd))
 	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyAS1 $(TARGET_DIR)/etc/inittab
 else
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000 dm7020hd dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000 dm7020hd dm800se dm800sev2 dcube))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm900 dm920))
 	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyS0_dm $(TARGET_DIR)/etc/inittab
 else
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dcube))
+	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyS1 $(TARGET_DIR)/etc/inittab
+else
 	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyS0 $(TARGET_DIR)/etc/inittab
+endif
 endif
 else
 	install -m 644 $(SKEL_ROOT)/etc/inittab $(TARGET_DIR)/etc/inittab

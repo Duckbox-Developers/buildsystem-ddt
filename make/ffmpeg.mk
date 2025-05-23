@@ -54,7 +54,11 @@ endif
 endif
 
 ifeq ($(BOXARCH), arm)
+ifeq ($(BOXTYPE), dcube)
+FFMPEG_CONF_OPTS  += --cpu=cortex-a9
+else
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
+endif
 endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic

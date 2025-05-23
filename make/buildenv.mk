@@ -65,10 +65,15 @@ TARGET_MARCH_CFLAGS   =
 endif
 
 ifeq ($(BOXARCH), arm)
-TARGET               ?= arm-cortex-linux-gnueabihf
 BOXARCH              ?= arm
 KERNELNAME            = zImage
+ifeq ($(BOXTYPE), dcube)
+TARGET               ?= arm-cortex-linux-gnueabi
+TARGET_MARCH_CFLAGS   = -march=armv7-a -mtune=cortex-a9 -mfpu=vfpv3-d16 -mfloat-abi=softfp
+else
+TARGET               ?= arm-cortex-linux-gnueabihf
 TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloat-abi=hard
+endif
 endif
 
 ifeq ($(BOXARCH), mips)
