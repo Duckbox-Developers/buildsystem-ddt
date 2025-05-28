@@ -274,17 +274,17 @@ if [ "$BOXARCH" == "sh4" ]; then
 			echo "FFMPEG_SNAPSHOT=0" >> config
 		fi
 	done
-elif [ $BS_GCC_VER == '4.9.4' -o $BS_GCC_VER == '5.5.0' ]; then
-	echo "FFMPEG_EXPERIMENTAL=0" >> config
-	echo "FFMPEG_SNAPSHOT=0" >> config
 elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
+	CNT=0
 	case $3 in
 		[1-3]) REPLY=$3;;
 		*)	echo -e "\nFFMPEG version:"
-			echo -e "   \033[01;32m1)  FFMPEG 4.4.5\033[00m"
-			echo "   2)  FFMPEG 6.1.2 [experimental]"
-			echo "   3)  FFMPEG 7.x.x [git snapshot]"
-			read -p "Select FFMPEG version (1-3)? "
+			echo -e "   \033[01;32m1)  FFMPEG 4.4.5\033[00m" && CNT=$(($CNT+1))
+			echo "   2)  FFMPEG 6.1.2 [experimental]" && CNT=$(($CNT+1))
+			if [ "$BOXTYPE" != "dcube" ]; then
+				echo "   3)  FFMPEG 7.x.x [git snapshot]" && CNT=$(($CNT+1))
+			fi
+			read -p "Select FFMPEG version (1-$CNT)? "
 			;;
 	esac
 
