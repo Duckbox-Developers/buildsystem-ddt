@@ -787,7 +787,7 @@ $(D)/ca-bundle: $(ARCHIVE)/$(CA-BUNDLE_SOURCE)
 ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 4.8.4 4.9.4))
 LIBCURL_VER = 7.61.1
 else
-LIBCURL_VER = 8.13.0
+LIBCURL_VER = 8.14.0
 endif
 LIBCURL_SOURCE = curl-$(LIBCURL_VER).tar.bz2
 LIBCURL_PATCH = libcurl-$(LIBCURL_VER).patch
