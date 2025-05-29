@@ -403,7 +403,9 @@ SYSTEM_TOOLS += $(D)/autofs
 SYSTEM_TOOLS += $(D)/dvbsnoop
 SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifneq ($(BOXTYPE), dcube)
 SYSTEM_TOOLS += $(D)/ofgwrite
+endif
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd dcube))
 SYSTEM_TOOLS += $(D)/f2fs-tools
 endif
