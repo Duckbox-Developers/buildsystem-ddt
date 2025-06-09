@@ -109,7 +109,7 @@ TARGET_LIB_DIR        = $(TARGET_DIR)/usr/lib
 TARGET_INCLUDE_DIR    = $(TARGET_DIR)/usr/include
 
 TARGET_CFLAGS         = -pipe $(TARGET_O_CFLAGS) $(TARGET_MARCH_CFLAGS) $(TARGET_EXTRA_CFLAGS) -I$(TARGET_INCLUDE_DIR)
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 10.5.0 11.5.0 12.4.0 13.3.0 14.2.0 15.1.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 10.5.0 11.5.0 12.4.0 13.3.0 14.3.0 15.1.0))
 TARGET_CFLAGS         +=-fcommon
 endif
 TARGET_CPPFLAGS       = $(TARGET_CFLAGS)
