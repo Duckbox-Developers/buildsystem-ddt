@@ -1632,9 +1632,9 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 #
 # dropbear
 #
-DROPBEAR_VER = 2025.87
+DROPBEAR_VER = 2025.88
 DROPBEAR_SOURCE = dropbear-$(DROPBEAR_VER).tar.bz2
-DROPBEAR_PATCH = dropbear-$(DROPBEAR_VER).patch
+DROPBEAR_PATCH = 
 
 $(ARCHIVE)/$(DROPBEAR_SOURCE):
 	$(DOWNLOAD) http://matt.ucc.asn.au/dropbear/releases/$(DROPBEAR_SOURCE)
