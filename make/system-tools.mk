@@ -1669,7 +1669,7 @@ $(D)/dropbear: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(DROPBEAR_SOURCE)
 #ifeq ($(BOXARCH), sh4)
 #DROPBEARMULTI_VER = e1d095e
 #else
-DROPBEARMULTI_VER = bd12a86
+DROPBEARMULTI_VER = 1610699
 #endif
 
 $(D)/dropbearmulti: $(D)/bootstrap
