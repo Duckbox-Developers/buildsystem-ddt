@@ -56,6 +56,10 @@ endif
 ifeq ($(BOXARCH), arm)
 ifeq ($(BOXTYPE), dcube)
 FFMPEG_CONF_OPTS  += --cpu=cortex-a9
+FFMPEG_CONF_OPTS  += --disable-neon
+FFMPEG_CONF_OPTS  += --enable-vfp
+FFMPEG_CONF_OPTS  += --enable-vfpv3
+FFMPEG_CONF_OPTS  += --enable-thumb
 else
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
