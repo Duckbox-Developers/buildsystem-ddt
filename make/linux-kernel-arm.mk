@@ -353,6 +353,7 @@ DCUBE_PATCHES = \
 		armbox/dcube/makefile-remove-wall.patch \
 		armbox/dcube/uaccess-dont-mark-register-as-const.patch \
 		armbox/dcube/compiler-gcc-h-handle-uninitialized-var.patch \
+		armbox/dcube/rtl8152.patch \
 		armbox/dcube/kernel-linuxdvb_53.patch
 
 #
