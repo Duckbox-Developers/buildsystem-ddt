@@ -39,7 +39,7 @@ NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910 vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm800se dm800sev2 dm900 dm920 dm8000 dm7020hd dcube))
 NEUTRINO_DEPS += $(D)/ntfs_3g
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 NEUTRINO_DEPS += $(D)/mtd_utils
 NEUTRINO_DEPS += $(D)/gptfdisk
 endif
