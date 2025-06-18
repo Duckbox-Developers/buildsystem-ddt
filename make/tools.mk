@@ -36,6 +36,7 @@ tools-clean:
 	-$(MAKE) -C $(TOOLS_DIR)/oled_ctrl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/lcd_ctrl distclean
 	-$(MAKE) -C $(TOOLS_DIR)/initfb distclean
+	-$(MAKE) -C $(TOOLS_DIR)/updateubivolume distclean
 	-$(MAKE) -C $(TOOLS_DIR)/turnoff_power distclean
 	-$(MAKE) -C $(TOOLS_DIR)/own-tools distclean
 
@@ -522,6 +523,19 @@ $(D)/tools-ustslave: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# updateubivolume
+#
+$(D)/tools-updateubivolume: $(D)/bootstrap
+	$(START_BUILD)
+	set -e; cd $(TOOLS_DIR)/updateubivolume; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+#
 # vfdctl
 #
 ifeq ($(BOXTYPE), spark7162)
@@ -617,6 +631,9 @@ TOOLS += $(D)/tools-turnoff_power
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), e4hdultra))
 TOOLS += $(D)/tools-initfb
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dcube))
+TOOLS += $(D)/tools-updateubivolume
 endif
 ifneq ($(wildcard $(TOOLS_DIR)/own-tools),)
 TOOLS += $(D)/tools-own-tools
