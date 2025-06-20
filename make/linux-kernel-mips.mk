@@ -52,6 +52,7 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
 		mipsbox/vuduo/CONFIG_DVB_SP2.patch \
 		mipsbox/vuduo/dvbsky-t330.patch \
+		mipsbox/vuduo/rtl8152.patch \
 		mipsbox/vuduo/fix-multiple-defs-yyloc.patch
 
 VUDUO2_PATCHES = \
@@ -132,6 +133,7 @@ DM820_PATCHES = \
 		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
 		mipsbox/dm820/build-with-gcc12-fixes.patch \
 		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
+		mipsbox/dm820/rtl8152.patch \
 		mipsbox/dm820/0001-log2-give-up-on-gcc-constant-optimizations.patch \
 		mipsbox/dm820/0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
 		mipsbox/dm820/0003-makefile-silence-packed-not-aligned-warn.patch \
@@ -185,6 +187,7 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/0014-makefile-silence-packed-not-aligned-warn.patch \
 		mipsbox/dm8000/0015-fcrypt-fix-bitoperation-for-gcc.patch \
 		mipsbox/dm8000/fix-multiple-defs-yyloc.patch \
+		mipsbox/dm8000/rtl8152.patch \
 		mipsbox/dm8000/devinitdata-gcc11.patch
 
 DM7020HD_PATCHES = \
