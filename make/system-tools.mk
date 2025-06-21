@@ -29,8 +29,9 @@ else
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.1.0))
-GCC15PARM = CPPFLAGS_EXTRA="$(TARGET_CPPFLAGS) -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 14.3.0 15.1.0))
+GCC15PARM  = CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)"
+GCC15PARM += CONFIG_EXTRA_CPPFLAGS="$(TARGET_CPPFLAGS)"
 endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
