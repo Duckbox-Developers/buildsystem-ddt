@@ -29,6 +29,10 @@ else
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.1.0))
+GCC15PARM = CPPFLAGS_EXTRA="$(TARGET_CPPFLAGS) -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
+endif
+
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
@@ -52,8 +56,8 @@ endif
 		install -m 0644 $(lastword $^) .config; \
 		sed -i -e 's#^CONFIG_PREFIX.*#CONFIG_PREFIX="$(TARGET_DIR)"#' .config; \
 		$(BUILDENV) \
-		$(MAKE) busybox ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
-		$(MAKE) install ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGET_DIR)
+		$(MAKE) busybox ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" $(GCC15PARM); \
+		$(MAKE) install ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" $(GCC15PARM) CONFIG_PREFIX=$(TARGET_DIR)
 	$(REMOVE)/busybox$(BB_SNAPSHOT)
 	$(TOUCH)
 
