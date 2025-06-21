@@ -35,6 +35,7 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/kernel-add-support-for-gcc12.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc13.patch \
 		mipsbox/vuduo/kernel-add-support-for-gcc14.patch \
+		mipsbox/vuduo/kernel-add-support-for-gcc15.patch \
 		mipsbox/vuduo/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo/gcc9_backport.patch \
 		mipsbox/vuduo/rtl8712-fix-warnings.patch \
@@ -66,6 +67,7 @@ VUDUO2_PATCHES = \
 		mipsbox/vuduo2/kernel-add-support-for-gcc12.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc13.patch \
 		mipsbox/vuduo2/kernel-add-support-for-gcc14.patch \
+		mipsbox/vuduo2/kernel-add-support-for-gcc15.patch \
 		mipsbox/vuduo2/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo2/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/vuduo2/add-dmx-source-timecode.patch \
@@ -131,6 +133,7 @@ DM820_PATCHES = \
 		mipsbox/dm820/kernel-add-support-for-gcc12.patch \
 		mipsbox/dm820/kernel-add-support-for-gcc13.patch \
 		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc15.patch \
 		mipsbox/dm820/build-with-gcc12-fixes.patch \
 		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
 		mipsbox/dm820/rtl8152.patch \
@@ -178,6 +181,7 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-add-support-for-gcc12.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc13.patch \
 		mipsbox/dm8000/kernel-add-support-for-gcc14.patch \
+		mipsbox/dm8000/kernel-add-support-for-gcc15.patch \
 		mipsbox/dm8000/build-with-gcc12-fixes.patch \
 		mipsbox/dm8000/misc_latin1_to_utf8_conversions.patch \
 		mipsbox/dm8000/0001-dvb_frontend-backport-multistream-support.patch \
@@ -226,16 +230,21 @@ ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 endif
 	@touch $@
 
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.1.0))
+GCC15PARM  = CFLAGS_KERNEL="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
+GCC15PARM += CFLAGS_MODULE="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
+endif
+
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000 dm7020hd dm800se dm800sev2))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
-		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux.bin modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- $(GCC15PARM) vmlinux.bin modules
 else
-		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- vmlinux modules
+		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- $(GCC15PARM) vmlinux modules
 endif
-		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
+		$(MAKE) -C $(KERNEL_DIR) ARCH=mips CROSS_COMPILE=$(TARGET)- $(GCC15PARM) DEPMOD=$(DEPMOD) INSTALL_MOD_PATH=$(TARGET_DIR) modules_install
 	@touch $@
 endif
 
