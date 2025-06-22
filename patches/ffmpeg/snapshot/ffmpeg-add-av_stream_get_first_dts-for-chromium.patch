@@ -9,7 +9,7 @@ diff --git a/libavformat/avformat.h b/libavformat/avformat.h
 index f12fa7d..0b9fd1f 100644
 --- a/libavformat/avformat.h
 +++ b/libavformat/avformat.h
-@@ -1215,6 +1215,10 @@
+@@ -1179,6 +1179,10 @@
  
  struct AVCodecParserContext *av_stream_get_parser(const AVStream *s);
  
@@ -24,7 +24,7 @@ diff --git a/libavformat/utils.c b/libavformat/utils.c
 index cf4d68b..d3e7488 100644
 --- a/libavformat/utils.c
 +++ b/libavformat/utils.c
-@@ -88,6 +88,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
+@@ -91,6 +91,13 @@ static int append_packet_chunked(AVIOContext *s, AVPacket *pkt, int size)
      return pkt->size > orig_size ? pkt->size - orig_size : ret;
  }
  

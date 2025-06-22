@@ -11,7 +11,7 @@ index 5948e50467..528eaa728c 100644
  static int flags;
  
  #define NB_LEVELS 8
-@@ -439,10 +439,6 @@ static void (*av_log_callback)(void*, int, const char*, va_list) =
+@@ -440,10 +440,6 @@ static void (*av_log_callback)(void*, int, const char*, va_list) =
  
  void av_log(void* avcl, int level, const char *fmt, ...)
  {

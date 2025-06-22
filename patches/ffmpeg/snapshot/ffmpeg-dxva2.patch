@@ -25,7 +25,7 @@
  
 --- a/libavcodec/dxva2_h264.c
 +++ b/libavcodec/dxva2_h264.c
-@@ -509,6 +509,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
+@@ -510,6 +510,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
  
      if (ctx_pic->slice_count <= 0 || ctx_pic->bitstream_size <= 0)
          return -1;
@@ -42,7 +42,7 @@
                                      &ctx_pic->qm, sizeof(ctx_pic->qm),
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -980,6 +980,7 @@ static int h264_slice_header_init(H264Context *h)
+@@ -987,6 +987,7 @@ static int h264_slice_header_init(H264Context *h)
  
      h->first_field           = 0;
      h->prev_interlaced_frame = 1;
@@ -52,7 +52,7 @@
      ret = ff_h264_alloc_tables(h);
 --- a/libavcodec/h264dec.c
 +++ b/libavcodec/h264dec.c
-@@ -461,6 +461,7 @@ void ff_h264_flush_change(H264Context *h)
+@@ -455,6 +455,7 @@ void ff_h264_flush_change(H264Context *h)
  
      h->next_outputed_poc = INT_MIN;
      h->prev_interlaced_frame = 1;
@@ -73,7 +73,7 @@
      int16_t slice_row[MAX_SLICES]; ///< to detect when MAX_SLICES is too low
 --- a/libavcodec/vaapi_h264.c
 +++ b/libavcodec/vaapi_h264.c
-@@ -322,6 +322,11 @@ static int vaapi_h264_end_frame(AVCodecContext *avctx)
+@@ -323,6 +323,11 @@ static int vaapi_h264_end_frame(AVCodecContext *avctx)
      H264SliceContext *sl = &h->slice_ctx[0];
      int ret;
  

@@ -1,7 +1,7 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -225,6 +225,8 @@
-     char *allowed_extensions;
+@@ -227,6 +227,8 @@ typedef struct HLSContext {
+     char *allowed_segment_extensions;
      int extension_picky;
      int max_reload;
 +    char *key_uri_replace_old;
@@ -9,13 +9,11 @@
      int http_persistent;
      int http_multiple;
      int http_seekable;
-@@ -1350,8 +1352,16 @@
+@@ -1388,7 +1390,17 @@ static int open_input(HLSContext *c, struct playlist *pls, struct segment *seg,
  
      if (seg->key_type == KEY_AES_128 || seg->key_type == KEY_SAMPLE_AES) {
          if (strcmp(seg->key, pls->key_url)) {
 +            char *key_url = NULL;
-             AVIOContext *pb = NULL;
--            if (open_url(pls->parent, &pb, seg->key, &c->avio_opts, opts, NULL) == 0) {
 +            if (NULL != c->key_uri_replace_old && \
 +                NULL != c-> key_uri_replace_new && \
 +                '\0' != c->key_uri_replace_old[0]) {
@@ -23,20 +21,13 @@
 +            } else {
 +                key_url = seg->key;
 +            }
-+            if (open_url(pls->parent, &pb, key_url, &c->avio_opts, opts, NULL) == 0) {
-                 ret = avio_read(pb, pls->key, sizeof(pls->key));
-                 if (ret != sizeof(pls->key)) {
-                     av_log(pls->parent, AV_LOG_ERROR, "Unable to read key file %s\n",
-@@ -1363,6 +1373,8 @@
-                        seg->key);
-             }
-             av_strlcpy(pls->key_url, seg->key, sizeof(pls->key_url));
+             ret = read_key(c, pls, seg);
 +            if (key_url != seg->key)
 +                av_free(key_url);
+             if (ret < 0)
+                 goto cleanup;
          }
-     }
- 
-@@ -2634,6 +2646,8 @@
+@@ -2812,6 +2826,8 @@ static const AVOption hls_options[] = {
          OFFSET(extension_picky), AV_OPT_TYPE_BOOL, {.i64 = 1}, 0, 1, FLAGS},
      {"max_reload", "Maximum number of times a insufficient list is attempted to be reloaded",
          OFFSET(max_reload), AV_OPT_TYPE_INT, {.i64 = 100}, 0, INT_MAX, FLAGS},
