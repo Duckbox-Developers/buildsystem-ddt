@@ -857,7 +857,8 @@ endif
 # channellist / tuxtxt / controlscripts
 #
 	cp -aR $(TARGET_DIR)/var/tuxbox/config/* $(RELEASE_DIR)/var/tuxbox/config
-	cp -aR $(TARGET_DIR)/var/tuxbox/control/* $(RELEASE_DIR)/var/tuxbox/control
+	[ -d $(TARGET_DIR)/usr/share/tuxbox/neutrino/control ] && cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino/control $(RELEASE_DIR)/usr/share/tuxbox/neutrino/control || true
+	[ -d $(TARGET_DIR)/var/tuxbox/control ] && cp -aR $(TARGET_DIR)/var/tuxbox/control/* $(RELEASE_DIR)/var/tuxbox/control || true
 #
 # copy root_neutrino
 #

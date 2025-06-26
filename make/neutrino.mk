@@ -176,7 +176,7 @@ ifeq  ($(FLAVOUR), neutrino-tangos)
 GIT_URL     ?= https://github.com/TangoCash
 NEUTRINO  = neutrino-tangos
 LIBSTB_HAL   = libstb-hal-tangos
-NMP_BRANCH  ?= master
+NMP_BRANCH  ?= evo
 HAL_BRANCH  ?= master
 NMP_PATCHES  = $(NEUTRINO_TANGOS_PATCHES)
 HAL_PATCHES  = $(NEUTRINO_LIBSTB_TANGOS_PATCHES)
