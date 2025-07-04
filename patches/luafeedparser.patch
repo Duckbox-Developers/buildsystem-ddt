@@ -1,0 +1,17 @@
+--- a/feedparser.lua
++++ b/feedparser.lua
+@@ -112,9 +112,12 @@
+ 				local author_url = (el:getChild('url') or blanky):getText()
+ 				if author_url and author_url ~= "" then entry.author_detail.href=resolve(author_url, rebase(el:getChild('url'), el_base)) end		
+ 			
+-			elseif tag=='category' or tag=='dc:subject' then 
++			elseif tag=='duration' then 
++				entry.duration = el:getText()
++			elseif tag=='category' then
++				entry.category = (el:getChild('term') or el):getText()
++			elseif tag=='dc:subject' then 
+ 				--todo
+-			
+ 			elseif tag=='source' then
+ 				--todo
+ 			end

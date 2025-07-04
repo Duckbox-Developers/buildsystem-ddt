@@ -111,6 +111,7 @@ $(D)/luasocket: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOCKET_SOURCE)
 LUAFEEDPARSER_VER = 9b284bc
 LUAFEEDPARSER_SOURCE = luafeedparser-git-$(LUAFEEDPARSER_VER).tar.bz2
 LUAFEEDPARSER_URL = https://github.com/slact/lua-feedparser.git
+LUAFEEDPARSER_PATCH = luafeedparser.patch
 
 $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAFEEDPARSER_URL) $(LUAFEEDPARSER_VER) $(notdir $@) $(ARCHIVE)
@@ -121,6 +122,7 @@ $(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHI
 	$(UNTAR)/$(LUAFEEDPARSER_SOURCE)
 	$(CHDIR)/luafeedparser-git-$(LUAFEEDPARSER_VER); \
 		sed -i -e "s/^PREFIX.*//" -e "s/^LUA_DIR.*//" Makefile ; \
+		$(call apply_patches, $(LUAFEEDPARSER_PATCH)); \
 		$(BUILDENV) \
 		$(MAKE) install  LUA_DIR=$(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT)
 	$(REMOVE)/luafeedparser-git-$(LUAFEEDPARSER_VER)
