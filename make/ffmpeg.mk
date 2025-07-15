@@ -60,6 +60,7 @@ FFMPEG_CONF_OPTS  += --disable-neon
 FFMPEG_CONF_OPTS  += --enable-vfp
 FFMPEG_CONF_OPTS  += --enable-vfpv3
 FFMPEG_CONF_OPTS  += --enable-thumb
+FFMPEG_DEPS       += $(D)/alsa_utils
 else
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
@@ -426,7 +427,7 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
 FFMPEG_VER = 2.8.22
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-FFMPEG_DEPS =
+FFMPEG_DEPS = $(D)/alsa_utils
 FFMPEG_CONF_OPTS = 
 FFMPRG_EXTRA_CFLAGS =
 
