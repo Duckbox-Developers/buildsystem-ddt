@@ -1782,7 +1782,7 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 # minisatip
 #
 MINISATIP_PATCH = minisatip.patch
-ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71 2.6.34))
+ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71_stm24_0217 2.6.34))
 MINISATIP_BRANCH = 79a50f9
 MINISATIP_EXTRA_FLAGS = -DNEEDS_SENDMMSG_SHIM
 endif
