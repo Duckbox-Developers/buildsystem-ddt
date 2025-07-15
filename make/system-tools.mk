@@ -1782,6 +1782,10 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 # minisatip
 #
 MINISATIP_PATCH = minisatip.patch
+ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71 2.6.34))
+MINISATIP_BRANCH = 79a50f9
+MINISATIP_EXTRA_FLAGS = -DNEEDS_SENDMMSG_SHIM
+endif
 
 $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATIP_SOURCE)
 	$(START_BUILD)
@@ -1792,9 +1796,10 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATI
 		fi
 	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
 	$(CHDIR)/minisatip; \
+		git checkout $(MINISATIP_BRANCH); \
 		$(call apply_patches,$(MINISATIP_PATCH)); \
 		$(BUILDENV) \
-		export CFLAGS="-pipe -Os -Wall -g0 -ldl -I$(TARGET_INCLUDE_DIR)"; \
+		export CFLAGS="-pipe -Os -Wall -g0 -ldl -I$(TARGET_INCLUDE_DIR) $(MINISATIP_EXTRA_FLAGS)"; \
 		export CPPFLAGS="-I$(TARGET_INCLUDE_DIR)"; \
 		export LDFLAGS="-L$(TARGET_LIB_DIR)"; \
 		./configure \
