@@ -12,8 +12,8 @@ endif
 #
 # crosstool-ng
 #
-#CROSSTOOL_NG_VER     = 0f69d3c
-CROSSTOOL_NG_VER     = 93d5d76
+#CROSSTOOL_NG_VER     = 93d5d76
+CROSSTOOL_NG_VER     = ec7070d
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
