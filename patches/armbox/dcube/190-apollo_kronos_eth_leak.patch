@@ -1,6 +1,6 @@
 --- linux-2.6.34.orig/drivers/net/LIPP_6300ETH/src/gmac_drv.c	2011-11-24 16:42:06.773352000 +0530
 +++ linux-2.6.34/drivers/net/LIPP_6300ETH/src/gmac_drv.c	2011-11-24 16:37:40.582889000 +0530
-@@ -2132,6 +2132,15 @@ static __s32 lipp_6300Eth_hard_start_xmi
+@@ -2108,6 +2108,15 @@ static __s32 lipp_6300Eth_hard_start_xmi
          ** For transmit descriptor, only end of ring is set in setup_descriptors()
          */
  
@@ -16,7 +16,7 @@
      if(0 == (priv->p_vtx_descr[priv->tx_produce_index].TDES0 & TXDESC_TDES0_OWN_VAL))
      {
  
-@@ -3679,6 +3688,7 @@ static void man_arp_udp_data(struct sk_b
+@@ -3655,6 +3664,7 @@ static void man_arp_udp_data(struct sk_b
   *NOTES:	None
   */
  /*--------------------------------------------------------------------------*/
@@ -24,7 +24,7 @@
  static void handle_tx_packets( struct net_device * dev)
  {
  
-@@ -3716,6 +3726,9 @@ static void handle_tx_packets( struct ne
+@@ -3692,6 +3702,9 @@ static void handle_tx_packets( struct ne
          {
              break;
          }
