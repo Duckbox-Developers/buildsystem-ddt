@@ -1,0 +1,13 @@
+diff --git a/Makefile.am b/Makefile.am
+index 9560a95..d444bd6 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -41,7 +41,7 @@
+     subdir-objects
+ 
+ ACLOCAL_AMFLAGS = -I m4
+-LIBTOOLFLAGS = --verbose
++LIBTOOLFLAGS = --verbose --tag CC
+ 
+ SUBDIRS = lib # lib goes first to build first
+ if WITH_EXAMPLES

@@ -1136,19 +1136,21 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 #
 # expat
 #
-EXPAT_VER = 2.7.1
-EXPAT_SOURCE = expat-$(EXPAT_VER).tar.bz2
-EXPAT_PATCH  = expat-$(EXPAT_VER)-libtool-tag.patch
-
-$(ARCHIVE)/$(EXPAT_SOURCE):
-	$(DOWNLOAD) https://sourceforge.net/projects/expat/files/expat/$(EXPAT_VER)/$(EXPAT_SOURCE)
+EXPAT_PATCH  = expat-libtool-tag.patch
+EXPAT_BRANCH = 4b274f1
 
 $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/expat-$(EXPAT_VER)
-	$(UNTAR)/$(EXPAT_SOURCE)
-	$(CHDIR)/expat-$(EXPAT_VER); \
+	$(REMOVE)/libexpat
+	set -e; if [ -d $(ARCHIVE)/libexpat.git ]; \
+		then cd $(ARCHIVE)/libexpat.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/libexpat/libexpat.git libexpat.git; \
+		fi
+	cp -ra $(ARCHIVE)/libexpat.git $(BUILD_TMP)/libexpat
+	$(CHDIR)/libexpat/expat; \
+		git checkout $(EXPAT_BRANCH); \
 		$(call apply_patches, $(EXPAT_PATCH)); \
+		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -1159,7 +1161,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/expat.pc
 	$(REWRITE_LIBTOOL)/libexpat.la
-	$(REMOVE)/expat-$(EXPAT_VER)
+	$(REMOVE)/libexpat
 	$(TOUCH)
 
 #
