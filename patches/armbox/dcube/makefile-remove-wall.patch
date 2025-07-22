@@ -2,6 +2,15 @@ diff --git a/Makefile b/Makefile
 index dc809c09..16052820 100644
 --- a/Makefile
 +++ b/Makefile
+@@ -227,7 +227,7 @@
+ 
+ HOSTCC       = gcc
+ HOSTCXX      = g++
+-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
++HOSTCFLAGS   = -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
+ HOSTCXXFLAGS = -O2
+ 
+ # Decide whether to build built-in, modular, or both.
 @@ -346,9 +346,8 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include -Iinclude \
  
  KBUILD_CPPFLAGS := -D__KERNEL__

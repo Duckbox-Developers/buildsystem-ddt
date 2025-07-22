@@ -104,8 +104,8 @@ diff -Naurp linux-2.6.34_Org/arch/arm/mach-krome/nx_sdiomc_dev.c linux-2.6.34/ar
 diff -Naurp linux-2.6.34_Org/drivers/mmc/host/Kconfig linux-2.6.34/drivers/mmc/host/Kconfig
 --- linux-2.6.34_Org/drivers/mmc/host/Kconfig	2012-01-19 14:46:36.000000000 +0800
 +++ linux-2.6.34/drivers/mmc/host/Kconfig	2012-01-19 14:49:39.000000000 +0800
-@@ -550,11 +550,11 @@ config MMC_USHC
- 	  support MMC or SD memory cards.
+@@ -414,11 +414,11 @@ config MMC_USHC
+ 	  If you say yes here SD-Cards may work on the EZkit.
  
  config MMC_SDHCI_NX_SDIOMC
 -	tristate "SD/SDIO/MMC host controller support on APOLLO/KRONOS boards"

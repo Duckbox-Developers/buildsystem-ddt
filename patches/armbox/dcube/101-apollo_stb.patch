@@ -982,7 +982,7 @@ diff -Naurp linux-2.6.34.orig/arch/arm/kernel/init_task.c linux-2.6.34/arch/arm/
 diff -Naurp linux-2.6.34.orig/arch/arm/kernel/module.c linux-2.6.34/arch/arm/kernel/module.c
 --- linux-2.6.34.orig/arch/arm/kernel/module.c	2010-09-07 21:21:47.000000000 -0500
 +++ linux-2.6.34/arch/arm/kernel/module.c	2010-09-07 22:16:40.000000000 -0500
-@@ -144,7 +144,7 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
+@@ -152,7 +152,7 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
  			offset += sym->st_value - loc;
  			if (offset & 3 ||
  			    offset <= (s32)0xfe000000 ||

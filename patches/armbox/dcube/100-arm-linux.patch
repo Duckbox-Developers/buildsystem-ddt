@@ -2849,7 +2849,7 @@ diff -Naurp linux-2.6.34.org/arch/arm/kernel/Makefile linux-2.6.34-arm/arch/arm/
 diff -Naurp linux-2.6.34.org/arch/arm/kernel/module.c linux-2.6.34-arm/arch/arm/kernel/module.c
 --- linux-2.6.34.org/arch/arm/kernel/module.c	2010-05-16 16:17:36.000000000 -0500
 +++ linux-2.6.34-arm/arch/arm/kernel/module.c	2010-07-09 12:03:08.000000000 -0500
-@@ -102,7 +102,9 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
+@@ -110,7 +110,9 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
  		unsigned long loc;
  		Elf32_Sym *sym;
  		s32 offset;
@@ -2859,7 +2859,7 @@ diff -Naurp linux-2.6.34.org/arch/arm/kernel/module.c linux-2.6.34-arm/arch/arm/
  
  		offset = ELF32_R_SYM(rel->r_info);
  		if (offset < 0 || offset > (symsec->sh_size / sizeof(Elf32_Sym))) {
-@@ -185,6 +187,7 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
+@@ -193,6 +195,7 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
  					(offset & 0x0fff);
  			break;
  
@@ -2867,7 +2867,7 @@ diff -Naurp linux-2.6.34.org/arch/arm/kernel/module.c linux-2.6.34-arm/arch/arm/
  		case R_ARM_THM_CALL:
  		case R_ARM_THM_JUMP24:
  			upper = *(u16 *)loc;
-@@ -233,9 +236,40 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
+@@ -241,9 +244,40 @@ apply_relocate(Elf32_Shdr *sechdrs, cons
  			*(u16 *)(loc + 2) = (u16)((lower & 0xd000) |
  						  (j1 << 13) | (j2 << 11) |
  						  ((offset >> 1) & 0x07ff));
