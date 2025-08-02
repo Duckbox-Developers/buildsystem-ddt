@@ -255,17 +255,17 @@ diff --git a/tests/fate/mov.mak b/tests/fate/mov.mak
 index 6cb493ceab..c420d8ab10 100644
 --- a/tests/fate/mov.mak
 +++ b/tests/fate/mov.mak
-@@ -8,6 +8,9 @@
+@@ -8,6 +8,9 @@ FATE_MOV-$(call FRAMEMD5, MOV, H264) += fate-mov-3elist \
             fate-mov-3elist-encrypted \
             fate-mov-frag-encrypted \
             fate-mov-tenc-only-encrypted \
 +           fate-mov-3elist-encrypted-kid \
 +           fate-mov-frag-encrypted-kid \
 +           fate-mov-tenc-only-encrypted-kid \
-            fate-mov-invalid-elst-entry-count \
-            fate-mov-gpmf-remux \
-            fate-mov-ibi-elst-starts-b \
-@@ -52,6 +55,15 @@
+            fate-mov-frag-overlap \
+            fate-mov-neg-firstpts-discard-frames \
+ 
+@@ -58,6 +61,15 @@
  # Full-sample encryption and constant IV using only tenc atom (no senc/saio/saiz).
  fate-mov-tenc-only-encrypted: CMD = framemd5 -decryption_key 12345678901234567890123456789012 -i $(TARGET_SAMPLES)/mov/mov-tenc-only-encrypted.mp4
  

@@ -14,7 +14,7 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 FFMPEG_VER = snapshot
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_SNAP =
-#FFMPEG_GITVER = 80131321c4
+FFMPEG_GITVER = e1ef33d
 else
 ifeq ($(FFMPEG_EXPERIMENTAL), 1)
 FFMPEG_VER = 6.1.2
@@ -95,7 +95,7 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
-#	($(CHDIR)/ffmpeg; git checkout -q $(FFMPEG_GITVER);)
+	($(CHDIR)/ffmpeg; git checkout -q $(FFMPEG_GITVER);)
 else
 	$(UNTAR)/$(FFMPEG_SOURCE)
 endif
