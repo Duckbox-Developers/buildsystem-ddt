@@ -69,7 +69,7 @@ $(D)/neutrino-plugin.do_prepare:
 	rm -rf $(SOURCE_DIR)/neutrino-plugins
 	rm -rf $(SOURCE_DIR)/neutrino-plugins.org
 	set -e; if [ -d $(ARCHIVE)/neutrino-plugins.git ]; \
-		then cd $(ARCHIVE)/neutrino-plugins.git; git pull; \
+		then cd $(ARCHIVE)/neutrino-plugins.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-ddt-plugins.git neutrino-plugins.git; \
 		fi
 	cp -ra $(ARCHIVE)/neutrino-plugins.git $(SOURCE_DIR)/neutrino-plugins
@@ -136,7 +136,7 @@ $(D)/neutrino-plugin-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-
 	$(START_BUILD)
 	$(REMOVE)/xupnpd
 	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
-		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
 		fi
 	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
@@ -164,7 +164,7 @@ $(D)/neutrino-plugin-scripts-lua: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/neutrino-plugin-scripts-lua
 	set -e; if [ -d $(ARCHIVE)/plugin-scripts-lua.git ]; \
-		then cd $(ARCHIVE)/plugin-scripts-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugin-scripts-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/plugin-scripts-lua.git plugin-scripts-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugin-scripts-lua.git/plugins $(BUILD_TMP)/neutrino-plugin-scripts-lua
@@ -183,7 +183,7 @@ $(D)/neutrino-plugin-mediathek:
 	$(START_BUILD)
 	$(REMOVE)/plugins-mediathek
 	set -e; if [ -d $(ARCHIVE)/plugins-mediathek.git ]; \
-		then cd $(ARCHIVE)/plugins-mediathek.git; git pull; \
+		then cd $(ARCHIVE)/plugins-mediathek.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/mediathek.git plugins-mediathek.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-mediathek.git $(BUILD_TMP)/plugins-mediathek
@@ -203,7 +203,7 @@ $(D)/neutrino-plugin-iptvplayer: $(D)/librtmp $(D)/python_twisted_small
 	$(START_BUILD)
 	$(REMOVE)/iptvplayer
 	set -e; if [ -d $(ARCHIVE)/iptvplayer.git ]; \
-		then cd $(ARCHIVE)/iptvplayer.git; git pull; \
+		then cd $(ARCHIVE)/iptvplayer.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/TangoCash/crossplatform_iptvplayer.git iptvplayer.git; \
 		fi
 	cp -ra $(ARCHIVE)/iptvplayer.git $(BUILD_TMP)/iptvplayer
@@ -232,7 +232,7 @@ $(D)/neutrino-plugin-settings-update:
 	$(START_BUILD)
 	$(REMOVE)/settings-update
 	set -e; if [ -d $(ARCHIVE)/settings-update.git ]; \
-		then cd $(ARCHIVE)/settings-update.git; git pull; \
+		then cd $(ARCHIVE)/settings-update.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/horsti58/lua-data.git settings-update.git; \
 		fi
 	cp -ra $(ARCHIVE)/settings-update.git $(BUILD_TMP)/settings-update
@@ -247,7 +247,7 @@ $(D)/spiegel:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua
@@ -265,7 +265,7 @@ $(D)/tierwelt:
 	$(START_BUILD)
 	$(REMOVE)/plugins-lua
 	set -e; if [ -d $(ARCHIVE)/plugins-lua.git ]; \
-		then cd $(ARCHIVE)/plugins-lua.git; git pull; \
+		then cd $(ARCHIVE)/plugins-lua.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/fs-basis/plugins-lua.git plugins-lua.git; \
 		fi
 	cp -ra $(ARCHIVE)/plugins-lua.git $(BUILD_TMP)/plugins-lua

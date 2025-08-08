@@ -538,7 +538,7 @@ $(D)/dosfstools: bootstrap
 	$(START_BUILD)
 	$(REMOVE)/dosfstools
 	set -e; if [ -d $(ARCHIVE)/dosfstools.git ]; \
-		then cd $(ARCHIVE)/dosfstools.git; git pull; \
+		then cd $(ARCHIVE)/dosfstools.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/dosfstools/dosfstools.git dosfstools.git; \
 		fi
 	cp -ra $(ARCHIVE)/dosfstools.git $(BUILD_TMP)/dosfstools
@@ -1000,7 +1000,7 @@ $(D)/shairport: $(D)/bootstrap $(D)/openssl $(D)/howl $(D)/alsa_lib
 	$(START_BUILD)
 	$(REMOVE)/shairport
 	set -e; if [ -d $(ARCHIVE)/shairport.git ]; \
-		then cd $(ARCHIVE)/shairport.git; git pull; \
+		then cd $(ARCHIVE)/shairport.git; git pull || true; \
 		else cd $(ARCHIVE); git clone -b 1.0-dev https://github.com/abrasive/shairport.git shairport.git; \
 		fi
 	cp -ra $(ARCHIVE)/shairport.git $(BUILD_TMP)/shairport
@@ -1020,7 +1020,7 @@ $(D)/shairport-sync: $(D)/bootstrap $(D)/libdaemon $(D)/libpopt $(D)/libconfig $
 	$(START_BUILD)
 	$(REMOVE)/shairport-sync
 	set -e; if [ -d $(ARCHIVE)/shairport-sync.git ]; \
-		then cd $(ARCHIVE)/shairport-sync.git; git pull; \
+		then cd $(ARCHIVE)/shairport-sync.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/mikebrady/shairport-sync.git shairport-sync.git; \
 		fi
 	cp -ra $(ARCHIVE)/shairport-sync.git $(BUILD_TMP)/shairport-sync
@@ -1505,7 +1505,7 @@ $(D)/dvbsnoop: $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(REMOVE)/dvbsnoop
 	set -e; if [ -d $(ARCHIVE)/dvbsnoop.git ]; \
-		then cd $(ARCHIVE)/dvbsnoop.git; git pull; \
+		then cd $(ARCHIVE)/dvbsnoop.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/dvbsnoop.git dvbsnoop.git; \
 		fi
 	cp -ra $(ARCHIVE)/dvbsnoop.git $(BUILD_TMP)/dvbsnoop
@@ -1676,7 +1676,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/dropbearmulti
 	set -e; if [ -d $(ARCHIVE)/dropbearmulti.git ]; \
-		then cd $(ARCHIVE)/dropbearmulti.git; git pull; \
+		then cd $(ARCHIVE)/dropbearmulti.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/mkj/dropbear.git dropbearmulti.git; \
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
@@ -1766,7 +1766,7 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/dvb-apps
 	set -e; if [ -d $(ARCHIVE)/dvb-apps.git ]; \
-		then cd $(ARCHIVE)/dvb-apps.git; git pull; \
+		then cd $(ARCHIVE)/dvb-apps.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/openpli-arm/dvb-apps.git dvb-apps.git; \
 		fi
 	cp -ra $(ARCHIVE)/dvb-apps.git $(BUILD_TMP)/dvb-apps
@@ -1791,7 +1791,7 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATI
 	$(START_BUILD)
 	$(REMOVE)/minisatip
 	set -e; if [ -d $(ARCHIVE)/minisatip.git ]; \
-		then cd $(ARCHIVE)/minisatip.git; git pull; \
+		then cd $(ARCHIVE)/minisatip.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/catalinii/minisatip.git minisatip.git; \
 		fi
 	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
@@ -1823,7 +1823,7 @@ $(D)/ofgwrite: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ofgwrite-ddt
 	set -e; if [ -d $(ARCHIVE)/ofgwrite-ddt.git ]; \
-		then cd $(ARCHIVE)/ofgwrite-ddt.git; git pull; \
+		then cd $(ARCHIVE)/ofgwrite-ddt.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/ofgwrite-ddt.git ofgwrite-ddt.git; \
 		fi
 	cp -ra $(ARCHIVE)/ofgwrite-ddt.git $(BUILD_TMP)/ofgwrite-ddt

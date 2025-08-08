@@ -696,7 +696,7 @@ $(D)/python_livestreamer: $(D)/bootstrap $(D)/python $(D)/python_setuptools
 	$(START_BUILD)
 	$(REMOVE)/livestreamer
 	set -e; if [ -d $(ARCHIVE)/livestreamer.git ]; \
-		then cd $(ARCHIVE)/livestreamer.git; git pull; \
+		then cd $(ARCHIVE)/livestreamer.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/chrippa/livestreamer.git livestreamer.git; \
 		fi
 	cp -ra $(ARCHIVE)/livestreamer.git $(BUILD_TMP)/livestreamer
@@ -713,7 +713,7 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(START_BUILD)
 	$(REMOVE)/livestreamersrv
 	set -e; if [ -d $(ARCHIVE)/livestreamersrv.git ]; \
-		then cd $(ARCHIVE)/livestreamersrv.git; git pull; \
+		then cd $(ARCHIVE)/livestreamersrv.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/athoik/livestreamersrv.git livestreamersrv.git; \
 		fi
 	cp -ra $(ARCHIVE)/livestreamersrv.git $(BUILD_TMP)/livestreamersrv

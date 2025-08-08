@@ -110,7 +110,7 @@ $(D)/oscam.do_prepare:
 	rm -rf $(LH_OBJDIR)
 	test -d $(SOURCE_DIR) || mkdir -p $(SOURCE_DIR)
 	[ -d "$(ARCHIVE)/$(OSCAM_FLAVOUR_DIR)" ] && \
-	(cd $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR); $(OSCAM_PULL);); \
+	(cd $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR); $(OSCAM_PULL) || true;); \
 	[ -d "$(ARCHIVE)/$(OSCAM_FLAVOUR_DIR)" ] || \
 	$(OSCAM_CLONE) $(OSCAM_FLAVOUR_URL) $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR);
 	cp -ra $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR) $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \

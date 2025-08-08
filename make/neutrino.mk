@@ -201,7 +201,7 @@ $(D)/libstb-hal.do_prepare:
 	rm -rf $(LH_OBJDIR)
 	test -d $(SOURCE_DIR) || mkdir -p $(SOURCE_DIR)
 	[ -d "$(ARCHIVE)/$(LIBSTB_HAL).git" ] && \
-	(cd $(ARCHIVE)/$(LIBSTB_HAL).git; git pull;); \
+	(cd $(ARCHIVE)/$(LIBSTB_HAL).git; git pull || true;); \
 	[ -d "$(ARCHIVE)/$(LIBSTB_HAL).git" ] || \
 	git clone $(GIT_URL)/$(LIBSTB_HAL).git $(ARCHIVE)/$(LIBSTB_HAL).git; \
 	cp -ra $(ARCHIVE)/$(LIBSTB_HAL).git $(SOURCE_DIR)/$(LIBSTB_HAL);\
@@ -269,7 +269,7 @@ $(D)/neutrino.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal
 	rm -rf $(SOURCE_DIR)/$(NEUTRINO).org
 	rm -rf $(N_OBJDIR)
 	[ -d "$(ARCHIVE)/$(NEUTRINO).git" ] && \
-	(cd $(ARCHIVE)/$(NEUTRINO).git; git pull;); \
+	(cd $(ARCHIVE)/$(NEUTRINO).git; git pull || true;); \
 	[ -d "$(ARCHIVE)/$(NEUTRINO).git" ] || \
 	git clone $(GIT_URL)/$(NEUTRINO).git $(ARCHIVE)/$(NEUTRINO).git; \
 	cp -ra $(ARCHIVE)/$(NEUTRINO).git $(SOURCE_DIR)/$(NEUTRINO); \

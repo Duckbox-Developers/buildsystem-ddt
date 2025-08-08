@@ -1143,7 +1143,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libexpat
 	set -e; if [ -d $(ARCHIVE)/libexpat.git ]; \
-		then cd $(ARCHIVE)/libexpat.git; git pull; \
+		then cd $(ARCHIVE)/libexpat.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/libexpat/libexpat.git libexpat.git; \
 		fi
 	cp -ra $(ARCHIVE)/libexpat.git $(BUILD_TMP)/libexpat
@@ -1289,7 +1289,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(START_BUILD)
 	$(REMOVE)/libdreamdvd
 	set -e; if [ -d $(ARCHIVE)/libdreamdvd.git ]; \
-		then cd $(ARCHIVE)/libdreamdvd.git; git pull; \
+		then cd $(ARCHIVE)/libdreamdvd.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
@@ -1530,7 +1530,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/pugixml
 	set -e; if [ -d $(ARCHIVE)/pugixml.git ]; \
-		then cd $(ARCHIVE)/pugixml.git; git pull; \
+		then cd $(ARCHIVE)/pugixml.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/zeux/pugixml.git pugixml.git; \
 		fi
 	cp -ra $(ARCHIVE)/pugixml.git $(BUILD_TMP)/pugixml
@@ -1646,7 +1646,7 @@ $(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdp
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
-		then cd $(ARCHIVE)/lcd4linux.git; git pull; \
+		then cd $(ARCHIVE)/lcd4linux.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/TangoCash/lcd4linux.git lcd4linux.git; \
 		fi
 	cp -ra $(ARCHIVE)/lcd4linux.git $(BUILD_TMP)/lcd4linux
@@ -1900,7 +1900,7 @@ $(D)/librtmp: $(D)/bootstrap $(D)/zlib $(D)/openssl
 	$(START_BUILD)
 	$(REMOVE)/rtmpdump
 	set -e; if [ -d $(ARCHIVE)/rtmpdump.git ]; \
-		then cd $(ARCHIVE)/rtmpdump.git; git pull; \
+		then cd $(ARCHIVE)/rtmpdump.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/rtmpdump.git rtmpdump.git; \
 		fi
 	cp -ra $(ARCHIVE)/rtmpdump.git $(BUILD_TMP)/rtmpdump
@@ -1950,7 +1950,7 @@ $(D)/libdvbcsa: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBCSA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libdvbcsa
 	set -e; if [ -d $(ARCHIVE)/libdvbcsa.git ]; \
-		then cd $(ARCHIVE)/libdvbcsa.git; git pull; \
+		then cd $(ARCHIVE)/libdvbcsa.git; git pull || true; \
 		else cd $(ARCHIVE); git clone https://github.com/oe-mirrors/libdvbcsa.git libdvbcsa.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdvbcsa.git $(BUILD_TMP)/libdvbcsa
