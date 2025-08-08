@@ -1785,6 +1785,8 @@ MINISATIP_PATCH = minisatip.patch
 ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71_stm24_0217 2.6.34))
 MINISATIP_BRANCH = cdcba64
 MINISATIP_EXTRA_FLAGS = -DNEEDS_SENDMMSG_SHIM
+else
+MINISATIP_BRANCH = c3b21df
 endif
 
 $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATIP_SOURCE)
