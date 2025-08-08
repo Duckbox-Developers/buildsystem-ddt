@@ -147,7 +147,7 @@ index 338861e..d4168c8 100644
      h->version = (val >> 1) & 0x1f;
      val = get8(pp, p_end);
      if (val < 0)
-@@ -2023,6 +2025,8 @@ static void pat_cb(MpegTSFilter *filter, const uint8_t *section, int section_len
+@@ -2025,6 +2027,8 @@ static void pat_cb(MpegTSFilter *filter, const uint8_t *section, int section_len
          return;
      if (ts->skip_changes)
          return;
@@ -186,7 +186,7 @@ index d4168c8..9c6f6dc 100644
  
      return filter;
  }
-@@ -2027,6 +2029,10 @@ static void pat_cb(MpegTSFilter *filter, const uint8_t *section, int section_len
+@@ -2029,6 +2031,10 @@ static void pat_cb(MpegTSFilter *filter, const uint8_t *section, int section_len
          return;
      if (!h->current)
          return;
@@ -212,7 +212,7 @@ diff --git a/libavformat/mpegts.c b/libavformat/mpegts.c
 index 9c6f6dc..a4db558 100644
 --- a/libavformat/mpegts.c
 +++ b/libavformat/mpegts.c
-@@ -2520,6 +2520,44 @@ static void seek_back(AVFormatContext *s, AVIOContext *pb, int64_t pos) {
+@@ -2522,6 +2522,44 @@ static void seek_back(AVFormatContext *s, AVIOContext *pb, int64_t pos) {
          av_log(s, pb->seekable ? AV_LOG_ERROR : AV_LOG_INFO, "Unable to seek back to the start\n");
  }
  
@@ -257,7 +257,7 @@ index 9c6f6dc..a4db558 100644
  static int mpegts_read_header(AVFormatContext *s)
  {
      MpegTSContext *ts = s->priv_data;
-@@ -2734,6 +2772,7 @@ static av_unused int64_t mpegts_get_pcr(AVFormatContext *s, int stream_index,
+@@ -2736,6 +2774,7 @@ static av_unused int64_t mpegts_get_pcr(AVFormatContext *s, int stream_index,
      uint8_t buf[TS_PACKET_SIZE];
      int pcr_l, pcr_pid =
          ((PESContext *)s->streams[stream_index]->priv_data)->pcr_pid;
@@ -265,7 +265,7 @@ index 9c6f6dc..a4db558 100644
      int pos47 = ts->pos47_full % ts->raw_packet_size;
      pos =
          ((*ppos + ts->raw_packet_size - 1 - pos47) / ts->raw_packet_size) *
-@@ -2755,6 +2794,11 @@ static av_unused int64_t mpegts_get_pcr(AVFormatContext *s, int stream_index,
+@@ -2757,6 +2796,11 @@ static av_unused int64_t mpegts_get_pcr(AVFormatContext *s, int stream_index,
              *ppos = pos;
              return timestamp;
          }
@@ -277,7 +277,7 @@ index 9c6f6dc..a4db558 100644
          pos += ts->raw_packet_size;
      }
  
-@@ -2854,7 +2898,7 @@ AVInputFormat ff_mpegts_demuxer = {
+@@ -2856,7 +2900,7 @@ AVInputFormat ff_mpegts_demuxer = {
      .read_header    = mpegts_read_header,
      .read_packet    = mpegts_read_packet,
      .read_close     = mpegts_read_close,
@@ -286,7 +286,7 @@ index 9c6f6dc..a4db558 100644
      .flags          = AVFMT_SHOW_IDS | AVFMT_TS_DISCONT,
      .priv_class     = &mpegts_class,
  };
-@@ -2866,7 +2910,7 @@ AVInputFormat ff_mpegtsraw_demuxer = {
+@@ -2868,7 +2912,7 @@ AVInputFormat ff_mpegtsraw_demuxer = {
      .read_header    = mpegts_read_header,
      .read_packet    = mpegts_raw_read_packet,
      .read_close     = mpegts_read_close,
@@ -377,7 +377,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 4ce4e2d..2c364ac 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -4731,8 +4731,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
+@@ -4743,8 +4743,8 @@ static AVIndexEntry *mov_find_next_sample(AVFormatContext *s, AVStream **st)
              if (!sample || (!s->pb->seekable && current_sample->pos < sample->pos) ||
                  (s->pb->seekable &&
                   ((msc->pb != s->pb && dts < best_dts) || (msc->pb == s->pb &&
@@ -415,7 +415,7 @@ index a4db558..492d9c7 100644
      av_init_packet(pkt);
  
      pkt->buf  = pes->buffer;
-@@ -2725,6 +2729,8 @@ static int mpegts_read_packet(AVFormatContext *s, AVPacket *pkt)
+@@ -2727,6 +2731,8 @@ static int mpegts_read_packet(AVFormatContext *s, AVPacket *pkt)
  
      pkt->size = -1;
      ts->pkt = pkt;

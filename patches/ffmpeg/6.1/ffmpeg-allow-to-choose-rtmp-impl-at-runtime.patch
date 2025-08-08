@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -3618,10 +3618,8 @@ xv_outdev_deps="xlib_xv xlib_x11 xlib_xext"
+@@ -3625,10 +3625,8 @@ xv_outdev_deps="xlib_xv xlib_x11 xlib_xext"
  # protocols
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="tcp_protocol"
-@@ -3635,20 +3633,18 @@ https_protocol_suggest="zlib"
+@@ -3642,20 +3640,18 @@ https_protocol_suggest="zlib"
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
@@ -108,7 +108,7 @@
                   hostname, sizeof(hostname), &port,
                   path, sizeof(path), s->filename);
  
-@@ -3185,9 +3187,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
+@@ -3181,9 +3183,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
  #define RTMP_PROTOCOL(flavor, uppercase)         \
      RTMP_PROTOCOL_3(flavor, CONFIG_ ## uppercase ## _PROTOCOL)
  

@@ -15,7 +15,7 @@ index ca1563abb0..9d0ab6025c 100644
  
  @end table
  
-@@ -769,7 +773,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
+@@ -776,7 +780,11 @@ Fixed key used for handling Audible AAX/AAX+ files. It has been pre-set so shoul
  specify.
  
  @item decryption_key
@@ -40,7 +40,7 @@ index 1215407f3c..091deac854 100644
  
      /* Flags for init section*/
      int is_init_section_common_video;
-@@ -1903,6 +1904,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
+@@ -1912,6 +1913,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
  
      if (c->cenc_decryption_key)
          av_dict_set(&in_fmt_opts, "decryption_key", c->cenc_decryption_key, 0);
@@ -49,7 +49,7 @@ index 1215407f3c..091deac854 100644
  
      // provide additional information from mpd if available
      ret = avformat_open_input(&pls->ctx, "", in_fmt, &in_fmt_opts); //pls->init_section->url
-@@ -2344,7 +2347,8 @@ static const AVOption dash_options[] = {
+@@ -2353,7 +2354,8 @@ static const AVOption dash_options[] = {
          OFFSET(allowed_extensions), AV_OPT_TYPE_STRING,
          {.str = "aac,m4a,m4s,m4v,mov,mp4,webm,ts"},
          INT_MIN, INT_MAX, FLAGS},
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7146,19 +7146,62 @@
+@@ -7153,19 +7153,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7204,15 +7247,21 @@
+@@ -7211,15 +7254,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7263,15 +7312,21 @@
+@@ -7270,15 +7319,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7329,15 +7384,21 @@
+@@ -7336,15 +7391,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -7480,7 +7541,7 @@
+@@ -7487,7 +7548,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -8629,12 +8690,6 @@
+@@ -8636,12 +8697,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      /* .mov and .mp4 aren't streamable anyway (only progressive download if moov is before mdat) */
-@@ -9333,7 +9388,8 @@
+@@ -9388,7 +9443,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

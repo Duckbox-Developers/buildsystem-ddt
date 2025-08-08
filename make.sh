@@ -270,17 +270,18 @@ if [ "$BOXARCH" == "sh4" ]; then
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE
 			echo "LOCAL_FFMPEG_BOXTYPE_LIST=$LOCAL_FFMPEG_BOXTYPE_LIST" >> config
-			echo "FFMPEG_EXPERIMENTAL=0" >> config
-			echo "FFMPEG_SNAPSHOT=0" >> config
+			FFMPEG_VER=4.4
+			echo "FFMPEG_VER=$FFMPEG_VER" >> config
 		fi
 	done
+	[ -z "$FFMPEG_VER" ] && echo "FFMPEG_VER=2.8" >> config
 elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 	CNT=0
 	case $3 in
 		[1-3]) REPLY=$3;;
 		*)	echo -e "\nFFMPEG version:"
-			echo -e "   \033[01;32m1)  FFMPEG 4.4.6\033[00m" && CNT=$(($CNT+1))
-			echo "   2)  FFMPEG 6.1.2 [experimental]" && CNT=$(($CNT+1))
+			echo -e "   \033[01;32m1)  FFMPEG 4.4 GIT\033[00m" && CNT=$(($CNT+1))
+			echo "   2)  FFMPEG 6.1 GIT [experimental]" && CNT=$(($CNT+1))
 			if [ "$BOXTYPE" != "dcube" ]; then
 				echo "   3)  FFMPEG 7.x.x [git snapshot]" && CNT=$(($CNT+1))
 			fi
@@ -289,17 +290,12 @@ elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 	esac
 
 	case "$REPLY" in
-		1)  FFMPEG_EXPERIMENTAL="0"
-		    FFMPEG_SNAPSHOT="0";;
-		2)  FFMPEG_EXPERIMENTAL="1"
-		    FFMPEG_SNAPSHOT="0";;
-		3)  FFMPEG_EXPERIMENTAL="0"
-		    FFMPEG_SNAPSHOT="1";;
-		*)  FFMPEG_EXPERIMENTAL="0"
-		    FFMPEG_SNAPSHOT="0";;
+		1)  FFMPEG_VER="4.4";;
+		2)  FFMPEG_VER="6.1";;
+		3)  FFMPEG_VER="snapshot";;
+		*)  FFMPEG_VER="4.4";;
 	esac
-	echo "FFMPEG_EXPERIMENTAL=$FFMPEG_EXPERIMENTAL" >> config
-	echo "FFMPEG_SNAPSHOT=$FFMPEG_SNAPSHOT" >> config
+	echo "FFMPEG_VER=$FFMPEG_VER" >> config
 fi
 
 ##############################################

@@ -10,28 +10,18 @@ FFMPEG_DEPS += $(D)/alsa_utils
 endif
 
 ifeq ($(FFM), 1)
-ifeq ($(FFMPEG_SNAPSHOT), 1)
-FFMPEG_VER = snapshot
-FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
+ifeq ($(FFMPEG_VER), snapshot)
 FFMPEG_SNAP =
+FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 FFMPEG_GITVER = e1ef33d
 else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 6.1.2
 FFMPEG_SNAP = -$(FFMPEG_VER)
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-else
-FFMPEG_VER = 4.4.6
-FFMPEG_SNAP = -$(FFMPEG_VER)
-FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-endif
 endif
 
 #FFMPEG_DEPS += $(D)/librtmp
 #FFMPEG_CONF_OPTS  = --enable-librtmp
-ifeq ($(FFMPEG_SNAPSHOT), 1)
+ifeq ($(FFMPEG_VER), snapshot)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
@@ -39,7 +29,7 @@ FFMPEG_DEPS       += $(D)/harfbuzz
 FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
 else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
+ifeq ($(FFMPEG_VER), 6.1)
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
@@ -66,30 +56,24 @@ else
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
 endif
+
 ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 
 ifeq ($(BOXARCH), sh4)
 ifeq ($(AUTOCONF_NEW),1)
-	FFMPEG2_PATCH = ffmpeg-4.4-sh4.patch
+	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
 endif
 endif
 
 FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_INCLUDE_DIR)/libxml2
 
-ifeq ($(FFMPEG_SNAPSHOT), 1)
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS)
-else
-$(ARCHIVE)/$(FFMPEG_SOURCE):
-	$(DOWNLOAD) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
-
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
-endif
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
 
-ifeq ($(FFMPEG_SNAPSHOT), 1)
+ifeq ($(FFMPEG_VER), snapshot)
 	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
 		then cd $(ARCHIVE)/ffmpeg.git; git pull || true; \
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
@@ -97,7 +81,12 @@ ifeq ($(FFMPEG_SNAPSHOT), 1)
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
 	($(CHDIR)/ffmpeg; git checkout -q $(FFMPEG_GITVER);)
 else
-	$(UNTAR)/$(FFMPEG_SOURCE)
+	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
+		then cd $(ARCHIVE)/ffmpeg.git; git pull || true; \
+		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
+		fi
+	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
+	cd $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP) && git checkout release/$(FFMPEG_VER)
 endif
 	$(CHDIR)/ffmpeg$(FFMPEG_SNAP); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
@@ -425,9 +414,7 @@ endif
 ifeq ($(BOXARCH), sh4)
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
 
-FFMPEG_VER = 2.8.22
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_DEPS = $(D)/alsa_utils
 FFMPEG_CONF_OPTS = 
 FFMPRG_EXTRA_CFLAGS =
@@ -437,17 +424,22 @@ FFMPEG_CONF_OPTS = --enable-muxer=hevc --enable-parser=hevc --enable-decoder=hev
 endif
 
 ifeq ($(AUTOCONF_NEW),1)
-	FFMPEG2_PATCH = ffmpeg-2.8-sh4.patch
+	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
 endif
 
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(DOWNLOAD) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(FFMPEG_DEPS)
 	$(START_BUILD)
-	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
-	$(UNTAR)/$(FFMPEG_SOURCE)
-	$(CHDIR)/ffmpeg-$(FFMPEG_VER); \
+	$(REMOVE)/ffmpeg
+	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
+		then cd $(ARCHIVE)/ffmpeg.git; git pull || true; \
+		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
+		fi
+	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg
+	cd $(BUILD_TMP)/ffmpeg && git checkout release/$(FFMPEG_VER)
+	$(CHDIR)/ffmpeg; \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		$(call apply_patches, $(FFMPEG2_PATCH)); \
 		./configure $(SILENT_OPT) \
@@ -658,7 +650,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libavutil.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswresample.pc
 	test -e $(PKG_CONFIG_PATH)/libswscale.pc && $(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswscale.pc || true
-	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
+	$(REMOVE)/ffmpeg
 	$(TOUCH)
 
 endif
