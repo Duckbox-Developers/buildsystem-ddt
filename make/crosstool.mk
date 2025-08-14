@@ -12,8 +12,8 @@ endif
 #
 # crosstool-ng
 #
-#CROSSTOOL_NG_VER     = 93d5d76
-CROSSTOOL_NG_VER     = ec7070d
+#CROSSTOOL_NG_VER     = ec7070d
+CROSSTOOL_NG_VER     = f390dba
 CROSSTOOL_NG_DIR     = crosstool-ng.git
 CROSSTOOL_NG_SOURCE  = $(CROSSTOOL_NG_DIR)
 CROSSTOOL_NG_URL     = https://github.com/crosstool-ng/crosstool-ng
@@ -44,8 +44,8 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 		$(call apply_patches, $(CROSSTOOL_NG_PATCH)); \
 		$(INSTALL_DATA) $(PATCHES)/ct-ng/$(CROSSTOOL_NG_CONFIG)$(BXTP).config .config; \
 		sed -i "s|^CT_PARALLEL_JOBS=.*|CT_PARALLEL_JOBS=$(PARALLEL_JOBS)|" .config; \
-		[ "$(BS_GCC_VER)" == "15.1.0" ] && [ `gcc -dumpfullversion | cut -d "." -f1` -lt 8 ] && sed -i "s|^CT_GMP_EXTRA_CFLAGS=\".*\"|CT_GMP_EXTRA_CFLAGS=\"\"|" .config; \
-		[ "$(BS_GCC_VER)" == "15.1.0" ] && [ `gcc -dumpfullversion | cut -d "." -f1` -lt 8 ] && sed -i "s|^CT_NCURSES_EXTRA_CFLAGS=\".*\"|CT_NCURSES_EXTRA_CFLAGS=\"\"|" .config; \
+		[ "$(BS_GCC_VER)" == "15.2.0" ] && [ `gcc -dumpfullversion | cut -d "." -f1` -lt 8 ] && sed -i "s|^CT_GMP_EXTRA_CFLAGS=\".*\"|CT_GMP_EXTRA_CFLAGS=\"\"|" .config; \
+		[ "$(BS_GCC_VER)" == "15.2.0" ] && [ `gcc -dumpfullversion | cut -d "." -f1` -lt 8 ] && sed -i "s|^CT_NCURSES_EXTRA_CFLAGS=\".*\"|CT_NCURSES_EXTRA_CFLAGS=\"\"|" .config; \
 		\
 		export CT_NG_ARCHIVE=$(ARCHIVE); \
 		export CT_NG_BASE_DIR=$(CROSS_BASE); \
