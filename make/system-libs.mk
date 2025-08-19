@@ -275,6 +275,7 @@ $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 #
 # openssl
 #
+ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71_stm24_0217 2.6.34))
 OPENSSL_MAJOR = 1.0.2
 OPENSSL_MINOR = u
 OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
@@ -323,6 +324,67 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 	ln -sf libssl.so.1.0.0 $(TARGET_LIB_DIR)/libssl.so.0.9.8
 	$(REMOVE)/openssl-$(OPENSSL_VER)
 	$(TOUCH)
+else
+OPENSSL_MAJOR = 1.1.1
+OPENSSL_MINOR = w
+OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
+OPENSSL_SOURCE = openssl-$(OPENSSL_VER).tar.gz
+OPENSSL_PATCH  = openssl-1.1.1w-0001-Dont-waste-time-building-manpages-if-we-re-not-going.patch
+OPENSSL_PATCH += openssl-1.1.1w-0002-Reproducible-build-do-not-leak-compiler-path.patch
+OPENSSL_PATCH += openssl-1.1.1w-0003-Introduce-the-OPENSSL_NO_MADVISE-to-disable-call-to-.patch
+OPENSSL_PATCH += openssl-1.1.1w-0004-Configure-use-ELFv2-ABI-on-some-ppc64-big-endian-sys.patch
+OPENSSL_PATCH += openssl-1.1.1w-0005-crypto-perlasm-ppc-xlate.pl-add-linux64v2-flavour.patch
+
+ifeq ($(BOXARCH), sh4)
+OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile
+else
+OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_BASE)/bin/$$(CC) -M|' Makefile
+endif
+
+$(ARCHIVE)/$(OPENSSL_SOURCE):
+	$(DOWNLOAD) https://www.openssl.org/source/old/$(OPENSSL_MAJOR)/$(OPENSSL_SOURCE)
+
+$(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/openssl-$(OPENSSL_VER)
+	$(UNTAR)/$(OPENSSL_SOURCE)
+	$(CHDIR)/openssl-$(OPENSSL_VER); \
+		$(call apply_patches, $(OPENSSL_PATCH)); \
+		$(BUILDENV) \
+		./Configure $(SILENT_OPT) \
+			-DL_ENDIAN \
+			linux-generic32 \
+			--prefix=$(TARGET_DIR)/usr \
+			--openssldir=/etc/ssl \
+			shared \
+			threads \
+			no-hw \
+			no-engine \
+			no-sse2 \
+			no-tests \
+			no-fuzz-afl \
+			no-fuzz-libfuzzer \
+			-DTERMIOS -fomit-frame-pointer \
+			-DOPENSSL_SMALL_FOOTPRINT \
+			$(TARGET_CFLAGS) \
+			$(TARGET_LDFLAGS) \
+		; \
+		$(OPENSSL_SED_PATCH); \
+		$(MAKE) depend; \
+		$(MAKE) all; \
+		$(MAKE) install_sw INSTALL_PREFIX=$(TARGET_DIR)
+	chmod 0755 $(TARGET_LIB_DIR)/lib{crypto,ssl}.so.*
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/openssl.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libcrypto.pc
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libssl.pc
+	cd $(TARGET_DIR) && rm -rf etc/ssl/man usr/bin/openssl usr/lib/engines
+	ln -sf libcrypto.so.1.1 $(TARGET_LIB_DIR)/libcrypto.so.0.9.8
+	ln -sf libcrypto.so.1.1 $(TARGET_LIB_DIR)/libcrypto.so.1.0.0
+	ln -sf libssl.so.1.1 $(TARGET_LIB_DIR)/libssl.so.0.9.8
+	ln -sf libssl.so.1.1 $(TARGET_LIB_DIR)/libssl.so.1.0.0
+	$(REMOVE)/openssl-$(OPENSSL_VER)
+	$(TOUCH)
+endif
 
 #
 # libbluray
