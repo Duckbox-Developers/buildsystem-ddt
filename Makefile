@@ -51,7 +51,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
 endif
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
-	@echo "FFMPEG            : `([ "$(FFMPEG_VER)" == "snapshot" ] && echo "SNAPSHOT" ) || echo "$(FFMPEG_VER) GIT"`"
+	@echo "FFMPEG            : $(FFMPEG_VER) GIT"
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ "$(OPTIMIZE_PICS)" == "1" ] && echo -e enabled || echo -e disabled)"

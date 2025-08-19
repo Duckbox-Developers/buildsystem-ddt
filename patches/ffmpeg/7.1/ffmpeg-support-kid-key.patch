@@ -63,7 +63,7 @@ diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
 +++ b/libavformat/isom.h
-@@ -363,8 +363,8 @@ typedef struct MOVContext {
+@@ -346,8 +346,8 @@ typedef struct MOVContext {
      void *audible_iv;
      int audible_iv_size;
      struct AVAES *aes_decrypt;
@@ -74,7 +74,7 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -379,6 +379,7 @@
+@@ -362,6 +362,7 @@
      int thmb_item_id;
      int64_t idat_offset;
      int interleaved_read;
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -7955,19 +7955,62 @@
+@@ -7878,19 +7878,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8013,15 +8056,21 @@
+@@ -7936,15 +7979,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8072,15 +8121,21 @@
+@@ -7995,15 +8044,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8138,15 +8193,21 @@
+@@ -8061,15 +8116,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8293,7 +8353,7 @@
+@@ -8216,7 +8276,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -10468,12 +10529,6 @@
+@@ -10188,12 +10249,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->thmb_item_id = -1;
-@@ -11341,7 +11396,8 @@
+@@ -11040,7 +11095,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },
@@ -255,17 +255,17 @@ diff --git a/tests/fate/mov.mak b/tests/fate/mov.mak
 index 6cb493ceab..c420d8ab10 100644
 --- a/tests/fate/mov.mak
 +++ b/tests/fate/mov.mak
-@@ -8,6 +8,9 @@ FATE_MOV-$(call FRAMEMD5, MOV, H264) += fate-mov-3elist \
-            fate-mov-3elist-encrypted \
-            fate-mov-frag-encrypted \
-            fate-mov-tenc-only-encrypted \
+@@ -12,6 +12,9 @@
+            fate-mov-gpmf-remux \
+            fate-mov-ibi-elst-starts-b \
+            fate-mov-elst-ends-betn-b-and-i \
 +           fate-mov-3elist-encrypted-kid \
 +           fate-mov-frag-encrypted-kid \
 +           fate-mov-tenc-only-encrypted-kid \
             fate-mov-frag-overlap \
             fate-mov-neg-firstpts-discard-frames \
- 
-@@ -58,6 +61,15 @@
+            fate-mov-stream-shorter-than-movie \
+@@ -52,6 +55,15 @@
  # Full-sample encryption and constant IV using only tenc atom (no senc/saio/saiz).
  fate-mov-tenc-only-encrypted: CMD = framemd5 -decryption_key 12345678901234567890123456789012 -i $(TARGET_SAMPLES)/mov/mov-tenc-only-encrypted.mp4
  

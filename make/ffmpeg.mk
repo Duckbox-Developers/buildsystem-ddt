@@ -10,38 +10,22 @@ FFMPEG_DEPS += $(D)/alsa_utils
 endif
 
 ifeq ($(FFM), 1)
-ifeq ($(FFMPEG_VER), snapshot)
-FFMPEG_SNAP =
 FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
-FFMPEG_GITVER = e1ef33d
-else
-FFMPEG_SNAP = -$(FFMPEG_VER)
-FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
-endif
 
 #FFMPEG_DEPS += $(D)/librtmp
 #FFMPEG_CONF_OPTS  = --enable-librtmp
-ifeq ($(FFMPEG_VER), snapshot)
+ifeq ($(FFMPEG_VER), 4.4)
+FFMPEG_CONF_OPTS  += --enable-libxml2
+FFMPEG_CONF_OPTS  += --enable-libfreetype
+FFMPEG_CONF_OPTS  += --disable-x86asm
+#FFMPEG_CONF_OPTS  += --enable-filter=overlay
+else
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm
 FFMPEG_DEPS       += $(D)/harfbuzz
 FFMPEG_CONF_OPTS  += --enable-libharfbuzz
 #FFMPEG_CONF_OPTS  += --enable-filter=overlay
-else
-ifeq ($(FFMPEG_VER), 6.1)
-FFMPEG_CONF_OPTS  += --enable-libxml2
-FFMPEG_CONF_OPTS  += --enable-libfreetype
-FFMPEG_CONF_OPTS  += --disable-x86asm
-FFMPEG_DEPS       += $(D)/harfbuzz
-FFMPEG_CONF_OPTS  += --enable-libharfbuzz
-#FFMPEG_CONF_OPTS  += --enable-filter=overlay
-else
-FFMPEG_CONF_OPTS  += --enable-libxml2
-FFMPEG_CONF_OPTS  += --enable-libfreetype
-FFMPEG_CONF_OPTS  += --disable-x86asm
-#FFMPEG_CONF_OPTS  += --enable-filter=overlay
-endif
 endif
 
 ifeq ($(BOXARCH), arm)
@@ -71,24 +55,16 @@ FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_INCLUDE_DIR)/libxml2
 
 $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS)
 	$(START_BUILD)
-	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
+	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 
-ifeq ($(FFMPEG_VER), snapshot)
 	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
 		then cd $(ARCHIVE)/ffmpeg.git; git pull || true; \
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
-	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
-	($(CHDIR)/ffmpeg; git checkout -q $(FFMPEG_GITVER);)
-else
-	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
-		then cd $(ARCHIVE)/ffmpeg.git; git pull || true; \
-		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
-		fi
-	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
-	cd $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP) && git checkout release/$(FFMPEG_VER)
-endif
-	$(CHDIR)/ffmpeg$(FFMPEG_SNAP); \
+	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER)
+	cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER) && git checkout release/$(FFMPEG_VER)
+
+	$(CHDIR)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		$(call apply_patches, $(FFMPEG2_PATCH)); \
 		./configure $(SILENT_OPT) \
@@ -404,7 +380,7 @@ endif
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libavutil.pc
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswresample.pc
 	test -e $(PKG_CONFIG_PATH)/libswscale.pc && $(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswscale.pc || true
-	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
+	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(TOUCH)
 
 endif

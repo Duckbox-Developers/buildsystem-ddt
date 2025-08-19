@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -3815,10 +3815,8 @@
+@@ -3762,10 +3762,8 @@
  android_content_protocol_select="file_protocol"
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="tcp_protocol"
-@@ -3832,20 +3830,18 @@
+@@ -3779,20 +3777,18 @@
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
@@ -46,7 +46,7 @@
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
 --- a/libavformat/Makefile
 +++ b/libavformat/Makefile
-@@ -696,12 +696,12 @@ OBJS-$(CONFIG_MMSH_PROTOCOL)             += mmsh.o mms.o asf_tags.o
+@@ -687,12 +687,12 @@ OBJS-$(CONFIG_MMSH_PROTOCOL)             += mmsh.o mms.o asf_tags.o
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf_tags.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o
@@ -88,7 +88,7 @@
  extern const URLProtocol ff_srtp_protocol;
 --- a/libavformat/rtmpproto.c
 +++ b/libavformat/rtmpproto.c
-@@ -2637,7 +2637,7 @@ static int inject_fake_duration_metadata(RTMPContext *rt)
+@@ -2628,7 +2628,7 @@ static int inject_fake_duration_metadata(RTMPContext *rt)
  static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **opts)
  {
      RTMPContext *rt = s->priv_data;
@@ -97,7 +97,7 @@
      char *old_app, *qmark, *n, fname_buffer[1024];
      uint8_t buf[2048];
      int port;
-@@ -2648,7 +2648,9 @@ static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **o
+@@ -2639,7 +2639,9 @@ static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **o
  
      rt->is_input = !(flags & AVIO_FLAG_WRITE);
  
@@ -108,7 +108,7 @@
                   hostname, sizeof(hostname), &port,
                   path, sizeof(path), s->filename);
  
-@@ -3198,9 +3200,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
+@@ -3184,9 +3186,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
  #define RTMP_PROTOCOL(flavor, uppercase)         \
      RTMP_PROTOCOL_3(flavor, CONFIG_ ## uppercase ## _PROTOCOL)
  
