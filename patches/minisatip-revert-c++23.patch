@@ -1417,10 +1417,10 @@
 +do
 +  CC="$ac_save_CC $ac_arg"
 +  if ac_fn_c_try_compile "$LINENO"
--       for ac_header in dvbcsa/dvbcsa.h
+-       for ac_header in stdio.h
 -do :
--  ac_fn_cxx_check_header_compile "$LINENO" "dvbcsa/dvbcsa.h" "ac_cv_header_dvbcsa_dvbcsa_h" "$ac_includes_default"
--if test "x$ac_cv_header_dvbcsa_dvbcsa_h" = xyes
+-  ac_fn_cxx_check_header_compile "$LINENO" "stdio.h" "ac_cv_header_stdio_h" "$ac_includes_default"
+-if test "x$ac_cv_header_stdio_h" = xyes
  then :
 +  ac_cv_prog_cc_c89=$ac_arg
 +fi
@@ -1430,7 +1430,7 @@
 +rm -f conftest.$ac_ext
 +CC=$ac_save_CC
 +fi
--  printf "%s\n" "#define HAVE_DVBCSA_DVBCSA_H 1" >>confdefs.h
+-  printf "%s\n" "#define HAVE_STDIO_H 1" >>confdefs.h
  
 +if test "x$ac_cv_prog_cc_c89" = xno
 +then :
@@ -1467,10 +1467,10 @@
 -    { printf "%s\n" "$as_me:${as_lineno-$LINENO}:  == Checking C++ 20 == " >&5
 -printf "%s\n" "$as_me:  == Checking C++ 20 == " >&6;}
 -    CXXFLAGS="-std=c++20"
--           for ac_header in dvbcsa/dvbcsa.h
+-           for ac_header in stdio.h
 -do :
--  ac_fn_cxx_check_header_compile "$LINENO" "dvbcsa/dvbcsa.h" "ac_cv_header_dvbcsa_dvbcsa_h" "$ac_includes_default"
--if test "x$ac_cv_header_dvbcsa_dvbcsa_h" = xyes
+-  ac_fn_cxx_check_header_compile "$LINENO" "stdio.h" "ac_cv_header_stdio_h" "$ac_includes_default"
+-if test "x$ac_cv_header_stdio_h" = xyes
  then :
 +  printf %s "(cached) " >&6
 +else $as_nop
@@ -1479,7 +1479,7 @@
 +cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 +/* end confdefs.h.  */
 +
--  printf "%s\n" "#define HAVE_DVBCSA_DVBCSA_H 1" >>confdefs.h
+-  printf "%s\n" "#define HAVE_STDIO_H 1" >>confdefs.h
  
 +int
 +main (void)
@@ -1498,7 +1498,7 @@
 +rm -f core conftest.err conftest.$ac_objext conftest.beam \
 +    conftest$ac_exeext conftest.$ac_ext
 +LIBS=$ac_check_lib_save_LIBS
--  CXXFLAGS="-std=c++2a"
+-  CXXFLAGS="-std=c++17"
  fi
 +{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_rt_main" >&5
 +printf "%s\n" "$ac_cv_lib_rt_main" >&6; }
@@ -1833,12 +1833,12 @@
 -
 -AC_MSG_NOTICE([ == Checking C++ 23 == ])
 -CXXFLAGS="-std=c++23"
--AC_CHECK_HEADERS([dvbcsa/dvbcsa.h],[],[NO_23=1])
+-AC_CHECK_HEADERS([stdio.h],[],[NO_23=1])
 -
 -if test "$NO_23" = "1"; then
 -    AC_MSG_NOTICE([ == Checking C++ 20 == ])
 -    CXXFLAGS="-std=c++20"
--    AC_CHECK_HEADERS([dvbcsa/dvbcsa.h],[],[CXXFLAGS="-std=c++2a"])  # gcc 9
+-    AC_CHECK_HEADERS([stdio.h],[],[CXXFLAGS="-std=c++17"])  # gcc 9
 -fi
 -
 -AC_MSG_NOTICE([ == Using C++ standard $CXXFLAGS == ])
