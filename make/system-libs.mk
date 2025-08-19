@@ -371,7 +371,7 @@ $(D)/openssl: $(D)/bootstrap $(ARCHIVE)/$(OPENSSL_SOURCE)
 		; \
 		$(OPENSSL_SED_PATCH); \
 		$(MAKE) depend; \
-		$(MAKE) all; \
+		$(MAKE) all ENGINESDIR=/usr/lib/engines-1.1; \
 		$(MAKE) install_sw INSTALL_PREFIX=$(TARGET_DIR)
 	chmod 0755 $(TARGET_LIB_DIR)/lib{crypto,ssl}.so.*
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/openssl.pc
