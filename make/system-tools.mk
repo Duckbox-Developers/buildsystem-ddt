@@ -534,7 +534,7 @@ $(D)/parted: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(PARTED_SOURCE)
 #
 DOSFSTOOLS_CFLAGS = $(TARGET_CFLAGS) -D_GNU_SOURCE -fomit-frame-pointer -D_FILE_OFFSET_BITS=64
 
-$(D)/dosfstools: bootstrap
+$(D)/dosfstools: $(D)/bootstrap
 	$(START_BUILD)
 	$(REMOVE)/dosfstools
 	set -e; if [ -d $(ARCHIVE)/dosfstools.git ]; \
