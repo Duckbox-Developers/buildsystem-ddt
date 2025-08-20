@@ -275,7 +275,7 @@ $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 #
 # openssl
 #
-ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.32.71_stm24_0217 2.6.34))
+ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 2.8 4.4 6.1))
 OPENSSL_MAJOR = 1.0.2
 OPENSSL_MINOR = u
 OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
@@ -329,11 +329,11 @@ OPENSSL_MAJOR = 1.1.1
 OPENSSL_MINOR = w
 OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
 OPENSSL_SOURCE = openssl-$(OPENSSL_VER).tar.gz
-OPENSSL_PATCH  = openssl-1.1.1w-0001-Dont-waste-time-building-manpages-if-we-re-not-going.patch
-OPENSSL_PATCH += openssl-1.1.1w-0002-Reproducible-build-do-not-leak-compiler-path.patch
-OPENSSL_PATCH += openssl-1.1.1w-0003-Introduce-the-OPENSSL_NO_MADVISE-to-disable-call-to-.patch
-OPENSSL_PATCH += openssl-1.1.1w-0004-Configure-use-ELFv2-ABI-on-some-ppc64-big-endian-sys.patch
-OPENSSL_PATCH += openssl-1.1.1w-0005-crypto-perlasm-ppc-xlate.pl-add-linux64v2-flavour.patch
+OPENSSL_PATCH  = openssl-$(OPENSSL_VER)-0001-Dont-waste-time-building-manpages-if-we-re-not-going.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-0002-Reproducible-build-do-not-leak-compiler-path.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-0003-Introduce-the-OPENSSL_NO_MADVISE-to-disable-call-to-.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-0004-Configure-use-ELFv2-ABI-on-some-ppc64-big-endian-sys.patch
+OPENSSL_PATCH += openssl-$(OPENSSL_VER)-0005-crypto-perlasm-ppc-xlate.pl-add-linux64v2-flavour.patch
 
 ifeq ($(BOXARCH), sh4)
 OPENSSL_SED_PATCH = sed -i 's|MAKEDEPPROG=makedepend|MAKEDEPPROG=$(CROSS_DIR)/bin/$$(CC) -M|' Makefile
