@@ -1585,7 +1585,7 @@ $(D)/libroxml: $(D)/bootstrap $(ARCHIVE)/$(LIBROXML_SOURCE)
 #
 # pugixml
 #
-PUGIXML_VER = b080173
+PUGIXML_VER = 5a1892b
 PUGIXML_PATCH = pugixml-config.patch
 
 $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
@@ -1596,7 +1596,7 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 		else cd $(ARCHIVE); git clone https://github.com/zeux/pugixml.git pugixml.git; \
 		fi
 	cp -ra $(ARCHIVE)/pugixml.git $(BUILD_TMP)/pugixml
-	(cd $(BUILD_TMP)/pugixml; git checkout $(PUGIXML_VER);); \
+	(cd $(BUILD_TMP)/pugixml; git checkout -q $(PUGIXML_VER);); \
 	$(CHDIR)/pugixml; \
 		$(call apply_patches, $(PUGIXML_PATCH)); \
 		cmake  --no-warn-unused-cli \
