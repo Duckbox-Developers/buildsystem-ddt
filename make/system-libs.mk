@@ -1199,7 +1199,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 # expat
 #
 EXPAT_PATCH  = expat-libtool-tag.patch
-EXPAT_BRANCH = 4b274f1
+EXPAT_BRANCH = 39ea0d1
 
 $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 	$(START_BUILD)
@@ -1210,7 +1210,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 		fi
 	cp -ra $(ARCHIVE)/libexpat.git $(BUILD_TMP)/libexpat
 	$(CHDIR)/libexpat/expat; \
-		git checkout $(EXPAT_BRANCH); \
+		git checkout -q $(EXPAT_BRANCH); \
 		$(call apply_patches, $(EXPAT_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
