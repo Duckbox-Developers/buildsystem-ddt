@@ -938,7 +938,7 @@ $(D)/sysstat: $(D)/bootstrap $(ARCHIVE)/$(SYSSTAT_SOURCE)
 #
 # libnsl
 #
-LIBNSL_VER    = 2.0.0
+LIBNSL_VER    = 2.0.1
 LIBNSL_SOURCE = libnsl-$(LIBNSL_VER).tar.gz
 
 $(ARCHIVE)/$(LIBNSL_SOURCE):
