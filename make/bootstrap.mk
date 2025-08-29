@@ -335,18 +335,19 @@ $(D)/dm800sev2_2nd: $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE)
 	$(TOUCH)
 
 #
-# qrencode
+# libqrencode
 #
-HOST_QRENCODE_VER = 4.1.1
-HOST_QRENCODE_SOURCE = qrencode-$(HOST_QRENCODE_VER).tar.gz
+HOST_LIBQRENCODE_VER = 4.1.1
+HOST_LIBQRENCODE_SOURCE = libqrencode-$(HOST_LIBQRENCODE_VER).tar.gz
 
-$(ARCHIVE)/$(HOST_QRENCODE_SOURCE):
-	$(DOWNLOAD) https://fukuchi.org/works/qrencode/$(HOST_QRENCODE_SOURCE)
+$(ARCHIVE)/$(HOST_LIBQRENCODE_SOURCE):
+	$(DOWNLOAD) https://github.com/fukuchi/libqrencode/archive/refs/tags/v$(HOST_LIBQRENCODE_VER).tar.gz -O $(ARCHIVE)/$(HOST_LIBQRENCODE_SOURCE)
 
-$(D)/host_qrencode: $(D)/directories $(ARCHIVE)/$(HOST_QRENCODE_SOURCE)
+$(D)/host_libqrencode: $(D)/directories $(ARCHIVE)/$(HOST_LIBQRENCODE_SOURCE)
 	$(START_BUILD)
-	$(UNTAR)/$(HOST_QRENCODE_SOURCE)
-	$(CHDIR)/qrencode-$(HOST_QRENCODE_VER); \
+	$(UNTAR)/$(HOST_LIBQRENCODE_SOURCE)
+	$(CHDIR)/libqrencode-$(HOST_LIBQRENCODE_VER); \
+		./autogen.sh $(SILENT_OPT); \
 		export PKG_CONFIG=/usr/bin/pkg-config; \
 		export PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig; \
 		./configure $(SILENT_OPT) \
@@ -355,7 +356,7 @@ $(D)/host_qrencode: $(D)/directories $(ARCHIVE)/$(HOST_QRENCODE_SOURCE)
 		; \
 		$(MAKE); \
 		$(MAKE) install
-	$(REMOVE)/qrencode-$(HOST_QRENCODE_VER)
+	$(REMOVE)/libqrencode-$(HOST_LIBQRENCODE_VER)
 	$(TOUCH)
 
 #
@@ -376,7 +377,7 @@ BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
 BOOTSTRAP += $(D)/host_mksquashfs
 endif
-BOOTSTRAP += $(D)/host_qrencode
+BOOTSTRAP += $(D)/host_libqrencode
 
 $(D)/bootstrap: $(BOOTSTRAP)
 	@touch $@
