@@ -14,6 +14,8 @@ fi
 
 echo "Build of Python 2.7.18..."
 
+sudo apt-get -y install libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+
 [ -e $HOME/Python-2.7.18 ] && rm -rf $HOME/Python-2.7.18
 cd $HOME
 tar xJf $ARCHIVE/Python-2.7.18.tar.xz
