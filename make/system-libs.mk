@@ -111,7 +111,7 @@ LIBGLIB2_SOURCE = glib-$(LIBGLIB2_VER).tar.xz
 $(ARCHIVE)/$(LIBGLIB2_SOURCE):
 	$(DOWNLOAD) https://ftp.gnome.org/pub/gnome/sources/glib/$(LIBGLIB2_VER_MAJOR).$(LIBGLIB2_VER_MINOR)/$(LIBGLIB2_SOURCE)
 
-$(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
+$(D)/host_libglib2_genmarshal: $(D)/bootstrap $(D)/host_python $(D)/host_libffi $(ARCHIVE)/$(LIBGLIB2_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/glib-$(LIBGLIB2_VER)
 	$(UNTAR)/$(LIBGLIB2_SOURCE)
