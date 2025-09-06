@@ -1,6 +1,6 @@
 --- a/src/Makefile.in
 +++ b/src/Makefile.in
-@@ -138,7 +138,6 @@ endif
+@@ -136,7 +136,6 @@ endif
  
  ifeq ($(STATIC),1)
  	LDFLAGS+=$(addsuffix .a,$(addprefix -l:lib,$(LIBS)))
@@ -1978,7 +1978,7 @@
  LDFLAGS += @LDFLAGS@ -lpthread
  CPPFLAGS += @CPPFLAGS@
  
-@@ -122,14 +121,6 @@
+@@ -120,14 +119,6 @@
  CXXFLAGS+=-DDISABLE_DDCI
  endif
  
@@ -1993,7 +1993,7 @@
  ifeq ($(DEBUG),1)
  CXXFLAGS += -fsanitize=address -fsanitize=leak -fsanitize=undefined -static-libasan -static-libubsan -static-liblsan -fstack-protector-all
  else
-@@ -143,7 +134,7 @@
+@@ -141,7 +132,7 @@
  endif
  
  SOURCES+=$(SOURCES-1)
@@ -2016,7 +2016,7 @@
  #endif
  
  #define DEFAULT_LOG LOG_UTILS
-@@ -228,13 +227,28 @@
+@@ -226,13 +225,28 @@
      }
  }
  
