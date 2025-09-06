@@ -275,7 +275,7 @@ $(D)/readline: $(D)/bootstrap $(ARCHIVE)/$(READLINE_SOURCE)
 #
 # openssl
 #
-ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 2.8 4.4 6.1))
+ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 2.8 4.4 6.1 7.1))
 OPENSSL_MAJOR = 1.0.2
 OPENSSL_MINOR = u
 OPENSSL_VER = $(OPENSSL_MAJOR)$(OPENSSL_MINOR)
