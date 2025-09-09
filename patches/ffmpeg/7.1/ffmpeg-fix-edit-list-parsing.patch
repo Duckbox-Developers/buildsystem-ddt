@@ -1,6 +1,6 @@
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -4305,8 +4305,10 @@
+@@ -4307,8 +4307,10 @@
  
              if (ctts_data_old && ctts_index_old < ctts_count_old) {
                  curr_ctts = ctts_data_old[ctts_index_old].duration;
