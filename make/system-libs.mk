@@ -1704,7 +1704,7 @@ endif
 #LCD4LINUX_DRV = ,DM8000
 #endif
 
-$(D)/lcd4linux: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
+$(D)/lcd4linux: $(D)/bootstrap $(D)/libjpeg $(D)/gd $(D)/libusb_compat $(D)/libusb $(D)/libdpf
 	$(START_BUILD)
 	$(REMOVE)/lcd4linux
 	set -e; if [ -d $(ARCHIVE)/lcd4linux.git ]; \
