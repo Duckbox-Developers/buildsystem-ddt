@@ -262,6 +262,28 @@ $(D)/opkg: $(D)/bootstrap $(D)/host_opkg $(D)/libarchive $(ARCHIVE)/$(OPKG_SOURC
 	$(TOUCH)
 
 #
+# host_autoconf
+#
+HOST_AUTOCONF_VER = 2.69
+HOST_AUTOCONF_SOURCE = autoconf-$(HOST_AUTOCONF_VER).tar.gz
+
+$(ARCHIVE)/$(HOST_AUTOCONF_SOURCE):
+	$(DOWNLOAD) http://ftp.gnu.org/gnu/autoconf/$(HOST_AUTOCONF_SOURCE)
+
+$(D)/host_autoconf: $(D)/directories $(ARCHIVE)/$(HOST_AUTOCONF_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/autoconf-$(HOST_AUTOCONF_VER)
+	$(UNTAR)/$(HOST_AUTOCONF_SOURCE)
+	$(CHDIR)/autoconf-$(HOST_AUTOCONF_VER); \
+		./configure $(SILENT_OPT) \
+			--prefix=$(HOST_DIR) \
+		; \
+		$(MAKE); \
+		$(MAKE) install
+	$(REMOVE)/autoconf-$(HOST_AUTOCONF_VER)
+	$(TOUCH)
+
+#
 # lsb
 #
 LSB_MAJOR = 3.2
@@ -1280,9 +1302,9 @@ $(D)/ethtool: $(D)/bootstrap $(ARCHIVE)/$(ETHTOOL_SOURCE)
 SAMBA_VER = 3.6.25
 SAMBA_SOURCE = samba-$(SAMBA_VER).tar.gz
 SAMBA_PATCH = $(PATCHES)/samba
-ifeq ($(AUTOCONF_NEW),1)
-	SAMBA2_PATCH = samba-autoconf.patch
-endif
+#ifeq ($(AUTOCONF_NEW),1)
+#	SAMBA2_PATCH = samba-autoconf.patch
+#endif
 
 ifeq ($(SAMBA_SMALL_INSTALL), 1)
 SAMBA_INSTALL = \

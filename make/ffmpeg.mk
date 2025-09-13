@@ -45,11 +45,11 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 
-ifeq ($(BOXARCH), sh4)
-ifeq ($(AUTOCONF_NEW),1)
-	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
-endif
-endif
+#ifeq ($(BOXARCH), sh4)
+#ifeq ($(AUTOCONF_NEW),1)
+#	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
+#endif
+#endif
 
 FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_INCLUDE_DIR)/libxml2
 
@@ -399,9 +399,9 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 FFMPEG_CONF_OPTS = --enable-muxer=hevc --enable-parser=hevc --enable-decoder=hevc
 endif
 
-ifeq ($(AUTOCONF_NEW),1)
-	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
-endif
+#ifeq ($(AUTOCONF_NEW),1)
+#	FFMPEG2_PATCH = ffmpeg-$(FFMPEG_VER)-sh4.patch
+#endif
 
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(DOWNLOAD) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
