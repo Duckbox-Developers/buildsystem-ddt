@@ -855,7 +855,7 @@ LIBCURL_SOURCE = curl-$(LIBCURL_VER).tar.bz2
 LIBCURL_PATCH = libcurl-$(LIBCURL_VER).patch
 
 $(ARCHIVE)/$(LIBCURL_SOURCE):
-	$(DOWNLOAD) https://curl.haxx.se/download/$(LIBCURL_SOURCE)
+	$(DOWNLOAD) https://curl.se/download/$(LIBCURL_SOURCE)
 
 $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(LIBCURL_SOURCE)
 	$(START_BUILD)
