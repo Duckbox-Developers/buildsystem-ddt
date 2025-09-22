@@ -64,7 +64,7 @@ $(D)/luacurl: $(D)/bootstrap $(D)/libcurl $(D)/lua $(ARCHIVE)/$(LUACURL_SOURCE)
 #
 # luaexpat
 #
-LUAEXPAT_VER = 33744ae
+LUAEXPAT_VER = 947d2e9
 LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VER).tar.bz2
 LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
 LUAEXPAT_URL = https://github.com/lunarmodules/luaexpat.git
