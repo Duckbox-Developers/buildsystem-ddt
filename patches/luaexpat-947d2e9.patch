@@ -4,7 +4,7 @@
  INSTALL		?= install
  INSTALL_PROGRAM	?= $(INSTALL)
  INSTALL_DATA	?= $(INSTALL) -m 644
--LUA_V		?= 5.1
+-LUA_V		?= 5.4
 -LUA_LDIR	?= /usr/share/lua/$(LUA_V)
 -LUA_CDIR	?= /usr/lib/lua/$(LUA_V)
 +LUA_V		?= 5.2
@@ -13,7 +13,7 @@
  T		= lxp
  LIBNAME		= $(T).so
  
- COMMON_CFLAGS	 = -g -pedantic -Wall -O2 -fPIC -DPIC -ansi
+ COMMON_CFLAGS	 = -g -pedantic -Wall -O2 -fPIC -DPIC
 -LUA_INC		?= -I/usr/include/lua$(LUA_V)
 -EXPAT_INC	?= -I/usr/include
 +LUA_INC		?= -I$(PREFIX)/include
