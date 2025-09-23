@@ -101,6 +101,7 @@ LH_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 N_CONFIG_OPTS  = $(LOCAL_NEUTRINO_BUILD_OPTIONS)
 N_CONFIG_OPTS += --with-boxtype=$(BOXTYPE)
 N_CONFIG_OPTS += --enable-freesatepg
+N_CONFIG_OPTS += --enable-svg
 #N_CONFIG_OPTS += --enable-radiotext
 #N_CONFIG_OPTS += --enable-dynamicdemux
 #N_CONFIG_OPTS += --enable-pip
