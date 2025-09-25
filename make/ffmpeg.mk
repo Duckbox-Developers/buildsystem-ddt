@@ -62,7 +62,7 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER)
-	cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER) && git checkout release/$(FFMPEG_VER)
+	if [ "$(FFMPEG_VER)" != "master" ]; then cd $(BUILD_TMP)/ffmpeg-$(FFMPEG_VER) && git checkout release/$(FFMPEG_VER); fi
 
 	$(CHDIR)/ffmpeg-$(FFMPEG_VER); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \

@@ -278,13 +278,14 @@ if [ "$BOXARCH" == "sh4" ]; then
 elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 	CNT=0
 	case $3 in
-		[1-4]) REPLY=$3;;
+		[1-5]) REPLY=$3;;
 		*)	echo -e "\nFFMPEG version:"
-			echo -e "   \033[01;32m1)  FFMPEG 4.4 GIT\033[00m" && CNT=$(($CNT+1))
-			echo "   2)  FFMPEG 6.1 GIT [experimental]" && CNT=$(($CNT+1))
+			echo -e "   \033[01;32m1)  FFMPEG 4.4    GIT\033[00m" && CNT=$(($CNT+1))
+			echo "   2)  FFMPEG 6.1    GIT [experimental]" && CNT=$(($CNT+1))
 			if [ "$BOXTYPE" != "dcube" ]; then
-				echo "   3)  FFMPEG 7.1 GIT [experimental]" && CNT=$(($CNT+1))
-				echo "   4)  FFMPEG 8.0 GIT [experimental]" && CNT=$(($CNT+1))
+				echo "   3)  FFMPEG 7.1    GIT [experimental]" && CNT=$(($CNT+1))
+				echo "   4)  FFMPEG 8.0    GIT [experimental]" && CNT=$(($CNT+1))
+				echo "   5)  FFMPEG MASTER GIT [experimental]" && CNT=$(($CNT+1))
 			fi
 			read -p "Select FFMPEG version (1-$CNT)? "
 			;;
@@ -295,6 +296,7 @@ elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 		2)  FFMPEG_VER="6.1";;
 		3)  FFMPEG_VER="7.1";;
 		4)  FFMPEG_VER="8.0";;
+		5)  FFMPEG_VER="master";;
 		*)  FFMPEG_VER="4.4";;
 	esac
 	echo "FFMPEG_VER=$FFMPEG_VER" >> config
