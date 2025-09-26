@@ -14,7 +14,7 @@ FFMPEG_PATCH  = $(PATCHES)/ffmpeg/$(FFMPEG_VER)
 
 #FFMPEG_DEPS += $(D)/librtmp
 #FFMPEG_CONF_OPTS  = --enable-librtmp
-ifeq ($(FFMPEG_VER), 4.4)
+ifeq ($(FFMPEG_VER), $(filter $(FFMPEG_VER), 3.4 4.4 5.1))
 FFMPEG_CONF_OPTS  += --enable-libxml2
 FFMPEG_CONF_OPTS  += --enable-libfreetype
 FFMPEG_CONF_OPTS  += --disable-x86asm

@@ -25,7 +25,7 @@ fi
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-87)"
 	echo "Parameter 2 (ARM/MIPS)                  : GCC Version (1-12)"
-	echo "Parameter 3 (not UFS910/UFS922)         : FFMPEG Version (1-3)"
+	echo "Parameter 3 (not UFS910/UFS922)         : FFMPEG Version (1-5)"
 	echo "Parameter 4                             : Optimization (1-6)"
 	echo "Parameter 5                             : External LCD support (1-4)"
 	echo "Parameter 6                             : Neutrino variant (1-4)"
