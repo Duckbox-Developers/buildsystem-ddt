@@ -1198,7 +1198,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 #
 # expat
 #
-EXPAT_BRANCH = 018daa3
+EXPAT_BRANCH = 98b489d
 EXPAT_PATCH  = expat-libtool-tag.patch
 EXPAT_PATCH += expat-enum-fix.patch
 

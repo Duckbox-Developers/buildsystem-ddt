@@ -2,7 +2,7 @@ diff --git a/lib/expat.h b/lib/expat.h
 index bb9cdedb..0bea3743 100644
 --- a/lib/expat.h
 +++ b/lib/expat.h
-@@ -132,7 +132,7 @@ enum XML_Error {
+@@ -133,7 +133,7 @@ enum XML_Error {
    /* Added in 2.4.0. */
    XML_ERROR_AMPLIFICATION_LIMIT_BREACH,
    /* Added in 2.6.4. */
@@ -11,7 +11,7 @@ index bb9cdedb..0bea3743 100644
  };
  
  enum XML_Content_Type {
-@@ -1035,7 +1035,7 @@ enum XML_FeatureEnum {
+@@ -1036,7 +1036,7 @@ enum XML_FeatureEnum {
    XML_FEATURE_GE,
    /* Added in Expat 2.7.2. */
    XML_FEATURE_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT,
