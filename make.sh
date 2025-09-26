@@ -198,7 +198,7 @@ echo "BOXTYPE=$BOXTYPE" >> config
 
 if [ $BOXARCH == "sh4" ]; then
 	CURDIR=`pwd`
-	echo -ne "\n    Checking the .elf files in $CURDIR/root/boot..."
+	echo -ne "\n   Checking the .elf files in $CURDIR/root/boot..."
 	set='audio_7100 audio_7105 audio_7111 video_7100 video_7105 video_7109 video_7111'
 	for i in $set;
 	do
@@ -270,7 +270,22 @@ if [ "$BOXARCH" == "sh4" ]; then
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE
 			echo "LOCAL_FFMPEG_BOXTYPE_LIST=$LOCAL_FFMPEG_BOXTYPE_LIST" >> config
-			FFMPEG_VER=4.4
+			case $3 in
+				[1-3]) REPLY=$3;;
+				*)	echo -e "\nFFMPEG version:"
+					echo "   1)  FFMPEG 3.4 GIT\033[00m"
+					echo -e "   \033[01;32m2)  FFMPEG 4.4 GIT\033[00m"
+					echo "   3)  FFMPEG 5.1 GIT [experimental]"
+					read -p "Select FFMPEG version (1-3)? "
+					;;
+			esac
+
+			case "$REPLY" in
+				1)  FFMPEG_VER="3.4";;
+				2)  FFMPEG_VER="4.4";;
+				3)  FFMPEG_VER="5.1";;
+				*)  FFMPEG_VER="4.4";;
+			esac
 			echo "FFMPEG_VER=$FFMPEG_VER" >> config
 		fi
 	done
