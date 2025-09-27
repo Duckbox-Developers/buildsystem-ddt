@@ -41,8 +41,6 @@ fi
 if [ "$1" != "" ]; then
 	# defaults
 	echo "BOXTYPE=$1" > config
-	echo "FFMPEG_EXPERIMENTAL=0" >> config
-	echo "FFMPEG_SNAPSHOT=0" >> config
 	echo "OPTIMIZATIONS=size" >> config
 	echo "OPTIMIZE_PICS=1" >> config
 	echo "EXTERNAL_LCD=none" >> config
@@ -54,24 +52,28 @@ if [ "$1" != "" ]; then
 		ufs910|ufs912|ufs913|ufs922|tf7700|fortis_hdbox|octagon1008|atevio7500|ipbox55|ipbox99|ipbox9900|cuberevo|cuberevo_mini|cuberevo_mini2|cuberevo_250hd|cuberevo_2000hd|cuberevo_3000hd|spark|spark7162)
 			echo "BOXARCH=sh4" >> config
 			echo "BS_GCC_VER=4.8.4" >> config
+			[ "$1" == "ufs910" -o "$1" == "ufs922" ] && echo "FFMPEG_VER=2.8" >> config || echo "FFMPEG_VER=4.4" >> config
 			make printenv
 			exit
 		;;
 		dcube)
 			echo "BOXARCH=arm" >> config
 			echo "BS_GCC_VER=4.9.4" >> config
+			echo "FFMPEG_VER=4.4" >> config
 			make printenv
 			exit
 		;;
 		hd51|h7|bre2ze4k|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse|dm900|dm920)
 			echo "BOXARCH=arm" >> config
 			echo "BS_GCC_VER=8.5.0" >> config
+			echo "FFMPEG_VER=4.4" >> config
 			make printenv
 			exit
 		;;
 		vuduo|vuduo2|vuuno|vuultimo|dm7020hd|dm820|dm7080|dm8000|dm800se|dm800sev2)
 			echo "BOXARCH=mips" >> config
 			echo "BS_GCC_VER=8.5.0" >> config
+			echo "FFMPEG_VER=4.4" >> config
 			make printenv
 			exit
 		;;
