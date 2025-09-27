@@ -700,7 +700,7 @@ $(D)/mc: $(D)/bootstrap $(D)/ncurses $(D)/libglib2 $(ARCHIVE)/$(MC_SOURCE)
 			--prefix=/usr \
 			--mandir=/.remove \
 			--sysconfdir=/etc \
-			--with-homedir=/var/tuxbox/config/mc \
+			--localstatedir=/var/tuxbox/config/mc \
 			--without-gpm-mouse \
 			--disable-doxygen-doc \
 			--disable-doxygen-dot \
