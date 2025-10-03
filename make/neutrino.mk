@@ -206,7 +206,7 @@ $(D)/libstb-hal.do_prepare:
 	[ -d "$(ARCHIVE)/$(LIBSTB_HAL).git" ] || \
 	git clone $(GIT_URL)/$(LIBSTB_HAL).git $(ARCHIVE)/$(LIBSTB_HAL).git; \
 	cp -ra $(ARCHIVE)/$(LIBSTB_HAL).git $(SOURCE_DIR)/$(LIBSTB_HAL);\
-	(cd $(SOURCE_DIR)/$(LIBSTB_HAL); git checkout $(HAL_BRANCH);); \
+	(cd $(SOURCE_DIR)/$(LIBSTB_HAL); git checkout -q $(HAL_BRANCH);); \
 	cp -ra $(SOURCE_DIR)/$(LIBSTB_HAL) $(SOURCE_DIR)/$(LIBSTB_HAL).org
 	set -e; cd $(SOURCE_DIR)/$(LIBSTB_HAL); \
 		$(call apply_patches, $(HAL_PATCHES))
@@ -274,7 +274,7 @@ $(D)/neutrino.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal
 	[ -d "$(ARCHIVE)/$(NEUTRINO).git" ] || \
 	git clone $(GIT_URL)/$(NEUTRINO).git $(ARCHIVE)/$(NEUTRINO).git; \
 	cp -ra $(ARCHIVE)/$(NEUTRINO).git $(SOURCE_DIR)/$(NEUTRINO); \
-	(cd $(SOURCE_DIR)/$(NEUTRINO); git checkout $(NMP_BRANCH);); \
+	(cd $(SOURCE_DIR)/$(NEUTRINO); git checkout -q $(NMP_BRANCH);); \
 	cp -ra $(SOURCE_DIR)/$(NEUTRINO) $(SOURCE_DIR)/$(NEUTRINO).org
 	set -e; cd $(SOURCE_DIR)/$(NEUTRINO); \
 		$(call apply_patches, $(NMP_PATCHES))

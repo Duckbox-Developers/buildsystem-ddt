@@ -96,8 +96,6 @@ insmod /lib/modules/ble.ko
 echo 255 > /proc/stb/fp/oled_brightness
 oled -tc "Booting... DDT"
 
-/bin/initfb $(sed -n 's/osd_resolution=//p' /var/tuxbox/config/neutrino.conf)
-
 echo "[rcS] starting mdev"
 mdev -s
 

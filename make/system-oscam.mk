@@ -116,7 +116,7 @@ $(D)/oscam.do_prepare:
 	cp -ra $(ARCHIVE)/$(OSCAM_FLAVOUR_DIR) $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
 	cp -ra $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR) $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR).org
 	set -e; cd $(SOURCE_DIR)/$(OSCAM_SOURCE_DIR); \
-		git checkout $(OSCAM_VER); \
+		git checkout -q $(OSCAM_VER); \
 		$(call apply_patches, $(OSCAM_PATCH)); \
 		 $(SHELL) ./config.sh --disable all \
 			$(OSCAM_CONFIG)

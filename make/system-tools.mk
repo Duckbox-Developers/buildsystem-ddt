@@ -1703,7 +1703,7 @@ $(D)/dropbearmulti: $(D)/bootstrap
 		else cd $(ARCHIVE); git clone https://github.com/mkj/dropbear.git dropbearmulti.git; \
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
-	(cd $(BUILD_TMP)/dropbearmulti; git checkout $(DROPBEARMULTI_VER);); \
+	(cd $(BUILD_TMP)/dropbearmulti; git checkout -q $(DROPBEARMULTI_VER);); \
 	$(CHDIR)/dropbearmulti; \
 		$(BUILDENV) \
 		$(CONFIGURE) \
@@ -1822,7 +1822,7 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATI
 		fi
 	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
 	$(CHDIR)/minisatip; \
-		git checkout $(MINISATIP_BRANCH); \
+		git checkout -q $(MINISATIP_BRANCH); \
 		$(call apply_patches,$(MINISATIP_PATCH)); \
 		$(BUILDENV) \
 		export CFLAGS="-pipe -Os -Wall -g0 -ldl -I$(TARGET_INCLUDE_DIR) $(MINISATIP_EXTRA_FLAGS)"; \
