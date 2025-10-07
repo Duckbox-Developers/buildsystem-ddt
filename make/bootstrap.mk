@@ -144,9 +144,7 @@ $(D)/host_mksquashfs3: directories $(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE)
 HOST_MKSQUASHFS_VER = 4.2
 HOST_MKSQUASHFS_SOURCE = squashfs$(HOST_MKSQUASHFS_VER).tar.gz
 HOST_MKSQUASHFS_PATCH = squashfs-$(HOST_MKSQUASHFS_VER)-sysmacros.patch
-#ifeq ($(AUTOCONF_NEW),1)
-#HOST_MKSQUASHFS_PATCH += squashfs-$(HOST_MKSQUASHFS_VER)-fix.patch
-#endif
+HOST_MKSQUASHFS_PATCH += squashfs-$(HOST_MKSQUASHFS_VER)-fix.patch
 
 LZMA_VER = 4.65
 LZMA_SOURCE = lzma-$(LZMA_VER).tar.bz2
