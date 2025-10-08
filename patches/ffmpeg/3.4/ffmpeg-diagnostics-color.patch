@@ -1,0 +1,10 @@
+--- a/configure.orig
++++ b/configure
+@@ -6483,7 +6483,6 @@
+     check_cflags -Werror=return-type
+     check_cflags -Werror=vla
+     check_cflags -Wformat
+-    check_cflags -fdiagnostics-color=auto
+     enabled extra_warnings || check_disable_warning -Wno-maybe-uninitialized
+ elif enabled llvm_gcc; then
+     check_cflags -mllvm -stack-alignment=16
