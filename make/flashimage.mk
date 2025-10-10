@@ -499,7 +499,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_$(BOXTYPE).bat
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
-	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
+	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2 --no-cleanmarkers
 	@if [ "$(BOXTYPE)" == "dm800" ]; then \
 		$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/ --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi --no-cleanmarkers; \
 	else \
