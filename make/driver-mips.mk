@@ -136,6 +136,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 else
 	tar -xf $(ARCHIVE)/$(DRIVER_SRC) -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
 endif
+ifeq ($(BOXTYPE), dm800)
+	tar -xf $(SKEL_ROOT)/release/dm800-extra.tar.gz -C $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/extra
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd dm7080))
 	tar -xf $(SKEL_ROOT)/release/grautec.tar.gz -C $(TARGET_DIR)/
 endif
