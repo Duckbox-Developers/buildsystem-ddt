@@ -1,6 +1,13 @@
 #
 # busybox
 #
+ifeq ($(BOXTYPE), dm800)
+BUSYBOX_VER = 1.25.1
+BB_SNAPSHOT = -$(BUSYBOX_VER)
+BUSYBOX_SOURCE = busybox-$(BUSYBOX_VER).tar.bz2
+BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
+BUSYBOX_SNAPSHOT = 0
+else
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
 BUSYBOX_VER = snapshot
 BB_SNAPSHOT =
@@ -9,6 +16,8 @@ BUSYBOX_VER = 1.36.1
 BB_SNAPSHOT = -$(BUSYBOX_VER)
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VER).tar.bz2
 endif
+endif
+
 BUSYBOX_PATCH  = busybox-$(BUSYBOX_VER)-nandwrite.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-unicode.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-extra.patch
@@ -17,6 +26,7 @@ BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-flashcp-small-output.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-block-telnet-internet.patch
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-recursive_action-fix.patch
 
+ifneq ($(BOXTYPE), dm800)
 ifeq ($(BOXARCH), $(filter $(BOXARCH), sh4 mips))
 BUSYBOX_PATCH += busybox-$(BUSYBOX_VER)-sh4-mips-revert_ifa_flags.patch
 endif
@@ -27,6 +37,7 @@ else ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 ufs912 ufs913))
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config_nandwrite
 else
 BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
+endif
 endif
 
 ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 14.3.0 15.2.0))
@@ -186,7 +197,7 @@ $(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 cuberevo cuberevo_mini2 cuberevo_2000hd cuberevo_3000hd))
 	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyAS1 $(TARGET_DIR)/etc/inittab
 else
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm8000 dm7020hd dm800se dm800sev2 dcube))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7 e4hdultra vuduo vuduo2 vuuno vuultimo vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm800 dm800se dm800sev2 dm8000 dm7020hd dm820 dm7080 dm900 dm920 dcube))
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080 dm900 dm920))
 	install -m 644 $(SKEL_ROOT)/etc/inittab_ttyS0_dm $(TARGET_DIR)/etc/inittab
 else

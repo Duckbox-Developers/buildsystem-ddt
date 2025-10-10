@@ -618,10 +618,10 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 TOOLS += $(D)/tools-wait4button
 endif
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm820 dm7080 dm900 dm920 dm7020hd dm8000 e4hdultra vuduo2 vuultimo))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k vuduo4kse vuuno4kse vuultimo4k vusolo4k dm8000 dm7020hd dm820 dm7080 dm900 dm920 e4hdultra vuduo2 vuultimo))
 TOOLS += $(D)/tools-oled_ctrl
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7080 dm7020hd dm8000 dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se dm800sev2 dm8000 dm7020hd dm7080))
 TOOLS += $(D)/tools-lcd_ctrl
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo2))

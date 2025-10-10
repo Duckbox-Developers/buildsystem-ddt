@@ -450,6 +450,54 @@ neutrino-release-vuultimo:
 	rm -f $(RELEASE_DIR)/lib/modules/fpga_directc.ko
 
 #
+# dm800
+#
+neutrino-release-dm800:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm800 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm800 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm800/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	@for modul in `ls $(RELEASE_DIR)/lib/modules/`; do \
+		sed -i "s/vermagic=2.6.18-7.4-dm800 mod_unload MIPS32_R1 32BIT gcc-4.6/vermagic=2.6.18-7.4-dm800 mod_unload MIPS32_R1 32BIT gcc-4.9/" $(RELEASE_DIR)/lib/modules/$$modul; \
+	done
+	echo "$(SUDOPASSWD)" | sudo -S tar xzf $(SKEL_ROOT)/release/dm800-devs.tar.gz -C $(RELEASE_DIR)
+
+#
+# dm800se
+#
+neutrino-release-dm800se:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm800se $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm800se $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm800se/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
+#
+# dm800sev2
+#
+neutrino-release-dm800sev2:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm800sev2 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm800sev2 $(RELEASE_DIR)/etc/fstab
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm800sev2/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
+#
+# dm8000
+#
+neutrino-release-dm8000:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm8000 $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm8000 $(RELEASE_DIR)/etc/fstab
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm8000/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
+#
+# dm7020hd
+#
+neutrino-release-dm7020hd:
+	install -m 0755 $(SKEL_ROOT)/release/halt_dm7020hd $(RELEASE_DIR)/etc/init.d/halt
+	cp -f $(SKEL_ROOT)/release/fstab_dm7020hd $(RELEASE_DIR)/etc/fstab
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
+	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
+	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm7020hd/extra/*.ko $(RELEASE_DIR)/lib/modules/
+
+#
 # dm820
 #
 neutrino-release-dm820:
@@ -488,42 +536,6 @@ neutrino-release-dm920:
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm920 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm920 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm920/extra/*.ko $(RELEASE_DIR)/lib/modules/
-
-#
-# dm8000
-#
-neutrino-release-dm8000:
-	install -m 0755 $(SKEL_ROOT)/release/halt_dm8000 $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_dm8000 $(RELEASE_DIR)/etc/fstab
-	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
-	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm8000/extra/*.ko $(RELEASE_DIR)/lib/modules/
-
-#
-# dm7020hd
-#
-neutrino-release-dm7020hd:
-	install -m 0755 $(SKEL_ROOT)/release/halt_dm7020hd $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_dm7020hd $(RELEASE_DIR)/etc/fstab
-	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc0.d/S89killusbtftdisplay
-	ln -s ../init.d/killusbtftdisplay.sh $(RELEASE_DIR)/etc/rc.d/rc6.d/S89killusbtftdisplay
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm7020hd/extra/*.ko $(RELEASE_DIR)/lib/modules/
-
-#
-# dm800se
-#
-neutrino-release-dm800se:
-	install -m 0755 $(SKEL_ROOT)/release/halt_dm800se $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_dm800se $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm800se/extra/*.ko $(RELEASE_DIR)/lib/modules/
-
-#
-# dm800sev2
-#
-neutrino-release-dm800sev2:
-	install -m 0755 $(SKEL_ROOT)/release/halt_dm800sev2 $(RELEASE_DIR)/etc/init.d/halt
-	cp -f $(SKEL_ROOT)/release/fstab_dm800sev2 $(RELEASE_DIR)/etc/fstab
-	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm800sev2/extra/*.ko $(RELEASE_DIR)/lib/modules/
 
 python-iptv-install:
 	install -d $(RELEASE_DIR)/usr/bin; \
@@ -746,7 +758,7 @@ endif
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ch341.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ch341.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/cp210x.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/cp210x.ko $(RELEASE_DIR)/lib/modules/ || true
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm8000 dm820 dm7080 dm900 dm920 dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se dm800sev2 dm8000 dm7020hd dm820 dm7080 dm900 dm920))
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/fs/autofs4/autofs4.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/fs/autofs4/autofs4.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/fs/nfsd/nfsd.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/fs/nfsd/nfsd.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/fs/exportfs/exportfs.ko ] && cp $(TARGET_DIR)-$(BOXTYPE)/lib/modules/$(KERNEL_VER)/kernel/fs/exportfs/exportfs.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -773,7 +785,7 @@ ifeq ($(IMAGE), neutrino-wlandriver)
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/staging/rtl8712/r8712u.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/staging/rtl8712/r8712u.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/staging/rtl8192u/r8192u_usb.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/staging/rtl8192u/r8192u_usb.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko $(RELEASE_DIR)/lib/modules/ || true
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm8000 dm820 dm7080 dm900 dm920 dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se dm800sev2 dm8000 dm7020hd dm820 dm7080 dm900 dm920))
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/staging/rtl8188eu/r8188eu.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/drivers/staging/rtl8188eu/r8188eu.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/net/wireless/cfg80211.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/net/wireless/cfg80211.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/net/rfkill/rfkill.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/kernel/net/rfkill/rfkill.ko $(RELEASE_DIR)/lib/modules/ || true
@@ -863,7 +875,7 @@ endif
 # copy root_neutrino
 #
 	cp -aR $(SKEL_ROOT)/root_neutrino/* $(RELEASE_DIR)/
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm820 dm7080 dm900 dm920 dm7020hd dm8000 dm800se dm800sev2 vuduo2 vuultimo vuuno dcube))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark7162 cuberevo_mini2 cuberevo_3000hd hd51 h7 e4hdultra vuduo4k vuduo4kse vuuno4kse vuzero4k vuultimo4k vuuno4k vusolo4k dm800 dm800se dm800sev2 dm8000 dm7020hd dm820 dm7080 dm900 dm920 vuduo2 vuultimo vuuno dcube))
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/cables.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
 endif
@@ -986,7 +998,7 @@ ifeq ($(EXTERNAL_LCD), $(filter $(EXTERNAL_LCD), lcd4linux both))
 	cp -aR $(SKEL_ROOT)/var/tuxbox/lcd $(RELEASE_DIR)/var/tuxbox/
 	ln -s /var/tuxbox/lcd $(RELEASE_DIR)/usr/share/tuxbox/lcd
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm7020hd dm7080 dm8000 dm800se dm800sev2 dm900 dm920 vuduo2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd dm7080 dm900 dm920 vuduo2))
 	cp -aR $(SKEL_ROOT)/var/tuxbox/lcd $(RELEASE_DIR)/var/tuxbox/
 	ln -s /var/tuxbox/lcd $(RELEASE_DIR)/usr/share/tuxbox/lcd
 endif

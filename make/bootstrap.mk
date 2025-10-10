@@ -249,6 +249,62 @@ $(D)/createimage: $(D)/bootstrap $(ARCHIVE)/$(CREATEIMAGE_SOURCE)
 	$(TOUCH)
 
 #
+# dm800 second stage loader #84
+#
+DM800_2ND_SOURCE = secondstage-dm800-84.bin
+#DM800_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800_2ND_SOURCE)
+DM800_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM800_2ND_SOURCE):
+	$(DOWNLOAD) $(DM800_2ND_URL)
+
+$(D)/dm800_2nd: $(ARCHIVE)/$(DM800_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
+# dm800se second stage loader #84
+#
+DM800SE_2ND_SOURCE = secondstage-dm800se-84.bin
+#DM800SE_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SE_2ND_SOURCE)
+DM800SE_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SE_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM800SE_2ND_SOURCE):
+	$(DOWNLOAD) $(DM800SE_2ND_URL)
+
+$(D)/dm800se_2nd: $(ARCHIVE)/$(DM800SE_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
+# dm800sev2 second stage loader #89
+#
+DM800SEV2_2ND_SOURCE = secondstage-dm800sev2-89.bin
+#DM800SEV2_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SEV2_2ND_SOURCE)
+DM800SEV2_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SEV2_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM800SEV2_2ND_SOURCE):
+	$(DOWNLOAD) $(DM800SEV2_2ND_URL)
+
+$(D)/dm800sev2_2nd: $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
+# dm8000 second stage loader #84
+#
+DM8000_2ND_SOURCE = secondstage-dm8000-84.bin
+#DM8000_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
+DM8000_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM8000_2ND_SOURCE)
+
+$(ARCHIVE)/$(DM8000_2ND_SOURCE):
+	$(DOWNLOAD) $(DM8000_2ND_URL)
+
+$(D)/dm8000_2nd: $(ARCHIVE)/$(DM8000_2ND_SOURCE)
+	$(START_BUILD)
+	$(TOUCH)
+
+#
 # dm7020hd second stage loader #89
 #
 DM7020HD_2ND_SOURCE = secondstage-dm7020hd-89.bin
@@ -287,48 +343,6 @@ $(ARCHIVE)/$(DM7080_2ND_SOURCE):
 	$(DOWNLOAD) $(DM7080_2ND_URL)
 
 $(D)/dm7080_2nd: $(ARCHIVE)/$(DM7080_2ND_SOURCE)
-	$(START_BUILD)
-	$(TOUCH)
-
-#
-# dm8000 second stage loader #84
-#
-DM8000_2ND_SOURCE = secondstage-dm8000-84.bin
-#DM8000_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
-DM8000_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM8000_2ND_SOURCE)
-
-$(ARCHIVE)/$(DM8000_2ND_SOURCE):
-	$(DOWNLOAD) $(DM8000_2ND_URL)
-
-$(D)/dm8000_2nd: $(ARCHIVE)/$(DM8000_2ND_SOURCE)
-	$(START_BUILD)
-	$(TOUCH)
-
-#
-# dm800se second stage loader #84
-#
-DM800SE_2ND_SOURCE = secondstage-dm800se-84.bin
-#DM800SE_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SE_2ND_SOURCE)
-DM800SE_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SE_2ND_SOURCE)
-
-$(ARCHIVE)/$(DM800SE_2ND_SOURCE):
-	$(DOWNLOAD) $(DM800SE_2ND_URL)
-
-$(D)/dm800se_2nd: $(ARCHIVE)/$(DM800SE_2ND_SOURCE)
-	$(START_BUILD)
-	$(TOUCH)
-
-#
-# dm800sev2 second stage loader #89
-#
-DM800SEV2_2ND_SOURCE = secondstage-dm800sev2-89.bin
-#DM800SEV2_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM800SEV2_2ND_SOURCE)
-DM800SEV2_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SEV2_2ND_SOURCE)
-
-$(ARCHIVE)/$(DM800SEV2_2ND_SOURCE):
-	$(DOWNLOAD) $(DM800SEV2_2ND_URL)
-
-$(D)/dm800sev2_2nd: $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE)
 	$(START_BUILD)
 	$(TOUCH)
 
@@ -406,7 +420,7 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 ifneq ($(BOXTYPE), dcube)
 SYSTEM_TOOLS += $(D)/ofgwrite
 endif
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd dcube))
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se dm800sev2 dm8000 dm7020hd dcube))
 SYSTEM_TOOLS += $(D)/f2fs-tools
 endif
 endif

@@ -23,7 +23,7 @@ fi
 ##############################################
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
-	echo "Parameter 1                             : Target system (1-87)"
+	echo "Parameter 1                             : Target system (1-91)"
 	echo "Parameter 2 (ARM/MIPS)                  : GCC Version (1-12)"
 	echo "Parameter 3 (not UFS910/UFS922)         : FFMPEG Version (1-5)"
 	echo "Parameter 4                             : Optimization (1-6)"
@@ -70,7 +70,14 @@ if [ "$1" != "" ]; then
 			make printenv
 			exit
 		;;
-		vuduo|vuduo2|vuuno|vuultimo|dm7020hd|dm820|dm7080|dm8000|dm800se|dm800sev2)
+		dm800)
+			echo "BOXARCH=mips" >> config
+			echo "BS_GCC_VER=4.9.4" >> config
+			echo "FFMPEG_VER=4.4" >> config
+			make printenv
+			exit
+		;;
+		vuduo|vuduo2|vuuno|vuultimo|dm800se|dm800sev2|dm8000|dm7020hd|dm820|dm7080)
 			echo "BOXARCH=mips" >> config
 			echo "BS_GCC_VER=8.5.0" >> config
 			echo "FFMPEG_VER=4.4" >> config
@@ -128,13 +135,13 @@ case $1 in
 		echo "   71) D-Cube R2"
 		echo
 		echo "  Dreambox mips-based receivers"
-		echo "   80) DM 8000 HD        81) DM 7020 HD         82) DM800 HD SE        83) DM800 HD SE v2"
-		echo "   84) DM 820 HD         85) DM 7080 HD"
+		echo "   80) DM 800 HD         81) DM800 HD SE        82) DM800 HD SE v2     83) DM8000 HD"
+		echo "   84) DM 7020 HD        85) DM 820 HD          86) DM 7080 HD"
 		echo
 		echo "  Dreambox arm-based receivers"
-		echo "   86) DM 900 UHD        87) DM 920 UHD"
+		echo "   90) DM 900 UHD        91) DM 920 UHD"
 		echo
-		read -p "Select target (1-87)? ";;
+		read -p "Select target (1-91)? ";;
 esac
 
 case "$REPLY" in
@@ -183,14 +190,17 @@ case "$REPLY" in
 
 	71) BOXARCH="arm";BOXTYPE="dcube";;
 
-	80) BOXARCH="mips";BOXTYPE="dm8000";;
-	81) BOXARCH="mips";BOXTYPE="dm7020hd";;
-	82) BOXARCH="mips";BOXTYPE="dm800se";;
-	83) BOXARCH="mips";BOXTYPE="dm800sev2";;
-	84) BOXARCH="mips";BOXTYPE="dm820";;
-	85) BOXARCH="mips";BOXTYPE="dm7080";;
-	86) BOXARCH="arm";BOXTYPE="dm900";;
-	87) BOXARCH="arm";BOXTYPE="dm920";;
+	80) BOXARCH="mips";BOXTYPE="dm800";;
+	81) BOXARCH="mips";BOXTYPE="dm800se";;
+	82) BOXARCH="mips";BOXTYPE="dm800sev2";;
+	83) BOXARCH="mips";BOXTYPE="dm8000";;
+	84) BOXARCH="mips";BOXTYPE="dm7020hd";;
+	85) BOXARCH="mips";BOXTYPE="dm820";;
+	86) BOXARCH="mips";BOXTYPE="dm7080";;
+
+	90) BOXARCH="arm";BOXTYPE="dm900";;
+	91) BOXARCH="arm";BOXTYPE="dm920";;
+
 	 *) BOXARCH="arm";BOXTYPE="hd51";;
 esac
 echo "BOXARCH=$BOXARCH" > config
@@ -220,7 +230,9 @@ fi
 
 ##############################################
 
-if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
+if [ $BOXTYPE == 'dm800' ]; then
+	echo "BS_GCC_VER=4.9.4" >> config
+elif [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 	case $2 in
 		[1-9] | 1[0-2]) REPLY=$2;;
 		*)	echo -e "\nSelect GCC version:"
@@ -257,7 +269,7 @@ if [ $BOXARCH == 'arm' -o $BOXARCH == 'mips' ]; then
 		10) BS_GCC_VER="13.4.0";;
 		11) BS_GCC_VER="14.3.0";;
 		12) BS_GCC_VER="15.2.0";;
-		 *) [ $BOXTYPE == 'dcube' ] && BS_GCC_VER="4.9.4" || BS_GCC_VER="8.5.0";;
+		 *) [ $BOXTYPE == 'dcube' -o $BOXTYPE == 'dm800' ] && BS_GCC_VER="4.9.4" || BS_GCC_VER="8.5.0";;
 	esac
 	echo "BS_GCC_VER=$BS_GCC_VER" >> config
 else
@@ -299,7 +311,7 @@ elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4    GIT\033[00m" && CNT=$(($CNT+1))
 			echo "   2)  FFMPEG 6.1    GIT [experimental]" && CNT=$(($CNT+1))
-			if [ "$BOXTYPE" != "dcube" ]; then
+			if [ "$BOXTYPE" != "dcube" -a "$BOXTYPE" != "dm800" ]; then
 				echo "   3)  FFMPEG 7.1    GIT [experimental]" && CNT=$(($CNT+1))
 				echo "   4)  FFMPEG 8.0    GIT [experimental]" && CNT=$(($CNT+1))
 				echo "   5)  FFMPEG MASTER GIT [experimental]" && CNT=$(($CNT+1))
@@ -380,7 +392,7 @@ case $6 in
 	*)	echo -e "\nWhich Neutrino variant do you want to build?:"
 		echo -e "   \033[01;32m1)  neutrino-ddt\033[00m"
 		echo "   2)  neutrino-ddt (includes WLAN drivers)"
-		if [ "$BOXARCH" != "sh4" -a "$BOXTYPE" != "vuuno" -a "$BOXTYPE" != "vuultimo" -a "$BOXTYPE" != "dm7020hd" -a "$BOXTYPE" != "dm8000" -a "$BOXTYPE" != "dm820" -a "$BOXTYPE" != "dm7080" -a "$BOXTYPE" != "dm900" -a "$BOXTYPE" != "dm920" -a "$BOXTYPE" != "dcube" ]; then
+		if [ "$BOXARCH" != "sh4" -a "$BOXTYPE" != "vuuno" -a "$BOXTYPE" != "vuultimo" -a "$BOXTYPE" != "dm800" -a "$BOXTYPE" != "dm800se" -a "$BOXTYPE" != "dm800sev2" -a "$BOXTYPE" != "dm8000" -a "$BOXTYPE" != "dm7020hd" -a "$BOXTYPE" != "dm820" -a "$BOXTYPE" != "dm7080" -a "$BOXTYPE" != "dm900" -a "$BOXTYPE" != "dm920" -a "$BOXTYPE" != "dcube" ]; then
 			echo "   3)  neutrino-tangos"
 			echo "   4)  neutrino-tangos (includes WLAN drivers)"
 		fi

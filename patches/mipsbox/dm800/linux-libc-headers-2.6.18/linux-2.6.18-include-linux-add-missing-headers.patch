@@ -1,0 +1,10 @@
+--- linux-2.6.18/include/linux/Kbuild-orig	2006-09-20 05:42:06.000000000 +0200
++++ linux-2.6.18/include/linux/Kbuild	2012-08-12 04:33:39.000000000 +0200
+@@ -164,6 +164,7 @@
+ header-y += xattr.h
+ header-y += x25.h
+ header-y += zorro_ids.h
++header-y += bsg.h fiemap.h oom.h rfkill.h if_pppol2tp.h pps.h if_alg.h
+ 
+ unifdef-y += acct.h
+ unifdef-y += adb.h

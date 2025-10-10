@@ -1,0 +1,80 @@
+--- a/arch/mips/kernel/r4k_fpu.S.org
++++ b/arch/mips/kernel/r4k_fpu.S
+@@ -54,7 +54,7 @@
+ 	EX	sdc1 $f29, SC_FPREGS+232(a0)
+ 	EX	sdc1 $f31, SC_FPREGS+248(a0)
+ #endif
+-
++#if 0
+ 	/* Store the 16 even double precision registers */
+ 	EX	sdc1 $f0, SC_FPREGS+0(a0)
+ 	EX	sdc1 $f2, SC_FPREGS+16(a0)
+@@ -76,7 +76,7 @@
+ 	jr	ra
+ 	 li	v0, 0					# success
+ 	END(_save_fp_context)
+-
++#endif
+ #ifdef CONFIG_MIPS32_COMPAT
+ 	/* Save 32-bit process floating point context */
+ LEAF(_save_fp_context32)
+@@ -132,6 +132,7 @@
+ 	EX	ldc1 $f29, SC_FPREGS+232(a0)
+ 	EX	ldc1 $f31, SC_FPREGS+248(a0)
+ #endif
++#if 0
+ 	EX	ldc1 $f0, SC_FPREGS+0(a0)
+ 	EX	ldc1 $f2, SC_FPREGS+16(a0)
+ 	EX	ldc1 $f4, SC_FPREGS+32(a0)
+@@ -152,6 +153,7 @@
+ 	jr	ra
+ 	 li	v0, 0					# success
+ 	END(_restore_fp_context)
++#endif
+ 
+ #ifdef CONFIG_MIPS32_COMPAT
+ LEAF(_restore_fp_context32)
+--- a/arch/mips/kernel/r4k_switch.S.org
++++ b/arch/mips/kernel/r4k_switch.S
+@@ -75,7 +75,7 @@
+ 	/* clear thread_struct CU1 bit */
+ 	and	t2, t1
+ 
+-	fpu_save_double a0 t0 t1		# c0_status passed in t0
++//	fpu_save_double a0 t0 t1		# c0_status passed in t0
+ 						# clobbers t1
+ 1:
+ 	LONG_S	t2, THREAD_STATUS(a0)
+@@ -137,7 +137,7 @@
+ #ifdef CONFIG_64BIT
+ 	mfc0	t0, CP0_STATUS
+ #endif
+-	fpu_save_double a0 t0 t1		# clobbers t1
++//	fpu_save_double a0 t0 t1		# clobbers t1
+ 	jr	ra
+ 	END(_save_fp)
+ 
+@@ -148,7 +148,7 @@
+ #ifdef CONFIG_64BIT
+ 	mfc0	t0, CP0_STATUS
+ #endif
+-	fpu_restore_double a0 t0 t1		# clobbers t1
++//	fpu_restore_double a0 t0 t1		# clobbers t1
+ 	jr	ra
+ 	END(_restore_fp)
+ 
+@@ -206,6 +206,7 @@
+ 1:
+ #endif
+ 
++#if 0
+ #ifdef CONFIG_CPU_MIPS32
+ 	mtc1	t1, $f0
+ 	mtc1	t1, $f1
+@@ -258,5 +259,6 @@
+ 	dmtc1	t1, $f28
+ 	dmtc1	t1, $f30
+ #endif
++#endif
+ 	jr	ra
+ 	END(_init_fpu)

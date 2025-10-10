@@ -1,0 +1,171 @@
+--- a/drivers/media/dvb/dvb-core/dmxdev.c
++++ b/drivers/media/dvb/dvb-core/dmxdev.c
+@@ -383,9 +383,9 @@
+ 		del_timer(&dmxdevfilter->timer);
+ 		dmxdevfilter->feed.sec->stop_filtering(dmxdevfilter->feed.sec);
+ 		break;
+-	case DMXDEV_TYPE_PES:
+-		dmxdevfilter->feed.ts->stop_filtering(dmxdevfilter->feed.ts);
+-		break;
++//	case DMXDEV_TYPE_PES:
++//		dmxdevfilter->feed.ts->stop_filtering(dmxdevfilter->feed.ts);
++//		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -400,8 +400,8 @@
+ 	switch (filter->type) {
+ 	case DMXDEV_TYPE_SEC:
+ 		return filter->feed.sec->start_filtering(filter->feed.sec);
+-	case DMXDEV_TYPE_PES:
+-		return filter->feed.ts->start_filtering(filter->feed.ts);
++//	case DMXDEV_TYPE_PES:
++//		return filter->feed.ts->start_filtering(filter->feed.ts);
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -448,6 +449,7 @@
+ 		dvb_dmxdev_feed_restart(dmxdevfilter);
+ 		dmxdevfilter->feed.sec = NULL;
+ 		break;
++#if 0
+ 	case DMXDEV_TYPE_PES:
+ 		if (!dmxdevfilter->feed.ts)
+ 			break;
+@@ -457,6 +459,7 @@
+ 				    dmxdevfilter->feed.ts);
+ 		dmxdevfilter->feed.ts = NULL;
+ 		break;
++#endif
+ 	default:
+ 		if (dmxdevfilter->state == DMXDEV_STATE_ALLOCATED)
+ 			return 0;
+@@ -586,7 +589,7 @@
+ 		enum dmx_ts_pes ts_pes;
+ 		struct dmx_ts_feed **tsfeed = &filter->feed.ts;
+ 
+-		filter->feed.ts = NULL;
++//		filter->feed.ts = NULL;
+ 		otype = para->output;
+ 
+ 		ts_pes = (enum dmx_ts_pes)para->pes_type;
+@@ -618,7 +621,7 @@
+ 			return ret;
+ 		}
+ 
+-		ret = filter->feed.ts->start_filtering(filter->feed.ts);
++//		ret = filter->feed.ts->start_filtering(filter->feed.ts);
+ 		if (ret < 0) {
+ 			dmxdev->demux->release_ts_feed(dmxdev->demux,
+ 						       *tsfeed);
+@@ -664,7 +667,7 @@
+ 	dvb_ringbuffer_init(&dmxdevfilter->buffer, NULL, 8192);
+ 	dmxdevfilter->type = DMXDEV_TYPE_NONE;
+ 	dvb_dmxdev_filter_state_set(dmxdevfilter, DMXDEV_STATE_ALLOCATED);
+-	dmxdevfilter->feed.ts = NULL;
++//	dmxdevfilter->feed.ts = NULL;
+ 	init_timer(&dmxdevfilter->timer);
+ 
+ 	mutex_unlock(&dmxdev->mutex);
+--- a/drivers/media/dvb/dvb-core/dvbdev.c
++++ b/drivers/media/dvb/dvb-core/dvbdev.c
+@@ -278,7 +278,7 @@
+ }
+ 
+ 
+-int dvb_register_adapter(struct dvb_adapter *adap, const char *name, struct module *module, struct device *device)
++int dvb_register_adapter(struct dvb_adapter *adap, const char *name, struct module *module, struct device *device, short *adapter_nums)
+ {
+ 	int num;
+ 
+--- a/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb/dvb-core/dvb_ca_en50221.c
+@@ -37,6 +37,7 @@
+ #include <linux/delay.h>
+ #include <linux/spinlock.h>
+ #include <linux/sched.h>
++#include <linux/smp_lock.h>
+ 
+ #include "dvb_ca_en50221.h"
+ #include "dvb_ringbuffer.h"
+--- a/drivers/media/dvb/dvb-core/dvbdev.h
++++ b/drivers/media/dvb/dvb-core/dvbdev.h
+@@ -102,7 +102,7 @@
+ 
+ struct dvb_device {
+ 	struct list_head list_head;
+-	const struct file_operations *fops;
++	struct file_operations *fops;
+ 	struct dvb_adapter *adapter;
+ 	int type;
+ 	int minor;
+--- a/drivers/media/dvb/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb/dvb-core/dvb_frontend.c
+@@ -37,6 +37,7 @@
+ #include <linux/suspend.h>
+ #include <linux/jiffies.h>
+ #include <asm/processor.h>
++#include <linux/smp_lock.h>
+ 
+ #include "dvb_frontend.h"
+ #include "dvbdev.h"
+--- a/drivers/media/dvb/dvb-core/dvb_frontend.h
++++ b/drivers/media/dvb/dvb-core/dvb_frontend.h
+@@ -316,6 +316,7 @@
+ 	int			  overflow;
+ 	wait_queue_head_t	  wait_queue;
+ 	struct mutex		  mtx;
++	struct semaphore 	  sem;
+ };
+ 
+ struct dtv_frontend_properties {
+--- a/drivers/media/dvb/dvb-core/dvb_ringbuffer.h
++++ b/drivers/media/dvb/dvb-core/dvb_ringbuffer.h
+@@ -117,8 +117,8 @@
+ */
+ extern ssize_t dvb_ringbuffer_read_user(struct dvb_ringbuffer *rbuf,
+ 				   u8 __user *buf, size_t len);
+-extern void dvb_ringbuffer_read(struct dvb_ringbuffer *rbuf,
+-				   u8 *buf, size_t len);
++extern ssize_t dvb_ringbuffer_read(struct dvb_ringbuffer *rbuf,
++				   u8 *buf, size_t len, int usermem);
+ 
+ 
+ /* write routines & macros */
+@@ -163,7 +163,7 @@
+ extern ssize_t dvb_ringbuffer_pkt_read_user(struct dvb_ringbuffer *rbuf, size_t idx,
+ 				       int offset, u8 __user *buf, size_t len);
+ extern ssize_t dvb_ringbuffer_pkt_read(struct dvb_ringbuffer *rbuf, size_t idx,
+-				       int offset, u8 *buf, size_t len);
++				       int offset, u8 *buf, size_t len, int usermem);
+ 
+ /**
+  * Dispose of a packet in the ring buffer.
+--- a/drivers/media/dvb/frontends/stv0299.c
++++ b/drivers/media/dvb/frontends/stv0299.c
+@@ -96,6 +96,10 @@
+ {
+ 	struct stv0299_state* state = fe->demodulator_priv;
+ 
++	u8 buf[] = {reg, data};
++	if (fe->ops.write)
++		fe->ops.write(fe, buf, 2);
++
+ 	return stv0299_writeregI(state, reg, data);
+ }
+ 
+--- a/drivers/media/dvb/frontends/stv0299.h
++++ b/drivers/media/dvb/frontends/stv0299.h
+@@ -107,12 +107,4 @@
+ }
+ #endif // CONFIG_DVB_STV0299
+ 
+-static inline int stv0299_writereg(struct dvb_frontend *fe, u8 reg, u8 val) {
+-	int r = 0;
+-	u8 buf[] = {reg, val};
+-	if (fe->ops.write)
+-		r = fe->ops.write(fe, buf, 2);
+-	return r;
+-}
+-
+ #endif // STV0299_H

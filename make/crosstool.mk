@@ -5,7 +5,7 @@ $(TARGET_DIR)/lib/libc.so.6:
 		cp -a $(CROSS_BASE)/$(TARGET)/lib/*so* $(TARGET_DIR)/lib; \
 	fi
 
-ifeq ($(BOXTYPE), dcube)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dcube dm800))
 BXTP = _$(BOXTYPE)
 endif
 
@@ -56,6 +56,9 @@ crosstool-ng: directories kernel.do_prepare $(ARCHIVE)/$(KERNEL_SRC)
 		chmod 0755 ct-ng; \
 		./ct-ng oldconfig; \
 		./ct-ng build
+ifeq ($(BOXTYPE), dm800)
+		sed -i "s|^#include <linux/namei.h>|#include <linux/types.h>|" $(CROSS_BASE)/$(TARGET)/sys-root/usr/include/linux/fs.h
+endif
 	test -e $(CROSS_BASE)/$(TARGET)/lib || ln -sf sys-root/lib $(CROSS_BASE)/$(TARGET)/
 	rm -f $(CROSS_BASE)/$(TARGET)/sys-root/lib/libstdc++.so.6.0.*-gdb.py
 	$(REMOVE)/$(CROSSTOOL_NG_DIR)

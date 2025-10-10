@@ -111,39 +111,55 @@ VUULTIMO_PATCHES = \
 		$(VUDUO_PATCHES) \
 		mipsbox/vuultimo/fixed_mtd.patch
 
-DM820_PATCHES = \
-		mipsbox/dm820/linux-dreambox-3.4-30070c78a23d461935d9db0b6ce03afc70a10c51.patch \
-		mipsbox/dm820/kernel-fake-3.4.patch \
-		mipsbox/dm820/dvb_frontend-Multistream-support-3.4.patch \
-		mipsbox/dm820/0001-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-		mipsbox/dm820/0001-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-		mipsbox/dm820/0001-STV-Add-PLS-support.patch \
-		mipsbox/dm820/0001-tuners-tda18273-silicon-tuner-driver.patch \
-		mipsbox/dm820/0001-add-support-for-si2165.patch \
-		mipsbox/dm820/0001-linux-dreambox-3.4-add-support-for-si2183.patch \
-		mipsbox/dm820/0001-blindscan2.patch \
-		mipsbox/dm820/0001-dvbs2x.patch \
-		mipsbox/dm820/0001-0003-cxusb-Geniatech-T230-support.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc6.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc7.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc8.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc9.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc10.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc11.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc12.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc13.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc15.patch \
-		mipsbox/dm820/build-with-gcc12-fixes.patch \
-		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
-		mipsbox/dm820/rtl8152.patch \
-		mipsbox/dm820/0001-log2-give-up-on-gcc-constant-optimizations.patch \
-		mipsbox/dm820/0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
-		mipsbox/dm820/0003-makefile-silence-packed-not-aligned-warn.patch \
-		mipsbox/dm820/0004-fcrypt-fix-bitoperation-for-gcc.patch
+DM800_PATCHES = \
+		mipsbox/dm800/linux-dreambox-2.6.18-ac6cc9511a5f70eaa584c63fc5c3de33cae1d0e7.patch \
+		mipsbox/dm800/unionfs-2.5.11_for_2.6.18.8.patch \
+		mipsbox/dm800/stblinux-2.6.18-extra-version-7.4.patch \
+		mipsbox/dm800/stblinux-2.6.18-brcmnand-oob-raw-write-fix.patch \
+		mipsbox/dm800/linux-2.6.18-fix-proc-cputype.patch \
+		mipsbox/dm800/dvb-api-2.6.18-5.3.patch \
+		mipsbox/dm800/linux-2.6.18-dvb-core-headers-20100904.patch \
+		mipsbox/dm800/linux-2.6.18-dvb-frontends-headers-20100904.patch \
+		mipsbox/dm800/stblinux-2.6.18-fixed-brcmnand-buffer-overflow.patch \
+		mipsbox/dm800/stblinux-2.6.18-brcmnand-fixed-dm7020hd-oob-write-op.patch \
+		mipsbox/dm800/stblinux-2.6.18-libata-revert-no-more-needed-change.patch \
+		mipsbox/dm800/stblinux-2.6.18-libata-hdd-spinup-workaround.patch \
+		mipsbox/dm800/kbuild-fix-make-incompatibility.patch \
+		mipsbox/dm800/0001-MIPS-Fix-possible-hang-in-LL-SC-futex-loops.patch \
+		mipsbox/dm800/0001-Add-support-for-FTDI-FT4232H-based-devices.patch \
+		mipsbox/dm800/0001-proc-mounts_poll-make-consistent-to-mdstat_poll.patch \
+		mipsbox/dm800/0001-fixed-broken-usb-with-gcc-4.6.x.patch \
+		mipsbox/dm800/linux-2.6.18-fix-serial.patch \
+		mipsbox/dm800/stblinux-2.6.18-hw-ecc-compatibility.patch \
+		mipsbox/dm800/linux-2.6.18-include-asm.patch \
+		mipsbox/dm800/linux-2.6.18-include-linux.patch \
+		mipsbox/dm800/linux-2.6.18-mod_devicetable_h.patch \
+		mipsbox/dm800/linux-2.6.18-3g-modems.patch \
+		mipsbox/dm800/mkmakefile-make-3.82-fix-follow-bug-2323.patch \
+		mipsbox/dm800/mips_refactor_page_dev0.patch \
+		mipsbox/dm800/linux-2.6.18-fix_headers_install.patch \
+		mipsbox/dm800/linux-2.6.18-r4k.patch \
+		mipsbox/dm800/fix-headers.patch \
+		mipsbox/dm800/fix-bpanther.patch \
+\
+		mipsbox/dm800/linux-libc-headers-2.6.18/fix-linux-futex-h.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/mips-fix-64bit-types.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/linux-2.6.18-include-linux-add-missing-headers.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/linux-2.6.18-dm-ioctl_h.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/linux-2.6.18-rfkill.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/ppp-over-l2tp.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/ifpacket_linuxtypes.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/pktsched_linuxtypes.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/mips-utimensat.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/mips-pps.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/if-alg-header.patch \
+		mipsbox/dm800/linux-libc-headers-2.6.18/socket-protocol.patch
 
-DM7080_PATCHES = \
-		$(DM820_PATCHES)
+DM800SE_PATCHES = \
+		$(DM8000_PATCHES)
+
+DM800SEV2_PATCHES = \
+		$(DM8000_PATCHES)
 
 DM8000_PATCHES = \
 		mipsbox/dm8000/kernel-fake-3.2.patch \
@@ -197,11 +213,39 @@ DM8000_PATCHES = \
 DM7020HD_PATCHES = \
 		$(DM8000_PATCHES)
 
-DM800SE_PATCHES = \
-		$(DM8000_PATCHES)
+DM820_PATCHES = \
+		mipsbox/dm820/linux-dreambox-3.4-30070c78a23d461935d9db0b6ce03afc70a10c51.patch \
+		mipsbox/dm820/kernel-fake-3.4.patch \
+		mipsbox/dm820/dvb_frontend-Multistream-support-3.4.patch \
+		mipsbox/dm820/0001-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		mipsbox/dm820/0001-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		mipsbox/dm820/0001-STV-Add-PLS-support.patch \
+		mipsbox/dm820/0001-tuners-tda18273-silicon-tuner-driver.patch \
+		mipsbox/dm820/0001-add-support-for-si2165.patch \
+		mipsbox/dm820/0001-linux-dreambox-3.4-add-support-for-si2183.patch \
+		mipsbox/dm820/0001-blindscan2.patch \
+		mipsbox/dm820/0001-dvbs2x.patch \
+		mipsbox/dm820/0001-0003-cxusb-Geniatech-T230-support.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc6.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc7.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc8.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc9.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc10.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc11.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc12.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc13.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
+		mipsbox/dm820/kernel-add-support-for-gcc15.patch \
+		mipsbox/dm820/build-with-gcc12-fixes.patch \
+		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
+		mipsbox/dm820/rtl8152.patch \
+		mipsbox/dm820/0001-log2-give-up-on-gcc-constant-optimizations.patch \
+		mipsbox/dm820/0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
+		mipsbox/dm820/0003-makefile-silence-packed-not-aligned-warn.patch \
+		mipsbox/dm820/0004-fcrypt-fix-bitoperation-for-gcc.patch
 
-DM800SEV2_PATCHES = \
-		$(DM8000_PATCHES)
+DM7080_PATCHES = \
+		$(DM820_PATCHES)
 
 #
 # KERNEL
@@ -236,7 +280,7 @@ GCC15PARM += CFLAGS_MODULE="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-co
 endif
 
 $(D)/kernel.do_compile: $(D)/kernel.do_prepare
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm820 dm7080 dm8000 dm7020hd dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo dm800 dm800se dm800sev2 dm8000 dm7020hd dm820 dm7080))
 	set -e; cd $(KERNEL_DIR); \
 		$(MAKE) -C $(KERNEL_DIR) ARCH=mips oldconfig
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -258,6 +302,23 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 vuuno vuultimo))
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
 	$(TOUCH)
 endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800))
+	$(TARGET)-strip "$(KERNEL_DIR)/vmlinux"
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz"
+	install -m 644 $(KERNEL_DIR)/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(TARGET_DIR)/boot/
+	ln -sf vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(TARGET_DIR)/boot/vmlinux
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/source || true
+	$(TOUCH)
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800se dm800sev2 dm8000 dm7020hd))
+	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz"
+	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/
+	ln -sf vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/vmlinux
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/build || true
+	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/source || true
+	$(TOUCH)
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux.gz-3.4-4.0-$(BOXTYPE)"
 	install -m 644 $(KERNEL_DIR)/vmlinux.gz-3.4-4.0-$(BOXTYPE) $(TARGET_DIR)/boot/
@@ -266,14 +327,6 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
 	ln -sf vmlinux.bin-3.4-4.0-$(BOXTYPE) $(TARGET_DIR)/boot/vmlinux.bin
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/build || true
 	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/source || true
-	$(TOUCH)
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm7020hd dm800se dm800sev2))
-	gzip -9c < "$(KERNEL_DIR)/vmlinux" > "$(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz"
-	install -m 644 $(KERNEL_DIR)/vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/
-	ln -sf vmlinux-3.2-$(BOXTYPE).gz $(TARGET_DIR)/boot/vmlinux
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/build || true
-	rm $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-$(BOXTYPE)/source || true
 	$(TOUCH)
 endif
 

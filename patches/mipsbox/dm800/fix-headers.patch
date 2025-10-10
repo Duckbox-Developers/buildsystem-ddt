@@ -1,0 +1,50 @@
+--- a/include/mtd/mtd-abi.h
++++ b/include/mtd/mtd-abi.h
+@@ -182,7 +180,13 @@
+ 	uint32_t eccpos[64];
+ };
+ /* For consistency with other structs used in ioctl 64-bit versions */
+-typedef struct nand_oobinfo64 nand_oobinfo;
++//typedef struct nand_oobinfo64 nand_oobinfo;
++struct nand_oobinfo64 {
++	uint32_t useecc;
++	uint32_t eccbytes;
++	uint32_t oobfree[8][2];
++	uint32_t eccpos[64];
++};
+ 
+ struct nand_oobfree {
+ 	uint32_t offset;
+ 
+--- a/include/linux/dvb/frontend.h
++++ b/include/linux/dvb/frontend.h
+@@ -62,6 +62,7 @@
+ 	FE_CAN_8VSB			= 0x200000,
+ 	FE_CAN_16VSB			= 0x400000,
+ 	FE_HAS_EXTENDED_CAPS		= 0x800000,   /* We need more bitspace for newer APIs, indicate this. */
++	FE_CAN_MULTISTREAM		= 0x4000000,  /* frontend supports multistream filtering */
+ 	FE_CAN_TURBO_FEC		= 0x8000000,  /* frontend supports "turbo fec modulation" */
+ 	FE_CAN_2G_MODULATION		= 0x10000000, /* frontend supports "2nd generation modulation" (DVB-S2) */
+ 	FE_NEEDS_BENDING		= 0x20000000, /* not supported anymore, don't use (frontend requires frequency bending) */
+@@ -312,9 +313,9 @@
+ 
+ #define DTV_ISDBT_LAYER_ENABLED	41
+ 
+-#define DTV_ISDBS_TS_ID		42
+-
+-#define DTV_DVBT2_PLP_ID	43
++#define DTV_STREAM_ID			42
++#define DTV_ISDBS_TS_ID_LEGACY		DTV_STREAM_ID
++#define DTV_DVBT2_PLP_ID_LEGACY		43
+ 
+ #define DTV_MAX_COMMAND				DTV_DVBT2_PLP_ID
+ 
+@@ -352,6 +353,8 @@
+ 	SYS_TURBO,
+ } fe_delivery_system_t;
+ 
++#define NO_STREAM_ID_FILTER	(~0U)
++
+ struct dtv_cmds_h {
+ 	char	*name;		/* A display name for debugging purposes */
+ 

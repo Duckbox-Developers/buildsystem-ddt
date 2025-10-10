@@ -80,7 +80,11 @@ ifeq ($(BOXARCH), mips)
 TARGET               ?= mipsel-unknown-linux-gnu
 BOXARCH              ?= mips
 KERNELNAME            = vmlinux
+ifeq ($(BOXTYPE), dm800)
+TARGET_MARCH_CFLAGS   = -mel -mabi=32 -msoft-float -march=mips32
+else
 TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32
+endif
 endif
 
 OPTIMIZATIONS        ?= size

@@ -26,7 +26,7 @@ ifeq ($(BOXTYPE), dm7020hd)
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 	DM720HDV2=1 $(MAKE) flash-image-dm_nfi
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm8000 dm800se dm800sev2))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm8000 dm800se dm800sev2))
 	$(MAKE) flash-image-dm_nfi flash-image-dm_nfi-usb
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm820 dm7080))
@@ -392,20 +392,19 @@ flash-image-vuduo: $(D)/host_mtd_utils
 	rm -rf $(IMAGE_BUILD_DIR)
 
 # NFI2
-ifeq ($(BOXTYPE), dm7020hd)
-DM_ERASE_BLOCK_SIZE = 0x40000
-DM_SECTOR_SIZE = 4096
-MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F
-UBINIZE_ARGS = -m 4096 -p 256KiB -s 4096
+ifeq ($(BOXTYPE), dm800)
+DM_ERASE_BLOCK_SIZE = 0x4000
+DM_SECTOR_SIZE = 512
 BUILDIMAGE_EXTRA = -B
 FLASH_SIZE = 0x4000000
-LOADER_SIZE = 0x100000
-BOOT_SIZE = 0x700000
-ROOT_SIZE = 0x3F800000
-SSBL = 89
+LOADER_SIZE = 0x40000
+BOOT_SIZE = 0x3C0000
+ROOT_SIZE = 0x3C00000
+SSBL = 84
 V2 = 
 endif
 
+# NFI2
 ifeq ($(BOXTYPE), dm800se)
 DM_ERASE_BLOCK_SIZE = 0x4000
 DM_SECTOR_SIZE = 512
@@ -420,7 +419,38 @@ SSBL = 84
 V2 = 
 endif
 
+# NFI2
 ifeq ($(BOXTYPE), dm800sev2)
+DM_ERASE_BLOCK_SIZE = 0x40000
+DM_SECTOR_SIZE = 4096
+MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F
+UBINIZE_ARGS = -m 4096 -p 256KiB -s 4096
+BUILDIMAGE_EXTRA = -B
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0x3F800000
+SSBL = 89
+V2 = 
+endif
+
+# NFI1
+ifeq ($(BOXTYPE), dm8000)
+DM_ERASE_BLOCK_SIZE = 0x20000
+DM_SECTOR_SIZE = 2048
+MKUBIFS_ARGS = -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
+UBINIZE_ARGS = -m 2048 -p 128KiB -s 512
+BUILDIMAGE_EXTRA = 
+FLASH_SIZE = 0x4000000
+LOADER_SIZE = 0x100000
+BOOT_SIZE = 0x700000
+ROOT_SIZE = 0xF800000
+SSBL = 84
+V2 = 
+endif
+
+# NFI2
+ifeq ($(BOXTYPE), dm7020hd)
 DM_ERASE_BLOCK_SIZE = 0x40000
 DM_SECTOR_SIZE = 4096
 MKUBIFS_ARGS = -m 4096 -e 248KiB -c 1640 -x favor_lzo -F
@@ -449,19 +479,10 @@ SSBL = 89
 V2 = v2
 endif
 
-# NFI1
-ifeq ($(BOXTYPE), dm8000)
-DM_ERASE_BLOCK_SIZE = 0x20000
-DM_SECTOR_SIZE = 2048
-MKUBIFS_ARGS = -m 2048 -e 126KiB -c 1961 -x favor_lzo -F
-UBINIZE_ARGS = -m 2048 -p 128KiB -s 512
-BUILDIMAGE_EXTRA = 
-FLASH_SIZE = 0x4000000
-LOADER_SIZE = 0x100000
-BOOT_SIZE = 0x700000
-ROOT_SIZE = 0xF800000
-SSBL = 84
-V2 = 
+ifeq ($(BOXTYPE), dm800)
+NFI_CMDLINE = root=/dev/mtdblock3 rootfstype=jffs2 rw console=ttyS0,115200n8
+else
+NFI_CMDLINE = ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8
 endif
 
 flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
@@ -474,22 +495,26 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	cp $(ARCHIVE)/secondstage-$(BOXTYPE)-$(SSBL).bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/
 	ln -sf vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/vmlinux
 	echo "/boot/bootlogo-$(BOXTYPE).elf.gz filename=/boot/bootlogo-$(BOXTYPE).jpg" > $(RELEASE_DIR)/boot/autoexec.bat
-	echo "/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8" >> $(RELEASE_DIR)/boot/autoexec.bat
+	echo "/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(NFI_CMDLINE)" >> $(RELEASE_DIR)/boot/autoexec.bat
 	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_$(BOXTYPE).bat
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
 	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2
-	$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs $(MKUBIFS_ARGS)
-	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'image=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi $(UBINIZE_ARGS) $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
-	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs
-	rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg
+	@if [ "$(BOXTYPE)" == "dm800" ]; then \
+		$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/ --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi --no-cleanmarkers; \
+	else \
+		$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs $(MKUBIFS_ARGS); \
+		echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'image=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		$(HOST_DIR)/bin/ubinize -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi $(UBINIZE_ARGS) $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+		rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs; \
+		rm -f $(IMAGE_BUILD_DIR)/$(BOXTYPE)/ubinize.cfg; \
+	fi
 	echo $(BOXTYPE)_DDT_usb_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
 	$(HOST_DIR)/bin/buildimage -a $(BOXTYPE) $(BUILDIMAGE_EXTRA) -e $(DM_ERASE_BLOCK_SIZE) -f $(FLASH_SIZE) -s $(DM_SECTOR_SIZE) -b $(LOADER_SIZE):secondstage-$(BOXTYPE)-$(SSBL).bin -d $(BOOT_SIZE):boot.jffs2 -d $(ROOT_SIZE):rootfs.ubi > $(BOXTYPE).nfi && \
@@ -512,7 +537,7 @@ flash-image-dm_nfi-usb:
 	cp $(TARGET_DIR)/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/
 	ln -sf vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(RELEASE_DIR)/boot/vmlinux
 	echo "/boot/bootlogo-$(BOXTYPE).elf.gz filename=/boot/bootlogo-$(BOXTYPE).jpg" > $(RELEASE_DIR)/boot/autoexec.bat
-	echo "/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8" >> $(RELEASE_DIR)/boot/autoexec.bat
+	echo "/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(NFI_CMDLINE)" >> $(RELEASE_DIR)/boot/autoexec.bat
 	cp $(RELEASE_DIR)/boot/autoexec.bat $(RELEASE_DIR)/boot/autoexec_$(BOXTYPE).bat
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
