@@ -1,0 +1,20 @@
+--- a/modutils/insmod.c_org	2020-10-03 22:30:03.397631793 +0200
++++ b/modutils/insmod.c	2020-10-03 22:33:43.951810083 +0200
+@@ -145,7 +145,7 @@
+ 			module_dir = xmalloc_readlink(tmdn);
+ 			if (!module_dir)
+ 				module_dir = xstrdup(CONFIG_DEFAULT_MODULES_DIR);
+-			recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, 0);
++			recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, NULL);
+ 			free(module_dir);
+ 			free(tmdn);
+ 		}
+@@ -162,7 +162,7 @@
+ 				module_dir = xstrdup(CONFIG_DEFAULT_MODULES_DIR);
+ 			/* No module found under /lib/modules/`uname -r`, this
+ 			 * time cast the net a bit wider.  Search /lib/modules/ */
+-			r = recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, 0);
++			r = recursive_action(module_dir, ACTION_RECURSE, check_module_name_match, NULL, m_fullName, NULL);
+ 			if (r)
+ 				bb_error_msg_and_die("%s: module not found", m_fullName);
+ 			free(module_dir);
