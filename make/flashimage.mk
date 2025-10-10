@@ -543,7 +543,8 @@ flash-image-dm_nfi-usb:
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
 	cp $(RELEASE_DIR)/boot/vmlinux-$(KERNEL_VER)-$(BOXTYPE).gz $(IMAGE_BUILD_DIR)/$(BOXTYPE)/vmlinux.gz
-	echo "/usb/vmlinux.gz console=ttyS0,115200n8 rootdelay=10 root=/dev/sda2 rootfstype=ext3 rw" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/autoexec.bat
+	echo "/usb/bootlogo-$(BOXTYPE).elf.gz filename=/usb/bootlogo-$(BOXTYPE).jpg" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/autoexec.bat
+	echo "/usb/vmlinux.gz console=ttyS0,115200n8 rootdelay=10 root=/dev/sda2 rootfstype=ext3 rw" >> $(IMAGE_BUILD_DIR)/$(BOXTYPE)/autoexec.bat
 	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
 	tar cvzf $(IMAGE_BUILD_DIR)/$(BOXTYPE)_usb_boot_$(shell date '+%d.%m.%Y-%H.%M').tar.gz . > /dev/null 2>&1
 	rm -fr $(IMAGE_BUILD_DIR)/$(BOXTYPE)
