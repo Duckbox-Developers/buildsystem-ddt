@@ -45,7 +45,7 @@ DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_D
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
 	$(DOWNLOAD) https://dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
-#	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), dm800se)
@@ -55,6 +55,7 @@ DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_D
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
@@ -65,6 +66,7 @@ DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_D
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
@@ -75,6 +77,7 @@ DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_D
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
@@ -85,6 +88,7 @@ DRIVER_SRC = dreambox-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_D
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
@@ -95,6 +99,7 @@ DRIVER_SRC = dreambox-dvb-modules_$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE)_$(BOXT
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
@@ -105,6 +110,7 @@ DRIVER_SRC = dreambox-dvb-modules_$(DRIVER_VER)-$(BOXTYPE)-$(DRIVER_DATE)_$(BOXT
 
 $(ARCHIVE)/$(DRIVER_SRC):
 #	$(DOWNLOAD) https://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 	$(DOWNLOAD) https://github.com/oe-mirrors/dreambox/raw/main/$(DRIVER_SRC)
 endif
 
