@@ -15,7 +15,8 @@ ifeq ($(BOXTYPE), bre2ze4k)
 DRIVER_DATE = 20191120
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = bre2ze4k-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/gfutures
+#DRIVER_URL = http://source.mynonpublic.com/gfutures
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/bre2ze4k
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -28,7 +29,8 @@ ifeq ($(BOXTYPE), hd51)
 DRIVER_DATE = 20191120
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = hd51-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/gfutures
+#DRIVER_URL = http://source.mynonpublic.com/gfutures
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/hd51
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -40,7 +42,8 @@ ifeq ($(BOXTYPE), h7)
 DRIVER_DATE = 20191123
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = h7-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/zgemma
+#DRIVER_URL = http://source.mynonpublic.com/zgemma
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/h7
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -50,7 +53,8 @@ ifeq ($(BOXTYPE), e4hdultra)
 DRIVER_DATE = 20191101
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = e4hd-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/ceryon
+#DRIVER_URL = http://source.mynonpublic.com/ceryon
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/e4hdultra
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
