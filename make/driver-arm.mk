@@ -16,7 +16,7 @@ DRIVER_DATE = 20191120
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = bre2ze4k-drivers-$(DRIVER_VER).zip
 #DRIVER_URL = http://source.mynonpublic.com/gfutures
-DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/bre2ze4k
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/$(BOXTYPE)
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -30,7 +30,7 @@ DRIVER_DATE = 20191120
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = hd51-drivers-$(DRIVER_VER).zip
 #DRIVER_URL = http://source.mynonpublic.com/gfutures
-DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/hd51
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/$(BOXTYPE)
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -43,7 +43,7 @@ DRIVER_DATE = 20191123
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = h7-drivers-$(DRIVER_VER).zip
 #DRIVER_URL = http://source.mynonpublic.com/zgemma
-DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/h7
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/$(BOXTYPE)
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -54,7 +54,7 @@ DRIVER_DATE = 20191101
 DRIVER_VER = 4.10.12-$(DRIVER_DATE)
 DRIVER_SRC = e4hd-drivers-$(DRIVER_VER).zip
 #DRIVER_URL = http://source.mynonpublic.com/ceryon
-DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/e4hdultra
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/$(BOXTYPE)
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
