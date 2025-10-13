@@ -392,24 +392,9 @@ flash-image-vuduo: $(D)/host_mtd_utils
 	rm -rf $(IMAGE_BUILD_DIR)
 
 # NFI2
-ifeq ($(BOXTYPE), dm800)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se))
 DM_ERASE_BLOCK_SIZE = 0x4000
 DM_SECTOR_SIZE = 512
-BUILDIMAGE_EXTRA = -B
-FLASH_SIZE = 0x4000000
-LOADER_SIZE = 0x40000
-BOOT_SIZE = 0x3C0000
-ROOT_SIZE = 0x3C00000
-SSBL = 84
-V2 = 
-endif
-
-# NFI2
-ifeq ($(BOXTYPE), dm800se)
-DM_ERASE_BLOCK_SIZE = 0x4000
-DM_SECTOR_SIZE = 512
-MKUBIFS_ARGS = -m 512 -e 15KiB -c 3735 -x favor_lzo -X 1 -F -j 4MiB
-UBINIZE_ARGS = -m 512 -p 16KiB -s 512
 BUILDIMAGE_EXTRA = -B
 FLASH_SIZE = 0x4000000
 LOADER_SIZE = 0x40000
@@ -479,7 +464,7 @@ SSBL = 89
 V2 = v2
 endif
 
-ifeq ($(BOXTYPE), dm800)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), dm800 dm800se))
 NFI_CMDLINE = root=/dev/mtdblock3 rootfstype=jffs2 rw console=ttyS0,115200n8
 else
 NFI_CMDLINE = ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw console=ttyS0,115200n8
@@ -500,7 +485,7 @@ flash-image-dm_nfi: $(D)/buildimage $(D)/host_mtd_utils $(D)/$(BOXTYPE)_2nd
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).elf.gz $(RELEASE_DIR)/boot/
 	cp $(SKEL_ROOT)/release/bootlogo-$(BOXTYPE).jpg $(RELEASE_DIR)/boot/
 	$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/boot/ --disable-compressor=lzo --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/boot.jffs2 --no-cleanmarkers
-	@if [ "$(BOXTYPE)" == "dm800" ]; then \
+	@if [ "$(BOXTYPE)" == "dm800" -o "$(BOXTYPE)" == "dm800se" ]; then \
 		$(HOST_DIR)/bin/mkfs.jffs2 --root=$(RELEASE_DIR)/ --compression-mode=size --eraseblock=$(DM_ERASE_BLOCK_SIZE) --output=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubi --no-cleanmarkers; \
 	else \
 		$(HOST_DIR)/bin/mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.ubifs $(MKUBIFS_ARGS); \
