@@ -7,7 +7,8 @@ DRIVER_DATE = 20151124
 DRIVER_SRC = vuplus-dvb-modules-bm750-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), vuduo2)
@@ -16,7 +17,8 @@ DRIVER_DATE = 20190429
 DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), vuuno)
@@ -25,7 +27,8 @@ DRIVER_DATE = 20171204
 DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), vuultimo)
@@ -34,7 +37,8 @@ DRIVER_DATE = 20171204
 DRIVER_SRC = vuplus-dvb-modules-$(BOXTYPE)-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-modules/$(DRIVER_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 ifeq ($(BOXTYPE), dm800)
@@ -163,7 +167,8 @@ endif
 UTIL_SRC = platform-util-$(KERNEL_TYPE)-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
 
 $(ARCHIVE)/$(UTIL_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/platform-util/$(UTIL_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/platform-util/$(UTIL_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(UTIL_SRC)
 
 $(D)/platform_util: $(D)/bootstrap $(ARCHIVE)/$(UTIL_SRC)
 	$(START_BUILD)
@@ -183,7 +188,8 @@ endif
 GLES_SRC = libgles-$(KERNEL_TYPE)-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
 
 $(ARCHIVE)/$(GLES_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/libgles/$(GLES_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/libgles/$(GLES_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(GLES_SRC)
 
 $(D)/libgles: $(D)/bootstrap $(ARCHIVE)/$(GLES_SRC)
 	$(START_BUILD)
@@ -204,7 +210,8 @@ endif
 INITRD_SRC = vmlinuz-initrd_$(KERNEL_TYPE)_$(INITRD_DATE).tar.gz
 
 $(ARCHIVE)/$(INITRD_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/kernel/$(INITRD_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/kernel/$(INITRD_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/driver/$(BOXTYPE)/$(INITRD_SRC)
 
 $(D)/vmlinuz_initrd: $(D)/bootstrap $(ARCHIVE)/$(INITRD_SRC)
 	$(START_BUILD)

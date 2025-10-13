@@ -133,7 +133,8 @@ endif
 DRIVER_SRC = vuplus-dvb-proxy-$(KERNEL_TYPE)-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
 
 $(ARCHIVE)/$(DRIVER_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-proxy/$(DRIVER_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/vuplus-dvb-proxy/$(DRIVER_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/$(BOXTYPE)/$(DRIVER_SRC)
 endif
 
 driver-clean:
@@ -206,7 +207,8 @@ endif
 UTIL_SRC = platform-util-$(KERNEL_TYPE)-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
 
 $(ARCHIVE)/$(UTIL_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/platform-util/$(UTIL_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/platform-util/$(UTIL_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/$(BOXTYPE)/$(UTIL_SRC)
 
 $(D)/platform_util: $(D)/bootstrap $(ARCHIVE)/$(UTIL_SRC)
 	$(START_BUILD)
@@ -256,7 +258,8 @@ endif
 GLES_SRC = libgles-$(KERNEL_TYPE)-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
 
 $(ARCHIVE)/$(GLES_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/libgles/$(GLES_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/libgles/$(GLES_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/$(BOXTYPE)/$(GLES_SRC)
 
 $(D)/libgles: $(D)/bootstrap $(ARCHIVE)/$(GLES_SRC)
 	$(START_BUILD)
@@ -295,7 +298,8 @@ endif
 INITRD_SRC = vmlinuz-initrd_$(KERNEL_TYPE)_$(INITRD_DATE).tar.gz
 
 $(ARCHIVE)/$(INITRD_SRC):
-	$(DOWNLOAD) http://code.vuplus.com/download/release/kernel/$(INITRD_SRC)
+#	$(DOWNLOAD) http://code.vuplus.com/download/release/kernel/$(INITRD_SRC)
+	$(DOWNLOAD) $(GITHUB)/$(GIT_NAME)/vuplus/raw/refs/heads/master/$(BOXTYPE)/$(INITRD_SRC)
 
 $(D)/vmlinuz_initrd: $(D)/bootstrap $(ARCHIVE)/$(INITRD_SRC)
 	$(START_BUILD)
