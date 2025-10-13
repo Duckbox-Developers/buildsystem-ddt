@@ -89,7 +89,7 @@ insmod /lib/modules/dreambox_rc2.ko
 insmod /lib/modules/dreambox_keyboard.ko
 insmod /lib/modules/bcm7405.ko
 
-echo 255 > /proc/stb/fp/oled_brightness
+echo 255 > /proc/stb/lcd/oled_brightness
 oled -tc "Booting... DDT"
 
 echo "[rcS] starting mdev"
