@@ -5,7 +5,8 @@ ifeq ($(BOXTYPE), dcube)
 DRIVER_DATE = 20141203
 DRIVER_VER = 2.6.34-$(DRIVER_DATE)
 DRIVER_SRC = cube-drivers-$(DRIVER_VER).zip
-DRIVER_URL = http://source.mynonpublic.com/cube
+#DRIVER_URL = http://source.mynonpublic.com/cube
+DRIVER_URL = $(GITHUB)/$(GIT_NAME)/driver-arm/raw/refs/heads/master/driver/$(BOXTYPE)
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(DOWNLOAD) $(DRIVER_URL)/$(DRIVER_SRC)
