@@ -287,7 +287,7 @@ if [ "$BOXARCH" == "sh4" ]; then
 			case $3 in
 				[1-3]) REPLY=$3;;
 				*)	echo -e "\nFFMPEG version:"
-					echo "   1)  FFMPEG 3.4 GIT\033[00m"
+					echo "   1)  FFMPEG 3.4 GIT"
 					echo -e "   \033[01;32m2)  FFMPEG 4.4 GIT\033[00m"
 					echo "   3)  FFMPEG 5.1 GIT [experimental]"
 					read -p "Select FFMPEG version (1-3)? "
