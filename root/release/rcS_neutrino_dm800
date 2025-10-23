@@ -94,7 +94,7 @@ echo 255 > /proc/stb/lcd/oled_brightness
 lcd -tc "Booting... DDT"
 
 echo "[rcS] starting mdev"
-mdev -s &
+mdev -s
 
 # set dummy time
 NTPDATE=`date +"%Y%m%d"`
