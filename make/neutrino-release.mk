@@ -631,6 +631,9 @@ endif
 	ln -sf ../../sbin/MAKEDEV $(RELEASE_DIR)/lib/udev/MAKEDEV
 	cp -aR $(SKEL_ROOT)/etc/mdev/* $(RELEASE_DIR)/etc/mdev/
 	cp -aR $(SKEL_ROOT)/etc/mdev_$(BOXARCH).conf $(RELEASE_DIR)/etc/mdev.conf
+ifeq ($(BOXTYPE), dm800)
+	sed -i "s#>dvb/adapter%1/%2%3#>dvb/adapter%1/%2#" $(RELEASE_DIR)/etc/mdev.conf
+endif
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
 	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
