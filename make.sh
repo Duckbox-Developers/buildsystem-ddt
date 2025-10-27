@@ -425,14 +425,14 @@ if [ $BOXTYPE == 'hd51' -o $BOXTYPE == 'h7' -o $BOXTYPE == 'bre2ze4k' -o $BOXTYP
 		[1-3] | 8[1-3]) REPLY=$7;;
 		*)	echo -e "\nSwap Data and Linux Swap:"
 			echo -e "   \033[01;32m 1)  Swap OFF\033[00m"
-			echo -e "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
-			echo -e "    3)  Swap ON (1x linux swap)"
+			echo "    2)  Swap ON (1x linux swap, 1x ext4 swap)"
+			echo "    3)  Swap ON (1x linux swap)"
 			if [ $BOXTYPE == 'e4hdultra' ]; then
 				echo ""
-				echo    "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
-				echo -e "   81)  Swap OFF\033[00m"
-				echo -e "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
-				echo -e "   83)  Swap ON (1x linux swap)"
+				echo "   AXAS E4HD 4K Ultra - 8 GB FLASH version:"
+				echo "   81)  Swap OFF"
+				echo "   82)  Swap ON (1x linux swap, 1x ext4 swap)"
+				echo "   83)  Swap ON (1x linux swap)"
 				read -p "Select SWAP support (1-3, 81-83)? "
 			else
 				read -p "Select SWAP support (1-3)? "
