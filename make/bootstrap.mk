@@ -254,6 +254,7 @@ $(D)/createimage: $(D)/bootstrap $(ARCHIVE)/$(CREATEIMAGE_SOURCE)
 DM800_2ND_SOURCE = secondstage-dm800-84.bin
 DM800_2ND_URL = http://dreamboxupdate.com/download/7020/$(DM800_2ND_SOURCE)
 #DM800_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800_2ND_SOURCE)
+#DM800_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM800_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM800_2ND_SOURCE):
 	$(DOWNLOAD) $(DM800_2ND_URL)
@@ -268,6 +269,7 @@ $(D)/dm800_2nd: $(ARCHIVE)/$(DM800_2ND_SOURCE)
 DM800SE_2ND_SOURCE = secondstage-dm800se-84.bin
 DM800SE_2ND_URL = http://dreamboxupdate.com/download/7020/$(DM800SE_2ND_SOURCE)
 #DM800SE_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SE_2ND_SOURCE)
+#DM800SE_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM800SE_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM800SE_2ND_SOURCE):
 	$(DOWNLOAD) $(DM800SE_2ND_URL)
@@ -282,6 +284,7 @@ $(D)/dm800se_2nd: $(ARCHIVE)/$(DM800SE_2ND_SOURCE)
 DM800SEV2_2ND_SOURCE = secondstage-dm800sev2-89.bin
 DM800SEV2_2ND_URL = http://dreamboxupdate.com/download/7020/$(DM800SEV2_2ND_SOURCE)
 #DM800SEV2_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM800SEV2_2ND_SOURCE)
+#DM800SEV2_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM800SEV2_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE):
 	$(DOWNLOAD) $(DM800SEV2_2ND_URL)
@@ -296,6 +299,7 @@ $(D)/dm800sev2_2nd: $(ARCHIVE)/$(DM800SEV2_2ND_SOURCE)
 DM8000_2ND_SOURCE = secondstage-dm8000-84.bin
 DM8000_2ND_URL = http://dreamboxupdate.com/download/7020/$(DM8000_2ND_SOURCE)
 #DM8000_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM8000_2ND_SOURCE)
+#DM8000_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM8000_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM8000_2ND_SOURCE):
 	$(DOWNLOAD) $(DM8000_2ND_URL)
@@ -310,6 +314,7 @@ $(D)/dm8000_2nd: $(ARCHIVE)/$(DM8000_2ND_SOURCE)
 DM7020HD_2ND_SOURCE = secondstage-dm7020hd-89.bin
 DM7020HD_2ND_URL = http://dreamboxupdate.com/download/7020/$(DM7020HD_2ND_SOURCE)
 #DM7020HD_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM7020HD_2ND_SOURCE)
+#DM7020HD_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM7020HD_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM7020HD_2ND_SOURCE):
 	$(DOWNLOAD) $(DM7020HD_2ND_URL)
@@ -324,6 +329,7 @@ $(D)/dm7020hd_2nd: $(ARCHIVE)/$(DM7020HD_2ND_SOURCE)
 DM820_2ND_SOURCE = dreambox-secondstage_18_dm820.tar.xz
 #DM820_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM820_2ND_SOURCE)
 DM820_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM820_2ND_SOURCE)
+#DM820_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM820_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM820_2ND_SOURCE):
 	$(DOWNLOAD) $(DM820_2ND_URL)
@@ -338,6 +344,7 @@ $(D)/dm820_2nd: $(ARCHIVE)/$(DM820_2ND_SOURCE)
 DM7080_2ND_SOURCE = dreambox-secondstage_14_dm7080.tar.xz
 #DM7080_2ND_URL = http://sources.dreamboxupdate.com/download/7020/$(DM7080_2ND_SOURCE)
 DM7080_2ND_URL = https://github.com/oe-mirrors/dreambox/raw/main/$(DM7080_2ND_SOURCE)
+#DM7080_2ND_URL = https://github.com/Duckbox-Developers/dreambox/raw/refs/heads/master/$(BOXTYPE)/$(DM7080_2ND_SOURCE)
 
 $(ARCHIVE)/$(DM7080_2ND_SOURCE):
 	$(DOWNLOAD) $(DM7080_2ND_URL)
