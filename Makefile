@@ -45,10 +45,8 @@ printenv:
 	@echo "TARGET            : $(TARGET)"
 	@echo "BOXTYPE           : $(BOXTYPE)"
 	@echo "KERNEL_VERSION    : $(KERNEL_VER)"
-ifneq ($(BOXARCH), sh4)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
 	@echo "SWAPDATA          : $(shell [ "$(SWAPDATA)" == "1" -o "$(SWAPDATA)" == "81" ] && echo -e enabled || echo -e disabled)"
-endif
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 	@echo "FFMPEG            : $(FFMPEG_VER) GIT"
