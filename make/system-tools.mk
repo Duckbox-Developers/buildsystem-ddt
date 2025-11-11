@@ -415,18 +415,19 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 # util_linux
 #
-#UTIL_LINUX_VER = d6438ee
+UTIL_LINUX_MAJOR = 2.41
+UTIL_LINUX_MINOR = .2
+UTIL_LINUX_VER = $(UTIL_LINUX_MAJOR)$(UTIL_LINUX_MINOR)
+UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VER).tar.xz
 
-$(D)/util_linux: $(D)/bootstrap $(D)/zlib
+$(ARCHIVE)/$(UTIL_LINUX_SOURCE):
+	$(DOWNLOAD) https://www.kernel.org/pub/linux/utils/util-linux/v$(UTIL_LINUX_MAJOR)/$(UTIL_LINUX_SOURCE)
+
+$(D)/util_linux: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(UTIL_LINUX_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/util-linux
-	set -e; if [ -d $(ARCHIVE)/util-linux.git ]; \
-		then cd $(ARCHIVE)/util-linux.git; git pull || true; \
-		else cd $(ARCHIVE); git clone https://github.com/util-linux/util-linux.git util-linux.git; \
-		fi
-	cp -ra $(ARCHIVE)/util-linux.git $(BUILD_TMP)/util-linux
-	$(CHDIR)/util-linux; \
-		git checkout -q $(UTIL_LINUX_VER); \
+	$(REMOVE)/util-linux-$(UTIL_LINUX_VER)
+	$(UNTAR)/$(UTIL_LINUX_SOURCE)
+	$(CHDIR)/util-linux-$(UTIL_LINUX_VER); \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--mandir=/.remove \
@@ -502,7 +503,7 @@ $(D)/util_linux: $(D)/bootstrap $(D)/zlib
 		$(MAKE) sfdisk mkfs; \
 		install -D -m 755 sfdisk $(TARGET_DIR)/sbin/sfdisk; \
 		install -D -m 755 mkfs $(TARGET_DIR)/sbin/mkfs
-	$(REMOVE)/util-linux
+	$(REMOVE)/util-linux-$(UTIL_LINUX_VER)
 	$(TOUCH)
 
 #
