@@ -171,21 +171,21 @@ $(D)/module_init_tools: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(MODULE_INIT_TOOLS_S
 #
 # sysvinit
 #
-SYSVINIT_VER = 3.14
-SYSVINIT_SOURCE = sysvinit-$(SYSVINIT_VER).tar.xz
-SYSVINIT_PATCH  = sysvinit-$(SYSVINIT_VER)-crypt-lib.patch
-SYSVINIT_PATCH += sysvinit-$(SYSVINIT_VER)-change-INIT_FIFO.patch
-SYSVINIT_PATCH += sysvinit-$(SYSVINIT_VER)-remove-killall5.patch
+#SYSVINIT_VER = 2da36cf
+SYSVINIT_PATCH  = sysvinit-crypt-lib.patch
+SYSVINIT_PATCH += sysvinit-change-INIT_FIFO.patch
+SYSVINIT_PATCH += sysvinit-remove-killall5.patch
 
-$(ARCHIVE)/$(SYSVINIT_SOURCE):
-#	$(DOWNLOAD) https://download.savannah.gnu.org/releases/sysvinit/$(SYSVINIT_SOURCE)
-	$(DOWNLOAD) https://github.com/slicer69/sysvinit/releases/download/$(SYSVINIT_VER)/$(SYSVINIT_SOURCE)
-
-$(D)/sysvinit: $(D)/bootstrap $(ARCHIVE)/$(SYSVINIT_SOURCE)
+$(D)/sysvinit: $(D)/bootstrap
 	$(START_BUILD)
-	$(REMOVE)/sysvinit-$(SYSVINIT_VER)
-	$(UNTAR)/$(SYSVINIT_SOURCE)
-	$(CHDIR)/sysvinit-$(SYSVINIT_VER); \
+	$(REMOVE)/sysvinit
+	set -e; if [ -d $(ARCHIVE)/sysvinit.git ]; \
+		then cd $(ARCHIVE)/sysvinit.git; git pull || true; \
+		else cd $(ARCHIVE); git clone https://github.com/slicer69/sysvinit.git sysvinit.git; \
+		fi
+	cp -ra $(ARCHIVE)/sysvinit.git $(BUILD_TMP)/sysvinit
+	$(CHDIR)/sysvinit; \
+		git checkout -q $(SYSVINIT_VER); \
 		$(call apply_patches, $(SYSVINIT_PATCH)); \
 		sed -i -e 's/\ sulogin[^ ]*//' -e 's/pidof\.8//' -e '/ln .*pidof/d' \
 		-e '/bootlogd/d' -e '/utmpdump/d' -e '/mountpoint/d' -e '/mesg/d' src/Makefile; \
@@ -211,7 +211,7 @@ else
 	install -m 644 $(SKEL_ROOT)/etc/inittab $(TARGET_DIR)/etc/inittab
 endif
 endif
-	$(REMOVE)/sysvinit-$(SYSVINIT_VER)
+	$(REMOVE)/sysvinit
 	$(TOUCH)
 
 #
