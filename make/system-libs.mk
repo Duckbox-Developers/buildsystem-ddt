@@ -746,7 +746,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 #
 # libpng
 #
-#LIBPNG_VER = 1ebf432
+LIBPNG_VER = 83b23a8
 LIBPNG_VER_X = 16
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib
@@ -771,7 +771,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' -i $(TARGET_DIR)/usr/bin/libpng$(LIBPNG_VER_X)-config; \
 		mv $(TARGET_DIR)/usr/bin/libpng*-config $(HOST_DIR)/bin/
-	$(REWRITE_LIBTOOL)/libpng16.la
+	$(REWRITE_LIBTOOL)/libpng$(LIBPNG_VER_X).la
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(LIBPNG_VER_X).pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,pngfix png-fix-itxt)
 	$(REMOVE)/libpng
