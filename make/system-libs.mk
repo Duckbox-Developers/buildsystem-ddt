@@ -1600,8 +1600,8 @@ $(D)/pugixml: $(D)/bootstrap $(ARCHIVE)/$(PUGIXML_SOURCE)
 		else cd $(ARCHIVE); git clone https://github.com/zeux/pugixml.git pugixml.git; \
 		fi
 	cp -ra $(ARCHIVE)/pugixml.git $(BUILD_TMP)/pugixml
-	(cd $(BUILD_TMP)/pugixml; git checkout -q $(PUGIXML_VER);); \
 	$(CHDIR)/pugixml; \
+		git checkout -q $(PUGIXML_VER); \
 		$(call apply_patches, $(PUGIXML_PATCH)); \
 		cmake  --no-warn-unused-cli \
 			-DCMAKE_INSTALL_PREFIX=/usr \

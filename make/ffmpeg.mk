@@ -404,8 +404,8 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
 		fi
 	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg
-	cd $(BUILD_TMP)/ffmpeg && git checkout -q release/$(FFMPEG_VER)
 	$(CHDIR)/ffmpeg; \
+		git checkout -q release/$(FFMPEG_VER); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		$(call apply_patches, $(FFMPEG2_PATCH)); \
 		./configure $(SILENT_OPT) \

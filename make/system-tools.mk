@@ -1710,8 +1710,8 @@ $(D)/dropbearmulti: $(D)/bootstrap
 		else cd $(ARCHIVE); git clone https://github.com/mkj/dropbear.git dropbearmulti.git; \
 		fi
 	cp -ra $(ARCHIVE)/dropbearmulti.git $(BUILD_TMP)/dropbearmulti
-	(cd $(BUILD_TMP)/dropbearmulti; git checkout -q $(DROPBEARMULTI_VER);); \
 	$(CHDIR)/dropbearmulti; \
+		git checkout -q $(DROPBEARMULTI_VER); \
 		$(BUILDENV) \
 		$(CONFIGURE) \
 			--prefix=/usr \
