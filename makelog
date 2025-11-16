@@ -10,6 +10,10 @@ if [ ! -z $1 ] ; then
 	cat /etc/*release >> $LOGFILE
 
 	echo >> $LOGFILE
+	echo "----- GCC VERSION -----" >> $LOGFILE
+	gcc --version | grep gcc >> $LOGFILE
+
+	echo >> $LOGFILE
 	echo "----- GIT  REV -----" >> $LOGFILE
 	echo "rev: "$(git log | grep "^commit" | wc -l) >> $LOGFILE
 	echo "commit: "$(git log -1 --pretty=format:%H) >> $LOGFILE
