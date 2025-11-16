@@ -1436,14 +1436,8 @@ $(D)/sqlite: $(D)/bootstrap $(ARCHIVE)/$(SQLITE_SOURCE)
 #
 # libxml2
 #
-LIBXML2_MAJOR = 2.15
-LIBXML2_MINOR = 1
-LIBXML2_VER = $(LIBXML2_MAJOR).$(LIBXML2_MINOR)
-LIBXML2_SOURCE = libxml2-$(LIBXML2_VER).tar.xz
-LIBXML2_PATCH = libxml2-$(LIBXML2_VER).patch
-
-$(ARCHIVE)/$(LIBXML2_SOURCE):
-	$(DOWNLOAD) https://download.gnome.org/sources/libxml2/$(LIBXML2_MAJOR)/$(LIBXML2_SOURCE)
+#LIBXML2_VER = 22f9d730
+LIBXML2_PATCH = libxml2.patch
 
 ifeq ($(BOXARCH), sh4)
 LIBXML2_CONF_OPTS += --without-iconv
@@ -1451,11 +1445,16 @@ LIBXML2_CONF_OPTS += --with-minimum
 LIBXML2_CONF_OPTS += --with-schematron=yes
 endif
 
-$(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
+$(D)/libxml2: $(D)/bootstrap $(D)/zlib
 	$(START_BUILD)
-	$(REMOVE)/libxml2-$(LIBXML2_VER).tar.gz
-	$(UNTAR)/$(LIBXML2_SOURCE)
-	$(CHDIR)/libxml2-$(LIBXML2_VER); \
+	$(REMOVE)/libxml2
+	set -e; if [ -d $(ARCHIVE)/libxml2.git ]; \
+		then cd $(ARCHIVE)/libxml2.git; git pull || true; \
+		else cd $(ARCHIVE); git clone https://gitlab.gnome.org/GNOME/libxml2.git libxml2.git; \
+		fi
+	cp -ra $(ARCHIVE)/libxml2.git $(BUILD_TMP)/libxml2
+	$(CHDIR)/libxml2; \
+		git checkout -q $(LIBXML2_VER); \
 		$(call apply_patches, $(LIBXML2_PATCH)); \
 		autoreconf -fi $(SILENT_OPT); \
 		$(CONFIGURE) \
@@ -1486,7 +1485,7 @@ $(D)/libxml2: $(D)/bootstrap $(D)/zlib $(ARCHIVE)/$(LIBXML2_SOURCE)
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,xmlcatalog xmllint)
 	rm -rf $(TARGET_LIB_DIR)/xml2Conf.sh
 	rm -rf $(TARGET_LIB_DIR)/cmake
-	$(REMOVE)/libxml2-$(LIBXML2_VER)
+	$(REMOVE)/libxml2
 	$(TOUCH)
 
 #
