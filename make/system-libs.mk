@@ -746,7 +746,7 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 #
 # libpng
 #
-LIBPNG_VER = 83b23a8
+LIBPNG_VER = 49363ad
 LIBPNG_VER_X = 16
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib
