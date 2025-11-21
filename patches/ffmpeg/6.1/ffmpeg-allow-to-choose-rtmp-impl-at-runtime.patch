@@ -88,7 +88,7 @@
  extern const URLProtocol ff_srtp_protocol;
 --- a/libavformat/rtmpproto.c
 +++ b/libavformat/rtmpproto.c
-@@ -2627,7 +2627,7 @@ static int inject_fake_duration_metadata(RTMPContext *rt)
+@@ -2645,7 +2645,7 @@ static int inject_fake_duration_metadata(RTMPContext *rt)
  static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **opts)
  {
      RTMPContext *rt = s->priv_data;
@@ -97,7 +97,7 @@
      char *old_app, *qmark, *n, fname_buffer[1024];
      uint8_t buf[2048];
      int port;
-@@ -2638,7 +2638,9 @@ static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **o
+@@ -2656,7 +2656,9 @@ static int rtmp_open(URLContext *s, const char *uri, int flags, AVDictionary **o
  
      rt->is_input = !(flags & AVIO_FLAG_WRITE);
  
@@ -108,7 +108,7 @@
                   hostname, sizeof(hostname), &port,
                   path, sizeof(path), s->filename);
  
-@@ -3181,9 +3183,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
+@@ -3205,9 +3207,9 @@ const URLProtocol ff_##flavor##_protocol = {     \
  #define RTMP_PROTOCOL(flavor, uppercase)         \
      RTMP_PROTOCOL_3(flavor, CONFIG_ ## uppercase ## _PROTOCOL)
  
