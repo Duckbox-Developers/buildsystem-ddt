@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.18-7.4
-# Mon Oct  6 22:22:22 2025
+# Sat Nov 22 22:22:22 2025
 #
 CONFIG_MIPS=y
 
@@ -1487,7 +1487,7 @@ CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"
 # Pseudo filesystems
 #
 CONFIG_PROC_FS=y
-CONFIG_PROC_KCORE=y
+# CONFIG_PROC_KCORE is not set
 CONFIG_PROC_SOFTIRQS=y
 CONFIG_SYSFS=y
 CONFIG_TMPFS=y
