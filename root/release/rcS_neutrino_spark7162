@@ -66,7 +66,7 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/stm_v4l2.ko
    insmod $MODDIR/pseudocard.ko
 
-   insmod $MODDIR/spark7162.ko UnionTunerType=t
+   insmod $MODDIR/spark7162.ko UnionTunerType=c
    insmod $MODDIR/pti.ko
    insmod $MODDIR/stm_monitor.ko
    insmod $MODDIR/stmsysfs.ko

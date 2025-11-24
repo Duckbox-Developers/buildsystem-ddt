@@ -279,7 +279,7 @@ fi
 ##############################################
 
 if [ "$BOXARCH" == "sh4" ]; then
-	LOCAL_FFMPEG_BOXTYPE_LIST='octagon1008 fortis_hdbox cuberevo cuberevo_3000hd cuberevo_mini cuberevo_mini2 ufs912 ufs913 spark atevio7500'
+	LOCAL_FFMPEG_BOXTYPE_LIST='octagon1008 fortis_hdbox cuberevo cuberevo_3000hd cuberevo_mini cuberevo_mini2 ufs912 ufs913 spark spark7162 atevio7500'
 	for i in $LOCAL_FFMPEG_BOXTYPE_LIST; do
 		if [ "$BOXTYPE" == "$i" ]; then
 			LOCAL_FFMPEG_BOXTYPE_LIST=$BOXTYPE
