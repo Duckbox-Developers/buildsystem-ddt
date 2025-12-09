@@ -111,7 +111,7 @@ index 807e783..8389bce 100644
      f->nb_streams = ic->nb_streams;
      f->rate_emu   = o->rate_emu;
      f->accurate_seek = o->accurate_seek;
-@@ -3538,6 +3542,10 @@ const OptionDef options[] = {
+@@ -3543,6 +3547,10 @@ const OptionDef options[] = {
      { "apad",           OPT_STRING | HAS_ARG | OPT_SPEC |
                          OPT_OUTPUT,                                  { .off = OFFSET(apad) },
          "audio pad", "" },
