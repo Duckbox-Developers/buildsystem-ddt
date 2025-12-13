@@ -50,6 +50,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51 h7 bre2ze4k e4hdultra))
 endif
 	@echo "GCC VERSION       : $(BS_GCC_VER)"
 	@echo "FFMPEG            : $(FFMPEG_VER) GIT"
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuduo4kse vuultimo4k vuzero4k vuuno4k vuuno4kse))
+	@echo "VU_MULTIBOOT      : $(shell [ "$(VU_MULTIBOOT)" == "1" ] && echo -e enabled || echo -e disabled)"
+endif
 	@echo "EXTERNAL_LCD      : $(EXTERNAL_LCD)"
 	@echo "OPTIMIZATIONS     : $(OPTIMIZATIONS)"
 	@echo "OPTIMIZE_PICS     : $(shell [ "$(OPTIMIZE_PICS)" == "1" ] && echo -e enabled || echo -e disabled)"
