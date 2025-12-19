@@ -747,8 +747,8 @@ $(D)/libjpeg_turbo: $(D)/bootstrap $(ARCHIVE)/$(LIBJPEG_TURBO_SOURCE)
 # libpng
 #
 #LIBPNG_VER = 49363ad
-LIBPNG_VER_X = 16
-LIBPNG_VER = libpng$(LIBPNG_VER_X)
+LIBPNG_VER = 16
+LIBPNG_VER_X = libpng$(LIBPNG_VER)
 
 $(D)/libpng: $(D)/bootstrap $(D)/zlib
 	$(START_BUILD)
@@ -759,7 +759,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib
 		fi
 	cp -ra $(ARCHIVE)/libpng.git $(BUILD_TMP)/libpng
 	$(CHDIR)/libpng; \
-		git checkout -q $(LIBPNG_VER); \
+		git checkout -q $(LIBPNG_VER_X); \
 		$(call apply_patches, $(LIBPNG_PATCH)); \
 		$(CONFIGURE) \
 			--prefix=/usr \
@@ -770,10 +770,10 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
-		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' -i $(TARGET_DIR)/usr/bin/libpng$(LIBPNG_VER_X)-config; \
+		sed -e 's:^prefix=.*:prefix="$(TARGET_DIR)/usr":' -i $(TARGET_DIR)/usr/bin/$(LIBPNG_VER_X)-config; \
 		mv $(TARGET_DIR)/usr/bin/libpng*-config $(HOST_DIR)/bin/
-	$(REWRITE_LIBTOOL)/libpng$(LIBPNG_VER_X).la
-	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libpng$(LIBPNG_VER_X).pc
+	$(REWRITE_LIBTOOL)/$(LIBPNG_VER_X).la
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/$(LIBPNG_VER_X).pc
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,pngfix png-fix-itxt)
 	$(REMOVE)/libpng
 	$(TOUCH)
