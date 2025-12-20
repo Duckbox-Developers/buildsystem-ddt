@@ -265,7 +265,7 @@ index 6cb493ceab..c420d8ab10 100644
             fate-mov-frag-overlap \
             fate-mov-neg-firstpts-discard-frames \
  
-@@ -58,6 +61,15 @@
+@@ -59,6 +62,15 @@
  # Full-sample encryption and constant IV using only tenc atom (no senc/saio/saiz).
  fate-mov-tenc-only-encrypted: CMD = framemd5 -decryption_key 12345678901234567890123456789012 -i $(TARGET_SAMPLES)/mov/mov-tenc-only-encrypted.mp4
  

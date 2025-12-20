@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -3902,10 +3902,8 @@
+@@ -3912,10 +3912,8 @@
  android_content_protocol_select="file_protocol"
  async_protocol_deps="threads"
  bluray_protocol_deps="libbluray"
@@ -11,7 +11,7 @@
  ffrtmphttp_protocol_select="http_protocol"
  ftp_protocol_select="tcp_protocol"
  gopher_protocol_select="tcp_protocol"
-@@ -3919,20 +3917,18 @@
+@@ -3929,20 +3927,18 @@
  icecast_protocol_select="http_protocol"
  mmsh_protocol_select="http_protocol"
  mmst_protocol_select="network"
@@ -46,7 +46,7 @@
  sctp_protocol_deps="struct_sctp_event_subscribe struct_msghdr_msg_flags"
 --- a/libavformat/Makefile
 +++ b/libavformat/Makefile
-@@ -697,12 +697,12 @@ OBJS-$(CONFIG_MMSH_PROTOCOL)             += mmsh.o mms.o asf_tags.o
+@@ -702,12 +702,12 @@ OBJS-$(CONFIG_MMSH_PROTOCOL)             += mmsh.o mms.o asf_tags.o
  OBJS-$(CONFIG_MMST_PROTOCOL)             += mmst.o mms.o asf_tags.o
  OBJS-$(CONFIG_PIPE_PROTOCOL)             += file.o
  OBJS-$(CONFIG_PROMPEG_PROTOCOL)          += prompeg.o
