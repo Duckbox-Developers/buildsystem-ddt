@@ -1930,7 +1930,7 @@ diff --git a/src/utils.cpp b/src/utils.cpp
 index 6699e29..a8b144c 100644
 --- a/src/utils.cpp
 +++ b/src/utils.cpp
-@@ -53,9 +53,8 @@
+@@ -52,9 +52,8 @@
  #include <time.h>
  #include <unistd.h>
  
@@ -1942,7 +1942,7 @@ index 6699e29..a8b144c 100644
  #endif
  
  #define DEFAULT_LOG LOG_UTILS
-@@ -226,13 +225,28 @@ void set_signal_handler(char *argv0) {
+@@ -225,13 +224,28 @@ void set_signal_handler(char *argv0) {
      }
  }
  
@@ -1980,12 +1980,9 @@ diff --git a/tests/Makefile.in b/tests/Makefile.in
 index a549f8a..73bd46a 100644
 --- a/tests/Makefile.in
 +++ b/tests/Makefile.in
-@@ -31,9 +31,9 @@ MAIN_SOURCES=$(shell find ../src -type f -iname '*.cpp')
- TABLES=0
- PMT=0
+@@ -33,7 +33,7 @@
  
--LIBS+=crypto dl pthread stdc++exp
-+LIBS+=crypto dl pthread
+ LIBS+=crypto dl pthread
  LIBS+=dvbcsa
 -CXXFLAGS += -std=c++23 -fsanitize=address -fno-omit-frame-pointer -fsanitize=leak -fsanitize=null
 +CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer -fsanitize=leak -fsanitize=null
