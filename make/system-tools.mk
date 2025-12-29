@@ -1666,7 +1666,7 @@ $(D)/openssh: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(OPENSSH_SOURCE)
 #
 # dropbear
 #
-DROPBEAR_VER = 2025.88
+DROPBEAR_VER = 2025.89
 DROPBEAR_SOURCE = dropbear-$(DROPBEAR_VER).tar.bz2
 DROPBEAR_PATCH = 
 
