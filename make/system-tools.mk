@@ -1817,7 +1817,7 @@ MINISATIP_BRANCH = cdcba64
 MINISATIP_EXTRA_FLAGS = -DNEEDS_SENDMMSG_SHIM
 else
 MINISATIP_PATCH += minisatip-revert-c++23.patch
-#MINISATIP_BRANCH = 33ef979
+MINISATIP_BRANCH = 958abfd
 endif
 
 $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(ARCHIVE)/$(MINISATIP_SOURCE)

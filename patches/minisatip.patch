@@ -2,7 +2,7 @@ diff --git a/src/dvb.h b/src/dvb.h
 index 7eef576..2b15356 100644
 --- a/src/dvb.h
 +++ b/src/dvb.h
-@@ -23,6 +23,12 @@
+@@ -21,6 +21,12 @@
  #include <linux/dvb/version.h>
  #define DVBAPIVERSION (DVB_API_VERSION << 8 | DVB_API_VERSION_MINOR)
  #define LOGDVBAPIVERSION DVBAPIVERSION
