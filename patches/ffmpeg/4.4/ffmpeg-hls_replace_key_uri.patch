@@ -9,7 +9,7 @@
      AVIOContext *playlist_pb;
  } HLSContext;
  
-@@ -1315,8 +1317,16 @@
+@@ -1318,8 +1320,16 @@
      } else if (seg->key_type == KEY_AES_128) {
          char iv[33], key[33], url[MAX_URL_SIZE];
          if (strcmp(seg->key, pls->key_url)) {
@@ -27,7 +27,7 @@
                  ret = avio_read(pb, pls->key, sizeof(pls->key));
                  if (ret != sizeof(pls->key)) {
                      av_log(pls->parent, AV_LOG_ERROR, "Unable to read key file %s\n",
-@@ -1328,6 +1338,8 @@
+@@ -1331,6 +1341,8 @@
                         seg->key);
              }
              av_strlcpy(pls->key_url, seg->key, sizeof(pls->key_url));
@@ -36,7 +36,7 @@
          }
          ff_data_to_hex(iv, seg->iv, sizeof(seg->iv), 0);
          ff_data_to_hex(key, pls->key, sizeof(pls->key), 0);
-@@ -2484,6 +2496,8 @@
+@@ -2487,6 +2499,8 @@
          OFFSET(http_multiple), AV_OPT_TYPE_BOOL, {.i64 = -1}, -1, 1, FLAGS},
      {"http_seekable", "Use HTTP partial requests, 0 = disable, 1 = enable, -1 = auto",
          OFFSET(http_seekable), AV_OPT_TYPE_BOOL, { .i64 = -1}, -1, 1, FLAGS},
