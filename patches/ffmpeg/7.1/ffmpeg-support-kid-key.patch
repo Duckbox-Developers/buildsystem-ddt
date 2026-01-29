@@ -63,7 +63,7 @@ diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
 +++ b/libavformat/isom.h
-@@ -346,8 +346,8 @@ typedef struct MOVContext {
+@@ -347,8 +347,8 @@ typedef struct MOVContext {
      void *audible_iv;
      int audible_iv_size;
      struct AVAES *aes_decrypt;
@@ -74,7 +74,7 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -362,6 +362,7 @@
+@@ -363,6 +363,7 @@
      int thmb_item_id;
      int64_t idat_offset;
      int interleaved_read;
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -10190,12 +10251,6 @@
+@@ -10214,12 +10275,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->thmb_item_id = -1;
-@@ -11042,7 +11098,8 @@
+@@ -11069,7 +11124,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

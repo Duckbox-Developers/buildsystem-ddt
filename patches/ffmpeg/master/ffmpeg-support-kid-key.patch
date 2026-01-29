@@ -40,7 +40,7 @@ index 1215407f3c..091deac854 100644
  
      /* Flags for init section*/
      int is_init_section_common_video;
-@@ -1925,6 +1926,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
+@@ -1933,6 +1934,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
  
      if (c->cenc_decryption_key)
          av_dict_set(&in_fmt_opts, "decryption_key", c->cenc_decryption_key, 0);
@@ -49,7 +49,7 @@ index 1215407f3c..091deac854 100644
  
      // provide additional information from mpd if available
      ret = avformat_open_input(&pls->ctx, "", in_fmt, &in_fmt_opts); //pls->init_section->url
-@@ -2366,7 +2369,8 @@ static const AVOption dash_options[] = {
+@@ -2374,7 +2377,8 @@ static const AVOption dash_options[] = {
          OFFSET(allowed_extensions), AV_OPT_TYPE_STRING,
          {.str = "aac,m4a,m4s,m4v,mov,mp4,webm,ts"},
          INT_MIN, INT_MAX, FLAGS},
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -10760,12 +10823,6 @@ static int mov_read_header(AVFormatContext *s)
+@@ -10774,12 +10837,6 @@ static int mov_read_header(AVFormatContext *s)
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->primary_item_id = -1;
-@@ -11651,7 +11706,8 @@
+@@ -11665,7 +11720,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },
