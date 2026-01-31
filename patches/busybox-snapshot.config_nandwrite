@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.38.0.git
-# Wed Jan 21 10:10:10 2026
+# Sat Jan 31 23:23:23 2026
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -650,6 +650,7 @@ CONFIG_HEXDUMP=y
 # CONFIG_LAST is not set
 # CONFIG_FEATURE_LAST_FANCY is not set
 CONFIG_LOSETUP=y
+CONFIG_LSBLK=y
 # CONFIG_LSPCI is not set
 CONFIG_LSUSB=y
 CONFIG_MDEV=y
