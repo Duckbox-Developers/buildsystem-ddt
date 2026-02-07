@@ -322,12 +322,9 @@ PORTMAP_SOURCE = portmap_$(PORTMAP_VER).orig.tar.gz
 PORTMAP_PATCH = portmap-$(PORTMAP_VER).patch
 
 $(ARCHIVE)/$(PORTMAP_SOURCE):
-	$(DOWNLOAD) https://merges.ubuntu.com/p/portmap/$(PORTMAP_SOURCE)
+	$(DOWNLOAD) https://debian-archive.anexia.at/debian/pool/main/p/portmap/$(PORTMAP_SOURCE)
 
-$(ARCHIVE)/portmap_$(PORTMAP_VER)-3.diff.gz:
-	$(DOWNLOAD) https://merges.ubuntu.com/p/portmap/portmap_$(PORTMAP_VER)-3.diff.gz
-
-$(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/portmap_$(PORTMAP_VER)-3.diff.gz
+$(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(PATCHES)/portmap_$(PORTMAP_VER)-3.diff.gz
 	$(START_BUILD)
 	$(REMOVE)/portmap-$(PORTMAP_VER)
 	$(UNTAR)/$(PORTMAP_SOURCE)
