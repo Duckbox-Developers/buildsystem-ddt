@@ -1,6 +1,6 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -2532,8 +2543,10 @@
+@@ -2537,8 +2548,10 @@
      HLSContext *c = s->priv_data;
      int ret, i, minplaylist = -1;
  
