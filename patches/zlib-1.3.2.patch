@@ -1,8 +1,8 @@
 --- a/configure
 +++ b/configure
-@@ -141,6 +141,7 @@
+@@ -152,6 +152,7 @@
      -c* | --const) zconst=1; shift ;;
-     -w* | --warn) warn=1; shift ;;
+     -w* | --warn) warn=$((warn + 1)); shift ;;
      -d* | --debug) debug=1; shift ;;
 +    --quiet) shift ;;
      --sanitize) address=1; shift ;;
@@ -10,7 +10,7 @@
      --memory) memory=1; shift ;;
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -318,7 +318,6 @@
+@@ -329,7 +329,6 @@
  	  rm -f $(DESTDIR)$(sharedlibdir)/$(SHAREDLIB) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIBM); \
  	  ln -s $(SHAREDLIBV) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIB); \
  	  ln -s $(SHAREDLIBV) $(DESTDIR)$(sharedlibdir)/$(SHAREDLIBM); \

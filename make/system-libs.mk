@@ -429,9 +429,13 @@ $(D)/libbluray: $(D)/bootstrap $(ARCHIVE)/$(LIBBLURAY_SOURCE)
 #
 # zlib
 #
-ZLIB_VER = 1.3.1
+ZLIB_VER = 1.3.2
 ZLIB_SOURCE = zlib-$(ZLIB_VER).tar.xz
 ZLIB_Patch = zlib-$(ZLIB_VER).patch
+
+ifeq ($(KERNEL_VER), $(filter $(KERNEL_VER), 2.6.18-7.4 2.6.32.71_stm24_0217 2.6.34))
+ZLIB_INSECURE = -DZLIB_INSECURE
+endif
 
 $(ARCHIVE)/$(ZLIB_SOURCE):
 	$(DOWNLOAD) https://zlib.net/$(ZLIB_SOURCE)
@@ -442,7 +446,7 @@ $(D)/zlib: $(D)/bootstrap $(ARCHIVE)/$(ZLIB_SOURCE)
 	$(UNTAR)/$(ZLIB_SOURCE)
 	$(CHDIR)/zlib-$(ZLIB_VER); \
 		$(call apply_patches, $(ZLIB_Patch)); \
-		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS)" \
+		CC=$(TARGET)-gcc mandir=$(TARGET_DIR)/.remove CFLAGS="$(TARGET_CFLAGS) $(ZLIB_INSECURE)" \
 		./configure $(SILENT_OPT) \
 			--prefix=/usr \
 			--shared \
