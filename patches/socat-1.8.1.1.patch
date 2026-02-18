@@ -1,6 +1,6 @@
 --- a/Makefile.in.org
 +++ b/Makefile.in
-@@ -130,16 +130,7 @@
+@@ -132,16 +132,7 @@
  
  install: progs $(srcdir)/doc/socat.1
  	mkdir -p $(DESTDIR)$(BINDEST)
