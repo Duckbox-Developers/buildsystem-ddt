@@ -1220,7 +1220,7 @@ $(D)/vsftpd: $(D)/bootstrap $(D)/openssl $(ARCHIVE)/$(VSFTPD_SOURCE)
 #
 # procps_ng
 #
-PROCPS_NG_VER = 3.3.16
+PROCPS_NG_VER = 4.0.6
 PROCPS_NG_SOURCE = procps-ng-$(PROCPS_NG_VER).tar.xz
 
 $(ARCHIVE)/$(PROCPS_NG_SOURCE):
@@ -1238,9 +1238,9 @@ $(D)/procps_ng: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(PROCPS_NG_SOURCE)
 			--prefix= \
 		; \
 		$(MAKE); \
-		install -D -m 755 top/.libs/top $(TARGET_DIR)/usr/bin/top; \
-		install -D -m 755 ps/.libs/pscommand $(TARGET_DIR)/bin/ps; \
-		cp -a proc/.libs/libprocps.so* $(TARGET_LIB_DIR)
+		install -D -m 755 src/top/.libs/top $(TARGET_DIR)/usr/bin/top; \
+		install -D -m 755 src/ps/.libs/pscommand $(TARGET_DIR)/bin/ps; \
+		cp -a library/.libs/libproc2.so* $(TARGET_LIB_DIR)
 	$(REMOVE)/procps-ng-$(PROCPS_NG_VER)
 	$(TOUCH)
 
