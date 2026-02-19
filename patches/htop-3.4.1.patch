@@ -1,0 +1,12 @@
+--- a/linux/LinuxProcessTable.h
++++ b/linux/LinuxProcessTable.h
+@@ -11,6 +11,9 @@
+ 
+ #include "ProcessTable.h"
+ 
++#ifndef _LINUX_CAPABILITY_VERSION_3
++#define _LINUX_CAPABILITY_VERSION_3 _LINUX_CAPABILITY_VERSION
++#endif
+ 
+ typedef struct TtyDriver_ {
+    char* path;

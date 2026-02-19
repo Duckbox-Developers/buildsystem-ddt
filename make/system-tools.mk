@@ -1247,12 +1247,12 @@ $(D)/procps_ng: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(PROCPS_NG_SOURCE)
 #
 # htop
 #
-HTOP_VER = 2.2.0
-HTOP_SOURCE = htop-$(HTOP_VER).tar.gz
+HTOP_VER = 3.4.1
+HTOP_SOURCE = htop-$(HTOP_VER).tar.xz
 HTOP_PATCH = htop-$(HTOP_VER).patch
 
 $(ARCHIVE)/$(HTOP_SOURCE):
-	$(DOWNLOAD) http://hisham.hm/htop/releases/$(HTOP_VER)/$(HTOP_SOURCE)
+	$(DOWNLOAD) http://github.com/htop-dev/htop/releases/download/$(HTOP_VER)/$(HTOP_SOURCE)
 
 $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 	$(START_BUILD)
@@ -1266,6 +1266,7 @@ $(D)/htop: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(HTOP_SOURCE)
 			--mandir=/.remove \
 			--sysconfdir=/etc \
 			--disable-unicode \
+			--with-curses=ncursesw \
 			ac_cv_func_malloc_0_nonnull=yes \
 			ac_cv_func_realloc_0_nonnull=yes \
 			ac_cv_file__proc_stat=yes \
