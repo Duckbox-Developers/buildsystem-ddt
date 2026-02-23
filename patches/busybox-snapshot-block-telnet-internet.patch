@@ -164,12 +164,18 @@ index f06e958..27e6c93 100644
  
  /* Read from pty to buffer, handling vhangup() EIO retries */
  static int pty_to_net__read(void *this)
-@@ -997,7 +1152,7 @@
- 	dbg("%s:%d", __func__, __LINE__);
- 	fd = accept(ts->read_fd, NULL, NULL);
+@@ -999,6 +1154,14 @@
  //TODO: accept4(SOCK_NONBLOCK) - can remove ndelay_on() in make_new_session
--	if (fd >= 0) {
-+	if (fd >= 0 && !is_permitted_connection(fd)) { /* Don't allow connections from the internet (except via VPN) as telnet traffic is not encrypted */
+ 	if (fd >= 0) {
  		close_on_exec_on(fd);
++
++		/* Don't allow connections from the internet (except via VPN) as telnet traffic is not encrypted */
++		if (!is_permitted_connection(fd))
++		{
++			close(fd);
++			return 0;
++		}
++
  		/* Create two new pipes and insert them into ioloop */
  		make_new_session(ts->io, fd);
+ 	}
