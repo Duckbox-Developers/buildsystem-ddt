@@ -526,6 +526,9 @@ neutrino-release-dm900:
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm900 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm900 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm900/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	install -d $(RELEASE_DIR)/var/lib/opkg/info
+	echo -e "#!/bin/sh\nflash-kernel /boot/zImage-3.14-1.17-dm900" > $(RELEASE_DIR)/var/lib/opkg/info/kernel-image.postinst
+	chmod 755 $(RELEASE_DIR)/var/lib/opkg/info/kernel-image.postinst
 
 #
 # dm920
@@ -536,6 +539,9 @@ neutrino-release-dm920:
 	install -m 0755 $(SKEL_ROOT)/release/halt_dm920 $(RELEASE_DIR)/etc/init.d/halt
 	cp -f $(SKEL_ROOT)/release/fstab_dm920 $(RELEASE_DIR)/etc/fstab
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)-dm920/extra/*.ko $(RELEASE_DIR)/lib/modules/
+	install -d $(RELEASE_DIR)/var/lib/opkg/info
+	echo -e "#!/bin/sh\nflash-kernel /boot/zImage-3.14-1.17-dm920" > $(RELEASE_DIR)/var/lib/opkg/info/kernel-image.postinst
+	chmod 755 $(RELEASE_DIR)/var/lib/opkg/info/kernel-image.postinst
 
 python-iptv-install:
 	install -d $(RELEASE_DIR)/usr/bin; \
