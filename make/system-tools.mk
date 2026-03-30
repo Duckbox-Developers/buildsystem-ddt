@@ -46,6 +46,7 @@ GCC15PARM += CONFIG_EXTRA_CPPFLAGS="$(TARGET_CPPFLAGS)"
 endif
 
 ifeq ($(BUSYBOX_SNAPSHOT), 1)
+BUSYBOX_PATCH += busybox-snapshot-inetd.patch
 $(D)/busybox: $(D)/bootstrap $(PATCHES)/$(BUSYBOX_CONFIG)
 	$(START_BUILD)
 	$(REMOVE)/busybox$(BB_SNAPSHOT)
