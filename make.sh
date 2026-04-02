@@ -25,7 +25,7 @@ fi
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-91)"
 	echo "Parameter 2 (ARM/MIPS, not DM800)       : GCC Version (1-12)"
-	echo "Parameter 3 (not UFS910/UFS922/DM800)   : FFMPEG Version (1-5)"
+	echo "Parameter 3 (not UFS910/UFS922/DM800)   : FFMPEG Version (1-6)"
 	echo "Parameter 4                             : Optimization (1-6)"
 	echo "Parameter 5                             : External LCD support (1-4)"
 	echo "Parameter 6                             : Neutrino variant (1-4)"
@@ -309,7 +309,7 @@ elif [ $BOXTYPE == 'dm800' ]; then
 elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 	CNT=0
 	case $3 in
-		[1-5]) REPLY=$3;;
+		[1-6]) REPLY=$3;;
 		*)	echo -e "\nFFMPEG version:"
 			echo -e "   \033[01;32m1)  FFMPEG 4.4    GIT\033[00m" && CNT=$(($CNT+1))
 			echo "   2)  FFMPEG 6.1    GIT [experimental]" && CNT=$(($CNT+1))
