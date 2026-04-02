@@ -316,7 +316,8 @@ elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 			if [ "$BOXTYPE" != "dcube" -a "$BOXTYPE" != "dm800" ]; then
 				echo "   3)  FFMPEG 7.1    GIT [experimental]" && CNT=$(($CNT+1))
 				echo "   4)  FFMPEG 8.0    GIT [experimental]" && CNT=$(($CNT+1))
-				echo "   5)  FFMPEG MASTER GIT [experimental]" && CNT=$(($CNT+1))
+				echo "   5)  FFMPEG 8.1    GIT [experimental]" && CNT=$(($CNT+1))
+				echo "   6)  FFMPEG MASTER GIT [experimental]" && CNT=$(($CNT+1))
 			fi
 			read -p "Select FFMPEG version (1-$CNT)? "
 			;;
@@ -327,7 +328,8 @@ elif [ "$BOXARCH" == "arm" -o "$BOXARCH" == "mips" ]; then
 		2)  FFMPEG_VER="6.1";;
 		3)  FFMPEG_VER="7.1";;
 		4)  FFMPEG_VER="8.0";;
-		5)  FFMPEG_VER="master";;
+		5)  FFMPEG_VER="8.1";;
+		6)  FFMPEG_VER="master";;
 		*)  FFMPEG_VER="4.4";;
 	esac
 	echo "FFMPEG_VER=$FFMPEG_VER" >> config
