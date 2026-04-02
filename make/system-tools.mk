@@ -413,8 +413,13 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 #
 # util_linux
 #
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 4.8.4 4.9.4))
 UTIL_LINUX_MAJOR = 2.41
-UTIL_LINUX_MINOR = .3
+UTIL_LINUX_MINOR = .4
+else
+UTIL_LINUX_MAJOR = 2.42
+UTIL_LINUX_MINOR = 
+endif
 UTIL_LINUX_VER = $(UTIL_LINUX_MAJOR)$(UTIL_LINUX_MINOR)
 UTIL_LINUX_SOURCE = util-linux-$(UTIL_LINUX_VER).tar.xz
 
