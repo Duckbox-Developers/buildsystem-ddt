@@ -68,7 +68,7 @@ diff --git a/fftools/ffmpeg.h b/fftools/ffmpeg.h
 index 606f2af..87775d4 100644
 --- a/fftools/ffmpeg.h
 +++ b/fftools/ffmpeg.h
-@@ -428,6 +428,10 @@ typedef struct InputFile {
+@@ -429,6 +429,10 @@ typedef struct InputFile {
      int joined;                 /* the thread has been joined */
      int thread_queue_size;      /* maximum number of queued packets */
  #endif
@@ -79,7 +79,7 @@ index 606f2af..87775d4 100644
  } InputFile;
  
  enum forced_keyframes_const {
-@@ -605,6 +609,9 @@ extern float audio_drift_threshold;
+@@ -606,6 +610,9 @@ extern float audio_drift_threshold;
  extern float dts_delta_threshold;
  extern float dts_error_threshold;
  
@@ -103,7 +103,7 @@ index 807e783..8389bce 100644
  int audio_volume      = 256;
  int audio_sync_method = 0;
  int video_sync_method = VSYNC_AUTO;
-@@ -1274,6 +1277,7 @@ static int open_input_file(OptionsContext *o, const char *filename)
+@@ -1276,6 +1279,7 @@ static int open_input_file(OptionsContext *o, const char *filename)
      f->recording_time = o->recording_time;
      f->input_ts_offset = o->input_ts_offset;
      f->ts_offset  = o->input_ts_offset - (copy_ts ? (start_at_zero && ic->start_time != AV_NOPTS_VALUE ? ic->start_time : 0) : timestamp);
@@ -111,7 +111,7 @@ index 807e783..8389bce 100644
      f->nb_streams = ic->nb_streams;
      f->rate_emu   = o->rate_emu;
      f->accurate_seek = o->accurate_seek;
-@@ -3543,6 +3547,10 @@ const OptionDef options[] = {
+@@ -3553,6 +3557,10 @@ const OptionDef options[] = {
      { "apad",           OPT_STRING | HAS_ARG | OPT_SPEC |
                          OPT_OUTPUT,                                  { .off = OFFSET(apad) },
          "audio pad", "" },
