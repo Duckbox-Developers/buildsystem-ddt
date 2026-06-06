@@ -1204,7 +1204,7 @@ $(D)/libiconv: $(D)/bootstrap $(ARCHIVE)/$(LIBICONV_SOURCE)
 #
 # expat
 #
-#EXPAT_BRANCH = 4fb6357
+#EXPAT_BRANCH = b85dd5a
 EXPAT_PATCH  = expat-libtool-tag.patch
 EXPAT_PATCH += expat-enum-fix.patch
 
@@ -1225,6 +1225,7 @@ $(D)/expat: $(D)/bootstrap $(ARCHIVE)/$(EXPAT_SOURCE)
 			--mandir=/.remove \
 			--bindir=/.remove \
 			--without-xmlwf \
+			--with-dev-urandom \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
