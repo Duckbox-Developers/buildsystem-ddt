@@ -1,6 +1,6 @@
 --- a/configure.orig
 +++ b/configure
-@@ -7182,7 +7175,6 @@
+@@ -7183,7 +7176,6 @@
      check_cflags -Werror=return-type
      check_cflags -Werror=vla
      check_cflags -Wformat

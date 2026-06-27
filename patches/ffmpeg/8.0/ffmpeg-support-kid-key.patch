@@ -32,15 +32,15 @@ diff --git a/libavformat/dashdec.c b/libavformat/dashdec.c
 index 1215407f3c..091deac854 100644
 --- a/libavformat/dashdec.c
 +++ b/libavformat/dashdec.c
-@@ -154,6 +154,7 @@ typedef struct DASHContext {
-     AVDictionary *avio_opts;
+@@ -156,6 +156,7 @@ typedef struct DASHContext {
      int max_url_size;
+     int max_reload;
      char *cenc_decryption_key;
 +    char *cenc_decryption_keys;
  
      /* Flags for init section*/
      int is_init_section_common_video;
-@@ -1924,6 +1925,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
+@@ -1941,6 +1942,8 @@ static int reopen_demux_for_component(AVFormatContext *s, struct representation
  
      if (c->cenc_decryption_key)
          av_dict_set(&in_fmt_opts, "decryption_key", c->cenc_decryption_key, 0);
@@ -49,16 +49,16 @@ index 1215407f3c..091deac854 100644
  
      // provide additional information from mpd if available
      ret = avformat_open_input(&pls->ctx, "", in_fmt, &in_fmt_opts); //pls->init_section->url
-@@ -2365,7 +2368,8 @@ static const AVOption dash_options[] = {
+@@ -2388,7 +2391,8 @@
          OFFSET(allowed_extensions), AV_OPT_TYPE_STRING,
          {.str = "aac,m4a,m4s,m4v,mov,mp4,webm,ts"},
          INT_MIN, INT_MAX, FLAGS},
 -    { "cenc_decryption_key", "Media decryption key (hex)", OFFSET(cenc_decryption_key), AV_OPT_TYPE_STRING, {.str = NULL}, INT_MIN, INT_MAX, .flags = FLAGS },
 +    { "cenc_decryption_key", "Media default decryption key (hex)", OFFSET(cenc_decryption_key), AV_OPT_TYPE_STRING, {.str = NULL}, INT_MIN, INT_MAX, .flags = FLAGS },
 +    { "cenc_decryption_keys", "Media decryption keys by KID (hex)", OFFSET(cenc_decryption_keys), AV_OPT_TYPE_STRING, {.str = NULL}, INT_MIN, INT_MAX, .flags = FLAGS },
+     { "max_reload", "Maximum number of manifest reloads in get_current_fragment() before giving up",
+         OFFSET(max_reload), AV_OPT_TYPE_INT, { .i64 = 100 }, 0, INT_MAX, FLAGS },
      {NULL}
- };
- 
 diff --git a/libavformat/isom.h b/libavformat/isom.h
 index 3d375d7a46..83bacb96a1 100644
 --- a/libavformat/isom.h
@@ -74,10 +74,10 @@ index 3d375d7a46..83bacb96a1 100644
      int enable_drefs;
      int32_t movie_display_matrix[3][3]; ///< display matrix from mvhd
      int have_read_mfra_size;
-@@ -385,6 +385,7 @@
-     int nb_heif_grid;
+@@ -386,6 +386,7 @@
      int64_t idat_offset;
      int interleaved_read;
+     unsigned heif_icc_profile_items;
 +    AVDictionary* decryption_keys;
  } MOVContext;
  
@@ -86,7 +86,7 @@ diff --git a/libavformat/mov.c b/libavformat/mov.c
 index 34ca8095c2..550bce86f5 100644
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -8089,19 +8089,62 @@
+@@ -8095,19 +8095,62 @@
      return 0;
  }
  
@@ -150,7 +150,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8147,15 +8190,21 @@
+@@ -8153,15 +8196,21 @@
      int i, ret;
      int num_of_encrypted_blocks;
      uint8_t iv[16];
@@ -173,7 +173,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8206,15 +8255,21 @@
+@@ -8212,15 +8261,21 @@
  {
      int i, ret, rem_bytes;
      uint8_t *data;
@@ -196,7 +196,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8272,15 +8327,21 @@
+@@ -8278,15 +8333,21 @@
      int i, ret, rem_bytes;
      uint8_t iv[16];
      uint8_t *data;
@@ -219,7 +219,7 @@ index 34ca8095c2..550bce86f5 100644
          if (ret < 0) {
              return ret;
          }
-@@ -8427,7 +8488,7 @@
+@@ -8433,7 +8494,7 @@
              return AVERROR_INVALIDDATA;
          }
  
@@ -228,7 +228,7 @@ index 34ca8095c2..550bce86f5 100644
              return cenc_decrypt(mov, sc, encrypted_sample, pkt->data, pkt->size);
          } else {
              size_t size;
-@@ -10688,12 +10749,6 @@
+@@ -10708,12 +10769,6 @@
      MOVAtom atom = { AV_RL32("root") };
      int i;
  
@@ -241,7 +241,7 @@ index 34ca8095c2..550bce86f5 100644
      mov->fc = s;
      mov->trak_index = -1;
      mov->primary_item_id = -1;
-@@ -11584,7 +11639,8 @@
+@@ -11613,7 +11668,8 @@
          "Fixed key used for handling Audible AAX files", OFFSET(audible_fixed_key),
          AV_OPT_TYPE_BINARY, {.str="77214d4b196a87cd520045fd20a51d67"},
          .flags = AV_OPT_FLAG_DECODING_PARAM },

@@ -2,7 +2,7 @@ diff --git a/libavformat/hls.c b/libavformat/hls.c
 index eec2515..da68831 100644
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -729,6 +729,7 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
+@@ -734,6 +734,7 @@ static int open_url(AVFormatContext *s, AVIOContext **pb, const char *url,
  
  static int test_segment(AVFormatContext *s, const AVInputFormat *in_fmt, struct playlist *pls, struct segment *seg)
  {
@@ -10,7 +10,7 @@ index eec2515..da68831 100644
      HLSContext *c = s->priv_data;
      int matchA = 3;
      int matchF = 0;
-@@ -767,7 +768,9 @@ static int test_segment(AVFormatContext *s, const AVInputFormat *in_fmt, struct
+@@ -772,7 +773,9 @@ static int test_segment(AVFormatContext *s, const AVInputFormat *in_fmt, struct
              return AVERROR_INVALIDDATA;
          }
      }

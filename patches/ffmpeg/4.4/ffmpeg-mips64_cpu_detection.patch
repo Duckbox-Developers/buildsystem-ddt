@@ -12,7 +12,7 @@ Upstream-Status: Inappropriate [OE-Specific]
 
 --- a/configure
 +++ b/configure
-@@ -5893,17 +5893,10 @@
+@@ -5895,17 +5895,10 @@
  
      # Check toolchain ISA level
      if enabled mips64; then
