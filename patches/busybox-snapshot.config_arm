@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Busybox version: 1.39.0.git
-# Thu Jul  2 02:02:02 2026
+# Sun Jul 12 05:05:05 2026
 #
 CONFIG_HAVE_DOT_CONFIG=y
 
@@ -270,6 +270,7 @@ CONFIG_ID=y
 CONFIG_GROUPS=y
 CONFIG_INSTALL=y
 # CONFIG_FEATURE_INSTALL_LONG_OPTIONS is not set
+# CONFIG_JOIN is not set
 # CONFIG_LINK is not set
 CONFIG_LN=y
 # CONFIG_LOGNAME is not set
