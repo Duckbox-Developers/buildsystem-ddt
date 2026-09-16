@@ -1040,7 +1040,9 @@ endif
 	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
 	rm -f $(RELEASE_DIR)/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/lib/libanl*
+ifneq ($(BOXARCH), mips)
 	rm -f $(RELEASE_DIR)/lib/libatomic*
+endif
 	rm -f $(RELEASE_DIR)/lib/libitm*
 	rm -f $(RELEASE_DIR)/lib/libmemusage.so
 	rm -f $(RELEASE_DIR)/lib/libBrokenLocale*
