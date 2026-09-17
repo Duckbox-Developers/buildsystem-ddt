@@ -2,8 +2,8 @@ diff --git a/Makefile.am b/Makefile.am
 index 9560a95..d444bd6 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -41,7 +41,7 @@
-     subdir-objects
+@@ -34,7 +34,7 @@
+ # USE OR OTHER DEALINGS IN THE SOFTWARE.
  
  ACLOCAL_AMFLAGS = -I m4
 -LIBTOOLFLAGS = --verbose
