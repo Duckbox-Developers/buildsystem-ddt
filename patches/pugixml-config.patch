@@ -1,6 +1,6 @@
 --- a/src/pugiconfig.hpp
 +++ b/src/pugiconfig.hpp
-@@ -45,7 +45,7 @@
+@@ -48,7 +48,7 @@
  // #define PUGIXML_HEADER_ONLY
  
  // Uncomment this to enable long long support (usually enabled automatically)
