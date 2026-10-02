@@ -1,6 +1,6 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -242,6 +242,8 @@ typedef struct HLSContext {
+@@ -241,6 +241,8 @@ typedef struct HLSContext {
      char *allowed_segment_extensions;
      int extension_picky;
      int max_reload;
@@ -38,7 +38,7 @@
  
      return 0;
  }
-@@ -3156,6 +3170,8 @@ static const AVOption hls_options[] = {
+@@ -3165,6 +3179,8 @@ static const AVOption hls_options[] = {
          OFFSET(extension_picky), AV_OPT_TYPE_BOOL, {.i64 = 1}, 0, 1, FLAGS},
      {"max_reload", "Maximum number of times a insufficient list is attempted to be reloaded",
          OFFSET(max_reload), AV_OPT_TYPE_INT, {.i64 = 100}, 0, INT_MAX, FLAGS},

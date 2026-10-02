@@ -1,6 +1,6 @@
 --- a/libavcodec/dxva2.c
 +++ b/libavcodec/dxva2.c
-@@ -794,16 +794,18 @@
+@@ -821,16 +821,18 @@
  #if CONFIG_D3D11VA
      if (avctx->pix_fmt == AV_PIX_FMT_D3D11)
          return (intptr_t)frame->data[1];
@@ -52,7 +52,7 @@
      ret = ff_h264_alloc_tables(h);
 --- a/libavcodec/h264dec.c
 +++ b/libavcodec/h264dec.c
-@@ -454,6 +454,7 @@ void ff_h264_flush_change(H264Context *h)
+@@ -455,6 +455,7 @@ void ff_h264_flush_change(H264Context *h)
  
      h->next_outputed_poc = INT_MIN;
      h->prev_interlaced_frame = 1;
