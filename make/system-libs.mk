@@ -786,7 +786,7 @@ $(D)/libpng: $(D)/bootstrap $(D)/zlib
 # giflib
 #
 GIFLIB_VER = 5.1.4
-GIFLIB_SOURCE = giflib-$(GIFLIB_VER).tar.bz2
+GIFLIB_SOURCE = giflib-$(GIFLIB_VER).tar.gz
 
 $(ARCHIVE)/$(GIFLIB_SOURCE):
 	$(DOWNLOAD) https://sourceforge.net/projects/giflib/files/$(GIFLIB_SOURCE)
