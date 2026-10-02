@@ -303,7 +303,8 @@ LSB_VER = $(LSB_MAJOR)-$(LSB_MINOR)
 LSB_SOURCE = lsb_$(LSB_VER).tar.gz
 
 $(ARCHIVE)/$(LSB_SOURCE):
-	$(DOWNLOAD) https://debian.sdinet.de/etch/sdinet/lsb/$(LSB_SOURCE)
+#	$(DOWNLOAD) https://debian.sdinet.de/etch/sdinet/lsb/$(LSB_SOURCE)
+	$(DOWNLOAD) https://ftp.up.pt/debian-archive/debian/pool/main/l/lsb/$(LSB_SOURCE)
 
 $(D)/lsb: $(D)/bootstrap $(ARCHIVE)/$(LSB_SOURCE)
 	$(START_BUILD)
