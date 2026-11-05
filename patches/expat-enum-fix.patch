@@ -2,7 +2,7 @@ diff --git a/lib/expat.h b/lib/expat.h
 index bb9cdedb..0bea3743 100644
 --- a/lib/expat.h
 +++ b/lib/expat.h
-@@ -137,7 +137,7 @@
+@@ -138,7 +138,7 @@
    /* Added in 2.4.0. */
    XML_ERROR_AMPLIFICATION_LIMIT_BREACH,
    /* Added in 2.6.4. */
@@ -11,7 +11,7 @@ index bb9cdedb..0bea3743 100644
  };
  
  /* Added in 2.9.0. */
-@@ -1066,7 +1066,7 @@
+@@ -1067,7 +1067,7 @@
    XML_FEATURE_GE,
    /* Added in Expat 2.7.2. */
    XML_FEATURE_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT,
