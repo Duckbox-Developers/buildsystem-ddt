@@ -11,7 +11,7 @@ index bb9cdedb..0bea3743 100644
  };
  
  /* Added in 2.9.0. */
-@@ -1067,7 +1067,7 @@
+@@ -1074,7 +1074,7 @@
    XML_FEATURE_GE,
    /* Added in Expat 2.7.2. */
    XML_FEATURE_ALLOC_TRACKER_MAXIMUM_AMPLIFICATION_DEFAULT,
