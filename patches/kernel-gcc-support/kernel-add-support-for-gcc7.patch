@@ -1,8 +1,8 @@
 --- /dev/null
-+++ b/include/linux/compiler-gcc6.h
-@@ -0,0 +1,72 @@
++++ b/include/linux/compiler-gcc7.h
+@@ -0,0 +1,74 @@
 +#ifndef __LINUX_COMPILER_H
-+#error "Please don't include <linux/compiler-gcc6.h> directly, include <linux/compiler.h> instead."
++#error "Please don't include <linux/compiler-gcc7.h> directly, include <linux/compiler.h> instead."
 +#endif
 +
 +#define __used				__attribute__((__used__))
@@ -73,3 +73,5 @@
 +#define __HAVE_BUILTIN_BSWAP64__
 +#define __HAVE_BUILTIN_BSWAP16__
 +#endif /* CONFIG_ARCH_USE_BUILTIN_BSWAP */
++
++#define KASAN_ABI_VERSION 5

@@ -6,6 +6,18 @@
 # Patches Kernel
 #
 VUDUO_PATCHES = \
+		kernel-gcc-support/kernel-add-support-for-gcc5.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		mipsbox/vuduo/add-dmx-source-timecode.patch \
 		mipsbox/vuduo/af9015-output-full-range-SNR.patch \
 		mipsbox/vuduo/af9033-output-full-range-SNR.patch \
@@ -25,17 +37,6 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/fix_fuse_for_linux_mips_3-9.patch \
 		mipsbox/vuduo/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/vuduo/linux-3.9-gcc-4.9.3-build-error-fixed.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc5.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc6.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc7.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc8.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc9.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc10.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc11.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc12.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc13.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc14.patch \
-		mipsbox/vuduo/kernel-add-support-for-gcc15.patch \
 		mipsbox/vuduo/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo/gcc9_backport.patch \
 		mipsbox/vuduo/rtl8712-fix-warnings.patch \
@@ -57,17 +58,18 @@ VUDUO_PATCHES = \
 		mipsbox/vuduo/fix-multiple-defs-yyloc.patch
 
 VUDUO2_PATCHES = \
-		mipsbox/vuduo2/kernel-add-support-for-gcc5.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc6.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc7.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc8.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc9.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc10.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc11.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc12.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc13.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc14.patch \
-		mipsbox/vuduo2/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc5.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		mipsbox/vuduo2/build-with-gcc12-fixes.patch \
 		mipsbox/vuduo2/rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		mipsbox/vuduo2/add-dmx-source-timecode.patch \
@@ -162,6 +164,17 @@ DM800SEV2_PATCHES = \
 		$(DM8000_PATCHES)
 
 DM8000_PATCHES = \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		mipsbox/dm8000/kernel-fake-3.2.patch \
 		mipsbox/dm8000/linux-dreambox-3.2-3c7230bc0819495db75407c365f4d1db70008044.patch \
 		mipsbox/dm8000/unionfs-2.6_for_3.2.62.patch \
@@ -188,16 +201,6 @@ DM8000_PATCHES = \
 		mipsbox/dm8000/dvb_usb_disable_rc_polling.patch \
 		mipsbox/dm8000/dvb-usb-smsdvb_fix_frontend.patch \
 		mipsbox/dm8000/0001-it913x-backport-changes-to-3.2-kernel.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc6.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc7.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc8.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc9.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc10.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc11.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc12.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc13.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc14.patch \
-		mipsbox/dm8000/kernel-add-support-for-gcc15.patch \
 		mipsbox/dm8000/build-with-gcc12-fixes.patch \
 		mipsbox/dm8000/misc_latin1_to_utf8_conversions.patch \
 		mipsbox/dm8000/0001-dvb_frontend-backport-multistream-support.patch \
@@ -214,6 +217,17 @@ DM7020HD_PATCHES = \
 		$(DM8000_PATCHES)
 
 DM820_PATCHES = \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		mipsbox/dm820/linux-dreambox-3.4-30070c78a23d461935d9db0b6ce03afc70a10c51.patch \
 		mipsbox/dm820/kernel-fake-3.4.patch \
 		mipsbox/dm820/dvb_frontend-Multistream-support-3.4.patch \
@@ -226,16 +240,6 @@ DM820_PATCHES = \
 		mipsbox/dm820/0001-blindscan2.patch \
 		mipsbox/dm820/0001-dvbs2x.patch \
 		mipsbox/dm820/0001-0003-cxusb-Geniatech-T230-support.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc6.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc7.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc8.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc9.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc10.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc11.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc12.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc13.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc14.patch \
-		mipsbox/dm820/kernel-add-support-for-gcc15.patch \
 		mipsbox/dm820/build-with-gcc12-fixes.patch \
 		mipsbox/dm820/genksyms_fix_typeof_handling.patch \
 		mipsbox/dm820/rtl8152.patch \

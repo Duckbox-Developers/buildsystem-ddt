@@ -72,6 +72,17 @@ DM920_PATCHES = \
 		$(DM900_PATCHES)
 
 COMMON_PATCHES_3_14 = \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		armbox/vuplus_common/3_14_bcm_genet_disable_warn.patch \
 		armbox/vuplus_common/3_14_linux_dvb-core.patch \
 		armbox/vuplus_common/3_14_dvbs2x.patch \
@@ -79,16 +90,6 @@ COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 		armbox/vuplus_common/3_14_usb_core_hub_msleep.patch \
 		armbox/vuplus_common/3_14_rtl8712_fix_build_error.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc6.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc7.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc8.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc9.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc10.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc11.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc12.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc13.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc14.patch \
-		armbox/vuplus_common/3_14_kernel-add-support-for-gcc15.patch \
 		armbox/vuplus_common/3_14_fix-linker-issue-undefined-reference.patch \
 		armbox/vuplus_common/3_14_0001-Support-TBS-USB-drivers.patch \
 		armbox/vuplus_common/3_14_0001-STV-Add-PLS-support.patch \
@@ -110,6 +111,17 @@ COMMON_PATCHES_3_14 = \
 		armbox/vuplus_common/3_14_fix-multiple-defs-yyloc.patch
 
 COMMON_PATCHES_4_1 = \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc10.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc11.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc12.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc13.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc14.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc15.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc16.patch \
 		armbox/vuplus_common/4_1_linux_dvb_adapter.patch \
 		armbox/vuplus_common/4_1_linux_dvb-core.patch \
 		armbox/vuplus_common/4_1_linux_4_1_45_dvbs2x.patch \
@@ -134,16 +146,6 @@ COMMON_PATCHES_4_1 = \
 		armbox/vuplus_common/4_1_0016-mn88472-fix-typo.patch \
 		armbox/vuplus_common/4_1_0017-mn88472-finalize-driver.patch \
 		armbox/vuplus_common/4_1_0001-dvb-usb-fix-a867.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc6.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc7.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc8.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc9.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc10.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc11.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc12.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc13.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc14.patch \
-		armbox/vuplus_common/4_1_kernel-add-support-for-gcc15.patch \
 		armbox/vuplus_common/4_1_0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
 		armbox/vuplus_common/4_1_0001-TBS-fixes-for-4.1-kernel.patch \
 		armbox/vuplus_common/4_1_0001-STV-Add-PLS-support.patch \
@@ -179,6 +181,11 @@ VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 		armbox/vusolo4k_fix_mmc_3.14.28-1.10.patch
 
 DCUBE_PATCHES = \
+		kernel-gcc-support/kernel-add-support-for-gcc5.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
+		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
 		armbox/dcube/100-arm-linux.patch \
 		armbox/dcube/101-apollo_stb.patch \
 		armbox/dcube/102-unionfs-2.5.4.patch \
@@ -341,14 +348,9 @@ DCUBE_PATCHES = \
 		armbox/dcube/262-ephy_powerdown.patch \
 		armbox/dcube/263-kronos-krome_splash_fix.patch \
 		armbox/dcube/300-dmxdev-unblock-read-on-ioctl.patch \
-		armbox/dcube/0001-kernel-add-support-for-gcc-5.patch \
 		armbox/dcube/fix_return_address_warning.patch \
 		armbox/dcube/rtl8712-fix-warnings.patch \
 		armbox/dcube/rtl8187se-fix-warnings.patch \
-		armbox/dcube/kernel-add-support-for-gcc6.patch \
-		armbox/dcube/kernel-add-support-for-gcc7.patch \
-		armbox/dcube/kernel-add-support-for-gcc8.patch \
-		armbox/dcube/kernel-add-support-for-gcc9.patch \
 		armbox/dcube/timeconst_perl5.patch \
 		armbox/dcube/0001-dvb_frontend-backport-multistream-support.patch \
 		armbox/dcube/log2.patch \
