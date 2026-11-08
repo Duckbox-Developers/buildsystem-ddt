@@ -9,7 +9,7 @@
  
  /**
   * Do seeks within this distance ahead of the current buffer by skipping
-@@ -536,16 +536,15 @@ static void fill_buffer(AVIOContext *s)
+@@ -541,16 +541,15 @@ static void fill_buffer(AVIOContext *s)
      }
  
      /* make buffer smaller in case it ended up large after probing */

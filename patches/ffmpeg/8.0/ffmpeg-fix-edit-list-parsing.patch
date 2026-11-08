@@ -1,6 +1,6 @@
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
-@@ -4369,8 +4369,10 @@
+@@ -4373,8 +4373,10 @@
  
              if (tts_data_old && tts_index_old < tts_count_old) {
                  curr_ctts = tts_data_old[tts_index_old].offset;

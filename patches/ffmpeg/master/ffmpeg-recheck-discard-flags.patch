@@ -1,8 +1,8 @@
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
-@@ -2751,8 +2752,10 @@
+@@ -3111,8 +3111,10 @@
      HLSContext *c = s->priv_data;
-     int ret, i, minplaylist = -1;
+     int ret, i, minplaylist = -1, deferred = 0, unanchored = 0;
  
 -    recheck_discard_flags(s, c->first_packet);
 -    c->first_packet = 0;
@@ -11,5 +11,5 @@
 +        c->first_packet = 0;
 +    }
  
+ retry:
      for (i = 0; i < c->n_playlists; i++) {
-         struct playlist *pls = c->playlists[i];
