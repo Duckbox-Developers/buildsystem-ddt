@@ -183,9 +183,6 @@ VUSOLO4K_PATCHES = $(COMMON_PATCHES_3_14) \
 DCUBE_PATCHES = \
 		kernel-gcc-support/kernel-add-support-for-gcc5.patch \
 		kernel-gcc-support/kernel-add-support-for-gcc6.patch \
-		kernel-gcc-support/kernel-add-support-for-gcc7.patch \
-		kernel-gcc-support/kernel-add-support-for-gcc8.patch \
-		kernel-gcc-support/kernel-add-support-for-gcc9.patch \
 		armbox/dcube/100-arm-linux.patch \
 		armbox/dcube/101-apollo_stb.patch \
 		armbox/dcube/102-unionfs-2.5.4.patch \
@@ -388,7 +385,7 @@ ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 endif
 	@touch $@
 
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.2.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.3.0 16.2.0))
 GCC15PARM  = CFLAGS_KERNEL="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
 GCC15PARM += CFLAGS_MODULE="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
 endif

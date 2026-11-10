@@ -278,7 +278,7 @@ ifeq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug))
 endif
 	@touch $@
 
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.2.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 15.3.0 16.2.0))
 GCC15PARM  = CFLAGS_KERNEL="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
 GCC15PARM += CFLAGS_MODULE="-std=gnu99 -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types"
 endif

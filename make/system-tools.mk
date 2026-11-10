@@ -40,7 +40,7 @@ BUSYBOX_CONFIG = busybox-$(BUSYBOX_VER).config
 endif
 endif
 
-ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 14.3.0 15.2.0))
+ifeq ($(BS_GCC_VER), $(filter $(BS_GCC_VER), 14.4.0 15.3.0 16.2.0))
 GCC15PARM  = CONFIG_EXTRA_CFLAGS="$(TARGET_CFLAGS)"
 GCC15PARM += CONFIG_EXTRA_CPPFLAGS="$(TARGET_CPPFLAGS)"
 endif
