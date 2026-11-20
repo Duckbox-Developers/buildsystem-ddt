@@ -24,7 +24,7 @@ fi
 
 if [ "$1" == -h ] || [ "$1" == --help ]; then
 	echo "Parameter 1                             : Target system (1-91)"
-	echo "Parameter 2 (ARM/MIPS, not DM800)       : GCC Version (1-12)"
+	echo "Parameter 2 (ARM/MIPS, not DM800)       : GCC Version (1-13)"
 	echo "Parameter 3 (not UFS910/UFS922/DM800)   : FFMPEG Version (1-6)"
 	echo "Parameter 4                             : Optimization (1-6)"
 	echo "Parameter 5                             : External LCD support (1-4)"
@@ -63,7 +63,7 @@ if [ "$1" != "" ]; then
 			make printenv
 			exit
 		;;
-		hd51|h7|bre2ze4k|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4kse|dm900|dm920)
+		hd51|h7|bre2ze4k|e4hdultra|vusolo4k|vuuno4k|vuultimo4k|vuzero4k|vuuno4kse|vuuno4k|vuduo4k|vuduo4kse|dm900|dm920)
 			echo "BOXARCH=arm" >> config
 			echo "BS_GCC_VER=8.5.0" >> config
 			echo "FFMPEG_VER=4.4" >> config
