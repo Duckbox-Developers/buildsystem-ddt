@@ -13,7 +13,7 @@ diff --git a/Makefile.flags b/Makefile.flags
 index 65021de25ffb..b9d0abb0dce5 100644
 --- a/Makefile.flags
 +++ b/Makefile.flags
-@@ -181,6 +181,7 @@ ifeq ($(CONFIG_SELINUX),y)
+@@ -191,6 +191,7 @@ ifeq ($(CONFIG_SELINUX),y)
  SELINUX_PC_MODULES = libselinux libsepol
  $(eval $(call pkg_check_modules,SELINUX,$(SELINUX_PC_MODULES)))
  CPPFLAGS += $(SELINUX_CFLAGS)
@@ -42,7 +42,7 @@ diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
 index ea2446a89814..8b70f99e7633 100644
 --- a/scripts/kconfig/conf.c
 +++ b/scripts/kconfig/conf.c
-@@ -539,7 +539,7 @@ int main(int ac, char **av)
+@@ -503,7 +503,7 @@ int main(int ac, char **av)
  			break;
  		case 's':
  			input_mode = ask_silent;
