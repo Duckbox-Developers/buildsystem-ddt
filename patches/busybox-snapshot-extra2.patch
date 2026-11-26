@@ -91,3 +91,17 @@ index 3aedbbffef82..bf6014b92c5b 100644
 -include/applet_tables.h: include/NUM_APPLETS.h applets/applet_tables
 +include/applet_tables.h: include/NUM_APPLETS.h | applets/applet_tables
  	$(call cmd,gen_applet_tables)
+diff --git a/include/libbb.h b/include/libbb.h
+index 521657d52..eb5efc874 100644
+--- a/include/libbb.h
++++ b/include/libbb.h
+@@ -2221,8 +2221,8 @@ typedef struct procps_status_t {
+ 	unsigned sid;
+ 	unsigned uid;
+ 	unsigned gid;
+-#if ENABLE_FEATURE_PS_ADDITIONAL_COLUMNS
+ 	unsigned ruid;
++#if ENABLE_FEATURE_PS_ADDITIONAL_COLUMNS
+ 	unsigned rgid;
+ 	int niceness;
+ #endif
