@@ -1,6 +1,6 @@
 --- a/libavcodec/dxva2.c
 +++ b/libavcodec/dxva2.c
-@@ -821,16 +821,18 @@
+@@ -833,16 +833,18 @@
  #if CONFIG_D3D11VA
      if (avctx->pix_fmt == AV_PIX_FMT_D3D11)
          return (intptr_t)frame->data[1];
@@ -25,7 +25,7 @@
  
 --- a/libavcodec/dxva2_h264.c
 +++ b/libavcodec/dxva2_h264.c
-@@ -510,6 +510,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
+@@ -511,6 +511,14 @@ static int dxva2_h264_end_frame(AVCodecContext *avctx)
  
      if (ctx_pic->slice_count <= 0 || ctx_pic->bitstream_size <= 0)
          return -1;
@@ -42,7 +42,7 @@
                                      &ctx_pic->qm, sizeof(ctx_pic->qm),
 --- a/libavcodec/h264_slice.c
 +++ b/libavcodec/h264_slice.c
-@@ -1004,6 +1004,7 @@ static int h264_slice_header_init(H264Context *h)
+@@ -1014,6 +1014,7 @@ static int h264_slice_header_init(H264Context *h)
  
      h->first_field           = 0;
      h->prev_interlaced_frame = 1;
@@ -62,7 +62,7 @@
      h->poc.prev_frame_num = -1;
 --- a/libavcodec/h264dec.h
 +++ b/libavcodec/h264dec.h
-@@ -561,6 +561,8 @@ typedef struct H264Context {
+@@ -563,6 +563,8 @@ typedef struct H264Context {
       * slices) anymore */
      int setup_finished;
  
